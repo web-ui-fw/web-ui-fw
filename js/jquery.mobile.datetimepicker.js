@@ -12,7 +12,7 @@
             showDate: true,
             showTime: true,
             header: "",
-            minutesSeparator: ":",
+            timeSeparator: ":",
             months: ["January", "February", "March", "April", "May",
                      "June", "July", "August", "September", "October",
                      "November", "December"]
@@ -48,8 +48,38 @@
 
         _createDateTime: function() {
             var $div = $("<div/>", {
-                class: "ui-datetimepicker-main"
+                class: "ui-datetimepicker-main ui-grid-e"
             });
+            var $year = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-a ui-datetimepicker-year"});
+            var $month = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-b ui-datetimepicker-month"});
+            var $day = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-c ui-datetimepicker-day"});
+            var $hours = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-d ui-datetimepicker-hours"});
+            var $separator = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-e ui-datetimepicker-separator"});
+            var $minutes = $("<span/>", {
+                class: "ui-datetimepicker-data ui-block-f ui-datetimepicker-minutes"});
+
+            $year.text(this.data.year);
+            $month.text(this.data.month);
+            $day.text(this.data.day);
+
+            $hours.text(this.data.hours);
+            $separator.text(this.options.timeSeparator);
+            $minutes.text(this.data.minutes);
+
+            /* TODO: the order should depend on locale and
+             * configurable in the options. */
+            $div.append($day)
+                .append($month)
+                .append($year)
+                .append($hours)
+                .append($separator)
+                .append($minutes);
+
             return $div;
         },
 
