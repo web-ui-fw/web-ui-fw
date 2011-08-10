@@ -1,0 +1,11 @@
+.ui-datetimepicker {
+    border: 1px solid #ddd;
+    border-left: 10px solid #ccc;
+    padding: 6px 10px;
+}
+
+.ui-datetimepicker .ui-datetimepicker-header {
+    display: block;
+    color: #666;
+}
+
