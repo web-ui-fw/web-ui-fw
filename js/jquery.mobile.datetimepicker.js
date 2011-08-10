@@ -14,6 +14,22 @@ $.widget("mobile.datetimepicker", $.mobile.widget, {
         showTime: true,
         header: ""
     },
+
+    _createHeader: function() {
+        var $div = $("<div/>", {
+            class: "ui-datetimepicker-header"
+        });
+        $div.text(this.options.header);
+        return $div;
+    },
+
+    _createDateTime: function() {
+        var $div = $("<div/>", {
+            class: "ui-datetimepicker-main"
+        });
+        return $div;
+    },
+
     _create: function() {
         var $container = this.element;
 
@@ -24,14 +40,8 @@ $.widget("mobile.datetimepicker", $.mobile.widget, {
             this.options.showDate = true;
         }
 
-        $container.addClass("ui-grid-a");
-
-        var $headerDiv = $("<div></div>",
-            {class: "ui-datetimepicker-header ui-block-a"});
-        $headerDiv.text(this.options.header);
-
-        var $mainDiv = $("<div></div>",
-            {class: "ui-datetimepicker-main ui-block-b"});
+        var $headerDiv = this._createHeader();
+        var $mainDiv = this._createDateTime();
 
         $container.append($headerDiv, $mainDiv);
     }
