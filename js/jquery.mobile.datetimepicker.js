@@ -42,8 +42,7 @@
         _createHeader: function() {
             var $div = $("<div/>", {
                 class: "ui-datetimepicker-header"
-            });
-            $div.text(this.options.header);
+            }).text(this.options.header);
             return $div;
         },
 
