@@ -11,11 +11,32 @@
         options: {
             showDate: true,
             showTime: true,
-            header: ""
+            header: "",
+            minutesSeparator: ":",
+            months: ["January", "February", "March", "April", "May",
+                     "June", "July", "August", "September", "October",
+                     "November", "December"]
         },
 
         data: {
-            uuid: 0
+            now: 0,
+            uuid: 0,
+
+            year: 0,
+            month: 0,
+            day: 0,
+
+            hours: 0,
+            minutes: 0
+        },
+
+        _initDateTime: function() {
+            this.data.year = this.data.now.getFullYear();
+            this.data.month = this.data.now.getMonth();
+            this.data.day = this.data.now.getDate();
+
+            this.data.hour = this.data.now.getHours();
+            this.data.minutes = this.data.now.getMinutes();
         },
 
         _createHeader: function() {
@@ -43,6 +64,8 @@
                 this.options.showDate = true;
             }
 
+            this._initDateTime();
+
             var $headerDiv = this._createHeader();
             var $mainDiv = this._createDateTime();
 
@@ -53,6 +76,8 @@
         }
     }); /* End of widget */
 
-    $($.mobile.datetimepicker.prototype.data.uuid = new Date().getTime());
+    var now = new Date();
+    $($.mobile.datetimepicker.prototype.data.now = now);
+    $($.mobile.datetimepicker.prototype.data.uuid = now.getTime());
 })(jQuery, this);
 
