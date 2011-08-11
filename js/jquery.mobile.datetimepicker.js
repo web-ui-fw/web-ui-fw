@@ -15,7 +15,8 @@
             timeSeparator: ":",
             months: ["January", "February", "March", "April", "May",
                      "June", "July", "August", "September", "October",
-                     "November", "December"]
+                     "November", "December"],
+            animationDuration: 500
         },
 
         data: {
@@ -59,7 +60,7 @@
                 class: "ui-datetimepicker-data ui-datetimepicker-day"});
 
             $year.text(this.data.year);
-            $month.text(this.data.month);
+            $month.text(this.options.months[this.data.month]);
             $day.text(this.data.day);
 
             /* TODO: the order should depend on locale and
@@ -114,7 +115,20 @@
             return $div;
         },
 
+        _createDataSelector: function() {
+            var $div = $("<div/>", {
+                class: "ui-datetimepicker-selector"
+            });
+
+            return $div;
+        },
+
+        _showDataSelector: function() {
+            $(".ui-datetimepicker-selector").slideDown(this.options.animationDuration);
+        },
+
         _create: function() {
+            var $widget = this;
             var $container = this.element;
 
             /* We must display either time or date: if the user set both to
@@ -126,13 +140,17 @@
 
             this._initDateTime();
 
-            var $headerDiv = this._createHeader();
-            var $mainDiv = this._createDateTime();
-
             /* Give unique id to allow more instances in one page. */
             this.data.uuid += 1;
             $container.attr("id", "ui-datetimepicker-" + this.data.uuid);
-            $container.append($headerDiv, $mainDiv);
+
+            $container.append(this._createHeader(),
+                              this._createDateTime(),
+                              this._createDataSelector());
+
+            $(".ui-datetimepicker-data").click(function() {
+                $widget._showDataSelector();
+            });
         }
     }); /* End of widget */
 
