@@ -46,39 +46,70 @@
             return $div;
         },
 
-        _createDateTime: function() {
+        _createDate: function() {
             var $div = $("<div/>", {
-                class: "ui-datetimepicker-main ui-grid-e"
+                class: "ui-datetimepicker-date ui-grid-b"
             });
+
             var $year = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-a ui-datetimepicker-year"});
+                class: "ui-datetimepicker-data ui-datetimepicker-year"});
             var $month = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-b ui-datetimepicker-month"});
+                class: "ui-datetimepicker-data ui-datetimepicker-month"});
             var $day = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-c ui-datetimepicker-day"});
-            var $hours = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-d ui-datetimepicker-hours"});
-            var $separator = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-e ui-datetimepicker-separator"});
-            var $minutes = $("<span/>", {
-                class: "ui-datetimepicker-data ui-block-f ui-datetimepicker-minutes"});
+                class: "ui-datetimepicker-data ui-datetimepicker-day"});
 
             $year.text(this.data.year);
             $month.text(this.data.month);
             $day.text(this.data.day);
 
-            $hours.text(this.data.hours);
-            $separator.text(this.options.timeSeparator);
-            $minutes.text(this.data.minutes);
-
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             $div.append($day)
                 .append($month)
-                .append($year)
-                .append($hours)
+                .append($year);
+
+            return $div;
+        },
+
+        _createTime: function() {
+            var $div = $("<div/>", {
+                class: "ui-datetimepicker-time ui-grid-b"
+            });
+
+            var $hours = $("<span/>", {
+                class: "ui-datetimepicker-data ui-datetimepicker-hours"});
+            var $separator = $("<span/>", {
+                class: "ui-datetimepicker-data ui-datetimepicker-separator"});
+            var $minutes = $("<span/>", {
+                class: "ui-datetimepicker-data ui-datetimepicker-last ui-datetimepicker-minutes"});
+
+            $hours.text(this.data.hours);
+            $separator.text(this.options.timeSeparator);
+            $minutes.text(this.data.minutes);
+
+            /* TODO: missing the AM/PM bit. */
+            $div.append($hours)
                 .append($separator)
                 .append($minutes);
+
+            return $div;
+        },
+
+        _createDateTime: function() {
+            var $div = $("<div/>", {
+                class: "ui-datetimepicker-main"
+            });
+
+            if (this.options.showDate && this.options.showTime) {
+                $div.addClass("ui-grid-a");
+            }
+
+            if (this.options.showDate) {
+                $div.append(this._createDate());
+            }
+            if (this.options.showTime) {
+                $div.append(this._createTime());
+            }
 
             return $div;
         },
