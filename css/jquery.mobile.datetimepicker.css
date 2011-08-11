@@ -2,15 +2,19 @@
     border: 1px solid #ddd;
     border-left: 10px solid #ccc;
     padding: 6px 10px;
+    width: 450px;
+    height: 68px;
 }
 
 .ui-datetimepicker .ui-datetimepicker-header {
     display: block;
+    height: 30px;
+    font-size: 24px;
     color: #666;
 }
 
 .ui-datetimepicker .ui-datetimepicker-data {
-    padding: 0 20px 0 0;
+    padding: 0 10px 0 0;
 }
 
 .ui-datetimepicker .ui-datetimepicker-data-last {
@@ -20,4 +24,17 @@
 .ui-datetimepicker .ui-datetimepicker-date,
 .ui-datetimepicker .ui-datetimepicker-time {
     display: inline-block;
+    height: 38px;
+    font-size: 32px;
 }
+
+.ui-datetimepicker .ui-datetimepicker-date {
+    width: 214px;
+    margin-right: 44px;
+}
+
+.ui-datetimepicker .ui-datetimepicker-time {
+    width: 94px;
+    margin-right: 30px;
+}
+
