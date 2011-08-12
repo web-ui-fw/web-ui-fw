@@ -29,3 +29,4 @@ clean:
 
 init: clean
 	# Initializing...
+	@@mkdir ${OUTPUT}
