@@ -52,8 +52,13 @@
                 class: "ui-datetimepicker-date ui-grid-b"
             });
 
+            var $w = this;
             var $year = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-year"});
+                class: "ui-datetimepicker-data ui-datetimepicker-year"
+            }).click(function() {
+                /* TODO: fix ugliness. */
+                $w._showDataSelector($($year.parent().parent().parent().find(".ui-datetimepicker-selector")))
+            });
             var $month = $("<span/>", {
                 class: "ui-datetimepicker-data ui-datetimepicker-month"});
             var $day = $("<span/>", {
@@ -123,12 +128,11 @@
             return $div;
         },
 
-        _showDataSelector: function() {
-            $(".ui-datetimepicker-selector").slideDown(this.options.animationDuration);
+        _showDataSelector: function($w) {
+            $w.slideDown(this.options.animationDuration);
         },
 
         _create: function() {
-            var $widget = this;
             var $container = this.element;
 
             /* We must display either time or date: if the user set both to
@@ -147,10 +151,6 @@
             $container.append(this._createHeader(),
                               this._createDateTime(),
                               this._createDataSelector());
-
-            $(".ui-datetimepicker-data").click(function() {
-                $widget._showDataSelector();
-            });
         }
     }); /* End of widget */
 
