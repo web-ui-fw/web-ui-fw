@@ -86,21 +86,23 @@
                 class: "ui-datetimepicker-time ui-grid-b"
             });
 
-            var hours = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-hours"});
-            var separator = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-separator"});
-            var minutes = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-last ui-datetimepicker-minutes"});
+            var w = this;
 
-            hours.text(this.data.hours);
-            separator.text(this.options.timeSeparator);
-            minutes.text(this.data.minutes);
+            /* TODO: the order should depend on locale and
+             * configurable in the options. */
+            var dataItems = {
+                0: ["ui-datetimepicker-hours", this.data.type.HOURS, this.data.hours],
+                1: ["ui-datetimepicker-separator", this.data.type.SEPARATOR, this.options.timeSeparator],
+                2: ["ui-datetimepicker-minutes", this.data.type.MINUTES, this.data.minutes],
+            };
 
-            /* TODO: missing the AM/PM bit. */
-            div.append(hours)
-               .append(separator)
-               .append(minutes);
+            for (var data in dataItems) {
+                var props = dataItems[data];
+                var item = $("<span/>", {
+                    class: "ui-datetimepicker-data " + props[0]
+                }).text(props[2]);
+                div.append(item);
+            }
 
             return div;
         },
