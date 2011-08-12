@@ -126,8 +126,17 @@
             return div;
         },
 
-        _showDataSelector: function(ds) {
-            ds.slideDown(this.options.animationDuration);
+        _showDataSelector: function(selector, owner) {
+            /* TODO: find out if it'd be better to prepopulate this, or
+             * do some caching at least. */
+            var klass = owner.attr("class");
+            if (klass.search("ui-datetimepicker-year")) {
+                this._populateYears(selector);
+            }
+            selector.slideDown(this.options.animationDuration);
+        },
+
+        _populateYears: function(selector) {
         },
 
         _create: function() {
@@ -155,7 +164,7 @@
 
             dateTime.find(".ui-datetimepicker-data").each(function() {
                 $(this).click(function() {
-                    obj._showDataSelector(selector);
+                    obj._showDataSelector(selector, $(this));
                 });
             });
 
