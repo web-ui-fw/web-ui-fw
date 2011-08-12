@@ -49,10 +49,10 @@
         },
 
         _createHeader: function() {
-            var $div = $("<div/>", {
+            var div = $("<div/>", {
                 class: "ui-datetimepicker-header"
             }).text(this.options.header);
-            return $div;
+            return div;
         },
 
         _createDate: function() {
@@ -82,54 +82,54 @@
         },
 
         _createTime: function() {
-            var $div = $("<div/>", {
+            var div = $("<div/>", {
                 class: "ui-datetimepicker-time ui-grid-b"
             });
 
-            var $hours = $("<span/>", {
+            var hours = $("<span/>", {
                 class: "ui-datetimepicker-data ui-datetimepicker-hours"});
-            var $separator = $("<span/>", {
+            var separator = $("<span/>", {
                 class: "ui-datetimepicker-data ui-datetimepicker-separator"});
-            var $minutes = $("<span/>", {
+            var minutes = $("<span/>", {
                 class: "ui-datetimepicker-data ui-datetimepicker-last ui-datetimepicker-minutes"});
 
-            $hours.text(this.data.hours);
-            $separator.text(this.options.timeSeparator);
-            $minutes.text(this.data.minutes);
+            hours.text(this.data.hours);
+            separator.text(this.options.timeSeparator);
+            minutes.text(this.data.minutes);
 
             /* TODO: missing the AM/PM bit. */
-            $div.append($hours)
-                .append($separator)
-                .append($minutes);
+            div.append(hours)
+               .append(separator)
+               .append(minutes);
 
-            return $div;
+            return div;
         },
 
         _createDateTime: function() {
-            var $div = $("<div/>", {
+            var div = $("<div/>", {
                 class: "ui-datetimepicker-main"
             });
 
             if (this.options.showDate && this.options.showTime) {
-                $div.addClass("ui-grid-a");
+                div.addClass("ui-grid-a");
             }
 
             if (this.options.showDate) {
-                $div.append(this._createDate());
+                div.append(this._createDate());
             }
             if (this.options.showTime) {
-                $div.append(this._createTime());
+                div.append(this._createTime());
             }
 
-            return $div;
+            return div;
         },
 
         _createDataSelector: function() {
-            var $div = $("<div/>", {
+            var div = $("<div/>", {
                 class: "ui-datetimepicker-selector"
             });
 
-            return $div;
+            return div;
         },
 
         _showDataSelector: function(ds) {
