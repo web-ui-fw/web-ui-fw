@@ -16,7 +16,8 @@
             months: ["January", "February", "March", "April", "May",
                      "June", "July", "August", "September", "October",
                      "November", "December"],
-            animationDuration: 500
+            animationDuration: 500,
+            yearsDisplayed: 5
         },
 
         data: {
@@ -137,6 +138,23 @@
         },
 
         _populateYears: function(selector) {
+            var currentYear = this.data.year;
+            var startYear = currentYear - Math.floor(this.options.yearsDisplayed / 2);
+            var endYear = currentYear + Math.round(this.options.yearsDisplayed / 2);
+
+            var container = $("<div/>", {
+                class: "ui-datetimepicker-container ui-datetimepicker-container-years ui-grid-d"
+            });
+
+            var i = 0;
+            for (i = startYear; i <= endYear; i++) {
+                w = $("<span />", {
+                    class: "ui-datetimepicker-container-item"
+                }).text(i);
+                container.append(w);
+            }
+
+            selector.html(container);
         },
 
         _create: function() {

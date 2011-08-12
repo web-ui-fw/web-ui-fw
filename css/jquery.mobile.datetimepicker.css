@@ -44,5 +44,10 @@
     background: #ffa500;
     color: white;
     height: 66px;
+    font-size: 24px;
+    padding: 10px 0;
 }
 
+.ui-datetimepicker .ui-datetimepicker-container-item {
+    padding: 0 8px;
+}
