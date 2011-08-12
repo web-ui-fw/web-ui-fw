@@ -29,4 +29,6 @@ clean:
 
 init: clean
 	# Initializing...
-	@@mkdir ${OUTPUT}
+	if ! test -d ${OUTPUT}; then \
+	@@mkdir ${OUTPUT}; \
+	fi
