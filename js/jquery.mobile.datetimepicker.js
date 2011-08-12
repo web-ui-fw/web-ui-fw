@@ -67,7 +67,7 @@
             var dataItems = {
                 0: ["ui-datetimepicker-year", this.data.type.YEAR, this.data.year],
                 1: ["ui-datetimepicker-month", this.data.type.MONTH, this.options.months[this.data.month]],
-                2: ["ui-datetimepicker-day", this.data.type.DAY, this.data.day,],
+                2: ["ui-datetimepicker-day", this.data.type.DAY, this.data.day],
             };
 
             for (var data in dataItems) {
