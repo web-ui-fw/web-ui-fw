@@ -17,7 +17,7 @@
                      "June", "July", "August", "September", "October",
                      "November", "December"],
             animationDuration: 500,
-            yearsDisplayed: 5
+            yearsRange: 30 
         },
 
         data: {
@@ -139,19 +139,29 @@
 
         _populateYears: function(selector) {
             var currentYear = this.data.year;
-            var startYear = currentYear - Math.floor(this.options.yearsDisplayed / 2);
-            var endYear = currentYear + Math.round(this.options.yearsDisplayed / 2);
+            var startYear = currentYear - Math.floor(this.options.yearsRange / 2);
+            var endYear = currentYear + Math.round(this.options.yearsRange / 2);
 
             var container = $("<div/>", {
-                class: "ui-datetimepicker-container ui-datetimepicker-container-years ui-grid-d"
+                class: "ui-datetimepicker-container ui-datetimepicker-container-years"
             });
+            container.attr("data-scroll", "x");
+
+            view = $("<div/>", {class: "view"});
+
+            container.html(view);
+
+            container.scrollview({direction: "x"});
 
             var i = 0;
             for (i = startYear; i <= endYear; i++) {
-                w = $("<span />", {
-                    class: "ui-datetimepicker-container-item"
-                }).text(i);
-                container.append(w);
+                w = $("<div />").text(i);
+                if (i == currentYear) {
+                    w.addClass("ui-datetimepicker-container-item-current");
+                } else {
+                    w.addClass("ui-datetimepicker-container-item");
+                }
+                view.append(w);
             }
 
             selector.html(container);
@@ -178,7 +188,12 @@
             var dateTime = this._createDateTime();
             var selector = this._createDataSelector();
 
-            container.append(header, dateTime, selector);
+            var innerContainer = $("<div/>", {
+                class: "ui-datetimepicker-inner-container",
+            });
+            innerContainer.append(header, dateTime);
+
+            container.append(innerContainer, selector);
 
             dateTime.find(".ui-datetimepicker-data").each(function() {
                 $(this).click(function() {
