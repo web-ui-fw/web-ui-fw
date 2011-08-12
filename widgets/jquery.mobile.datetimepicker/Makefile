@@ -1,4 +1,5 @@
-OUTPUT = compiled
+OUTPUT = ../../compiled
+
 JS = jquery.mobile.datetimepicker.js
 CSS = jquery.mobile.datetimepicker.css
 
@@ -22,7 +23,9 @@ css: init
 	# Building the CSS file...
 	@@cat ${CSSFILES} >> ${OUTPUT}/${CSS}
 
-init:
-	# Preparing...
-	@@rm -rf ${OUTPUT}
-	@@mkdir ${OUTPUT}
+clean:
+	# Cleaning...
+	@@rm -rf ${OUTPUT}/{${JS},${CSS}}
+
+init: clean
+	# Initializing...
