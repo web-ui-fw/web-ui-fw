@@ -23,14 +23,6 @@
             now: 0,
             uuid: 0,
 
-            type: {
-                YEAR     : 0,
-                MONTH    : 1,
-                DAY      : 2,
-                HOURS    : 3,
-                SEPARATOR: 4,
-                MINUTES  : 5
-            },
             year: 0,
             month: 0,
             day: 0,
@@ -65,16 +57,16 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["ui-datetimepicker-year", this.data.type.YEAR, this.data.year],
-                1: ["ui-datetimepicker-month", this.data.type.MONTH, this.options.months[this.data.month]],
-                2: ["ui-datetimepicker-day", this.data.type.DAY, this.data.day],
+                0: ["ui-datetimepicker-year", this.data.year],
+                1: ["ui-datetimepicker-month", this.options.months[this.data.month]],
+                2: ["ui-datetimepicker-day", this.data.day],
             };
 
             for (var data in dataItems) {
                 var props = dataItems[data];
                 var item = $("<span/>", {
                     class: "ui-datetimepicker-data " + props[0]
-                }).text(props[2]);
+                }).text(props[1]);
                 div.append(item);
             }
 
@@ -91,16 +83,16 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["ui-datetimepicker-hours", this.data.type.HOURS, this.data.hours],
-                1: ["ui-datetimepicker-separator", this.data.type.SEPARATOR, this.options.timeSeparator],
-                2: ["ui-datetimepicker-minutes", this.data.type.MINUTES, this.data.minutes],
+                0: ["ui-datetimepicker-hours", this.data.hours],
+                1: ["ui-datetimepicker-separator", this.options.timeSeparator],
+                2: ["ui-datetimepicker-minutes", this.data.minutes],
             };
 
             for (var data in dataItems) {
                 var props = dataItems[data];
                 var item = $("<span/>", {
                     class: "ui-datetimepicker-data " + props[0]
-                }).text(props[2]);
+                }).text(props[1]);
                 div.append(item);
             }
 
