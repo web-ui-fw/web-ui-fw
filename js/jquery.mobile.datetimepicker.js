@@ -23,6 +23,14 @@
             now: 0,
             uuid: 0,
 
+            type: {
+                YEAR     : 0,
+                MONTH    : 1,
+                DAY      : 2,
+                HOURS    : 3,
+                SEPARATOR: 4,
+                MINUTES  : 5
+            },
             year: 0,
             month: 0,
             day: 0,
@@ -48,33 +56,29 @@
         },
 
         _createDate: function() {
-            var $div = $("<div/>", {
+            var div = $("<div/>", {
                 class: "ui-datetimepicker-date ui-grid-b"
             });
 
-            var $w = this;
-            var $year = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-year"
-            }).click(function() {
-                /* TODO: fix ugliness. */
-                $w._showDataSelector($($year.parent().parent().parent().find(".ui-datetimepicker-selector")))
-            });
-            var $month = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-month"});
-            var $day = $("<span/>", {
-                class: "ui-datetimepicker-data ui-datetimepicker-day"});
-
-            $year.text(this.data.year);
-            $month.text(this.options.months[this.data.month]);
-            $day.text(this.data.day);
+            var w = this;
 
             /* TODO: the order should depend on locale and
              * configurable in the options. */
-            $div.append($day)
-                .append($month)
-                .append($year);
+            var dataItems = {
+                0: ["ui-datetimepicker-year", this.data.type.YEAR, this.data.year],
+                1: ["ui-datetimepicker-month", this.data.type.MONTH, this.options.months[this.data.month]],
+                2: ["ui-datetimepicker-day", this.data.type.DAY, this.data.day,],
+            };
 
-            return $div;
+            for (var data in dataItems) {
+                var props = dataItems[data];
+                var item = $("<span/>", {
+                    class: "ui-datetimepicker-data " + props[0]
+                }).text(props[2]);
+                div.append(item);
+            }
+
+            return div;
         },
 
         _createTime: function() {
@@ -128,12 +132,13 @@
             return $div;
         },
 
-        _showDataSelector: function($w) {
-            $w.slideDown(this.options.animationDuration);
+        _showDataSelector: function(ds) {
+            ds.slideDown(this.options.animationDuration);
         },
 
         _create: function() {
-            var $container = this.element;
+            var container = this.element;
+            var obj = this;
 
             /* We must display either time or date: if the user set both to
              * false, we override that.
@@ -146,11 +151,20 @@
 
             /* Give unique id to allow more instances in one page. */
             this.data.uuid += 1;
-            $container.attr("id", "ui-datetimepicker-" + this.data.uuid);
+            container.attr("id", "ui-datetimepicker-" + this.data.uuid);
 
-            $container.append(this._createHeader(),
-                              this._createDateTime(),
-                              this._createDataSelector());
+            var header = this._createHeader();
+            var dateTime = this._createDateTime();
+            var selector = this._createDataSelector();
+
+            container.append(header, dateTime, selector);
+
+            dateTime.find(".ui-datetimepicker-data").each(function() {
+                $(this).click(function() {
+                    obj._showDataSelector(selector);
+                });
+            });
+
         }
     }); /* End of widget */
 
