@@ -5,7 +5,6 @@ CSS = jquery.mobile.datetimepicker.css
 JSFILES = \
     js/jquery.mobile.datetimepicker.js \
     js/jquery.mobile.scrollview.js \
-    js/scrollview.js \
     js/jquery.easing.1.3.js
 
 CSSFILES = \
