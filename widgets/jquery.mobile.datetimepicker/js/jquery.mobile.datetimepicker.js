@@ -149,6 +149,8 @@
                 this._populateYears(selector, owner);
             } else if (klass.search("month") > 0) {
                 this._populateMonths(selector, owner);
+            } else if (klass.search("day") > 0) {
+                this._populateDays(selector, owner);
             }
             selector.slideDown(this.options.animationDuration);
         },
@@ -246,6 +248,43 @@
 
             selector.html(scrollable.container);
         },
+
+        _populateDays: function(selector, owner) {
+            var obj = this;
+            var scrollable = this._createScrollabeView();
+            var maxDay = new Date(obj.data.year, obj.data.month + 1, 0).getDate();
+
+            var i = 1;
+            for (; i <= maxDay; i++) {
+                w = $("<div />", {
+                    class: "item"
+                });
+                link = $("<a />", {
+                    href: "#"
+                }).click(function() {
+                    /* Get value */
+                    obj.data.day = parseInt($(this).text());
+                    owner.text(obj.data.day);
+
+                    /* Give feedback */
+                    scrollable.view.find('.item a').each(function() {
+                        $(this).removeClass("current");
+                    });
+                    $(this).toggleClass("current");
+
+                    /* Close shop */
+                    selector.slideUp(obj.options.animationDuration);
+                }).text(i);
+                if (i == obj.data.day) {
+                    link.addClass("current");
+                }
+                w.append(link);
+                scrollable.view.append(w);
+            }
+
+            selector.html(scrollable.container);
+        },
+
 
         _create: function() {
             var container = this.element;
