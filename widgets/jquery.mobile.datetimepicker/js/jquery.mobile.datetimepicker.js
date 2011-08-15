@@ -157,15 +157,12 @@
             for (i = startYear; i <= endYear; i++) {
                 w = $("<div />", {
                     class: "item"
-                });
-                link = $("<a />", {
+                }).html($("<a />", {
                     href: "#"
-                });
-                link.text(i);
+                }).text(i));
                 if (i == currentYear) {
                     w.addClass("current");
                 }
-                w.append(link);
                 view.append(w);
             }
 
