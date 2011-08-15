@@ -24,6 +24,15 @@
             now: 0,
             uuid: 0,
 
+            initial: {
+                year: 0,
+                month: 0,
+                day: 0,
+
+                hours: 0,
+                minutes: 0
+            },
+
             year: 0,
             month: 0,
             day: 0,
@@ -33,10 +42,15 @@
         },
 
         _initDateTime: function() {
+            this.data.initial.year = this.data.now.getFullYear();
+            this.data.initial.month = this.data.now.getMonth();
+            this.data.initial.day = this.data.now.getDate();
+            this.data.initial.hour = this.data.now.getHours();
+            this.data.initial.minutes = this.data.now.getMinutes();
+
             this.data.year = this.data.now.getFullYear();
             this.data.month = this.data.now.getMonth();
             this.data.day = this.data.now.getDate();
-
             this.data.hour = this.data.now.getHours();
             this.data.minutes = this.data.now.getMinutes();
         },
@@ -58,9 +72,9 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["ui-datetimepicker-year", this.data.year],
-                1: ["ui-datetimepicker-month", this.options.months[this.data.month]],
-                2: ["ui-datetimepicker-day", this.data.day],
+                0: ["year", this.data.initial.year],
+                1: ["month", this.options.months[this.data.initial.month]],
+                2: ["day", this.data.initial.day],
             };
 
             for (var data in dataItems) {
@@ -84,9 +98,9 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["ui-datetimepicker-hours", this.data.hours],
+                0: ["ui-datetimepicker-hours", this.data.initial.hours],
                 1: ["ui-datetimepicker-separator", this.options.timeSeparator],
-                2: ["ui-datetimepicker-minutes", this.data.minutes],
+                2: ["ui-datetimepicker-minutes", this.data.initial.minutes],
             };
 
             for (var data in dataItems) {
@@ -131,14 +145,15 @@
             /* TODO: find out if it'd be better to prepopulate this, or
              * do some caching at least. */
             var klass = owner.attr("class");
-            if (klass.search("ui-datetimepicker-year")) {
-                this._populateYears(selector);
+            if (klass.search("year")) {
+                this._populateYears(selector, owner);
             }
             selector.slideDown(this.options.animationDuration);
         },
 
-        _populateYears: function(selector) {
-            var currentYear = this.data.year;
+        _populateYears: function(selector, owner) {
+            var obj = this;
+            var currentYear = this.data.initial.year;
             var startYear = currentYear - Math.floor(this.options.yearsRange / 2);
             var endYear = currentYear + Math.round(this.options.yearsRange / 2);
 
@@ -157,12 +172,27 @@
             for (i = startYear; i <= endYear; i++) {
                 w = $("<div />", {
                     class: "item"
-                }).html($("<a />", {
+                });
+                link = $("<a />", {
                     href: "#"
-                }).text(i));
+                }).click(function() {
+                    /* Get value */
+                    obj.data.year = parseInt($(this).text());
+                    owner.text(obj.data.year);
+
+                    /* Give feedback */
+                    view.find('.item a').each(function() {
+                        $(this).removeClass("current");
+                    });
+                    $(this).toggleClass("current");
+
+                    /* Close shop */
+                    selector.slideUp(obj.options.animationDuration);
+                }).text(i);
                 if (i == currentYear) {
-                    w.addClass("current");
+                    link.addClass("current");
                 }
+                w.append(link);
                 view.append(w);
             }
 
