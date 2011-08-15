@@ -43,14 +43,14 @@
 
         _createHeader: function() {
             var div = $("<div/>", {
-                class: "ui-datetimepicker-header"
+                id: "header"
             }).text(this.options.header);
             return div;
         },
 
         _createDate: function() {
             var div = $("<div/>", {
-                class: "ui-datetimepicker-date ui-grid-b"
+                class: "date ui-grid-b"
             });
 
             var w = this;
@@ -66,7 +66,7 @@
             for (var data in dataItems) {
                 var props = dataItems[data];
                 var item = $("<span/>", {
-                    class: "ui-datetimepicker-data " + props[0]
+                    class: "data " + props[0]
                 }).text(props[1]);
                 div.append(item);
             }
@@ -76,7 +76,7 @@
 
         _createTime: function() {
             var div = $("<div/>", {
-                class: "ui-datetimepicker-time ui-grid-b"
+                class: "time ui-grid-b"
             });
 
             var w = this;
@@ -92,7 +92,7 @@
             for (var data in dataItems) {
                 var props = dataItems[data];
                 var item = $("<span/>", {
-                    class: "ui-datetimepicker-data " + props[0]
+                    class: "data " + props[0]
                 }).text(props[1]);
                 div.append(item);
             }
@@ -102,7 +102,7 @@
 
         _createDateTime: function() {
             var div = $("<div/>", {
-                class: "ui-datetimepicker-main"
+                id: "main"
             });
 
             if (this.options.showDate && this.options.showTime) {
@@ -121,7 +121,7 @@
 
         _createDataSelector: function() {
             var div = $("<div/>", {
-                class: "ui-datetimepicker-selector"
+                class: "selector"
             });
 
             return div;
@@ -143,7 +143,7 @@
             var endYear = currentYear + Math.round(this.options.yearsRange / 2);
 
             var container = $("<div/>", {
-                class: "ui-datetimepicker-container ui-datetimepicker-container-years"
+                class: "container container-years"
             });
             container.attr("data-scroll", "x");
 
@@ -155,12 +155,17 @@
 
             var i = 0;
             for (i = startYear; i <= endYear; i++) {
-                w = $("<div />").text(i);
+                w = $("<div />", {
+                    class: "item"
+                });
+                link = $("<a />", {
+                    href: "#"
+                });
+                link.text(i);
                 if (i == currentYear) {
-                    w.addClass("ui-datetimepicker-container-item-current");
-                } else {
-                    w.addClass("ui-datetimepicker-container-item");
+                    w.addClass("current");
                 }
+                w.append(link);
                 view.append(w);
             }
 
@@ -189,13 +194,13 @@
             var selector = this._createDataSelector();
 
             var innerContainer = $("<div/>", {
-                class: "ui-datetimepicker-inner-container",
+                id: "inner-container",
             });
             innerContainer.append(header, dateTime);
 
             container.append(innerContainer, selector);
 
-            dateTime.find(".ui-datetimepicker-data").each(function() {
+            dateTime.find(".data").each(function() {
                 $(this).click(function() {
                     obj._showDataSelector(selector, $(this));
                 });

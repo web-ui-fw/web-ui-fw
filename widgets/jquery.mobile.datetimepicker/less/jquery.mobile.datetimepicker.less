@@ -1,3 +1,6 @@
+@selector-height: 66px;
+@container-height: 68px;
+
 .ui-datetimepicker {
     width: 450px;
 
@@ -5,7 +8,7 @@
         border: 1px solid #ddd;
         border-left: 10px solid #ccc;
         padding: 6px 10px;
-        min-height: 68px;
+        min-height: @container-height;
     }
 
     #header {
@@ -48,28 +51,33 @@
         z-index: 9999;
         background: #ffa500;
         color: white;
-        height: 46px;
+        height: @selector-height;
         font-size: 24px;
-        padding: 19px 0 0 0;
+        padding: 0;
         margin: 14px 0 0 0;
         text-align: center;
-    }
 
-    .container {
-        > .view {
-            width: 2000px;
-            height: 28px;
-        }
+        .container {
+            > .view {
+                width: 2000px;
+                height: @selector-height;
+            }
 
-        .item {
-            padding: 0 8px;
-            color: #ffc14f;
-            float: left;
-        }
+            .item {
+                padding: 0 8px;
+                height: @selector-height;
+                float: left;
+                a {
+                    text-decoration: none;
+                    color: #ffc14f;
+                    height: @selector-height;
+                }
+            }
 
-        .current {
-            color: #fff;
-            float: left;
+            .current {
+                color: #fff;
+                float: left;
+            }
         }
     }
 }
