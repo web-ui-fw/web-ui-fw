@@ -35,6 +35,6 @@ clean:
 
 init: clean
 	# Initializing...
-	if ! test -d ${OUTPUT}; then \
-	@@mkdir ${OUTPUT}; \
+	@@if ! test -d ${OUTPUT}; then \
+	  mkdir ${OUTPUT}; \
 	fi
