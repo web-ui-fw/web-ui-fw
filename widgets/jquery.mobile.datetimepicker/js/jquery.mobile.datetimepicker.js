@@ -145,7 +145,7 @@
             /* TODO: find out if it'd be better to prepopulate this, or
              * do some caching at least. */
             var klass = owner.attr("class");
-            if (klass.search("year")) {
+            if (klass.search("year") > 0) {
                 this._populateYears(selector, owner);
             }
             selector.slideDown(this.options.animationDuration);
