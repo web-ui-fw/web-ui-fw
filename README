@@ -1,0 +1,20 @@
+Installing lessc
+================
+
+`lessc` is a compiler that generates CSS code from the .less files that
+style the widgets. Here are some instruction to install it on Ubuntu
+11.04, and it should work on other Debian based distributions. Users of
+other distributions should find their way around too:
+
+cd /tmp
+sudo apt-get install git-core curl build-essential openssl libssl-dev
+git clone https://github.com/joyent/node.git && cd node
+git checkout v0.4.9 # or whatever the latest stable is
+./configure && make
+sudo make install
+curl http://npmjs.org/install.sh | sudo sh
+npm install less
+export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH
+
+You may want to add the final export to your .bashrc and source it.
+
