@@ -147,6 +147,8 @@
             var klass = owner.attr("class");
             if (klass.search("year") > 0) {
                 this._populateYears(selector, owner);
+            } else if (klass.search("month") > 0) {
+                this._populateMonths(selector, owner);
             }
             selector.slideDown(this.options.animationDuration);
         },
@@ -189,7 +191,58 @@
                     /* Close shop */
                     selector.slideUp(obj.options.animationDuration);
                 }).text(i);
-                if (i == currentYear) {
+                if (i == obj.data.year) {
+                    link.addClass("current");
+                }
+                w.append(link);
+                view.append(w);
+            }
+
+            selector.html(container);
+        },
+
+        _parseMonth: function(month) {
+            var i = 0;
+            for(; this.options.months[i] != month; i++);
+            return i;
+        },
+
+        _populateMonths: function(selector, owner) {
+            var obj = this;
+
+            var container = $("<div/>", {
+                class: "container container-months"
+            });
+            container.attr("data-scroll", "x");
+
+            view = $("<div/>", {class: "view"});
+
+            container.html(view);
+
+            container.scrollview({direction: "x"});
+
+            var i = 0;
+            for (; i <= 12; i++) {
+                w = $("<div />", {
+                    class: "item"
+                });
+                link = $("<a />", {
+                    href: "#"
+                }).click(function() {
+                    /* Get value */
+                    obj.data.month = obj._parseMonth($(this).text());
+                    owner.text(obj.options.months[obj.data.month]);
+
+                    /* Give feedback */
+                    view.find('.item a').each(function() {
+                        $(this).removeClass("current");
+                    });
+                    $(this).toggleClass("current");
+
+                    /* Close shop */
+                    selector.slideUp(obj.options.animationDuration);
+                }).text(obj.options.months[i]);
+                if (i == obj.data.month) {
                     link.addClass("current");
                 }
                 w.append(link);
