@@ -2,22 +2,21 @@ OUTPUT = ../../compiled
 
 JS = jquery.mobile.toolkit.js
 JS_THEME = theme.js
-CSS = $(NULL)
 CSS_THEME = theme.css
 
 JSFILES = \
-    js/jquery.mobile.switch.js \
+    js/jquery.easing.1.3.js \
+    js/jquery.mobile.scrollview.js \
     $(NULL)
 
 JS_THEME_FILES = \
-    js/theme.js \
     $(NULL)
 
 CSSFILES = \
     $(NULL)
 
 CSS_THEME_FILES = \
-    css/theme.css \
+    css/jquery.mobile.scrollview.css \
     $(NULL)
 
 all: init js js_theme css css_theme
@@ -25,9 +24,9 @@ all: init js js_theme css css_theme
 
 js: init
 	# Building the Javascript file...
-	@@if test "x${JSFILES}x" != "xx"; then \
-	  cat ${JSFILES} >> ${OUTPUT}/${JS}; \
-	fi
+#	@@if test "x${JSFILES}x" != "xx"; then
+	  cat ${JSFILES} >> ${OUTPUT}/${JS};
+#	fi
 
 js_theme: init
 	# Building the Javascript theme file...
