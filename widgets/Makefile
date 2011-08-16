@@ -13,3 +13,11 @@ all: clean
 clean:
 	# Removing destination directory
 	@@rm -rf ${OUTPUT}
+
+	@@ls -l | grep '^d' | awk '{ print $$NF;}' | \
+	  while read REPLY; do \
+	    echo "Making clean in $$REPLY"; \
+	    if ! $(MAKE) -C "$$REPLY" clean; then \
+              break; \
+            fi; \
+	  done

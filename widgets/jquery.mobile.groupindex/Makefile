@@ -36,3 +36,6 @@ init:
 	if ! test -d ${OUTPUT}; then \
 	@@mkdir ${OUTPUT}; \
 	fi
+
+clean:
+	@@true
