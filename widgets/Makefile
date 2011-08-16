@@ -3,7 +3,7 @@ OUTPUT = ../compiled
 all: clean
 	# Building
 	@@ls -l | grep '^d' | awk '{ print $$NF;}' | \
-	  while read; do \
+	  while read REPLY; do \
 	    echo "Making all in $$REPLY"; \
 	    if ! $(MAKE) -C "$$REPLY" all; then \
               break; \
