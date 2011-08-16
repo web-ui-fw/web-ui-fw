@@ -17,7 +17,6 @@
                      "Jun", "Jul", "Aug", "Sep", "Oct",
                      "Nov", "Dec"],
             animationDuration: 500,
-            yearsRange: 30 
         },
 
         data: {
@@ -144,18 +143,32 @@
         _showDataSelector: function(selector, owner) {
             /* TODO: find out if it'd be better to prepopulate this, or
              * do some caching at least. */
+            var obj = this;
             var klass = owner.attr("class");
             if (klass.search("year") > 0) {
-                this._populateYears(selector, owner);
+                obj._populateSelector(selector, owner, range(1900, 2100),
+                                      parseInt, null, obj.data, "year");
             } else if (klass.search("month") > 0) {
-                this._populateMonths(selector, owner);
+                obj._populateSelector(selector, owner, obj.options.months,
+                                      function (month) {
+                                          var i = 0;
+                                          for (; obj.options.months[i] != month; i++);
+                                          return i;
+                                      },
+                                      function (index) {
+                                          return obj.options.months[index];
+                                      },
+                                      obj.data, "month");
             } else if (klass.search("day") > 0) {
-                this._populateDays(selector, owner);
+                var day = new Date(obj.data.year, obj.data.month + 1, 0).getDate();
+                obj._populateSelector(selector, owner,
+                                      range(1, day),
+                                      parseInt, null, obj.data, "day");
             }
-            selector.slideDown(this.options.animationDuration);
+            selector.slideDown(obj.options.animationDuration);
         },
 
-        _createScrollabeView: function() {
+        _createScrollableView: function() {
             var container = $("<div/>", {
                 class: "container container-years"
             });
@@ -169,122 +182,35 @@
             return {container: container, view: view};
         },
 
-        _populateYears: function(selector, owner) {
+        _populateSelector: function(selector, owner, values,
+                                    parseFromFunc, parseToFunc,
+                                    dest, prop) {
             var obj = this;
-            var currentYear = this.data.initial.year;
-            var startYear = currentYear - Math.floor(this.options.yearsRange / 2);
-            var endYear = currentYear + Math.round(this.options.yearsRange / 2);
-
-            var scrollable = obj._createScrollabeView();
+            var scrollable = obj._createScrollableView();
 
             var i = 0;
-            for (i = startYear; i <= endYear; i++) {
-                w = $("<div />", {
-                    class: "item"
-                });
-                link = $("<a />", {
-                    href: "#"
-                }).click(function() {
-                    /* Get value */
-                    obj.data.year = parseInt($(this).text());
-                    owner.text(obj.data.year);
-
-                    /* Give feedback */
-                    scrollable.view.find('.item a').each(function() {
+            for (; i < values.length; i++) {
+                item = $.createSelectorItem();
+                item.link.click(function() {
+                    dest[prop] = parseFromFunc(this.text);
+                    if (parseToFunc !== null) {
+                        owner.text(parseToFunc(dest[prop]));
+                    } else {
+                        owner.text(dest[prop]);
+                    }
+                    scrollable.view.find(item.selector).each(function() {
                         $(this).removeClass("current");
                     });
                     $(this).toggleClass("current");
-
-                    /* Close shop */
                     selector.slideUp(obj.options.animationDuration);
-                }).text(i);
-                if (i == obj.data.year) {
-                    link.addClass("current");
+                }).text(values[i]);
+                if (values[i] == dest[prop]) {
+                    item.link.addClass("current");
                 }
-                w.append(link);
-                scrollable.view.append(w);
+                scrollable.view.append(item.container);
             }
-
             selector.html(scrollable.container);
         },
-
-        _parseMonth: function(month) {
-            var i = 0;
-            for(; this.options.months[i] != month; i++);
-            return i;
-        },
-
-        _populateMonths: function(selector, owner) {
-            var obj = this;
-            var scrollable = this._createScrollabeView();
-
-            var i = 0;
-            for (; i <= 12; i++) {
-                w = $("<div />", {
-                    class: "item"
-                });
-                link = $("<a />", {
-                    href: "#"
-                }).click(function() {
-                    /* Get value */
-                    obj.data.month = obj._parseMonth($(this).text());
-                    owner.text(obj.options.months[obj.data.month]);
-
-                    /* Give feedback */
-                    scrollable.view.find('.item a').each(function() {
-                        $(this).removeClass("current");
-                    });
-                    $(this).toggleClass("current");
-
-                    /* Close shop */
-                    selector.slideUp(obj.options.animationDuration);
-                }).text(obj.options.months[i]);
-                if (i == obj.data.month) {
-                    link.addClass("current");
-                }
-                w.append(link);
-                scrollable.view.append(w);
-            }
-
-            selector.html(scrollable.container);
-        },
-
-        _populateDays: function(selector, owner) {
-            var obj = this;
-            var scrollable = this._createScrollabeView();
-            var maxDay = new Date(obj.data.year, obj.data.month + 1, 0).getDate();
-
-            var i = 1;
-            for (; i <= maxDay; i++) {
-                w = $("<div />", {
-                    class: "item"
-                });
-                link = $("<a />", {
-                    href: "#"
-                }).click(function() {
-                    /* Get value */
-                    obj.data.day = parseInt($(this).text());
-                    owner.text(obj.data.day);
-
-                    /* Give feedback */
-                    scrollable.view.find('.item a').each(function() {
-                        $(this).removeClass("current");
-                    });
-                    $(this).toggleClass("current");
-
-                    /* Close shop */
-                    selector.slideUp(obj.options.animationDuration);
-                }).text(i);
-                if (i == obj.data.day) {
-                    link.addClass("current");
-                }
-                w.append(link);
-                scrollable.view.append(w);
-            }
-
-            selector.html(scrollable.container);
-        },
-
 
         _create: function() {
             var container = this.element;
