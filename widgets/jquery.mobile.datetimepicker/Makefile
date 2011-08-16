@@ -7,12 +7,12 @@ LESS = jquery.mobile.datetimepicker.less
 
 JSFILES = \
     js/jquery.mobile.datetimepicker.js \
+    js/range.js \
     $(NULL)
 
 JS_THEME_FILES = \
     js/theme.js \
     $(NULL)
-
 
 CSSFILES = \
     theme.css \
