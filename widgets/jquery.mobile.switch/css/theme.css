@@ -7,7 +7,7 @@
   background: green;
 }
 
-.ui-switch-button {
+.ui-switch-inner-container .ui-switch-button {
   position: relative;
   left: 5px;
   top: 5px;

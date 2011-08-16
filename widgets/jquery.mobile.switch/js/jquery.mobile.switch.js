@@ -9,40 +9,26 @@
 (function($, window, undefined) {
     $.widget("mobile.switch", $.mobile.widget, {
         options: {
-            animationDuration: 500,
+            animationDuration: 500
         },
 
         data: {
             uuid: 0,
-            toggled: 0
+            instanceData: new Array()
         },
 
-        _theButtonClicked: function() {
-          if (0 == this.data.toggled)
-            this.data.toggled = 1;
+        _buttonClicked: function(myUUID, obj) {
+          if (0 == obj.data.instanceData[myUUID].toggled)
+            obj.data.instanceData[myUUID].toggled = 1;
           else
-            this.data.toggled = 0;
+            obj.data.instanceData[myUUID].toggled = 0;
 
-          console.log("theButtonClicked: this.data.toggled = " + this.data.toggled);
-
-          if (this.data.toggled)
-            $(this).find('.ui-switch-button').animate({top: 85}, {duration: 500});
+          if (1 == obj.data.instanceData[myUUID].toggled)
+            $('#ui-switch-button-' + myUUID).animate({top: 85}, {duration: obj.options.animationDuration});
           else
-            $(this).find('.ui-switch-button').animate({top: 5}, {duration: 500});
-        },
+            $('#ui-switch-button-' + myUUID).animate({top:  5}, {duration: obj.options.animationDuration});
 
-        _buttonClicked: function(obj) {
-          if (0 == obj.data.toggled)
-            obj.data.toggled = 1;
-          else
-            obj.data.toggled = 0;
-
-          if (1 == obj.data.toggled)
-            $('#ui-switch-button-' + obj.data.uuid).animate({top: 85}, {duration: obj.options.animationDuration});
-          else
-            $('#ui-switch-button-' + obj.data.uuid).animate({top:  5}, {duration: obj.options.animationDuration});
-
-          $(obj).trigger('toggled');
+          //$(obj).trigger('toggled');
         },
 
         _create: function() {
@@ -51,6 +37,10 @@
 
             /* Give unique id to allow more instances in one page. */
             this.data.uuid += 1;
+
+            var myUUID = this.data.uuid;
+
+            console.log("creating item with id " + this.data.uuid);
 
             container.attr("id", "ui-switch-" + this.data.uuid);
 
@@ -63,8 +53,10 @@
             innerContainer.append(theButton);
             container.append(innerContainer);
 
+            obj.data.instanceData[myUUID] = { toggled: 0 };
+
             innerContainer.click(function() {
-              obj._buttonClicked(obj);
+              obj._buttonClicked(myUUID, obj);
             });
         }
     }); /* End of widget */
