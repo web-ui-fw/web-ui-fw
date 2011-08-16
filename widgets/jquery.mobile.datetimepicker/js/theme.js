@@ -6,7 +6,7 @@ jQuery.extend( jQuery,
 
   createSelectorItem: function() {
     var container = $("<div/>", {class: "item"});
-    var link = $("<a/>", {href: "a"});
+    var link = $("<a/>", {href: "#"});
 
     container.append(link);
 
