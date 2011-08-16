@@ -14,6 +14,11 @@
 
         data: {
             uuid: 0,
+            precompute: {
+              needed: true,
+              slideFrom: -1,
+              slideTo: -1
+            },
             instanceData: new Array()
         },
 
@@ -24,9 +29,9 @@
             obj.data.instanceData[myUUID].toggled = 0;
 
           if (1 == obj.data.instanceData[myUUID].toggled)
-            $('#ui-switch-button-' + myUUID).animate({top: 85}, {duration: obj.options.animationDuration});
+            $('#ui-switch-button-' + myUUID).animate({top: obj.data.precompute.slideTo},   {duration: obj.options.animationDuration});
           else
-            $('#ui-switch-button-' + myUUID).animate({top:  5}, {duration: obj.options.animationDuration});
+            $('#ui-switch-button-' + myUUID).animate({top: obj.data.precompute.slideFrom}, {duration: obj.options.animationDuration});
 
           //$(obj).trigger('toggled');
         },
@@ -40,8 +45,6 @@
 
             var myUUID = this.data.uuid;
 
-            console.log("creating item with id " + this.data.uuid);
-
             container.attr("id", "ui-switch-" + this.data.uuid);
 
             var innerContainer = $.createSwitchInnerContainer();
@@ -54,6 +57,12 @@
             container.append(innerContainer);
 
             obj.data.instanceData[myUUID] = { toggled: 0 };
+
+            if (obj.data.precompute.needed) {
+              obj.data.precompute.needed = false;
+              obj.data.precompute.slideFrom = parseInt(theButton.css('top'));
+              obj.data.precompute.slideTo = innerContainer.height() - parseInt(theButton.css('top')) - theButton.height();
+            }
 
             innerContainer.click(function() {
               obj._buttonClicked(myUUID, obj);
