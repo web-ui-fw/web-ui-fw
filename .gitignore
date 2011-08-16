@@ -1,3 +1,4 @@
 *.swp
 compiled
 widgets/jquery.mobile.datetimepicker/css/jquery.mobile.datetimepicker.css
+widgets/jquery.mobile.datetimepicker/theme.css
