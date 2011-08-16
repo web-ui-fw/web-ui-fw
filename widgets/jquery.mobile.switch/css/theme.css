@@ -1,13 +1,13 @@
 /* Own CSS */
 
-.ui-switch .ui-switch-inner-container {
+.ui-switch-inner-container {
   position: relative;
   width: 80px;
   height: 160px;
   background: green;
 }
 
-.ui-switch .ui-switch-button {
+.ui-switch-button {
   position: relative;
   left: 5px;
   top: 5px;

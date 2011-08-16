@@ -54,14 +54,10 @@
 
             container.attr("id", "ui-switch-" + this.data.uuid);
 
-            var innerContainer = $("<div/>", {
-              class: "ui-switch-inner-container"
-            });
+            var innerContainer = $.createSwitchInnerContainer();
             innerContainer.attr("id", "ui-switch-inner-container-" + this.data.uuid);
 
-            var theButton = $("<div/>", {
-              class: "ui-switch-button"
-            });
+            var theButton = $.createSwitchButton();
             theButton.attr("id", "ui-switch-button-" + this.data.uuid);
 
             innerContainer.append(theButton);
