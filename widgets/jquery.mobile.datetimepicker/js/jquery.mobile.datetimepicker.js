@@ -56,9 +56,9 @@
         },
 
         _createHeader: function() {
-            var div = $("<div/>", {
-                id: "header"
-            }).text(this.options.header);
+            var div = $.createDateTimePickerHeader();
+            div.attr("id", "header");
+            div.text(this.options.header);
             return div;
         },
 
