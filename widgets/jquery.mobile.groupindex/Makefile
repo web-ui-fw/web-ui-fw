@@ -31,11 +31,7 @@ css: init less
 	@@cat ${CSSFILES} >> ${OUTPUT}/${CSS}; \
 	fi
 
-clean:
-	# Cleaning...
-	@@rm -rf ${OUTPUT}/*
-
-init: clean
+init:
 	# Initializing...
 	if ! test -d ${OUTPUT}; then \
 	@@mkdir ${OUTPUT}; \
