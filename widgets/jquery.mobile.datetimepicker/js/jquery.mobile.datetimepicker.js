@@ -97,9 +97,9 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["ui-datetimepicker-hours", this.data.initial.hours],
-                1: ["ui-datetimepicker-separator", this.options.timeSeparator],
-                2: ["ui-datetimepicker-minutes", this.data.initial.minutes],
+                0: ["hours", this.data.initial.hours],
+                1: ["separator", this.options.timeSeparator],
+                2: ["minutes", this.data.initial.minutes],
             };
 
             for (var data in dataItems) {
@@ -164,7 +164,15 @@
                 obj._populateSelector(selector, owner,
                                       range(1, day),
                                       parseInt, null, obj.data, "day");
+            } else if (klass.search("hours") > 0) {
+                /* TODO: 12/24 settings should come from the locale */
+                obj._populateSelector(selector, owner, range(0, 23), parseInt, null,
+                                      obj.data, "hours");
+            } else if (klass.search("minutes") > 0) {
+                obj._populateSelector(selector, owner, range(0, 60), parseInt, null,
+                                      obj.data, "minutes");
             }
+
             selector.slideDown(obj.options.animationDuration);
         },
 
@@ -245,7 +253,6 @@
                     obj._showDataSelector(selector, $(this));
                 });
             });
-
         }
     }); /* End of widget */
 
