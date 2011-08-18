@@ -63,7 +63,7 @@
 			dragging = false;
 		    }
 		 
-		    function _evaluatePosition() {
+		    function _evaluatePosition(event) {
 			newPos = absoluteTouchPostion(event);
 			newPos = newPos.add(elementTopPos).subtract(startPos);
 		    }
@@ -74,7 +74,7 @@
 			draggedElement.bind('swipe mousemove touchmove scroll',
 					    function (event) {
 			    dragging = true;
-			    _evaluatePosition();
+			    _evaluatePosition(event);
 			    draggedElement.css({
 				top: newPos.y(),
 				left: newPos.x()
@@ -114,10 +114,11 @@
 		draggedObject = new dragObject();
 		previousPageX = 0,
 		previousPageY = 0,
-		shadow = $.createShadowListItem(),
-		$(shadow).addClass("shadow");
+		$shadow = $($.createShadowListItem()),
+		$shadow.addClass("shadow");
 		shadowIndex = null,
-		clone = document.createElement("li");
+                $realObject = null,
+		$clone = document.createElement("li");
 		 
 		var _unBind = function () {
 		    if (!resetNeeded)
@@ -134,12 +135,12 @@
 		 		 
 		var _evaluateDragEnd = function () {
 		    if (draggedObject.draggedElement() != null) {
-                       $(clone).animate({
-                        left: parseInt($(shadow).offset().left),
-                        top: parseInt($(shadow).offset().top)
+                       $clone.animate({
+                        left: parseInt($shadow.offset().left),
+                        top: parseInt($shadow.offset().top)
                         }, 100, "swing", function(){
-                            $(clone).remove();
-		            $(shadow).replaceWith($(realObject));
+                            $clone.remove();
+		            $shadow.replaceWith($realObject);
                             });
 		    }
 		    $.enableSelection(list);
@@ -191,12 +192,18 @@
 		    if ((shadowIndex == index || $(children[index]).hasClass("shadow") )
 			&& index != children.length) {
 			return;
-		    }	 
-		    if (index != children.length) {
-			$(shadow).insertBefore($(children[index]));
-		    } else {
-			$(shadow).insertAfter($(children[index - 1]));
 		    }
+                    var target = $(children[index]);
+                    $shadow.animate({
+                        left: parseInt(target.offset().left),
+                        top: parseInt(target.offset().top)
+                        },10, "swing", function(){
+		        if (index != children.length) {
+			   $shadow.insertBefore(target);
+		        } else {
+			  $shadow.insertAfter(target);
+		        }
+                    });
 		    shadowIndex = index;
 	        }
 		 
@@ -210,15 +217,15 @@
 			    listItem.bind('taphold', function (event) {
 				$.disableSelection(list);
 				list.trigger('dragStarted', [idx]);
-				realObject = $(this);
-				clone = realObject.clone();
-				clone.addClass("dragObject")
-				$(realObject).replaceWith($(clone));
-				draggedObject.setMovingObject(clone,
+				$realObject = $(this);
+				$clone = $realObject.clone();
+				$clone.addClass("dragObject")
+				$realObject.replaceWith($clone);
+				draggedObject.setMovingObject($clone,
 							     absoluteTouchPostion(event),
 							    _evaluateDragMove, _evaluateDragEnd);
-				shadow.css('height', parseInt($(clone).outerHeight()));
-				$(shadow).insertBefore($(clone));
+				$shadow.css('height', parseInt($clone.outerHeight()));
+				$shadow.insertBefore($clone);
 				_unBind();
 				shadowIndex = idx;
 			    });
