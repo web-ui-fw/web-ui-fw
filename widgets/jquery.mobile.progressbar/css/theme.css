@@ -53,14 +53,26 @@
 
 #boxImgId {
 	float: left;
+	position: relative;
 	margin-left: 10px;
-	background-image: url(../widgets/jquery.mobile.progressbar/images/progressbg_yellow.gif);
+	margin-right: 10px;
+	background-image: url(../widgets/jquery.mobile.progressbar/images/progressbar.gif);
+	background-repeat:no-repeat;
+	z-index: 2; 
+	height: 10px;
+	width: 100%;
 }
 
 #barImgId {
-	float: left;
+	position: relative;
 	margin-left: 10px;
-	
+	margin-right: 10px;	
+	background-image: url(../widgets/jquery.mobile.progressbar/images/progressbg_yellow.gif);
+	background-repeat:no-repeat;
+	z-index: 3;
+	height: 10px;
+	/*width: 10%;
+	 */
 }
 
 

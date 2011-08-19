@@ -23,9 +23,7 @@
 			value		: 0,
 			max			: 100,
 			min			: 0
-		},
-		
-		
+		},		
 		
 		_create: function() {
 			var container = this.element;
@@ -85,8 +83,7 @@
 				
 			$('<div/>', {
 					id: 'barImgId',					
-				}).appendTo(progressbar);
-			
+				}).appendTo(progressbar);			
 				
 							
 			$('#cancel-button').click(function() {
