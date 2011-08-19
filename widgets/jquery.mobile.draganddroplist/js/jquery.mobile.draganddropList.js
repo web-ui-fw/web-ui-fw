@@ -1,4 +1,4 @@
-﻿   /*!
+  /*!
    * jQuery Mobile Widget @VERSION
    *
    * Copyright (C) TODO
