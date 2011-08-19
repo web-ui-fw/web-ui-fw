@@ -177,7 +177,7 @@
                                       values, parseInt, null,
                                       obj.data, "hours");
             } else if (klass.search("minutes") > 0) {
-                var values = range(0, 60);
+                var values = range(0, 59);
                 numItems = values.length;
                 obj._populateSelector(selector, owner, "minutes",
                                       values, parseInt, null,
