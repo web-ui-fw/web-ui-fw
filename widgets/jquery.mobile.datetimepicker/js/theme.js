@@ -4,8 +4,8 @@ jQuery.extend( jQuery,
     return $("<div/>");
   },
 
-  createSelectorItem: function() {
-    var container = $("<div/>", {class: "item"});
+  createSelectorItem: function(klass) {
+    var container = $("<div/>", {class: "item " + klass});
     var link = $("<a/>", {href: "#"});
 
     container.append(link);

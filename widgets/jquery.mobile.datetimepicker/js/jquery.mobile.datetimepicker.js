@@ -145,11 +145,15 @@
              * do some caching at least. */
             var obj = this;
             var klass = owner.attr("class");
+            var numItems = 0;
             if (klass.search("year") > 0) {
-                obj._populateSelector(selector, owner, range(1900, 2100),
+                var values = range(1900, 2100);
+                numItems = values.length;
+                obj._populateSelector(selector, owner, "year", values,
                                       parseInt, null, obj.data, "year");
             } else if (klass.search("month") > 0) {
-                obj._populateSelector(selector, owner, obj.options.months,
+                numItems = obj.options.months.length;
+                obj._populateSelector(selector, owner, "month", obj.options.months,
                                       function (month) {
                                           var i = 0;
                                           for (; obj.options.months[i] != month; i++);
@@ -161,19 +165,32 @@
                                       obj.data, "month");
             } else if (klass.search("day") > 0) {
                 var day = new Date(obj.data.year, obj.data.month + 1, 0).getDate();
-                obj._populateSelector(selector, owner,
+                numItems = day;
+                obj._populateSelector(selector, owner, "day",
                                       range(1, day),
                                       parseInt, null, obj.data, "day");
             } else if (klass.search("hours") > 0) {
+                var values = range(0, 23);
+                numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
-                obj._populateSelector(selector, owner, range(0, 23), parseInt, null,
+                obj._populateSelector(selector, owner, "hours",
+                                      values, parseInt, null,
                                       obj.data, "hours");
             } else if (klass.search("minutes") > 0) {
-                obj._populateSelector(selector, owner, range(0, 60), parseInt, null,
+                var values = range(0, 60);
+                numItems = values.length;
+                obj._populateSelector(selector, owner, "minutes",
+                                      values, parseInt, null,
                                       obj.data, "minutes");
             }
 
             selector.slideDown(obj.options.animationDuration);
+
+            /* Now that all the items have been added to the DOM, let's compute
+             * the size of the selector.
+             */
+            itemWidth = selector.find(".item").outerWidth();
+            selector.find(".view").width(itemWidth * numItems);
         },
 
         _createScrollableView: function() {
@@ -190,7 +207,7 @@
             return {container: container, view: view};
         },
 
-        _populateSelector: function(selector, owner, values,
+        _populateSelector: function(selector, owner, klass, values,
                                     parseFromFunc, parseToFunc,
                                     dest, prop) {
             var obj = this;
@@ -198,7 +215,7 @@
 
             var i = 0;
             for (; i < values.length; i++) {
-                item = $.createSelectorItem();
+                var item = $.createSelectorItem(klass);
                 item.link.click(function() {
                     dest[prop] = parseFromFunc(this.text);
                     if (parseToFunc !== null) {

@@ -59,7 +59,6 @@
 
         .container {
             > .view {
-                width: 2000px;
                 height: @selector-height;
             }
 
@@ -75,6 +74,18 @@
                 a.current {
                     color: #fff;
                 }
+            }
+
+            .year {
+                min-width: 65px;
+            }
+
+            .month {
+                min-width: 50px;
+            }
+
+            .day, .hours, .minutes {
+                min-width: 30px;
             }
         }
     }
