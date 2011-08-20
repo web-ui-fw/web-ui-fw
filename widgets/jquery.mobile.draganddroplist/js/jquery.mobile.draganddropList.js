@@ -82,17 +82,19 @@
 			    newPos.setY(newPos.y() + event.offsetY);
 			    var p = newPos.y();
                             if (previousYPosition === p)
-                                return;
+				return true;
                             var scrollingUp = false;
                             if (previousYPosition >p)
                                 scrollingUp = true;
                             previousYPosition = p;
 			    if (dragCallBack !== null)
 				dragCallBack(p,scrollingUp);
+			    return true;
                         });
 			draggedElement.bind('mouseup touchstart mousedown touchend',
 						function (event) {
-				_stopDragging();
+			    _stopDragging();
+			    return true;
 			});
 		    }
 		 
@@ -111,20 +113,21 @@
                 children = [],
 		resetNeeded = false,
                 reEvaluateChildren = false,
-		previousPageX = 0,
-		previousPageY = 0,
-                $realObject = null
+		$realObject = null,
+		$targetObject = null
 		$clone = document.createElement("li");
 		$shadow = $($.createShadowListItem());
 		$shadow.addClass("shadow");
 		draggedObject = new dragObject();
-		
-		var shadowData= {
+		shadowData = {
+		    $shadowRect: new $.Rect(0,0,0,0),
 		    shadowIndex: null,
-		    shadowHeight: null,
-                    thresholdHeight: null,
-		    shadowTop: null,
                     targetHeight: null
+		}
+
+		$targetObject = {
+		    targetItem: null,
+		    targetIndex: null
 		}
 		//console.log(list.outerHeight() + 'window'+window.innerHeight);
 		var _unBind = function () {
@@ -137,19 +140,20 @@
 			    listItem.unbind('taphold');
 		    });
 		    $this.unbind("swipe mousemove touchmove");
-		    shadowData= {
-		    shadowIndex: null,//This will be the index of item before which shadow is placed
-		    shadowHeight: null,//Height of the shadow. Same as the item being dragged.
-                    thresholdHeight: null,
-		    shadowTop: null,
-                    targetHeight: null
-		    };
+		    shadowData.$shadowRect.setRect(0,0,0,0);
+		    shadowData.targetHeight = null;
+		    shadowData.shadowIndex = null;
+		    $targetObject = {
+		    targetItem: null,
+		    targetIndex: null
+		    }
 		}
 		 		 
 		var _evaluateDragEnd = function () {
+		    var offset = $shadow.offset();
                     $clone.animate({
-                        left: parseInt($shadow.offset().left,10),
-                        top: parseInt($shadow.offset().top,10)
+			left: parseInt(offset.left,10),
+			top: parseInt(offset.top,10)
                         }, 100, "swing", function(){
 			    jQuery($clone).css('-webkit-transform', 'scale(1)');
                             $clone.remove();
@@ -161,25 +165,19 @@
 		}
 		
                 var _evaluateDragDown = function (newPos) { 
-                    var result = null;
 		    for (var i = shadowData.shadowIndex,l = children.length; i < l; i++) {
 			if (_targetItemIndex(i,newPos,true)) {
-                            result = i;
 			    break;
 			}
 		    }
-                    return result;
                 }
 
                 var _evaluateDragup = function (newPos) {
-                    var result = null;
 		    for (var i = shadowData.shadowIndex; i >=0; i--) {
 			if (_targetItemIndex(i,newPos,false)) {
-                            result = i;
 			    break;
 			}
 		    }
-                    return result;
                 }
 
                 var _targetItemIndex = function (itemIndex,newPos,dragDown) {
@@ -188,70 +186,76 @@
                     if (!item.hasClass("dragObject")) {
 			var itemheight = parseInt(item.outerHeight(),10); 
                         var itemTop =  parseInt(item.offset().top,10);
-                        var difference = dragDown ? newPos - itemTop : Math.abs(itemTop - newPos);
-			if (Math.round(itemheight/2) >= difference) {
-                            result = true;
+			var difference = dragDown ? newPos - itemTop
+						  : Math.abs(itemTop - newPos);
+			if (Math.round(itemheight/2) > difference) {
+			   $targetObject.targetItem = item;
+			   $targetObject.targetIndex = itemIndex;
+			   result = true;
 			}
                     }
                     return result;
                 }
                 
-                 var _moveShadowToTarget = function (targetIndex,insertBefore) {
-                    var target = $(children[targetIndex]);
-                    reEvaluateChildren = true;
+		 var _moveShadowToTarget = function (insertBefore) {
+		    var offset = $targetObject.targetItem.offset();
                     $shadow.animate({
-                        left: parseInt(target.offset().left,10),
-                        top: parseInt(target.offset().top,10)
+			left: parseInt(offset.left,10),
+			top: parseInt(offset.top,10)
                         },10, "swing", function(){
 		        if (insertBefore) {
-			   $shadow.insertBefore(target);
+			   $shadow.insertBefore($targetObject.targetItem);
 		        } else {
-			  $shadow.insertAfter(target);
+			  $shadow.insertAfter($targetObject.targetItem);
 		        }
                     });
-		    shadowData.shadowIndex = targetIndex === 0 ? 0:targetIndex;
-		    shadowData.shadowTop = target.offset().top;
-                    shadowData.targetHeight = targetIndex === children.length-1
-                                        ? (shadowData.shadowTop+Math.round(target.outerHeight()/2))
+		    reEvaluateChildren = true;
+		    shadowData.shadowIndex = $targetObject.targetIndex;
+		    shadowData.$shadowRect.setTop($targetObject.targetItem.offset().top);
+		    shadowData.$shadowRect.setBottom(shadowData.shadowTop + shadowData.shadowHeight);
+		    shadowData.targetHeight = $targetObject.targetIndex === children.length-1
+					? (shadowData.shadowTop+Math.round($targetObject.targetItem.outerHeight()/2))
                                         :null;
                 }
 		    
                 var _evaluateDragMove = function (newPos,scrollingUp) {
-                    //check if the new pos is within the shadow item
-                    var checkPoint = shadowData.shadowTop+shadowData.shadowHeight;
-		    if (newPos > shadowData.shadowTop &&
-                        newPos <= checkPoint) {
-                        if (shadowData.targetHeight !== null && newPos >= shadowData.targetHeight) {
-                        _moveShadowToTarget(shadowData.shadowIndex,false);
-                        shadowData.targetHeight = null;
-                        }
-                     return;
-		    }
-                    
-                    if (shadowData.thresholdHeight >= Math.abs(shadowData.shadowTop - newPos)) {
-		    //Item has not been dragged enough to move the shadow;
-                        return;
-		    }
                     
                     if (reEvaluateChildren) {
                         //need to recache children as they have moved
                         children = $this.children();
                         reEvaluateChildren = false;
                     }
-                    var index = scrollingUp ? _evaluateDragup(newPos): _evaluateDragDown(newPos);
-		    if ((index === null) || (shadowData.shadowIndex === index))
+		    //check if the new pos is within the shadow item
+		    if (shadowData.$shadowRect.containsY(newPos)) {
+			if (shadowData.targetHeight !== null
+				 && newPos >= shadowData.targetHeight) {
+			    $targetObject.targetIndex = children.length-1;
+			    $targetObject.targetItem = $(children[children.length-1]);
+			    _moveShadowToTarget(false);
+			    shadowData.targetHeight = null;
+			}
+		     return;
+		    }
+
+		    $targetObject.targetIndex = null;
+		    $targetObject.targetItem = null;
+		    var index = scrollingUp ? _evaluateDragup(newPos)
+					    : _evaluateDragDown(newPos);
+		    if ($targetObject.targetItem === null ||
+			$targetObject.targetIndex === null ||
+			shadowData.shadowIndex === $targetObject.targetIndex ||
+			$targetObject.targetItem.hasClass("shadow"))  {
                        return;
-                    _moveShadowToTarget(index,true);
+		    }
+		    _moveShadowToTarget(true);
 	        }
 		 
 		var _mouseInit = function () {
 		    resetNeeded = true;
 		    listItems = $this.children("li");
-		    var listItem = "";
 		    if (listItems) {
 			listItems.each(function (idx, li) {
-			    listItem = $(li);
-			    listItem.bind('taphold', function (event) {
+			    $(li).bind('taphold', function (event) {
 				$.disableSelection($this);
 				$this.trigger('dragStarted', [idx]);
 				$realObject = $(this);
@@ -261,24 +265,24 @@
 				draggedObject.setMovingObject($clone,
 							     absoluteTouchPostion(event),
 							    _evaluateDragMove, _evaluateDragEnd);
-				$shadow.css('height', parseInt($clone.outerHeight(),10));
+				var cloneHeight = $clone.outerHeight();
+				$shadow.css('height', parseInt(cloneHeight,10));
 				$shadow.insertBefore($clone);
 				_unBind();
-                                shadowData = {
-		                    shadowIndex: idx,
-		                    shadowHeight: $clone.outerHeight(),
-                                    thresholdHeight: Math.round(shadowData.shadowHeight/2),
-		                    shadowTop: $shadow.offset().top
-		                };
+				shadowData.shadowIndex = idx;
+				shadowData.shadowHeight = cloneHeight;
+				shadowData.shadowTop = $shadow.offset().top;
+				shadowData.shadowBottom = shadowData.shadowTop + shadowData.shadowHeight;
                                 reEvaluateChildren = true;
+				return true;
 			    });
 			});
 		    }
 		}
 		 
 		$this.bind("mousedown touchstart", function (event) {
-		    previousPageX = event.pageX;
-		    previousPageY = event.pageY;
+		    var previousPageX = event.pageX;
+		    var previousPageY = event.pageY;
 		    _mouseInit();
 		    $this.bind("swipe mousemove touchmove", function (event) {
 		        if (event.type == "swipe" || previousPageX != event.pageX ||
