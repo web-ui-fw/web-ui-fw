@@ -1,0 +1,7 @@
+widgets/jquery.mobile.groupindex/
+	initial version taken from
+	git clone https://github.com/jquery/jquery-mobile.git
+	commit a197e17500ed9f4994f532ab384b0b45b414a1ea
+	including theme files (removed php files which required some changes), demo html, js, and also the
+	jquery.mobile.scrollview.{js/css} in the common directories (already copied as part of datetimepicker).
+
