@@ -37,7 +37,7 @@ jQuery.extend(jQuery, {
 	    }
 
 	    this.isNull = function () {
-		    return (X == 0 && Y == 0);
+		    return (X === 0 && Y === 0);
 	    }
 
 	    this.x = function () {
@@ -62,7 +62,7 @@ jQuery.extend(jQuery, {
 	    }
 
 	    this.isEqualTo = function (point) {
-		    return (X == point.x() && Y == point.y());
+		    return (X === point.x() && Y === point.y());
 	    }
     },
 

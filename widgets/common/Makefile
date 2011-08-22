@@ -7,7 +7,7 @@ CSS_THEME = theme.css
 JSFILES = \
     js/jquery.easing.1.3.js \
     js/jquery.mobile.scrollview.js \
-    js/jquery.mobile.core.js \
+    js/todons.core.js \
     $(NULL)
 
 JS_THEME_FILES = \
