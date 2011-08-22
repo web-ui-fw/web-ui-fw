@@ -211,11 +211,10 @@
                     });
 		    reEvaluateChildren = true;
 		    shadowData.shadowIndex = $targetObject.targetIndex;
-		    shadowData.$shadowRect.setTop($targetObject.targetItem.offset().top);
-		    shadowData.$shadowRect.setBottom(shadowData.shadowTop + shadowData.shadowHeight);
+		    shadowData.$shadowRect.moveTop($targetObject.targetItem.offset().top);
 		    shadowData.targetHeight = $targetObject.targetIndex === children.length-1
-					? (shadowData.shadowTop+Math.round($targetObject.targetItem.outerHeight()/2))
-                                        :null;
+					? (shadowData.$shadowRect.top()+Math.round($targetObject.targetItem.outerHeight()/2))
+					 :null;
                 }
 		    
                 var _evaluateDragMove = function (newPos,scrollingUp) {
@@ -270,9 +269,8 @@
 				$shadow.insertBefore($clone);
 				_unBind();
 				shadowData.shadowIndex = idx;
-				shadowData.shadowHeight = cloneHeight;
-				shadowData.shadowTop = $shadow.offset().top;
-				shadowData.shadowBottom = shadowData.shadowTop + shadowData.shadowHeight;
+				shadowData.$shadowRect.setTop($shadow.offset().top);
+				shadowData.$shadowRect.setBottom(shadowData.$shadowRect.top() + cloneHeight);
                                 reEvaluateChildren = true;
 				return true;
 			    });

@@ -118,6 +118,12 @@
 		Left = val;
 	    }
 
+	    this.moveTop = function(valY) {
+		var h = this.height();
+		Top = valY;
+		Bottom = Top + h;
+	    }
+
 	    this.isNull = function () {
 		return Right === Left && Bottom === Top;
 	    }
@@ -145,13 +151,25 @@
 	    }
 
 	    this.containsX = function(val) {
-		if (Left > val || Right < val)
+		var l = Left,
+		    r = Right;
+		if (Right<Left) {
+		   l = Right;
+		   r = Left;
+		}
+		if (l > val || r < val)
 		    return false;
 		return true;
 	    }
 
 	    this.containsY = function(val) {
-		if (Top > val || Bottom < val)
+		var t = Top,
+		    b = Bottom;
+		if (Bottom<Top) {
+		   t = Bottom;
+		   b = Top;
+		}
+		if (t > val || b < val)
 		    return false;
 		return true;
 	    }
