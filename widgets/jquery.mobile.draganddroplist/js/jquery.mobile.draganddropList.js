@@ -244,7 +244,7 @@
 		    if ($targetObject.targetItem === null ||
 			$targetObject.targetIndex === null ||
 			shadowData.shadowIndex === $targetObject.targetIndex ||
-			$targetObject.targetItem.hasClass("shadow"))  {
+			$targetObject.targetItem.hasClass("shadow")) {
                        return;
 		    }
 		    _moveShadowToTarget(true);
