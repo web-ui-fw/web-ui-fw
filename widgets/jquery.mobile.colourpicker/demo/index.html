@@ -7,7 +7,7 @@
 
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-        <script type="text/javascript" src="file:///home/nix/tmp/jquery.mobile-1.0b2.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
 
         <script type="text/javascript" src="../../../compiled/theme.js"></script>
         <script type="text/javascript" src="../../../compiled/jquery.mobile.toolkit.js"></script>
@@ -23,10 +23,12 @@
             <div data-role="content">
               <form action='#' method="get">
                 <div data-role="fieldcontain">
-                  <label for="desired_colour">Desired Colour:</label>
-                  <input type="color" name="desired_colour" id="desired_colour" value="#ff8000">
-                    <option value="tmp">Temporary</option>
-                  </input>
+                  <label for="desired_colour">Background Colour:</label>
+                  <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
+                </div>
+                <div data-role="fieldcontain">
+                  <label for="desired_colour">Foreground Colour:</label>
+                  <input type="color" name="foreground_colour" id="foreground_colour" value="#0080ff"/>
                 </div>
                 <div data-role="fieldcontain">
                   <label for="my_slider">My slider:</label>

@@ -6,7 +6,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		disabled: false,
 		icon: null,
 		iconpos: "right",
-		inline: null,
+		inline: true,
 		corners: true,
 		shadow: true,
 		iconshadow: true,
@@ -14,7 +14,6 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		overlayTheme: "a",
 		hidePlaceholderMenuItems: true,
 		closeText: "Close",
-		nativeMenu: false,
 		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colourpicker')"
 	},
 	_create: function() {
@@ -35,6 +34,12 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			// select first in this case
 			selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
 
+                        buttonContents = $("<span/>", { 
+                          class : "colourpicker-button-span"
+                        })
+                        .html("&#x2587;&#x2587;&#x2587;"),
+
+
 			button = $( "<a>", {
 					"href": "#",
 					"role": "button",
@@ -42,7 +47,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 					"aria-haspopup": "true",
 					"aria-owns": menuId
 				})
-				.text( "This is some text" )
+				.append(buttonContents)
 				.insertBefore( select )
 				.buttonMarkup({
 					theme: o.theme,
@@ -54,88 +59,67 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 					iconshadow: o.iconshadow
 				}),
 
-			// Multi select or not
-			isMultiple = self.isMultiple = select[ 0 ].multiple;
-
-		// Opera does not properly support opacity on select elements
-		// In Mini, it hides the element, but not its text
-		// On the desktop,it seems to do the opposite
-		// for these reasons, using the nativeMenu option results in a full native select in Opera
-		if ( o.nativeMenu && window.opera && window.opera.version ) {
-			select.addClass( "ui-select-nativeonly" );
-		}
-
 		//vars for non-native menus
-		if ( !o.nativeMenu ) {
-			var options = select.find("option"),
+		var options = select.find("option"),
 
-				buttonId = selectID + "-button",
+			buttonId = selectID + "-button",
 
-				menuId = selectID + "-menu",
+			menuId = selectID + "-menu",
 
-				thisPage = select.closest( ".ui-page" ),
+			thisPage = select.closest( ".ui-page" ),
 
-				//button theme
-				theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
+			//button theme
+			theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
-				menuPage = $( "<div data-" + $.mobile.ns + "role='dialog' data-" +$.mobile.ns + "theme='"+ o.menuPageTheme +"'>" +
-							"<div data-" + $.mobile.ns + "role='header'>" +
-								"<div class='ui-title'>" + label.text() + "</div>"+
-							"</div>"+
-							"<div data-" + $.mobile.ns + "role='content'></div>"+
-						"</div>" )
-						.appendTo( $.mobile.pageContainer )
-						.page(),
+			menuPage = $( "<div data-" + $.mobile.ns + "role='dialog' data-" +$.mobile.ns + "theme='"+ o.menuPageTheme +"'>" +
+						"<div data-" + $.mobile.ns + "role='header'>" +
+							"<div class='ui-title'>" + label.text() + "</div>"+
+						"</div>"+
+						"<div data-" + $.mobile.ns + "role='content'></div>"+
+					"</div>" )
+					.appendTo( $.mobile.pageContainer )
+					.page(),
 
-				menuPageContent = menuPage.find( ".ui-content" ),
+			menuPageContent = menuPage.find( ".ui-content" ),
 
-				menuPageClose = menuPage.find( ".ui-header a" ),
+			menuPageClose = menuPage.find( ".ui-header a" ),
 
-				screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-							.appendTo( thisPage ),
+			screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
+						.appendTo( thisPage ),
 
-				listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition })
-						.insertAfter(screen),
+			listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition })
+					.insertAfter(screen),
 
-				list = $( "<ul>", {
-						"class": "ui-selectmenu-list",
-						"id": menuId,
-						"role": "listbox",
-						"aria-labelledby": buttonId
-					})
-					.attr( "data-" + $.mobile.ns + "theme", theme )
-					.appendTo( listbox ),
+			list = $( "<ul>", {
+					"class": "ui-selectmenu-list",
+					"id": menuId,
+					"role": "listbox",
+					"aria-labelledby": buttonId
+				})
+				.attr( "data-" + $.mobile.ns + "theme", theme )
+				.appendTo( listbox ),
 
-				header = $( "<div>", {
-						"class": "ui-header ui-bar-" + theme
-					})
-					.prependTo( listbox ),
+			header = $( "<div>", {
+					"class": "ui-header ui-bar-" + theme
+				})
+				.prependTo( listbox ),
 
-				headerTitle = $( "<h1>", {
-						"class": "ui-title"
-					})
-					.appendTo( header ),
+			headerTitle = $( "<h1>", {
+					"class": "ui-title"
+				})
+				.appendTo( header ),
 
-				headerClose = $( "<a>", {
-						"text": o.closeText,
-						"href": "#",
-						"class": "ui-btn-left"
-					})
-					.attr( "data-" + $.mobile.ns + "iconpos", "notext" )
-					.attr( "data-" + $.mobile.ns + "icon", "delete" )
-					.appendTo( header )
-					.buttonMarkup(),
+			headerClose = $( "<a>", {
+					"text": o.closeText,
+					"href": "#",
+					"class": "ui-btn-left"
+				})
+				.attr( "data-" + $.mobile.ns + "iconpos", "notext" )
+				.attr( "data-" + $.mobile.ns + "icon", "delete" )
+				.appendTo( header )
+				.buttonMarkup(),
 
-				menuType;
-		} // End non native vars
-
-		// Add counter for multi selects
-		if ( isMultiple ) {
-			self.buttonCount = $( "<span>" )
-				.addClass( "ui-li-count ui-btn-up-c ui-btn-corner-all" )
-				.hide()
-				.appendTo( button );
-		}
+			menuType;
 
 		// Disable if specified
 		if ( o.disabled ) {
@@ -166,161 +150,130 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			header: header,
 			headerClose: headerClose,
 			headerTitle: headerTitle,
-			placeholder: ""
+			placeholder: "",
+                        buttonContents: buttonContents
 		});
 
 		// Support for using the native select menu with a custom button
-		if ( o.nativeMenu ) {
 
-			select.appendTo( button )
-				.bind( "vmousedown", function() {
-					// Add active class to button
-					button.addClass( $.mobile.activeBtnClass );
-				})
-				.bind( "focus vmouseover", function() {
-					button.trigger( "vmouseover" );
-				})
-				.bind( "vmousemove", function() {
-					// Remove active class on scroll/touchmove
-					button.removeClass( $.mobile.activeBtnClass );
-				})
-				.bind( "change blur vmouseout", function() {
+		// Create list from select, update state
+		self.refresh();
 
-					button.trigger( "vmouseout" )
-						.removeClass( $.mobile.activeBtnClass );
-				});
-
-
-		} else {
-
-			// Create list from select, update state
-			self.refresh();
-
-			select.attr( "tabindex", "-1" )
-				.focus(function() {
-					$(this).blur();
-					button.focus();
-				});
-
-			// Button events
-			button.bind( "vclick keydown" , function( event ) {
-				if ( event.type == "vclick" ||
-							event.keyCode && ( event.keyCode === $.mobile.keyCode.ENTER ||
-																		event.keyCode === $.mobile.keyCode.SPACE ) ) {
-
-					self.open();
-					event.preventDefault();
-				}
+		select.attr( "tabindex", "-1" )
+			.focus(function() {
+				$(this).blur();
+				button.focus();
 			});
 
-			// Events for list items
-			list.attr( "role", "listbox" )
-				.delegate( ".ui-li>a", "focusin", function() {
-					$( this ).attr( "tabindex", "0" );
-				})
-				.delegate( ".ui-li>a", "focusout", function() {
-					$( this ).attr( "tabindex", "-1" );
-				})
-				.delegate( "li:not(.ui-disabled, .ui-li-divider)", "vclick", function( event ) {
+		// Button events
+		button.bind( "vclick keydown" , function( event ) {
+			if ( event.type == "vclick" ||
+						event.keyCode && ( event.keyCode === $.mobile.keyCode.ENTER ||
+																	event.keyCode === $.mobile.keyCode.SPACE ) ) {
 
-					var $this = $( this ),
-						// index of option tag to be selected
-						oldIndex = select[ 0 ].selectedIndex,
-						newIndex = $this.jqmData( "option-index" ),
-						option = self.optionElems[ newIndex ];
+				self.open();
+				event.preventDefault();
+			}
+		});
 
-					// toggle selected status on the tag for multi selects
-					option.selected = isMultiple ? !option.selected : true;
-
-					// toggle checkbox class for multiple selects
-					if ( isMultiple ) {
-						$this.find( ".ui-icon" )
-							.toggleClass( "ui-icon-checkbox-on", option.selected )
-							.toggleClass( "ui-icon-checkbox-off", !option.selected );
-					}
-
-					// trigger change if value changed
-					if ( isMultiple || oldIndex !== newIndex ) {
-						select.trigger( "change" );
-					}
-
-					//hide custom select for single selects only
-					if ( !isMultiple ) {
-						self.close();
-					}
-
-					event.preventDefault();
+		// Events for list items
+		list.attr( "role", "listbox" )
+			.delegate( ".ui-li>a", "focusin", function() {
+				$( this ).attr( "tabindex", "0" );
 			})
-			//keyboard events for menu items
-			.keydown(function( event ) {
-				var target = $( event.target ),
-					li = target.closest( "li" ),
-					prev, next;
+			.delegate( ".ui-li>a", "focusout", function() {
+				$( this ).attr( "tabindex", "-1" );
+			})
+			.delegate( "li:not(.ui-disabled, .ui-li-divider)", "vclick", function( event ) {
 
-				// switch logic based on which key was pressed
-				switch ( event.keyCode ) {
-					// up or left arrow keys
-					case 38:
-						prev = li.prev();
+				var $this = $( this ),
+					// index of option tag to be selected
+					oldIndex = select[ 0 ].selectedIndex,
+					newIndex = $this.jqmData( "option-index" ),
+					option = self.optionElems[ newIndex ];
 
-						// if there's a previous option, focus it
-						if ( prev.length ) {
-							target
-								.blur()
-								.attr( "tabindex", "-1" );
+				// toggle selected status on the tag for multi selects
+				option.selected = true;
 
-							prev.find( "a" ).first().focus();
-						}
-
-						return false;
-					break;
-
-					// down or right arrow keys
-					case 40:
-						next = li.next();
-
-						// if there's a next option, focus it
-						if ( next.length ) {
-							target
-								.blur()
-								.attr( "tabindex", "-1" );
-
-							next.find( "a" ).first().focus();
-						}
-
-						return false;
-					break;
-
-					// If enter or space is pressed, trigger click
-					case 13:
-					case 32:
-						 target.trigger( "vclick" );
-
-						 return false;
-					break;
+				// trigger change if value changed
+				if ( oldIndex !== newIndex ) {
+					select.trigger( "change" );
 				}
-			});
 
-			// button refocus ensures proper height calculation
-			// by removing the inline style and ensuring page inclusion
-			self.menuPage.bind( "pagehide", function(){
-				self.list.appendTo( self.listbox );
-				self._focusButton();
-			});
-
-			// Events on "screen" overlay
-			screen.bind( "vclick", function( event ) {
+				//hide custom select for single selects only
 				self.close();
-			});
 
-			// Close button on small overlays
-			self.headerClose.click(function() {
-				if ( self.menuType == "overlay" ) {
-					self.close();
+				event.preventDefault();
+		})
+		//keyboard events for menu items
+		.keydown(function( event ) {
+			var target = $( event.target ),
+				li = target.closest( "li" ),
+				prev, next;
+
+			// switch logic based on which key was pressed
+			switch ( event.keyCode ) {
+				// up or left arrow keys
+				case 38:
+					prev = li.prev();
+
+					// if there's a previous option, focus it
+					if ( prev.length ) {
+						target
+							.blur()
+							.attr( "tabindex", "-1" );
+
+						prev.find( "a" ).first().focus();
+					}
+
 					return false;
-				}
-			});
-		}
+				break;
+
+				// down or right arrow keys
+				case 40:
+					next = li.next();
+
+					// if there's a next option, focus it
+					if ( next.length ) {
+						target
+							.blur()
+							.attr( "tabindex", "-1" );
+
+						next.find( "a" ).first().focus();
+					}
+
+					return false;
+				break;
+
+				// If enter or space is pressed, trigger click
+				case 13:
+				case 32:
+					 target.trigger( "vclick" );
+
+					 return false;
+				break;
+			}
+		});
+
+		// button refocus ensures proper height calculation
+		// by removing the inline style and ensuring page inclusion
+		self.menuPage.bind( "pagehide", function(){
+			self.list.appendTo( self.listbox );
+			self._focusButton();
+		});
+
+		// Events on "screen" overlay
+		screen.bind( "vclick", function( event ) {
+			self.close();
+		});
+
+		// Close button on small overlays
+		self.headerClose.click(function() {
+			if ( self.menuType == "overlay" ) {
+				self.close();
+				return false;
+			}
+		});
 	},
 
 	_buildList: function() {
@@ -329,7 +282,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			placeholder = this.placeholder,
 			optgroups = [],
 			lis = [],
-			dataIcon = self.isMultiple ? "checkbox-off" : "false";
+			dataIcon = "false";
 
 		self.list.empty().filter( ".ui-listview" ).listview( "destroy" );
 
@@ -378,12 +331,10 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			.first().attr( "tabindex", "0" );
 
 		// Hide header close link for single selects
-		if ( !this.isMultiple ) {
-			this.headerClose.hide();
-		}
+		this.headerClose.hide();
 
 		// Hide header if it's not a multiselect and there's no placeholder
-		if ( !this.isMultiple && !placeholder.length ) {
+		if ( !placeholder.length ) {
 			this.header.hide();
 		} else {
 			this.headerTitle.text( this.placeholder );
@@ -396,7 +347,6 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 	refresh: function( forceRebuild ) {
 		var self = this,
 			select = this.element,
-			isMultiple = this.isMultiple,
 			options = this.optionElems = select.find( "option" ),
 			selected = options.filter( ":selected" ),
 
@@ -405,53 +355,27 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 				return options.index( this );
 			}).get();
 
-		if ( !self.options.nativeMenu &&
-					( forceRebuild || 1 ) ) {
+		if ( ( forceRebuild || 1 ) ) {
 
 			self._buildList();
 		}
 
-		self.button.find( ".ui-btn-text" )
-			.text(function() {
+		self.list.find( "li:not(.ui-li-divider)" )
+			.removeClass( $.mobile.activeBtnClass )
+			.attr( "aria-selected", false )
+			.each(function( i ) {
 
-				if ( !isMultiple ) {
-					return selected.text();
+				if ( $.inArray( i, indicies ) > -1 ) {
+					var item = $( this ).addClass( $.mobile.activeBtnClass );
+
+					// Aria selected attr
+					item.find( "a" ).attr( "aria-selected", true );
 				}
-
-				return selected.length ? selected.map(function() {
-								return $( this ).text();
-							}).get().join( ", " ) : self.placeholder;
 			});
-
-		// multiple count inside button
-		if ( isMultiple ) {
-			self.buttonCount[ selected.length > 1 ? "show" : "hide" ]().text( selected.length );
-		}
-
-		if ( !self.options.nativeMenu ) {
-
-			self.list.find( "li:not(.ui-li-divider)" )
-				.removeClass( $.mobile.activeBtnClass )
-				.attr( "aria-selected", false )
-				.each(function( i ) {
-
-					if ( $.inArray( i, indicies ) > -1 ) {
-						var item = $( this ).addClass( $.mobile.activeBtnClass );
-
-						// Aria selected attr
-						item.find( "a" ).attr( "aria-selected", true );
-
-						// Multiple selects: add the "on" checkbox state to the icon
-						if ( isMultiple ) {
-							item.find( ".ui-icon" ).removeClass( "ui-icon-checkbox-off" ).addClass( "ui-icon-checkbox-on" );
-						}
-					}
-				});
-		}
 	},
 
 	open: function() {
-		if ( this.options.disabled || this.options.nativeMenu ) {
+		if ( this.options.disabled ) {
 			return;
 		}
 
@@ -566,7 +490,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 	},
 
 	close: function() {
-		if ( this.options.disabled || !this.isOpen || this.options.nativeMenu ) {
+		if ( this.options.disabled || !this.isOpen ) {
 			return;
 		}
 
