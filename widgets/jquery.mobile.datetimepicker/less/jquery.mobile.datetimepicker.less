@@ -59,13 +59,11 @@
 
         .container {
             > .view {
-                width: 2000px;
                 height: @selector-height;
             }
 
             .item {
-                padding: 0 8px;
-                height: @selector-height;
+                padding: 18px 8px 0 8px;
                 float: left;
                 a {
                     text-decoration: none;
@@ -75,6 +73,18 @@
                 a.current {
                     color: #fff;
                 }
+            }
+
+            .year {
+                min-width: 65px;
+            }
+
+            .month {
+                min-width: 50px;
+            }
+
+            .day, .hours, .minutes {
+                min-width: 30px;
             }
         }
     }

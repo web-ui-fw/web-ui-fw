@@ -1,0 +1,79 @@
+/* Own CSS */
+
+.ui-upper-progressbar-container {
+  position: relative;
+  height: 100px;
+  background: white;
+}
+
+#cancel-container{
+  position: relative;
+  bottom: 0px;
+  height: 60px;
+  background: gray;
+  text-align: center;
+}
+
+#cancel-button {
+  display: inline-block;
+  background-color: white;
+  color: black;
+  text-align: center;  
+}
+
+#progressbar {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  height: 10px;
+  background: white;
+}
+
+#text1 {
+	position: relative;
+	text-align: center;
+	margin-top: 14px;			
+}
+
+#text2 {
+	float: left;
+	text-align: left;
+	margin-left: 10px;
+	margin-bottom: 14px;			
+}
+
+#text3 {
+	float: right;
+	text-align: right;
+	margin-right: 20px;
+	margin-bottom: 14px;			
+}
+
+#boxImgId {
+	float: left;
+	position: relative;
+	margin-left: 10px;
+	margin-right: 10px;
+	background-image: url(../widgets/jquery.mobile.progressbar/images/progressbar.gif);
+	background-repeat:no-repeat;
+	z-index: 2; 
+	height: 10px;
+	width: 100%;
+}
+
+#barImgId {
+	position: relative;
+	margin-left: 10px;
+	margin-right: 10px;	
+	background-image: url(../widgets/jquery.mobile.progressbar/images/progressbg_yellow.gif);
+	background-repeat:no-repeat;
+	z-index: 3;
+	height: 10px;
+	/*width: 10%;
+	 */
+}
+
+
+

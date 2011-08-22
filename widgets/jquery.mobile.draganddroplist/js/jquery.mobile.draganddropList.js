@@ -1,4 +1,4 @@
-﻿   /*!
+  /*!
    * jQuery Mobile Widget @VERSION
    *
    * Copyright (C) TODO
@@ -9,10 +9,10 @@
     (function ($, undefined) {
 	$(":jqmData(role='listview')").live("listviewcreate", function () {
 	    if ($(this).hasClass("draganddroplist")) {
-		
+		var $this = $(this);
                 function absoluteTouchPostion(event) {
-		    return new $.Point(event.clientX + window.scrollX,
-				       event.clientY + window.scrollY);
+		    return new $.Point(event.pageX + window.scrollX,
+				       event.pageY + window.scrollY);
 		}
                 
 	        //Drag Object. this is the clone of the "real list item" being dragged
@@ -24,31 +24,31 @@
                     dragCallBack = null,
                     dragStoppedCallback = null,
                     realObject = null,
-                    newPos = $.Point(0, 0),
+                    newPos = new $.Point(0, 0),
                     previousYPosition = null
+		    
 		 
                     this.setMovingObject = function(movingElement, cursorStartPos,
                                                     draggingCallBack,
                                                     draggingStoppedCallback) {
+			if (movingElement === null)
+			    return;
 			dragging = true;
 			startPos = cursorStartPos;
                         previousYPosition = startPos.y();
 			dragCallBack = draggingCallBack;
 			dragStoppedCallback = draggingStoppedCallback;
 			draggedElement = movingElement;
-			var height = parseInt(draggedElement.height());
-			var width = parseInt(draggedElement.width());
 			draggedElement.css({
 			    position: "absolute",
 			    zIndex: "100",
 			    opacity: 0.5,
 			    top: draggedElement.offset().top,
-			    left: draggedElement.offset().left,
-			    height: height + height / 4,
-			    width: width + width / 4
+			    left: draggedElement.offset().left
 			});
-			elementTopPos = new $.Point(parseInt(draggedElement.css('left')),
-						    parseInt(draggedElement.css('top')));
+			elementTopPos = new $.Point(parseInt(draggedElement.css('left'),10),
+						    parseInt(draggedElement.css('top'),10));
+			 jQuery(draggedElement).css('-webkit-transform', 'scale(1.5)');
 			_moveObject();
 		    };
 		 
@@ -57,7 +57,7 @@
 			startPos = null;
 			elementTopPos = null;
 			draggedElement.unbind('swipe mousemove touchmove mouseup touchstart mousedown scroll touchend');
-			if (dragStoppedCallback != null)
+			if (dragStoppedCallback !== null)
 			    dragStoppedCallback(draggedElement);
 			draggedElement = null;
 			dragging = false;
@@ -69,7 +69,7 @@
 		    }
 		 
 		    function _moveObject() {
-			if (draggedElement == null || !dragging)
+			if (!dragging)
 			    return;
 			draggedElement.bind('swipe mousemove touchmove scroll',
 					    function (event) {
@@ -81,18 +81,20 @@
 				});
 			    newPos.setY(newPos.y() + event.offsetY);
 			    var p = newPos.y();
-                            if (previousYPosition == p)
-                                return;
+                            if (previousYPosition === p)
+				return true;
                             var scrollingUp = false;
                             if (previousYPosition >p)
                                 scrollingUp = true;
                             previousYPosition = p;
-			    if (dragCallBack != null)
+			    if (dragCallBack !== null)
 				dragCallBack(p,scrollingUp);
+			    return true;
                         });
 			draggedElement.bind('mouseup touchstart mousedown touchend',
 						function (event) {
-				_stopDragging();
+			    _stopDragging();
+			    return true;
 			});
 		    }
 		 
@@ -107,19 +109,27 @@
 		 
 		 
 		//DragAndDrop Functionality
-		var list = $(this),
-		listItems = [],
+		var listItems = [],
                 children = [],
 		resetNeeded = false,
-		draggedObject = new dragObject();
-		previousPageX = 0,
-		previousPageY = 0,
-		$shadow = $($.createShadowListItem()),
-		$shadow.addClass("shadow");
-		shadowIndex = null,
-                $realObject = null,
+                reEvaluateChildren = false,
+		$realObject = null,
+		$targetObject = null
 		$clone = document.createElement("li");
-		 
+		$shadow = $($.createShadowListItem());
+		$shadow.addClass("shadow");
+		draggedObject = new dragObject();
+		shadowData = {
+		    $shadowRect: new $.Rect(0,0,0,0),
+		    shadowIndex: null,
+                    targetHeight: null
+		}
+
+		$targetObject = {
+		    targetItem: null,
+		    targetIndex: null
+		}
+		//console.log(list.outerHeight() + 'window'+window.innerHeight);
 		var _unBind = function () {
 		    if (!resetNeeded)
 			return;
@@ -129,115 +139,152 @@
 			    listItem = $(li);
 			    listItem.unbind('taphold');
 		    });
-		    list.unbind("swipe mousemove touchmove");
-		    shadowIndex = null;
+		    $this.unbind("swipe mousemove touchmove");
+		    shadowData.$shadowRect.setRect(0,0,0,0);
+		    shadowData.targetHeight = null;
+		    shadowData.shadowIndex = null;
+		    $targetObject = {
+		    targetItem: null,
+		    targetIndex: null
+		    }
 		}
 		 		 
 		var _evaluateDragEnd = function () {
-		    if (draggedObject.draggedElement() != null) {
-                       $clone.animate({
-                        left: parseInt($shadow.offset().left),
-                        top: parseInt($shadow.offset().top)
+		    var offset = $shadow.offset();
+                    $clone.animate({
+			left: parseInt(offset.left,10),
+			top: parseInt(offset.top,10)
                         }, 100, "swing", function(){
+			    jQuery($clone).css('-webkit-transform', 'scale(1)');
                             $clone.remove();
 		            $shadow.replaceWith($realObject);
-                            });
-		    }
-		    $.enableSelection(list);
-		    list.trigger('dragEnded', [shadowIndex]);
+                    });
+		    $.enableSelection($this);
+		    $this.trigger('dragEnded', [shadowData.shadowIndex]);
 		    _unBind();
 		}
 		
                 var _evaluateDragDown = function (newPos) { 
-                    var result = null;
-		    for (var i = shadowIndex; i < children.length; i++) {
+		    for (var i = shadowData.shadowIndex,l = children.length; i < l; i++) {
 			if (_targetItemIndex(i,newPos,true)) {
-                            result = i;
 			    break;
 			}
 		    }
-                    return result;
                 }
 
                 var _evaluateDragup = function (newPos) {
-                    var result = null;
-		    for (var i = shadowIndex; i >=0; i--) {
+		    for (var i = shadowData.shadowIndex; i >=0; i--) {
 			if (_targetItemIndex(i,newPos,false)) {
-                            result = i;
 			    break;
 			}
 		    }
-                    return result;
                 }
 
                 var _targetItemIndex = function (itemIndex,newPos,dragDown) {
                     var result = false;
                     var item = $(children[itemIndex]);
                     if (!item.hasClass("dragObject")) {
-			var itemheight = parseInt(item.outerHeight()); 
-                        var itemTop =  parseInt(item.position().top);
-                        var difference = dragDown ? newPos - itemTop : itemTop - newPos;
-			if (Math.round(itemheight/2) >= difference) {
-                            result = true;
+			var itemheight = parseInt(item.outerHeight(),10); 
+                        var itemTop =  parseInt(item.offset().top,10);
+			var difference = dragDown ? newPos - itemTop
+						  : Math.abs(itemTop - newPos);
+			if (Math.round(itemheight/2) > difference) {
+			   $targetObject.targetItem = item;
+			   $targetObject.targetIndex = itemIndex;
+			   result = true;
 			}
                     }
                     return result;
                 }
-		    
-                var _evaluateDragMove = function (newPos,scrollingUp) {
-                    children = list.children();
-                    var index = scrollingUp ? _evaluateDragup(newPos): _evaluateDragDown(newPos);
-		    if (index==null)
-                       return;
-		    if ((shadowIndex == index || $(children[index]).hasClass("shadow") )
-			&& index != children.length) {
-			return;
-		    }
-                    var target = $(children[index]);
+                
+		 var _moveShadowToTarget = function (insertBefore) {
+		    var offset = $targetObject.targetItem.offset();
                     $shadow.animate({
-                        left: parseInt(target.offset().left),
-                        top: parseInt(target.offset().top)
+			left: parseInt(offset.left,10),
+			top: parseInt(offset.top,10)
                         },10, "swing", function(){
-		        if (index != children.length) {
-			   $shadow.insertBefore(target);
+		        if (insertBefore) {
+			   $shadow.insertBefore($targetObject.targetItem);
 		        } else {
-			  $shadow.insertAfter(target);
+			  $shadow.insertAfter($targetObject.targetItem);
 		        }
                     });
-		    shadowIndex = index;
+		    reEvaluateChildren = true;
+		    shadowData.shadowIndex = $targetObject.targetIndex;
+		    shadowData.$shadowRect.setTop($targetObject.targetItem.offset().top);
+		    shadowData.$shadowRect.setBottom(shadowData.shadowTop + shadowData.shadowHeight);
+		    shadowData.targetHeight = $targetObject.targetIndex === children.length-1
+					? (shadowData.shadowTop+Math.round($targetObject.targetItem.outerHeight()/2))
+                                        :null;
+                }
+		    
+                var _evaluateDragMove = function (newPos,scrollingUp) {
+                    
+                    if (reEvaluateChildren) {
+                        //need to recache children as they have moved
+                        children = $this.children();
+                        reEvaluateChildren = false;
+                    }
+		    //check if the new pos is within the shadow item
+		    if (shadowData.$shadowRect.containsY(newPos)) {
+			if (shadowData.targetHeight !== null
+				 && newPos >= shadowData.targetHeight) {
+			    $targetObject.targetIndex = children.length-1;
+			    $targetObject.targetItem = $(children[children.length-1]);
+			    _moveShadowToTarget(false);
+			    shadowData.targetHeight = null;
+			}
+		     return;
+		    }
+
+		    $targetObject.targetIndex = null;
+		    $targetObject.targetItem = null;
+		    var index = scrollingUp ? _evaluateDragup(newPos)
+					    : _evaluateDragDown(newPos);
+		    if ($targetObject.targetItem === null ||
+			$targetObject.targetIndex === null ||
+			shadowData.shadowIndex === $targetObject.targetIndex ||
+			$targetObject.targetItem.hasClass("shadow")) {
+                       return;
+		    }
+		    _moveShadowToTarget(true);
 	        }
 		 
 		var _mouseInit = function () {
 		    resetNeeded = true;
-		    listItems = list.children("li");
-		    var listItem = "";
+		    listItems = $this.children("li");
 		    if (listItems) {
 			listItems.each(function (idx, li) {
-			    listItem = $(li);
-			    listItem.bind('taphold', function (event) {
-				$.disableSelection(list);
-				list.trigger('dragStarted', [idx]);
+			    $(li).bind('taphold', function (event) {
+				$.disableSelection($this);
+				$this.trigger('dragStarted', [idx]);
 				$realObject = $(this);
 				$clone = $realObject.clone();
-				$clone.addClass("dragObject")
+				$clone.addClass("dragObject");
 				$realObject.replaceWith($clone);
 				draggedObject.setMovingObject($clone,
 							     absoluteTouchPostion(event),
 							    _evaluateDragMove, _evaluateDragEnd);
-				$shadow.css('height', parseInt($clone.outerHeight()));
+				var cloneHeight = $clone.outerHeight();
+				$shadow.css('height', parseInt(cloneHeight,10));
 				$shadow.insertBefore($clone);
 				_unBind();
-				shadowIndex = idx;
+				shadowData.shadowIndex = idx;
+				shadowData.shadowHeight = cloneHeight;
+				shadowData.shadowTop = $shadow.offset().top;
+				shadowData.shadowBottom = shadowData.shadowTop + shadowData.shadowHeight;
+                                reEvaluateChildren = true;
+				return true;
 			    });
 			});
 		    }
 		}
 		 
-		list.bind("mousedown touchstart", function (event) {
-		    previousPageX = event.pageX;
-		    previousPageY = event.pageY;
+		$this.bind("mousedown touchstart", function (event) {
+		    var previousPageX = event.pageX;
+		    var previousPageY = event.pageY;
 		    _mouseInit();
-		    list.bind("swipe mousemove touchmove", function (event) {
+		    $this.bind("swipe mousemove touchmove", function (event) {
 		        if (event.type == "swipe" || previousPageX != event.pageX ||
 			   previousPageY != event.pageY) {
 			   //we have some movement after touch and before tapandhold

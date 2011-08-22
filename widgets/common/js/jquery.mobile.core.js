@@ -1,4 +1,4 @@
-    /*!
+   /*!
     * jQuery Mobile Widget @VERSION
     *
     * Copyright (C) TODO
@@ -71,9 +71,92 @@
 	    this.isEqualTo = function (point) {
 		return (X == point.x() && Y == point.y());
 	    }
-    
 	},
+
+	Rect: function (left,top,width,height) {
+	    var Left = left;
+	    var Top = top;
+	    var Right = Left+width;
+	    var Bottom = Top+height;
+
+	    this.setRect = function(varL,varR,varT,varB) {
+		this.setLeft(varL);
+		this.setRight(varR);
+		this.setTop(varT);
+		this.setBottom(varB);
+	    }
+
+	    this.right = function () {
+		return Right;
+	    }
     
+	    this.setRight = function (val) {
+		Right = val;
+	    }
+
+	    this.top = function () {
+		return Top;
+	    }
+
+	    this.setTop = function (val) {
+		Top = val;
+	    }
+
+	    this.bottom = function () {
+		return Bottom;
+	    }
+
+	    this.setBottom = function (val) {
+		Bottom = val;
+	    }
+
+	    this.left = function () {
+		return Left;
+	    }
+
+	    this.setLeft = function (val) {
+		Left = val;
+	    }
+
+	    this.isNull = function () {
+		return Right === Left && Bottom === Top;
+	    }
+
+	    this.isValid = function () {
+		return Left <= Right && Top <= Bottom;
+	    }
+
+	    this.isEmpty = function () {
+		return Left > Right || Top > Bottom;
+	    }
+
+	    this.contains = function (valX,valY) {
+		if (this.containsX(valX) && this.containsY(valY))
+		   return true;
+		return false;
+	    }
+
+	    this.width = function () {
+		return Right - Left;
+	    }
+
+	    this.height = function () {
+		return Bottom - Top;
+	    }
+
+	    this.containsX = function(val) {
+		if (Left > val || Right < val)
+		    return false;
+		return true;
+	    }
+
+	    this.containsY = function(val) {
+		if (Top > val || Bottom < val)
+		    return false;
+		return true;
+	    }
+	},
+
 	disableSelection: function (element) {
 	    return $(element).each(function () {
 		jQuery(element).css('-webkit-user-select', 'none');
