@@ -225,24 +225,23 @@
             var obj = this;
             var scrollable = obj._createScrollableView();
             var currentIndex = 0;
+            var destValue = (parseToFunc !== null ?
+                                parseToFunc(dest[prop]) :
+                                dest[prop]);
 
             var i = 0;
             for (; i < values.length; i++) {
                 var item = $.createSelectorItem(klass);
                 item.link.click(function() {
                     dest[prop] = parseFromFunc(this.text);
-                    if (parseToFunc !== null) {
-                        owner.text(parseToFunc(dest[prop]));
-                    } else {
-                        owner.text(dest[prop]);
-                    }
+                    owner.text(destValue);
                     scrollable.view.find(item.selector).each(function() {
                         $(this).removeClass("current");
                     });
                     $(this).toggleClass("current");
                     selector.slideUp(obj.options.animationDuration);
                 }).text(values[i]);
-                if (values[i] == dest[prop]) {
+                if (values[i] == destValue) {
                     item.link.addClass("current");
                     currentIndex = i;
                 }
