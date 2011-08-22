@@ -160,7 +160,7 @@
                     function (month) {
                         var i = 0;
                         for (; obj.options.months[i] != month; i++);
-                        return i;
+                        return i + 1;
                     },
                     function (index) {
                         return obj.options.months[index];
@@ -233,8 +233,9 @@
             for (; i < values.length; i++) {
                 var item = $.createSelectorItem(klass);
                 item.link.click(function() {
-                    dest[prop] = parseFromFunc(this.text);
-                    owner.text(destValue);
+                    var newValue = parseFromFunc(this.text);
+                    dest[prop] = newValue;
+                    owner.text(this.text);
                     scrollable.view.find(item.selector).each(function() {
                         $(this).removeClass("current");
                     });
