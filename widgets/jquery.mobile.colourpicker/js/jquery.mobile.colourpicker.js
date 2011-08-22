@@ -60,7 +60,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 				}),
 
 		//vars for non-native menus
-		var options = select.find("option"),
+		        options = select.find("option"),
 
 			buttonId = selectID + "-button",
 
@@ -345,6 +345,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 	},
 
 	refresh: function( forceRebuild ) {
+
 		var self = this,
 			select = this.element,
 			options = this.optionElems = select.find( "option" ),
@@ -354,6 +355,8 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			indicies = selected.map(function() {
 				return options.index( this );
 			}).get();
+
+                self.buttonContents.css("color", this.element.attr("value"));
 
 		if ( ( forceRebuild || 1 ) ) {
 
