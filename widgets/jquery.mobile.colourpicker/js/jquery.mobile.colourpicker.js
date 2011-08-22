@@ -1,17 +1,10 @@
-/*
-* jQuery Mobile Framework : "selectmenu" plugin
-* Copyright (c) jQuery Project
-* Dual licensed under the MIT or GPL Version 2 licenses.
-* http://jquery.org/license
-*/
-
 (function( $, undefined ) {
 
-$.widget( "mobile.selectmenu", $.mobile.widget, {
+$.widget( "mobile.colourpicker", $.mobile.widget, {
 	options: {
 		theme: null,
 		disabled: false,
-		icon: "arrow-d",
+		icon: null,
 		iconpos: "right",
 		inline: null,
 		corners: true,
@@ -21,8 +14,8 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 		overlayTheme: "a",
 		hidePlaceholderMenuItems: true,
 		closeText: "Close",
-		nativeMenu: true,
-		initSelector: "select:not(:jqmData(role='slider'))"
+		nativeMenu: false,
+		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colourpicker')"
 	},
 	_create: function() {
 
@@ -42,14 +35,14 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 			// select first in this case
 			selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
 
-			button = ( self.options.nativeMenu ? $( "<div/>" ) : $( "<a>", {
+			button = $( "<a>", {
 					"href": "#",
 					"role": "button",
 					"id": buttonId,
 					"aria-haspopup": "true",
 					"aria-owns": menuId
-				}) )
-				.text( $( select[ 0 ].options.item( selectedIndex ) ).text() )
+				})
+				.text( "This is some text" )
 				.insertBefore( select )
 				.buttonMarkup({
 					theme: o.theme,
@@ -413,7 +406,7 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 			}).get();
 
 		if ( !self.options.nativeMenu &&
-					( forceRebuild || select[0].options.length != self.list.find( "li" ).length ) ) {
+					( forceRebuild || 1 ) ) {
 
 			self._buildList();
 		}
@@ -617,9 +610,9 @@ $.widget( "mobile.selectmenu", $.mobile.widget, {
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-	$( $.mobile.selectmenu.prototype.options.initSelector, e.target )
+	$( $.mobile.colourpicker.prototype.options.initSelector, e.target )
 		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-		.selectmenu();
+		.colourpicker();
 });
 
 })( jQuery );
