@@ -9,21 +9,26 @@
 (function($, window, undefined) {
 	$.widget("mobile.progressbar", $.mobile.widget, {
 		options: { 
-			increment	: 2,
-			speed 		: 15,
-			showText 	: true,	
-			boxImage	:'../images/progressbar.gif',
-			barImage	:'../images/progressbg_yellow.gif',
-			width		: 120,
-			height		: 12
+			duration	: 5000,
 		},
 				
 		data: {
 			uuid		: 0,
 			value		: 0,
-			max			: 100,
-			min			: 0
+			bar         : 0,
+			box			: 0
 		},		
+		
+		startProgress: function(value) {
+			this.data.bar.animate({
+				    width: '100%'
+				   }, this.options.duration, function() {
+				       // Animation complete Callback 
+				       //value = 100;
+				       //alert("callback func animation complete");
+			  	   }
+			  	 );
+		},
 		
 		_create: function() {
 			var container = this.element;
@@ -42,7 +47,7 @@
 			
 			$('<div/>', {
 				id: 'text1',
-				text: 'text1',								
+				text: 'TextText',								
 			}).appendTo(upperProgressBarContainer);
 			
 			$('<div/>', {
@@ -53,12 +58,12 @@
 				
 			$('<span/>', {
 				id: 'text2',
-				text: 'text2',								
+				text: 'Text',								
 			}).appendTo(upperProgressBarContainer);
 			
 			$('<span/>', {
 				id: 'text3',
-				text: 'text3',								
+				text: 'TextTextTextText',								
 			}).appendTo(upperProgressBarContainer);			
 			
 			
@@ -77,28 +82,30 @@
 			container.append(upperProgressBarContainer);
 			container.append(cancelContainer);	
 			
-			$('<div/>', {
+			
+			this.data.box = $('<div/>', {
 					id: 'boxImgId',					
 				}).appendTo(progressbar);
-				
-			$('<div/>', {
+							
+			this.data.bar = $('<div/>', {
 					id: 'barImgId',					
 				}).appendTo(progressbar);			
-				
 							
-			$('#cancel-button').click(function() {
-				//alert("clicked !!");						
-				/*
-				$('boxImgId').css("background-image",  "url(../images/progressbg_yellow.gif)");	
-				$('boxImgId').css("padding", "0");
-				$('boxImgId').css("margin", "0");
-				*/	
-			});			
-						
-		},
-				
 			
-		
+							
+			cancelContainer.find('#cancel-button').click(function() {
+				//alert("cancel button clicked");
+				if (obj.data.bar.is(':animated')) {
+					obj.data.bar.stop();
+				};
+				obj.data.value =  parseInt(parseInt(obj.data.bar.css('width')) / parseInt(obj.data.box.css('width')) * 100 );
+				alert("value=" + obj.data.value);
+			}); // end of click		
+			
+			/* caller of the progress bar widget should start the progressbar using startProgress */
+			obj.startProgress();	
+						
+		},			
 	}); /* End of widget */
 	
 	var now = new Date();
