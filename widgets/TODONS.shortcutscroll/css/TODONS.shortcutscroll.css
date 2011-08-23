@@ -2,14 +2,16 @@
   position: absolute;
   right: 0px;
   top: 121px;
-  height: 794px;
+  background-color: rgba(225, 221, 215, 204);
+  height: 673px;
+  max-width: 20px;
+  min-width: 12px;
 }
 
 .ui-shortcutscroll li {
   list-style-type: none;
-  min-height: 14px;
-  min-width: 12px;
   text-align: center;
+  margin-left: -2.2em;
   padding: 0px;
-  margin: 0px;
+  min-height: 14px;
 }
