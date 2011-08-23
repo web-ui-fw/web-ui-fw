@@ -31,7 +31,8 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
     var $el = this.element,
       o = this.options,
       shortcutsContainer = $('<ul></ul>'),
-      dividers = $el.find(':jqmData(role="list-divider")');
+      dividers = $el.find(':jqmData(role="list-divider")'),
+      lastListItem = null;
 
     // set a minimum scroll duration; with duration = 0, the scroll moves
     // in the wrong direction
@@ -44,6 +45,9 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
       o.scrollview = $el.parent();
     }
 
+    // find the bottom of the last item in the listview
+    lastListItem = $el.children().last();
+
     // get all the dividers from the list
     dividers.each(function (index, divider) {
       var listItem = $('<li>' + $(this).text() + '</li>');
@@ -53,13 +57,29 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
         // get the vertical position of the divider (so we can scroll to it)
         var dividerY = $(divider).position().top;
 
+        // find the bottom of the last list item
+        var bottomOffset = lastListItem.outerHeight(true) + lastListItem.position().top;
+
+        // get the height of the scrollview
+        var scrollviewHeight = o.scrollview.height();
+
+        // check that after the candidate scroll, the bottom of the
+        // last item will still be at the bottom of the scroll view
+        // and not half way up the page
+        var maxScroll = bottomOffset - scrollviewHeight;
+
+        if (dividerY > maxScroll) {
+          dividerY = maxScroll;
+        }
+
+        // apply the scroll
         o.scrollview.scrollview('scrollTo', 0, dividerY, o.scrollDuration);
       });
 
       shortcutsContainer.append(listItem);
     });
 
-    o.scrollview.after($('<div class="ui-shortcutscroll">').append(shortcutsContainer));
+    o.scrollview.after($('<div class="ui-shortcutscroll"/>').append(shortcutsContainer));
   },
 
   refresh: function () {
