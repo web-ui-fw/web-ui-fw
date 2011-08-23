@@ -1,0 +1,46 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>jquery.mobile.switch demo</title> 
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
+
+        <script type="text/javascript" src="../../../compiled/theme.js"></script>
+        <script type="text/javascript" src="../../../compiled/jquery.mobile.toolkit.js"></script>
+        <link rel="stylesheet" href="../../../compiled/theme.css" />
+    </head> 
+
+    <body> 
+        <div data-role="page">
+            <div data-role="header">
+                <h1>jquery.mobile.switch demo</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">
+              <form action='#' method="get">
+                <div data-role="fieldcontain">
+                  <label for="desired_colour">Background Colour:</label>
+                  <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
+                </div>
+                <div data-role="fieldcontain">
+                  <label for="desired_colour">Foreground Colour:</label>
+                  <input type="color" name="foreground_colour" id="foreground_colour" value="#0080ff"/>
+                </div>
+                <div data-role="fieldcontain">
+                  <label for="my_slider">My slider:</label>
+                  <input type="range" name="my_slider" id="my_slider" value="15" min="0" max="100"/>
+                </div>
+              </form>
+            </div><!-- /content -->
+
+            <div data-role="footer">
+                <h4>Thanks!</h4>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+    </body>
+</html>
+

@@ -146,42 +146,46 @@
             var obj = this;
             var klass = owner.attr("class");
             var numItems = 0;
+            var selectorResult = {};
+
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
                 numItems = values.length;
-                obj._populateSelector(selector, owner, "year", values,
-                                      parseInt, null, obj.data, "year");
+                selectorResult = obj._populateSelector(selector, owner,
+                    "year", values, parseInt, null, obj.data, "year");
             } else if (klass.search("month") > 0) {
                 numItems = obj.options.months.length;
-                obj._populateSelector(selector, owner, "month", obj.options.months,
-                                      function (month) {
-                                          var i = 0;
-                                          for (; obj.options.months[i] != month; i++);
-                                          return i;
-                                      },
-                                      function (index) {
-                                          return obj.options.months[index];
-                                      },
-                                      obj.data, "month");
+                selectorResult = obj._populateSelector(selector, owner,
+                    "month", obj.options.months,
+                    function (month) {
+                        var i = 0;
+                        for (; obj.options.months[i] != month; i++);
+                        return i + 1;
+                    },
+                    function (index) {
+                        return obj.options.months[index];
+                    },
+                    obj.data, "month");
             } else if (klass.search("day") > 0) {
-                var day = new Date(obj.data.year, obj.data.month + 1, 0).getDate();
+                var day = new Date(
+                    obj.data.year, obj.data.month + 1, 0).getDate();
                 numItems = day;
-                obj._populateSelector(selector, owner, "day",
-                                      range(1, day),
-                                      parseInt, null, obj.data, "day");
+                selectorResult = obj._populateSelector(selector, owner,
+                    "day", range(1, day), parseInt, null, obj.data,
+                    "day");
             } else if (klass.search("hours") > 0) {
                 var values = range(0, 23);
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
-                obj._populateSelector(selector, owner, "hours",
-                                      values, parseInt, null,
-                                      obj.data, "hours");
+                selectorResult = obj._populateSelector(selector, owner,
+                    "hours", values, parseInt, null, obj.data,
+                    "hours");
             } else if (klass.search("minutes") > 0) {
                 var values = range(0, 59);
                 numItems = values.length;
-                obj._populateSelector(selector, owner, "minutes",
-                                      values, parseInt, null,
-                                      obj.data, "minutes");
+                selectorResult = obj._populateSelector(selector, owner,
+                    "minutes", values, parseInt, null, obj.data,
+                    "minutes");
             }
 
             selector.slideDown(obj.options.animationDuration);
@@ -190,7 +194,15 @@
              * the size of the selector.
              */
             itemWidth = selector.find(".item").outerWidth();
+            selectorWidth = selector.find(".container").outerWidth();
+            var x = 0;
+            if (itemWidth * selectorResult.currentIndex > selectorWidth / 2.0) {
+                x = -((itemWidth * selectorResult.currentIndex) -
+                        (selectorWidth / 2.0 - itemWidth / 2.0));
+            }
             selector.find(".view").width(itemWidth * numItems);
+            selectorResult.scrollable.container.scrollview(
+                'scrollTo', x, 0);
         },
 
         _createScrollableView: function() {
@@ -212,29 +224,33 @@
                                     dest, prop) {
             var obj = this;
             var scrollable = obj._createScrollableView();
+            var currentIndex = 0;
+            var destValue = (parseToFunc !== null ?
+                                parseToFunc(dest[prop]) :
+                                dest[prop]);
 
             var i = 0;
             for (; i < values.length; i++) {
                 var item = $.createSelectorItem(klass);
                 item.link.click(function() {
-                    dest[prop] = parseFromFunc(this.text);
-                    if (parseToFunc !== null) {
-                        owner.text(parseToFunc(dest[prop]));
-                    } else {
-                        owner.text(dest[prop]);
-                    }
+                    var newValue = parseFromFunc(this.text);
+                    dest[prop] = newValue;
+                    owner.text(this.text);
                     scrollable.view.find(item.selector).each(function() {
                         $(this).removeClass("current");
                     });
                     $(this).toggleClass("current");
                     selector.slideUp(obj.options.animationDuration);
                 }).text(values[i]);
-                if (values[i] == dest[prop]) {
+                if (values[i] == destValue) {
                     item.link.addClass("current");
+                    currentIndex = i;
                 }
                 scrollable.view.append(item.container);
             }
             selector.html(scrollable.container);
+
+            return {scrollable: scrollable, currentIndex: currentIndex};
         },
 
         _create: function() {
