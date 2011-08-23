@@ -5,3 +5,7 @@ widgets/jquery.mobile.groupindex/
 	including theme files (removed php files which required some changes), demo html, js, and also the
 	jquery.mobile.scrollview.{js/css} in the common directories (already copied as part of datetimepicker).
 
+widgets/jquery.mobile.maps/
+	initial version taken from :
+	svn checkout http://jquery-ui-map.googlecode.com/svn/trunk/ jquery-ui-map-read-only
+	Checked out revision 254.

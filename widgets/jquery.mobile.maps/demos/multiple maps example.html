@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head profile="http://dublincore.org/documents/dcq-html/">
+        
+        <title>Example with multiple Google maps - Google maps jQuery plugin</title>
+        <meta name="keywords" content="Google maps, jQuery, plugin" />
+		<meta name="description" content="An example with multiple maps using jQuery and Google maps v3" />
+		<meta http-equiv="content-language" content="en" />
+		
+		<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+		<meta name="DC.title" content="Example with multiple Google maps" />
+		<meta name="DC.subject" content="Google maps;jQuery;plugin" />
+		<meta name="DC.description" content="An example with multiple maps using jQuery and Google maps v3" />
+		<meta name="DC.creator" content="Johan S&auml;ll Larsson" />
+        <meta name="DC.language" content="en" />
+        
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+		
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssfonts/fonts-min.css" />
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />	 
+        <link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shCore.css" />
+		<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shThemeDefault.css" />		
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+        
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+        <script type="text/javascript" src="../web/jquery.fn.gmap.js"></script>
+      	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shCore.js"></script>
+      	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shAutoloader.js"></script>
+		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushJScript.js"></script>
+		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushXml.js"></script>		
+        <script type="text/javascript">
+			// Ignore all code here
+			String.prototype.format = function() {
+				var retval = this.toString();
+				for ( var i = 0; i < arguments.length; i++ ) {
+					retval = retval.replace('{'+i+'}', arguments[i]);
+				}
+				return retval;
+			};
+			$(function() {	
+				// Only for code formatting
+				SyntaxHighlighter.all();
+				var items = '';
+				parseRSS('http://groups.google.com/group/jquery-ui-map-discuss/feed/rss_v2_0_msgs.xml', function(result) {
+					for ( var i = 0; i < result.entries.length; i++ ) {
+						items += ('<li class="group-item"><a href="{0}">{1}</a></h3></li>').format(
+							result.entries[i].link,
+							result.entries[i].title
+						);
+					}
+					$('#results').html(items);
+					$('#google-groups').show();
+				});
+				function parseRSS(url, callback) {
+					$.getJSON('http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=?&q=' + encodeURIComponent(url), function(data) { callback(data.responseData.feed); });
+				}
+			});
+		</script>
+		<script type="text/javascript">
+		//<![CDATA[
+			$(function() {
+			
+				var opts = { 'center': '59.3426606750, 18.0736160278', 'streetViewControl': false, 'mapTypeControl': false, 'navigationControl': false };
+
+				$('#map_1').gmap(opts).bind('init', function(evt, map) {
+					$('#map_1').gmap('addMarker', { 'position': map.getCenter() });
+					$('#clear_1').click(function() {
+						$('#map_1').gmap('clear', 'markers');
+						return false;
+					});
+				});	
+				
+				$('#map_2').gmap(opts).bind('init', function(evt, map) {
+					$('#map_2').gmap('addMarker', { 'position': map.getCenter() });
+					$('#clear_2').click(function() {
+						$('#map_2').gmap('clear', 'markers');
+						return false;
+					});
+				});
+				
+				$('#map_3').gmap(opts).bind('init', function(evt, map) {
+					$('#map_3').gmap('addMarker', { 'position': map.getCenter() });
+					$('#clear_3').click(function() {
+						$('#map_3').gmap('clear', 'markers');
+						return false;
+					});
+				});
+				
+				$('#map_4').gmap(opts).bind('init', function(evt, map) {
+					$('#map_4').gmap('addMarker', { 'position': map.getCenter() });
+					$('#clear_4').click(function() {
+						$('#map_4').gmap('clear', 'markers');
+						return false;
+					});
+				});
+				
+            });
+		//]]>
+		</script>
+        <!-- GA START -->
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-17614686-5']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+		<!-- GA END -->
+	</head>
+    <body>
+		
+		<div id="doc">
+			
+			<div id="hd">
+                <h1><a href="/">Google maps jQuery plugin</a> multiple maps on page example</h1>
+            </div>
+			
+			<div id="multiple-maps">
+				<div class="multi-map-wrap first">
+					<div id="map_1" class="multi-map"></div>
+					<p><a class="buttonize" id="clear_1" href="#">Clear markers</a></p>
+				</div>
+				<div class="multi-map-wrap">
+					<div id="map_2" class="multi-map"></div>
+					<p><a class="buttonize" id="clear_2" href="#">Clear markers</a></p>
+				</div>
+				<div class="multi-map-wrap">
+					<div id="map_3" class="multi-map"></div>
+					<p><a class="buttonize" id="clear_3" href="#">Clear markers</a></p>
+				</div>
+				<div class="multi-map-wrap">
+					<div id="map_4" class="multi-map"></div>
+					<p><a class="buttonize" id="clear_4" href="#">Clear markers</a></p>
+				</div>
+			
+			</div>
+			
+			<div class="clear"></div>
+			
+			<h2>Using jquery with Google maps</h2>
+			<p>
+				Download <a href="http://jquery.com/">jQuery 1.4.X or higher</a> and optionally <a href="http://jqueryui.com/">jQuery UI 1.8.X or higher</a> or
+				use <a href="http://code.google.com/intl/sv-SE/apis/libraries/devguide.html">Googles</a> or <a href="http://www.asp.net/ajaxlibrary/cdn.ashx">Microsofts</a> 
+				<abbr title="Content delivery network"><a href="http://en.wikipedia.org/wiki/Content_delivery_network">CDN</a></abbr>.
+			</p>
+			
+			<div class="prettyprint">
+				<pre class="brush: xml">
+	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js""&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.js"&gt;&lt;/script&gt;</pre>
+			</div>
+			
+			<p>or</p>
+			
+			<div class="prettyprint">
+				<pre class="brush: xml">
+	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"&gt;&lt;/script&gt;
+	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.fn.gmap.js"&gt;&lt;/script&gt;</pre>
+			</div>
+			
+			<div class="prettyprint">
+				<pre class="brush: js">
+&lt;script type="text/javascript"&gt;
+	$(function() {
+		$('#map_canvas1').gmap({ 'center': '59.3426606750, 18.0736160278' });
+		$('#map_canvas2').gmap({ 'center': '69.7504264130, 21.0696260023' });
+	});
+&lt;/script&gt;</pre>
+			</div>
+			
+			<h2>More Google maps and jQuery examples</h2>
+			<ul>
+				<li><a href="jquery-mobile-example.html">Google maps with jQuery mobile example</a></li>
+				<li><a href="advanced-example.html">Microformats, Google streetview and jQuery dialog example</a></li>
+				<li><a href="other-examples.html">Click and drag events with Google geo search example</a></li>
+				<li><a href="load JSON example.html">Import markers with JSON example</a></li>
+				<li><a href="load Microformat example.html">Import markers with microformats example</a></li>
+				<li><a href="load RDFa example.html">Import markers with RDFa example</a></li>
+				<li><a href="load Microdata example.html">Import markers with microdata example</a></li>
+				<li><a href="load Fusion.html">Import markers with Google Fusion tables</a></li>
+				<li><a href="basic-example.html">Google maps and jQuery example</a></li>
+				<li><a href="google-maps-jquery-filtering.html">Filter markers example</a></li>
+			</ul>
+			
+			<div id="google-groups" class="groups ui-corner-all">
+				<h2>Forum</h2>
+				<ul id="results"></ul>
+				<h2>Subscribe</h2>
+				<form class="subscribe" action="http://groups.google.com/group/jquery-ui-map-discuss/boxsubscribe">
+					<label for="email">E-mail:</label>
+					<input id="email" type="text" name="email" />
+					<input type="submit" name="sub" value="Subscribe" />
+				</form>
+			</div>
+			
+			<div id="ft" class="hidden">
+				Author: 
+				<div id="hcard-Johan-Säll-Larsson" class="vcard">
+					<span class="fn n">
+						<span class="given-name">Johan</span> 
+						<span class="family-name">Säll Larsson</span>
+					</span>
+					<span class="adr">
+						<span class="locality">Göteborg</span>,
+						<span class="country-name">Sweden</span>
+					</span>
+				</div>
+			</div>
+		</div>
+    </body>
+</html>
