@@ -26,11 +26,11 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
       shortcutsContainer = $('<ul></ul>');
 
     // TODO use characters from dividers rather than hard-coding here
-    shortcutsContainer.append( $('<li>A</li>') );
-    shortcutsContainer.append( $('<li>B</li>') );
-    shortcutsContainer.append( $('<li>C</li>') );
+    shortcutsContainer.append($('<li>A</li>'));
+    shortcutsContainer.append($('<li>B</li>'));
+    shortcutsContainer.append($('<li>C</li>'));
 
-    $el.parent().after( $('<div class="ui-shortcutscroll">').append( shortcutsContainer ) );
+    $el.parent().after($('<div class="ui-shortcutscroll">').append(shortcutsContainer));
 
     this.refresh();
   },
@@ -39,33 +39,10 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
   }
 });
 
-function ResizePageContentHeight($page)
-{
-	var $content = $page.children(".ui-content");
-	var hh = $page.children(".ui-header").outerHeight(); hh = hh ? hh : 0;
-	var fh = $page.children(".ui-footer").outerHeight(); fh = fh ? fh : 0;
-	var pt = parseFloat($content.css("padding-top"));
-	var pb = parseFloat($content.css("padding-bottom"));
-	var wh = window.innerHeight;
-	$content.height(wh - (hh + fh) - (pt + pb));
-}
-
 $( document ).bind( "pagecreate create", function( e ){
-  $page = $( e.target );
-
-  $( $.TODONS.shortcutscroll.prototype.options.initSelector, $page )
+  $( $.TODONS.shortcutscroll.prototype.options.initSelector, e.target )
     .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-    .shortcutscroll({scrollview: $page});
-
-  $page.bind("pageshow", function(event) {
-	  $page.find(".ui-content").scrollview({direction: 'y', showScrollBars: false});
-
-	  ResizePageContentHeight( $page );
-  });
-});
-
-$(window).bind("orientationchange", function(event) {
-	ResizePageContentHeight($(".ui-page"));
+    .shortcutscroll();
 });
 
 })( jQuery );
