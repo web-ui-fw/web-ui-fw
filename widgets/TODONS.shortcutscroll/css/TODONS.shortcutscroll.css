@@ -1,0 +1,15 @@
+.ui-shortcutscroll {
+  position: absolute;
+  right: 0px;
+  top: 121px;
+  height: 794px;
+}
+
+.ui-shortcutscroll li {
+  list-style-type: none;
+  min-height: 14px;
+  min-width: 12px;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+}
