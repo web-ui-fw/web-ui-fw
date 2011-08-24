@@ -7,11 +7,11 @@
  */
 
 /**
- * Scrollview controller, which binds the visible part of a scrollview
- * to a a list of short cuts. Clicking on a shortcut instantaneously
- * jumps the scrollview to the selected list divider; mouse movements
- * on the shortcut column move the scrollview to the list divider
- * currently under the touch.
+ * shortcutscroll is a scrollview controller, which binds
+ * a scrollview to a a list of short cuts. Clicking on a shortcut
+ * instantaneously jumps the scrollview to the selected list divider;
+ * mouse movements on the shortcut column move the scrollview to the
+ * list divider currently under the touch.
  *
  * To apply, add the attribute data-shortcutscroll="true" to a listview
  * (a <ul> or <ol> element inside a page). Alternatively, call
