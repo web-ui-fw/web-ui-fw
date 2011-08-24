@@ -23,8 +23,7 @@
 $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
   options: {
     initSelector: ":jqmData(shortcutscroll)",
-    scrollview: null,
-    scrollDuration: 500
+    scrollview: null
   },
 
   _create: function () {
@@ -33,12 +32,6 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
       shortcutsContainer = $('<ul></ul>'),
       dividers = $el.find(':jqmData(role="list-divider")'),
       lastListItem = null;
-
-    // set a minimum scroll duration; with duration = 0, the scroll moves
-    // in the wrong direction
-    o.scrollDuration = parseInt(o.scrollDuration) && o.scrollDuration > 0 ?
-                         o.scrollDuration :
-                         500;
 
     // if no scrollview has been specified, use the parent of the listview
     if (o.scrollview === null) {
@@ -73,7 +66,7 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
         }
 
         // apply the scroll
-        o.scrollview.scrollview('scrollTo', 0, dividerY, o.scrollDuration);
+        o.scrollview.scrollview('scrollTo', 0, -dividerY);
       });
 
       shortcutsContainer.append(listItem);
