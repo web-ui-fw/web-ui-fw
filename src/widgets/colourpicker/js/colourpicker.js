@@ -179,7 +179,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                   self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
                   self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
 
-                  console.log("select.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+//                  console.log("select.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
                   return true;
                 });
 
@@ -192,7 +192,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                   self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
                   self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
 
-                  console.log("lmnnce.vmousedown: (" + self.dragging_hsl.l + ")");
+//                  console.log("lmnnce.vmousedown: (" + self.dragging_hsl.l + ")");
                   return true;
                 });
 
@@ -216,7 +216,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 
                   if (eventHandled) {
                     self._updateCanvasSelectorBackgroundClr(self);
-                    console.log("select.vmousemove: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+//                    console.log("select.vmousemove: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
                   }
 
                   return eventHandled;
@@ -237,20 +237,20 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                   if (eventHandled) {
                     self._fillColours(self.canvas, self.dragging_hsl.l / 255.0);
                     self._updateCanvasSelectorBackgroundClr(self);
-                    console.log("lmnnce.vmousemove: (" + self.dragging_hsl.l + ")");
+//                    console.log("lmnnce.vmousemove: (" + self.dragging_hsl.l + ")");
                   }
 
                   return eventHandled;
                 });
 
                 canvas.bind( "vmouseup", function (event) {
-                  console.log("canvas.vmouseup: event = " + event);
+//                  console.log("canvas.vmouseup: event = " + event);
                   self.dragging = false;
                   return true;
                 });
 
                 canvasSelector.bind( "vmouseup", function (event) {
-                  console.log("canvasSelector.vmouseup: event = " + event);
+//                  console.log("canvasSelector.vmouseup: event = " + event);
                   self.dragging = false;
                   return true;
                 });
@@ -403,7 +403,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                 self._updateCanvasSelectorBackgroundClr(self);
                 self.selectorDraggingOffset.x = Math.ceil(parseInt(self.canvasSelector.css("width"))  / 2.0);
                 self.selectorDraggingOffset.y = Math.ceil(parseInt(self.canvasSelector.css("height")) / 2.0);
-                console.log("canvas.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+//                console.log("canvas.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
               }
             }
             else {
@@ -419,7 +419,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                 self._updateCanvasSelectorBackgroundClr(self);
                 self.selectorDraggingOffset.x = Math.ceil(parseInt(self.luminenceSelector.css("width"))  / 2.0);
                 self.selectorDraggingOffset.y = Math.ceil(parseInt(self.luminenceSelector.css("height")) / 2.0);
-                console.log("canvas.vmousedown: (" + self.dragging_hsl.l + ")");
+//                console.log("canvas.vmousedown: (" + self.dragging_hsl.l + ")");
               }
             }
           }
@@ -474,7 +474,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
                     16;
 
           canvas.attr("width", width);
-          luminenceSelector.css("left", 256 + Math.ceil(parseInt(canvasSelector.css("width"))));
+          luminenceSelector.css("left", width - 8);
           this._fillColours(canvas, 0.5);
         },
 
@@ -553,7 +553,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 
           self.buttonContents.css("color", clrValue);
 
-          console.log("clrValue: " + clrValue);
+//          console.log("clrValue: " + clrValue);
 
           if (clrValue.charAt(0) == '#')
             clrValue = clrValue.substring(1);
@@ -565,13 +565,13 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
           g = parseInt(g_str, 16) / 255.0;
           b = parseInt(b_str, 16) / 255.0;
 
-          console.log("clrValue = " + clrValue + ", " +
-            "r = " + r + "(" + r_str + "), " +
-            "g = " + g + "(" + g_str + "), " +
-            "b = " + b + "(" + b_str + ")");
+//          console.log("clrValue = " + clrValue + ", " +
+//            "r = " + r + "(" + r_str + "), " +
+//            "g = " + g + "(" + g_str + "), " +
+//            "b = " + b + "(" + b_str + ")");
 
           hsl = this._RGBToHSL(r, g, b).map(this.normalizeValue);
-          console.log("h: " + hsl[0] + " s: " + hsl[1] + " l: " + hsl[2]);
+//          console.log("h: " + hsl[0] + " s: " + hsl[1] + " l: " + hsl[2]);
 
           this._fillColours(this.canvas, hsl[2] / 255.0);
 
