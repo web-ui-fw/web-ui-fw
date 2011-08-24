@@ -1,6 +1,6 @@
 (function( $, undefined ) {
 
-$.widget( "mobile.colourpicker", $.mobile.widget, {
+$.widget( "mobile.colorpicker", $.mobile.widget, {
 	options: {
 		theme: null,
 		disabled: false,
@@ -10,7 +10,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		overlayTheme: "a",
 		hidePlaceholderMenuItems: true,
 		closeText: "Close",
-		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colourpicker')"
+		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpicker')"
 	},
 	_create: function() {
 		var
@@ -30,7 +30,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		  selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
 
                   buttonContents = $("<span/>", { 
-                    class : "colourpicker-button-span"
+                    class : "colorpicker-button-span"
                   })
                   .html("&#x2587;&#x2587;&#x2587;"),
 
@@ -66,16 +66,16 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		  screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
 					  .appendTo( thisPage ),
 
-		  listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition + " colourpicker-canvas-border" })
+		  listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition + " colorpicker-canvas-border" })
 				  .insertAfter(screen),
 
                   canvas = $("<canvas width='288' height='256'>Colour picker canvas</canvas>")
                     .appendTo(listbox),
 
-                  canvasSelector = $("<div>", {"class" : "colourpicker-canvas-selector"})
+                  canvasSelector = $("<div>", {"class" : "colorpicker-canvas-selector"})
                     .appendTo(listbox),
 
-                  luminenceSelector = $("<div>", {"class" : "colourpicker-canvas-selector"})
+                  luminenceSelector = $("<div>", {"class" : "colorpicker-canvas-selector"})
                     .appendTo(listbox);
 
                 this.element.css("display", "none");
@@ -688,9 +688,9 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-	$( $.mobile.colourpicker.prototype.options.initSelector, e.target )
+	$( $.mobile.colorpicker.prototype.options.initSelector, e.target )
 		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-		.colourpicker();
+		.colorpicker();
 });
 
 })( jQuery );
