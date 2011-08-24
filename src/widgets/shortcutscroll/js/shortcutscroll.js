@@ -72,8 +72,8 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
         dividers.each(function (index, divider) {
             var listItem = $('<li>' + $(divider).text() + '</li>');
 
-            // bind clicks so they move the scroller to the divider
-            listItem.bind('click', function () {
+            // bind taps so they move the scroller to the divider
+            listItem.bind('tap', function () {
                 jumpToDivider(divider);
             });
 
