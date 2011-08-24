@@ -86,6 +86,13 @@
                 </a>
 	  		</div>
 
+            <div class="content" data-role="content">
+                <h2>Switch</h2>
+                <div id="abracadabra"></div>
+                <p/>
+                <div id="simsalabim"></div>
+            </div>
+
             <div data-role="footer">
                 <h4>Thanks!</h4>
             </div><!-- /footer -->
@@ -103,6 +110,8 @@
             $(document).ready(function() {
                 $('.ui-datetimepicker').datetimepicker({header: "Set time"});
         		$('.ui-progressbar').progressbar();
+                $('#abracadabra').switch();
+                $('#simsalabim').switch();
             });
         </script>
     </body>
