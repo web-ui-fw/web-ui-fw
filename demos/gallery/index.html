@@ -1,0 +1,119 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>jquery.mobile.datetimepicker demo</title> 
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <script type="text/javascript" src="../../build/libs/js/web-ui-fw-libs.js"></script>
+        <script type="text/javascript" src="../../build/web-ui-fw/js/web-ui-fw.js"></script>
+        <script type="text/javascript" src="../../build/web-ui-fw/js/web-ui-fw-default-theme.js"></script>
+
+        <link rel="stylesheet" href="../../build/libs/css/web-ui-fw-libs.css" />
+        <link rel="stylesheet" href="../../build/web-ui-fw/css/web-ui-fw-default-theme.css" />
+    </head> 
+
+    <body> 
+        <div data-role="page">
+            <div data-role="header">
+                <h1>web-ui-fw widgets gallery</h1>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                <h2>Date/time picker</h2>
+                <div class="ui-datetimepicker"></div>
+            </div><!-- /content -->
+
+            <div data-role="content">
+                <h2>Color picker</h2>
+                <form action='#' method="get">
+                    <div data-role="fieldcontain">
+                        <label for="desired_colour">Background Colour:</label>
+                        <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="desired_colour">Foreground Colour:</label>
+                        <input type="color" name="foreground_colour" id="foreground_colour" value="#0080ff"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="my_slider">My slider:</label>
+                       <input type="range" name="my_slider" id="my_slider" value="15" min="0" max="100"/>
+                    </div>
+                </form>
+            </div><!-- /content -->
+            <div data-role="content">
+                <h2>Drag & drop list</h2>
+                <ul data-role="listview" class="draganddroplist">
+                    <li data-role="list-divider">A</li>
+                    <li><a href="../../docs/lists/index.html">Adam Kinkaid</a></li>
+                    <li><a href="../../docs/lists/index.html">Alex Wickerham</a></li>
+                    <li><a href="../../docs/lists/index.html">Avery Johnson</a></li>
+                    <li data-role="list-divider">B</li>
+                    <li><a href="../../docs/lists/index.html">Bob Cabot</a></li>
+                    <li data-role="list-divider">C</li>
+                    <li><a href="../../docs/lists/index.html">David Walsh</a></li>
+                    <li><a href="../../docs/lists/index.html">Drake Alfred</a></li>
+                    <li data-role="list-divider">E</li>
+                    <li><a href="../../docs/lists/index.html">Elizabeth Bacon</a></li>
+                    <li><a href="../../docs/lists/index.html">Emery Parker</a></li>
+                    <li><a href="../../docs/lists/index.html">Enid Voldon</a></li>
+                    <li data-role="list-divider">F</li>
+                    <li><a href="../../docs/lists/index.html">Francis Wall</a></li>
+                    <li data-role="list-divider">G</li>
+                    <li><a href="../../docs/lists/index.html">Graham Smith</a></li>
+                    <li><a href="../../docs/lists/index.html">Greta Peete</a></li>
+                    <li data-role="list-divider">H</li>
+                    <li><a href="../../docs/lists/index.html">Harvey Walls</a></li>
+                    <li data-role="list-divider">M</li>
+                    <li><a href="../../docs/lists/index.html">Mike Farnsworth</a></li>
+                    <li><a href="../../docs/lists/index.html">Murray Vanderbuilt</a></li>
+                    <li data-role="list-divider">N</li>
+                    <li><a href="../../docs/lists/index.html">Nathan Williams</a></li>
+                    <li data-role="list-divider">P</li>
+                    <li><a href="../../docs/lists/index.html">Paul Baker</a></li>
+                    <li><a href="../../docs/lists/index.html">Pete Mason</a></li>
+                    <li data-role="list-divider">R</li>
+                    <li><a href="../../docs/lists/index.html">Rod Tarker</a></li>
+                    <li data-role="list-divider">S</li>
+                    <li><a href="../../docs/lists/index.html">Sawyer Wakefield</a></li>
+                </ul>
+            </div> <!-- /content -->
+
+   	  		<div class="content" data-role="content">
+	    		<h2>Progress bar</p>
+				<a href="#progressbar_page" data-rel="dialog" data-transition="pop">
+                    Open progress bar dialog
+                </a>
+	  		</div>
+
+            <div class="content" data-role="content">
+                <h2>Switch</h2>
+                <div id="abracadabra"></div>
+                <p/>
+                <div id="simsalabim"></div>
+            </div>
+
+            <div data-role="footer">
+                <h4>Thanks!</h4>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+	  	<section id="progressbar_page" data-role="page">
+            <header data-role="header"><h1>Progress bar</h1></header>
+                <div class="content" data-role="content">
+                    <div class="ui-progressbar"></div>
+                </div>
+            <footer data-role="footer"><h1>Thanks</h1></footer>
+		</section>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.ui-datetimepicker').datetimepicker({header: "Set time"});
+        		$('.ui-progressbar').progressbar();
+                $('#abracadabra').switch();
+                $('#simsalabim').switch();
+            });
+        </script>
+    </body>
+</html>
+
