@@ -4,6 +4,8 @@ OUTPUT_ROOT = build
 CODE_DIR = src/widgets
 LIBS_DIR = libs
 
+FW_IMAGES_DIR = ${OUTPUT_ROOT}/web-ui-fw/css/images
+
 LIBS_JS = ${OUTPUT_ROOT}/libs/js/web-ui-fw-libs.js
 LIBS_CSS= ${OUTPUT_ROOT}/libs/css/web-ui-fw-libs.css
 
@@ -73,6 +75,10 @@ widgets: init
 	            echo "		$$f"; \
 	            cat $$f >> ${WEB_UI_FW_CSS}; \
 	        done; \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.gif' -or -iname '*.png' -or -iname '*.jpg'`; do \
+	            echo "		$$f"; \
+	            cp $$f ${FW_IMAGES_DIR}; \
+	        done; \
 	    done
 
 clean:
@@ -85,4 +91,4 @@ init: clean
 	@@mkdir -p ${OUTPUT_ROOT}/libs/js
 	@@mkdir -p ${OUTPUT_ROOT}/libs/css
 	@@mkdir -p ${OUTPUT_ROOT}/web-ui-fw/js
-	@@mkdir -p ${OUTPUT_ROOT}/web-ui-fw/css
+	@@mkdir -p ${OUTPUT_ROOT}/web-ui-fw/css/images

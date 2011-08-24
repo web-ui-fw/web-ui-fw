@@ -79,14 +79,30 @@
                 </ul>
             </div> <!-- /content -->
 
+   	  		<div class="content" data-role="content">
+	    		<h2>Progress bar</p>
+				<a href="#progressbar_page" data-rel="dialog" data-transition="pop">
+                    Open progress bar dialog
+                </a>
+	  		</div>
+
             <div data-role="footer">
                 <h4>Thanks!</h4>
             </div><!-- /footer -->
         </div><!-- /page -->
 
+	  	<section id="progressbar_page" data-role="page">
+            <header data-role="header"><h1>Progress bar</h1></header>
+                <div class="content" data-role="content">
+                    <div class="ui-progressbar"></div>
+                </div>
+            <footer data-role="footer"><h1>Thanks</h1></footer>
+		</section>
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.ui-datetimepicker').datetimepicker({header: "Set time"});
+        		$('.ui-progressbar').progressbar();
             });
         </script>
     </body>
