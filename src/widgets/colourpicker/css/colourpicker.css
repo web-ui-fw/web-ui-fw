@@ -3,3 +3,20 @@
 .colourpicker-button-span {
   text-align: center;
 }
+
+.colourpicker-canvas-border {
+  padding: 40px;
+}
+
+.colourpicker-canvas-selector {
+  position: absolute;
+  width: 81px;
+  height: 81px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: black;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+}
