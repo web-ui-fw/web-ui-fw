@@ -8,7 +8,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 		corners: true,
 		shadow: true,
 		overlayTheme: "a",
-		hidePlaceholderMenuItems: true,
 		closeText: "Close",
 		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpicker')"
 	},
@@ -24,16 +23,14 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
 		  label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
 
-		  // IE throws an exception at options.item() function when
-		  // there is no selected item
-		  // select first in this case
-		  selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
-
                   buttonContents = $("<span/>", { 
                     class : "colorpicker-button-span"
                   })
                   .html("&#x2587;&#x2587;&#x2587;"),
 
+		  buttonId = selectID + "-button",
+
+		  menuId = selectID + "-menu",
 
 		  button = $( "<a>", {
 				  "href": "#",
@@ -50,13 +47,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 				  corners: o.corners,
 				  shadow: o.shadow
 			  }),
-
-	  //vars for non-native menus
-		  options = select.find("option"),
-
-		  buttonId = selectID + "-button",
-
-		  menuId = selectID + "-menu",
 
 		  thisPage = select.closest( ".ui-page" ),
 
@@ -95,7 +85,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 		// Expose to other methods
 		$.extend( self, {
 			select: select,
-			optionElems: options,
 			selectID: selectID,
 			label: label,
 			buttonId: buttonId,
@@ -263,85 +252,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
 				self.open();
 				event.preventDefault();
-			}
-		});
-
-		// Events for list items
-		canvas.attr( "role", "listbox" )
-			.delegate( ".ui-li>a", "focusin", function() {
-				$( this ).attr( "tabindex", "0" );
-			})
-			.delegate( ".ui-li>a", "focusout", function() {
-				$( this ).attr( "tabindex", "-1" );
-			})
-			.delegate( "li:not(.ui-disabled, .ui-li-divider)", "vclick", function( event ) {
-
-				var $this = $( this ),
-					// index of option tag to be selected
-					oldIndex = select[ 0 ].selectedIndex,
-					newIndex = $this.jqmData( "option-index" ),
-					option = self.optionElems[ newIndex ];
-
-				// toggle selected status on the tag for multi selects
-				option.selected = true;
-
-				// trigger change if value changed
-				if ( oldIndex !== newIndex ) {
-					select.trigger( "change" );
-				}
-
-				//hide custom select for single selects only
-				self.close();
-
-				event.preventDefault();
-		})
-		//keyboard events for menu items
-		.keydown(function( event ) {
-			var target = $( event.target ),
-				li = target.closest( "li" ),
-				prev, next;
-
-			// switch logic based on which key was pressed
-			switch ( event.keyCode ) {
-				// up or left arrow keys
-				case 38:
-					prev = li.prev();
-
-					// if there's a previous option, focus it
-					if ( prev.length ) {
-						target
-							.blur()
-							.attr( "tabindex", "-1" );
-
-						prev.find( "a" ).first().focus();
-					}
-
-					return false;
-				break;
-
-				// down or right arrow keys
-				case 40:
-					next = li.next();
-
-					// if there's a next option, focus it
-					if ( next.length ) {
-						target
-							.blur()
-							.attr( "tabindex", "-1" );
-
-						next.find( "a" ).first().focus();
-					}
-
-					return false;
-				break;
-
-				// If enter or space is pressed, trigger click
-				case 13:
-				case 32:
-					 target.trigger( "vclick" );
-
-					 return false;
-				break;
 			}
 		});
 
