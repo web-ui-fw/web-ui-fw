@@ -97,9 +97,9 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["hours", this.data.initial.hours],
+                0: ["hours", this._makeTwoDigitValue(this.data.initial.hours)],
                 1: ["separator", this.options.timeSeparator],
-                2: ["minutes", this.data.initial.minutes],
+                2: ["minutes", this._makeTwoDigitValue(this.data.initial.minutes)],
             };
 
             for (var data in dataItems) {
@@ -140,6 +140,14 @@
             return div;
         },
 
+        _makeTwoDigitValue: function(val) {
+          var ret = val.toString(10);
+
+          if (val < 10)
+            ret = "0" + ret;
+          return ret;
+        },
+
         _showDataSelector: function(selector, owner) {
             /* TODO: find out if it'd be better to prepopulate this, or
              * do some caching at least. */
@@ -174,14 +182,14 @@
                     "day", range(1, day), parseInt, null, obj.data,
                     "day");
             } else if (klass.search("hours") > 0) {
-                var values = range(0, 23);
+                var values = range(0, 23).map(this._makeTwoDigitValue);
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
                     "hours", values, parseInt, null, obj.data,
                     "hours");
             } else if (klass.search("minutes") > 0) {
-                var values = range(0, 59);
+                var values = range(0, 59).map(this._makeTwoDigitValue);
                 numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
                     "minutes", values, parseInt, null, obj.data,
