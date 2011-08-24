@@ -4,12 +4,9 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 	options: {
 		theme: null,
 		disabled: false,
-		icon: null,
-		iconpos: "right",
 		inline: true,
 		corners: true,
 		shadow: true,
-		iconshadow: true,
 		overlayTheme: "a",
 		hidePlaceholderMenuItems: true,
 		closeText: "Close",
@@ -49,12 +46,9 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			  .insertBefore( select )
 			  .buttonMarkup({
 				  theme: o.theme,
-				  icon: o.icon,
-				  iconpos: o.iconpos,
 				  inline: o.inline,
 				  corners: o.corners,
-				  shadow: o.shadow,
-				  iconshadow: o.iconshadow
+				  shadow: o.shadow
 			  }),
 
 	  //vars for non-native menus
