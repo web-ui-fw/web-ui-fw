@@ -48,7 +48,7 @@
 				    });
 				    elementTopPos = new $.Point(parseInt(draggedElement.css('left'),10),
 								parseInt(draggedElement.css('top'),10));
-				     jQuery(draggedElement).css('-webkit-transform', 'scale(1.5)');
+				     jQuery(draggedElement).css('-webkit-transform', 'scale(1.1)');
 				    _moveObject();
 			    };
 
@@ -90,7 +90,7 @@
 					previousYPosition = p;
 					if (dragCallBack !== null)
 					    dragCallBack(p,scrollingUp);
-					return true;
+					event.preventDefault();
 				    });
 				    draggedElement.bind('mouseup touchstart mousedown touchend',
 							    function (event) {
@@ -156,7 +156,6 @@
 				left: parseInt(offset.left,10),
 				top: parseInt(offset.top,10)
 				}, 100, "swing", function(){
-				    jQuery($clone).css('-webkit-transform', 'scale(1)');
 				    $clone.remove();
 				    $shadow.replaceWith($realObject);
 			    });
@@ -260,6 +259,7 @@
 					$realObject = $(this);
 					$clone = $realObject.clone();
 					$clone.addClass("dragObject");
+					$clone.css('width', $realObject.css('width'));
 					$realObject.replaceWith($clone);
 					draggedObject.setMovingObject($clone,
 								     absoluteTouchPostion(event),
@@ -272,7 +272,7 @@
 					shadowData.$shadowRect.setTop($shadow.offset().top);
 					shadowData.$shadowRect.setBottom(shadowData.$shadowRect.top() + cloneHeight);
 					reEvaluateChildren = true;
-					return true;
+					event.preventDefault();
 				});
 			    });
 		    }
