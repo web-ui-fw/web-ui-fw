@@ -34,7 +34,8 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
             o = this.options,
             shortcutsContainer = $('<ul></ul>'),
             dividers = $el.find(':jqmData(role="list-divider")'),
-            lastListItem = null;
+            lastListItem = null,
+            jumpToDivider = null;
 
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
@@ -44,31 +45,36 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
+        // create a closure to jump to a specific divider
+        jumpToDivider = function (divider) {
+            // get the vertical position of the divider (so we can
+            // scroll to it)
+            var dividerY = $(divider).position().top;
+
+            // find the bottom of the last list item
+            var bottomOffset = lastListItem.outerHeight(true) +
+                               lastListItem.position().top;
+
+            // get the height of the scrollview
+            var scrollviewHeight = o.scrollview.height();
+
+            // check that after the candidate scroll, the bottom of the
+            // last item will still be at the bottom of the scroll view
+            // and not half way up the page
+            var maxScroll = bottomOffset - scrollviewHeight;
+            dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
+
+            // apply the scroll
+            o.scrollview.scrollview('scrollTo', 0, -dividerY);
+        };
+
         // get all the dividers from the list
         dividers.each(function (index, divider) {
             var listItem = $('<li>' + $(divider).text() + '</li>');
 
             // bind clicks so they move the scroller to the divider
             listItem.bind('click', function () {
-                // get the vertical position of the divider (so we can
-                // scroll to it)
-                var dividerY = $(divider).position().top;
-
-                // find the bottom of the last list item
-                var bottomOffset = lastListItem.outerHeight(true) +
-                                   lastListItem.position().top;
-
-                // get the height of the scrollview
-                var scrollviewHeight = o.scrollview.height();
-
-                // check that after the candidate scroll, the bottom of the
-                // last item will still be at the bottom of the scroll view
-                // and not half way up the page
-                var maxScroll = bottomOffset - scrollviewHeight;
-                dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
-
-                // apply the scroll
-                o.scrollview.scrollview('scrollTo', 0, -dividerY);
+                jumpToDivider(divider);
             });
 
             shortcutsContainer.append(listItem);
