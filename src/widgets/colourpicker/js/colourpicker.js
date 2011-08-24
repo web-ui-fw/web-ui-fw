@@ -10,116 +10,83 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		corners: true,
 		shadow: true,
 		iconshadow: true,
-		menuPageTheme: "b",
 		overlayTheme: "a",
 		hidePlaceholderMenuItems: true,
 		closeText: "Close",
 		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colourpicker')"
 	},
 	_create: function() {
+		var
+                  self = this,
 
-		var self = this,
+		  o = this.options,
 
-			o = this.options,
+		  select = this.element.wrap( "<div class='ui-select'>" ),
 
-			select = this.element
-						.wrap( "<div class='ui-select'>" ),
+		  selectID = select.attr( "id" ),
 
-			selectID = select.attr( "id" ),
+		  label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
 
-			label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
+		  // IE throws an exception at options.item() function when
+		  // there is no selected item
+		  // select first in this case
+		  selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
 
-			// IE throws an exception at options.item() function when
-			// there is no selected item
-			// select first in this case
-			selectedIndex = select[ 0 ].selectedIndex == -1 ? 0 : select[ 0 ].selectedIndex,
-
-                        buttonContents = $("<span/>", { 
-                          class : "colourpicker-button-span"
-                        })
-                        .html("&#x2587;&#x2587;&#x2587;"),
+                  buttonContents = $("<span/>", { 
+                    class : "colourpicker-button-span"
+                  })
+                  .html("&#x2587;&#x2587;&#x2587;"),
 
 
-			button = $( "<a>", {
-					"href": "#",
-					"role": "button",
-					"id": buttonId,
-					"aria-haspopup": "true",
-					"aria-owns": menuId
-				})
-				.append(buttonContents)
-				.insertBefore( select )
-				.buttonMarkup({
-					theme: o.theme,
-					icon: o.icon,
-					iconpos: o.iconpos,
-					inline: o.inline,
-					corners: o.corners,
-					shadow: o.shadow,
-					iconshadow: o.iconshadow
-				}),
+		  button = $( "<a>", {
+				  "href": "#",
+				  "role": "button",
+				  "id": buttonId,
+				  "aria-haspopup": "true",
+				  "aria-owns": menuId
+			  })
+			  .append(buttonContents)
+			  .insertBefore( select )
+			  .buttonMarkup({
+				  theme: o.theme,
+				  icon: o.icon,
+				  iconpos: o.iconpos,
+				  inline: o.inline,
+				  corners: o.corners,
+				  shadow: o.shadow,
+				  iconshadow: o.iconshadow
+			  }),
 
-		//vars for non-native menus
-		        options = select.find("option"),
+	  //vars for non-native menus
+		  options = select.find("option"),
 
-			buttonId = selectID + "-button",
+		  buttonId = selectID + "-button",
 
-			menuId = selectID + "-menu",
+		  menuId = selectID + "-menu",
 
-			thisPage = select.closest( ".ui-page" ),
+		  thisPage = select.closest( ".ui-page" ),
 
-			//button theme
-			theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
+		  //button theme
+		  theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
-			menuPage = $( "<div data-" + $.mobile.ns + "role='dialog' data-" +$.mobile.ns + "theme='"+ o.menuPageTheme +"'>" +
-						"<div data-" + $.mobile.ns + "role='header'>" +
-							"<div class='ui-title'>" + label.text() + "</div>"+
-						"</div>"+
-						"<div data-" + $.mobile.ns + "role='content'></div>"+
-					"</div>" )
-					.appendTo( $.mobile.pageContainer )
-					.page(),
+		  screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
+					  .appendTo( thisPage ),
 
-			menuPageContent = menuPage.find( ".ui-content" ),
+		  listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition + " colourpicker-canvas-border" })
+				  .insertAfter(screen),
 
-			menuPageClose = menuPage.find( ".ui-header a" ),
+                  canvas = $("<canvas width='288' height='256'>Colour picker canvas</canvas>")
+                    .appendTo(listbox),
 
-			screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-						.appendTo( thisPage ),
+                  canvasSelector = $("<div>", {"class" : "colourpicker-canvas-selector"})
+                    .appendTo(listbox),
 
-			listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition })
-					.insertAfter(screen),
+                  luminenceSelector = $("<div>", {"class" : "colourpicker-canvas-selector"})
+                    .appendTo(listbox);
 
-			list = $( "<ul>", {
-					"class": "ui-selectmenu-list",
-					"id": menuId,
-					"role": "listbox",
-					"aria-labelledby": buttonId
-				})
-				.attr( "data-" + $.mobile.ns + "theme", theme )
-				.appendTo( listbox ),
+                this.element.css("display", "none");
 
-			header = $( "<div>", {
-					"class": "ui-header ui-bar-" + theme
-				})
-				.prependTo( listbox ),
-
-			headerTitle = $( "<h1>", {
-					"class": "ui-title"
-				})
-				.appendTo( header ),
-
-			headerClose = $( "<a>", {
-					"text": o.closeText,
-					"href": "#",
-					"class": "ui-btn-left"
-				})
-				.attr( "data-" + $.mobile.ns + "iconpos", "notext" )
-				.attr( "data-" + $.mobile.ns + "icon", "delete" )
-				.appendTo( header )
-				.buttonMarkup(),
-
-			menuType;
+                this._initCanvas(canvas, canvasSelector, luminenceSelector);
 
 		// Disable if specified
 		if ( o.disabled ) {
@@ -141,16 +108,23 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			menuId: menuId,
 			thisPage: thisPage,
 			button: button,
-			menuPage: menuPage,
-			menuPageContent: menuPageContent,
 			screen: screen,
 			listbox: listbox,
-			list: list,
-			menuType: menuType,
-			header: header,
-			headerClose: headerClose,
-			headerTitle: headerTitle,
+			canvas: canvas,
+                        canvasSelector: canvasSelector,
+                        luminenceSelector: luminenceSelector,
 			placeholder: "",
+                        dragging: false,
+                        draggingHS: true,
+                        dragging_hsl : {
+                          h : -1,
+                          s : -1,
+                          l : -1
+                        },
+                        selectorDraggingOffset : {
+                          x : -1,
+                          y : -1
+                        },
                         buttonContents: buttonContents
 		});
 
@@ -158,6 +132,128 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 
 		// Create list from select, update state
 		self.refresh();
+
+		$( document ).bind( "vmousemove", function( event ) {
+			if ( self.dragging ) {
+//				self.refresh( event );
+				return false;
+			}
+		});
+
+		$( document ).bind( "vmouseup", function( event ) {
+			if ( self.dragging ) {
+                                self.dragging = false;
+//				self.refresh( event );
+				return false;
+			}
+		});
+
+                canvas.bind( "vmousedown", function (event) {
+                  if (event.offsetY >= 0 && event.offsetY <= 256) {
+                    if (event.offsetX >= 0 && event.offsetX <= 256) {
+                      self.dragging = true;
+                      self.draggingHS = true;
+                    }
+                    else
+                    if (event.offsetX >= parseInt(canvas.attr("width")) - 16 && 
+                        event.offsetX <= parseInt(canvas.attr("width"))) {
+                      self.dragging = true;
+                      self.draggingHS = false;
+                    }
+                  }
+                  return self._canvasDownAndMove(self, event);
+                });
+
+                canvas.bind( "vmousemove", function (event) {
+                  if (self.dragging)
+                    return self._canvasDownAndMove(self, event);
+                  return false;
+                });
+
+                canvasSelector.bind( "vmousedown", function (event) {
+                  self.dragging = true;
+                  self.draggingHS = true;
+                  self.selectorDraggingOffset.x = event.offsetX;
+                  self.selectorDraggingOffset.y = event.offsetY;
+                  self.dragging_hsl.h = parseInt(self.canvasSelector.css("left"));
+                  self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
+                  self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
+
+                  console.log("select.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+                  return true;
+                });
+
+                luminenceSelector.bind( "vmousedown", function (event) {
+                  self.dragging = true;
+                  self.draggingHS = false;
+                  self.selectorDraggingOffset.x = event.offsetX;
+                  self.selectorDraggingOffset.y = event.offsetY;
+                  self.dragging_hsl.h = parseInt(self.canvasSelector.css("left"));
+                  self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
+                  self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
+
+                  console.log("lmnnce.vmousedown: (" + self.dragging_hsl.l + ")");
+                  return true;
+                });
+
+                canvasSelector.bind( "vmousemove", function (event) {
+                  var eventHandled = false,
+                      potential_h = self.dragging_hsl.h + event.offsetX - self.selectorDraggingOffset.x,
+                      potential_s = self.dragging_hsl.s + event.offsetY - self.selectorDraggingOffset.y;
+
+                  if (self.dragging) {
+                    if (potential_h >= 0 && potential_h <= 255) {
+                      self.dragging_hsl.h = potential_h;
+                      self.canvasSelector.css("left", potential_h);
+                      eventHandled = true;
+                    }
+                    if (potential_s >= 0 && potential_s <= 255) {
+                      self.dragging_hsl.s = potential_s;
+                      self.canvasSelector.css("top",  potential_s);
+                      eventHandled = true;
+                    }
+                  }
+
+                  if (eventHandled) {
+                    self._updateCanvasSelectorBackgroundClr(self);
+                    console.log("select.vmousemove: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+                  }
+
+                  return eventHandled;
+                });
+
+                luminenceSelector.bind( "vmousemove", function (event) {
+                  var eventHandled = false,
+                      potential_l = self.dragging_hsl.l + event.offsetY - self.selectorDraggingOffset.y;
+
+                  if (self.dragging && !self.draggingHS) {
+                    if (potential_l >= 0 && potential_l <= 255) {
+                      self.dragging_hsl.l = potential_l;
+                      self.luminenceSelector.css("top",  potential_l);
+                      eventHandled = true;
+                    }
+                  }
+
+                  if (eventHandled) {
+                    self._fillColours(self.canvas, self.dragging_hsl.l / 255.0);
+                    self._updateCanvasSelectorBackgroundClr(self);
+                    console.log("lmnnce.vmousemove: (" + self.dragging_hsl.l + ")");
+                  }
+
+                  return eventHandled;
+                });
+
+                canvas.bind( "vmouseup", function (event) {
+                  console.log("canvas.vmouseup: event = " + event);
+                  self.dragging = false;
+                  return true;
+                });
+
+                canvasSelector.bind( "vmouseup", function (event) {
+                  console.log("canvasSelector.vmouseup: event = " + event);
+                  self.dragging = false;
+                  return true;
+                });
 
 		select.attr( "tabindex", "-1" )
 			.focus(function() {
@@ -177,7 +273,7 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		});
 
 		// Events for list items
-		list.attr( "role", "listbox" )
+		canvas.attr( "role", "listbox" )
 			.delegate( ".ui-li>a", "focusin", function() {
 				$( this ).attr( "tabindex", "0" );
 			})
@@ -255,126 +351,237 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 			}
 		});
 
-		// button refocus ensures proper height calculation
-		// by removing the inline style and ensuring page inclusion
-		self.menuPage.bind( "pagehide", function(){
-			self.list.appendTo( self.listbox );
-			self._focusButton();
-		});
-
 		// Events on "screen" overlay
 		screen.bind( "vclick", function( event ) {
-			self.close();
-		});
-
-		// Close button on small overlays
-		self.headerClose.click(function() {
-			if ( self.menuType == "overlay" ) {
-				self.close();
-				return false;
-			}
+		  self.close();
 		});
 	},
 
-	_buildList: function() {
-		var self = this,
-			o = this.options,
-			placeholder = this.placeholder,
-			optgroups = [],
-			lis = [],
-			dataIcon = "false";
+        makeClrChannel: function(val) {
+          return (val < 16 ? "0" : "") + (val & 0xff).toString(16);
+        },
 
-		self.list.empty().filter( ".ui-listview" ).listview( "destroy" );
+        _updateCanvasSelectorBackgroundClr: function(self) {
+          var g_str = self.makeClrChannel(parseInt(self.luminenceSelector.css("top"))),
+              clrValue = "#" + self._HSLToRGB(
+                self.dragging_hsl.h / 255.0, 
+                (255 - self.dragging_hsl.s) / 255.0,
+                self.dragging_hsl.l / 255.0)
+                  .map(self.normalizeValue)
+                  .map(self.makeClrChannel)
+                  .join("");
 
-		// Populate menu with options from select element
-		self.select.find( "option" ).each(function( i ) {
-			var $this = $( this ),
-				$parent = $this.parent(),
-				text = $this.text(),
-				anchor = "<a href='#'>"+ text +"</a>",
-				classes = [],
-				extraAttrs = [];
+          self.canvasSelector.css("background", clrValue);
+          self.luminenceSelector.css("background", "#" + g_str + g_str + g_str);
+          self.element.attr("value", clrValue);
+          self.buttonContents.css("color", clrValue);
+        },
 
-			// Are we inside an optgroup?
-			if ( $parent.is( "optgroup" ) ) {
-				var optLabel = $parent.attr( "label" );
+        _canvasDownAndMove: function(self, event) {
+          var eventHandled = false;
 
-				// has this optgroup already been built yet?
-				if ( $.inArray( optLabel, optgroups ) === -1 ) {
-					lis.push( "<li data-" + $.mobile.ns + "role='list-divider'>"+ optLabel +"</li>" );
-					optgroups.push( optLabel );
-				}
-			}
+          if (self.dragging) {
+            if (self.draggingHS) {
+              var potential_h = event.offsetX,
+                  potential_s = event.offsetY;
 
-			// Find placeholder text
-			// TODO: Are you sure you want to use getAttribute? ^RW
-			if ( !this.getAttribute( "value" ) || text.length == 0 || $this.jqmData( "placeholder" ) ) {
-				if ( o.hidePlaceholderMenuItems ) {
-					classes.push( "ui-selectmenu-placeholder" );
-				}
-				placeholder = self.placeholder = text;
-			}
+              self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
 
-			// support disabled option tags
-			if ( this.disabled ) {
-				classes.push( "ui-disabled" );
-				extraAttrs.push( "aria-disabled='true'" );
-			}
+              if (potential_h >= 0 && potential_h <= 255) {
+                self.dragging_hsl.h = potential_h;
+                eventHandled = true;
+                self.canvasSelector.css("left", potential_h);
+              }
 
-			lis.push( "<li data-" + $.mobile.ns + "option-index='" + i + "' data-" + $.mobile.ns + "icon='"+ dataIcon +"' class='"+ classes.join(" ") + "' " + extraAttrs.join(" ") +">"+ anchor +"</li>" )
-		});
+              if (potential_s >= 0 && potential_s <= 255) {
+                self.dragging_hsl.s = potential_s;
+                eventHandled = true;
+                self.canvasSelector.css("top",  potential_s);
+              }
 
-		self.list.html( lis.join(" ") );
+              if (eventHandled) {
+                self._updateCanvasSelectorBackgroundClr(self);
+                self.selectorDraggingOffset.x = Math.ceil(parseInt(self.canvasSelector.css("width"))  / 2.0);
+                self.selectorDraggingOffset.y = Math.ceil(parseInt(self.canvasSelector.css("height")) / 2.0);
+                console.log("canvas.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
+              }
+            }
+            else {
+              var potential_l = event.offsetY;
 
-		self.list.find( "li" )
-			.attr({ "role": "option", "tabindex": "-1" })
-			.first().attr( "tabindex", "0" );
+              if (potential_l >= 0 && potential_l <= 255) {
+                self.dragging_hsl.l = potential_l;
+                eventHandled = true;
+                self.luminenceSelector.css("top", potential_l);
+              }
 
-		// Hide header close link for single selects
-		this.headerClose.hide();
+              if (eventHandled) {
+                self._updateCanvasSelectorBackgroundClr(self);
+                self.selectorDraggingOffset.x = Math.ceil(parseInt(self.luminenceSelector.css("width"))  / 2.0);
+                self.selectorDraggingOffset.y = Math.ceil(parseInt(self.luminenceSelector.css("height")) / 2.0);
+                console.log("canvas.vmousedown: (" + self.dragging_hsl.l + ")");
+              }
+            }
+          }
 
-		// Hide header if it's not a multiselect and there's no placeholder
-		if ( !placeholder.length ) {
-			this.header.hide();
-		} else {
-			this.headerTitle.text( this.placeholder );
-		}
+          return eventHandled;
+        },
 
-		// Now populated, create listview
-		self.list.listview();
-	},
+        _canvasSelectorDownAndMove: function(self, event) {
+        },
+
+        _fillColours: function(canvas, l) {
+          var
+            width = canvas.attr("width"),
+            context = canvas[0].getContext("2d"),
+            Nix, Nix1,
+            n_x_steps = 64, n_y_steps = 64,
+            x_step = 256.0 / n_x_steps, y_step = 256.0 / n_y_steps,
+            rgb,
+            h, s, g;
+
+          context.save();
+
+          context.mozImageSmoothingEnabled = false;
+
+          for (Nix = 0 ; Nix < n_y_steps ; Nix++)
+            for (Nix1 = 0 ; Nix1 < n_x_steps ; Nix1++) {
+
+              h = Nix1 / (n_x_steps - 1);
+              s = 1.0 - Nix  / (n_y_steps - 1);
+
+              rgb = this._HSLToRGB(h, s, l).map(this.normalizeValue);
+
+              clrStr = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", 1.0)";
+              context.fillStyle = clrStr;
+                context.fillRect(Nix1 * x_step, Nix * y_step, x_step, y_step);
+            }
+
+          for (Nix = 0 ; Nix < n_y_steps ; Nix++) {
+            g = this.normalizeValue((Nix / (n_y_steps - 1)));
+            context.fillStyle = "rgba(" + g + ", " + g + ", " + g + ", 1.0)";
+            context.fillRect(width - 16, Nix * y_step, 16, y_step);
+          }
+
+          context.restore();
+        },
+
+        _initCanvas: function(canvas, canvasSelector, luminenceSelector) {
+          var
+            width = 256 + 
+                    Math.ceil(parseInt(canvasSelector.css("width")) / 2.0) + 
+                    Math.ceil(parseInt(luminenceSelector.css("width")) / 2.0) +
+                    16;
+
+          canvas.attr("width", width);
+          luminenceSelector.css("left", 256 + Math.ceil(parseInt(canvasSelector.css("width"))));
+          this._fillColours(canvas, 0.5);
+        },
+
+        _HSLToRGB: function(h, s, l) {
+          var PI = 3.141592653589793115997963468544;
+          var r, g, b;
+
+          r = 0.0 + Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * ( 0.0 + h * 360.0))))) ;
+          g = 1.0 - Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * (60.0 + h * 360.0))))) ;
+          b = 1.0 - Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * (60.0 - h * 360.0))))) ;
+
+          r = l + (r - l) * s ;
+          g = l + (g - l) * s ;
+          b = l + (b - l) * s ;
+
+          r += (l - 0.5) * 2.0 * (l < 0.5 ? r : (1.0 - r)) ;
+          g += (l - 0.5) * 2.0 * (l < 0.5 ? g : (1.0 - g)) ;
+          b += (l - 0.5) * 2.0 * (l < 0.5 ? b : (1.0 - b)) ;
+
+          return [ r, g, b ];
+        },
+
+        _RGBToHSL: function(r, g, b) {
+          var
+            h = 0, s = 1.0, l = 0.5,
+            r_dist, g_dist, b_dist,
+            fMax, fMin;
+
+          fMax = Math.max (r, Math.max (g, b)) ;
+          fMin = Math.min (r, Math.min (g, b)) ;
+
+          l = (fMax + fMin) / 2 ;
+          if (fMax - fMin <= 0.00001) {
+            h = 0 ;
+            s = 0 ;
+          }
+          else {
+            s = (fMax - fMin) / ((l < 0.5) ? (fMax + fMin) : (2 - fMax - fMin)) ;
+
+            r_dist = (fMax - r) / (fMax - fMin) ;
+            g_dist = (fMax - g) / (fMax - fMin) ;
+            b_dist = (fMax - b) / (fMax - fMin) ;
+
+            if (r == fMax)
+              h = b_dist - g_dist ;
+            else
+            if (g == fMax)
+              h = 2 + r_dist - b_dist ;
+            else
+            if (b == fMax)
+              h = 4 + g_dist - r_dist ;
+
+            h *= 60 ;
+
+            if (h < 0)
+              h += 360 ;
+          }
+
+          return [ h / 360.0, s, l ];
+        },
+
+        normalizeValue: function (val) {
+          var
+            ret = val * 255.0,
+            ret_floor = Math.floor(ret);
+
+          if (ret - ret_floor > 0.5) ret_floor++;
+
+          return ret_floor;
+        },
 
 	refresh: function( forceRebuild ) {
+          var r, g, b, r_str, g_str, b_str, hsl,
+	      self = this,
+              clrValue = this.element.attr("value");
 
-		var self = this,
-			select = this.element,
-			options = this.optionElems = select.find( "option" ),
-			selected = options.filter( ":selected" ),
+          self.buttonContents.css("color", clrValue);
 
-			// return an array of all selected index's
-			indicies = selected.map(function() {
-				return options.index( this );
-			}).get();
+          console.log("clrValue: " + clrValue);
 
-                self.buttonContents.css("color", this.element.attr("value"));
+          if (clrValue.charAt(0) == '#')
+            clrValue = clrValue.substring(1);
 
-		if ( ( forceRebuild || 1 ) ) {
+          r_str = clrValue.substring(0, 2);
+          g_str = clrValue.substring(2, 4);
+          b_str = clrValue.substring(4, 6);
+          r = parseInt(r_str, 16) / 255.0;
+          g = parseInt(g_str, 16) / 255.0;
+          b = parseInt(b_str, 16) / 255.0;
 
-			self._buildList();
-		}
+          console.log("clrValue = " + clrValue + ", " +
+            "r = " + r + "(" + r_str + "), " +
+            "g = " + g + "(" + g_str + "), " +
+            "b = " + b + "(" + b_str + ")");
 
-		self.list.find( "li:not(.ui-li-divider)" )
-			.removeClass( $.mobile.activeBtnClass )
-			.attr( "aria-selected", false )
-			.each(function( i ) {
+          hsl = this._RGBToHSL(r, g, b).map(this.normalizeValue);
+          console.log("h: " + hsl[0] + " s: " + hsl[1] + " l: " + hsl[2]);
 
-				if ( $.inArray( i, indicies ) > -1 ) {
-					var item = $( this ).addClass( $.mobile.activeBtnClass );
+          this._fillColours(this.canvas, hsl[2] / 255.0);
 
-					// Aria selected attr
-					item.find( "a" ).attr( "aria-selected", true );
-				}
-			});
+          this.canvasSelector.css("left", hsl[0]);
+          this.canvasSelector.css("top", 255 - hsl[1]);
+          this.canvasSelector.css("background", "#" + clrValue);
+
+          var g_str = this.makeClrChannel(hsl[2]);
+          this.luminenceSelector.css("top", hsl[2]);
+          this.luminenceSelector.css("background", "#" + g_str + g_str + g_str);
 	},
 
 	open: function() {
@@ -383,8 +590,8 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		}
 
 		var self = this,
-			menuHeight = self.list.parent().outerHeight(),
-			menuWidth = self.list.parent().outerWidth(),
+			menuHeight = self.canvas.parent().outerHeight(),
+			menuWidth = self.canvas.parent().outerWidth(),
 			scrollTop = $( window ).scrollTop(),
 			btnOffset = self.button.offset().top,
 			screenHeight = window.innerHeight,
@@ -399,90 +606,54 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 		}, 300);
 
 		function focusMenuItem() {
-			self.list.find( ".ui-btn-active" ).focus();
+			self.canvas.find( ".ui-btn-active" ).focus();
 		}
 
-		if ( menuHeight > screenHeight - 80 || !$.support.scrollTop ) {
-			// prevent the parent page from being removed from the DOM,
-			// otherwise the results of selecting a list item in the dialog
-			// fall into a black hole
-			self.thisPage.unbind( "pagehide.remove" );
+		self.screen.height( $(document).height() )
+			.removeClass( "ui-screen-hidden" );
 
-			//for webos (set lastscroll using button offset)
-			if ( scrollTop == 0 && btnOffset > screenHeight ) {
-				self.thisPage.one( "pagehide", function() {
-					$( this ).jqmData( "lastScroll", btnOffset );
-				});
-			}
+		// Try and center the overlay over the button
+		var roomtop = btnOffset - scrollTop,
+			roombot = scrollTop + screenHeight - btnOffset,
+			halfheight = menuHeight / 2,
+			maxwidth = parseFloat( self.canvas.parent().css( "max-width" ) ),
+			newtop, newleft;
 
-			self.menuPage.one( "pageshow", function() {
-				// silentScroll() is called whenever a page is shown to restore
-				// any previous scroll position the page may have had. We need to
-				// wait for the "silentscroll" event before setting focus to avoid
-				// the browser"s "feature" which offsets rendering to make sure
-				// whatever has focus is in view.
-				$( window ).one( "silentscroll", function() {
-					focusMenuItem();
-				});
+		if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+			newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
+		} else {
+			// 30px tolerance off the edges
+			newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+		}
 
-				self.isOpen = true;
-			});
-
-			self.menuType = "page";
-			self.menuPageContent.append( self.list );
-			$.mobile.changePage( self.menuPage, {
-			   transition: $.mobile.defaultDialogTransition
-			});
+		// If the menuwidth is smaller than the screen center is
+		if ( menuWidth < maxwidth ) {
+			newleft = ( screenWidth - menuWidth ) / 2;
 		} else {
 
-			self.menuType = "overlay";
+			//otherwise insure a >= 30px offset from the left
+			newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
 
-			self.screen.height( $(document).height() )
-				.removeClass( "ui-screen-hidden" );
-
-			// Try and center the overlay over the button
-			var roomtop = btnOffset - scrollTop,
-				roombot = scrollTop + screenHeight - btnOffset,
-				halfheight = menuHeight / 2,
-				maxwidth = parseFloat( self.list.parent().css( "max-width" ) ),
-				newtop, newleft;
-
-			if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-				newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
-			} else {
-				// 30px tolerance off the edges
-				newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+			// 30px tolerance off the edges
+			if ( newleft < 30 ) {
+				newleft = 30;
+			} else if ( ( newleft + menuWidth ) > screenWidth ) {
+				newleft = screenWidth - menuWidth - 30;
 			}
-
-			// If the menuwidth is smaller than the screen center is
-			if ( menuWidth < maxwidth ) {
-				newleft = ( screenWidth - menuWidth ) / 2;
-			} else {
-
-				//otherwise insure a >= 30px offset from the left
-				newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
-
-				// 30px tolerance off the edges
-				if ( newleft < 30 ) {
-					newleft = 30;
-				} else if ( ( newleft + menuWidth ) > screenWidth ) {
-					newleft = screenWidth - menuWidth - 30;
-				}
-			}
-
-			self.listbox.append( self.list )
-				.removeClass( "ui-selectmenu-hidden" )
-				.css({
-					top: newtop,
-					left: newleft
-				})
-				.addClass( "in" );
-
-			focusMenuItem();
-
-			// duplicate with value set in page show for dialog sized selects
-			self.isOpen = true;
 		}
+
+		self.listbox.append( self.canvas )
+			.removeClass( "ui-selectmenu-hidden" )
+			.css({
+				top: newtop,
+				left: newleft
+			})
+			.addClass( "in" );
+
+		focusMenuItem();
+
+		// duplicate with value set in page show for dialog sized selects
+		self.isOpen = true;
 	},
 
 	_focusButton : function(){
@@ -499,24 +670,10 @@ $.widget( "mobile.colourpicker", $.mobile.widget, {
 
 		var self = this;
 
-		if ( self.menuType == "page" ) {
-			// rebind the page remove that was unbound in the open function
-			// to allow for the parent page removal from actions other than the use
-			// of a dialog sized custom select
-			self.thisPage.bind( "pagehide.remove", function(){
-				$(this).remove();
-			});
-
-			// doesn't solve the possible issue with calling change page
-			// where the objects don't define data urls which prevents dialog key
-			// stripping - changePage has incoming refactor
-			window.history.back();
-		} else{
-			self.screen.addClass( "ui-screen-hidden" );
-			self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
-			self.list.appendTo( self.listbox );
-			self._focusButton();
-		}
+		self.screen.addClass( "ui-screen-hidden" );
+		self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
+		self.canvas.appendTo( self.listbox );
+		self._focusButton();
 
 		// allow the dialog to be closed again
 		this.isOpen = false;
