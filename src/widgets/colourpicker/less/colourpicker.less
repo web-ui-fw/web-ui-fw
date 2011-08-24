@@ -1,0 +1,27 @@
+/* Own CSS */
+
+/* @selector-size should be an odd number, in order to pixel-perfectly center on a given colour */
+@selector-size: 61px;
+@selector-border-width: 5px;
+@selector-border-radius: (@selector-size + 2 * @selector-border-width) / 4;
+
+.colourpicker-button-span {
+  text-align: center;
+}
+
+.colourpicker-canvas-border {
+  padding: (@selector-border-width * 2 + @selector-size - 1) / 2;
+}
+
+.colourpicker-canvas-selector {
+  position: absolute;
+  width: @selector-size;
+  height: @selector-size;
+  border-style: solid;
+  border-width: @selector-border-width;
+  border-color: black;
+  -moz-border-radius: @selector-border-radius;
+  -webkit-border-radius: @selector-border-radius;
+  -khtml-border-radius: @selector-border-radius;
+  border-radius: @selector-border-radius;
+}
