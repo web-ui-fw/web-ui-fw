@@ -10,7 +10,7 @@
 ( function($) {
 
 	$.extend($.ui.gmap.prototype, {
-		
+
 		/**
 		 * Adds a shape to the map
 		 * @param type:string Polygon, Polyline, Rectangle, Circle
@@ -20,7 +20,7 @@
 		addShape: function(a, b) {
 			return $(this.get('overlays > ' + a, []).push(new google.maps[a](jQuery.extend({'map': this.get('map')}, b))));
 		},
-		
+
 		/**
 		 * Adds fusion data to the map.
 		 * @param fusionTableOptions:google.maps.FusionTablesLayerOptions, http://code.google.com/intl/sv-SE/apis/maps/documentation/javascript/reference.html#FusionTablesLayerOptions
@@ -29,7 +29,7 @@
 		loadFusion: function(a, b) {
 			( (!b) ? this.get('overlays > FusionTablesLayer', new google.maps.FusionTablesLayer()) : this.get('overlays > FusionTablesLayer', new google.maps.FusionTablesLayer(b, a)) ).setOptions(jQuery.extend({'map': this.get('map') }, a));
 		},
-		
+
 		/**
 		 * Adds markers from KML file or GeoRSS feed
 		 * @param uid:String - an identifier for the RSS e.g. 'rss_dogs'
@@ -39,7 +39,7 @@
 		loadKML: function(a, b, c) {
 			this.get('overlays > ' + a, new google.maps.KmlLayer(b, jQuery.extend({'map': this.get('map')}, c)));
 		}
-		
+
 		/**
 		 * A layer that displays data from Panoramio.
 		 * @param panoramioLayerOptions:google.maps.panoramio.PanoramioLayerOptions, http://code.google.com/apis/maps/documentation/javascript/reference.html#PanoramioLayerOptions
@@ -50,7 +50,7 @@
 			}
 			this.get('overlays').PanoramioLayer.setOptions(jQuery.extend({'map': this.get('map') }, a));
 		}*/
-	
+
 	});
-	
+
 } (jQuery) );

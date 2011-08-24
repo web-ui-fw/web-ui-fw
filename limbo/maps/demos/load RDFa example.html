@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.1//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-2.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
     xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.w3.org/1999/xhtml
-                        http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd"
+			http://www.w3.org/MarkUp/SCHEMA/xhtml-rdfa-2.xsd"
     xml:lang="en">
     <head profile="http://dublincore.org/documents/dcq-html/">
-        
-        <title>Example with Google maps and RDFa - Google maps jQuery plugin</title>
-        <meta name="keywords" content="Google maps, jQuery, plugin, RDFa" />
+
+	<title>Example with Google maps and RDFa - Google maps jQuery plugin</title>
+	<meta name="keywords" content="Google maps, jQuery, plugin, RDFa" />
 		<meta name="description" content="An example how to load markers with RDFa using jQuery and Google maps v3" />
 		<meta http-equiv="content-language" content="en"/>
-		
+
 		<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
 		<meta name="DC.title" content="Example with Google maps and RDFa - Google maps jQuery plugin" />
 		<meta name="DC.subject" content="Google maps;jQuery;plugin;RDFa" />
 		<meta name="DC.description" content="An example how to load markers with RDFa using jQuery and Google maps v3" />
 		<meta name="DC.creator" content="Johan S&auml;ll Larsson" />
-        <meta name="DC.language" content="en"/>
-		
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
-		
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
+	<meta name="DC.language" content="en"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssfonts/fonts-min.css" />
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />	 
-        <link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shCore.css" />
-		<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shThemeDefault.css" />		
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shCore.css" />
+		<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shThemeDefault.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
-        
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-        <script type="text/javascript" src="../web/jquery.fn.gmap.js"></script>
+	<script type="text/javascript" src="../web/jquery.fn.gmap.js"></script>
 		<script type="text/javascript" src="../ui/jquery.ui.map.rdfa.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shCore.js"></script>
-      	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shAutoloader.js"></script>
+	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shAutoloader.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushJScript.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushXml.js"></script>
-        <script type="text/javascript">
+	<script type="text/javascript">
 			// Ignore all code here
 			String.prototype.format = function() {
 				var retval = this.toString();
@@ -50,7 +50,7 @@
 				}
 				return retval;
 			};
-			$(function() {	
+			$(function() {
 				// Only for code formatting
 				SyntaxHighlighter.all();
 				var items = '';
@@ -73,7 +73,7 @@
 			$(function() {
 				$('#sidebar-wrap').hide();
 				$('#map_canvas').gmap({ 'navigationControl': false, 'streetViewControl': false }).bind('init', function(event, map) {
-					$('#map_canvas').gmap('rdfa', 'vcard:Vevent', function(data, item, i) { 
+					$('#map_canvas').gmap('rdfa', 'vcard:Vevent', function(data, item, i) {
 						var content = '<h2>Extracted metadata</h2>';
 						for ( var p in data['vevent'] ) {
 							if ( data['vevent'][p].content ) {
@@ -86,7 +86,7 @@
 					});
 					$('#map_canvas').gmap('addControl', 'sidebar', 1);
 				});
-            });
+	    });
 		</script>
 		<!-- GA START -->
 		<script type="text/javascript">
@@ -102,17 +102,17 @@
 		<!-- GA END -->
     </head>
     <body>
-	
+
 		<div id="doc">
-		
+
 			<div id="hd">
-                <h1><a href="/">Google maps jQuery plugin</a> load markers with RDFa example</h1>
-            </div>
-            
-            <div class="item gradient ui-corner-all shadow-all">
-                <div id="map_canvas"></div>
-            </div>
-		
+		<h1><a href="/">Google maps jQuery plugin</a> load markers with RDFa example</h1>
+	    </div>
+
+	    <div class="item gradient ui-corner-all shadow-all">
+		<div id="map_canvas"></div>
+	    </div>
+
 			<div id="sidebar-wrap">
 				<div id="sidebar">
 					<h3>Event</h3>
@@ -121,10 +121,10 @@
 							<abbr class="dtstart" property="vcard:dtstart" content="20101214" title="20101214">Tuesday December 14, 2010</abbr>
 						</span>
 						<span class="summary" property="vcard:summary">Robyn - Stockholm</span> at
-						<span class="venue location vcard" about="#venue">  
+						<span class="venue location vcard" about="#venue">
 							<span class="fn org"><a rel="vcard:urlofvenue" href="/venue/8473/STHLM/Stockholm/Berns-Salonger/">Berns Salonger</a></span>
 							<span class="address adr" property="vcard:adr">
-								<span typeof="vcard:address"> 
+								<span typeof="vcard:address">
 									<span class="street-address" property="vcard:street-address">Berzelii Park</span>
 									<span class="locality" property="vcard:locality">Stockholm</span>, <span class="region" property="vcard:region">Stockholm</span>
 									<span class="geo hidden">
@@ -137,14 +137,14 @@
 					</div>
 				</div>
 			</div>
-        
+
 			<h2>Using jquery with Google maps</h2>
 			<p>
 				Download <a href="http://jquery.com/">jQuery 1.4.X or higher</a> and optionally <a href="http://jqueryui.com/">jQuery UI 1.8.X or higher</a> or
-				use <a href="http://code.google.com/intl/sv-SE/apis/libraries/devguide.html">Googles</a> or <a href="http://www.asp.net/ajaxlibrary/cdn.ashx">Microsofts</a> 
+				use <a href="http://code.google.com/intl/sv-SE/apis/libraries/devguide.html">Googles</a> or <a href="http://www.asp.net/ajaxlibrary/cdn.ashx">Microsofts</a>
 				<abbr title="Content delivery network"><a href="http://en.wikipedia.org/wiki/Content_delivery_network">CDN</a></abbr>.
 			</p>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: xml">
 	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
@@ -153,9 +153,9 @@
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.js"&gt;&lt;/script&gt;
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.rdfa.js"&gt;&lt;/script&gt;</pre>
 			</div>
-			
+
 			<p>or</p>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: xml">
 	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
@@ -163,13 +163,13 @@
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.fn.gmap.js"&gt;&lt;/script&gt;
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.rdfa.js"&gt;&lt;/script&gt;</pre>
 			</div>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: js">
 &lt;script type="text/javascript"&gt;
 	$(function() {
 		$('#map_canvas').gmap().bind('init', function() {
-				$('#map_canvas').gmap('rdfa', 'vcard:Vevent', function(data, item, i) { 
+				$('#map_canvas').gmap('rdfa', 'vcard:Vevent', function(data, item, i) {
 					$('#map_canvas').gmap('addMarker', { 'bounds':true, 'position': data['vevent']['geo:lat_long'].content });
 				});
 			}
@@ -177,7 +177,7 @@
 	});
 &lt;/script&gt;</pre>
 			</div>
-			
+
 			<h2>More Google maps and jQuery examples</h2>
 			<ul>
 				<li><a href="jquery-mobile-example.html">Google maps with jQuery mobile example</a></li>
@@ -191,7 +191,7 @@
 				<li><a href="basic-example.html">Google maps and jQuery example</a></li>
 				<li><a href="google-maps-jquery-filtering.html">Filter markers example</a></li>
 			</ul>
-			
+
 			<div id="google-groups" class="groups ui-corner-all">
 				<h2>Forum</h2>
 				<ul id="results"></ul>
@@ -202,12 +202,12 @@
 					<input type="submit" name="sub" value="Subscribe" />
 				</form>
 			</div>
-			
+
 			<div id="ft" class="hidden">
-				Author: 
+				Author:
 				<div id="hcard-Johan-Säll-Larsson" class="vcard">
 					<span class="fn n">
-						<span class="given-name">Johan</span> 
+						<span class="given-name">Johan</span>
 						<span class="family-name">Säll Larsson</span>
 					</span>
 					<span class="adr">

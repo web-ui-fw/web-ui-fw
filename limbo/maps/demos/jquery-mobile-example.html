@@ -1,20 +1,20 @@
-<!DOCTYPE html> 
-<html> 
+<!DOCTYPE html>
+<html>
 	<head profile="http://dublincore.org/documents/dcq-html/">
-	
+
 		<title>jQuery mobile with Google maps - Google maps jQuery plugin</title>
 		<meta name="keywords" content="Google maps, jQuery, plugin, mobile, iphone, ipad, android, HTML5" />
 		<meta name="description" content="Examples with jQuery mobile, Google maps and HTML5" />
 		<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1"/>
 		<meta http-equiv="content-language" content="en"/>
-		
+
 		<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
 		<meta name="DC.title" content="jQuery mobile with Google maps - Google maps jQuery plugin" />
 		<meta name="DC.subject" content="Google maps;jQuery;plugin;mobile;iphone;ipad;android;HTML5" />
 		<meta name="DC.description" content="Examples with jQuery mobile, Google maps and HTML5" />
 		<meta name="DC.creator" content="Johan S&auml;ll Larsson" />
 		<meta name="DC.language" content="en"/>
-		
+
 		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/main-mobile.css" />
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -38,21 +38,21 @@
 		</script>
 		<!-- GA END -->
 		<script type="text/javascript">
-			
+
 			$('#basic_map').live("pageshow", function() {
 				$('#map_canvas').gmap('refresh');
 			});
-			
+
 			$('#basic_map').live("pagecreate", function() {
 				$('#map_canvas').gmap({'center': '59.3426606750, 18.0736160278'}).bind('init', function(evt, map) {
-					$('#map_canvas').gmap('addMarker', {'position': map.getCenter(), 'animation': google.maps.Animation.DROP }).click(function() { 
+					$('#map_canvas').gmap('addMarker', {'position': map.getCenter(), 'animation': google.maps.Animation.DROP }).click(function() {
 						$('#map_canvas').gmap('openInfoWindow', { 'content': 'Hello world!'}, this);
 					});
 				});
 			});
-			
+
 			////////////////////////////////////////////////////////////
-			
+
 			$('#directions_map').live("pageshow", function() {
 				$('#map_canvas_1').gmap('refresh');
 				$('#map_canvas_1').gmap('getCurrentPosition', function(position, status) {
@@ -69,7 +69,7 @@
 					}
 				});
 			});
-			
+
 			$('#directions_map').live("pagecreate", function() {
 				$('#map_canvas_1').gmap({'center': '59.3426606750, 18.0736160278'});
 				$('#submit').click(function() {
@@ -83,13 +83,13 @@
 					return false;
 				});
 			});
-			
+
 			////////////////////////////////////////////////////////////
-			
+
 			$('#gps_map').live("pageshow", function() {
 				$('#map_canvas_2').gmap('refresh');
 			});
-			
+
 			$('#gps_map').live("pagecreate", function() {
 				$('#map_canvas_2').gmap({'center': '59.3426606750, 18.0736160278', 'mapTypeId': 'terrain'}).bind('init', function(evt, map) {
 					$('#map_canvas_2').gmap('watchPosition', function(position, status) {
@@ -106,43 +106,43 @@
 					});
 				});
 			});
-			
+
 			$('#gps_map').live("pagehide", function() {
 				$('#map_canvas_2').gmap('clearWatch');
 			});
-			
-		</script>
-	</head> 
 
-	<body> 
+		</script>
+	</head>
+
+	<body>
 
 		<div id="home" data-role="page">
 			<div data-role="header">
 				<h1><a data-ajax="false" href="/">jQuery mobile with Google maps v3</a> examples</h1>
 			</div>
-			<div data-role="content">	
-				<p>This is an example using the 
-					<a data-ajax="false" href="/" alt="Google map jQuery plugin">Google maps jQuery plugin</a> 
+			<div data-role="content">
+				<p>This is an example using the
+					<a data-ajax="false" href="/" alt="Google map jQuery plugin">Google maps jQuery plugin</a>
 					together with <a data-ajax="false" href="http://jquerymobile.com" alt="jQuery mobile framework">jQuery mobile framework</a>. Since jquery mobile framework
 					loads links through Ajax you either need to disable the jQuery mobile's Ajax behavior or load the Google maps javascript in the 'real' first page.
 					<em>This example use ajax in navigation.</em>
 				</p>
-				
+
 				<p>
-					To disable pages loading through Ajax bind 'mobileinit' and override $.mobile.ajaxEnabled (You need to bind 'mobileinit' 
-					before referencing the jQuery mobile script) or add <strong>data-ajax="false"</strong> or <strong>rel="external"</strong> to the link element. 
+					To disable pages loading through Ajax bind 'mobileinit' and override $.mobile.ajaxEnabled (You need to bind 'mobileinit'
+					before referencing the jQuery mobile script) or add <strong>data-ajax="false"</strong> or <strong>rel="external"</strong> to the link element.
 				</p>
-				
+
 				<h2>jQuery mobile examples</h2>
-				<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="a"> 
-					<li><a href="#basic_map">Basic map example</a></li> 
+				<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="a">
+					<li><a href="#basic_map">Basic map example</a></li>
 					<li><a href="#gps_map">Basic map example with geolocation</a></li>
-					<li><a href="#directions_map">Get directions example</a></li> 
+					<li><a href="#directions_map">Get directions example</a></li>
 					<li><a data-ajax="false" href="jquery-mobile-google-maps-places.html">Search for places</a></li>
 				</ul>
-				
+
 				<h2>More Google maps and jQuery examples</h2>
-				<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="a"> 
+				<ul data-role="listview" data-inset="true" data-theme="c" data-dividertheme="a">
 					<li><a data-ajax="false" href="advanced-example.html">Microformats, Google streetview and jQuery dialog example</a></li>
 					<li><a data-ajax="false" href="other-examples.html">Click and drag events with Google geo search example</a></li>
 					<li><a data-ajax="false" href="load JSON example.html">Import markers with JSON example</a></li>
@@ -156,52 +156,52 @@
 				</ul>
 
 			</div>
-			
+
 			<div data-role="footer" data-theme="a">
 				<h3>Need help?</h3>
 				<p class="more">Please feel free to ask for help in the <a data-ajax="false" href="http://groups.google.com/group/jquery-ui-map-discuss">forum</a></p>
 				<div class="hidden" itemscope itemtype="http://data-vocabulary.org/Person">
-					Author: 
-					<span itemprop="name">Johan S&auml;ll Larsson</span>  
+					Author:
+					<span itemprop="name">Johan S&auml;ll Larsson</span>
 					<span itemprop="address" itemscope itemtype="http://data-vocabulary.org/Address">
-						<span itemprop="locality">G&ouml;teborg</span>, 
-						<span itemprop="country-name">Sweden</span> 
+						<span itemprop="locality">G&ouml;teborg</span>,
+						<span itemprop="country-name">Sweden</span>
 					</span>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 		<div id="basic_map" data-role="page">
 			<div data-role="header" data-add-back-btn="true">
 				<h1><a data-ajax="false" href="/">jQuery mobile with Google maps v3</a> examples</h1>
 				<a href="jquery-mobile-example.html" data-ajax="false" data-icon="home">Home</a>
 			</div>
-			<div data-role="content">	
+			<div data-role="content">
 				<div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
 					<div id="map_canvas" style="height:350px;"></div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="gps_map" data-role="page">
 			<div data-role="header" data-add-back-btn="true">
 				<h1><a data-ajax="false" href="/">jQuery mobile with Google maps v3</a> examples</h1>
 				<a href="jquery-mobile-example.html" data-ajax="false" data-icon="home">Home</a>
 			</div>
-			<div data-role="content">	
+			<div data-role="content">
 				<div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
 					<div id="map_canvas_2" style="height:300px;"></div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div id="directions_map" data-role="page">
 			<div data-role="header" data-add-back-btn="true">
 				<h1><a data-ajax="false" href="/">jQuery mobile with Google maps v3</a> examples</h1>
 				<a href="jquery-mobile-example.html" data-ajax="false" data-icon="home">Home</a>
 			</div>
-			<div data-role="content">	
+			<div data-role="content">
 				<div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
 					<div id="map_canvas_1" style="height:300px;"></div>
 					<p>
@@ -221,7 +221,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</body>
-	
+
 </html>

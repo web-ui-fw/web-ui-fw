@@ -8,39 +8,39 @@
  *		jquery.ui.map.js
  */
 ( function($) {
-	
+
 	/* see http://en.wikipedia.org/wiki/XHTML_Friends_Network */
-	var XFN = [ 
-		'friend', 
-		'contact', 
+	var XFN = [
+		'friend',
+		'contact',
 		'acquaintance'
 	];
-	
+
 	/* Supported properties */
 	var properties = [
 		'summary',
 		'description',
-		'url', 
+		'url',
 		'photo',
-		'street-address', 
-		'postal-code', 
+		'street-address',
+		'postal-code',
 		'locality',
 		'region',
 		'latitude',
 		'longitude',
-		'startDate', 
-		'dtstart', 
-		'endDate', 
-		'dtend', 
-		'duration', 
-		'eventType', 
-		'category', 					  		
+		'startDate',
+		'dtstart',
+		'endDate',
+		'dtend',
+		'duration',
+		'eventType',
+		'category',
 		'fn',
 		'name',
-		'nickname', 
-		'title', 
+		'nickname',
+		'title',
 		'role',
-		'org', 
+		'org',
 		'tel',
 		'reviewer',
 		'dtreviewed',
@@ -55,7 +55,7 @@
 			});
 		}
 	});
-	
+
 	function hasProperty(property) {
 		for( var i = 0; i < properties.length; i++) {
 			if ( properties[i] === property ) {
@@ -64,7 +64,7 @@
 		};
 		return false;
 	}
-	
+
 	function hasXFN(xfn) {
 		for( var i = 0; i < XFN.length; i++) {
 			if ( XFN[i] === xfn ) {
@@ -73,13 +73,13 @@
 		};
 		return false;
 	}
-	
+
 	function getItem(node, list) {
-		
+
 		node.children().each(function() {
-			
+
 			var childNode = $(this);
-			
+
 			if ( childNode.attr('class') != undefined ) {
 				$.each(childNode.attr('class').split(' '), function(i, c) {
 					if ( c.length > 0 && hasProperty(c) ) {
@@ -104,7 +104,7 @@
 					}
 				});
 			}
-			
+
 			if ( childNode.attr('rel') != undefined ) {
 				$.each(childNode.attr('rel').split(' '), function(i, c) {
 					if ( c.length > 0 && hasXFN(c) ) {
@@ -115,13 +115,13 @@
 					}
 				});
 			}
-			
+
 			getItem(childNode, list);
-			
+
 		});
-		
+
 		return list;
-		
+
 	}
 
 } (jQuery) );

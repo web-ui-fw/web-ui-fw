@@ -8,24 +8,24 @@
  *		jquery.ui.map.js
  */
 ( function($) {
-	
+
 	jQuery.fn.extend({
 		items: getItems
 	});
-	
+
 	function getItems(type, ns, callback) {
 		var selector = jQuery.map(splitTokens(ns), function(t) {
 			return '['+type+'~="'+t.replace(/"/g, '\\"')+'"]';
 		}).join(',') || '*';
 		return jQuery(selector, this).filter(callback);
 	}
-	
+
 	function splitTokens(s) {
 		if (s && /\S/.test(s))
 		  return s.replace(/^\s+|\s+$/g,'').split(/\s+/);
 		return [];
 	}
-	
+
 	function resolve(url) {
 		if (!url)
 			return '';
@@ -33,9 +33,9 @@
 		img.setAttribute('src', url);
 		return img.src;
 	}
-	
+
 	function populateItem(elm, list, prefix, property) {
-		
+
 		var tagName = elm.tagName.toUpperCase();
 		list.tagName = tagName;
 		list.src = null;
@@ -62,7 +62,7 @@
 		list.rel = elm.getAttribute('rel');
 
 	}
-	
+
 	function getItem(node, list) {
 		node.children().each( function() {
 			var property = $(this).attr('property');
@@ -76,16 +76,16 @@
 		});
 		return list;
 	}
-	
+
 	$.extend($.ui.gmap.prototype, {
-		
+
 		/**
-		 * Extracts meta data from the HTML 
+		 * Extracts meta data from the HTML
 		 * @param namespace:String
 		 * @param callback:function(result:Array<String>, item:jQuery, iterator:int)
 		 */
-		rdfa: function(ns, callback) { 
-			
+		rdfa: function(ns, callback) {
+
 			var self = this;
 			var prefix;
 			if ( ns.indexOf('http') > -1 ) {
@@ -100,14 +100,14 @@
 			prefix = prefix.toLowerCase();
 			var retval = [];
 			retval[prefix] = [];
-			
+
 			$(document).items('typeof', ns, function() { return (this.getAttribute('typeof') != null); }).each(function(i, node) {
 				getItem($(node), retval[prefix]);
 				self._call(callback, retval, $(node), i);
 			});
-			
+
 		}
-	
+
 	});
-	
+
 } (jQuery) );
