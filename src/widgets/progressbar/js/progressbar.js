@@ -9,7 +9,7 @@
 (function($, window, undefined) {
 	$.widget("mobile.progressbar", $.mobile.widget, {
 		options: { 
-			duration	: 5000,
+			duration	: 20000,
 		},
 				
 		data: {

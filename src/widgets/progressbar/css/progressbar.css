@@ -18,11 +18,7 @@
   background-color: white;
   color: black;
   width: 50%;
-  /*
-  text-align: center;  
-  margin: auto;
-  */
-}
+  }
 
 #progressbar {
   position: relative;
@@ -54,8 +50,7 @@
 	margin-bottom: 14px;			
 }
 
-#boxImgId {
-	
+#boxImgId {	
 	position: relative;
 	top: 0;
 	background: gray;
@@ -67,7 +62,6 @@
 	position: relative;
 	top: -10px;
 	background: orange;
-	
 	height: 10px;
 	width: 0;
 	
