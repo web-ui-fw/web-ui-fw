@@ -72,10 +72,10 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                   canvas = $("<canvas width='288' height='256'>Colour picker canvas</canvas>")
                     .appendTo(listbox),
 
-                  canvasSelector = $("<div>", {"class" : "colorpicker-canvas-selector"})
+                  canvasSelector = $("<div>", {"class" : "colorpicker-canvas-selector ui-corner-all"})
                     .appendTo(listbox),
 
-                  luminenceSelector = $("<div>", {"class" : "colorpicker-canvas-selector"})
+                  luminenceSelector = $("<div>", {"class" : "colorpicker-canvas-selector ui-corner-all"})
                     .appendTo(listbox);
 
                 this.element.css("display", "none");
