@@ -10,7 +10,7 @@
 ( function($) {
 
 	$.extend($.ui.gmap.prototype, {
-		 
+
 		/**
 		 * Gets the current position
 		 * @param callback:function(position, status)
@@ -19,20 +19,20 @@
 		getCurrentPosition: function(a, b) {
 			var c = this;
 			if ( navigator.geolocation ) {
-				navigator.geolocation.getCurrentPosition ( 
+				navigator.geolocation.getCurrentPosition (
 					function(d) {
 						c._call(a, d, "OK");
-					}, 
+					},
 					function(error) {
 						c._call(a, null, error);
-					}, 
-					b 
-				);	
+					},
+					b
+				);
 			} else {
 				c._call(a, null, "NOT_SUPPORTED");
 			}
 		},
-		
+
 		/**
 		 * Watches current position
 		 * To clear watch, call navigator.geolocation.clearWatch(this.get('watch'));
@@ -42,15 +42,15 @@
 		watchPosition: function(a, b) {
 			var c = this;
 			if ( navigator.geolocation ) {
-				this.set('watch', navigator.geolocation.watchPosition ( 
+				this.set('watch', navigator.geolocation.watchPosition (
 					function(d) {
 						c._call(a, d, "OK");
-					}, 
+					},
 					function(error) {
 						c._call(a, null, error);
-					}, 
-					b 
-				));	
+					},
+					b
+				));
 			} else {
 				c._call(a, null, "NOT_SUPPORTED");
 			}
@@ -64,7 +64,7 @@
 				navigator.geolocation.clearWatch(this.get('watch'));
 			}
 		},
-		
+
 		/**
 		 * Autocomplete using Google Geocoder
 		 * @param panel:string/node/jquery
@@ -85,14 +85,14 @@
 					});
 				},
 				minLength: 3,
-				select: function(event, ui) { 
+				select: function(event, ui) {
 					self._call(b, ui);
 				},
 				open: function() { $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" ); },
 				close: function() { $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" ); }
 			});
 		},
-		
+
 		/**
 		 * Retrieves a list of Places in a given area. The PlaceResultss passed to the callback are stripped-down versions of a full PlaceResult. A more detailed PlaceResult for each Place can be obtained by sending a Place Details request with the desired Place's reference value.
 		 * @param a:google.maps.places.PlaceSearchRequest, http://code.google.com/apis/maps/documentation/javascript/reference.html#PlaceSearchRequest
@@ -101,8 +101,8 @@
 		placesSearch: function(a, b) {
 			this.get('services > PlacesService', new google.maps.places.PlacesService(this.get('map'))).search(a, b);
 		}
-		
-	
+
+
 	});
-	
+
 } (jQuery) );

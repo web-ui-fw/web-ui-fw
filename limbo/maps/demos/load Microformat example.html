@@ -2,39 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head profile="http://microformats.org/profile/hcalendar">
 
-        <title>Example with Google maps and microformats - Google maps jQuery plugin</title>
-        <meta name="keywords" content="Google maps, jQuery, plugin, microformats" />
+	<title>Example with Google maps and microformats - Google maps jQuery plugin</title>
+	<meta name="keywords" content="Google maps, jQuery, plugin, microformats" />
 		<meta name="description" content="An example how to load markers with microformats using jQuery and Google maps v3" />
 		<meta http-equiv="content-language" content="en" />
-		
+
 		<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
 		<meta name="DC.title" content="Example with Google maps and microformats - Google maps jQuery plugin" />
 		<meta name="DC.subject" content="Google maps;jQuery;plugin;microformats" />
 		<meta name="DC.description" content="An example how to load markers with microformats using jQuery and Google maps v3" />
 		<meta name="DC.creator" content="Johan S&auml;ll Larsson" />
-        <meta name="DC.language" content="en" />
-		
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
-		
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
-        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
+	<meta name="DC.language" content="en" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssreset/reset-min.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssbase/base-min.css" />
 		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.2.0/build/cssfonts/fonts-min.css" />
-        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />	 
-        <link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shCore.css" />
-		<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shThemeDefault.css" />		
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shCore.css" />
+		<link rel="stylesheet" type="text/css" href="../thirdparty/SyntaxHighlighter/shThemeDefault.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
-        
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-        <script type="text/javascript" src="../web/jquery.fn.gmap.js"></script>
+	<script type="text/javascript" src="../web/jquery.fn.gmap.js"></script>
 		<script type="text/javascript" src="../ui/jquery.ui.map.microformat.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shCore.js"></script>
-      	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shAutoloader.js"></script>
+	<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shAutoloader.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushJScript.js"></script>
 		<script type="text/javascript" src="../thirdparty/SyntaxHighlighter/shBrushXml.js"></script>
-        <script type="text/javascript">
+	<script type="text/javascript">
 			// Ignore all code here
 			String.prototype.format = function() {
 				var retval = this.toString();
@@ -43,7 +43,7 @@
 				}
 				return retval;
 			};
-			$(function() {	
+			$(function() {
 				// Only for code formatting
 				SyntaxHighlighter.all();
 				var items = '';
@@ -84,7 +84,7 @@
 					});
 					$('#map_canvas').gmap('addControl', 'sidebar', google.maps.ControlPosition.LEFT_TOP);
 				});
-            });
+	    });
 		//]]>
 		</script>
 		<!-- GA START -->
@@ -101,17 +101,17 @@
 		<!-- GA END -->
     </head>
     <body>
-        
+
 		<div id="doc">
-		
+
 			<div id="hd">
-                <h1><a href="/">Google maps jQuery plugin</a> load markers with microformats example</h1>
-            </div>
-            
-            <div class="item gradient ui-corner-all shadow-all">
-                <div id="map_canvas"></div>
-            </div>
-		
+		<h1><a href="/">Google maps jQuery plugin</a> load markers with microformats example</h1>
+	    </div>
+
+	    <div class="item gradient ui-corner-all shadow-all">
+		<div id="map_canvas"></div>
+	    </div>
+
 			<div id="sidebar-wrap">
 				<div id="sidebar">
 					<h3>Event</h3>
@@ -120,13 +120,13 @@
 							<abbr title="2010-12-14" class="dtstart">Tuesday December 14, 2010</abbr>
 						</span>
 						<span class="summary">Robyn - Stockholm</span> at
-						<span class="location vcard">  
+						<span class="location vcard">
 							<a class="fn org" href="http://www.berns.se/">Berns Salonger</a>
 							<span class="address adr">
 								<span class="street-address">Berzelii Park</span>
 								<span class="locality">Stockholm</span>, <span class="region">Stockholm</span>
 								<span class="geo">
-									<abbr title="59.3426606750" class="latitude"></abbr> 
+									<abbr title="59.3426606750" class="latitude"></abbr>
 									<abbr title="18.0736160278" class="longitude"></abbr>
 								</span>
 							</span>
@@ -135,14 +135,14 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<h2>Using jquery with Google maps</h2>
 			<p>
 				Download <a href="http://jquery.com/">jQuery 1.4.X or higher</a> and optionally <a href="http://jqueryui.com/">jQuery UI 1.8.X or higher</a> or
-				use <a href="http://code.google.com/intl/sv-SE/apis/libraries/devguide.html">Googles</a> or <a href="http://www.asp.net/ajaxlibrary/cdn.ashx">Microsofts</a> 
+				use <a href="http://code.google.com/intl/sv-SE/apis/libraries/devguide.html">Googles</a> or <a href="http://www.asp.net/ajaxlibrary/cdn.ashx">Microsofts</a>
 				<abbr title="Content delivery network"><a href="http://en.wikipedia.org/wiki/Content_delivery_network">CDN</a></abbr>.
 			</p>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: xml">
 	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
@@ -151,9 +151,9 @@
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.js"&gt;&lt;/script&gt;
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.microformats.js"&gt;&lt;/script&gt;</pre>
 			</div>
-			
+
 			<p>or</p>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: xml">
 	&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"&gt;&lt;/script&gt;
@@ -161,7 +161,7 @@
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.fn.gmap.js"&gt;&lt;/script&gt;
 	&lt;script type="text/javascript" src="PATH_TO_PLUGIN/jquery.ui.map.microformats.js"&gt;&lt;/script&gt;</pre>
 			</div>
-			
+
 			<div class="prettyprint">
 				<pre class="brush: js">
 &lt;script type="text/javascript"&gt;
@@ -174,7 +174,7 @@
 	});
 &lt;/script&gt;</pre>
 			</div>
-			
+
 			<h2>More Google maps and jQuery examples</h2>
 			<ul>
 				<li><a href="jquery-mobile-example.html">Google maps with jQuery mobile example</a></li>
@@ -188,7 +188,7 @@
 				<li><a href="basic-example.html">Google maps and jQuery example</a></li>
 				<li><a href="google-maps-jquery-filtering.html">Filter markers example</a></li>
 			</ul>
-			
+
 			<div id="google-groups" class="groups ui-corner-all">
 				<h2>Forum</h2>
 				<ul id="results"></ul>
@@ -199,12 +199,12 @@
 					<input type="submit" name="sub" value="Subscribe" />
 				</form>
 			</div>
-			
+
 			<div id="ft" class="hidden">
-				Author: 
+				Author:
 				<div id="hcard-Johan-Säll-Larsson" class="vcard">
 					<span class="fn n">
-						<span class="given-name">Johan</span> 
+						<span class="given-name">Johan</span>
 						<span class="family-name">Säll Larsson</span>
 					</span>
 					<span class="adr">

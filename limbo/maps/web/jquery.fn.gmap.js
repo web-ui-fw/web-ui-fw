@@ -5,7 +5,7 @@
  * Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
  */
 ( function($) {
-	
+
 	/**
 	 * This is how you write unmaintainable code :) - the size is small though.
 	 * @param namespace:string
@@ -28,12 +28,12 @@
 			} else if ( typeof options === 'object' || ! options ) {
 				d[id] = new $[a][b](options, this);
 				return this;
-			}  
+			}
 		};
 	};
-	
+
 	$.a("ui", "gmap", {
-		
+
 		/**
 		 * Map options
 		 * @see http://code.google.com/intl/sv-SE/apis/maps/documentation/javascript/reference.html#MapOptions
@@ -41,9 +41,9 @@
 		options: {
 			center: (google.maps) ? new google.maps.LatLng(0.0, 0.0) : null,
 			mapTypeId: (google.maps) ? google.maps.MapTypeId.ROADMAP : null,
-			zoom: 5	
+			zoom: 5
 		},
-		
+
 		/**
 		 * Get or set options
 		 * @param key:string
@@ -57,9 +57,9 @@
 				c._u(a, b);
 			}
 		},
-		
+
 		/**
-		 * Setup plugin basics, 
+		 * Setup plugin basics,
 		 * Set the jQuery UI Widget this.element, so extensions will work on both plugins
 		 */
 		_s: function( a, b ) {
@@ -72,7 +72,7 @@
 				this._init();
 			}
 		},
-		
+
 		/**
 		 * Create
 		 * @return $(google.maps.Map)
@@ -88,7 +88,7 @@
 			});
 			return $(b.map);
 		},
-		
+
 		/**
 		 * Set map options
 		 * @param key:string (optional)
@@ -102,7 +102,7 @@
 			}
 			map.setOptions(this.options);
 		},
-		
+
 		/**
 		 * Adds a latitude longitude pair to the bounds.
 		 * @param position:google.maps.LatLng/string
@@ -111,17 +111,17 @@
 			this.get('bounds', new google.maps.LatLngBounds()).extend(this._latLng(a));
 			this.get('map').fitBounds(this.get('bounds'));
 		},
-		
+
 		/**
 		 * Adds a custom control to the map
-		 * @param panel:jquery/node/string	
-		 * @param position:google.maps.ControlPosition	 
+		 * @param panel:jquery/node/string
+		 * @param position:google.maps.ControlPosition
 		 * @see http://code.google.com/intl/sv-SE/apis/maps/documentation/javascript/reference.html#ControlPosition
 		 */
 		addControl: function(a, b) {
 			this.get('map').controls[b].push(this._unwrap(a));
 		},
-		
+
 		/**
 		 * Adds a Marker to the map
 		 * @param markerOptions:google.maps.MarkerOptions (optional)
@@ -147,7 +147,7 @@
 			this._call(b, d, e);
 			return $(e);
 		},
-		
+
 		/**
 		 * Adds an InfoWindow to the map
 		 * @param infoWindowOptions:google.maps.InfoWindowOptions (optional)
@@ -160,7 +160,7 @@
 			this._call(b, c);
 			return $(c);
 		},
-		
+
 		/**
 		 * Clears by type
 		 * @param type:string i.e. markers, overlays, services
@@ -169,7 +169,7 @@
 			this._c(this.get(a));
 			this.set(a, []);
 		},
-		
+
 		_c: function(a) {
 			for ( b in a ) {
 				if ( a[b] instanceof google.maps.MVCObject ) {
@@ -181,7 +181,7 @@
 				a[b] = null;
 			}
 		},
-		
+
 		/**
 		 * Returns the marker(s) with a specific property and value, e.g. 'category', 'tags'
 		 * @param property:string the property to search within
@@ -224,7 +224,7 @@
 			}
 			return c[a];
 		},
-		
+
 		/**
 		 * Triggers an InfoWindow to open
 		 * @param infoWindowOptions:google.maps.InfoWindowOptions
@@ -233,9 +233,9 @@
 		 */
 		openInfoWindow: function(a, b) {
 			this.get('iw', new google.maps.InfoWindow).setOptions(a);
-			this.get('iw').open(this.get('map'), this._unwrap(b)); 
+			this.get('iw').open(this.get('map'), this._unwrap(b));
 		},
-				
+
 		/**
 		 * Sets an instance property
 		 * @param key:string
@@ -244,7 +244,7 @@
 		set: function(a, b) {
 			this.instances[this.id][a] = b;
 		},
-		
+
 		/**
 		 * Refreshes the map
 		 */
@@ -252,7 +252,7 @@
 			$(this.get('map')).triggerEvent('resize');
 			this._update();
 		},
-		
+
 		/**
 		 * Destroys the plugin.
 		 */
@@ -265,7 +265,7 @@
 				a[b] = null;
 			}
 		},
-		
+
 		/**
 		 * Helper method for calling a function
 		 * @param callback
@@ -275,7 +275,7 @@
 				a.apply(this, Array.prototype.slice.call(arguments, 1));
 			}
 		},
-		
+
 		/**
 		 * Helper method for google.maps.Latlng
 		 * @param callback
@@ -288,7 +288,7 @@
 				return new google.maps.LatLng(b[0], b[1]);
 			}
 		},
-		
+
 		/**
 		 * Helper method for unwrapping jQuery/DOM/string elements
 		 * @param callback
@@ -303,52 +303,52 @@
 			}
 			return $('#'+a)[0];
 		}
-		
+
 	});
-	
+
 	jQuery.fn.extend( {
-		
-		click: function(a) { 
+
+		click: function(a) {
 			return this.addEventListener('click', a);
 		},
-		
+
 		rightclick: function(a) {
 			return this.addEventListener('rightclick', a);
 		},
-		
+
 		dblclick: function(a) {
 			return this.addEventListener('dblclick', a);
 		},
-		
+
 		mouseover: function(a) {
 			return this.addEventListener('mouseover', a);
 		},
-		
+
 		mouseout: function(a) {
 			return this.addEventListener('mouseout', a);
 		},
-		
+
 		drag: function(a) {
 			return this.addEventListener('drag', a );
 		},
-		
+
 		dragend: function(a) {
 			return this.addEventListener('dragend', a );
 		},
-		
+
 		triggerEvent: function(a) {
-			google.maps.event.trigger(this[0], a);		
+			google.maps.event.trigger(this[0], a);
 		},
-		
+
 		addEventListener: function(a, b) {
 			if ( google.maps && this[0] instanceof google.maps.MVCObject ) {
 				google.maps.event.addListener(this[0], a, b );
 			} else {
-				this.bind(a, b);	
+				this.bind(a, b);
 			}
 			return this;
 		}
-		
+
 	});
-	
+
 } (jQuery) );
