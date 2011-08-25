@@ -8,7 +8,8 @@
 
 /**
  * shortcutscroll is a scrollview controller, which binds
- * a scrollview to a a list of short cuts. Clicking on a shortcut
+ * a scrollview to a a list of short cuts; the shortcuts are built
+ * from the text on dividers in the list. Clicking on a shortcut
  * instantaneously jumps the scrollview to the selected list divider;
  * mouse movements on the shortcut column move the scrollview to the
  * list divider currently under the touch.
@@ -20,6 +21,9 @@
  *
  * If a scrollview is not passed as an option to the widget, the parent
  * of the listview is assumed to be the scrollview under control.
+ *
+ * If a listview has no dividers or a single divider, the widget won't
+ * display.
  */
 (function( $, undefined ) {
 
@@ -32,10 +36,19 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
     _create: function () {
         var $el = this.element,
             o = this.options,
-            shortcutsContainer = $('<ul></ul>'),
+            shortcutsContainer = $('<div class="ui-shortcutscroll"/>'),
+            shortcutsList = $('<ul></ul>'),
             dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
-            jumpToDivider = null;
+            jumpToDivider = null,
+            shortcutscroll = this;
+
+        if (dividers.length < 2) {
+          return;
+        }
+
+        // popup for the hovering character
+        var popup = null;
 
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
@@ -45,43 +58,58 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
-        // create a closure to jump to a specific divider
-        jumpToDivider = function (divider) {
-            // get the vertical position of the divider (so we can
-            // scroll to it)
-            var dividerY = $(divider).position().top;
-
-            // find the bottom of the last list item
-            var bottomOffset = lastListItem.outerHeight(true) +
-                               lastListItem.position().top;
-
-            // get the height of the scrollview
-            var scrollviewHeight = o.scrollview.height();
-
-            // check that after the candidate scroll, the bottom of the
-            // last item will still be at the bottom of the scroll view
-            // and not half way up the page
-            var maxScroll = bottomOffset - scrollviewHeight;
-            dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
-
-            // apply the scroll
-            o.scrollview.scrollview('scrollTo', 0, -dividerY);
-        };
-
-        // get all the dividers from the list
+        // get all the dividers from the list and turn them into
+        // shortcuts
         dividers.each(function (index, divider) {
-            var listItem = $('<li>' + $(divider).text() + '</li>');
+            var text = $(divider).text();
+            var listItem = $('<li>' + text + '</li>');
 
             // bind mouse over so it moves the scroller to the divider
             listItem.bind('mouseover', function () {
-                jumpToDivider(divider);
+                // get the vertical position of the divider (so we can
+                // scroll to it)
+                var dividerY = $(divider).position().top;
+
+                // find the bottom of the last list item
+                var bottomOffset = lastListItem.outerHeight(true) +
+                                   lastListItem.position().top;
+
+                // get the height of the scrollview
+                var scrollviewHeight = o.scrollview.height();
+
+                // check that after the candidate scroll, the bottom of the
+                // last item will still be at the bottom of the scroll view
+                // and not half way up the page
+                var maxScroll = bottomOffset - scrollviewHeight;
+                dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
+
+                // apply the scroll
+                o.scrollview.scrollview('scrollTo', 0, -dividerY);
+
+                // show the popup
+                if (!popup) {
+                    popup = $('<div class="ui-shortcutscroll-popup">' +
+                              '<p></p>' +
+                              '</div>');
+
+                    o.scrollview.after(popup);
+                }
+
+                popup.find('p').text(text);
             });
 
-            shortcutsContainer.append(listItem);
+            shortcutsList.append(listItem);
         });
 
-        o.scrollview.after($('<div class="ui-shortcutscroll"/>')
-                           .append(shortcutsContainer));
+        // bind mouseout of the shortcutscroll container to remove popup
+        shortcutsContainer.bind('mouseout', function () {
+            if (popup) {
+                popup.remove();
+                popup = null;
+            }
+        });
+
+        o.scrollview.after(shortcutsContainer.append(shortcutsList));
     }
 });
 

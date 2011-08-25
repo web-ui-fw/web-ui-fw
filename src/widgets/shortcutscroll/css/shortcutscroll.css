@@ -15,7 +15,15 @@
   margin-left: -2.2em;
   padding: 0px;
   min-height: 14px;
+  width: 100%;
   -webkit-user-select: none;
   cursor: pointer;
   color: rgb(93, 93, 93);
+}
+
+.ui-shortcutscroll-popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: red;
 }
