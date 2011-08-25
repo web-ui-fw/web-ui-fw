@@ -23,7 +23,16 @@
 
 .ui-shortcutscroll-popup {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  color: red;
+  background-color: white;
+  min-width: 110px;
+  max-width: 140px;
+  min-height: 110px;
+  max-height: 140px;
+}
+
+.ui-shortcutscroll-popup * {
+  text-align: center;
+  font-size: 75px;
+  font-weight: bold;
+  vertical-align: top;
 }

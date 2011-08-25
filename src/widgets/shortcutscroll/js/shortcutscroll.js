@@ -12,7 +12,8 @@
  * from the text on dividers in the list. Clicking on a shortcut
  * instantaneously jumps the scrollview to the selected list divider;
  * mouse movements on the shortcut column move the scrollview to the
- * list divider currently under the touch.
+ * list divider matching the text currently under the touch; a popup
+ * with the text currently under the touch is also displayed.
  *
  * To apply, add the attribute data-shortcutscroll="true" to a listview
  * (a <ul> or <ol> element inside a page). Alternatively, call
@@ -74,12 +75,11 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
                 var bottomOffset = lastListItem.outerHeight(true) +
                                    lastListItem.position().top;
 
-                // get the height of the scrollview
                 var scrollviewHeight = o.scrollview.height();
 
                 // check that after the candidate scroll, the bottom of the
                 // last item will still be at the bottom of the scroll view
-                // and not half way up the page
+                // and not some way up the page
                 var maxScroll = bottomOffset - scrollviewHeight;
                 dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
 
@@ -89,13 +89,21 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
                 // show the popup
                 if (!popup) {
                     popup = $('<div class="ui-shortcutscroll-popup">' +
-                              '<p></p>' +
+                              '<div></div>' +
                               '</div>');
 
                     o.scrollview.after(popup);
+
+                    popup.position({my: 'center center',
+                                    at: 'center center',
+                                    of: o.scrollview});
                 }
 
-                popup.find('p').text(text);
+                popup.find('div').text(text);
+
+                popup.find('div').position({my: 'center center',
+                                            at: 'center center',
+                                            of: popup});
             });
 
             shortcutsList.append(listItem);
