@@ -4,7 +4,6 @@
   top: 121px;
   background-color: rgb(225, 221, 215);
   opacity: 0.8;
-  height: 673px;
   max-width: 20px;
   min-width: 12px;
 }
@@ -28,6 +27,9 @@
   max-width: 140px;
   min-height: 110px;
   max-height: 140px;
+  -moz-box-shadow: 8px 10px 0px rgb(199,199,199);
+	-webkit-box-shadow: 8px 10px 0px rgb(199,199,199);
+	box-shadow: 8px 10px 0px rgb(199,199,199);
 }
 
 .ui-shortcutscroll-popup * {
