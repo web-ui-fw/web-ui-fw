@@ -93,17 +93,16 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
                               '</div>');
 
                     o.scrollview.after(popup);
-
-                    popup.position({my: 'center center',
-                                    at: 'center center',
-                                    of: o.scrollview});
                 }
 
-                popup.find('div').text(text);
-
-                popup.find('div').position({my: 'center center',
+                popup.find('div').text(text)
+                                 .position({my: 'center center',
                                             at: 'center center',
                                             of: popup});
+
+                popup.position({my: 'center center',
+                                at: 'center center',
+                                of: o.scrollview});
             });
 
             shortcutsList.append(listItem);
