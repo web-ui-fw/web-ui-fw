@@ -238,12 +238,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                   return true;
                 });
 
-		select.attr( "tabindex", "-1" )
-			.focus(function() {
-				$(this).blur();
-				button.focus();
-			});
-
 		// Button events
 		button.bind( "vclick keydown" , function( event ) {
 			if ( event.type == "vclick" ||
