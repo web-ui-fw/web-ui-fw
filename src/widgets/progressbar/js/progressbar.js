@@ -42,6 +42,7 @@
 			alert("callback func animation complete");	
 		}
 		
+		/*
 		_value: function() {
 			var val = this.options.value;
 			// normalize the invalid value
@@ -50,7 +51,7 @@
 			}	
 			return Math.min(this.options.max, Math.max(this.min, val ));
 		},
-		
+		*/
 		_destroy: function() {
 			/*
 			this.data.bar.remove();
@@ -66,12 +67,13 @@
 			console.log("_destroy is called");
 		},
 		
+		/*
 		_setOptions: function( key, value) {
 			if ( key === "value") {
 				this.options.value = value;
 			}
 		},
-		
+		*/
 		_create: function() {
 			var container = this.element;
 			var obj = this;
