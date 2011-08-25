@@ -20,16 +20,47 @@
 			box			: 0
 		},		
 		
+		oldValue		: 0,
+		
 		_value: function() {
-			return  (this.options.value);
+			return  this.options.value;
 		},
 		
-		_refreshValue: function(now) {
-			this.options.value = parseInt(now);
-			console.log("value = " + parseInt(this._value()));
+		value: function( newValue) {
+			if ( newValue  === undefined ) {
+				return this._value();
+			}
+			this.options.value = parseInt(newValue);
+			return this;
+		},
+		
+		_percentage: function() {
+			return 100 * this._value() / this.options.max;
+		},
+		
+		_refreshValue: function( value /*now*/) {
+			//this.options.value = parseInt(now);
+			//console.log("value = " + parseInt(this._value()));
+			
+			var val = this.options.value;
+			var percentage = this._percentage();
+			
+			if(this.oldValue !== value) {
+				this.oldValue = value;
+				this._trigger("change");
+				this.value(value);
+			}
+		},
+		
+		_trigger: function(action) {
+			// animate here if there is a change in value	
+			if (action === "change") {
+				this.data.bar.css('width', this._value());
+			}
 		},
 		
 		
+		/*
 		startProgress: function(value) {
 			var obj = this;
 			this.data.bar.animate({
@@ -49,6 +80,7 @@
 			  	   }
 			  	 );
 		},		
+		*/
 		
 		_create: function() {
 			var container = this.element;
@@ -123,7 +155,9 @@
 			}); // end of click		
 			
 			/* caller of the progress bar widget should start the progressbar using startProgress */
-			obj.startProgress();	
+			// obj.startProgress();	
+			this.oldValue = this._value();
+			this._refreshValue();
 						
 		},			
 	}); /* End of widget */
