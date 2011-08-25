@@ -17,6 +17,7 @@
                      "Jun", "Jul", "Aug", "Sep", "Oct",
                      "Nov", "Dec"],
             animationDuration: 500,
+            initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
 
         data: {
@@ -262,8 +263,12 @@
         },
 
         _create: function() {
-            var container = this.element;
             var obj = this;
+            var input = this.element;
+            var container = $("<div/>", {class: "ui-datetimepicker"});
+
+            $(input).css("display", "none");
+            $(input).after(container);
 
             /* We must display either time or date: if the user set both to
              * false, we override that.
@@ -300,5 +305,12 @@
     var now = new Date();
     $($.mobile.datetimepicker.prototype.data.now = now);
     $($.mobile.datetimepicker.prototype.data.uuid = now.getTime());
+
+    $(document).bind("pagecreate create", function(e) {
+        $($.mobile.datetimepicker.prototype.options.initSelector, e.target)
+            .not(":jqmData(role='none'), :jqmData(role='nojs')")
+            .datetimepicker();
+    });
+
 })(jQuery, this);
 
