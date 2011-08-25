@@ -41,7 +41,6 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
             shortcutsList = $('<ul></ul>'),
             dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
-            jumpToDivider = null,
             shortcutscroll = this;
 
         if (dividers.length < 2) {
