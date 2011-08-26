@@ -1,0 +1,39 @@
+.ui-shortcutscroll {
+  position: absolute;
+  right: 0px;
+  top: 121px;
+  background-color: rgb(225, 221, 215);
+  opacity: 0.8;
+  max-width: 20px;
+  min-width: 12px;
+}
+
+.ui-shortcutscroll li {
+  list-style-type: none;
+  text-align: center;
+  margin-left: -2.2em;
+  padding: 0px;
+  min-height: 14px;
+  width: 100%;
+  -webkit-user-select: none;
+  cursor: pointer;
+  color: rgb(93, 93, 93);
+}
+
+.ui-shortcutscroll-popup {
+  position: absolute;
+  background-color: white;
+  min-width: 110px;
+  max-width: 140px;
+  min-height: 110px;
+  max-height: 140px;
+  -moz-box-shadow: 8px 10px 0px rgb(199, 199, 199);
+	-webkit-box-shadow: 8px 10px 0px rgb(199, 199, 199);
+	box-shadow: 8px 10px 0px rgb(199, 199, 199);
+}
+
+.ui-shortcutscroll-popup * {
+  text-align: center;
+  font-size: 75px;
+  font-weight: bold;
+}
