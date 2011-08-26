@@ -12,8 +12,9 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpicker')"
 	},
 	_create: function() {
+
 		var
-                  self = this,
+		  self = this,
 
 		  o = this.options,
 
@@ -162,7 +163,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                   self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
                   self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
 
-//                  console.log("select.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
                   return true;
                 });
 
@@ -175,7 +175,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                   self.dragging_hsl.s = parseInt(self.canvasSelector.css("top"));
                   self.dragging_hsl.l = parseInt(self.luminenceSelector.css("top"));
 
-//                  console.log("lmnnce.vmousedown: (" + self.dragging_hsl.l + ")");
                   return true;
                 });
 
@@ -199,7 +198,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
                   if (eventHandled) {
                     self._updateCanvasSelectorBackgroundClr(self);
-//                    console.log("select.vmousemove: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
                   }
 
                   return eventHandled;
@@ -220,20 +218,17 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                   if (eventHandled) {
                     self._fillColours(self.canvas, self.dragging_hsl.l / 255.0);
                     self._updateCanvasSelectorBackgroundClr(self);
-//                    console.log("lmnnce.vmousemove: (" + self.dragging_hsl.l + ")");
                   }
 
                   return eventHandled;
                 });
 
                 canvas.bind( "vmouseup", function (event) {
-//                  console.log("canvas.vmouseup: event = " + event);
                   self.dragging = false;
                   return true;
                 });
 
                 canvasSelector.bind( "vmouseup", function (event) {
-//                  console.log("canvasSelector.vmouseup: event = " + event);
                   self.dragging = false;
                   return true;
                 });
@@ -301,7 +296,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                 self._updateCanvasSelectorBackgroundClr(self);
                 self.selectorDraggingOffset.x = Math.ceil(parseInt(self.canvasSelector.css("width"))  / 2.0);
                 self.selectorDraggingOffset.y = Math.ceil(parseInt(self.canvasSelector.css("height")) / 2.0);
-//                console.log("canvas.vmousedown: (" + self.dragging_hsl.h + ", " + self.dragging_hsl.s + ")");
               }
             }
             else {
@@ -317,15 +311,11 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
                 self._updateCanvasSelectorBackgroundClr(self);
                 self.selectorDraggingOffset.x = Math.ceil(parseInt(self.luminenceSelector.css("width"))  / 2.0);
                 self.selectorDraggingOffset.y = Math.ceil(parseInt(self.luminenceSelector.css("height")) / 2.0);
-//                console.log("canvas.vmousedown: (" + self.dragging_hsl.l + ")");
               }
             }
           }
 
           return eventHandled;
-        },
-
-        _canvasSelectorDownAndMove: function(self, event) {
         },
 
         _fillColours: function(canvas, l) {
@@ -449,9 +439,10 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 	      self = this,
               clrValue = this.element.attr("value");
 
-          self.buttonContents.css("color", clrValue);
+          if (undefined === clrValue)
+            clrValue = "#ff0000";
 
-//          console.log("clrValue: " + clrValue);
+          self.buttonContents.css("color", clrValue);
 
           if (clrValue.charAt(0) == '#')
             clrValue = clrValue.substring(1);
@@ -463,13 +454,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
           g = parseInt(g_str, 16) / 255.0;
           b = parseInt(b_str, 16) / 255.0;
 
-//          console.log("clrValue = " + clrValue + ", " +
-//            "r = " + r + "(" + r_str + "), " +
-//            "g = " + g + "(" + g_str + "), " +
-//            "b = " + b + "(" + b_str + ")");
-
           hsl = this._RGBToHSL(r, g, b).map(this.normalizeValue);
-//          console.log("h: " + hsl[0] + " s: " + hsl[1] + " l: " + hsl[2]);
 
           this._fillColours(this.canvas, hsl[2] / 255.0);
 
@@ -502,10 +487,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 		setTimeout(function() {
 			self.button.removeClass( $.mobile.activeBtnClass );
 		}, 300);
-
-		function focusMenuItem() {
-			self.canvas.find( ".ui-btn-active" ).focus();
-		}
 
 		self.screen.height( $(document).height() )
 			.removeClass( "ui-screen-hidden" );
@@ -547,8 +528,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 				left: newleft
 			})
 			.addClass( "in" );
-
-		focusMenuItem();
 
 		// duplicate with value set in page show for dialog sized selects
 		self.isOpen = true;
