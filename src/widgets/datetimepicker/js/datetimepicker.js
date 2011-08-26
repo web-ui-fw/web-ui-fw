@@ -168,7 +168,7 @@
                     function (month) {
                         var i = 0;
                         for (; obj.options.months[i] != month; i++);
-                        return i + 1;
+                        return i;
                     },
                     function (index) {
                         return obj.options.months[index];
@@ -176,7 +176,7 @@
                     obj.data, "month");
             } else if (klass.search("day") > 0) {
                 var day = new Date(
-                    obj.data.year, obj.data.month + 1, 0).getDate();
+                    obj.data.year, obj.data.month, 0).getDate();
                 numItems = day;
                 selectorResult = obj._populateSelector(selector, owner,
                     "day", range(1, day), parseInt, null, obj.data,
