@@ -179,7 +179,7 @@
         </div><!-- /footer -->
 
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).bind("pagecreate", function() {
                 /* TODO: we should not need these! */
                 $('.ui-datetimepicker').datetimepicker();
                 $('.ui-progressbar').progressbar();
