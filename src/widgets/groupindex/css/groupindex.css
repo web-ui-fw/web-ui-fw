@@ -6,14 +6,6 @@
 }
 
 /*
- * this doesn't seem to match anything
- */
-.ui-content.ui-scrollview-clip > div.ui-scrollview-view {
-    margin: 0;
-    padding: 15px;
-}
-
-/*
  * this seems to effect how far the top divider is place wrt to the scrollview
  * without this, it is placed too high, so it is clipped in half
  */
