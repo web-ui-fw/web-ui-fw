@@ -11,7 +11,7 @@
         options: {
             showDate: true,
             showTime: true,
-            header: "",
+            header: "Set time",
             timeSeparator: ":",
             months: ["Jan", "Feb", "Mar", "Apr", "May",
                      "Jun", "Jul", "Aug", "Sep", "Oct",
