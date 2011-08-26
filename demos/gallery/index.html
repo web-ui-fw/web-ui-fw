@@ -34,6 +34,7 @@
                             <li><a href="#progressbar-demo">Progress bar</a></li>
                             <li><a href="#switch-demo">Switch</a></li>
                             <li><a href="#groupindex-demo">Group index</a></li>
+                            <li><a href="#shortcutscroll-demo">Short cut scroll (aka fast scroll)</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -179,9 +180,69 @@
             </div>
         </div> <!-- page -->
 
-        <div data-role="footer">
-            <h4>Weeb UI Framework - Widgets gallery</h4>
-        </div><!-- /footer -->
+        <section data-role="page" id="shortcutscroll-demo"  data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Short cut scroll (aka fast scroll)</h1>
+            </div><!-- header -->
+
+            <div class="content" data-role="content">
+                <ul id="contacts" data-role="listview" data-shortcutscroll="true">
+                    <li data-role="list-divider">A</li>
+                    <li>Anton</li>
+                    <li>Arabella</li>
+                    <li>Art</li>
+                    <li data-role="list-divider">B</li>
+                    <li>Barry</li>
+                    <li>Bibi</li>
+                    <li>Billy</li>
+                    <li>Bob</li>
+                    <li data-role="list-divider">D</li>
+                    <li>Daisy</li>
+                    <li>Derek</li>
+                    <li>Desmond</li>
+                    <li data-role="list-divider">E</li>
+                    <li>Eric</li>
+                    <li>Ernie</li>
+                    <li>Esme</li>
+                    <li data-role="list-divider">F</li>
+                    <li>Fay</li>
+                    <li>Felicity</li>
+                    <li>Francis</li>
+                    <li>Frank</li>
+                    <li data-role="list-divider">H</li>
+                    <li>Harry</li>
+                    <li>Herman</li>
+                    <li>Horace</li>
+                    <li data-role="list-divider">J</li>
+                    <li>Jack</li>
+                    <li>Jane</li>
+                    <li>Jill</li>
+                    <li data-role="list-divider">K</li>
+                    <li>Katherine</li>
+                    <li>Katy</li>
+                    <li>Keith</li>
+                    <li data-role="list-divider">L</li>
+                    <li>Larry</li>
+                    <li>Lee</li>
+                    <li>Lola</li>
+                    <li data-role="list-divider">M</li>
+                    <li>Mark</li>
+                    <li>Milly</li>
+                    <li>Mort</li>
+                    <li data-role="list-divider">N</li>
+                    <li>Nigel</li>
+                    <li>Norman</li>
+                    <li data-role="list-divider">O</li>
+                    <li>Organza</li>
+                    <li>Orlando</li>
+                </ul>
+
+            </div><!-- content -->
+
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </section><!-- page -->
 
         <script type="text/javascript">
             $(document).bind("pagecreate", function() {
@@ -194,4 +255,3 @@
         </script>
     </body>
 </html>
-
