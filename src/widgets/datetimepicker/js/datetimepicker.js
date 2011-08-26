@@ -278,6 +278,12 @@
             if (totalWidth - widthAtItem < halfWidth) {
                 x = -totalWidth + selectorWidth;
             }
+            /* There's also a third option: the values are so few
+             * that we should always center them.
+             */
+            if (totalWidth < halfWidth) {
+                x = totalWidth / 2.0 + itemWidth * numItems / 2.0;
+            }
 
             selector.find(".view").width(itemWidth * numItems);
             selectorResult.scrollable.container.scrollview(
