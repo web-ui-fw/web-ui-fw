@@ -23,7 +23,7 @@ LIBS_JS_FILES +=\
 else
 LIBS_JS_FILES +=\
     jquery-1.6.2.min.js \
-    jquery.mobile-1.0b2.js \
+    jquery.mobile-1.0b2.min.js \
     $(NULL)
 endif
 

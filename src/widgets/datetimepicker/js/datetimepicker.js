@@ -17,6 +17,7 @@
                      "Jun", "Jul", "Aug", "Sep", "Oct",
                      "Nov", "Dec"],
             animationDuration: 500,
+            initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
 
         data: {
@@ -168,7 +169,7 @@
                     function (month) {
                         var i = 0;
                         for (; obj.options.months[i] != month; i++);
-                        return i + 1;
+                        return i;
                     },
                     function (index) {
                         return obj.options.months[index];
@@ -176,7 +177,7 @@
                     obj.data, "month");
             } else if (klass.search("day") > 0) {
                 var day = new Date(
-                    obj.data.year, obj.data.month + 1, 0).getDate();
+                    obj.data.year, obj.data.month, 0).getDate();
                 numItems = day;
                 selectorResult = obj._populateSelector(selector, owner,
                     "day", range(1, day), parseInt, null, obj.data,
@@ -203,11 +204,23 @@
              */
             itemWidth = selector.find(".item").outerWidth();
             selectorWidth = selector.find(".container").outerWidth();
+            var totalWidth = itemWidth * numItems;
+            var widthAtItem = itemWidth * selectorResult.currentIndex;
+            var halfWidth = selectorWidth / 2.0;
             var x = 0;
-            if (itemWidth * selectorResult.currentIndex > selectorWidth / 2.0) {
-                x = -((itemWidth * selectorResult.currentIndex) -
-                        (selectorWidth / 2.0 - itemWidth / 2.0));
+            /* The following code deals with the case of the item
+             * selected being one of the first ones in the list
+             */
+            if (widthAtItem > selectorWidth / 2.0) {
+                x = -((widthAtItem) - (halfWidth - itemWidth / 2.0));
             }
+            /* And here we're dealing with the case of the item
+             * selected being one of the last ones in the list.
+             */
+            if (totalWidth - widthAtItem < halfWidth) {
+                x = -totalWidth + selectorWidth;
+            }
+
             selector.find(".view").width(itemWidth * numItems);
             selectorResult.scrollable.container.scrollview(
                 'scrollTo', x, 0);
@@ -262,8 +275,12 @@
         },
 
         _create: function() {
-            var container = this.element;
             var obj = this;
+            var input = this.element;
+            var container = $("<div/>", {class: "ui-datetimepicker"});
+
+            $(input).css("display", "none");
+            $(input).after(container);
 
             /* We must display either time or date: if the user set both to
              * false, we override that.
@@ -300,5 +317,12 @@
     var now = new Date();
     $($.mobile.datetimepicker.prototype.data.now = now);
     $($.mobile.datetimepicker.prototype.data.uuid = now.getTime());
+
+    $(document).bind("pagecreate create", function(e) {
+        $($.mobile.datetimepicker.prototype.options.initSelector, e.target)
+            .not(":jqmData(role='none'), :jqmData(role='nojs')")
+            .datetimepicker();
+    });
+
 })(jQuery, this);
 
