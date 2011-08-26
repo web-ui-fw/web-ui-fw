@@ -26,6 +26,7 @@
         data: {
             now: 0,
             uuid: 0,
+            parentInput: 0,
 
             initial: {
                 year: 0,
@@ -301,6 +302,7 @@
                                     parseFromFunc, parseToFunc,
                                     dest, prop) {
             var obj = this;
+            var jqObj = $(this);
             var scrollable = obj._createScrollableView();
             var currentIndex = 0;
             var destValue = (parseToFunc !== null ?
@@ -319,6 +321,7 @@
                     });
                     $(this).toggleClass("current");
                     selector.slideUp(obj.options.animationDuration);
+                    $(obj.data.parentInput).trigger("date-changed", obj.getValue());
                 }).text(values[i]);
                 if (values[i] == destValue) {
                     item.link.addClass("current");
@@ -338,6 +341,7 @@
 
             $(input).css("display", "none");
             $(input).after(container);
+            this.data.parentInput = input;
 
             /* We must display either time or date: if the user set both to
              * false, we override that.
@@ -368,6 +372,18 @@
                     obj._showDataSelector(selector, $(this));
                 });
             });
+        },
+
+        getValue: function() {
+            var actualHours = this.data.hours;
+            if (!this.options.twentyfourHours && this.data.pm) {
+                actualHours += 12;
+            }
+            return new Date(this.data.year,
+                            this.data.month,
+                            this.data.day,
+                            actualHours,
+                            this.data.minutes);
         }
     }); /* End of widget */
 
