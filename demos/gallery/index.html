@@ -184,16 +184,15 @@
         </div><!-- /footer -->
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('.ui-datetimepicker').datetimepicker({header: "Set time"});
-                $('.ui-progressbar').progressbar({value:50});
-                $('#abracadabra').switch();
-                $('#simsalabim').switch();
-                
-                var refreshId = setInterval(function(){
-                		console.log("setInteval is called");
-            			$('.ui-progressbar').progressbar("value",75);
-		        	}, 10000);
+		        $('#progressbar_page').bind('pagecreate', function () {
+                setInterval(function() {
+                    var progress = $('.ui-progressbar').progressbar('value');
+                    progress++;
+                    if (progress > 100) {
+                      progress = 0;
+                    }
+                    $('.ui-progressbar').progressbar('value', progress)
+		        	  }, 100);
 		        });
 
             $(document).bind("pagecreate", function() {
@@ -206,4 +205,3 @@
         </script>
     </body>
 </html>
-
