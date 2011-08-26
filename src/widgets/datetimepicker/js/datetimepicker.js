@@ -41,6 +41,10 @@
             minutes: 0
         },
 
+        state: {
+            selectorOut: false
+        },
+
         _initDateTime: function() {
             this.data.initial.year = this.data.now.getFullYear();
             this.data.initial.month = this.data.now.getMonth();
@@ -198,6 +202,7 @@
             }
 
             selector.slideDown(obj.options.animationDuration);
+            obj.state.selectorOut = true;
 
             /* Now that all the items have been added to the DOM, let's compute
              * the size of the selector.
@@ -224,6 +229,13 @@
             selector.find(".view").width(itemWidth * numItems);
             selectorResult.scrollable.container.scrollview(
                 'scrollTo', x, 0);
+        },
+
+        _hideDataSelector: function(selector) {
+            if (this.state.selectorOut) {
+                selector.slideUp(this.options.animationDuration);
+                this.state.selectorOut = false;
+            }
         },
 
         _createScrollableView: function() {
@@ -253,7 +265,7 @@
             var i = 0;
             for (; i < values.length; i++) {
                 var item = $.createSelectorItem(klass);
-                item.link.click(function() {
+                item.link.click(function(e) {
                     var newValue = parseFromFunc(this.text);
                     dest[prop] = newValue;
                     owner.text(this.text);
@@ -261,7 +273,7 @@
                         $(this).removeClass("current");
                     });
                     $(this).toggleClass("current");
-                    selector.slideUp(obj.options.animationDuration);
+                    obj._hideDataSelector(selector);
                 }).text(values[i]);
                 if (values[i] == destValue) {
                     item.link.addClass("current");
@@ -305,10 +317,14 @@
             innerContainer.append(header, dateTime);
 
             container.append(innerContainer, selector);
+            container.bind("click", function () {
+                obj._hideDataSelector(selector);
+            });
 
             dateTime.find(".data").each(function() {
-                $(this).click(function() {
+                $(this).click(function(e) {
                     obj._showDataSelector(selector, $(this));
+                    e.stopPropagation();
                 });
             });
         }
