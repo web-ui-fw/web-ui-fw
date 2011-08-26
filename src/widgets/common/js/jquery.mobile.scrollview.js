@@ -799,6 +799,32 @@ jQuery.widget( "mobile.scrolllistview", jQuery.mobile.scrollview, {
 	}
 });
 
+// auto-init scrollview widgets
+$(document).bind('pagecreate create', function (e) {
+    $page = $(e.target);
+
+    $page.find(":jqmData(scroll):not(.ui-scrollview-clip)").each(function () {
+        var $this = $(this);
+
+        var st = $this.jqmData("scroll") + "";
+        var paging = st && st.search(/^[xy]p$/) != -1;
+        var dir = st && st.search(/^[xy]/) != -1 ? st.charAt(0) : null;
+
+        var opts = {};
+        if (dir)
+            opts.direction = dir;
+        if (paging)
+            opts.pagingEnabled = true;
+
+        var method = $this.jqmData("scroll-method");
+        if (method)
+            opts.scrollMethod = method;
+
+        $this.scrollview(opts);
+    });
+});
+
+
 // auto-init scrolllistview widgets
 $(document).bind('pagecreate create', function (e) {
     $page = $(e.target);
