@@ -185,7 +185,7 @@
                 <h1>Short cut scroll (aka fast scroll)</h1>
             </div><!-- header -->
 
-            <div class="content" data-role="content">
+            <div class="content" data-role="content" data-scroll="y">
                 <ul id="contacts" data-role="listview" data-shortcutscroll="true">
                     <li data-role="list-divider">A</li>
                     <li>Anton</li>
@@ -246,11 +246,15 @@
 
         <script type="text/javascript">
             $(document).bind("pagecreate", function() {
-                /* TODO: we should not need these! */
                 $('#groupindex-demo').bind('pageshow', function (e) {
                     $.fillPageWithContentArea($(this));
-                    });
+                });
 
+                $('#shortcutscroll-demo').bind('pageshow', function (e) {
+                    $.fillPageWithContentArea($(this));
+                });
+
+                /* TODO: we should not need these! */
                 $('.ui-datetimepicker').datetimepicker();
                 $('.ui-progressbar').progressbar();
                 $('#switch-1').switch();
