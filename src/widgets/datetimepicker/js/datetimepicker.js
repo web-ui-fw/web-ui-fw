@@ -203,11 +203,23 @@
              */
             itemWidth = selector.find(".item").outerWidth();
             selectorWidth = selector.find(".container").outerWidth();
+            var totalWidth = itemWidth * numItems;
+            var widthAtItem = itemWidth * selectorResult.currentIndex;
+            var halfWidth = selectorWidth / 2.0;
             var x = 0;
-            if (itemWidth * selectorResult.currentIndex > selectorWidth / 2.0) {
-                x = -((itemWidth * selectorResult.currentIndex) -
-                        (selectorWidth / 2.0 - itemWidth / 2.0));
+            /* The following code deals with the case of the item
+             * selected being one of the first ones in the list
+             */
+            if (widthAtItem > selectorWidth / 2.0) {
+                x = -((widthAtItem) - (halfWidth - itemWidth / 2.0));
             }
+            /* And here we're dealing with the case of the item
+             * selected being one of the last ones in the list.
+             */
+            if (totalWidth - widthAtItem < halfWidth) {
+                x = -totalWidth + selectorWidth;
+            }
+
             selector.find(".view").width(itemWidth * numItems);
             selectorResult.scrollable.container.scrollview(
                 'scrollTo', x, 0);
