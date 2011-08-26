@@ -16,6 +16,9 @@
             months: ["Jan", "Feb", "Mar", "Apr", "May",
                      "Jun", "Jul", "Aug", "Sep", "Oct",
                      "Nov", "Dec"],
+            am: "AM",
+            pm: "PM",
+            twentyfourHours: false,
             animationDuration: 500,
             initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
@@ -30,7 +33,8 @@
                 day: 0,
 
                 hours: 0,
-                minutes: 0
+                minutes: 0,
+                pm: false
             },
 
             year: 0,
@@ -38,21 +42,24 @@
             day: 0,
 
             hours: 0,
-            minutes: 0
+            minutes: 0,
+            pm: false
         },
 
         _initDateTime: function() {
             this.data.initial.year = this.data.now.getFullYear();
             this.data.initial.month = this.data.now.getMonth();
             this.data.initial.day = this.data.now.getDate();
-            this.data.initial.hour = this.data.now.getHours();
+            this.data.initial.hours = this.data.now.getHours();
             this.data.initial.minutes = this.data.now.getMinutes();
+            this.data.initial.pm = this.data.initial.hours > 11;
 
             this.data.year = this.data.now.getFullYear();
             this.data.month = this.data.now.getMonth();
             this.data.day = this.data.now.getDate();
-            this.data.hour = this.data.now.getHours();
+            this.data.hours = this.data.now.getHours();
             this.data.minutes = this.data.now.getMinutes();
+            this.data.pm = this.data.hours > 11;
         },
 
         _createHeader: function() {
@@ -98,7 +105,7 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["hours", this._makeTwoDigitValue(this.data.initial.hours)],
+                0: ["hours", this._normalizeHour(this._makeTwoDigitValue(this.data.initial.hours))],
                 1: ["separator", this.options.timeSeparator],
                 2: ["minutes", this._makeTwoDigitValue(this.data.initial.minutes)],
             };
@@ -114,13 +121,28 @@
             return div;
         },
 
+        _createAmPm: function() {
+            var div = $("<div/>", {
+                class: "ampm"
+            });
+            item = $("<span/>", {
+                class: "data ampm"
+            }).text(this._parseAmPmValue(this.data.initial.pm));
+            div.append(item);
+
+            return div;
+        },
+
         _createDateTime: function() {
             var div = $("<div/>", {
                 id: "main"
             });
 
             if (this.options.showDate && this.options.showTime) {
-                div.addClass("ui-grid-a");
+                div.attr("class", "ui-grid-a");
+                if (!this.options.twentyfourHours) {
+                    div.attr("class", "ui-grid-b");
+                }
             }
 
             if (this.options.showDate) {
@@ -128,6 +150,9 @@
             }
             if (this.options.showTime) {
                 div.append(this._createTime());
+            }
+            if (!this.options.twentyfourHours) {
+                div.append(this._createAmPm());
             }
 
             return div;
@@ -147,6 +172,16 @@
           if (val < 10)
             ret = "0" + ret;
           return ret;
+        },
+
+        _normalizeHour: function(val) {
+            val = parseInt(val);
+            val = (!this.options.twentyfourHours && val >= 12) ? (val - 12) : val;
+            return this._makeTwoDigitValue(val);
+        },
+
+        _parseAmPmValue: function(pm) {
+            return pm ? this.options.pm : this.options.am;
         },
 
         _showDataSelector: function(selector, owner) {
@@ -183,7 +218,9 @@
                     "day", range(1, day), parseInt, null, obj.data,
                     "day");
             } else if (klass.search("hours") > 0) {
-                var values = range(0, 23).map(this._makeTwoDigitValue);
+                var values =
+                    range(0, this.options.twentyfourHours ? 23 : 11)
+                        .map(this._makeTwoDigitValue);
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
@@ -195,6 +232,26 @@
                 selectorResult = obj._populateSelector(selector, owner,
                     "minutes", values, parseInt, null, obj.data,
                     "minutes");
+            } else if (klass.search("ampm") > 0) {
+                var values = [this.options.am, this.options.pm];
+                numItems = values.length;
+                selectorResult = obj._populateSelector(selector, owner,
+                    "ampm", values,
+                    function (val) {
+                        if (val == obj.options.am) {
+                            return 0;
+                        } else {
+                            return 1;
+                        }
+                    },
+                    function (index) {
+                        if (index == 0) {
+                            return obj.options.am;
+                        } else {
+                            return obj.options.pm;
+                        }
+                    },
+                    obj.data, "pm");
             }
 
             selector.slideDown(obj.options.animationDuration);
