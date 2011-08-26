@@ -21,17 +21,23 @@
 		},		
 		
 		oldValue		: 0,
+		delta			: 0,
 		
 		_value: function() {
 			return  this.options.value;
 		},
 		
 		value: function( newValue) {
+			
+			this.delta = this._value() - this.oldValue;
+			this.oldValue = this._value();
+			console.log("delta in value(): " + this.delta);
+			
 			if ( newValue  === undefined ) {
 				return this._value();
 			}
 			this.options.value = parseInt(newValue);
-			return this;
+			return this;			
 		},
 		
 		_percentage: function() {
@@ -55,32 +61,34 @@
 		_trigger: function(action) {
 			// animate here if there is a change in value	
 			if (action === "change") {
-				this.data.bar.css('width', this._value());
+				this.startProgress();
 			}
 		},
+				
 		
+	     startProgress: function() {
+				var obj = this;
+				this.data.bar.animate({
+					    width: obj._percentage() + '%',
+					  	}, {
+						    duration : this.options.duration * ( obj.delta) / 100 ,
+						    specialEasing : {
+							    width: 'linear',
+						    }, 
+							complete: function() {
+						   		//alert("animation completed : value is: " + parseInt(obj._value()));
+						   		// callback function here
+						   		obj._completed();		
+						    },						  
+				  	   }
+				  	 );
+			},		
+
 		
-		/*
-		startProgress: function(value) {
-			var obj = this;
-			this.data.bar.animate({
-				    width: '100%'
-				  	}, {
-					    duration :this.options.duration,
-					    specialEasing : {
-					    width: 'linear',
-					   }, 
-						complete: function() {
-					   		//alert("animation completed : value is: " + parseInt(obj._value()));
-					   		// callback function here		
-					  },
-					  step : function( now, fx ) {
-					  	  obj._refreshValue(now);
-					  },
-			  	   }
-			  	 );
-		},		
-		*/
+		_completed: function() {
+			// animation is finished 
+			console.log("call back from progressbar animation");	
+		},
 		
 		_create: function() {
 			var container = this.element;
@@ -156,7 +164,9 @@
 			
 			/* caller of the progress bar widget should start the progressbar using startProgress */
 			// obj.startProgress();	
+			this.delta = this._value() - this.oldValue;
 			this.oldValue = this._value();
+			console.log("delta _create(): " + this.delta);
 			this._refreshValue();
 						
 		},			

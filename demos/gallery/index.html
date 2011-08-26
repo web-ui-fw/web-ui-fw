@@ -123,7 +123,11 @@
                 $('.ui-progressbar').progressbar({value:50});
                 $('#abracadabra').switch();
                 $('#simsalabim').switch();
-            });
+                
+                var refreshId = setInterval(function(){
+            		$('.ui-progressbar').value(75);
+		        }, 5000);
+		            });
         </script>
     </body>
 </html>
