@@ -11,7 +11,7 @@
 		options: { 
 			value		: 0,
 			max			: 100,
-			duration	: 20000,
+			duration	: 10000,
 		},
 				
 		data: {
@@ -27,34 +27,24 @@
 			return  this.options.value;
 		},
 		
-		value: function( newValue) {
-			
-			this.delta = this._value() - this.oldValue;
-			this.oldValue = this._value();
-			console.log("delta in value(): " + this.delta);
-			
+		value: function( newValue) {			
 			if ( newValue  === undefined ) {
 				return this._value();
-			}
+			}		
 			this.options.value = parseInt(newValue);
-			return this;			
+			this._refreshValue();			
 		},
 		
 		_percentage: function() {
 			return 100 * this._value() / this.options.max;
 		},
 		
-		_refreshValue: function( value /*now*/) {
-			//this.options.value = parseInt(now);
-			//console.log("value = " + parseInt(this._value()));
-			
-			var val = this.options.value;
-			var percentage = this._percentage();
-			
-			if(this.oldValue !== value) {
-				this.oldValue = value;
+		_refreshValue: function( val /*now*/) {
+			this.delta = this._value() - this.oldValue;
+			if(this.oldValue !== val) {
+				this.oldValue = this._value();
+				this.value(val);
 				this._trigger("change");
-				this.value(value);
 			}
 		},
 		
@@ -64,7 +54,6 @@
 				this.startProgress();
 			}
 		},
-				
 		
 	     startProgress: function() {
 				var obj = this;
@@ -76,17 +65,13 @@
 							    width: 'linear',
 						    }, 
 							complete: function() {
-						   		//alert("animation completed : value is: " + parseInt(obj._value()));
-						   		// callback function here
 						   		obj._completed();		
 						    },						  
 				  	   }
 				  	 );
 			},		
-
 		
 		_completed: function() {
-			// animation is finished 
 			console.log("call back from progressbar animation");	
 		},
 		
@@ -162,11 +147,6 @@
 				alert("value=" + obj.options.value);
 			}); // end of click		
 			
-			/* caller of the progress bar widget should start the progressbar using startProgress */
-			// obj.startProgress();	
-			this.delta = this._value() - this.oldValue;
-			this.oldValue = this._value();
-			console.log("delta _create(): " + this.delta);
 			this._refreshValue();
 						
 		},			

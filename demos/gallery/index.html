@@ -184,7 +184,6 @@
         </div><!-- /footer -->
 
         <script type="text/javascript">
-<<<<<<< HEAD
             $(document).ready(function() {
                 $('.ui-datetimepicker').datetimepicker({header: "Set time"});
                 $('.ui-progressbar').progressbar({value:50});
@@ -192,10 +191,11 @@
                 $('#simsalabim').switch();
                 
                 var refreshId = setInterval(function(){
-            		$('.ui-progressbar').value(75);
-		        }, 5000);
-		            });
-=======
+                		console.log("setInteval is called");
+            			$('.ui-progressbar').progressbar("value",75);
+		        	}, 10000);
+		        });
+
             $(document).bind("pagecreate", function() {
                 /* TODO: we should not need these! */
                 $('.ui-datetimepicker').datetimepicker();
@@ -203,7 +203,6 @@
                 $('#switch-1').switch();
                 $('#switch-2').switch();
             });
->>>>>>> master
         </script>
     </body>
 </html>
