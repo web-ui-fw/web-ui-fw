@@ -247,10 +247,15 @@
         <script type="text/javascript">
             $(document).bind("pagecreate", function() {
                 /* TODO: we should not need these! */
+                $('#groupindex-demo').bind('pageshow', function (e) {
+                    $.fillPageWithContentArea($(this));
+                    });
+
                 $('.ui-datetimepicker').datetimepicker();
                 $('.ui-progressbar').progressbar();
                 $('#switch-1').switch();
                 $('#switch-2').switch();
+                $('#groupindex').scrolllistview();
             });
         </script>
     </body>
