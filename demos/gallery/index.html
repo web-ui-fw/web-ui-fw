@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>jquery.mobile.datetimepicker demo</title>
+        <title>Web UI Framework - Widgets gallery</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -14,27 +14,75 @@
     </head>
 
     <body>
-        <div data-role="page">
+        <div data-role="page" id="widgets-demo">
             <div data-role="header">
-                <h1>web-ui-fw widgets gallery</h1>
-            </div><!-- /header -->
+                <h1>Web UI Framework - Widgets gallery</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="content-secondary">
+                    <div id="widgets-gallery-header">
+                        <h1>Web UI Framework - Widgets gallery</h1>
+                    </div>
+                </div>
+                <div data-role="content-primary">
+                    <nav>
+                        <ul data-role="listview">
+                            <li data-role="list-divider">Widgets</li>
+                            <li><a href="#datetimepicker-demo">Date/time picker</a></li>
+                            <li><a href="#colorpicker-demo">Color picker</a></li>
+                            <li><a href="#draganddroplist-demo">Drag &amp; drop list</a></li>
+                            <li><a href="#progressbar-demo">Progress bar</a></li>
+                            <li><a href="#switch-demo">Switch</a></li>
+                            <li><a href="#groupindex-demo">Group index</a></li>
+                            <li><a href="#shortcutscroll-demo">Short cut scroll (aka fast scroll)</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
 
+        <div data-role="page" id="datetimepicker-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Date/time picker</h1>
+            </div>
             <div data-role="content">
                 <h2>Date/time picker</h2>
-                <div class="ui-datetimepicker"></div>
+                <form action="#" action="get">
+                    <div data-role="fieldcontain">
+                        <input type="date" name="demo_date" id="demo_date" />
+                    </div>
+                </form>
             </div><!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
 
+        <div data-role="page" id="colorpicker-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Color picker</h1>
+            </div>
             <div data-role="content">
-                <h2>Colour picker</h2>
                 <form action='#' method="get">
                     <div data-role="fieldcontain">
                         <label for="desired_colour">Choose colour:</label>
                         <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
                     </div>
                 </form>
-            </div><!-- /content -->
-            <div>
-                <h2>Drag & drop list</h2>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+       </div> <!-- /page -->
+
+        <div data-role="page" id="draganddroplist-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Drag &amp; drop list</h1>
+            </div>
+            <div data-role="content">
                 <ul data-role="listview" class="draganddroplist">
                     <li data-role="list-divider">A</li>
                     <li><a href="../../docs/lists/index.html">Adam Kinkaid</a></li>
@@ -45,25 +93,50 @@
                     <li data-role="list-divider">C</li>
                 </ul>
             </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
 
+        <div data-role="page" id="progressbar-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Progress bar</h1>
+            </div>
             <div class="content" data-role="content">
-                <h2>Progress bar</p>
                 <a href="#progressbar_page" data-rel="dialog" data-transition="pop">
                     Open progress bar dialog
                 </a>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
             </div>
+        </div> <!-- /page -->
+        <div id="progressbar_page" data-role="page">
+            <div data-role="content">
+                <div class="ui-progressbar"></div>
+            </div>
+        </div>
 
+        <div data-role="page" id="switch-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Switch</h1>
+            </div>
             <div class="content" data-role="content">
-                <h2>Switch</h2>
-                <div id="abracadabra"></div>
+                <div id="switch-1"></div>
                 <p/>
-                <div id="simsalabim"></div>
+                <div id="switch-2"></div>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
             </div>
+        </div> <!-- page -->
 
-            <div data-role="content" class="ui-scrolllistview">
-                <h2>Group Index</h2>
+        <div data-role="page" id="groupindex-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Group index</h1>
+            </div>
+            <div data-role="content" data-scroll="y" class="ui-scrolllistview">
                 <ul data-role="listview">
-
                     <li data-role="list-divider">A</li>
                     <li><a href="#">Adam Kinkaid</a></li>
                     <li><a href="#">Alex Wickerham</a></li>
@@ -100,31 +173,94 @@
                     <li><a href="#">Rod Tarker</a></li>
                     <li data-role="list-divider">S</li>
                     <li><a href="#">Sawyer Wakefield</a></li>
-
                 </ul>
+            </div> <!-- content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
             </div>
+        </div> <!-- page -->
+
+        <section data-role="page" id="shortcutscroll-demo"  data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Short cut scroll (aka fast scroll)</h1>
+            </div><!-- header -->
+
+            <div class="content" data-role="content" data-scroll="y">
+                <ul id="contacts" data-role="listview" data-shortcutscroll="true">
+                    <li data-role="list-divider">A</li>
+                    <li>Anton</li>
+                    <li>Arabella</li>
+                    <li>Art</li>
+                    <li data-role="list-divider">B</li>
+                    <li>Barry</li>
+                    <li>Bibi</li>
+                    <li>Billy</li>
+                    <li>Bob</li>
+                    <li data-role="list-divider">D</li>
+                    <li>Daisy</li>
+                    <li>Derek</li>
+                    <li>Desmond</li>
+                    <li data-role="list-divider">E</li>
+                    <li>Eric</li>
+                    <li>Ernie</li>
+                    <li>Esme</li>
+                    <li data-role="list-divider">F</li>
+                    <li>Fay</li>
+                    <li>Felicity</li>
+                    <li>Francis</li>
+                    <li>Frank</li>
+                    <li data-role="list-divider">H</li>
+                    <li>Harry</li>
+                    <li>Herman</li>
+                    <li>Horace</li>
+                    <li data-role="list-divider">J</li>
+                    <li>Jack</li>
+                    <li>Jane</li>
+                    <li>Jill</li>
+                    <li data-role="list-divider">K</li>
+                    <li>Katherine</li>
+                    <li>Katy</li>
+                    <li>Keith</li>
+                    <li data-role="list-divider">L</li>
+                    <li>Larry</li>
+                    <li>Lee</li>
+                    <li>Lola</li>
+                    <li data-role="list-divider">M</li>
+                    <li>Mark</li>
+                    <li>Milly</li>
+                    <li>Mort</li>
+                    <li data-role="list-divider">N</li>
+                    <li>Nigel</li>
+                    <li>Norman</li>
+                    <li data-role="list-divider">O</li>
+                    <li>Organza</li>
+                    <li>Orlando</li>
+                </ul>
+
+            </div><!-- content -->
 
             <div data-role="footer">
-                <h4>Thanks!</h4>
-            </div><!-- /footer -->
-        </div><!-- /page -->
-
-        <section id="progressbar_page" data-role="page">
-            <header data-role="header"><h1>Progress bar</h1></header>
-                <div class="content" data-role="content">
-                    <div class="ui-progressbar"></div>
-                </div>
-            <footer data-role="footer"><h1>Thanks</h1></footer>
-        </section>
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </section><!-- page -->
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('.ui-datetimepicker').datetimepicker({header: "Set time"});
+            $(document).bind("pagecreate", function() {
+                $('#groupindex-demo').bind('pageshow', function (e) {
+                    $.fillPageWithContentArea($(this));
+                });
+
+                $('#shortcutscroll-demo').bind('pageshow', function (e) {
+                    $.fillPageWithContentArea($(this));
+                });
+
+                /* TODO: we should not need these! */
+                $('.ui-datetimepicker').datetimepicker();
                 $('.ui-progressbar').progressbar();
-                $('#abracadabra').switch();
-                $('#simsalabim').switch();
+                $('#switch-1').switch();
+                $('#switch-2').switch();
+                $('#groupindex').scrolllistview();
             });
         </script>
     </body>
 </html>
-

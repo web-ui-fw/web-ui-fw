@@ -19,11 +19,13 @@ ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
     jquery-1.6.2.js \
     jquery.mobile-1.0b2.js \
+    jquery.ui.position.git+dfe75e1.js \
     $(NULL)
 else
 LIBS_JS_FILES +=\
     jquery-1.6.2.min.js \
-    jquery.mobile-1.0b2.js \
+    jquery.mobile-1.0b2.min.js \
+    jquery.ui.position.git+dfe75e1.min.js \
     $(NULL)
 endif
 
