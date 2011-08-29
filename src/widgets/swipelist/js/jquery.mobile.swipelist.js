@@ -40,6 +40,7 @@
                 $currentSwipeItem = $(this);
                 var data = e.type === "touchstart" ? e.originalEvent.targetTouches[0]
                                                    :e;
+                e.preventDefault();
                 return _TouchStart(e, data.clientX, data.clientY);
             };
 
