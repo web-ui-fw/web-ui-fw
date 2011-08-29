@@ -35,6 +35,7 @@
                             <li><a href="#switch-demo">Switch</a></li>
                             <li><a href="#groupindex-demo">Group index</a></li>
                             <li><a href="#shortcutscroll-demo">Short cut scroll (aka fast scroll)</a></li>
+                            <li><a href="#swipelist-demo">SwipeList</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -243,6 +244,48 @@
                 <h4>Web UI Framework - Widgets gallery</h4>
             </div>
         </section><!-- page -->
+
+        <div data-role="page" id="swipelist-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>SwipeList. Swipe any list item from left to right to reveal the associated actions.</h1>
+            </div>
+            <div data-role="content" class="ui-scrolllistview">
+                <ul data-role="swipelist">
+                    <li>
+                        <a href="#" data-role="button" data-theme="a">Tweet</a>
+                        <div data-role ="ui-list-cover">Jack</div>
+                    </li>
+                    <li>
+                        <a href="#" data-role="button" data-theme="a">Twitter</a>
+                         <!-- THIS IS NOT RECOMMENDED WAY, IT IS HERE FOR TESTING PURPOSE ONLY --> 
+                        <div data-role ="ui-list-cover">Barry</div>
+                        <a href="#" data-role="button" data-theme="b">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="#" data-role="button" data-theme="a">Twitter</a>
+                        <a href="#" data-role="button" data-theme="b">FaceBook</a>
+                        <a href="#" data-role="button" data-theme="c">Google+</a>
+                        <div data-role ="ui-list-cover">Jane</div>
+                    </li>
+                    <li>
+                        <a href="#" data-role="button" data-theme="a">Twitter</a>
+                        <a href="#" data-role="button" data-theme="b">FaceBook</a>
+                        <a href="#" data-role="button" data-theme="c">Google+</a>
+                        <a href="#" data-role="button" data-theme="d">Yahoo</a>
+                        <div data-role ="ui-list-cover">Nigel</div>
+                    </li>
+                </ul>
+                <ul data-role="swipelist">
+                    <li>
+                        <a href="#" data-role="button" data-theme="a">Twitter</a>
+                        <div data-role ="ui-list-cover">Norman</div>
+                    </li>
+                </ul>
+            </div> <!-- content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- page -->
 
         <script type="text/javascript">
             $(document).bind("pagecreate", function() {
