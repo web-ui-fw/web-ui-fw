@@ -1,180 +1,213 @@
 (function( $, undefined ) {
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
-	options: {
-		theme: null,
-		disabled: false,
-		inline: true,
-		corners: true,
-		shadow: true,
-		overlayTheme: "a",
-		closeText: "Close"
-	},
-	_create: function() {
-		var
-                  self = this,
+  options: {
+    theme: null,
+    disabled: false,
+    inline: true,
+    corners: true,
+    shadow: true,
+    overlayTheme: "a",
+    closeText: "Close",
+    initSelector: ":jqmData(role='volumecontrol')"
+  },
+  _create: function() {
+    var
+      self = this,
 
-		  o = this.options,
+      o = this.options,
 
-		  select = this.element,
+      select = this.element.wrap( "<div class='ui-select'>" ),
 
-		  selectID = select.attr( "id" ),
+      selectID = select.attr( "id" ),
 
-		  thisPage = select.closest( ".ui-page" ),
+      label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
 
-		  screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-					  .appendTo( thisPage ),
+      menuId = selectID + "-menu",
 
-		  listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition + " colorpicker-canvas-border" })
-				  .insertAfter(screen);
-/*
-                  canvas = $("<canvas width='288' height='256'>Colour picker canvas</canvas>")
-                    .appendTo(listbox),
-*/
-                this.element.css("display", "none");
+      thisPage = select.closest( ".ui-page" ),
 
-		// Disable if specified
-		if ( o.disabled ) {
-			this.disable();
-		}
+      screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
+        .appendTo( thisPage ),
 
-		// Events on native select
-		select.change(function() {
-			self.refresh();
-		});
+      listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition })
+	.insertAfter(screen),
 
-		// Expose to other methods
-		$.extend( self, {
-			select: select,
-			selectID: selectID,
-			thisPage: thisPage,
-			listbox: listbox,
-/*
-			canvas: canvas,
-*/
-			screen: screen
-		});
+      contents = $("<div>", {"class" : "ui-grid-a"})
+        .appendTo(listbox),
 
-		// Support for using the native select menu with a custom button
+      titleContainer = $("<div>", {"class" : "ui-header"})
+        .appendTo(contents),
 
-		// Create list from select, update state
-		self.refresh();
+      titleSpan = $("<span>", {"class" : "ui-title"})
+        .appendTo(titleContainer),
 
-		// Events on "screen" overlay
-		screen.bind( "vclick", function( event ) {
-		  self.close();
-		});
-	},
+      randomText = $("<span>")
+        .appendTo(contents);
 
-	refresh: function( forceRebuild ) {
-	},
+      titleSpan.text("Volume");
+      randomText.text("Random Text");
 
-	open: function() {
-		if ( this.options.disabled ) {
-			return;
-		}
+    this.element.css("display", "none");
 
-		var self = this,
-			menuHeight = self.canvas.parent().outerHeight(),
-			menuWidth = self.canvas.parent().outerWidth(),
-			scrollTop = $( window ).scrollTop(),
-			btnOffset = self.button.offset().top,
-			screenHeight = window.innerHeight,
-			screenWidth = window.innerWidth;
+    // Disable if specified
+    if ( o.disabled ) {
+      this.disable();
+    }
 
-		//add active class to button
-		self.button.addClass( $.mobile.activeBtnClass );
+    // Events on native select
+    select.change(function() {
+      self.refresh();
+    });
 
-		//remove after delay
-		setTimeout(function() {
-			self.button.removeClass( $.mobile.activeBtnClass );
-		}, 300);
+    // Expose to other methods
+    $.extend( self, {
+      select: select,
+      selectID: selectID,
+      label: label,
+      menuId: menuId,
+      thisPage: thisPage,
+      screen: screen,
+      listbox: listbox,
+      contents: contents,
+      placeholder: "",
+      dragging: false,
+      draggingHS: true,
+      dragging_hsl : {
+        h : -1,
+        s : -1,
+        l : -1
+      }
+    });
 
-		function focusMenuItem() {
-			self.canvas.find( ".ui-btn-active" ).focus();
-		}
+    // Support for using the native select menu with a custom button
 
-		self.screen.height( $(document).height() )
-			.removeClass( "ui-screen-hidden" );
+    // Create list from select, update state
+    self.refresh();
 
-		// Try and center the overlay over the button
-		var roomtop = btnOffset - scrollTop,
-			roombot = scrollTop + screenHeight - btnOffset,
-			halfheight = menuHeight / 2,
-			maxwidth = parseFloat( self.canvas.parent().css( "max-width" ) ),
-			newtop, newleft;
+    $( document ).bind( "vmousemove", function( event ) {
+      if ( self.dragging ) {
+//        self.refresh( event );
+	return false;
+      }
+    });
 
-		if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-			newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
-		} else {
-			// 30px tolerance off the edges
-			newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-		}
+    $( document ).bind( "vmouseup", function( event ) {
+      if ( self.dragging ) {
+        self.dragging = false;
+//        self.refresh( event );
+	return false;
+      }
+    });
 
-		// If the menuwidth is smaller than the screen center is
-		if ( menuWidth < maxwidth ) {
-			newleft = ( screenWidth - menuWidth ) / 2;
-		} else {
+    // Events on "screen" overlay
+    screen.bind( "vclick", function( event ) {
+      self.close();
+    });
+  },
 
-			//otherwise insure a >= 30px offset from the left
-			newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
+  makeClrChannel: function(val) {
+    return (val < 16 ? "0" : "") + (val & 0xff).toString(16);
+  },
 
-			// 30px tolerance off the edges
-			if ( newleft < 30 ) {
-				newleft = 30;
-			} else if ( ( newleft + menuWidth ) > screenWidth ) {
-				newleft = screenWidth - menuWidth - 30;
-			}
-		}
+  refresh: function( forceRebuild ) {
+  },
 
-		self.listbox.append( self.canvas )
-			.removeClass( "ui-selectmenu-hidden" )
-			.css({
-				top: newtop,
-				left: newleft
-			})
-			.addClass( "in" );
+  open: function() {
+    if ( this.options.disabled ) {
+      return;
+    }
 
-		focusMenuItem();
+    var self = this,
+	    menuHeight = self.contents.parent().outerHeight(),
+	    menuWidth = self.contents.parent().outerWidth(),
+	    scrollTop = $( window ).scrollTop(),
+	    screenHeight = window.innerHeight,
+	    screenWidth = window.innerWidth;
 
-		// duplicate with value set in page show for dialog sized selects
-		self.isOpen = true;
-	},
+    console.log(
+      "menuHeight: " + menuHeight + 
+      ", menuWidth: " + menuWidth +
+      ", scrollTop: " + scrollTop +
+      ", screenHeight: " + screenHeight +
+      ", screenWidth: " + screenWidth);
 
-	_focusButton : function(){
-		var self = this;
-		setTimeout(function() {
-			self.button.focus();
-		}, 40);
-	},
+    self.screen.height( $(document).height() )
+	.removeClass( "ui-screen-hidden" );
 
-	close: function() {
-		if ( this.options.disabled || !this.isOpen ) {
-			return;
-		}
+    // Try and center the overlay over the button
+    var roomtop = -scrollTop,
+	roombot = scrollTop + screenHeight,
+	halfheight = menuHeight / 2,
+	maxwidth = parseFloat( self.contents.parent().css( "max-width" ) ),
+	newtop, newleft;
 
-		var self = this;
+    if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+      newtop = -halfheight;
+    } else {
+      // 30px tolerance off the edges
+      newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+    }
 
-		self.screen.addClass( "ui-screen-hidden" );
-		self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
-		self.canvas.appendTo( self.listbox );
-		self._focusButton();
+    // If the menuwidth is smaller than the screen center is
+    if ( menuWidth < maxwidth ) {
+      newleft = ( screenWidth - menuWidth ) / 2;
+    } else {
 
-		// allow the dialog to be closed again
-		this.isOpen = false;
-	},
+      //otherwise insure a >= 30px offset from the left
+      newleft = 0 - menuWidth / 2;
 
-	disable: function() {
-		this.element.attr( "disabled", true );
-		this.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
-		return this._setOption( "disabled", true );
-	},
+      // 30px tolerance off the edges
+      if ( newleft < 30 ) {
+	newleft = 30;
+      } else if ( ( newleft + menuWidth ) > screenWidth ) {
+	newleft = screenWidth - menuWidth - 30;
+      }
+    }
 
-	enable: function() {
-		this.element.attr( "disabled", false );
-		this.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
-		return this._setOption( "disabled", false );
-	}
+    self.listbox.append( self.contents )
+	.removeClass( "ui-selectmenu-hidden" )
+	.css({
+	  top: newtop,
+	  left: newleft
+	})
+	.addClass( "in" );
+
+    // duplicate with value set in page show for dialog sized selects
+    self.isOpen = true;
+  },
+
+  close: function() {
+    if ( this.options.disabled || !this.isOpen ) {
+      return;
+    }
+
+    var self = this;
+
+    self.screen.addClass( "ui-screen-hidden" );
+    self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
+    self.contents.appendTo( self.listbox );
+
+    // allow the dialog to be closed again
+    this.isOpen = false;
+  },
+
+  disable: function() {
+    this.element.attr( "disabled", true );
+    return this._setOption( "disabled", true );
+  },
+
+  enable: function() {
+    this.element.attr( "disabled", false );
+    return this._setOption( "disabled", false );
+  }
+});
+
+//auto self-init widgets
+$( document ).bind( "pagecreate create", function( e ){
+  $( $.mobile.volumecontrol.prototype.options.initSelector, e.target )
+    .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
+    .volumecontrol();
 });
 
 })( jQuery );
