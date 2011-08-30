@@ -53,9 +53,10 @@
                 <h2>Date/time picker</h2>
                 <form action="#" action="get">
                     <div data-role="fieldcontain">
-                        <input type="date" name="demo_date" id="demo_date" />
+                        <input type="date" name="demo-date" id="demo-date" />
                     </div>
                 </form>
+                <p>The date you selected is: <span class="selected-date"><em>(select a date first)</em></span></p>
             </div><!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
@@ -308,8 +309,12 @@
                     $.fillPageWithContentArea($(this));
                 });
 
+                var updateDate = function(e, newDate) {
+                    $("#datetimepicker-demo .selected-date").text(newDate.toString());
+                };
+                $("#demo-date").bind("date-changed", updateDate);
+
                 /* TODO: we should not need these! */
-                $('.ui-datetimepicker').datetimepicker();
                 $('.ui-progressbar').progressbar();
                 $('#switch-1').switch();
                 $('#switch-2').switch();
