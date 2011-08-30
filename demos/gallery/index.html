@@ -36,6 +36,7 @@
                             <li><a href="#groupindex-demo">Group index</a></li>
                             <li><a href="#shortcutscroll-demo">Short cut scroll (aka fast scroll)</a></li>
                             <li><a href="#swipelist-demo">SwipeList</a></li>
+                            <li><a href="#popupwindow-demo">Popup window</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -288,6 +289,27 @@
             </div>
         </div> <!-- page -->
 
+        <div data-role="page" id="popupwindow-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Popup window</h1>
+            </div>
+            <div class="content" data-role="content">
+              <a href="#" id="popupwindowDemoButton" data-role="button" data-inline="true">Show popup</a>
+              <!-- The following div will be ripped out of here and placed into a popup -->
+              <div id="popupContent" data-role="popupwindow" style="display: table;">
+                <table>
+                  <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
+                  <tr> <td>Catch-a</td> <td>Tiger</td>   <td>By-the</td>  <td>Toe</td> </tr>
+                  <tr> <td>If-he</td>   <td>Hollers</td> <td>Let-him</td> <td>Go</td>  </tr>
+                  <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
+                </table>
+              </div>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
         <script type="text/javascript">
 		        $('#progressbar_page').bind('pagecreate', function () {
                 setInterval(function() {
@@ -319,6 +341,12 @@
                 $('#switch-1').switch();
                 $('#switch-2').switch();
                 $('#groupindex').scrolllistview();
+                $('#popupwindowDemoButton').bind("vclick", function(e) {
+                  var btn = $('#popupwindowDemoButton');
+                  $('#popupContent').popupwindow("open",
+                    btn.offset().left + btn.outerWidth()  / 2,
+                    btn.offset().top  + btn.outerHeight() / 2);
+                });
             });
         </script>
     </body>

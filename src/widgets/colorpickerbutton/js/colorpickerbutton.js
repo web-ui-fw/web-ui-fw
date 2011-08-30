@@ -57,8 +57,8 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
 			        .appendTo( thisPage ),
 
-        listbox = $("<div>", { "class": "ui-popupmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition})
-		        .insertAfter(screen),
+        listbox = $("<div>", { "class": "ui-popupwindow ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition})
+	  .insertAfter(screen),
 
         canvas = $("<div/>", {"id" : "canvas"})
           .appendTo(listbox),
@@ -79,6 +79,8 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
             corners: o.corners,
             shadow: o.shadow
           });
+
+    canvas.css("max-width", realcanvas.outerWidth());
 
     if (undefined === colour)
       colour = o.color;
@@ -176,8 +178,9 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         targetWidget = self.canvas.parent();
 
     self.realcanvas.colorpicker("setColor", self.colour);
-    self.canvas.css("max-width", self.realcanvas.outerWidth());
-    self.listbox.css("max-width", self.realcanvas.outerWidth());
+
+    self.listbox.css("max-width",  self.canvas.outerWidth());
+    self.listbox.css("max-height", self.canvas.outerHeight());
 
     var menuHeight = targetWidget.outerHeight(),
 	menuWidth = targetWidget.outerWidth(),
@@ -220,7 +223,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     else {
 
       //otherwise insure a >= 30px offset from the left
-      newleft = self.button.offset().left + (self.button.outerWidth() - menuWidth) / 2;
+      newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
 
       // 30px tolerance off the edges
       if ( newleft < 30 ) {
