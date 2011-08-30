@@ -288,6 +288,17 @@
         </div> <!-- page -->
 
         <script type="text/javascript">
+		        $('#progressbar_page').bind('pagecreate', function () {
+                setInterval(function() {
+                    var progress = $('.ui-progressbar').progressbar('value');
+                    progress++;
+                    if (progress > 100) {
+                      progress = 0;
+                    }
+                    $('.ui-progressbar').progressbar('value', progress)
+		        	  }, 100);
+		        });
+
             $(document).bind("pagecreate", function() {
                 $('#groupindex-demo').bind('pageshow', function (e) {
                     $.fillPageWithContentArea($(this));
