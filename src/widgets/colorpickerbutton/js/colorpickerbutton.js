@@ -1,275 +1,289 @@
 (function( $, undefined ) {
 
 $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
-	options: {
-		theme: null,
-		disabled: false,
-		inline: true,
-		corners: true,
-		shadow: true,
-		overlayTheme: "a",
-		closeText: "Close",
-		initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
-	},
-	_create: function() {
+  options: {
+    color: "#ff0000",
+    theme: null,
+    disabled: false,
+    inline: true,
+    corners: true,
+    shadow: true,
+    overlayTheme: "a",
+    closeText: "Close",
+    initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
+  },
+  _create: function() {
+    var self = this,
 
-		var
-		  self = this,
+        o = this.options,
 
-		  o = this.options,
+        colour = this.element.attr("value"),
 
-		  select = this.element.wrap( "<div class='ui-select'>" ),
+        select = this.element.wrap( "<div class='ui-select'>" ),
 
-		  selectID = select.attr( "id" ),
+        selectID = select.attr( "id" ),
 
-		  label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
+        label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
 
-                  buttonContents = $("<span/>")
-                    .html("&#x2587;&#x2587;&#x2587;"),
+        buttonContents = $("<span/>")
+          .html("&#x2587;&#x2587;&#x2587;"),
 
-		  buttonId = selectID + "-button",
+        buttonId = selectID + "-button",
 
-		  menuId = selectID + "-menu",
+        menuId = selectID + "-menu",
 
-		  button = $( "<a>", {
-				  "href": "#",
-				  "role": "button",
-				  "id": buttonId,
-				  "aria-haspopup": "true",
-				  "aria-owns": menuId
-			  })
-			  .append(buttonContents)
-			  .insertBefore( select )
-			  .buttonMarkup({
-				  theme: o.theme,
-				  inline: o.inline,
-				  corners: o.corners,
-				  shadow: o.shadow
-			  }),
+        button = $( "<a>", {
+		        "href": "#",
+		        "role": "button",
+		        "id": buttonId,
+		        "aria-haspopup": "true",
+		        "aria-owns": menuId
+	        })
+	        .append(buttonContents)
+	        .insertBefore( select )
+	        .buttonMarkup({
+		        theme: o.theme,
+		        inline: o.inline,
+		        corners: o.corners,
+		        shadow: o.shadow
+	        })
+                .css("color", colour),
 
-		  thisPage = select.closest( ".ui-page" ),
+        thisPage = select.closest( ".ui-page" ),
 
-		  //button theme
-		  theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
+        //button theme
+        theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
-		  screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-					  .appendTo( thisPage ),
+        screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
+			        .appendTo( thisPage ),
 
-		  listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition})
-				  .insertAfter(screen),
+        listbox = $("<div>", { "class": "ui-popupmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition})
+		        .insertAfter(screen),
 
-                  canvas = $("<div/>", {"id" : "canvas"})
-                    .appendTo(listbox),
+        canvas = $("<div/>", {"id" : "canvas"})
+          .appendTo(listbox),
 
-                  realcanvas = $("<div/>")
-                    .appendTo(canvas)
-                    .colorpicker()/*,
+        realcanvas = $("<div/>")
+          .appendTo(canvas)
+          .colorpicker({"color" : colour}),
 
-                  closeButton = $("<a/>", {
-                    "href": "#",
-                    "role": "button"
-                    })
-                    .text(o.closeText)
-                    .appendTo(canvas)
-                    .buttonMarkup({
-                      theme: o.theme,
-                      inline: true,
-                      corners: o.corners,
-                      shadow: o.shadow
-                    })*/;
+        closeButton = $("<a/>", {
+          "href": "#",
+          "role": "button"
+          })
+          .text(o.closeText)
+          .appendTo(canvas)
+          .buttonMarkup({
+            theme: o.theme,
+            inline: false,
+            corners: o.corners,
+            shadow: o.shadow
+          });
 
-                console.log("colorpickerbutton._create: Setting listbox [" + realcanvas.attr("width") + " x " + realcanvas.attr("height") + "]");
+    if (undefined === colour)
+      colour = o.color;
 
-                listbox
-                  .attr("width", realcanvas.attr("width"))
-                  .attr("height", realcanvas.attr("height"));
+    this.element.css("display", "none");
 
-                listbox
-                  .css("width", realcanvas.attr("width"))
-                  .css("height", realcanvas.attr("height"));
+    // Disable if specified
+    if ( o.disabled ) {
+      this.disable();
+    }
 
-                this.element.css("display", "none");
+    // Expose to other methods
+    $.extend( self, {
+      dragging_clr: undefined,
+      colour: colour,
+      realcanvas: realcanvas,
+      select: select,
+      selectID: selectID,
+      label: label,
+      buttonId: buttonId,
+      menuId: menuId,
+      thisPage: thisPage,
+      button: button,
+      screen: screen,
+      listbox: listbox,
+      canvas: canvas,
+      placeholder: "",
+      buttonContents: buttonContents
+    });
 
-		// Disable if specified
-		if ( o.disabled ) {
-			this.disable();
-		}
+    // Support for using the native select menu with a custom button
 
-		// Events on native select
-		select.change(function() {
-			self.refresh();
-		});
+    // Create list from select, update state
+    self.refresh();
 
-		// Expose to other methods
-		$.extend( self, {
-                        realcanvas: realcanvas,
-			select: select,
-			selectID: selectID,
-			label: label,
-			buttonId: buttonId,
-			menuId: menuId,
-			thisPage: thisPage,
-			button: button,
-			screen: screen,
-			listbox: listbox,
-                        canvas: canvas,
-			placeholder: "",
-                        buttonContents: buttonContents
-		});
+    // Button events
+    button.bind("vclick keydown", function(event) {
+      if (event.type == "vclick" ||
+          event.keyCode &&
+            (event.keyCode === $.mobile.keyCode.ENTER ||
+             event.keyCode === $.mobile.keyCode.SPACE)) {
+	self.open();
+	event.preventDefault();
+      }
+    });
 
-		// Support for using the native select menu with a custom button
+    // Events on "screen" overlay
+    screen.bind( "vclick", function( event ) {
+      self.close();
+    });
 
-		// Create list from select, update state
-		self.refresh();
+    realcanvas.bind( "colorchanged", function (event, clr) {
+      self.dragging_clr = clr;
+    });
 
-		// Button events
-		button.bind( "vclick keydown" , function( event ) {
-			if ( event.type == "vclick" ||
-						event.keyCode && ( event.keyCode === $.mobile.keyCode.ENTER ||
-																	event.keyCode === $.mobile.keyCode.SPACE ) ) {
+    closeButton.bind("vclick", function(event) {
+      self.setColor(self.dragging_clr);
+      self.close();
+    });
+  },
 
-				self.open();
-				event.preventDefault();
-			}
-		});
+  setColor: function(clr) {
+    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
+      if (this.colour != clr) {
 
-		// Events on "screen" overlay
-		screen.bind( "vclick", function( event ) {
-		  self.close();
-		});
-	},
+        this.colour = clr;
+        this.dragging_clr = clr;
+        this.refresh();
+        this.realcanvas.colorpicker("setColor", this.colour);
+        this.element.trigger("colorchanged", this.colour);
+      }
+    }
+  },
 
-	refresh: function( forceRebuild ) {
-          var r, g, b, r_str, g_str, b_str, hsl,
-	      self = this,
-              clrValue = this.element.attr("value");
+  refresh: function( forceRebuild ) {
+    var self = this,
+        r, g, b, r_str, g_str, b_str, hsl,
+        clrValue = self.colour;
 
-          if (undefined === clrValue)
-            clrValue = "#ff0000";
+        if (undefined === clrValue)
+          clrValue = "#ff0000";
 
-          self.buttonContents.css("color", clrValue);
-	},
+        if (self.element.attr("value") != clrValue)
+          self.element.attr("value", clrValue);
 
-	open: function() {
-		if ( this.options.disabled ) {
-			return;
-		}
+    self.buttonContents.css("color", clrValue);
+  },
 
-		var self = this,
-                        targetWidget = self.canvas.parent(),
-			menuHeight = targetWidget.outerHeight(),
-			menuWidth = targetWidget.outerWidth(),
-			scrollTop = $( window ).scrollTop(),
-			btnOffset = self.button.offset().top,
-			screenHeight = window.innerHeight,
-			screenWidth = window.innerWidth;
+  open: function() {
+    if ( this.options.disabled ) {
+      return;
+    }
 
-                console.log("colorpickerbutton.open: menuHeight = " + menuHeight + ", menuWidth = " + menuWidth);
+    var self = this,
+        targetWidget = self.canvas.parent();
 
-		//add active class to button
-		self.button.addClass( $.mobile.activeBtnClass );
+    self.realcanvas.colorpicker("setColor", self.colour);
+    self.canvas.css("max-width", self.realcanvas.outerWidth());
+    self.listbox.css("max-width", self.realcanvas.outerWidth());
 
-		//remove after delay
-		setTimeout(function() {
-			self.button.removeClass( $.mobile.activeBtnClass );
-		}, 300);
+    var menuHeight = targetWidget.outerHeight(),
+	menuWidth = targetWidget.outerWidth(),
+	scrollTop = $( window ).scrollTop(),
+	btnOffset = self.button.offset().top,
+	screenHeight = window.innerHeight,
+	screenWidth = window.innerWidth;
 
-		self.screen.height( $(document).height() )
-			.removeClass( "ui-screen-hidden" );
+    //add active class to button
+    self.button.addClass( $.mobile.activeBtnClass );
 
-		// Try and center the overlay over the button
-		var roomtop = btnOffset - scrollTop,
-			roombot = scrollTop + screenHeight - btnOffset,
-			halfheight = menuHeight / 2,
-			maxwidth = parseFloat( targetWidget.css( "max-width" ) ),
-			newtop, newleft;
+    //remove after delay
+    setTimeout(function() {
+      self.button.removeClass( $.mobile.activeBtnClass );
+    }, 300);
 
-                console.log("colorpickerbutton.open: maxwidth = " + maxwidth);
+    self.screen
+      .height($(document).height())
+      .removeClass("ui-screen-hidden");
 
-		if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-			newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
-		} else {
-			// 30px tolerance off the edges
-			newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-		}
+    // Try and center the overlay over the button
+    var roomtop = btnOffset - scrollTop,
+	roombot = scrollTop + screenHeight - btnOffset,
+	halfheight = menuHeight / 2,
+	maxwidth = parseFloat( targetWidget.css( "max-width" ) ),
+	newtop, newleft;
 
-		// If the menuwidth is smaller than the screen center is
-		if ( menuWidth < maxwidth ) {
-			newleft = ( screenWidth - menuWidth ) / 2;
-		} else {
+    if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+      newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
+    }
+    else {
+      // 30px tolerance off the edges
+      newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+    }
 
-			//otherwise insure a >= 30px offset from the left
-			newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
+    // If the menuwidth is smaller than the screen center is
+    if ( menuWidth < maxwidth ) {
+      newleft = ( screenWidth - menuWidth ) / 2;
+    } 
+    else {
 
-			// 30px tolerance off the edges
-			if ( newleft < 30 ) {
-				newleft = 30;
-			} else if ( ( newleft + menuWidth ) > screenWidth ) {
-				newleft = screenWidth - menuWidth - 30;
-			}
-		}
+      //otherwise insure a >= 30px offset from the left
+      newleft = self.button.offset().left + (self.button.outerWidth() - menuWidth) / 2;
 
-		self.listbox.append( self.canvas )
-			.removeClass( "ui-selectmenu-hidden" )
-			.css({
-				top: newtop,
-				left: newleft
-			})
-			.addClass( "in" );
+      // 30px tolerance off the edges
+      if ( newleft < 30 ) {
+	newleft = 30;
+      }
+      else
+      if ( ( newleft + menuWidth ) > screenWidth ) {
+	newleft = screenWidth - menuWidth - 30;
+      }
+    }
 
-                self.listbox
-                  .attr("width", self.realcanvas.attr("width"))
-                  .attr("height", self.realcanvas.attr("height"));
+    self.listbox
+      .removeClass( "ui-selectmenu-hidden" )
+      .css({
+	top: newtop,
+	left: newleft
+      })
+      .addClass( "in" );
 
-                self.listbox
-                  .css("width", self.realcanvas.attr("width"))
-                  .css("height", self.realcanvas.attr("height"));
+    // duplicate with value set in page show for dialog sized selects
+    self.isOpen = true;
+  },
 
-		// duplicate with value set in page show for dialog sized selects
-		self.isOpen = true;
-	},
+  _focusButton : function(){
+    var self = this;
+    setTimeout(function() {
+      self.button.focus();
+    }, 40);
+  },
 
-	_focusButton : function(){
-		var self = this;
-		setTimeout(function() {
-			self.button.focus();
-		}, 40);
-	},
+  close: function() {
+    if ( this.options.disabled || !this.isOpen ) {
+      return;
+    }
 
-	close: function() {
-		if ( this.options.disabled || !this.isOpen ) {
-			return;
-		}
+    var self = this;
 
-		var self = this;
+    self.screen.addClass( "ui-screen-hidden" );
+    self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
+    self._focusButton();
 
-		self.screen.addClass( "ui-screen-hidden" );
-		self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
-		self.canvas.appendTo( self.listbox );
-		self._focusButton();
+    // allow the dialog to be closed again
+    this.isOpen = false;
+  },
 
-		// allow the dialog to be closed again
-		this.isOpen = false;
-	},
+  disable: function() {
+    this.element.attr( "disabled", true );
+    this.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
+    return this._setOption( "disabled", true );
+  },
 
-	disable: function() {
-		this.element.attr( "disabled", true );
-		this.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
-		return this._setOption( "disabled", true );
-	},
-
-	enable: function() {
-		this.element.attr( "disabled", false );
-		this.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
-		return this._setOption( "disabled", false );
-	}
+  enable: function() {
+    this.element.attr( "disabled", false );
+    this.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
+    return this._setOption( "disabled", false );
+  }
 });
 
 //auto self-init widgets
-$( document ).bind( "pagecreate create", function( e ){
-	$( $.mobile.colorpickerbutton.prototype.options.initSelector, e.target )
-		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-		.colorpickerbutton();
+$(document).bind("pagecreate create", function(e) {
+  $($.mobile.colorpickerbutton.prototype.options.initSelector, e.target)
+    .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
+    .colorpickerbutton();
 });
 
 })( jQuery );

@@ -8,39 +8,32 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        o = this.options,
-        elem = this.element
-          /*.wrap("<div class='ui-colorpicker'/>")*/
-          .addClass("ui-colorpicker"),
-        elemID = elem.attr("id"),
 
-        canvasContainer = $("<div>", {"class" : "ui-colorpicker-canvas-border"})
-          .appendTo(elem),
+        o = this.options,
+
+        elem = this.element
+          .addClass("ui-colorpicker"),
+
+        elemID = elem.attr("id"),
 
         canvas = $("<canvas>", {"class" : "ui-colorpicker-canvas" })
           .text("colorpicker canvas")
-          .appendTo(canvasContainer),
+          .appendTo(elem),
+
         hsSelector = $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(canvasContainer),
+          .appendTo(elem),
+
         lSelector =  $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(canvasContainer),
+          .appendTo(elem),
+
         scale = Math.min(parseInt(canvas.css("width")), parseInt(canvas.css("height"))) / 256.0,
-        hsl = this.getHSL(o.color),
-        canvasCX = parseInt(canvas.css("width")),
-        canvasCY = parseInt(canvas.css("height"));
 
-      canvas[0].width  = canvasCX;
-      canvas[0].height = canvasCY;
+        hsl = this.getHSL(o.color);
 
-      console.log("colorpicker._create: Setting [w x h] = [" + canvasCX + " x " + canvasCY + "]");
+      hsl[1] = 1.0 - hsl[1];
 
-      canvas.attr("width", canvasCX);
-      canvas.attr("height", canvasCY);
-
-      console.log("colorpicker._create: Setting elem [w x h] = [" + canvasContainer.outerWidth() + " x " + canvasContainer.outerHeight() + "]");
-
-      elem.attr("width", canvasContainer.outerWidth());
-      elem.attr("height", canvasContainer.outerHeight());
+      canvas[0].width  = parseInt(canvas.css("width"));
+      canvas[0].height = parseInt(canvas.css("height"));
 
     $.extend( self, {
       scale: scale,
@@ -282,6 +275,21 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   refresh: function() {
     this.paintCanvas(this.dragging_hsl);
     this.updateSelectors(this.dragging_hsl);
+  },
+
+  setColor: function(clr) {
+    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
+      var newHSL = this.getHSL(clr);
+
+      if (!(newHSL[0] == this.dragging_hsl[0] &&
+            newHSL[1] == this.dragging_hsl[1] &&
+            newHSL[2] == this.dragging_hsl[2])) {
+
+        this.dragging_hsl = newHSL;
+        this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
+        this.refresh();
+      }
+    }
   },
 
   normalizeValue: function (val) {
