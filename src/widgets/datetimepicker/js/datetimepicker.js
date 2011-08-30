@@ -308,7 +308,6 @@
                                     parseFromFunc, parseToFunc,
                                     dest, prop) {
             var obj = this;
-            var jqObj = $(this);
             var scrollable = obj._createScrollableView();
             var currentIndex = 0;
             var destValue = (parseToFunc !== null ?
