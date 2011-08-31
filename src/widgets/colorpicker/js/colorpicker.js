@@ -11,7 +11,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         o = this.options,
 
-        elem = this.element
+        elem = this.element.wrap("<div>")
           .addClass("ui-colorpicker"),
 
         elemID = elem.attr("id"),
@@ -269,6 +269,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     this.lSelector.css("top",   hsl[2] * this.scale * 256.0);
     this.lSelector.css("background",  "#" + gray + gray + gray);
 
+    this.element.attr("data-color", clr);
     this.element.triggerHandler('colorchanged', clr);
   },
 
