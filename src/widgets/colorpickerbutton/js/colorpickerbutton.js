@@ -8,7 +8,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     inline: true,
     corners: true,
     shadow: true,
-    overlayTheme: "a",
     closeText: "Close",
     initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
   },
@@ -68,7 +67,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
           .text(o.closeText)
           .appendTo(canvas)
           .buttonMarkup({
-            theme: o.theme,
+            theme: $.mobile.popupwindow.prototype.options.overlayTheme,
             inline: false,
             corners: o.corners,
             shadow: o.shadow
