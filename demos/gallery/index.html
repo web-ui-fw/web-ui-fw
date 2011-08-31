@@ -29,6 +29,7 @@
                         <ul data-role="listview">
                             <li data-role="list-divider">Widgets</li>
                             <li><a href="#datetimepicker-demo">Date/time picker</a></li>
+                            <li><a href="#volumecontrol-demo">Volume control</a></li>
                             <li><a href="#colorpicker-demo">Color picker widget</a></li>
                             <li><a href="#colorpickerbutton-demo">Color picker button</a></li>
                             <li><a href="#draganddroplist-demo">Drag &amp; drop list</a></li>
@@ -59,6 +60,20 @@
                     </div>
                 </form>
                 <p>The date you selected is: <span class="selected-date"><em>(select a date first)</em></span></p>
+            </div><!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
+        <div data-role="page" id="volumecontrol-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Volume control</h1>
+            </div>
+            <div data-role="content">
+                <h2>Volume control</h2>
+                <div data-role="volumecontrol" id="myVolumeControl"></div>
+                <a href="#" id="showVolumeButton" data-role="button" data-inline="true">Show Volume</a>
             </div><!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
@@ -359,6 +374,9 @@
                   $('#popupContent').popupwindow("open",
                     btn.offset().left + btn.outerWidth()  / 2,
                     btn.offset().top  + btn.outerHeight() / 2);
+                });
+                $("#showVolumeButton").bind("vclick", function (e) {
+                  $("#myVolumeControl").volumecontrol("open");
                 });
             });
         </script>

@@ -1,0 +1,15 @@
+jQuery.extend( jQuery,
+{
+  volumecontrol_createIcon: function() {
+    return $("<img>", {
+            "src": "../../build/libs/images/White_Theme/Volume/00_volume_icon.png",
+            "alt": "☺"
+          });
+  },
+
+  volumecontrol_basicToneIconTemplate:
+    "../../build/libs/images/White_Theme/Volume/volume_7_level/00_volume_%1.png",
+
+  volumecontrol_volumeIconTemplate:
+    "../../build/libs/images/White_Theme/Volume/volume_15_level/00_volume_%1.png"
+});

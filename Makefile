@@ -41,7 +41,6 @@ LIBS_CSS_FILES +=
     $(NULL)
 endif
 
-
 all: third_party widgets
 
 third_party: init
@@ -55,6 +54,8 @@ third_party: init
 	        cat $$f >> $(CURDIR)/${LIBS_CSS}; \
 	    done; \
 	    cp -r images $(CURDIR)/${OUTPUT_ROOT}/libs/css
+
+	@@cp -a $(CURDIR)/${LIBS_DIR}/images $(CURDIR)/${OUTPUT_ROOT}/libs/images
 
 widgets: init
 	# Building widgets...

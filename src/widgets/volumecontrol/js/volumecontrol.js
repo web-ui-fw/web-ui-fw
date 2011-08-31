@@ -2,205 +2,129 @@
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
   options: {
-    theme: null,
-    disabled: false,
-    inline: true,
-    corners: true,
-    shadow: true,
-    overlayTheme: "a",
-    closeText: "Close",
+    volume: 0,
+    basicTone: false,
+    title: "Volume",
     initSelector: ":jqmData(role='volumecontrol')"
   },
+
   _create: function() {
-    var
-      self = this,
 
-      o = this.options,
+    console.log("volumecontrol._create");
 
-      select = this.element.wrap( "<div class='ui-select'>" ),
+    var self = this,
+        select = this.element,
+        o = this.options,
+        volume = o.volume,
+        container = $("<div>", {"class" : "ui-volumecontrol"})
+          .attr("id", "container")
+          .insertBefore(select)
+          .popupwindow(),
+        titleSpan = $("<h1>")
+          .text(o.title)
+          .appendTo(container),
+        icon = $("<div>", {"class" : "ui-volumecontrol-icon"})
+          .append($.volumecontrol_createIcon())
+          .appendTo(container),
 
-      selectID = select.attr( "id" ),
+        volumeImage = $("<img>", {"alt": "☺"}),
 
-      label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
+        indicator = $("<div>", {"class" : "ui-volumecontrol-indicator"})
+          .append(volumeImage)
+          .appendTo(container);
 
-      menuId = selectID + "-menu",
+      this.element.css("display", "none");
 
-      thisPage = select.closest( ".ui-page" ),
+      $.extend (self, {
+        isOpen: false,
+        basicTone: o.basicTone,
+        volumeImage: volumeImage,
+        indicator: indicator,
+        container: container,
+        volume: volume
+      });
 
-      screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-        .appendTo( thisPage ),
+      this.setVolumeIcon();
 
-      listbox = $("<div>", { "class": "ui-selectmenu ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition })
-	.insertAfter(screen),
+      container.bind("closed", function(e) {
+        console.log("volumecontrol._create: popup closed");
+        self.isOpen = false;
+      });
 
-      contents = $("<div>", {"class" : "ui-grid-a"})
-        .appendTo(listbox),
+      $(document).bind("keydown", function(e) {
+        if (this.isOpen) {
+          var maxVolume = self.basicTone ? 6 : 14,
+              newVolume = -1;
 
-      titleContainer = $("<div>", {"class" : "ui-header"})
-        .appendTo(contents),
+          switch(event.keyCode) {
+            case $.mobile.keyCode.UP:
+            case $.mobile.keyCode.DOWN:
+            case $.mobile.keyCode.HOME:
+            case $.mobile.keyCode.END:
+              event.preventDefault();
+              break;
+          }
 
-      titleSpan = $("<span>", {"class" : "ui-title"})
-        .appendTo(titleContainer),
+          switch(event.keyCode) {
+            case $.mobile.keyCode.UP:
+              newVolume = Math.max(this.volume + 1, maxVolume);
+              break;
 
-      randomText = $("<span>")
-        .appendTo(contents);
+            case $.mobile.keyCode.DOWN:
+              newVolume = Math.min(this.volume - 1, 0);
+              break;
 
-      titleSpan.text("Volume");
-      randomText.text("Random Text");
+            case $.mobile.keyCode.HOME:
+              newVolume = 0;
+              break;
 
-    this.element.css("display", "none");
+            case $.mobile.keyCode.END:
+              newVolume = maxVolume;
+              break;
+          }
 
-    // Disable if specified
-    if ( o.disabled ) {
-      this.disable();
-    }
-
-    // Events on native select
-    select.change(function() {
-      self.refresh();
-    });
-
-    // Expose to other methods
-    $.extend( self, {
-      select: select,
-      selectID: selectID,
-      label: label,
-      menuId: menuId,
-      thisPage: thisPage,
-      screen: screen,
-      listbox: listbox,
-      contents: contents,
-      placeholder: "",
-      dragging: false,
-      draggingHS: true,
-      dragging_hsl : {
-        h : -1,
-        s : -1,
-        l : -1
-      }
-    });
-
-    // Support for using the native select menu with a custom button
-
-    // Create list from select, update state
-    self.refresh();
-
-    $( document ).bind( "vmousemove", function( event ) {
-      if ( self.dragging ) {
-//        self.refresh( event );
-	return false;
-      }
-    });
-
-    $( document ).bind( "vmouseup", function( event ) {
-      if ( self.dragging ) {
-        self.dragging = false;
-//        self.refresh( event );
-	return false;
-      }
-    });
-
-    // Events on "screen" overlay
-    screen.bind( "vclick", function( event ) {
-      self.close();
-    });
+          self.setVolume(newVolume);
+        }
+      });
   },
 
-  makeClrChannel: function(val) {
-    return (val < 16 ? "0" : "") + (val & 0xff).toString(16);
+  setVolumeIcon: function() {
+    this.volumeImage.attr("src",
+      (this.basicTone 
+          ? $.volumecontrol_basicToneIconTemplate
+          : $.volumecontrol_volumeIconTemplate)
+        .replace("%1", ((this.volume < 10 ? "0" : "") + this.volume)));
   },
 
-  refresh: function( forceRebuild ) {
+  setVolume: function(volume) {
+    if (volume != undefined)
+      if (this.volume != volume) {
+        this.volume = Math.max(0, Math.min(volume, (this.basicTone ? 6 : 14)));
+        setVolumeIcon();
+      }
   },
 
   open: function() {
-    if ( this.options.disabled ) {
-      return;
+    console.log("volumecontrol.open: Entering");
+    if (!this.isOpen) {
+      console.log("volumecontrol.open: Opening popupwindow at (" 
+        + window.innerWidth  / 2 + ", " 
+        + window.innerHeight / 2 + ")");
+
+      this.container.popupwindow("open",
+        window.innerWidth  / 2,
+        window.innerHeight / 2);
+
+      this.isOpen = true;
     }
-
-    var self = this,
-	    menuHeight = self.contents.parent().outerHeight(),
-	    menuWidth = self.contents.parent().outerWidth(),
-	    scrollTop = $( window ).scrollTop(),
-	    screenHeight = window.innerHeight,
-	    screenWidth = window.innerWidth;
-
-    console.log(
-      "menuHeight: " + menuHeight + 
-      ", menuWidth: " + menuWidth +
-      ", scrollTop: " + scrollTop +
-      ", screenHeight: " + screenHeight +
-      ", screenWidth: " + screenWidth);
-
-    self.screen.height( $(document).height() )
-	.removeClass( "ui-screen-hidden" );
-
-    // Try and center the overlay over the button
-    var roomtop = -scrollTop,
-	roombot = scrollTop + screenHeight,
-	halfheight = menuHeight / 2,
-	maxwidth = parseFloat( self.contents.parent().css( "max-width" ) ),
-	newtop, newleft;
-
-    if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-      newtop = -halfheight;
-    } else {
-      // 30px tolerance off the edges
-      newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-    }
-
-    // If the menuwidth is smaller than the screen center is
-    if ( menuWidth < maxwidth ) {
-      newleft = ( screenWidth - menuWidth ) / 2;
-    } else {
-
-      //otherwise insure a >= 30px offset from the left
-      newleft = 0 - menuWidth / 2;
-
-      // 30px tolerance off the edges
-      if ( newleft < 30 ) {
-	newleft = 30;
-      } else if ( ( newleft + menuWidth ) > screenWidth ) {
-	newleft = screenWidth - menuWidth - 30;
-      }
-    }
-
-    self.listbox.append( self.contents )
-	.removeClass( "ui-selectmenu-hidden" )
-	.css({
-	  top: newtop,
-	  left: newleft
-	})
-	.addClass( "in" );
-
-    // duplicate with value set in page show for dialog sized selects
-    self.isOpen = true;
   },
-
+  
   close: function() {
-    if ( this.options.disabled || !this.isOpen ) {
-      return;
+    if (this.isOpen) {
+      this.container.popupwindow("close");
+      this.isOpen = false;
     }
-
-    var self = this;
-
-    self.screen.addClass( "ui-screen-hidden" );
-    self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
-    self.contents.appendTo( self.listbox );
-
-    // allow the dialog to be closed again
-    this.isOpen = false;
   },
-
-  disable: function() {
-    this.element.attr( "disabled", true );
-    return this._setOption( "disabled", true );
-  },
-
-  enable: function() {
-    this.element.attr( "disabled", false );
-    return this._setOption( "disabled", false );
-  }
 });
 
 //auto self-init widgets

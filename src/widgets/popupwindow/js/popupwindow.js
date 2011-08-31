@@ -120,6 +120,8 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       .removeClass("in");
 
     this.isOpen = false;
+
+    this.element.trigger("closed");
   }
 });
 
