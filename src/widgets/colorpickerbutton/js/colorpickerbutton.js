@@ -49,23 +49,17 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 	        })
                 .css("color", colour),
 
-        thisPage = select.closest( ".ui-page" ),
-
         //button theme
         theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
-        screen = $( "<div>", {"class": "ui-selectmenu-screen ui-screen-hidden"})
-			        .appendTo( thisPage ),
-
-        listbox = $("<div>", { "class": "ui-popupwindow ui-selectmenu-hidden ui-overlay-shadow ui-corner-all ui-body-" + o.overlayTheme + " " + $.mobile.defaultDialogTransition})
-	  .insertAfter(screen),
-
         canvas = $("<div/>", {"id" : "canvas"})
-          .appendTo(listbox),
+          .insertBefore(select),
 
         realcanvas = $("<div/>")
           .appendTo(canvas)
           .colorpicker({"color" : colour}),
+
+        popup = canvas.popupwindow(),
 
         closeButton = $("<a/>", {
           "href": "#",
@@ -94,6 +88,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 
     // Expose to other methods
     $.extend( self, {
+      popup: popup,
       dragging_clr: undefined,
       colour: colour,
       realcanvas: realcanvas,
@@ -102,10 +97,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       label: label,
       buttonId: buttonId,
       menuId: menuId,
-      thisPage: thisPage,
       button: button,
-      screen: screen,
-      listbox: listbox,
       canvas: canvas,
       placeholder: "",
       buttonContents: buttonContents
@@ -125,11 +117,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 	self.open();
 	event.preventDefault();
       }
-    });
-
-    // Events on "screen" overlay
-    screen.bind( "vclick", function( event ) {
-      self.close();
     });
 
     realcanvas.bind( "colorchanged", function (event, clr) {
@@ -174,77 +161,11 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       return;
     }
 
-    var self = this,
-        targetWidget = self.canvas.parent();
+    this.realcanvas.colorpicker("setColor", this.colour);
 
-    self.realcanvas.colorpicker("setColor", self.colour);
-
-    self.listbox.css("max-width",  self.canvas.outerWidth());
-    self.listbox.css("max-height", self.canvas.outerHeight());
-
-    var menuHeight = targetWidget.outerHeight(),
-	menuWidth = targetWidget.outerWidth(),
-	scrollTop = $( window ).scrollTop(),
-	btnOffset = self.button.offset().top,
-	screenHeight = window.innerHeight,
-	screenWidth = window.innerWidth;
-
-    //add active class to button
-    self.button.addClass( $.mobile.activeBtnClass );
-
-    //remove after delay
-    setTimeout(function() {
-      self.button.removeClass( $.mobile.activeBtnClass );
-    }, 300);
-
-    self.screen
-      .height($(document).height())
-      .removeClass("ui-screen-hidden");
-
-    // Try and center the overlay over the button
-    var roomtop = btnOffset - scrollTop,
-	roombot = scrollTop + screenHeight - btnOffset,
-	halfheight = menuHeight / 2,
-	maxwidth = parseFloat( targetWidget.css( "max-width" ) ),
-	newtop, newleft;
-
-    if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-      newtop = btnOffset + ( self.button.outerHeight() / 2 ) - halfheight;
-    }
-    else {
-      // 30px tolerance off the edges
-      newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-    }
-
-    // If the menuwidth is smaller than the screen center is
-    if ( menuWidth < maxwidth ) {
-      newleft = ( screenWidth - menuWidth ) / 2;
-    } 
-    else {
-
-      //otherwise insure a >= 30px offset from the left
-      newleft = self.button.offset().left + self.button.outerWidth() / 2 - menuWidth / 2;
-
-      // 30px tolerance off the edges
-      if ( newleft < 30 ) {
-	newleft = 30;
-      }
-      else
-      if ( ( newleft + menuWidth ) > screenWidth ) {
-	newleft = screenWidth - menuWidth - 30;
-      }
-    }
-
-    self.listbox
-      .removeClass( "ui-selectmenu-hidden" )
-      .css({
-	top: newtop,
-	left: newleft
-      })
-      .addClass( "in" );
-
-    // duplicate with value set in page show for dialog sized selects
-    self.isOpen = true;
+    this.popup.popupwindow("open",
+      this.button.position().left + this.button.outerWidth()  / 2,
+      this.button.position().top  + this.button.outerHeight() / 2);
   },
 
   _focusButton : function(){
@@ -255,18 +176,14 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
   },
 
   close: function() {
-    if ( this.options.disabled || !this.isOpen ) {
+    if ( this.options.disabled ) {
       return;
     }
 
     var self = this;
 
-    self.screen.addClass( "ui-screen-hidden" );
-    self.listbox.addClass( "ui-selectmenu-hidden" ).removeAttr( "style" ).removeClass( "in" );
     self._focusButton();
-
-    // allow the dialog to be closed again
-    this.isOpen = false;
+    self.popup.popupwindow("close");
   },
 
   disable: function() {
