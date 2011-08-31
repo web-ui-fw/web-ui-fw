@@ -34,4 +34,7 @@ $(document).bind("pagecreate", function() {
         btn.offset().left + btn.outerWidth()  / 2,
         btn.offset().top  + btn.outerHeight() / 2);
     });
+    $("#showVolumeButton").bind("vclick", function (e) {
+      $("#myVolumeControl").volumecontrol("open");
+    });
 });

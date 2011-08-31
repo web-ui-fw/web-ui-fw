@@ -1,5 +1,5 @@
 // domready.js (https://github.com/ded/domready)
-// NB not minified, as it the minified version doesn't work
+// NB not minified, as in the minified version doesn't work
 !function (context, doc) {
   var fns = [], ol, fn, f = false,
       testEl = doc.documentElement,
@@ -73,9 +73,11 @@ S = {
   // default root path to the framework; could be an absolute file:// URI
   defaultFrameworkRoot: 'web-ui-fw',
 
+// FIXME: Commented out until the Makefile cooperates. Should use @VERSION@ and sed ...
+/*
   // default framework version to load
   defaultFrameworkVersion: '0.1',
-
+*/
   // default theme to load
   defaultFrameworkTheme: 'default',
 

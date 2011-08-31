@@ -55,7 +55,8 @@ third_party: init
 	    done; \
 	    cp -r images/* $(CURDIR)/${CSS_IMAGES_OUTPUT_DIR}
 
-	@@cp -a $(CURDIR)/${LIBS_DIR}/images $(CURDIR)/${OUTPUT_ROOT}/libs/images
+	@@mkdir -p $(CURDIR)/${OUTPUT_ROOT}/libs/
+	@@cp -a $(CURDIR)/${LIBS_DIR}/images $(CURDIR)/${OUTPUT_ROOT}/libs/
 
 widgets: init
 	# Building widgets...
