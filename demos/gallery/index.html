@@ -5,12 +5,11 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script type="text/javascript" src="../../build/libs/js/web-ui-fw-libs.js"></script>
-        <script type="text/javascript" src="../../build/web-ui-fw/js/web-ui-fw.js"></script>
-        <script type="text/javascript" src="../../build/web-ui-fw/js/web-ui-fw-default-theme.js"></script>
-
-        <link rel="stylesheet" href="../../build/libs/css/web-ui-fw-libs.css" />
-        <link rel="stylesheet" href="../../build/web-ui-fw/css/web-ui-fw-default-theme.css" />
+        <script src="bootstrap.js"
+                data-framework-version="0.1"
+                data-framework-root="../../build/web-ui-fw"
+                data-framework-theme="default">
+        </script>
     </head>
 
     <body>
@@ -99,7 +98,7 @@
             <div data-role="content">
                 <form action='#' method="get">
                     <div data-role="fieldcontain">
-                        <label for="desired_colour">Choose colour:</label>
+                        <label for="desired_colour">Choose color:</label>
                         <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
                     </div>
                 </form>
@@ -337,48 +336,5 @@
                 <h4>Web UI Framework - Widgets gallery</h4>
             </div>
         </div> <!-- /page -->
-
-        <script type="text/javascript">
-		        $('#progressbar_page').bind('pagecreate', function () {
-                setInterval(function() {
-                    var progress = $('.ui-progressbar').progressbar('value');
-                    progress++;
-                    if (progress > 100) {
-                      progress = 0;
-                    }
-                    $('.ui-progressbar').progressbar('value', progress)
-		        	  }, 100);
-		        });
-
-            $(document).bind("pagecreate", function() {
-                $('#groupindex-demo').bind('pageshow', function (e) {
-                    $.fillPageWithContentArea($(this));
-                });
-
-                $('#shortcutscroll-demo').bind('pageshow', function (e) {
-                    $.fillPageWithContentArea($(this));
-                });
-
-                var updateDate = function(e, newDate) {
-                    $("#datetimepicker-demo .selected-date").text(newDate.toString());
-                };
-                $("#demo-date").bind("date-changed", updateDate);
-
-                /* TODO: we should not need these! */
-                $('.ui-progressbar').progressbar();
-                $('#switch-1').switch();
-                $('#switch-2').switch();
-                $('#groupindex').scrolllistview();
-                $('#popupwindowDemoButton').bind("vclick", function(e) {
-                  var btn = $('#popupwindowDemoButton');
-                  $('#popupContent').popupwindow("open",
-                    btn.offset().left + btn.outerWidth()  / 2,
-                    btn.offset().top  + btn.outerHeight() / 2);
-                });
-                $("#showVolumeButton").bind("vclick", function (e) {
-                  $("#myVolumeControl").volumecontrol("open");
-                });
-            });
-        </script>
     </body>
 </html>
