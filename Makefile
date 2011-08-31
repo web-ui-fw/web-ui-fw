@@ -5,7 +5,7 @@ VERSION = 0.1
 OUTPUT_ROOT = build
 JS_OUTPUT_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/js
 CSS_OUTPUT_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/css
-IMAGES_OUTPUT_DIR = ${CSS_OUTPUT_ROOT}/images
+CSS_IMAGES_OUTPUT_DIR = ${CSS_OUTPUT_ROOT}/images
 
 CODE_DIR = src/widgets
 LIBS_DIR = libs
@@ -54,7 +54,7 @@ third_party: init
 	    for f in ${LIBS_CSS_FILES}; do \
 	        cat $$f >> $(CURDIR)/${FW_CSS}; \
 	    done; \
-	    cp -r images/* $(CURDIR)/${IMAGES_OUTPUT_DIR}
+	    cp -r images/* $(CURDIR)/${CSS_IMAGES_OUTPUT_DIR}
 
 widgets: init
 	# Building widgets...
@@ -79,7 +79,7 @@ widgets: init
 	        done; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.gif' -or -iname '*.png' -or -iname '*.jpg'`; do \
 	            echo "		$$f"; \
-	            cp $$f ${IMAGES_OUTPUT_DIR}; \
+	            cp $$f ${CSS_IMAGES_OUTPUT_DIR}; \
 	        done; \
 	    done
 
@@ -93,4 +93,4 @@ init: clean
 	# Initializing...
 	@@mkdir -p ${JS_OUTPUT_ROOT}
 	@@mkdir -p ${CSS_OUTPUT_ROOT}
-	@@mkdir -p ${IMAGES_OUTPUT_DIR}
+	@@mkdir -p ${CSS_IMAGES_OUTPUT_DIR}
