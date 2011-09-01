@@ -7,8 +7,15 @@ jQuery.extend( jQuery,
           });
   },
 
-  volumecontrol_basicToneIconTemplate:
-    "../../build/libs/images/White_Theme/Volume/volume_7_level/00_volume_%1.png",
+  volumecontrol_basicTone: {
+    imageTemplate: "../../build/libs/images/White_Theme/Volume/volume_7_level/00_volume_%1.png",
+    maxVolume: 7
+  },
+
+  volumecontrol_generalVolume: {
+    imageTemplate: "../../build/libs/images/White_Theme/Volume/volume_15_level/00_volume_%1.png",
+    maxVolume: 15
+  },
 
   volumecontrol_volumeIconTemplate:
     "../../build/libs/images/White_Theme/Volume/volume_15_level/00_volume_%1.png"

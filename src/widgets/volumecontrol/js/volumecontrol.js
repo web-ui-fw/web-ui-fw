@@ -52,9 +52,11 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       });
 
       $(document).bind("keydown", function(e) {
-        if (this.isOpen) {
-          var maxVolume = self.basicTone ? 6 : 14,
+        if (self.isOpen) {
+          var maxVolume = self.maxVolume(),
               newVolume = -1;
+
+          console.log("maxVolume: " + maxVolume);
 
           switch(event.keyCode) {
             case $.mobile.keyCode.UP:
@@ -67,11 +69,11 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
           switch(event.keyCode) {
             case $.mobile.keyCode.UP:
-              newVolume = Math.max(this.volume + 1, maxVolume);
+              newVolume = Math.min(self.volume + 1, maxVolume);
               break;
 
             case $.mobile.keyCode.DOWN:
-              newVolume = Math.min(this.volume - 1, 0);
+              newVolume = Math.max(self.volume - 1, 0);
               break;
 
             case $.mobile.keyCode.HOME:
@@ -83,24 +85,33 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
               break;
           }
 
-          self.setVolume(newVolume);
+          if (newVolume != -1) {
+            console.log("newVolume: " + newVolume);
+            self.setVolume(newVolume);
+          }
         }
       });
+  },
+
+  maxVolume: function() {
+    return this.basicTone
+      ? $.volumecontrol_basicTone.maxVolume
+      : $.volumecontrol_generalVolume.maxVolume;
   },
 
   setVolumeIcon: function() {
     this.volumeImage.attr("src",
       (this.basicTone 
-          ? $.volumecontrol_basicToneIconTemplate
-          : $.volumecontrol_volumeIconTemplate)
+          ? $.volumecontrol_basicTone.imageTemplate
+          : $.volumecontrol_generalVolume.imageTemplate)
         .replace("%1", ((this.volume < 10 ? "0" : "") + this.volume)));
   },
 
   setVolume: function(volume) {
     if (volume != undefined)
       if (this.volume != volume) {
-        this.volume = Math.max(0, Math.min(volume, (this.basicTone ? 6 : 14)));
-        setVolumeIcon();
+        this.volume =  Math.max(0, Math.min(volume, this.maxVolume()));
+        this.setVolumeIcon();
       }
   },
 
