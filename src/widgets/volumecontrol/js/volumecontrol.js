@@ -10,8 +10,6 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   _create: function() {
 
-    console.log("volumecontrol._create");
-
     var self = this,
         select = this.element,
         o = this.options,
@@ -47,7 +45,6 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       this.setVolumeIcon();
 
       container.bind("closed", function(e) {
-        console.log("volumecontrol._create: popup closed");
         self.isOpen = false;
       });
 
@@ -55,8 +52,6 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
         if (self.isOpen) {
           var maxVolume = self.maxVolume(),
               newVolume = -1;
-
-          console.log("maxVolume: " + maxVolume);
 
           switch(event.keyCode) {
             case $.mobile.keyCode.UP:
@@ -86,7 +81,6 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
           }
 
           if (newVolume != -1) {
-            console.log("newVolume: " + newVolume);
             self.setVolume(newVolume);
           }
         }
@@ -116,12 +110,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   open: function() {
-    console.log("volumecontrol.open: Entering");
     if (!this.isOpen) {
-      console.log("volumecontrol.open: Opening popupwindow at (" 
-        + window.innerWidth  / 2 + ", " 
-        + window.innerHeight / 2 + ")");
-
       this.container.popupwindow("open",
         window.innerWidth  / 2,
         window.innerHeight / 2);
