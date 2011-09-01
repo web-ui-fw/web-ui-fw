@@ -15,8 +15,8 @@
 }
 
 .ui-swipelistitemcontainer {
-    position:relative;
     overflow:hidden;
+    position:relative;
     width:@swipelistitem-width;
     height:@swipelistitem-height;
 
@@ -41,24 +41,24 @@
         margin-top:35px;
         border:0;
         .ui-buttonlayout{
-            margin-right:10px;
+            margin-right:@margin;
             border:0px;
             height:38px;
             width:215px;
             text-align: center;
             border-radius:@border-radius;
             -webkit-border-radius:@border-radius;
-            .ui-swipebuttonlast{
-                width:225px;
-                margin-right:0px;
-            }
+        }
+
+        .ui-swipebuttonlast{
+            width:225px;
+            margin-right:0px;
         }
 
         .ui-threebuttonlayout{
             width:137px;
             .ui-swipebuttonlast{
                 width:147px;
-                margin-right:0px;
             }
         }
 
@@ -66,7 +66,6 @@
             width:136px;
             .ui-swipebuttonlast{
                 width:146px;
-                margin-right:0px;
             }
         }
 
@@ -75,7 +74,6 @@
             margin-right:8px;
             .ui-swipebuttonlast{
                 width:109px;
-                margin-right:0px;
             }
         }
     }
