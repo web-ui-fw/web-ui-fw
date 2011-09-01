@@ -123,10 +123,11 @@
                     swipeLeft = X<startData.point.x(),
                     velocity = dMoved/time;
                 if ((dMoved >= swipeThreshold) && velocity >=0.2) {
-                    swipeLeft === false ? _swipeToTarget()
-                                        : 0 !== $animatedItem.position().left
-                                        ? _swipeBack()
-                                        : 0;
+                    if (!swipeLeft) {
+                        _swipeToTarget();
+                    } else if ($animatedItem.position().left !== 0) {
+                               _swipeBack();
+                    }
                 }
                 _reset();
                 delete date;
