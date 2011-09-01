@@ -3,18 +3,28 @@
 /* @selector-size should be an odd number, in order to pixel-perfectly center on a given colour */
 @selector-size: 61px;
 @selector-border-width: 5px;
+@selector-total-size: @selector-size + 2 * @selector-border-width;
+@canvas-width: 256px + @selector-total-size + 16px;
+@canvas-height: 256px;
 
-.colorpicker-button-span {
-  text-align: center;
-}
+.ui-colorpicker {
 
-.colorpicker-canvas-border {
-  padding: (@selector-border-width * 2 + @selector-size - 1) / 2;
-}
+  position: relative;
+  width: @canvas-width;
+  height: @canvas-height;
+  padding: (@selector-total-size - 1) / 2;
 
-.colorpicker-canvas-selector {
-  position: absolute;
-  width: @selector-size;
-  height: @selector-size;
-  border: solid @selector-border-width black;
+  .ui-colorpicker-canvas-selector {
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    width: @selector-size;
+    height: @selector-size;
+    border: solid @selector-border-width black;
+  }
+
+  .ui-colorpicker-canvas {
+    width: @canvas-width;
+    height: @canvas-height;
+  }
 }

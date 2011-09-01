@@ -29,6 +29,7 @@
                 swipeThreshold = 30,
                 $currentSwipeItem = null,
                 $animatedItem = null,
+                $previousAnimatedItem = null,
                 maxSwipeItemLeft = 0,
                 resetNeeded = false,
                 startData = {
@@ -63,36 +64,36 @@
                 var targetName = e.target.className;
                 if (targetName.indexOf('ui-swipelistitemcover') < 0
                     && targetName.indexOf('ui-swipelistitemcontent') < 0
-                    && targetName.indexOf('ui-swipelistitemcontainer') < 0)
-                    return $(e.target).trigger('click');
+                    && targetName.indexOf('ui-swipelistitemcontainer') < 0) {
+                        _swipeBack();
+                        return $(e.target).trigger('click');
+                }
                 var temp = $currentSwipeItem.children('.ui-swipelistitemcontainer');
                 $animatedItem = temp.children('.ui-swipelistitemcover');
                 maxSwipeItemLeft = $animatedItem.outerWidth();
-                if (0 !== $animatedItem.position().left) {
-                    _swipeBack();
-                    $animatedItem = null;
-                    maxSwipeItemLeft = null;
-                }
-                else {
-                    var date = new Date();
-                    startData.time = date.getTime();
-                    startData.point.setX(X);
-                    startData.point.setY(Y);
-                    if ($currentSwipeItem.width()/2 < swipeThreshold)
-                        swipeThreshold = $currentSwipeItem.outerWidth()/2;
-                    $currentSwipeItem.bind("mousemove touchmove", _mouseMoveCB);
-                    $currentSwipeItem.bind("mouseup touchend", _mouseUpCB);
-                    resetNeeded = true;
-                    delete date;
-                }
+                var date = new Date();
+                startData.time = date.getTime();
+                startData.point.setX(X);
+                startData.point.setY(Y);
+                if ($currentSwipeItem.width()/2 < swipeThreshold)
+                    swipeThreshold = $currentSwipeItem.outerWidth()/2;
+                $currentSwipeItem.bind("mousemove touchmove", _mouseMoveCB);
+                $currentSwipeItem.bind("mouseup touchend", _mouseUpCB);
+                resetNeeded = true;
+                delete date;
             };
 
             var _swipeBack = function() {
-                $animatedItem.stop().animate({"left" :0}, 'fast','linear');
+                if (null !== $previousAnimatedItem) {
+                    $previousAnimatedItem.stop().animate({"left" :0}, 'fast','linear');
+                    $previousAnimatedItem = null;
+                }
             };
 
             var _swipeToTarget = function() {
+                _swipeBack();
                 $animatedItem.stop().animate({"left" :maxSwipeItemLeft}, 'fast','linear');
+                $previousAnimatedItem = $animatedItem;
             };
 
             var _reset = function() {
@@ -122,7 +123,11 @@
                     swipeLeft = X<startData.point.x(),
                     velocity = dMoved/time;
                 if ((dMoved >= swipeThreshold) && velocity >=0.2) {
-                    swipeLeft === false ? _swipeToTarget():_swipeBack();
+                    if (!swipeLeft) {
+                        _swipeToTarget();
+                    } else if ($animatedItem.position().left !== 0) {
+                               _swipeBack();
+                    }
                 }
                 _reset();
                 delete date;

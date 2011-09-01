@@ -1,20 +1,21 @@
 DEBUG = yes
+PROJECT_NAME = web-ui-fw
+VERSION = 0.1
 
 OUTPUT_ROOT = build
+JS_OUTPUT_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/js
+CSS_OUTPUT_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/css
+CSS_IMAGES_OUTPUT_DIR = ${CSS_OUTPUT_ROOT}/images
+
 CODE_DIR = src/widgets
 LIBS_DIR = libs
 
-FW_IMAGES_DIR = ${OUTPUT_ROOT}/web-ui-fw/css/images
-
-LIBS_JS = ${OUTPUT_ROOT}/libs/js/web-ui-fw-libs.js
-LIBS_CSS= ${OUTPUT_ROOT}/libs/css/web-ui-fw-libs.css
-
-WEB_UI_FW_JS = ${OUTPUT_ROOT}/web-ui-fw/js/web-ui-fw.js
-WEB_UI_FW_JS_THEME = ${OUTPUT_ROOT}/web-ui-fw/js/web-ui-fw-default-theme.js
-WEB_UI_FW_CSS = ${OUTPUT_ROOT}/web-ui-fw/css/web-ui-fw-default-theme.css
+FW_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}.js
+FW_JS_THEME = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-default-theme.js
+FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-default-theme.css
+FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 
 LIBS_JS_FILES =
-
 ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
     jquery-1.6.2.js \
@@ -30,7 +31,6 @@ LIBS_JS_FILES +=\
 endif
 
 LIBS_CSS_FILES =
-
 ifeq (${DEBUG},yes)
 LIBS_CSS_FILES +=\
     jquery.mobile-1.0b2.css \
@@ -41,20 +41,22 @@ LIBS_CSS_FILES +=
     $(NULL)
 endif
 
-
 all: third_party widgets
 
 third_party: init
 	# Building third party components...
 	@@cd $(CURDIR)/${LIBS_DIR}/js; \
 	    for f in ${LIBS_JS_FILES}; do \
-	        cat $$f >> $(CURDIR)/${LIBS_JS}; \
+	        cat $$f >> $(CURDIR)/${FW_LIBS_JS}; \
 	    done
 	@@cd $(CURDIR)/${LIBS_DIR}/css; \
 	    for f in ${LIBS_CSS_FILES}; do \
-	        cat $$f >> $(CURDIR)/${LIBS_CSS}; \
+	        cat $$f >> $(CURDIR)/${FW_CSS}; \
 	    done; \
-	    cp -r images $(CURDIR)/${OUTPUT_ROOT}/libs/css
+	    cp -r images/* $(CURDIR)/${CSS_IMAGES_OUTPUT_DIR}
+
+	@@mkdir -p $(CURDIR)/${OUTPUT_ROOT}/libs/
+	@@cp -a $(CURDIR)/${LIBS_DIR}/images $(CURDIR)/${OUTPUT_ROOT}/libs/
 
 widgets: init
 	# Building widgets...
@@ -63,11 +65,11 @@ widgets: init
 	        echo "	# Building widget $$REPLY"; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js'`; do \
 	            echo "		$$f"; \
-	            cat $$f >> ${WEB_UI_FW_JS}; \
+	            cat $$f >> ${FW_JS}; \
 	        done; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js.theme'`; do \
 	            echo "		$$f"; \
-	            cat $$f >> ${WEB_UI_FW_JS_THEME}; \
+	            cat $$f >> ${FW_JS_THEME}; \
 	        done; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.less'`; do \
 	            echo "		$$f"; \
@@ -75,11 +77,11 @@ widgets: init
 	        done; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.css'`; do \
 	            echo "		$$f"; \
-	            cat $$f >> ${WEB_UI_FW_CSS}; \
+	            cat $$f >> ${FW_CSS}; \
 	        done; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.gif' -or -iname '*.png' -or -iname '*.jpg'`; do \
 	            echo "		$$f"; \
-	            cp $$f ${FW_IMAGES_DIR}; \
+	            cp $$f ${CSS_IMAGES_OUTPUT_DIR}; \
 	        done; \
 	    done
 
@@ -90,7 +92,7 @@ clean:
 	@@rm -f `find . -iname *.less.css`
 
 init: clean
-	@@mkdir -p ${OUTPUT_ROOT}/libs/js
-	@@mkdir -p ${OUTPUT_ROOT}/libs/css
-	@@mkdir -p ${OUTPUT_ROOT}/web-ui-fw/js
-	@@mkdir -p ${OUTPUT_ROOT}/web-ui-fw/css/images
+	# Initializing...
+	@@mkdir -p ${JS_OUTPUT_ROOT}
+	@@mkdir -p ${CSS_OUTPUT_ROOT}
+	@@mkdir -p ${CSS_IMAGES_OUTPUT_DIR}
