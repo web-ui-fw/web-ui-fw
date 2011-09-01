@@ -2,6 +2,7 @@
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
   options: {
+    structure: $.mobile.loadStructure("volumecontrol"),
     volume: 0,
     basicTone: false,
     title: "Volume",
@@ -14,30 +15,18 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
         select = this.element,
         o = this.options,
         volume = o.volume,
-        container = $("<div>", {"class" : "ui-volumecontrol"})
-          .attr("id", "container")
+        container = o.structure.clone().find("#volumecontrol")
           .insertBefore(select)
           .popupwindow(),
-        titleSpan = $("<h1>")
-          .text(o.title)
-          .appendTo(container),
-        icon = $("<div>", {"class" : "ui-volumecontrol-icon"})
-          .append($.volumecontrol_createIcon())
-          .appendTo(container),
-
-        volumeImage = $("<img>", {"alt": "☺"}),
-
-        indicator = $("<div>", {"class" : "ui-volumecontrol-indicator"})
-          .append(volumeImage)
-          .appendTo(container);
+        volumeImage = container.find("#volumecontrol-indicator");
 
       this.element.css("display", "none");
+      container.find("#volumecontrol-title").text(o.title);
 
       $.extend (self, {
         isOpen: false,
         basicTone: o.basicTone,
         volumeImage: volumeImage,
-        indicator: indicator,
         container: container,
         volume: volume
       });
@@ -88,16 +77,18 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   maxVolume: function() {
-    return this.basicTone
-      ? $.volumecontrol_basicTone.maxVolume
-      : $.volumecontrol_generalVolume.maxVolume;
+    var ret = this.volumeIcon.attr(this.basicTone
+      ? "data-basicTone-maxVolume"
+      : "data-generalVolume-maxVolume");
+    return ret;
   },
 
   setVolumeIcon: function() {
     this.volumeImage.attr("src",
-      (this.basicTone 
-          ? $.volumecontrol_basicTone.imageTemplate
-          : $.volumecontrol_generalVolume.imageTemplate)
+      this.volumeImage.attr(
+          (this.basicTone 
+            ? "data-basicTone-imageTemplate"
+            : "data-generalVolume-imageTemplate"))
         .replace("%1", ((this.volume < 10 ? "0" : "") + this.volume)));
   },
 
