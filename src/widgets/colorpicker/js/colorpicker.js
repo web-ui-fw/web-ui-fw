@@ -2,6 +2,7 @@
 
 $.widget( "mobile.colorpicker", $.mobile.widget, {
   options: {
+    prototype: $.mobile.loadPrototype("colorpicker"),
     color: "#1a8039",
     initSelector: ":jqmData(role='colorpicker')"
   },
@@ -11,18 +12,12 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         o = this.options,
 
-        clrpicker = $("<div>", {"class" : "ui-colorpicker", "id" : "colorpicker" })
+        clrpicker = o.prototype.clone().find("#colorpicker")
           .appendTo(this.element),
 
-        canvas = $("<canvas>", {"class" : "ui-colorpicker-canvas" })
-          .text("colorpicker canvas")
-          .appendTo(clrpicker),
-
-        hsSelector = $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(clrpicker),
-
-        lSelector =  $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(clrpicker),
+        canvas = clrpicker.find("#colorpicker-canvas"),
+        hsSelector = clrpicker.find("#colorpicker-hs-selector"),
+        lSelector =  clrpicker.find("#colorpicker-l-selector"),
 
         scale = Math.min(parseInt(canvas.css("width")), parseInt(canvas.css("height"))) / 256.0,
 
