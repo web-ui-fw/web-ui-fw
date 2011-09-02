@@ -2,6 +2,7 @@
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
   options: {
+    prototype: $.mobile.loadPrototype("volumecontrol"),
     volume: 0,
     basicTone: false,
     title: "Volume",
@@ -10,36 +11,22 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   _create: function() {
 
-    console.log("volumecontrol._create");
-
     var self = this,
         select = this.element,
         o = this.options,
         volume = o.volume,
-        container = $("<div>", {"class" : "ui-volumecontrol"})
-          .attr("id", "container")
+        container = o.prototype.clone().find("#volumecontrol")
           .insertBefore(select)
           .popupwindow(),
-        titleSpan = $("<h1>")
-          .text(o.title)
-          .appendTo(container),
-        icon = $("<div>", {"class" : "ui-volumecontrol-icon"})
-          .append($.volumecontrol_createIcon())
-          .appendTo(container),
-
-        volumeImage = $("<img>", {"alt": "☺"}),
-
-        indicator = $("<div>", {"class" : "ui-volumecontrol-indicator"})
-          .append(volumeImage)
-          .appendTo(container);
+        volumeImage = container.find("#volumecontrol-indicator");
 
       this.element.css("display", "none");
+      container.find("#volumecontrol-title").text(o.title);
 
       $.extend (self, {
         isOpen: false,
         basicTone: o.basicTone,
         volumeImage: volumeImage,
-        indicator: indicator,
         container: container,
         volume: volume
       });
@@ -47,13 +34,12 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       this.setVolumeIcon();
 
       container.bind("closed", function(e) {
-        console.log("volumecontrol._create: popup closed");
         self.isOpen = false;
       });
 
       $(document).bind("keydown", function(e) {
-        if (this.isOpen) {
-          var maxVolume = self.basicTone ? 6 : 14,
+        if (self.isOpen) {
+          var maxVolume = self.maxVolume(),
               newVolume = -1;
 
           switch(event.keyCode) {
@@ -67,11 +53,11 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
           switch(event.keyCode) {
             case $.mobile.keyCode.UP:
-              newVolume = Math.max(this.volume + 1, maxVolume);
+              newVolume = Math.min(self.volume + 1, maxVolume);
               break;
 
             case $.mobile.keyCode.DOWN:
-              newVolume = Math.min(this.volume - 1, 0);
+              newVolume = Math.max(self.volume - 1, 0);
               break;
 
             case $.mobile.keyCode.HOME:
@@ -83,34 +69,39 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
               break;
           }
 
-          self.setVolume(newVolume);
+          if (newVolume != -1) {
+            self.setVolume(newVolume);
+          }
         }
       });
   },
 
+  maxVolume: function() {
+    var ret = this.volumeIcon.attr(this.basicTone
+      ? "data-basicTone-maxVolume"
+      : "data-generalVolume-maxVolume");
+    return ret;
+  },
+
   setVolumeIcon: function() {
     this.volumeImage.attr("src",
-      (this.basicTone 
-          ? $.volumecontrol_basicToneIconTemplate
-          : $.volumecontrol_volumeIconTemplate)
+      this.volumeImage.attr(
+          (this.basicTone 
+            ? "data-basicTone-imageTemplate"
+            : "data-generalVolume-imageTemplate"))
         .replace("%1", ((this.volume < 10 ? "0" : "") + this.volume)));
   },
 
   setVolume: function(volume) {
     if (volume != undefined)
       if (this.volume != volume) {
-        this.volume = Math.max(0, Math.min(volume, (this.basicTone ? 6 : 14)));
-        setVolumeIcon();
+        this.volume =  Math.max(0, Math.min(volume, this.maxVolume()));
+        this.setVolumeIcon();
       }
   },
 
   open: function() {
-    console.log("volumecontrol.open: Entering");
     if (!this.isOpen) {
-      console.log("volumecontrol.open: Opening popupwindow at (" 
-        + window.innerWidth  / 2 + ", " 
-        + window.innerHeight / 2 + ")");
-
       this.container.popupwindow("open",
         window.innerWidth  / 2,
         window.innerHeight / 2);
