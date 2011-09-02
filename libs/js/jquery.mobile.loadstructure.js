@@ -1,6 +1,6 @@
 jQuery.extend( jQuery.mobile,
 {
-  loadStructure: function(widgetname) {
+  loadPrototype: function(widgetname) {
     var ret = undefined,
         theScriptTag = $("script[data-framework-version][data-framework-root][data-framework-theme]"),
         frameworkRootPath = theScriptTag.attr("data-framework-root")    + "/" +

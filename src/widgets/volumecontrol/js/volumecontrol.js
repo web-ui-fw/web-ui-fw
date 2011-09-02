@@ -2,7 +2,7 @@
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
   options: {
-    structure: $.mobile.loadStructure("volumecontrol"),
+    prototype: $.mobile.loadPrototype("volumecontrol"),
     volume: 0,
     basicTone: false,
     title: "Volume",
@@ -15,7 +15,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
         select = this.element,
         o = this.options,
         volume = o.volume,
-        container = o.structure.clone().find("#volumecontrol")
+        container = o.prototype.clone().find("#volumecontrol")
           .insertBefore(select)
           .popupwindow(),
         volumeImage = container.find("#volumecontrol-indicator");
