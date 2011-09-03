@@ -25,44 +25,37 @@
 (function($) {
     $.widget( "mobile.swipelist", $.mobile.widget, {
         _create: function() {
-            var yThreshold = 20,
+            var yThreshold = 2,
                 swipeThreshold = 30,
                 $currentSwipeItem = null,
                 $animatedItem = null,
                 $previousAnimatedItem = null,
                 maxSwipeItemLeft = 0,
                 resetNeeded = false,
+                _self = this,
                 startData = {
                     time: null,
                     point: new $.Point(0,0)
                 };
 
-            this._mouseDownCB = function(e) {
+            _self._mouseDownCB = function(e) {
                 $currentSwipeItem = $(this);
-                var data = e.type === "touchstart" ? e.originalEvent.targetTouches[0]
-                                                   :e;
                 e.preventDefault();
-                return _TouchStart(e, data.clientX, data.clientY);
+                return _TouchStart(e,e.pageX,e.pageY);
             };
 
             var _mouseMoveCB = function(e) {
-                var data = e.type === "touchmove"
-                                  ? e.originalEvent.targetTouches[0]
-                                  :e;
                 e.preventDefault();
-                return _TouchMove(e, e.clientX, e.clientY);
+                return _TouchMove(e.pageX,e.pageY);
             };
 
             var _mouseUpCB = function(e) {
-                var data = e.type === "touchend"
-                                  ? e.originalEvent.targetTouches[0]
-                                  :e;
-                return _TouchEnd(e, e.clientX, e.clientY);
+                return _TouchEnd(e.pageX,e.pageY);
             };
 
             var _TouchStart =  function(e,X,Y) {
                 var targetName = e.target.className;
-                if (targetName.indexOf('ui-swipelistitemcover') < 0
+                if (targetName.length >0 && targetName.indexOf('ui-swipelistitemcover') < 0
                     && targetName.indexOf('ui-swipelistitemcontent') < 0
                     && targetName.indexOf('ui-swipelistitemcontainer') < 0) {
                         _swipeBack();
@@ -77,8 +70,8 @@
                 startData.point.setY(Y);
                 if ($currentSwipeItem.width()/2 < swipeThreshold)
                     swipeThreshold = $currentSwipeItem.outerWidth()/2;
-                $currentSwipeItem.bind("mousemove touchmove", _mouseMoveCB);
-                $currentSwipeItem.bind("mouseup touchend", _mouseUpCB);
+                $currentSwipeItem.bind("vmousemove", _mouseMoveCB);
+                $currentSwipeItem.bind("vmouseup", _mouseUpCB);
                 resetNeeded = true;
                 delete date;
             };
@@ -103,34 +96,39 @@
                 startData.time = null;
                 startData.point.setX(0);
                 startData.point.setY(0);
-                $currentSwipeItem.unbind("mousemove touchmove", _mouseMoveCB);
-                $currentSwipeItem.unbind("mouseup touchend", _mouseUpCB);
+                $currentSwipeItem.unbind("vmousemove vmouseup", _mouseMoveCB);
                 $currentSwipeItem = null;
                 $animatedItem = null;
                 maxSwipeItemLeft = null;
                 resetNeeded = false;
             };
-
-            var _TouchMove = function(e,X,Y) {
-                if (Math.abs(Y-startData.point.y()) > yThreshold)
-                    _reset();
+            
+            var _validSweep = function(X,Y) {
+                return X>startData.point.x() && Math.abs(Y-startData.point.y()) <= 0 && X-startData.point.x() >0;
             };
 
-            var _TouchEnd = function(e,X,Y) {
-                var date = new Date(),
-                    time = date.getTime()-startData.time,
-                    dMoved = Math.abs(X-startData.point.x()),
-                    swipeLeft = X<startData.point.x(),
-                    velocity = dMoved/time;
-                if ((dMoved >= swipeThreshold) && velocity >=0.2) {
-                    if (!swipeLeft) {
-                        _swipeToTarget();
-                    } else if ($animatedItem.position().left !== 0) {
-                               _swipeBack();
+            var _validReverseSweep = function(X,Y) {
+                return X<startData.point.x() && Math.abs(Y-startData.point.y()) <= 10 && startData.point.x() - X >= swipeThreshold;
+            };
+
+            var _TouchMove = function(X,Y) {
+                 if (_validSweep(X,Y)) {
+                     _swipeToTarget();
+                     _reset();          
+                }               
+            };
+
+            var _TouchEnd = function(X,Y) {
+                if ($animatedItem !== null && $animatedItem.position().left !== 0 && _validReverseSweep(X,Y)) {
+                    var date = new Date(),
+                        time = date.getTime()-startData.time,
+                        velocity = (startData.point.x()-X)/time;
+                    if (velocity >=0.2) {
+                        _swipeBack();
                     }
+                    delete date;
                 }
                 _reset();
-                delete date;
             }
         },
 
@@ -193,8 +191,7 @@
 
                     //append top level container to listitem
                     $li.append($containerDiv);
-                    $li.bind("mousedown touchstart",
-                             self._mouseDownCB);
+                    $li.bind("vmousedown", self._mouseDownCB);
                 }
             });
             if (listItems.length === 1)
