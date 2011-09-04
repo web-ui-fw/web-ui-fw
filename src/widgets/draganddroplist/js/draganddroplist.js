@@ -153,7 +153,10 @@
                 }, 100, "swing", function(){
                     $clone.remove();
                     $shadow.replaceWith($realObject);
-                    _mouseInit();   
+                    $realObject.bind('vmousedown',_mouseDown);
+                    listItems = null;
+                    listItems = $this.children("li");
+                    _dragInit();   
                 });
                 $.enableSelection($this);
                 $realObject.trigger('dragEnded');
@@ -245,20 +248,18 @@
                 _moveShadowToTarget(true);
             }
 
-            var _mouseInit = function() {
-                listItems = $this.children("li");
-                var $li = null;
+            var _mouseDown = function() {
+                if (!validActivation) {
+                    $realObject = $(this);
+                    $realObject.bind('vmouseup vmousemove',_reset);
+                    event.preventDefault();
+                    validActivation = true;
+                }
+            }
+
+            var _dragInit = function() {
                 listItems.each(function (idx, li) {
-                    $li = $(li);
-                    $li.bind('vmousedown',function(event) {
-                        if (!validActivation) {
-                            $realObject = $(this);
-                            $realObject.bind('vmouseup vmousemove',_reset);
-                            event.preventDefault();
-                            validActivation = true;
-                        }
-                    });
-                    $li.bind('taphold', function (event) {
+                    $(li).bind('taphold', function (event) {
                         if (validActivation) {
                             $.disableSelection($this);
                             _reset();
@@ -286,6 +287,13 @@
                 });
             }
 
+            var _mouseInit = function() {
+                listItems = $this.children("li");
+                listItems.each(function (idx, li) {
+                    $(li).bind('vmousedown',_mouseDown);
+                });
+                _dragInit();
+            }
             _mouseInit();
         }
     });
