@@ -48,7 +48,7 @@
                     });
                     elementTopPos = new $.Point(parseInt(draggedElement.css('left'),10),
                                 parseInt(draggedElement.css('top'),10));
-                     jQuery(draggedElement).css('-webkit-transform', 'scale(1.1)');
+                     jQuery(draggedElement).css('-webkit-transform', 'scale(1.001)');
                     _moveObject();
                 };
 
@@ -57,7 +57,7 @@
                        return;
                     startPos = null;
                     elementTopPos = null;
-                    draggedElement.unbind('swipe mousemove touchmove mouseup touchstart mousedown scroll touchend');
+                    draggedElement.unbind('vmousemove vmouseup vmousedown');
                     if (dragStoppedCallback !== null)
                         dragStoppedCallback(draggedElement);
                     draggedElement = null;
@@ -131,13 +131,14 @@
                 targetIndex: null
             }
 
-            var _unBind = function () {
+            var _reset = function () {
                 if (!validActivation)
                     return;
                 validActivation = false;
-                $realObject.unbind('vmouseup vmousemove',_unBind());
+                $realObject.unbind('vmouseup vmousemove',_reset);
                 shadowData.$shadowRect.setRect(0,0,0,0);
                 shadowData.targetHeight = null;
+                shadowData.shadowIndex = null;
                 $targetObject = {
                 targetItem: null,
                 targetIndex: null
@@ -152,10 +153,11 @@
                 }, 100, "swing", function(){
                     $clone.remove();
                     $shadow.replaceWith($realObject);
+                    _mouseInit();   
                 });
                 $.enableSelection($this);
                 $realObject.trigger('dragEnded');
-                _unBind();
+                _reset();             
             }
 
             var _evaluateDragDown = function (newPos) {
@@ -245,37 +247,42 @@
 
             var _mouseInit = function() {
                 listItems = $this.children("li");
+                var $li = null;
                 listItems.each(function (idx, li) {
-                    $(li).bind('vmousedown',function(event) {
-                        $realObject = $(this);
-                        shadowData.shadowIndex = idx;
-                        $realObject.bind('vmouseup vmousemove',_unBind);
-                        event.preventDefault();
-                        validActivation = true;
-                    });
-		    $(li).bind('taphold', function (event) {
-                        if (validActivation) {
-		            $.disableSelection($this);
-			    $this.trigger('dragStarted', [idx]);
-			    $realObject = $(this);
-			    $clone = $realObject.clone();
-			    $clone.addClass("dragObject");
-			    $clone.css('width', $realObject.css('width'));
-			    $realObject.replaceWith($clone);
-			    draggedObject.setMovingObject($clone,
-						      absoluteTouchPostion(event),
-						      _evaluateDragMove, _evaluateDragEnd);
-			    var cloneHeight = $clone.outerHeight();
-			    $shadow.css('height', parseInt(cloneHeight,10));
-			    $shadow.insertBefore($clone);
-			    _unBind();
-			    shadowData.shadowIndex = idx;
-			    shadowData.$shadowRect.setTop($shadow.offset().top);
-			    shadowData.$shadowRect.setBottom(shadowData.$shadowRect.top() + cloneHeight);
-			    reEvaluateChildren = true;
-			    event.preventDefault();
+                    $li = $(li);
+                    $li.bind('vmousedown',function(event) {
+                        if (!validActivation) {
+                            $realObject = $(this);
+                            $realObject.bind('vmouseup vmousemove',_reset);
+                            event.preventDefault();
+                            validActivation = true;
                         }
-		    });
+                    });
+                    $li.bind('taphold', function (event) {
+                        if (validActivation) {
+                            $.disableSelection($this);
+                            _reset();
+                            $.each(listItems, function (idx, li) {
+                                $(li).unbind('taphold');
+                            });
+                            $realObject.trigger('dragStarted');
+                            $clone = $realObject.clone();
+                            $clone.addClass("dragObject");
+                            $clone.css('width', $realObject.css('width'));
+                            $realObject.replaceWith($clone);
+                            draggedObject.setMovingObject($clone,
+                                                          absoluteTouchPostion(event),
+                                                          _evaluateDragMove, _evaluateDragEnd);
+                            var cloneHeight = $clone.outerHeight();
+                            $shadow.css('height', parseInt(cloneHeight,10));
+                            $shadow.insertBefore($clone);
+                            shadowData.shadowIndex = idx;
+                            shadowData.$shadowRect.setTop($shadow.offset().top);
+                            shadowData.$shadowRect.setBottom(shadowData.$shadowRect.top() + cloneHeight);
+                            reEvaluateChildren = true;
+                            event.preventDefault();
+                        }
+                    });
                 });
             }
 
