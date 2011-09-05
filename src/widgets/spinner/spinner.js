@@ -19,7 +19,7 @@
  * Once you have a spinner, call the start() method on it to display it
  * and start the animation.
  *
- * The spinner uses a div directly after the element. Calling done()
+ * The spinner uses a div directly after the element. Calling stop()
  * on a spinner detaches this element from the DOM; it also removes
  * the data-processing="spinner" attribute from the target element, if one
  * exists.
