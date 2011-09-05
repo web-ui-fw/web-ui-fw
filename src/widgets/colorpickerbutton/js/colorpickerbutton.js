@@ -52,13 +52,9 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
         canvas = $("<div/>", {"id" : "canvas"})
-          .insertBefore(select),
-
-        realcanvas = $("<div/>")
-          .appendTo(canvas)
-          .colorpicker({"color" : colour}),
-
-        popup = canvas.popupwindow(),
+          .insertBefore(select)
+          .colorpicker({"color" : colour})
+          .popupwindow(),
 
         closeButton = $("<a/>", {
           "href": "#",
@@ -73,7 +69,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
             shadow: o.shadow
           });
 
-    canvas.css("max-width", realcanvas.outerWidth());
+    canvas.css("max-width", canvas.find("#colorpicker").outerWidth());
 
     if (undefined === colour)
       colour = o.color;
@@ -87,10 +83,8 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 
     // Expose to other methods
     $.extend( self, {
-      popup: popup,
       dragging_clr: undefined,
       colour: colour,
-      realcanvas: realcanvas,
       select: select,
       selectID: selectID,
       label: label,
@@ -118,7 +112,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       }
     });
 
-    realcanvas.bind( "colorchanged", function (event, clr) {
+    canvas.bind( "colorchanged", function (event, clr) {
       self.dragging_clr = clr;
     });
 
@@ -135,7 +129,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         this.colour = clr;
         this.dragging_clr = clr;
         this.refresh();
-        this.realcanvas.colorpicker("setColor", this.colour);
+        this.canvas.colorpicker("setColor", this.colour);
         this.element.trigger("colorchanged", this.colour);
       }
     }
@@ -160,9 +154,9 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       return;
     }
 
-    this.realcanvas.colorpicker("setColor", this.colour);
+    this.canvas.colorpicker("setColor", this.colour);
 
-    this.popup.popupwindow("open",
+    this.canvas.popupwindow("open",
       this.button.position().left + this.button.outerWidth()  / 2,
       this.button.position().top  + this.button.outerHeight() / 2);
   },
@@ -182,7 +176,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     var self = this;
 
     self._focusButton();
-    self.popup.popupwindow("close");
+    self.canvas.popupwindow("close");
   },
 
   disable: function() {

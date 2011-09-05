@@ -2,7 +2,6 @@
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
   options: {
-    prototype: $.mobile.loadPrototype("volumecontrol"),
     volume: 0,
     basicTone: false,
     title: "Volume",
@@ -15,7 +14,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
         select = this.element,
         o = this.options,
         volume = o.volume,
-        container = o.prototype.clone().find("#volumecontrol")
+        container = $.mobile.loadPrototype("volumecontrol").find("#volumecontrol")
           .insertBefore(select)
           .popupwindow(),
         volumeImage = container.find("#volumecontrol-indicator");
@@ -77,7 +76,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   maxVolume: function() {
-    var ret = this.volumeIcon.attr(this.basicTone
+    var ret = this.volumeImage.attr(this.basicTone
       ? "data-basicTone-maxVolume"
       : "data-generalVolume-maxVolume");
     return ret;

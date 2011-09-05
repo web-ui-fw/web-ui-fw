@@ -11,34 +11,24 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         o = this.options,
 
-        elem = this.element.wrap("<div>")
-          .addClass("ui-colorpicker"),
+        clrpicker = $.mobile.loadPrototype("colorpicker").find("#colorpicker")
+          .appendTo(this.element),
 
-        elemID = elem.attr("id"),
-
-        canvas = $("<canvas>", {"class" : "ui-colorpicker-canvas" })
-          .text("colorpicker canvas")
-          .appendTo(elem),
-
-        hsSelector = $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(elem),
-
-        lSelector =  $("<div>", {"class": "ui-colorpicker-canvas-selector ui-corner-all" })
-          .appendTo(elem),
+        canvas = clrpicker.find("#colorpicker-canvas"),
+        hsSelector = clrpicker.find("#colorpicker-hs-selector"),
+        lSelector =  clrpicker.find("#colorpicker-l-selector"),
 
         scale = Math.min(parseInt(canvas.css("width")), parseInt(canvas.css("height"))) / 256.0,
 
         hsl = this.getHSL(o.color);
 
-      hsl[1] = 1.0 - hsl[1];
+    hsl[1] = 1.0 - hsl[1];
 
-      canvas[0].width  = parseInt(canvas.css("width"));
-      canvas[0].height = parseInt(canvas.css("height"));
+    canvas[0].width  = parseInt(canvas.css("width"));
+    canvas[0].height = parseInt(canvas.css("height"));
 
     $.extend( self, {
       scale: scale,
-      colour: o.color,
-      elem: elem,
       canvas: canvas,
       hsSelector: hsSelector,
       lSelector: lSelector,
