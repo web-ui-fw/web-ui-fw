@@ -2,7 +2,6 @@
 
 $.widget( "mobile.colorpicker", $.mobile.widget, {
   options: {
-    prototype: $.mobile.loadPrototype("colorpicker"),
     color: "#1a8039",
     initSelector: ":jqmData(role='colorpicker')"
   },
@@ -12,7 +11,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         o = this.options,
 
-        clrpicker = o.prototype.clone().find("#colorpicker")
+        clrpicker = $.mobile.loadPrototype("colorpicker").find("#colorpicker")
           .appendTo(this.element),
 
         canvas = clrpicker.find("#colorpicker-canvas"),

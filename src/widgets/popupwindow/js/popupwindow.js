@@ -2,7 +2,6 @@
 
 $.widget( "mobile.popupwindow", $.mobile.widget, {
   options: {
-    prototype: $.mobile.loadPrototype("popupwindow"),
     disabled: false,
     initSelector: ":jqmData(role='popupwindow')",
     overlayTheme: "a"
@@ -13,7 +12,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         o = this.options,
         elem = this.element,
         thisPage = this.element.closest(".ui-page"),
-        myProto = o.prototype.clone(),
+        myProto = $.mobile.loadPrototype("popupwindow"),
         screen = myProto.find("#popupwindow-screen")
           .appendTo(thisPage),
         container = myProto.find("#popupwindow-container")
