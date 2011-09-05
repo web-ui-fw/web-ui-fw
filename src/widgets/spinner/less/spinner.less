@@ -1,6 +1,38 @@
-.ui-spinner {
+.ui-spinner-container {
+  @-webkit-keyframes ui-spinner-animation {
+      from {
+          -webkit-transform: rotate(0deg);
+      }
+      to {
+          -webkit-transform: rotate(360deg);
+      }
+  }
+
+  @containerSide: 1.8em;
+  @spinnerWidth: @containerSide / 8;
+  @spinnerHeight: @containerSide * 4 / 10;
+  @borderWidth: @containerSide / 8;
+
   position: absolute;
-  width: 40px;
-  height: 40px;
-  background-color: gray;
+  border-color: rgba(170, 156, 144, 0.62);
+  border-width: @borderWidth;
+  border-style: solid;
+
+  width: @containerSide;
+  height: @containerSide;
+  -webkit-border-radius: (@containerSide + @borderWidth) / 2;
+
+  .ui-spinner {
+    position: relative;
+    background-color: black;
+    left: (@containerSide / 2) - (@spinnerWidth / 2);
+    top: (@containerSide / 2) - (@spinnerHeight);
+    width: @spinnerWidth;
+    height: @spinnerHeight;
+
+    -webkit-animation-name: ui-spinner-animation;
+    -webkit-animation-timing-function: linear;
+    -webkit-transform-origin: 50% 100%;
+    -webkit-animation-iteration-count: infinite;
+  }
 }

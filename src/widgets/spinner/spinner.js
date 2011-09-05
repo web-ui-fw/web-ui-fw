@@ -7,53 +7,67 @@
  */
 
 /**
- * Displays a spinner icon over the DOM element it is applied to (the
- * "masked" element).
+ * Displays a spinner icon over the DOM element it is applied to
+ * (the "target").
  *
  * A spinner doesn't have a progress value, as it is used in situations
  * where the exact amount of time a process would take is not known.
  *
- * The spinner uses a div directly after the masked element. Calling done()
+ * Apply a spinner using the spinner() method or by adding a
+ * data-processing="spinner" attribute to an element.
+ *
+ * The spinner uses a div directly after the element. Calling done()
  * on a spinner detaches this element from the DOM; it also removes
- * the data-mask="spinner" attribute from the masked element, if one
+ * the data-processing="spinner" attribute from the target element, if one
  * exists.
  *
  * Options:
  *
- *   position = positionining specifier, allowing positioning of the
- *              spinner with respect to the masked element; default
- *              is to align 'left top' of the spinner
- *              with 'left top' of the masked element; change by passing
+ *   position = object; positioning specifier, allowing positioning of the
+ *              spinner with respect to the target element; default
+ *              is to align 'right center' of the spinner
+ *              with 'right center' of the target element; change by passing
  *              an object with 'my' and 'at' properties, as per the jQuery UI
  *              position() options (see http://jqueryui.com/demos/position/);
  *              e.g. to position the center of the spinner over the center
- *              of the masked element, use:
- *                position: {my:'center center', at: 'center center'}
- *              where 'my' specifies the point on the spinner, at 'at'
- *              specifies the point on the masked element
+ *              of the target element, use:
+ *                  position: {my:'center center', at: 'center center'}
+ *              where 'my' specifies the point on the spinner, and 'at'
+ *              specifies the point on the target element
+ *   duration = integer; number of seconds the spinner should take to rotate
+                the full 360 degrees
  */
 
 (function($, undefined) {
 
 $.widget("TODONS.spinner", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(mask='spinner')",
-        positioning: {my: 'left top', at: 'left top'}
+        initSelector: ":jqmData(processing='spinner')",
+        positioning: {my: 'right center', at: 'right center'},
+        duration: 1
     },
 
     _create: function() {
         var self = this,
-            masked = this.element,
+            target = this.element,
             o = this.options,
-            popup;
+            popup, zIndex, spinner;
 
         popup = $.mobile.loadPrototype("spinner").find("div:first");
 
-        masked.after(popup);
+        zIndex = target.css('z-index');
+        zIndex = zIndex ? zIndex + 1 : 10;
+        popup.css('z-index', zIndex);
 
-        o.positioning['of'] = masked;
+        target.after(popup);
+
+        o.positioning['of'] = target;
 
         popup.position(o.positioning);
+
+        spinner = popup.find('.ui-spinner');
+
+        spinner.css('-webkit-animation-duration', o.duration + 's');
 
         this.popup = popup;
     },
