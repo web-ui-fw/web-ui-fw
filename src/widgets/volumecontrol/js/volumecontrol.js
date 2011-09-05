@@ -76,7 +76,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   maxVolume: function() {
-    var ret = this.volumeIcon.attr(this.basicTone
+    var ret = this.volumeImage.attr(this.basicTone
       ? "data-basicTone-maxVolume"
       : "data-generalVolume-maxVolume");
     return ret;
