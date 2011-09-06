@@ -50,7 +50,7 @@ $.widget("TODONS.spinner", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(processing='spinner')",
         position: {my: 'right center', at: 'right center'},
-        duration: 1,
+        duration: 2,
         isRunning: false
     },
 
