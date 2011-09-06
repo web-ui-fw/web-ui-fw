@@ -5,13 +5,29 @@
  * License: TODO
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
+
+/**
+ * Displays a progressbar element 
+ *
+ * A progressbar does have a progress value, and can be found from _value()
+ * You can set the value using value()
+ * 
+ *
+ * Options:
+ *
+ *     value	: starting value, default is 0
+ *	   max		: maximum value, default is 100		
+ *     duration : Integer; number of milli seconds the progressbar takes to animate
+ *				 from 0 to max. 
+ *
+ */
+
 (function ($, window, undefined) {
     $.widget("mobile.progressbar", $.mobile.widget, {
         options: {
             value: 0,
             max: 100,
             duration: 10000,	
-            title: "Progressbar"
         },
 
         data: {
@@ -89,7 +105,7 @@
         },
     }); /* End of widget */
 	
-	// Auto self-init widgets
+	// auto self-init widgets
     $(document).bind("pagecreate", function (e) {
         $(e.target).find(":jqmData(role='progressbar')").progressbar();
     });
