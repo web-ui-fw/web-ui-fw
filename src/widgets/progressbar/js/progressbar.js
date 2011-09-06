@@ -11,8 +11,7 @@
             value: 0,
             max: 100,
             duration: 10000,
-            title : "Progressbar",
-            initSelector: "jqmData(role='progressbar')"
+            title : "Progressbar"           
         },
 
         data: {
@@ -70,7 +69,7 @@
         var self = this,
         	select = this.element,
         	o = this.options,
-        	container = $.mobile.loadPrototype("ui-progressbar").find("#progressbar")
+        	container = $.mobile.loadPrototype("progressbar").find("#progressbar")
         		.insertBefore(select);
     		
     		console.log("looking for" + container.find("#progressbar")[0]);	
@@ -92,13 +91,5 @@
     $( document ).bind( "pagecreate", function( e ){
         $( e.target ).find( ":jqmData(role='progressbar')" ).progressbar();
     });
-    //auto self-init widgets
-	/*
-	$( document ).bind( "pagecreate create", function( e ){
-  		$( $.mobile.progressbar.prototype.options.initSelector, e.target )
-    		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-    		.progressbar();
-    		
-	});*/
-
+  
 })(jQuery, this);
