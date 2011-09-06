@@ -73,13 +73,16 @@
         var	container = $.mobile.loadPrototype("progressbar").find("#progressbar")
         		.insertBefore(select);
     		
-    		console.log("looking for ->" + container.find("#boxImgId")[0]);	
+    		console.log("looking for ->" + container.find("#boxImgId"));	
     		
             
             $.extend ( self, {
             	container: container
             });
             
+            this.data.box = container.find("#boxImgId");							
+			this.data.bar = container.find("#barImgId");				
+				
             self.options.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
             this._refreshValue();
 
