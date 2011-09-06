@@ -89,11 +89,16 @@
    // var now = new Date();
    // $($.mobile.progressbar.prototype.data.uuid = now.getTime());
     
+    $( document ).bind( "pagecreate", function( e ){
+        $( e.target ).find( ":jqmData(role='progressbar')" ).progressbar();
+    });
     //auto self-init widgets
+	/*
 	$( document ).bind( "pagecreate create", function( e ){
   		$( $.mobile.progressbar.prototype.options.initSelector, e.target )
     		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
     		.progressbar();
-});
+    		
+	});*/
 
 })(jQuery, this);

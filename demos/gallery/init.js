@@ -54,7 +54,7 @@ $(document).bind("pagecreate", function() {
     $('#showprogressbarButton').bind("vclick", function (e) {
     	console.log("in init");
     	setInterval(function() {
-        var progress = $('.ui-progressbar').progressbar('value');
+        var progress = $('#myprogressbar').progressbar('value');
         console.log("progress is " + progress);
         progress++;
         if (progress > 100) {
