@@ -60,7 +60,7 @@ widgets), you may want to bypass the framework loader's cache
 mechanism (so you get the latest version of every JS file). To
 do this, append a debug=true parameter to the URL, e.g.
 
-  file://&lt;path&lt;/demos/gallery/index.html?debug=true
+file://<path>/demos/gallery/index.html?debug=true
 
 where <path> is the full, absolute (with leading /) path to your
 checked out copy of the web-ui-fw repo.
