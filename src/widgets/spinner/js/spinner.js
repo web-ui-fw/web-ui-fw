@@ -81,11 +81,11 @@ $.widget("TODONS.spinner", $.mobile.widget, {
     },
 
     stop: function () {
-      if (this.isRunning) {
-          this.popup.detach();
-          this.element.trigger('stopped');
-          this.isRunning = false;
-      }
+        if (this.isRunning) {
+            this.popup.detach();
+            this.element.trigger('stopped');
+            this.isRunning = false;
+        }
     }
 });
 
