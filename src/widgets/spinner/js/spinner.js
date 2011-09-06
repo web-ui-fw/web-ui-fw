@@ -89,8 +89,7 @@ $.widget("TODONS.spinner", $.mobile.widget, {
     }
 });
 
-// auto self-init widgets; NB pageshow is used here so the DOM elements
-// have already been drawn before positioning is done
+// auto self-init widgets
 $(document).bind("pagecreate", function (e) {
     $($.TODONS.spinner.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
