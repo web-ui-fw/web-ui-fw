@@ -68,11 +68,12 @@
         	
         var self = this,
         	select = this.element,
-        	o = this.options,
-        	container = $.mobile.loadPrototype("progressbar").find("#progressbar")
+        	o = this.options;
+        	
+        var	container = $.mobile.loadPrototype("progressbar").find("#progressbar")
         		.insertBefore(select);
     		
-    		console.log("looking for" + container.find("#progressbar")[0]);	
+    		console.log("looking for ->" + container.find("#boxImgId")[0]);	
     		
             
             $.extend ( self, {
