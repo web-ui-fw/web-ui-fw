@@ -1,13 +1,3 @@
-$('#progressbar_page').bind('pagecreate', function () {
-    setInterval(function() {
-        var progress = $('.ui-progressbar').progressbar('value');
-        progress++;
-        if (progress > 100) {
-            progress = 0;
-        }
-        $('.ui-progressbar').progressbar('value', progress)
-    }, 100);
-});
 
 $(document).bind("pagecreate", function() {
     $('#groupindex-demo').bind('pageshow', function (e) {
@@ -63,7 +53,14 @@ $(document).bind("pagecreate", function() {
     //$('.ui-progressbar').progressbar();
     $('.ui-progressbar').bind("vclick", function (e) {
     	console.log("in init");
-    	$("#myprogressbar").progressbar();
+    	setInterval(function() {
+        var progress = $('.ui-progressbar').progressbar('value');
+        progress++;
+        if (progress > 100) {
+            progress = 0;
+        }
+        $('.ui-progressbar').progressbar('value', progress)
+    	}, 100);
     	console("finished in init");
     });
     $('#switch-1').switch();
