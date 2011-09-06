@@ -78,6 +78,11 @@
                     self.data.bar.stop();
                 };                
             });
+            
+            $.extend ( self, {
+            	container: container
+            });
+            
             self.options.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
             this._refreshValue();
 
