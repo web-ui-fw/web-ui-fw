@@ -20,7 +20,7 @@
   width: 50%;
   }
 
-#progressbar {
+#progressbar-container {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;

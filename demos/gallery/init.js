@@ -60,7 +60,10 @@ $(document).bind("pagecreate", function() {
     $("#demo-date").bind("date-changed", updateDate);
 
     /* TODO: we should not need these! */
-    $('.ui-progressbar').progressbar();
+    //$('.ui-progressbar').progressbar();
+    $('.ui-progressbar').bind("vclick", function (e) {
+    	$.("#myprogressbar").progressbar();
+    });
     $('#switch-1').switch();
     $('#switch-2').switch();
     $('#groupindex').scrolllistview();

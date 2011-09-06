@@ -12,7 +12,7 @@
             max: 100,
             duration: 10000,
             title : "Progressbar",
-            initSelector: "jqmData(role='progressbar-dialog')"
+            initSelector: "jqmData(role='progressbar')"
         },
 
         data: {
@@ -65,10 +65,12 @@
         },
 
         _create: function () {
+        	console.log("in _create in progressbar");
+        	
         var self = this,
         	select = this.element,
         	o = this.options,
-        	container = $.mobile.loadPrototype("ui-progressbar-dialog").find("#progressbar-dialog")
+        	container = $.mobile.loadPrototype("ui-progressbar").find("#progressbar")
         		.insertBefore(select);
     		
     		console.log("looking for" + container.find("#progressbar")[0]);	
