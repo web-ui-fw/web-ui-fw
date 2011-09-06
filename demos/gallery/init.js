@@ -20,7 +20,7 @@ $(document).bind("pagecreate", function() {
 
     $('#spinner-demo').bind('pageshow', function (e) {
         $(this).find('li').each(function (index, element) {
-            var randomWait = 500 * (Math.floor(Math.random() * 10) + 1);
+            var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
 
             $(element).text("I am processing");
 
