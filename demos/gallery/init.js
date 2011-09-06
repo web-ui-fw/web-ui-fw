@@ -1,5 +1,4 @@
-
-$(document).bind("pagecreate", function() {
+$(document).bind("pagecreate", function () {
     $('#groupindex-demo').bind('pageshow', function (e) {
         $.fillPageWithContentArea($(this));
     });
@@ -50,35 +49,34 @@ $(document).bind("pagecreate", function() {
     $("#demo-date").bind("date-changed", updateDate);
 
     /* TODO: we should not need these! */
-    //$('.ui-progressbar').progressbar();
     $('#progressbar-demo').bind('pageshow', function (e) {
-        setInterval(function() {
-        var progress = $('#myprogressbar').progressbar('value');
-        console.log("progress is " + progress);
-        progress++;
-        if (progress > 100) {
-            progress = 0;
-        }
-        $('.ui-progressbar').progressbar('value', progress)
-    	}, 100);
+        setInterval(function () {
+            var progress = $('#progressbar1').progressbar('value');
+            console.log("progress is " + progress);
+            progress++;
+            if (progress > 100) {
+                progress = 0;
+            }
+        $('#progressbar1').progressbar('value', progress)
+        }, 100);
     });
-    
+
     $('#showprogressbarButton').bind("vclick", function (e) {
-    	console.log("in init");  	
-    	console.log("finished in init");
+        console.log("in init");
+        console.log("finished in init");
     });
-    
-    $('#switch-1').switch();
-    $('#switch-2').switch();
+
+    $('#switch-1').switch ();
+    $('#switch-2').switch ();
     $('#groupindex').scrolllistview();
-    $('#popupwindowDemoButton').bind("vclick", function(e) {
-      var btn = $('#popupwindowDemoButton');
+    $('#popupwindowDemoButton').bind("vclick", function (e) {
+        var btn = $('#popupwindowDemoButton');
       $('#popupContent').popupwindow("open",
         btn.offset().left + btn.outerWidth()  / 2,
         btn.offset().top  + btn.outerHeight() / 2);
     });
     $("#showVolumeButton").bind("vclick", function (e) {
-      $("#myVolumeControl").volumecontrol("open");
+        $("#myVolumeControl").volumecontrol("open");
     });
 });
 

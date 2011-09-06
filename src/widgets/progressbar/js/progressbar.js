@@ -10,14 +10,13 @@
         options: {
             value: 0,
             max: 100,
-            duration: 10000,
-            title : "Progressbar"           
+            duration: 10000,	
+            title: "Progressbar"
         },
 
         data: {
-            uuid: 0,
-            bar: 0,
-            box: 0
+            bar: 0,		// to hold the gray background
+            box: 0		// to hold the moving orange bar
         },
 
         oldValue: 0,
@@ -39,6 +38,9 @@
             return 100 * this._value() / this.options.max;
         },
 
+		/**
+		 * function: update the value and call _startProgress()
+		 */
         _refreshValue: function (val /*now*/ ) {
             this.delta = this._value() - this.oldValue;
             if (this.oldValue !== val) {
@@ -47,10 +49,10 @@
                 this._startProgress();
             }
         },
-		
-		/**
-		 * function : animates the progressBar
-		 */
+
+        /**
+         * function : animates the progressBar
+         */
         _startProgress: function () {
             var obj = this;
             this.data.bar.animate({
@@ -62,38 +64,34 @@
                 },
             });
         },
-
+		
+		/**
+		 * function: loads the html divs from progressbar.prototype.html
+		 * and calls _refreshValue();
+		 */
         _create: function () {
-        	console.log("in _create in progressbar");
-        	
-        var self = this,
-        	select = this.element,
-        	o = this.options;
-        	
-        var	container = $.mobile.loadPrototype("progressbar").find("#progressbar")
-        		.insertBefore(select);
-    		
-    		console.log("looking for ->" + container.find("#boxImgId"));	
-    		
-            
-            $.extend ( self, {
-            	container: container
-            });
-            
-            this.data.box = container.find("#boxImgId");							
-			this.data.bar = container.find("#barImgId");				
-				
-            self.options.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
-            this._refreshValue();
 
+            var self = this,
+                select = this.element,
+                o = this.options;
+
+            var container = $.mobile.loadPrototype("progressbar").find("#progressbar").insertBefore(select);
+
+            $.extend(self, {
+                container: container
+            });
+
+            self.data.box = container.find("#boxImgId");
+            self.data.bar = container.find("#barImgId");
+
+            o.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
+            self._refreshValue();
         },
     }); /* End of widget */
-
-   // var now = new Date();
-   // $($.mobile.progressbar.prototype.data.uuid = now.getTime());
-    
-    $( document ).bind( "pagecreate", function( e ){
-        $( e.target ).find( ":jqmData(role='progressbar')" ).progressbar();
+	
+	// Auto self-init widgets
+    $(document).bind("pagecreate", function (e) {
+        $(e.target).find(":jqmData(role='progressbar')").progressbar();
     });
-  
+
 })(jQuery, this);
