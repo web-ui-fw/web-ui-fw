@@ -62,7 +62,9 @@ $(document).bind("pagecreate", function() {
     /* TODO: we should not need these! */
     //$('.ui-progressbar').progressbar();
     $('.ui-progressbar').bind("vclick", function (e) {
-    	$.("#myprogressbar").progressbar();
+    	console.log("in init");
+    	$("#myprogressbar").progressbar();
+    	console("finished in init");
     });
     $('#switch-1').switch();
     $('#switch-2').switch();
