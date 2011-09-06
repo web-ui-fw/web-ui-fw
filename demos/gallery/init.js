@@ -63,6 +63,7 @@ $(document).bind("pagecreate", function () {
 
     $('#showprogressbarButton').bind("vclick", function (e) {
         console.log("in init");
+        $("#myprogressbar-dialog").progressbar('value', 53);
         console.log("finished in init");
     });
 

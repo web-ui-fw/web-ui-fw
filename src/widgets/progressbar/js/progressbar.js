@@ -11,7 +11,8 @@
  *
  * A progressbar does have a progress value, and can be found from _value()
  * You can set the value using value()
- * 
+ * The external process is supposed to call the progressbar 
+ * e.g. $('#myprogressbar').progressbar('value', 19)
  *
  * Options:
  *

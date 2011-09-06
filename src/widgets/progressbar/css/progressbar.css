@@ -1,6 +1,4 @@
 /* Own CSS */
-
-
 .ui-progressbar {
   position: relative;
   margin-left: 10px;
@@ -11,7 +9,7 @@
   background: white;
 }
 
-#boxImgId {	
+.ui-boxImg {	
 	position: relative;
 	top: 0;
 	background: gray;
@@ -19,13 +17,12 @@
 	height: 10px;
 }
 
-#barImgId {
+.ui-barImg {
 	position: relative;
 	top: -10px;
 	background: orange;
 	height: 10px;
-	width: 0;
-	
+	width: 0;	
 }
 
 
