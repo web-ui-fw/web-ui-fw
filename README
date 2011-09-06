@@ -18,3 +18,51 @@ export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH
 
 You may want to add the final export to your .bashrc and source it.
 
+
+
+Building
+========
+
+***
+NB: The development team working on web-ui-fw uses Linux,
+so no one has attempted to build this project on other
+platforms.
+***
+
+First install lessc (see above).
+
+You'll also need make.
+
+Then, from a command line inside the project directory, do:
+
+  make clean
+  make
+
+This compiles the stylesheets for all the widgets using lessc,
+then concatenates all the library and widget JavaScript into
+framework files.
+
+
+
+The widget gallery demo
+===============================
+
+You'll need to build the project first (see above).
+
+In a browser, open:
+
+  demos/gallery/index.html
+
+This shows the widgets currently available for the web UI framework.
+
+If you are developing on the widget gallery demo (e.g. writing
+widgets), you may want to bypass the framework loader's cache
+mechanism (so you get the latest version of every JS file). To
+do this, append a debug=true parameter to the URL, e.g.
+
+  file:///home/me/web-ui-fw/demos/gallery/index.html?debug=true
+
+where <me> is your username.
+
+Also note that each time you change your widget code, you'll
+need to do "make clean ; make" to rebuild the CSS and JS files.
