@@ -50,6 +50,7 @@ $(document).bind("pagecreate", function () {
 
     /* TODO: we should not need these! */
     $('#progressbar-demo').bind('pageshow', function (e) {
+        /*
         setInterval(function () {
             var progress = $('#progressbar1').progressbar('value');
             console.log("progress is " + progress);
@@ -59,11 +60,16 @@ $(document).bind("pagecreate", function () {
             }
         $('#progressbar1').progressbar('value', progress)
         }, 100);
+        */
+       /*
+        * TODO : temporary change it back 
+        */
+       $('#myprogressbar').progressbar('value', 7);
     });
 
     $('#showprogressbarButton').bind("vclick", function (e) {
         console.log("in init");
-        $("#myprogressbar-dialog").progressbar('value', 53);
+        $("#myprogressbar-dialog").progressbar_dialog('value', 53);
         console.log("finished in init");
     });
 
