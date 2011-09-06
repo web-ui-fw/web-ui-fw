@@ -1,5 +1,5 @@
 // domready.js (https://github.com/ded/domready)
-// NB not minified, as in the minified version doesn't work
+// NB not minified, as it the minified version doesn't work
 !function (context, doc) {
   var fns = [], ol, fn, f = false,
       testEl = doc.documentElement,
@@ -51,12 +51,14 @@
 // 'S' is the framework namespace (temporary)
 S = {
   loaderChain: $LAB,
+  cacheBust: (document.location.href.match(/debug=true/)) ?
+             '?cacheBust=' + (new Date()).getTime() : '',
 
   // NB all scripts are loaded serially, but we could use a dependency
   // graph here instead
   load: function () {
     for (var i = 0; i < arguments.length; i++) {
-      S.loaderChain.script(arguments[i]).wait();
+      S.loaderChain.script(arguments[i] + S.cacheBust).wait();
     }
   },
 
@@ -73,11 +75,9 @@ S = {
   // default root path to the framework; could be an absolute file:// URI
   defaultFrameworkRoot: 'web-ui-fw',
 
-// FIXME: Commented out until the Makefile cooperates. Should use @VERSION@ and sed ...
-/*
   // default framework version to load
   defaultFrameworkVersion: '0.1',
-*/
+
   // default theme to load
   defaultFrameworkTheme: 'default',
 
@@ -148,7 +148,7 @@ S = {
     // NB this could also be customised with a data- attribute
     head = document.getElementsByTagName('head')[0];
     // TODO: this should not be hardcoded.
-    stylesheetPath = basePath + 'css/web-ui-fw-default-theme.css';
+    stylesheetPath = basePath + 'css/web-ui-fw-default-theme.css' + S.cacheBust;
 
     stylesheetLink = document.createElement('link');
     stylesheetLink.setAttribute('rel', 'stylesheet');
@@ -160,10 +160,10 @@ S = {
     // inside the S object, or keep to a small number of files
     // with known names
     S.loaderChain
-    .script(basePath + 'js/web-ui-fw-libs.js').wait()
-    .script(basePath + 'js/web-ui-fw-default-theme.js').wait() // TODO: hardcoded!
-    .script(basePath + 'js/web-ui-fw.js').wait()
-    .script('config.js').wait(function () {
+    .script(basePath + 'js/web-ui-fw-libs.js' + S.cacheBust).wait()
+    .script(basePath + 'js/web-ui-fw-default-theme.js' + S.cacheBust).wait() // TODO: hardcoded!
+    .script(basePath + 'js/web-ui-fw.js' + S.cacheBust).wait()
+    .script('config.js' + S.cacheBust).wait(function () {
       body.style.visibility = 'visible';
     });
   });
