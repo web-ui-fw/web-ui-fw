@@ -55,6 +55,7 @@ $(document).bind("pagecreate", function() {
     	console.log("in init");
     	setInterval(function() {
         var progress = $('.ui-progressbar').progressbar('value');
+        console.log("progress is " + progress);
         progress++;
         if (progress > 100) {
             progress = 0;
@@ -63,6 +64,7 @@ $(document).bind("pagecreate", function() {
     	}, 100);
     	console.log("finished in init");
     });
+    
     $('#switch-1').switch();
     $('#switch-2').switch();
     $('#groupindex').scrolllistview();

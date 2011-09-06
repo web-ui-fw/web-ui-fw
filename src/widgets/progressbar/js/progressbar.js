@@ -75,11 +75,6 @@
     		
     		console.log("looking for" + container.find("#progressbar")[0]);	
     		
-            container.find('#cancel-button').click(function () {
-                if (self.data.bar.is(':animated')) {
-                    self.data.bar.stop();
-                };                
-            });
             
             $.extend ( self, {
             	container: container
