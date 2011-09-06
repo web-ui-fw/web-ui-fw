@@ -51,7 +51,7 @@ $(document).bind("pagecreate", function() {
 
     /* TODO: we should not need these! */
     //$('.ui-progressbar').progressbar();
-    $('.ui-progressbar').bind("vclick", function (e) {
+    $('#showprogressbarButton').bind("vclick", function (e) {
     	console.log("in init");
     	setInterval(function() {
         var progress = $('.ui-progressbar').progressbar('value');
@@ -61,7 +61,7 @@ $(document).bind("pagecreate", function() {
         }
         $('.ui-progressbar').progressbar('value', progress)
     	}, 100);
-    	console("finished in init");
+    	console.log("finished in init");
     });
     $('#switch-1').switch();
     $('#switch-2').switch();
