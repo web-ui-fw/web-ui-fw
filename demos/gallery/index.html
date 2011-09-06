@@ -140,21 +140,19 @@
             <div data-role="header">
                 <h1>Progress bar</h1>
             </div>
-            <div class="content" data-role="content">
-                <a href="#progressbar_page" data-rel="dialog" data-transition="pop">
-                    Open progress bar dialog
-                </a>
+            <div data-role="content">
+                <h2>Progress bar</h2>
+                <div data-role="progressbar-dialog" id="myprogressbar-dialog">
+                Click "Show Progressbar" <br/>
+                <a href="#" id="showprogressbarButton" data-role="button" data-inline="true">Show Progressbar</a>  
+                </div>
+                
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
             </div>
         </div> <!-- /page -->
-        <div id="progressbar_page" data-role="page">
-            <div data-role="content">
-                <div class="ui-progressbar"></div>
-            </div>
-        </div>
-
+        
         <div data-role="page" id="switch-demo" data-add-back-btn="true">
             <div data-role="header">
                 <h1>Switch</h1>

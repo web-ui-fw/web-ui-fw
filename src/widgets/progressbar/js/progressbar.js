@@ -11,6 +11,8 @@
             value: 0,
             max: 100,
             duration: 10000,
+            title : "Progressbar",
+            initSelector: "jqmData(role='progressbar-dialog')"
         },
 
         data: {
@@ -63,69 +65,33 @@
         },
 
         _create: function () {
-            var container = this.element;
-            var obj = this;
-
-            /* Give unique id to allow more instances in one page. */
-            this.data.uuid += 1;
-            var myUUID = this.data.uuid;
-            container.attr("id", "ui-progressbar-container" + this.data.uuid);
-            var upperProgressBarContainer = $.createUpperProgressBarContainer();
-            upperProgressBarContainer.attr("id", "ui-upper-progressbar-container");
-
-            $('<div/>', {
-                id: 'text1',
-                text: 'TextText',
-            }).appendTo(upperProgressBarContainer);
-
-            $('<div/>', {
-                id: 'progressbar',
-            }).appendTo(upperProgressBarContainer);
-
-            $('<span/>', {
-                id: 'text2',
-                text: 'Text',
-            }).appendTo(upperProgressBarContainer);
-
-            $('<span/>', {
-                id: 'text3',
-                text: 'TextTextTextText',
-            }).appendTo(upperProgressBarContainer);
-
-            var cancelContainer = $("<div/>", {
-                id: "cancel-container"
-            });
-
-            $('<div/>', {
-                id: 'cancel-button',
-                text: 'Cancel',
-                'data-role': 'button',
-                'data-inline': true,
-            }).appendTo(cancelContainer);
-
-            container.append(upperProgressBarContainer);
-            container.append(cancelContainer);
-
-            this.data.box = $('<div/>', {
-                id: 'boxImgId',
-            }).appendTo(progressbar);
-
-            this.data.bar = $('<div/>', {
-                id: 'barImgId',
-            }).appendTo(progressbar);
-
-            cancelContainer.find('#cancel-button').click(function () {
-                if (obj.data.bar.is(':animated')) {
-                    obj.data.bar.stop();
+        var self = this,
+        	select = this.element,
+        	o = this.options,
+        	container = $.mobile.loadPrototype("ui-progressbar-dialog").find("#progressbar-dialog")
+        		.insertBefore(select);
+    		
+    		console.log("looking for" + container.find("#progressbar")[0]);	
+    		
+            container.find('#cancel-button').click(function () {
+                if (self.data.bar.is(':animated')) {
+                    self.data.bar.stop();
                 };                
             });
-            obj.options.value = parseInt(parseInt(obj.data.bar.css('width')) / parseInt(obj.data.box.css('width')) * 100);
+            self.options.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
             this._refreshValue();
 
         },
     }); /* End of widget */
 
-    var now = new Date();
-    $($.mobile.progressbar.prototype.data.uuid = now.getTime());
+   // var now = new Date();
+   // $($.mobile.progressbar.prototype.data.uuid = now.getTime());
+    
+    //auto self-init widgets
+	$( document ).bind( "pagecreate create", function( e ){
+  		$( $.mobile.progressbar.prototype.options.initSelector, e.target )
+    		.not( ":jqmData(role='none'), :jqmData(role='nojs')" )
+    		.progressbar();
+});
 
 })(jQuery, this);
