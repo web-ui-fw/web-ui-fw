@@ -51,7 +51,12 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
         this.bar = this.spinnerbar.find('.ui-spinnerbar-bar');
     },
 
-    refresh: function () {
+    start: function () {
+        if (this.isRunning) {
+          return;
+        }
+
+        // draw the spinnerbar
         var el = $(this.element);
 
         var zIndex = el.css('z-index');
@@ -62,15 +67,8 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
                                   at: 'center center',
                                   of: el});
         el.after(this.spinnerbar);
-    },
 
-    start: function () {
-        if (this.isRunning) {
-          return;
-        }
-
-        this.refresh();
-
+        // func to animate the bar itself
         var animateFunc = function (bar, animationMsPerPixel) {
             var moveY = bar.height() / 2;
 
@@ -86,6 +84,7 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
                          });
         };
 
+        // animate the bar
         animateFunc(this.bar, this.options.animationMsPerPixel);
 
         this.isRunning = true;
