@@ -14,6 +14,7 @@
         },
 		
 		container: 0,
+		progressBar_in_dialog : 0,
 				
         _create: function () {
         	console.log("in _create in progressbar_dialog");
@@ -21,37 +22,18 @@
         var self = this,
         	select = this.element,
         	o = this.options;
-        	self.container = $.mobile.loadPrototype("progressbar_dialog").find("#progressbar-dialog")
+        	container = $.mobile.loadPrototype("progressbar_dialog").find("#progressbar-dialog")
         		.insertBefore(select);
+        
         	
-        	
-		/*
-		var progressbar = $.mobile.loadPrototype("")
-    		
-    		console.log("looking for" + container.find("#upper-progressbar-container"));	
-    		
-            container.find('#cancel-button').click(function () {
-                if (self.data.bar.is(':animated')) {
-                    self.data.bar.stop();
-                };                
-            });
-        */  
-       /*  
-            $.extend ( self, {
-            	container: container
-            });
-         */ 
-          
+        progressBar_in_dialog = container.find("#progressbar-in-dialog");
+        progressBar_in_dialog.progressbar();
+        
         },
         
         value : function( newValue ) {
-			var progressbar = container.find("#progressbar-in-dialog");	
-			console.log("progressbar-->" + progressbar);
-        	if (newValue === undefined) {
-                return progressbar._value();
-            }
-            progressbar.options.value = parseInt(newValue);
-            progressbar._refreshValue();
+			console.log("progressBar_in_dialog-->" + progressBar_in_dialog);
+        	progressBar_in_dialog.progressbar('value', newValue);
 		},
     }); /* End of widget */
 
