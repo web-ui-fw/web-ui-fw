@@ -1,0 +1,42 @@
+.ui-spinner-container {
+    @-webkit-keyframes ui-spinner-animation {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @containerSide: 1.6em;
+    @borderColor: rgba(228, 228, 228, 0.62);
+    @borderWidth: @containerSide / 8;
+    @spinnerWidth: @containerSide / 8;
+    @spinnerHeight: @containerSide / 2 + @borderWidth;
+    @spinnerColor: #000;
+
+    position: absolute;
+    border-color: @borderColor;
+    border-width: @borderWidth;
+    border-style: solid;
+
+    width: @containerSide;
+    height: @containerSide;
+    -webkit-border-radius: (@containerSide / 2) + @borderWidth;
+
+    .ui-spinner {
+        position: relative;
+        -webkit-border-radius: @spinnerWidth;
+        -webkit-box-shadow: inset 0px 0px (@spinnerWidth / 2) (@spinnerWidth / 3) @borderColor;
+        background-color: @spinnerColor;
+        left: (@containerSide - @spinnerWidth) / 2;
+        top: (@containerSide / 2) - (@spinnerHeight);
+        width: @spinnerWidth;
+        height: @spinnerHeight;
+
+        -webkit-animation-name: ui-spinner-animation;
+        -webkit-animation-timing-function: linear;
+        -webkit-transform-origin: 50% 100%;
+        -webkit-animation-iteration-count: infinite;
+    }
+}

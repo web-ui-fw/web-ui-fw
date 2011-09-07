@@ -18,6 +18,24 @@ $(document).bind("pagecreate", function() {
         $.fillPageWithContentArea($(this));
     });
 
+    $('#spinner-demo').bind('pageshow', function (e) {
+        $(this).find('li').each(function (index, element) {
+            var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
+
+            $(element).text("I am processing");
+
+            $(element).bind('stopped', function () {
+                $(element).text("I am done!");
+            });
+
+            $(element).spinner('start');
+
+            setTimeout(function () {
+                $(element).spinner('stop');
+            }, randomWait);
+        });
+    });
+
     var updateDate = function(e, newDate) {
         $("#datetimepicker-demo .selected-date").text(newDate.toString());
     };
