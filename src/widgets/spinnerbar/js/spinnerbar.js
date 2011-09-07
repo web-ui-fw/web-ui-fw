@@ -19,6 +19,11 @@
  * vertical and horizontal space. This makes it easy to overlay list
  * items.
  *
+ * Once you have a spinnerbar, start its animation with start();
+ * stop the animation with stop() (which also detaches its DOM elements).
+ * NB if you start() a spinnerbar again, it will redraw itself
+ * at the same position on the page.
+ *
  * Options:
  *
  *     animationMsPerPixel: Integer; default = 15; the number of ms of
