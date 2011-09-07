@@ -7,11 +7,9 @@
  */
 /**
  * Displays a progressbar element in a dialog
- *
- * A progressbar does have a progress value, and can be found from getValue()
- * You can set the value using value()
- * The external process is supposed to call the progressbar 
- * e.g. $('#myprogressbar').progressbar('value', 19)
+ * For details refer to progressbar
+ * The external process is supposed to call the progressbar_dialog 
+ * e.g. $('#myprogressbar_dialog').progressbar_dialog('value', someValue);
  *
  * Options:
  *
