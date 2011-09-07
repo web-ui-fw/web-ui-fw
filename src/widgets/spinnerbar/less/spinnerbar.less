@@ -1,0 +1,36 @@
+.ui-spinnerbar-container {
+    min-height: 1.4em;
+
+    .ui-spinnerbar-clip {
+        @spinnerbarClipHeight: 10px;
+        @spinnerbarBarBgSide: @spinnerbarClipHeight * 2;
+        @spinnerbarBarHeight: @spinnerbarBarBgSide * 2;
+        @spinnerbarBarFgColor: #e2e0de;
+        @spinnerbarBarBgColor: rgb(225, 173, 83);
+
+        position: absolute;
+        overflow: hidden;
+        height: @spinnerbarClipHeight;
+        width: 98%;
+
+        .ui-spinnerbar-bar {
+            background-image: -webkit-linear-gradient(-45deg,
+                                                      transparent,
+                                                      transparent 25%,
+                                                      @spinnerbarBarBgColor 25%,
+                                                      @spinnerbarBarBgColor 50%,
+                                                      transparent 50%,
+                                                      transparent 75%,
+                                                      @spinnerbarBarBgColor 75%);
+            background-color: @spinnerbarBarFgColor;
+            -webkit-background-size: @spinnerbarBarBgSide @spinnerbarBarBgSide;
+            height: @spinnerbarBarHeight;
+            width: 100%;
+            position: relative;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}

@@ -36,6 +36,22 @@ $(document).bind("pagecreate", function() {
         });
     });
 
+    $('#spinnerbar-demo').bind('pageshow', function () {
+        $(this).find(':jqmData(processing="spinnerbar")').each(function (index, element) {
+            var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
+
+            $(element).bind('stopped', function () {
+                $(element).parent().text("I am done!");
+            });
+
+            $(element).spinnerbar('start');
+
+            setTimeout(function () {
+                $(element).spinnerbar('stop');
+            }, randomWait);
+        });
+    });
+
     var updateDate = function(e, newDate) {
         $("#datetimepicker-demo .selected-date").text(newDate.toString());
     };
