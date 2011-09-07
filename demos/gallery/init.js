@@ -50,7 +50,6 @@ $(document).bind("pagecreate", function () {
 
     /* TODO: we should not need these! */
     $('#progressbar-demo').bind('pageshow', function (e) {
-        /*
         setInterval(function () {
             var progress = $('#progressbar1').progressbar('value');
             console.log("progress is " + progress);
@@ -60,11 +59,6 @@ $(document).bind("pagecreate", function () {
             }
         $('#progressbar1').progressbar('value', progress)
         }, 100);
-        */
-       /*
-        * TODO : temporary change it back 
-        */
-       $('#myprogressbar').progressbar('value', 7);
     });
 
     $('#switch-1').switch ();

@@ -13,22 +13,18 @@
             duration: 10000,
         },
 		
-		container: 0,
+		dialogContainer: 0,
 		progressBar_in_dialog : 0,
 				
         _create: function () {
-        	console.log("in _create in progressbar_dialog");
-        	
-        var self = this,
-        	select = this.element,
-        	o = this.options;
-        	container = $.mobile.loadPrototype("progressbar_dialog").find("#progressbar-dialog")
-        		.insertBefore(select);
-        
-        	
-        progressBar_in_dialog = container.find("#progressbar-in-dialog");
-        progressBar_in_dialog.progressbar();
-        
+            var self = this,
+	   		   	select = this.element;
+	        	
+	        dialogContainer = $.mobile.loadPrototype("progressbar_dialog").find("#progressbar-dialog")
+	        		.insertBefore(select);
+	                	
+	        progressBar_in_dialog = dialogContainer.find("#progressbar-in-dialog");
+	        progressBar_in_dialog.progressbar();
         },
         
         value : function( newValue ) {
