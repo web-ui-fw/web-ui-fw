@@ -13,7 +13,7 @@
   text-align: center;
 }
 
-#cancel-button {
+.ui-cancel-button {
   display: inline-block;	
   background-color: white;
   color: black;
@@ -24,20 +24,20 @@
   text-align: center;  
 }
 
-#text1 {
+.ui-text1 {
 	position: relative;
 	text-align: center;
 	margin-top: 14px;			
 }
 
-#text2 {
+.ui-text2 {
 	float: left;
 	text-align: left;
 	margin-left: 10px;
 	margin-bottom: 14px;			
 }
 
-#text3 {
+.ui-text3 {
 	float: right;
 	text-align: right;
 	margin-right: 20px;

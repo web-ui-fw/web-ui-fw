@@ -5,6 +5,23 @@
  * License: TODO
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
+/**
+ * Displays a progressbar element in a dialog
+ *
+ * A progressbar does have a progress value, and can be found from getValue()
+ * You can set the value using value()
+ * The external process is supposed to call the progressbar 
+ * e.g. $('#myprogressbar').progressbar('value', 19)
+ *
+ * Options:
+ *
+ *     value	: starting value, default is 0
+ *	   max		: maximum value, default is 100		
+ *     duration : Integer; number of milli seconds the progressbar takes to animate
+ *				 from 0 to max. 
+ *
+ */
+
 (function ($, window, undefined) {
     $.widget("mobile.progressbar_dialog", $.mobile.widget, {
         options: {
@@ -20,10 +37,10 @@
             var self = this,
 	   		   	select = this.element;
 	        	
-	        dialogContainer = $.mobile.loadPrototype("progressbar_dialog").find("#progressbar-dialog")
+	        dialogContainer = $.mobile.loadPrototype("progressbar_dialog").find("div.ui-progressbar-dialog")
 	        		.insertBefore(select);
 	                	
-	        progressBar_in_dialog = dialogContainer.find("#progressbar-in-dialog");
+	        progressBar_in_dialog = dialogContainer.find("div.ui-progressbar_dialog");
 	        progressBar_in_dialog.progressbar();
         },
         
@@ -32,7 +49,7 @@
 		},
 		
 		getValue: function () {
-			return progressBar_in_dialog.progressbar('getValue');
+			return progressBar_in_dialog.progressbar('value');
 		},
 		
     }); /* End of widget */

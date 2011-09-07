@@ -54,7 +54,8 @@
         _percentage: function () {
             return 100 * this.getValue() / this.options.max;
         },
-
+		
+		
 		/**
 		 * function: update the value and call _startProgress()
 		 */
@@ -92,14 +93,14 @@
                 select = this.element,
                 o = this.options;
 
-            var container = $.mobile.loadPrototype("progressbar").find("#progressbar").insertBefore(select);
+            var container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar").insertBefore(select);
 
             $.extend(self, {
                 container: container
             });
 
-            self.data.box = container.find("#boxImgId");
-            self.data.bar = container.find("#barImgId");
+            self.data.box = container.find("div.ui-boxImg");
+            self.data.bar = container.find("div.ui-barImg");
 
             o.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
             self._refreshValue();

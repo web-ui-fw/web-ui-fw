@@ -50,10 +50,9 @@ $(document).bind("pagecreate", function () {
 
     /* TODO: we should not need these! */
     $('#progressbar-demo').bind('pageshow', function (e) {       
-        /*
+        
         setInterval(function () {
-            var progress = $('#progressbar1').progressbar('value');
-            console.log("progress is " + progress);
+            var progress = $('#progressbar1').progressbar('value');            console.log("progress is " + progress);
             progress++;
             if (progress > 100) {
                 progress = 0;
