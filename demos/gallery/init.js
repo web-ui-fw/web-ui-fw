@@ -40,8 +40,10 @@ $(document).bind("pagecreate", function() {
         $(this).find(':jqmData(processing="spinnerbar")').each(function (index, element) {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
 
+            $(element).text("")
+
             $(element).bind('stopped', function () {
-                $(element).parent().text("I am done!");
+                $(element).text("I am done!");
             });
 
             $(element).spinnerbar('start');

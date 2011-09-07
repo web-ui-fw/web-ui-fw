@@ -42,7 +42,7 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
 
     _create: function () {
         this.isRunning = false;
-        this.spinnerbar = $.mobile.loadPrototype('spinnerbar');
+        this.spinnerbar = $.mobile.loadPrototype('spinnerbar').find('div:first');
         this.bar = this.spinnerbar.find('.ui-spinnerbar-bar');
     },
 
@@ -53,7 +53,6 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
         zIndex = zIndex ? zIndex + 1 : 10;
         this.spinnerbar.css('z-index', zIndex);
 
-        this.spinnerbar.width(el.width());
         this.spinnerbar.position({my: 'center center',
                                   at: 'center center',
                                   of: el});
