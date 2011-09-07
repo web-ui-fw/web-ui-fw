@@ -66,13 +66,24 @@ $(document).bind("pagecreate", function () {
         */
        $('#myprogressbar').progressbar('value', 7);
     });
+    
+    $('#myprogressbar-dialog-page').bind('pageshow', function (e) {
+    	 $("#myprogressbar_dialog").progressbar_dialog();
+    });
 
     $('#showprogressbarButton').bind("vclick", function (e) {
         console.log("in init");
-        $("#myprogressbar-dialog").progressbar_dialog('value', 53);
+        //$("#myprogressbar_dialog").progressbar_dialog('value', 53);
         console.log("finished in init");
     });
-
+    
+    /*
+    $('#myprogressbar-dialog-page').bind('pageshow', function (e) {
+    	console.log("AAAAAAA");
+        $("#myprogressbar-dialog").progressbar_dialog('value', 53);
+        console.log("BBBBB");
+    });
+	*/
     $('#switch-1').switch ();
     $('#switch-2').switch ();
     $('#groupindex').scrolllistview();
