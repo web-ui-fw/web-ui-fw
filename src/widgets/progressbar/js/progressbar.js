@@ -9,7 +9,7 @@
 /**
  * Displays a progressbar element 
  *
- * A progressbar does have a progress value, and can be found from _value()
+ * A progressbar does have a progress value, and can be found from getValue()
  * You can set the value using value()
  * The external process is supposed to call the progressbar 
  * e.g. $('#myprogressbar').progressbar('value', 19)
@@ -39,29 +39,29 @@
         oldValue: 0,
         delta: 0,
 
-        _value: function () {
+        getValue: function () {
             return this.options.value;
         },
 
         value: function (newValue) {
             if (newValue === undefined) {
-                return this._value();
+                return this.getValue();
             }
             this.options.value = parseInt(newValue);
             this._refreshValue();
         },
 
         _percentage: function () {
-            return 100 * this._value() / this.options.max;
+            return 100 * this.getValue() / this.options.max;
         },
 
 		/**
 		 * function: update the value and call _startProgress()
 		 */
         _refreshValue: function (val /*now*/ ) {
-            this.delta = this._value() - this.oldValue;
+            this.delta = this.getValue() - this.oldValue;
             if (this.oldValue !== val) {
-                this.oldValue = this._value();
+                this.oldValue = this.getValue();
                 this.value(val);
                 this._startProgress();
             }

@@ -27,10 +27,14 @@
 	        progressBar_in_dialog.progressbar();
         },
         
-        value : function( newValue ) {
-			console.log("progressBar_in_dialog-->" + progressBar_in_dialog);
-        	progressBar_in_dialog.progressbar('value', newValue);
+        value: function( newValue ) {
+			progressBar_in_dialog.progressbar('value', newValue);
 		},
+		
+		getValue: function () {
+			return progressBar_in_dialog.progressbar('getValue');
+		},
+		
     }); /* End of widget */
 
     //auto self-init widgets

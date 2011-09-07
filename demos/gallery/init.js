@@ -49,7 +49,8 @@ $(document).bind("pagecreate", function () {
     $("#demo-date").bind("date-changed", updateDate);
 
     /* TODO: we should not need these! */
-    $('#progressbar-demo').bind('pageshow', function (e) {
+    $('#progressbar-demo').bind('pageshow', function (e) {       
+        /*
         setInterval(function () {
             var progress = $('#progressbar1').progressbar('value');
             console.log("progress is " + progress);
