@@ -57,7 +57,7 @@ $(document).bind("pagecreate", function () {
             if (progress > 100) {
                 progress = 0;
             }
-        $('#progressbar1').progressbar('value', progress)
+            $('#progressbar1').progressbar('value', progress)
         }, 100);
     });
 

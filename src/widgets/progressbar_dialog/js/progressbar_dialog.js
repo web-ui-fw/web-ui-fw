@@ -40,6 +40,8 @@
 	                	
 	        progressBar_in_dialog = dialogContainer.find("div.ui-progressbar_dialog");
 	        progressBar_in_dialog.progressbar();
+	        
+	        
         },
         
         value: function( newValue ) {
