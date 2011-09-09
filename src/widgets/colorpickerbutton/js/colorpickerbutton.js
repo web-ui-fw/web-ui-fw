@@ -14,9 +14,11 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
   _create: function() {
     var self = this,
 
+        dstAttr = this.element.is("input") ? "value" : "data-color",
+
         o = this.options,
 
-        colour = this.element.attr("value"),
+        colour = ((undefined === this.element.attr(dstAttr)) ? o.color : this.element.attr(dstAttr)),
 
         select = this.element.wrap( "<div class='ui-select'>" ),
 
@@ -54,6 +56,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         canvas = $("<div/>", {"id" : "canvas"})
           .insertBefore(select)
           .colorpicker({"color" : colour})
+          .attr("data-prefix", "colorpickerbutton")
           .popupwindow(),
 
         closeButton = $("<a/>", {
@@ -71,9 +74,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 
     canvas.css("max-width", canvas.find("#colorpicker").outerWidth());
 
-    if (undefined === colour)
-      colour = o.color;
-
     this.element.css("display", "none");
 
     // Disable if specified
@@ -83,8 +83,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 
     // Expose to other methods
     $.extend( self, {
-      dragging_clr: undefined,
-      colour: colour,
+      dstAttr: dstAttr,
       select: select,
       selectID: selectID,
       label: label,
@@ -112,49 +111,38 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       }
     });
 
-    canvas.bind( "colorchanged", function (event, clr) {
-      self.dragging_clr = clr;
-    });
-
     closeButton.bind("vclick", function(event) {
-      self.setColor(self.dragging_clr);
+      self.refresh();
+      self.element.trigger("colorchanged", self.canvas.attr("data-color"));
       self.close();
     });
   },
 
-  setColor: function(clr) {
+  setColor: function(clr, force) {
     if (clr.match(/#[0-9A-Fa-f]{6}/)) {
-      if (this.colour != clr) {
+      if (this.canvas.attr("data-color") != clr) {
 
-        this.colour = clr;
-        this.dragging_clr = clr;
+        this.canvas.colorpicker("setColor", clr);
         this.refresh();
-        this.canvas.colorpicker("setColor", this.colour);
-        this.element.trigger("colorchanged", this.colour);
+        this.element.trigger("colorchanged", clr);
       }
     }
   },
 
   refresh: function( forceRebuild ) {
-    var self = this,
-        r, g, b, r_str, g_str, b_str, hsl,
-        clrValue = self.colour;
+    var r, g, b, r_str, g_str, b_str, hsl,
+        clrValue = this.canvas.attr("data-color");
 
-        if (undefined === clrValue)
-          clrValue = "#ff0000";
+        if (this.element.attr(this.dstAttr) != clrValue)
+          this.element.attr(this.dstAttr, clrValue);
 
-        if (self.element.attr("value") != clrValue)
-          self.element.attr("value", clrValue);
-
-    self.buttonContents.css("color", clrValue);
+    this.buttonContents.css("color", clrValue);
   },
 
   open: function() {
     if ( this.options.disabled ) {
       return;
     }
-
-    this.canvas.colorpicker("setColor", this.colour);
 
     this.canvas.popupwindow("open",
       this.button.position().left + this.button.outerWidth()  / 2,

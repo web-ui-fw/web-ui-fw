@@ -20,7 +20,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         scale = Math.min(parseInt(canvas.css("width")), parseInt(canvas.css("height"))) / 256.0,
 
-        hsl = this.getHSL(o.color);
+        hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(o.color));
 
     hsl[1] = 1.0 - hsl[1];
 
@@ -197,14 +197,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     return eventHandled;
   },
 
-  getHSL: function(str) {
-    var rgb_str = (('#' == str.charAt(0)) ? str.substring(1) : str),
-        rgb = [ rgb_str.substring(0, 2), rgb_str.substring(2, 4), rgb_str.substring(4, 6)]
-          .map(function(val) { return parseInt(val, 16) / 255.0; });
-
-    return $.mobile.clrlib.RGBToHSL(rgb);
-  },
-
   paintCanvas: function(hsl) {
     var Nix, Nix1, gray,
         context = this.canvas[0].getContext("2d"),
@@ -269,8 +261,8 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   },
 
   setColor: function(clr) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
-      var newHSL = this.getHSL(clr);
+    if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) {
+      var newHSL = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr));
 
       if (!(newHSL[0] == this.dragging_hsl[0] &&
             newHSL[1] == this.dragging_hsl[1] &&
