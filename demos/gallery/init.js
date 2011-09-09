@@ -77,11 +77,10 @@ $(document).bind("pagecreate", function() {
 
 $(document).bind("pagecreate", function() {
     var button = $('#calendarbutton');
-    button.unbind().bind('vclick', function (e) { 
-        e.preventDefault();
+    button.bind('vclick', function (e) { 
         button.calendarpicker('open');
-            button.unbind('selectedDate').bind('selectedDate',function(e,val) {
-                confirm('selecteddate:' + val);
+        button.unbind('selectedDate').bind('selectedDate',function(e,val) {
+            $("#calendarbutton .selected-date").text(val);
         });
     });
 });

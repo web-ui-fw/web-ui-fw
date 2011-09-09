@@ -378,13 +378,16 @@
             </div>
         </div> <!-- page -->
 
-        <div data-role="page" data-theme="a" id="calendarDemo" data-add-back-btn="true"> 
+        <div data-role="page" id="calendarDemo" data-add-back-btn="true"> 
 	    <div data-role="header"> 
                 <h1>TODONS - Calendar Picker</h1>
 	    </div>
-            <div id = "calendarbutton" data-role = "calendarpicker"> 
-                <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> Launch CalendarPicker</a>
-            </div>
+            <div class="content" data-role="content">
+                <div id = "calendarbutton" data-role = "calendarpicker"> 
+                    <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> Launch CalendarPicker</a>
+                    <p>The selected date is: <span class="selected-date"><em>None</em></span></p>
+                </div>
+           </div>
            <div data-role="footer">
                <h4>Web UI Framework - Widgets gallery</h4>
 	    </div>

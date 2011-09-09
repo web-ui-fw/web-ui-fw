@@ -74,8 +74,7 @@
  *         </div>
  *        $(document).bind("pagecreate", function() {
  *            var button = $('#calendarbutton');
- *             button.unbind().bind('vclick', function (e) { 
- *                e.preventDefault();
+ *            button.bind('vclick', function (e) { 
  *	          button.calendarpicker('open'); --> Shows the CalendarPicker.
  *                button.unbind('selectedDate').bind('selectedDate',function(e,val) {
  *                // val should contain the selected date in specified format.
@@ -91,7 +90,7 @@
  */
 
 (function($, undefined ) {
-    $.widget( "mobile.calendarpicker", $.mobile.widget, {
+    $.widget( "TODONS.calendarpicker", $.mobile.widget, {
         options: {
             // All widget options, including some internal runtime details      
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
