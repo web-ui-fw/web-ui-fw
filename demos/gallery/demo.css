@@ -36,10 +36,12 @@ h1, h4 {
     width: 110px;
     padding-top:10px;
 }
+
 #calendarinputcontainer #selectedCalendarDate { 
     float: left;
     width: 130px;
 }
+
 #calendarinputcontainer #calendarbutton{
     float: left;
     width: 33%;
