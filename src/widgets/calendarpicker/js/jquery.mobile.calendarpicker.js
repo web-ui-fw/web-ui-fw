@@ -32,15 +32,18 @@
  *                0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2,"b", 3, "mycustomtheme"])
  *      disabledDayColor: Colour used to show disabled dates.
  *      calHighToday: Theme used to highlight current day. By default it is set to e.Setting the value to null will disable
- *                    highlighting today date.
+ *                    highlighting todays date.
  *      highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
  *
- *      Documnetation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/
+ *      Documnetation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
+ *
  *      afterToday: When set, only dates that are after or on "today" are selectable.
  *      beforeToday: When set, only dates that are before or on "today" are selectable.
  *      notToday: When set, "today" is not selectable.
- *      minDays: When set, only dates that are after *number* of days before today may be selected. Note that minDays can be a negative number.
- *      maxDays: When set, only dates that are before *number* of days after today may be selected. Note that maxDays can be a negative number.
+ *      minDays: When set, only dates that are after *number* of days before today may be selected. 
+ *               Note that minDays can be a negative number.
+ *      maxDays: When set, only dates that are before *number* of days after today may be selected. 
+ *               Note that maxDays can be a negative number.
  *      highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
  *      blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2])
  *      blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"])
@@ -56,7 +59,8 @@
  *     
  *     open: Shows the CalendarPicker with an animation.
  *     close: Hides the CalendarPicker with an animation.
- *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change, changing options dynamically etc.
+ *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change, 
+ *              changing options dynamically etc.
  *
  * Examples:
  *         
@@ -79,7 +83,10 @@
  *        });
  *
  *    Passing custom options:
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": false'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": 'false'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": [1,"e", 2,"a"]'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDates": ["2011-12-24", "2011-12-25"],
+ *                                                                                "highDatesTheme":'c'>  </div>
  */
 
 (function($, undefined ) {
@@ -364,8 +371,8 @@
                 cpHeader = container.find('.ui-cp-headercontainer'),
                 cpweekDayGrid = container.find('.ui-cp-weekday'),
                 cpMonthGrid = container.find('.ui-cp-month'),
-                previousButton = container.find('.ui-cp-previous'),
-                nextButton = container.find('.ui-cp-next'),
+                previousButton = container.find('.ui-cp-previous').buttonMarkup({theme: 'c', icon: 'arrow-l', inline: true, corners:true}),
+                nextButton = container.find('.ui-cp-next').buttonMarkup({theme: 'c', icon: 'arrow-r', inline: true, corners:true}),
                 isopen = false;    
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
@@ -396,7 +403,7 @@
         },
 
         open: function() {
-            // Open the controls
+            // Open the picker
             var self = this;
             if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
             self._update();
@@ -409,7 +416,7 @@
         },
 
         close: function() {
-            // Close the controls
+            // Close the picker
             var self = this,
             callback;
             self.isopen = false;
@@ -420,7 +427,7 @@
             });
         },
     });  
-    // Automatically bind to data-role='datebox' items.
+    // Autoinit widget.
     $( document ).bind( "pagecreate", function( e ){
         $( ":jqmData(role='calendarpicker')", e.target ).calendarpicker();
     });
