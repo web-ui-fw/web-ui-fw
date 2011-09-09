@@ -35,7 +35,7 @@
  *                    highlighting todays date.
  *      highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
  *
- *      Documnetation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
+ *      Documentation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
  *
  *      afterToday: When set, only dates that are after or on "today" are selectable.
  *      beforeToday: When set, only dates that are before or on "today" are selectable.
@@ -52,13 +52,14 @@
  *
  *     appear: Fired after calendarpicker becomes visible and appear animation has ended.
  *     disappear: Fired after calendarpicker is closed and disappear animation has ended.
- *     selectedDate: Fired after user has selected a valid date. The formatteddate(which user has selected)
+ *     selectedDate: Fired after user has selected a valid date. The formateddate(which user has selected)
  *                   is sent as additional parameter. 
  *
  * Properties:
  *     
  *     open: Shows the CalendarPicker with an animation.
  *     close: Hides the CalendarPicker with an animation.
+ *     visible: Returns true if calendarpicker is visible.
  *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change, 
  *              changing options dynamically etc.
  *
@@ -83,10 +84,10 @@
  *        });
  *
  *    Passing custom options:
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": 'false'>  </div>
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": [1,"e", 2,"a"]'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": "false"}'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": [1,"e", 2,"a"]}'>  </div>
  *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDates": ["2011-12-24", "2011-12-25"],
- *                                                                                "highDatesTheme":'c'>  </div>
+ *                                                                                "highDatesTheme":"c"}'>  </div>
  */
 
 (function($, undefined ) {
@@ -373,7 +374,7 @@
                 cpMonthGrid = container.find('.ui-cp-month'),
                 previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true}),
                 nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true}),
-                isopen = false;    
+                open = false;    
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
@@ -393,7 +394,7 @@
                 cpMonthGrid: cpMonthGrid,
                 cpweekDayGrid: cpweekDayGrid,
                 cpContainer: cpContainer,
-                isopen:isopen
+                open:open
             });     
             cpContainer.appendTo(self.thisPage);     
         },
@@ -402,10 +403,14 @@
             this._update();
         },
 
+        visible: function() {
+            return this.open;
+        },
+
         open: function() {
             // Open the picker
             var self = this;
-            if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
+            if (self.open === true ) { return false; } else { self.open = true; } // Ignore if already open
             self._update();
             var windowHeight = $(window).height(),
                 contentHeight = self.cpContainer.outerHeight();
@@ -419,7 +424,7 @@
             // Close the picker
             var self = this,
             callback;
-            self.isopen = false;
+            self.open = false;
             self.cpContainer.stop().animate({"top":$(window).height()+self.cpContainer.outerHeight()},
                                              self.options.slidedownanimationtime,self.options.slidedownanimation,function() {
                 self.cpContainer.addClass('ui-cpcontainer-hidden').removeAttr('style').removeClass('in');
