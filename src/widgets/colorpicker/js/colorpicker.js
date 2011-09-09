@@ -101,12 +101,12 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
     hsSelector.bind( "vmousemove", function (event) {
       var eventHandled = false,
-          potential_h = self.dragging_hsl[0] + (event.offsetX - self.selectorDraggingOffset.x) / (self.scale * 255.0),
+          potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / (self.scale * 255.0),
           potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
 
       if (self.dragging) {
         if (potential_h >= 0.0 && potential_h <= 1.0) {
-          self.dragging_hsl[0] = potential_h;
+          self.dragging_hsl[0] = potential_h * 360;
           eventHandled = true;
         }
         if (potential_s >= 0.0 && potential_s <= 1.0) {
@@ -162,7 +162,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
             hsl;
 
         if (potential_h >= 0.0 && potential_h <= 1.0) {
-          self.dragging_hsl[0] = potential_h;
+          self.dragging_hsl[0] = potential_h * 360;
           eventHandled = true;
         }
 
@@ -202,11 +202,11 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         rgb = [ rgb_str.substring(0, 2), rgb_str.substring(2, 4), rgb_str.substring(4, 6)]
           .map(function(val) { return parseInt(val, 16) / 255.0; });
 
-    return this.RGBToHSL(rgb[0], rgb[1], rgb[2]);
+    return $.mobile.clrlib.RGBToHSL(rgb);
   },
 
   paintCanvas: function(hsl) {
-    var Nix, Nix1, g,
+    var Nix, Nix1, gray,
         context = this.canvas[0].getContext("2d"),
         n_x_steps = 64, n_y_steps = 64,
         x_step = 256.0 / n_x_steps, y_step = 256.0 / n_y_steps;
@@ -222,16 +222,16 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         h = Nix1 / (n_x_steps - 1);
         s = 1.0 - Nix / (n_y_steps - 1);
 
-        rgb = this.HSLToRGB(h, s, hsl[2]).map(this.normalizeValue);
+        rgb = $.mobile.clrlib.HSLToRGB([h * 360, s, hsl[2]]).map(this.normalizeValue);
 
-        context.fillStyle = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", 1.0)";
+        context.fillStyle = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
         context.fillRect(Nix1 * x_step, Nix * y_step, x_step, y_step);
       }
 
     for (Nix = 0 ; Nix < n_y_steps ; Nix++) {
-      g = this.normalizeValue(Nix / (n_y_steps - 1));
-      context.fillStyle = "rgba(" + g + ", " + g + ", " + g + ", 1.0)";
-      context.strokeStyle = "rgba(" + g + ", " + g + ", " + g + ", 1.0)";
+      gray = this.normalizeValue(Nix / (n_y_steps - 1));
+      context.fillStyle = "rgb(" + gray + ", " + gray + ", " + gray + ")";
+      context.strokeStyle = "rgb(" + gray + ", " + gray + ", " + gray + ")";
       context.fillRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
       context.strokeRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
     }
@@ -245,13 +245,13 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   updateSelectors: function(hsl, updateHS) {
     var clr = "#" +
-          this.HSLToRGB(hsl[0], 1.0 - hsl[1], hsl[2])
+          $.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])
             .map(this.normalizeValue)
             .map(this.makeClrChannel)
             .join(""),
         gray = this.makeClrChannel(this.normalizeValue(hsl[2]));
 
-    this.hsSelector.css("left", hsl[0] * this.scale * 256.0);
+    this.hsSelector.css("left", hsl[0] / 360 * this.scale * 256.0);
     this.hsSelector.css("top",  hsl[1] * this.scale * 256.0);
     this.hsSelector.css("background", clr);
 
@@ -291,64 +291,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     if (ret - ret_floor > 0.5) ret_floor++;
 
     return ret_floor;
-  },
-
-  HSLToRGB: function(h, s, l) {
-    var PI = 3.141592653589793115997963468544;
-    var r, g, b;
-
-    r = 0.0 + Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * ( 0.0 + h * 360.0))))) ;
-    g = 1.0 - Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * (60.0 + h * 360.0))))) ;
-    b = 1.0 - Math.max (0.0, Math.min (1.0, (0.5 + Math.cos (PI / 180.0 * (60.0 - h * 360.0))))) ;
-
-    r = l + (r - l) * s ;
-    g = l + (g - l) * s ;
-    b = l + (b - l) * s ;
-
-    r += (l - 0.5) * 2.0 * (l < 0.5 ? r : (1.0 - r)) ;
-    g += (l - 0.5) * 2.0 * (l < 0.5 ? g : (1.0 - g)) ;
-    b += (l - 0.5) * 2.0 * (l < 0.5 ? b : (1.0 - b)) ;
-
-    return [ r, g, b ];
-  },
-
-  RGBToHSL: function(r, g, b) {
-    var
-      h = 0, s = 1.0, l = 0.5,
-      r_dist, g_dist, b_dist,
-      fMax, fMin;
-
-    fMax = Math.max (r, Math.max (g, b)) ;
-    fMin = Math.min (r, Math.min (g, b)) ;
-
-    l = (fMax + fMin) / 2 ;
-    if (fMax - fMin <= 0.00001) {
-      h = 0 ;
-      s = 0 ;
-    }
-    else {
-      s = (fMax - fMin) / ((l < 0.5) ? (fMax + fMin) : (2 - fMax - fMin)) ;
-
-      r_dist = (fMax - r) / (fMax - fMin) ;
-      g_dist = (fMax - g) / (fMax - fMin) ;
-      b_dist = (fMax - b) / (fMax - fMin) ;
-
-      if (r == fMax)
-        h = b_dist - g_dist ;
-      else
-      if (g == fMax)
-        h = 2 + r_dist - b_dist ;
-      else
-      if (b == fMax)
-        h = 4 + g_dist - r_dist ;
-
-      h *= 60 ;
-
-      if (h < 0)
-        h += 360 ;
-    }
-
-    return [ h / 360.0, s, l ];
   }
 
 });
