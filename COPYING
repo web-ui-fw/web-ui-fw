@@ -9,3 +9,6 @@ widgets/jquery.mobile.maps/
 	initial version taken from :
 	svn checkout http://jquery-ui-map.googlecode.com/svn/trunk/ jquery-ui-map-read-only
 	Checked out revision 254.
+
+This software incorporates parts of the jQuery UI library (http://jqueryui.com/),
+which is available under the MIT licence.
