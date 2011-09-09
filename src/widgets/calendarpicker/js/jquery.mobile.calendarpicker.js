@@ -371,8 +371,8 @@
                 cpHeader = container.find('.ui-cp-headercontainer'),
                 cpweekDayGrid = container.find('.ui-cp-weekday'),
                 cpMonthGrid = container.find('.ui-cp-month'),
-                previousButton = container.find('.ui-cp-previous').buttonMarkup({theme: 'c', icon: 'arrow-l', inline: true, corners:true}),
-                nextButton = container.find('.ui-cp-next').buttonMarkup({theme: 'c', icon: 'arrow-r', inline: true, corners:true}),
+                previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true}),
+                nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true}),
                 isopen = false;    
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
