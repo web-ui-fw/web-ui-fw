@@ -74,3 +74,14 @@ $(document).bind("pagecreate", function() {
       $("#myVolumeControl").volumecontrol("open");
     });
 });
+
+$(document).bind("pagecreate", function() {
+    var button = $('#calendarbutton');
+    button.unbind().bind('vclick', function (e) { 
+        e.preventDefault();
+        button.calendarpicker('open');
+            button.unbind('selectedDate').bind('selectedDate',function(e,val) {
+                confirm('selecteddate:' + val);
+        });
+    });
+});
