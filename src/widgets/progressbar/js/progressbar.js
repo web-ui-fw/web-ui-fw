@@ -16,10 +16,10 @@
  *
  * Options:
  *
- *     value  : starting value, default is 0
- *     max    : maximum value, default is 100
+ *     value    : starting value, default is 0
+ *     max      : maximum value, default is 100
  *     duration : Integer; number of milli seconds the progressbar takes to animate
- *         from 0 to max.
+ *                from 0 to max.
  *
  */
 
@@ -31,39 +31,23 @@
             duration: 10000,
         },
 
-        data: {
-            bar: 0,    // to hold the gray background
-            box: 0    // to hold the moving orange bar
-        },
+        bar: null,  // to hold the gray background
+        box: null,  // to hold the moving orange bar
 
         oldValue: 0,
+        currentValue: 0,
         delta: 0,
-
-        getValue: function () {
-            return this.options.value;
-        },
 
         value: function (newValue) {
             if (newValue === undefined) {
-                return this.getValue();
+                return this.currentValue;
             }
-            this.options.value = parseInt(newValue);
-            this._refreshValue();
-        },
 
-        _percentage: function () {
-            return 100 * this.getValue() / this.options.max;
-        },
+            this.currentValue = parseInt(newValue);
 
-
-    /**
-     * function: update the value and call _startProgress()
-     */
-        _refreshValue: function (val /*now*/ ) {
-            this.delta = this.getValue() - this.oldValue;
-            if (this.oldValue !== val) {
-                this.oldValue = this.getValue();
-                this.value(val);
+            if (this.oldValue !== this.currentValue) {
+                this.delta = this.currentValue - this.oldValue;
+                this.oldValue = this.currentValue;
                 this._startProgress();
             }
         },
@@ -72,41 +56,31 @@
          * function : animates the progressBar
          */
         _startProgress: function () {
-            var obj = this;
-            this.data.bar.animate({
-                width: obj._percentage() + '%',
-            }, {
-                duration: this.options.duration * (obj.delta) / 100,
-                specialEasing: {
-                    width: 'linear',
-                },
-            });
+            var duration = this.options.duration * (this.delta) / 100;
+            var percentage = 100 * this.currentValue / this.options.max;
+            var width = percentage + '%';
+            this.bar.animate({width: width}, duration, 'linear');
         },
 
-    /**
-     * function: loads the html divs from progressbar.prototype.html
-     * and calls _refreshValue();
-     */
+        /**
+         * function: loads the html divs from progressbar.prototype.html
+         * and sets the value to the initial value specified in options
+         */
         _create: function () {
-            var self = this,
-                select = this.element,
-                o = this.options;
+            var startValue, container;
 
-            var container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar").insertBefore(select);
+            container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar");
+            container.insertBefore(this.element);
 
-            $.extend(self, {
-                container: container
-            });
+            this.box = container.find("div.ui-boxImg");
+            this.bar = container.find("div.ui-barImg");
 
-            self.data.box = container.find("div.ui-boxImg");
-            self.data.bar = container.find("div.ui-barImg");
-
-            o.value = parseInt(parseInt(self.data.bar.css('width')) / parseInt(self.data.box.css('width')) * 100);
-            self._refreshValue();
+            startValue = this.options.value ? this.options.value : 0;
+            this.value(startValue);
         },
     }); /* End of widget */
 
-  // auto self-init widgets
+    // auto self-init widgets
     $(document).bind("pagecreate", function (e) {
         $(e.target).find(":jqmData(role='progressbar')").progressbar();
     });
