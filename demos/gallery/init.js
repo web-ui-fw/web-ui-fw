@@ -80,7 +80,7 @@ $(document).bind("pagecreate", function() {
     button.bind('vclick', function (e) { 
         button.calendarpicker('open');
         button.unbind('selectedDate').bind('selectedDate',function(e,val) {
-            $("#calendarbutton .selected-date").text(val);
+            $('#selectedCalendarDate').attr('value',val);
         });
     });
 });

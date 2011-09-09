@@ -382,11 +382,9 @@
 	    <div data-role="header"> 
                 <h1>TODONS - Calendar Picker</h1>
 	    </div>
-            <div class="content" data-role="content">
-                <div id = "calendarbutton" data-role = "calendarpicker"> 
-                    <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> Launch CalendarPicker</a>
-                    <p>The selected date is: <span class="selected-date"><em>None</em></span></p>
-                </div>
+            <div class="content" data-role="content" id="calendarinputcontainer">
+                <label id="label">Selected Date</label><input type="text" name = "calendardate" id="selectedCalendarDate" value="Click button"/>
+                <input type="button" data-role="calendarpicker" data-icon="grid" data-iconpos="notext" id = "calendarbutton"> 
            </div>
            <div data-role="footer">
                <h4>Web UI Framework - Widgets gallery</h4>
