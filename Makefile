@@ -32,7 +32,6 @@ LIBS_JS_FILES +=\
     jquery.ui.position.git+dfe75e1.min.js \
     $(NULL)
 endif
-LIBS_JS_FILES += jquery.mobile.loadprototype.js
 
 LIBS_CSS_FILES =
 ifeq (${DEBUG},yes)
