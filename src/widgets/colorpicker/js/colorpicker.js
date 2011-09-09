@@ -214,16 +214,14 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         h = Nix1 / (n_x_steps - 1);
         s = 1.0 - Nix / (n_y_steps - 1);
 
-        rgb = $.mobile.clrlib.HSLToRGB([h * 360, s, hsl[2]]).map(this.normalizeValue);
-
-        context.fillStyle = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
+        context.fillStyle = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([h * 360, s, hsl[2]]));
         context.fillRect(Nix1 * x_step, Nix * y_step, x_step, y_step);
       }
 
     for (Nix = 0 ; Nix < n_y_steps ; Nix++) {
-      gray = this.normalizeValue(Nix / (n_y_steps - 1));
-      context.fillStyle = "rgb(" + gray + ", " + gray + ", " + gray + ")";
-      context.strokeStyle = "rgb(" + gray + ", " + gray + ", " + gray + ")";
+      gray = Nix / (n_y_steps - 1);
+      context.fillStyle = $.mobile.clrlib.RGBToHTML([gray, gray, gray]);
+      context.strokeStyle = context.fillStyle;
       context.fillRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
       context.strokeRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
     }
@@ -231,17 +229,9 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     context.restore();
   },
 
-  makeClrChannel: function(val) {
-    return (val < 16 ? "0" : "") + (val & 0xff).toString(16);
-  },
-
   updateSelectors: function(hsl, updateHS) {
-    var clr = "#" +
-          $.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])
-            .map(this.normalizeValue)
-            .map(this.makeClrChannel)
-            .join(""),
-        gray = this.makeClrChannel(this.normalizeValue(hsl[2]));
+    var clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
+        gray = $.mobile.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
     this.hsSelector.css("left", hsl[0] / 360 * this.scale * 256.0);
     this.hsSelector.css("top",  hsl[1] * this.scale * 256.0);
@@ -249,7 +239,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
     this.lSelector.css("left",  this.canvas[0].width - 8);
     this.lSelector.css("top",   hsl[2] * this.scale * 256.0);
-    this.lSelector.css("background",  "#" + gray + gray + gray);
+    this.lSelector.css("background",  gray);
 
     this.element.attr("data-color", clr);
     this.element.triggerHandler('colorchanged', clr);
@@ -262,29 +252,11 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   setColor: function(clr) {
     if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) {
-      var newHSL = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr));
-
-      if (!(newHSL[0] == this.dragging_hsl[0] &&
-            newHSL[1] == this.dragging_hsl[1] &&
-            newHSL[2] == this.dragging_hsl[2])) {
-
-        this.dragging_hsl = newHSL;
-        this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
-        this.refresh();
-      }
+      this.dragging_hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr));
+      this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
+      this.refresh();
     }
-  },
-
-  normalizeValue: function (val) {
-    var
-      ret = val * 255.0,
-      ret_floor = Math.floor(ret);
-
-    if (ret - ret_floor > 0.5) ret_floor++;
-
-    return ret_floor;
   }
-
 });
 
 $(document).bind("pagecreate create", function(e) {
