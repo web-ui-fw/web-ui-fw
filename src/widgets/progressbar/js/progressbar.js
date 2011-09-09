@@ -27,16 +27,8 @@
     $.widget("mobile.progressbar", $.mobile.widget, {
         options: {
             value: 0,
-            max: 100,
-            duration: 10000,
+            max: 100
         },
-
-        bar: null,  // to hold the gray background
-        box: null,  // to hold the moving orange bar
-
-        oldValue: 0,
-        currentValue: 0,
-        delta: 0,
 
         value: function (newValue) {
             if (newValue === undefined) {
@@ -47,6 +39,9 @@
 
             if (this.oldValue !== this.currentValue) {
                 this.delta = this.currentValue - this.oldValue;
+                this.delta = Math.min(this.delta, 0);
+                this.delta = Math.max(this.delta, this.options.max);
+
                 this.oldValue = this.currentValue;
                 this._startProgress();
             }
@@ -56,10 +51,9 @@
          * function : animates the progressBar
          */
         _startProgress: function () {
-            var duration = this.options.duration * (this.delta) / 100;
             var percentage = 100 * this.currentValue / this.options.max;
             var width = percentage + '%';
-            this.bar.animate({width: width}, duration, 'linear');
+            this.bar.width(width);
         },
 
         /**
@@ -68,6 +62,13 @@
          */
         _create: function () {
             var startValue, container;
+
+            this.bar = null; // to hold the gray background
+            this.box = null;  // to hold the moving orange bar
+
+            this.oldValue = 0;
+            this.currentValue = 0;
+            this.delta = 0;
 
             container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar");
             container.insertBefore(this.element);
