@@ -48,11 +48,9 @@ $(document).bind("pagecreate", function () {
     };
     $("#demo-date").bind("date-changed", updateDate);
 
-    /* TODO: we should not need these! */
-    $('#progressbar-demo').bind('pageshow', function (e) {       
-        
+    $('#progressbar-demo').bind('pageshow', function (e) {
         setInterval(function () {
-            var progress = $('#progressbar1').progressbar('value');            console.log("progress is " + progress);
+            var progress = $('#progressbar1').progressbar('value');
             progress++;
             if (progress > 100) {
                 progress = 0;
@@ -77,7 +75,7 @@ $(document).bind("pagecreate", function () {
 
 $(document).bind("pagecreate", function() {
     var button = $('#calendarbutton');
-    button.bind('vclick', function (e) { 
+    button.bind('vclick', function (e) {
         button.calendarpicker('open');
         button.unbind('selectedDate').bind('selectedDate',function(e,val) {
             $('#selectedCalendarDate').attr('value',val);

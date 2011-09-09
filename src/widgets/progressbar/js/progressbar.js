@@ -7,19 +7,19 @@
  */
 
 /**
- * Displays a progressbar element 
+ * Displays a progressbar element
  *
  * A progressbar does have a progress value, and can be found from getValue()
  * You can set the value using value()
- * The external process is supposed to call the progressbar 
+ * The external process is supposed to call the progressbar
  * e.g. $('#myprogressbar').progressbar('value', 19)
  *
  * Options:
  *
- *     value	: starting value, default is 0
- *	   max		: maximum value, default is 100		
+ *     value  : starting value, default is 0
+ *     max    : maximum value, default is 100
  *     duration : Integer; number of milli seconds the progressbar takes to animate
- *				 from 0 to max. 
+ *         from 0 to max.
  *
  */
 
@@ -28,12 +28,12 @@
         options: {
             value: 0,
             max: 100,
-            duration: 10000,	
+            duration: 10000,
         },
 
         data: {
-            bar: 0,		// to hold the gray background
-            box: 0		// to hold the moving orange bar
+            bar: 0,    // to hold the gray background
+            box: 0    // to hold the moving orange bar
         },
 
         oldValue: 0,
@@ -54,11 +54,11 @@
         _percentage: function () {
             return 100 * this.getValue() / this.options.max;
         },
-		
-		
-		/**
-		 * function: update the value and call _startProgress()
-		 */
+
+
+    /**
+     * function: update the value and call _startProgress()
+     */
         _refreshValue: function (val /*now*/ ) {
             this.delta = this.getValue() - this.oldValue;
             if (this.oldValue !== val) {
@@ -82,13 +82,12 @@
                 },
             });
         },
-		
-		/**
-		 * function: loads the html divs from progressbar.prototype.html
-		 * and calls _refreshValue();
-		 */
-        _create: function () {
 
+    /**
+     * function: loads the html divs from progressbar.prototype.html
+     * and calls _refreshValue();
+     */
+        _create: function () {
             var self = this,
                 select = this.element,
                 o = this.options;
@@ -106,8 +105,8 @@
             self._refreshValue();
         },
     }); /* End of widget */
-	
-	// auto self-init widgets
+
+  // auto self-init widgets
     $(document).bind("pagecreate", function (e) {
         $(e.target).find(":jqmData(role='progressbar')").progressbar();
     });
