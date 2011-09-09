@@ -1,3 +1,5 @@
+This software incorporates software from other sources, including:
+
 widgets/jquery.mobile.groupindex/
 	initial version taken from
 	git clone https://github.com/jquery/jquery-mobile.git
@@ -10,5 +12,8 @@ widgets/jquery.mobile.maps/
 	svn checkout http://jquery-ui-map.googlecode.com/svn/trunk/ jquery-ui-map-read-only
 	Checked out revision 254.
 
-This software incorporates parts of the jQuery UI library (http://jqueryui.com/),
-which is available under the MIT licence.
+jQuery UI (http://jqueryui.com/) [MIT licence]
+
+jQuery Mobile (http://jquerymobile.com/) [MIT licence]
+
+jQuery (http://jquery.com/) [MIT licence]
