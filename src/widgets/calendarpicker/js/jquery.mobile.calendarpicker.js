@@ -374,7 +374,7 @@
                 cpMonthGrid = container.find('.ui-cp-month'),
                 previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true}),
                 nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true}),
-                open = false;    
+                isopen = false;    
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
@@ -394,7 +394,7 @@
                 cpMonthGrid: cpMonthGrid,
                 cpweekDayGrid: cpweekDayGrid,
                 cpContainer: cpContainer,
-                open:open
+                isopen:isopen
             });     
             cpContainer.appendTo(self.thisPage);     
         },
@@ -404,13 +404,13 @@
         },
 
         visible: function() {
-            return this.open;
+            return this.isopen;
         },
 
         open: function() {
             // Open the picker
             var self = this;
-            if (self.open === true ) { return false; } else { self.open = true; } // Ignore if already open
+            if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
             self._update();
             var windowHeight = $(window).height(),
                 contentHeight = self.cpContainer.outerHeight();
@@ -424,7 +424,7 @@
             // Close the picker
             var self = this,
             callback;
-            self.open = false;
+            self.isopen = false;
             self.cpContainer.stop().animate({"top":$(window).height()+self.cpContainer.outerHeight()},
                                              self.options.slidedownanimationtime,self.options.slidedownanimation,function() {
                 self.cpContainer.addClass('ui-cpcontainer-hidden').removeAttr('style').removeClass('in');
