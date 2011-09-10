@@ -1,0 +1,51 @@
+.jquery-mobile-clrlib-hue-gradient {
+  background: rgb(255,0,0); /* Old browsers */
+  background: -webkit-gradient(linear, left top, right top,
+    color-stop(  0%          ,rgba(255,  0,  0,1)),
+    color-stop( 16.666666667%,rgba(255,255,  0,1)),
+    color-stop( 33.333333333%,rgba(0  ,255,  0,1)),
+    color-stop( 50%          ,rgba(0  ,255,255,1)),
+    color-stop( 66.666666667%,rgba(0  ,  0,255,1)),
+    color-stop( 83.333333333%,rgba(255,  0,255,1)),
+    color-stop(100%          ,rgba(255,  0,  0,1))); /* Chrome,Safari4+ */
+  background: -moz-linear-gradient(left, 
+    rgba(255,  0,  0,1)   0%, 
+    rgba(255,255,  0,1)  16.666666667%,
+    rgba(  0,255,  0,1)  33.333333333%,
+    rgba(  0,255,255,1)  50%,
+    rgba(  0,  0,255,1)  66.666666667%,
+    rgba(255,  0,255,1)  83.333333333%,
+    rgba(255,  0,  0,1) 100%);
+  background: -webkit-linear-gradient(left,
+    rgba(255,  0,  0,1)   0%, 
+    rgba(255,255,  0,1)  16.666666667%,
+    rgba(  0,255,  0,1)  33.333333333%,
+    rgba(  0,255,255,1)  50%,
+    rgba(  0,  0,255,1)  66.666666667%,
+    rgba(255,  0,255,1)  83.333333333%,
+    rgba(255,  0,  0,1) 100%);
+  background: -o-linear-gradient(left,
+    rgba(255,  0,  0,1)   0%, 
+    rgba(255,255,  0,1)  16.666666667%,
+    rgba(  0,255,  0,1)  33.333333333%,
+    rgba(  0,255,255,1)  50%,
+    rgba(  0,  0,255,1)  66.666666667%,
+    rgba(255,  0,255,1)  83.333333333%,
+    rgba(255,  0,  0,1) 100%);
+  background: -ms-linear-gradient(left,
+    rgba(255,  0,  0,1)   0%, 
+    rgba(255,255,  0,1)  16.666666667%,
+    rgba(  0,255,  0,1)  33.333333333%,
+    rgba(  0,255,255,1)  50%,
+    rgba(  0,  0,255,1)  66.666666667%,
+    rgba(255,  0,255,1)  83.333333333%,
+    rgba(255,  0,  0,1) 100%);
+  background: linear-gradient(left,
+    rgba(255,  0,  0,1)   0%, 
+    rgba(255,255,  0,1)  16.666666667%,
+    rgba(  0,255,  0,1)  33.333333333%,
+    rgba(  0,255,255,1)  50%,
+    rgba(  0,  0,255,1)  66.666666667%,
+    rgba(255,  0,255,1)  83.333333333%,
+    rgba(255,  0,  0,1) 100%);
+}
