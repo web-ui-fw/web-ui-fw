@@ -100,39 +100,30 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     });
 
     hsSelector.bind( "vmousemove", function (event) {
-      var eventHandled = false,
-          potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / (self.scale * 255.0),
-          potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
-
       if (self.dragging) {
-        if (potential_h >= 0.0 && potential_h <= 1.0) {
-          self.dragging_hsl[0] = potential_h * 360;
-          eventHandled = true;
-        }
-        if (potential_s >= 0.0 && potential_s <= 1.0) {
-          self.dragging_hsl[1] = potential_s;
-          eventHandled = true;
-        }
+        var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / (self.scale * 255.0),
+            potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
+
+        potential_h = Math.min(1.0, Math.max(0.0, potential_h));
+        potential_s = Math.min(1.0, Math.max(0.0, potential_s));
+
+        self.dragging_hsl[0] = potential_h * 360;
+        self.dragging_hsl[1] = potential_s;
+        self.updateSelectors(self.dragging_hsl, true);
       }
 
-      if (eventHandled)
-        self.updateSelectors(self.dragging_hsl, true);
-
-      return eventHandled;
+      return self.dragging;
     });
 
     lSelector.bind( "vmousemove", function (event) {
-      var eventHandled = false,
-          potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
-
-      if (self.dragging && !self.draggingHS) {
-        if (potential_l >= 0.0 && potential_l <= 1.0) {
-          self.dragging_hsl[2] = potential_l;
-          eventHandled = true;
-        }
-      }
+      var eventHandled = (self.dragging && !self.draggingHS);
 
       if (eventHandled) {
+        var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
+
+        potential_l = Math.min(1.0, Math.max(0.0, potential_l));
+
+        self.dragging_hsl[2] = potential_l;
         self.paintCanvas(self.dragging_hsl);
         self.updateSelectors(self.dragging_hsl);
       }
@@ -161,15 +152,12 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
             potential_s = event.offsetY / (self.scale * 255.0),
             hsl;
 
-        if (potential_h >= 0.0 && potential_h <= 1.0) {
-          self.dragging_hsl[0] = potential_h * 360;
-          eventHandled = true;
-        }
+        potential_h = Math.min(1.0, Math.max(0.0, potential_h));
+        potential_s = Math.min(1.0, Math.max(0.0, potential_s));
 
-        if (potential_s >= 0.0 && potential_s <= 1.0) {
-          self.dragging_hsl[1] = potential_s;
-          eventHandled = true;
-        }
+        self.dragging_hsl[0] = potential_h * 360;
+        self.dragging_hsl[1] = potential_s;
+        eventHandled = true;
 
         if (eventHandled) {
           self.updateSelectors(self.dragging_hsl, true);
@@ -180,10 +168,9 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       else {
         var potential_l = event.offsetY / (self.scale * 255.0);
 
-        if (potential_l >= 0.0 && potential_l <= 1.0) {
-          self.dragging_hsl[2] = potential_l;
-          eventHandled = true;
-        }
+        potential_l = Math.min(1.0, Math.max(0.0, potential_l));
+        self.dragging_hsl[2] = potential_l;
+        eventHandled = true;
 
         if (eventHandled) {
           self.paintCanvas(self.dragging_hsl);
