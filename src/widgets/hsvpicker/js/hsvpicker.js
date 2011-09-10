@@ -46,10 +46,20 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     });
 
     myProto.find(".hsvpicker-arrow-btn").bind("vmouseup", function(e) {
+      var chan = $(this).attr("data-target"),
+          hsvIdx = ("hue" === chan) ? 0 :
+                   ("sat" === chan) ? 1 : 2,
+          max = (0 == hsvIdx ? 360 : 1),
+          step = 0.05 * max;
+
       $(this).attr("src",
         myProto.attr("data-arrow-btn-imageTemplate")
           .replace("%1", $(this).attr("data-location"))
           .replace("%2", ""));
+
+      self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
+      self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
+      self.refresh();
     });
   },
 
