@@ -13,21 +13,21 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
           .appendTo(this.element),
         ui = {
           hue: {
-            masks:    myProto.find("#hsvpicker-hue-masks-container"),
-            selector: myProto.find("#hsvpicker-hue-selector"),
-            hue:      myProto.find("#hsvpicker-hue-hue"),
-            valMask:  myProto.find("#hsvpicker-hue-mask-val")
+            container: myProto.find("#hsvpicker-hue-masks-container"),
+            selector:  myProto.find("#hsvpicker-hue-selector"),
+            hue:       myProto.find("#hsvpicker-hue-hue"),
+            valMask:   myProto.find("#hsvpicker-hue-mask-val")
           },
           sat: {
-            masks:    myProto.find("#hsvpicker-sat-masks-container"),
-            selector: myProto.find("#hsvpicker-sat-selector"),
-            hue:      myProto.find("#hsvpicker-sat-hue"),
-            valMask:  myProto.find("#hsvpicker-sat-mask-val")
+            container: myProto.find("#hsvpicker-sat-masks-container"),
+            selector:  myProto.find("#hsvpicker-sat-selector"),
+            hue:       myProto.find("#hsvpicker-sat-hue"),
+            valMask:   myProto.find("#hsvpicker-sat-mask-val")
           },
           val: {
-            masks:    myProto.find("#hsvpicker-val-masks-container"),
-            selector: myProto.find("#hsvpicker-val-selector"),
-            hue:      myProto.find("#hsvpicker-val-hue")
+            container: myProto.find("#hsvpicker-val-masks-container"),
+            selector:  myProto.find("#hsvpicker-val-selector"),
+            hue:       myProto.find("#hsvpicker-val-hue")
           }
         };
 
@@ -67,6 +67,20 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       self.refresh();
     });
 
+    $( document ).bind( "vmousemove", function( event ) {
+      if ( self.dragging != -1 ) {
+//            self.refresh( event );
+        event.stopPropagation();
+      }
+    });
+
+    $( document ).bind( "vmouseup", function( event ) {
+      if ( self.dragging != -1 ) {
+        self.dragging = false;
+//            self.refresh( event );
+      }
+    });
+
     ui.hue.selector.bind("vmousedown", function(e) { self.selectorMouseDown("hue", 0, e); });
     ui.sat.selector.bind("vmousedown", function(e) { self.selectorMouseDown("sat", 1, e); });
     ui.val.selector.bind("vmousedown", function(e) { self.selectorMouseDown("val", 2, e); });
@@ -78,6 +92,43 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     ui.hue.selector.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.sat.selector.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.val.selector.bind("vmouseup", function(e) { self.dragging = -1; });
+
+    ui.hue.container.bind("vmousedown", function(e) { self.containerMouseDown("hue", 0, e); });
+    ui.sat.container.bind("vmousedown", function(e) { self.containerMouseDown("sat", 1, e); });
+    ui.val.container.bind("vmousedown", function(e) { self.containerMouseDown("val", 2, e); });
+
+    ui.hue.container.bind("vmousemove", function(e) { self.containerMouseMove("hue", 0, e); });
+    ui.sat.container.bind("vmousemove", function(e) { self.containerMouseMove("sat", 1, e); });
+    ui.val.container.bind("vmousemove", function(e) { self.containerMouseMove("val", 2, e); });
+
+    ui.hue.container.bind("vmouseup", function(e) { self.dragging = -1; });
+    ui.sat.container.bind("vmouseup", function(e) { self.dragging = -1; });
+    ui.val.container.bind("vmouseup", function(e) { self.dragging = -1; });
+  },
+
+  containerMouseDown: function(chan, idx, e) {
+    if (event.offsetX >= 0 && event.offsetX <= this.ui[chan].container.width() &&
+        event.offsetY >= 0 && event.offsetY <= this.ui[chan].container.height()) {
+      this.dragging = idx;
+      this.containerMouseMove(chan, idx, e);
+    }
+  },
+
+  containerMouseMove: function(chan, idx, e) {
+    if (this.dragging === idx) {
+      var potential = event.offsetX / this.ui[chan].container.width();
+
+      potential = Math.min(1.0, Math.max(0.0, potential));
+      if (0 === idx)
+        potential *= 360;
+
+      this.dragging_hsv[idx] = potential;
+
+      this.selectorDraggingOffset.x = Math.ceil(this.ui[chan].selector.outerWidth()  / 2.0);
+      this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
+      this.updateSelectors(this.dragging_hsv);
+      e.stopPropagation();
+    }
   },
 
   selectorMouseDown: function(chan, idx, e) {
@@ -94,7 +145,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       if (0 === idx)
         potential /= 360;
 
-      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].masks.width();
+      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].container.width();
       potential = Math.min(1.0, Math.max(0.0, potential));
 
       if (0 === idx)
@@ -112,17 +163,17 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
         hclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
         vclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
-    this.ui.hue.selector.css("left", this.ui.hue.masks.width() * hsv[0] / 360);
+    this.ui.hue.selector.css("left", this.ui.hue.container.width() * hsv[0] / 360);
     this.ui.hue.selector.css("background", clr);
     this.ui.hue.hue.css("opacity", hsv[1]);
     this.ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
-    this.ui.sat.selector.css("left", this.ui.sat.masks.width() * hsv[1]);
+    this.ui.sat.selector.css("left", this.ui.sat.container.width() * hsv[1]);
     this.ui.sat.selector.css("background", clr);
     this.ui.sat.hue.css("background", hclr);
     this.ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
-    this.ui.val.selector.css("left", this.ui.val.masks.width() * hsv[2]);
+    this.ui.val.selector.css("left", this.ui.val.container.width() * hsv[2]);
     this.ui.val.selector.css("background", clr);
     this.ui.val.hue.css("background", vclr);
 

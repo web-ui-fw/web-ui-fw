@@ -48,7 +48,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     $( document ).bind( "vmousemove", function( event ) {
       if ( self.dragging ) {
 //            self.refresh( event );
-        return false;
+        event.stopPropagation();
       }
     });
 
@@ -56,28 +56,25 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       if ( self.dragging ) {
         self.dragging = false;
 //            self.refresh( event );
-        return false;
       }
     });
 
     ui.hs.container.bind( "vmousedown", function (event) {
-      self._canvasMouseDown(self, event, ui.hs.container);
-      self._canvasDownAndMove(self, event);
+      self._canvasMouseDown(event, "hs");
     });
 
     ui.l.container.bind( "vmousedown", function (event) {
-      self._canvasMouseDown(self, event, ui.l.container);
-      self._canvasDownAndMove(self, event);
+      self._canvasMouseDown(event, "l");
     });
 
     ui.hs.container.bind( "vmousemove", function (event) {
       if (self.dragging && self.draggingHS)
-        self._canvasDownAndMove(self, event);
+        self._canvasMouseMove(event, "hs");
     });
 
     ui.l.container.bind( "vmousemove", function (event) {
       if (self.dragging && !self.draggingHS)
-        self._canvasDownAndMove(self, event);
+        self._canvasMouseMove(event, "l");
     });
 
     ui.hs.selector.bind( "vmousedown", function (event) {
@@ -139,46 +136,38 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   },
 
-  _canvasMouseDown: function(self, event, container) {
-    if (event.offsetY >= 0 && event.offsetY <= container.height()) {
-      if (event.offsetX >= 0 && event.offsetX <= container.width()) {
-        self.dragging = true;
-        self.draggingHS = (container === this.ui.hs.container);
-      }
+  _canvasMouseDown: function(event, containerStr) {
+    if (event.offsetX >= 0 && event.offsetX <= this.ui[containerStr].container.width() &&
+        event.offsetY >= 0 && event.offsetY <= this.ui[containerStr].container.height()) {
+      this.dragging = true;
+      this.draggingHS = ("hs" === containerStr);
+      this._canvasMouseMove(event, containerStr);
     }
   },
 
-  _canvasDownAndMove: function(self, event) {
-    if (self.dragging) {
-      if (self.draggingHS) {
-        var potential_h = event.offsetX / self.ui.hs.container.width(),
-            potential_s = event.offsetY / self.ui.hs.container.height(),
-            hsl;
+  _canvasMouseMove: function(event, containerStr) {
+    if (this.dragging) {
+      if (this.draggingHS) {
+        var potential_h = event.offsetX / this.ui.hs.container.width(),
+            potential_s = event.offsetY / this.ui.hs.container.height();
 
         potential_h = Math.min(1.0, Math.max(0.0, potential_h));
         potential_s = Math.min(1.0, Math.max(0.0, potential_s));
 
-        self.dragging_hsl[0] = potential_h * 360;
-        self.dragging_hsl[1] = potential_s;
-
-        self.updateSelectors(self.dragging_hsl, true);
-        self.selectorDraggingOffset.x = Math.ceil(parseInt(self.ui.hs.selector.width())  / 2.0);
-        self.selectorDraggingOffset.y = Math.ceil(parseInt(self.ui.hs.selector.height()) / 2.0);
-
-        event.stopPropagation();
+        this.dragging_hsl[0] = potential_h * 360;
+        this.dragging_hsl[1] = potential_s;
       }
       else {
         var potential_l = event.offsetY / this.ui.l.container.height();
 
         potential_l = Math.min(1.0, Math.max(0.0, potential_l));
-        self.dragging_hsl[2] = potential_l;
-
-        self.updateSelectors(self.dragging_hsl);
-        self.selectorDraggingOffset.x = Math.ceil(parseInt(self.ui.l.selector.width())  / 2.0);
-        self.selectorDraggingOffset.y = Math.ceil(parseInt(self.ui.l.selector.height()) / 2.0);
-
-        event.stopPropagation();
+        this.dragging_hsl[2] = potential_l;
       }
+
+      this.selectorDraggingOffset.x = Math.ceil(this.ui[containerStr].selector.outerWidth()  / 2.0);
+      this.selectorDraggingOffset.y = Math.ceil(this.ui[containerStr].selector.outerHeight() / 2.0);
+      this.updateSelectors(this.dragging_hsl, true);
+      event.stopPropagation();
     }
   },
 
