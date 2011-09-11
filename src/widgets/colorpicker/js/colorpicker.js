@@ -61,33 +61,26 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     });
 
     ui.hs.container.bind( "vmousedown", function (event) {
-      console.log("ui.hs.container.vmousedown");
       self._canvasMouseDown(self, event, ui.hs.container);
       self._canvasDownAndMove(self, event);
     });
 
     ui.l.container.bind( "vmousedown", function (event) {
-      console.log("ui.hs.container.vmousedown");
       self._canvasMouseDown(self, event, ui.l.container);
       self._canvasDownAndMove(self, event);
     });
 
     ui.hs.container.bind( "vmousemove", function (event) {
-      if (self.dragging && self.draggingHS) {
-        console.log("ui.hs.container.vmousemove");
+      if (self.dragging && self.draggingHS)
         self._canvasDownAndMove(self, event);
-      }
     });
 
     ui.l.container.bind( "vmousemove", function (event) {
-      if (self.dragging && !self.draggingHS) {
-        console.log("ui.l.container.vmousemove");
+      if (self.dragging && !self.draggingHS)
         self._canvasDownAndMove(self, event);
-      }
     });
 
     ui.hs.selector.bind( "vmousedown", function (event) {
-      console.log("ui.hs.selector.vmousedown");
       self.dragging = true;
       self.draggingHS = true;
       self.selectorDraggingOffset.x = event.offsetX;
@@ -97,7 +90,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     });
 
     ui.l.selector.bind( "vmousedown", function (event) {
-      console.log("ui.l.selector.vmousedown");
       self.dragging = true;
       self.draggingHS = false;
       self.selectorDraggingOffset.x = event.offsetX;
@@ -108,8 +100,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
     ui.hs.selector.bind( "vmousemove", function (event) {
       if (self.dragging && self.draggingHS) {
-        console.log("ui.hs.selector.vmousemove");
-
         var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.container.width(),
             potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.container.height();
 
@@ -126,8 +116,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
     ui.l.selector.bind( "vmousemove", function (event) {
       if (self.dragging && !self.draggingHS) {
-        console.log("ui.l.selector.vmousemove");
-
         var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.container.height();
 
         potential_l = Math.min(1.0, Math.max(0.0, potential_l));
