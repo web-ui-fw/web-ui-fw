@@ -1,30 +1,109 @@
 /* Own CSS */
 
 /* @selector-size should be an odd number, in order to pixel-perfectly center on a given colour */
-@selector-size: 61px;
-@selector-border-width: 5px;
-@selector-total-size: @selector-size + 2 * @selector-border-width;
-@canvas-width: 256px + @selector-total-size + 16px;
-@canvas-height: 256px;
+@colorpicker-selector-size: 61px;
+@colorpicker-selector-border-width: 5px;
+@colorpicker-clrchannel-hs-width:  256px;
+@colorpicker-clrchannel-hs-height: 256px;
+@colorpicker-clrchannel-l-width: 16px;
+@colorpicker-clrchannel-l-height: 256px;
+
+@colorpicker-selector-total-size: @colorpicker-selector-size + 2 * @colorpicker-selector-border-width;
+@colorpicker-clrchannel-hs-padding: @colorpicker-selector-total-size / 2;
+@colorpicker-clrchannel-l-hpadding:
+  ~`Math.max(0, (parseInt("@{colorpicker-selector-total-size}") - parseInt("@{colorpicker-clrchannel-l-width}")) / 2) + "px"`;
 
 .ui-colorpicker {
+  .colorpicker-hs-container {
+    position: relative;
+    float: left;
 
-  position: relative;
-  width: @canvas-width;
-  height: @canvas-height;
-  padding: (@selector-total-size - 1) / 2;
+    width:  @colorpicker-clrchannel-hs-width;
+    height: @colorpicker-clrchannel-hs-height;
+    padding: @colorpicker-clrchannel-hs-padding;
 
-  .ui-colorpicker-canvas-selector {
-    left: 0px;
-    top: 0px;
-    position: absolute;
-    width: @selector-size;
-    height: @selector-size;
-    border: solid @selector-border-width black;
+    .colorpicker-hs-mask {
+      position: absolute;
+      width:  @colorpicker-clrchannel-hs-width;
+      height: @colorpicker-clrchannel-hs-height;
+    }
+
+    .colorpicker-hs-selector {
+      position: absolute;
+      width:  @colorpicker-selector-size;
+      height: @colorpicker-selector-size;
+      border: @colorpicker-selector-border-width solid black;
+    }
+
+    .sat-gradient {
+      background: rgb(128,128,128); /* Old browsers */
+      background: -webkit-gradient(linear, left top, left bottom,
+        color-stop(0%,rgba(128,128,128,0)), 
+        color-stop(100%,rgba(128,128,128,1))); /* Chrome,Safari4+ */
+      background: -moz-linear-gradient(top, 
+        rgba(128,128,128,0) 0%, 
+        rgba(128,128,128,1) 100%); /* FF3.6+ */
+      background: -webkit-linear-gradient(top, 
+        rgba(128,128,128,0) 0%,
+        rgba(128,128,128,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, 
+        rgba(128,128,128,0) 0%,
+        rgba(128,128,128,1) 100%); /* Opera11.10+ */
+      background: -ms-linear-gradient(top, 
+        rgba(128,128,128,0) 0%,
+        rgba(128,128,128,1) 100%); /* IE10+ */
+      background: linear-gradient(top, 
+        rgba(128,128,128,0) 0%,
+        rgba(128,128,128,1) 100%); /* W3C */
+    }
   }
 
-  .ui-colorpicker-canvas {
-    width: @canvas-width;
-    height: @canvas-height;
+  .colorpicker-l-container {
+    position: relative;
+    float: left;
+
+    width:  @colorpicker-clrchannel-l-width;
+    height: @colorpicker-clrchannel-l-height;
+    padding-left:   @colorpicker-clrchannel-l-hpadding;
+    padding-right:  @colorpicker-clrchannel-l-hpadding;
+    padding-top:    @colorpicker-clrchannel-hs-padding;
+    padding-bottom: @colorpicker-clrchannel-hs-padding;
+
+    .colorpicker-l-mask {
+      position: absolute;
+      width:  @colorpicker-clrchannel-l-width;
+      height: @colorpicker-clrchannel-l-height;
+    }
+
+    .colorpicker-l-selector {
+      left: 0px;
+      top:  0px;
+      position: absolute;
+      width:  @colorpicker-selector-size;
+      height: @colorpicker-selector-size;
+      border: @colorpicker-selector-border-width solid black;
+    }
+
+    .l-gradient {
+      background: rgb(0,0,0); /* Old browsers */
+      background: -webkit-gradient(linear, left top, left bottom,
+        color-stop(0%,rgba(0,0,0,1)),
+        color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */
+      background: -moz-linear-gradient(top,
+        rgba(0,0,0,1) 0%, 
+        rgba(255,255,255,1) 100%); /* FF3.6+ */
+      background: -webkit-linear-gradient(top, 
+        rgba(0,0,0,1) 0%,
+        rgba(255,255,255,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top, 
+        rgba(0,0,0,1) 0%,
+        rgba(255,255,255,1) 100%); /* Opera11.10+ */
+      background: -ms-linear-gradient(top, 
+        rgba(0,0,0,1) 0%,
+        rgba(255,255,255,1) 100%); /* IE10+ */
+      background: linear-gradient(top, 
+        rgba(0,0,0,1) 0%,
+        rgba(255,255,255,1) 100%); /* W3C */
+    }
   }
 }

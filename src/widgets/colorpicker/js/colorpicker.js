@@ -14,24 +14,26 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         clrpicker = $.mobile.loadPrototype("colorpicker").find("#colorpicker")
           .appendTo(this.element),
 
-        canvas = clrpicker.find("#colorpicker-canvas"),
-        hsSelector = clrpicker.find("#colorpicker-hs-selector"),
-        lSelector =  clrpicker.find("#colorpicker-l-selector"),
-
-        scale = Math.min(parseInt(canvas.css("width")), parseInt(canvas.css("height"))) / 256.0,
+        ui = {
+          hs: {
+            container: clrpicker.find("#colorpicker-hs-container"),
+            valMask:   clrpicker.find("#colorpicker-hs-val-mask"),
+            selector:  clrpicker.find("#colorpicker-hs-selector")
+          },
+          l: {
+            container: clrpicker.find("#colorpicker-l-container"),
+            selector:  clrpicker.find("#colorpicker-l-selector")
+          }
+        },
 
         hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(o.color));
 
-    hsl[1] = 1.0 - hsl[1];
-
-    canvas[0].width  = parseInt(canvas.css("width"));
-    canvas[0].height = parseInt(canvas.css("height"));
+    /* Only necessary because of lesscss shortcomings */
+    clrpicker.css("width", ui.hs.container.outerWidth() + ui.l.container.outerWidth());
+    clrpicker.css("height", Math.max(ui.hs.container.outerHeight(), ui.l.container.outerHeight()));
 
     $.extend( self, {
-      scale: scale,
-      canvas: canvas,
-      hsSelector: hsSelector,
-      lSelector: lSelector,
+      ui: ui,
       dragging: false,
       draggingHS: false,
       selectorDraggingOffset: {
@@ -58,51 +60,58 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       }
     });
 
-    
-    canvas.bind( "vmousedown", function (event) {
-      if (event.offsetY >= 0 && event.offsetY <= 256 * scale) {
-        if (event.offsetX >= 0 && event.offsetX <= 256 * scale) {
-          self.dragging = true;
-          self.draggingHS = true;
-        }
-        else
-        if (event.offsetX >= parseInt(canvas.attr("width")) - 16 && 
-            event.offsetX <= parseInt(canvas.attr("width"))) {
-          self.dragging = true;
-          self.draggingHS = false;
-        }
+    ui.hs.container.bind( "vmousedown", function (event) {
+      console.log("ui.hs.container.vmousedown");
+      self._canvasMouseDown(self, event, ui.hs.container);
+      self._canvasDownAndMove(self, event);
+    });
+
+    ui.l.container.bind( "vmousedown", function (event) {
+      console.log("ui.hs.container.vmousedown");
+      self._canvasMouseDown(self, event, ui.l.container);
+      self._canvasDownAndMove(self, event);
+    });
+
+    ui.hs.container.bind( "vmousemove", function (event) {
+      if (self.dragging && self.draggingHS) {
+        console.log("ui.hs.container.vmousemove");
+        self._canvasDownAndMove(self, event);
       }
-      return self._canvasDownAndMove(self, event);
     });
 
-    canvas.bind( "vmousemove", function (event) {
-      if (self.dragging)
-        return self._canvasDownAndMove(self, event);
-      return false;
+    ui.l.container.bind( "vmousemove", function (event) {
+      if (self.dragging && !self.draggingHS) {
+        console.log("ui.l.container.vmousemove");
+        self._canvasDownAndMove(self, event);
+      }
     });
 
-    hsSelector.bind( "vmousedown", function (event) {
+    ui.hs.selector.bind( "vmousedown", function (event) {
+      console.log("ui.hs.selector.vmousedown");
       self.dragging = true;
       self.draggingHS = true;
       self.selectorDraggingOffset.x = event.offsetX;
       self.selectorDraggingOffset.y = event.offsetY;
 
-      return true;
+      event.stopPropagation();
     });
 
-    lSelector.bind( "vmousedown", function (event) {
+    ui.l.selector.bind( "vmousedown", function (event) {
+      console.log("ui.l.selector.vmousedown");
       self.dragging = true;
       self.draggingHS = false;
       self.selectorDraggingOffset.x = event.offsetX;
       self.selectorDraggingOffset.y = event.offsetY;
 
-      return true;
+      event.stopPropagation();
     });
 
-    hsSelector.bind( "vmousemove", function (event) {
-      if (self.dragging) {
-        var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / (self.scale * 255.0),
-            potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
+    ui.hs.selector.bind( "vmousemove", function (event) {
+      if (self.dragging && self.draggingHS) {
+        console.log("ui.hs.selector.vmousemove");
+
+        var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.container.width(),
+            potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.container.height();
 
         potential_h = Math.min(1.0, Math.max(0.0, potential_h));
         potential_s = Math.min(1.0, Math.max(0.0, potential_s));
@@ -110,46 +119,52 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         self.dragging_hsl[0] = potential_h * 360;
         self.dragging_hsl[1] = potential_s;
         self.updateSelectors(self.dragging_hsl, true);
-      }
 
-      return self.dragging;
+        event.stopPropagation();
+      }
     });
 
-    lSelector.bind( "vmousemove", function (event) {
-      var eventHandled = (self.dragging && !self.draggingHS);
+    ui.l.selector.bind( "vmousemove", function (event) {
+      if (self.dragging && !self.draggingHS) {
+        console.log("ui.l.selector.vmousemove");
 
-      if (eventHandled) {
-        var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / (self.scale * 255.0);
+        var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.container.height();
 
         potential_l = Math.min(1.0, Math.max(0.0, potential_l));
 
         self.dragging_hsl[2] = potential_l;
-        self.paintCanvas(self.dragging_hsl);
         self.updateSelectors(self.dragging_hsl);
+
+        event.stopPropagation();
       }
-
-      return eventHandled;
     });
 
-    canvas.bind( "vmouseup", function (event) {
+    ui.hs.container.bind( "vmouseup", function (event) {
       self.dragging = false;
-      return true;
+      event.stopPropagation();
     });
 
-    hsSelector.bind( "vmouseup", function (event) {
+    ui.hs.selector.bind( "vmouseup", function (event) {
       self.dragging = false;
-      return true;
+      event.stopPropagation();
     });
 
   },
 
-  _canvasDownAndMove: function(self, event) {
-    var eventHandled = false;
+  _canvasMouseDown: function(self, event, container) {
+    if (event.offsetY >= 0 && event.offsetY <= container.height()) {
+      if (event.offsetX >= 0 && event.offsetX <= container.width()) {
+        self.dragging = true;
+        self.draggingHS = (container === this.ui.hs.container);
+      }
+    }
+  },
 
+  _canvasDownAndMove: function(self, event) {
     if (self.dragging) {
       if (self.draggingHS) {
-        var potential_h = event.offsetX / (self.scale * 255.0),
-            potential_s = event.offsetY / (self.scale * 255.0),
+        var potential_h = event.offsetX / self.ui.hs.container.width(),
+            potential_s = event.offsetY / self.ui.hs.container.height(),
             hsl;
 
         potential_h = Math.min(1.0, Math.max(0.0, potential_h));
@@ -157,83 +172,53 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         self.dragging_hsl[0] = potential_h * 360;
         self.dragging_hsl[1] = potential_s;
-        eventHandled = true;
 
-        if (eventHandled) {
-          self.updateSelectors(self.dragging_hsl, true);
-          self.selectorDraggingOffset.x = Math.ceil(parseInt(self.hsSelector.css("width"))  / 2.0);
-          self.selectorDraggingOffset.y = Math.ceil(parseInt(self.hsSelector.css("height")) / 2.0);
-        }
+        self.updateSelectors(self.dragging_hsl, true);
+        self.selectorDraggingOffset.x = Math.ceil(parseInt(self.ui.hs.selector.width())  / 2.0);
+        self.selectorDraggingOffset.y = Math.ceil(parseInt(self.ui.hs.selector.height()) / 2.0);
+
+        event.stopPropagation();
       }
       else {
-        var potential_l = event.offsetY / (self.scale * 255.0);
+        var potential_l = event.offsetY / this.ui.l.container.height();
 
         potential_l = Math.min(1.0, Math.max(0.0, potential_l));
         self.dragging_hsl[2] = potential_l;
-        eventHandled = true;
 
-        if (eventHandled) {
-          self.paintCanvas(self.dragging_hsl);
-          self.updateSelectors(self.dragging_hsl);
-          self.selectorDraggingOffset.x = Math.ceil(parseInt(self.lSelector.css("width"))  / 2.0);
-          self.selectorDraggingOffset.y = Math.ceil(parseInt(self.lSelector.css("height")) / 2.0);
-        }
+        self.updateSelectors(self.dragging_hsl);
+        self.selectorDraggingOffset.x = Math.ceil(parseInt(self.ui.l.selector.width())  / 2.0);
+        self.selectorDraggingOffset.y = Math.ceil(parseInt(self.ui.l.selector.height()) / 2.0);
+
+        event.stopPropagation();
       }
     }
-
-    return eventHandled;
-  },
-
-  paintCanvas: function(hsl) {
-    var Nix, Nix1, gray,
-        context = this.canvas[0].getContext("2d"),
-        n_x_steps = 64, n_y_steps = 64,
-        x_step = 256.0 / n_x_steps, y_step = 256.0 / n_y_steps;
-
-    context.mozImageSmoothingEnabled = false;
-
-    context.save();
-
-    context.scale(this.scale, this.scale);
-
-    for (Nix = 0 ; Nix < n_y_steps ; Nix++)
-      for (Nix1 = 0 ; Nix1 < n_x_steps ; Nix1++) {
-        h = Nix1 / (n_x_steps - 1);
-        s = 1.0 - Nix / (n_y_steps - 1);
-
-        context.fillStyle = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([h * 360, s, hsl[2]]));
-        context.fillRect(Nix1 * x_step, Nix * y_step, x_step, y_step);
-      }
-
-    for (Nix = 0 ; Nix < n_y_steps ; Nix++) {
-      gray = Nix / (n_y_steps - 1);
-      context.fillStyle = $.mobile.clrlib.RGBToHTML([gray, gray, gray]);
-      context.strokeStyle = context.fillStyle;
-      context.fillRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
-      context.strokeRect((this.canvas[0].width - 16) / this.scale, Nix * y_step, 16, y_step);
-    }
-
-    context.restore();
   },
 
   updateSelectors: function(hsl, updateHS) {
     var clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
         gray = $.mobile.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
-    this.hsSelector.css("left", hsl[0] / 360 * this.scale * 256.0);
-    this.hsSelector.css("top",  hsl[1] * this.scale * 256.0);
-    this.hsSelector.css("background", clr);
+    if (hsl[2] < 0.5) {
+      this.ui.hs.valMask.css("background", "#000000");
+      this.ui.hs.valMask.css("opacity", 1.0 - hsl[2] * 2.0);
+    }
+    else {
+      this.ui.hs.valMask.css("background", "#ffffff");
+      this.ui.hs.valMask.css("opacity", (hsl[2] - 0.5) * 2.0);
+    }
 
-    this.lSelector.css("left",  this.canvas[0].width - 8);
-    this.lSelector.css("top",   hsl[2] * this.scale * 256.0);
-    this.lSelector.css("background",  gray);
+    this.ui.hs.selector.css("left", hsl[0] / 360 * this.ui.hs.container.width());
+    this.ui.hs.selector.css("top",  hsl[1] * this.ui.hs.container.height());
+    this.ui.hs.selector.css("background", clr);
+
+    this.ui.l.selector.css("top",   hsl[2] * this.ui.l.container.height());
+    this.ui.l.selector.css("background",  gray);
 
     this.element.attr("data-color", clr);
     this.element.triggerHandler('colorchanged', clr);
   },
 
   refresh: function() {
-    this.paintCanvas(this.dragging_hsl);
     this.updateSelectors(this.dragging_hsl);
   },
 
