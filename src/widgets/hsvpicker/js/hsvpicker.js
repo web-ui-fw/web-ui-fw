@@ -34,6 +34,11 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     $.extend(self, {
       ui: ui,
       dragging_hsv: [ 0, 0, 0],
+      selectorDraggingOffset: {
+        x : -1,
+        y : -1
+      },
+      dragging: -1
     });
 
     this.setColor(o.color);
@@ -61,22 +66,65 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
       self.refresh();
     });
+
+    ui.hue.selector.bind("vmousedown", function(e) { self.selectorMouseDown("hue", 0, e); });
+    ui.sat.selector.bind("vmousedown", function(e) { self.selectorMouseDown("sat", 1, e); });
+    ui.val.selector.bind("vmousedown", function(e) { self.selectorMouseDown("val", 2, e); });
+
+    ui.hue.selector.bind("vmousemove", function(e) { self.selectorMouseMove("hue", 0, e); });
+    ui.sat.selector.bind("vmousemove", function(e) { self.selectorMouseMove("sat", 1, e); });
+    ui.val.selector.bind("vmousemove", function(e) { self.selectorMouseMove("val", 2, e); });
+
+    ui.hue.selector.bind("vmouseup", function(e) { self.dragging = -1; });
+    ui.sat.selector.bind("vmouseup", function(e) { self.dragging = -1; });
+    ui.val.selector.bind("vmouseup", function(e) { self.dragging = -1; });
+  },
+
+  selectorMouseDown: function(chan, idx, e) {
+    this.dragging = idx;
+    this.selectorDraggingOffset.x = event.offsetX;
+    this.selectorDraggingOffset.y = event.offsetY;
+    e.stopPropagation();
+  },
+
+  selectorMouseMove: function(chan, idx, e) {
+    if (this.dragging === idx) {
+      var potential = this.dragging_hsv[idx];
+
+      if (0 === idx)
+        potential /= 360;
+
+      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].masks.width();
+      potential = Math.min(1.0, Math.max(0.0, potential));
+
+      if (0 === idx)
+        potential *= 360;
+
+      this.dragging_hsv[idx] = potential;
+      this.updateSelectors(this.dragging_hsv);
+
+      e.stopPropagation();
+    }
   },
 
   updateSelectors: function(hsv) {
-    var clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB(hsv)),
-        hclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HToRGB(hsv[0]));
+    var  clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB(hsv)),
+        hclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
+        vclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
     this.ui.hue.selector.css("left", this.ui.hue.masks.width() * hsv[0] / 360);
+    this.ui.hue.selector.css("background", clr);
     this.ui.hue.hue.css("opacity", hsv[1]);
     this.ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
     this.ui.sat.selector.css("left", this.ui.sat.masks.width() * hsv[1]);
+    this.ui.sat.selector.css("background", clr);
     this.ui.sat.hue.css("background", hclr);
     this.ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
     this.ui.val.selector.css("left", this.ui.val.masks.width() * hsv[2]);
-    this.ui.val.hue.css("background", clr);
+    this.ui.val.selector.css("background", clr);
+    this.ui.val.hue.css("background", vclr);
 
     this.element.attr("data-color", clr);
     this.element.triggerHandler('colorchanged', clr);

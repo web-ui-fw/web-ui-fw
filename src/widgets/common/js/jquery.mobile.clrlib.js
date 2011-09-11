@@ -55,36 +55,6 @@ jQuery.extend( jQuery.mobile,
     },
 
     /*
-     * Converts hue to rgb.
-     *
-     * Input: h, where
-     * h is in [0, 360]
-     *
-     * Returns: [ r, g, b ], where
-     * r is in [0, 1]
-     * g is in [0, 1]
-     * b is in [0, 1]
-     */
-    HToRGB: function(h) {
-      var rgb = [(h <=  60 || h >= 300) ? 1.0 : 0.0, 
-                 (h >=  60 && h <= 180) ? 1.0 : 0.0,
-                 (h >= 180 && h <= 300) ? 1.0 : 0.0],
-          normal_h = h / 60 - Math.floor(h / 60),
-          update_idx = (h - Math.floor(h / 180) * 180);
-
-      update_idx = (update_idx >=   0 && update_idx <=  60) ? 1 :
-                   (update_idx >   60 && update_idx <= 120) ? 0 :
-                   (update_idx >  120 && update_idx <= 180) ? 2 : -1;
-
-      if ((h >=  60 && h < 120) || (h >= 180 && h < 240) || (h >= 300 && h < 360))
-        normal_h = 1.0 - normal_h;
-
-      rgb[update_idx] = normal_h;
-
-      return rgb;
-    },
-
-    /*
      * Converts hsl to rgb.
      *
      * From http://130.113.54.154/~monger/hsl-rgb.html
