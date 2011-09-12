@@ -4,7 +4,9 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
   options: {
     disabled: false,
     initSelector: ":jqmData(role='popupwindow')",
-    overlayTheme: "c"
+    overlayTheme: "c",
+    shadow: true,
+    fade: true,
   },
 
   _create: function() {
@@ -16,13 +18,19 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         screen = myProto.find("#popupwindow-screen")
           .appendTo(thisPage),
         container = myProto.find("#popupwindow-container")
-          .addClass("ui-body-" + o.overlayTheme)
           .addClass($.mobile.defaultDialogTransition)
           .insertAfter(screen);
+
+    if (o.overlayTheme.match(/[a-z]/))
+      container.addClass("ui-body-" + o.overlayTheme);
+
+    if (!o.shadow)
+      container.removeClass("ui-overlay-shadow");
 
     elem.appendTo(container);
 
     $.extend( self, {
+      fade: o.fade,
       elem: elem,
       isOpen: false,
       thisPage: thisPage,
@@ -58,8 +66,10 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 
     self.screen
       .height($(document).height())
-      .removeClass("ui-screen-hidden")
-      .animate({opacity: 0.5}, "fast");
+      .removeClass("ui-screen-hidden");
+
+      if (self.fade)
+        self.screen.animate({opacity: 0.5}, "fast");
     
       // Try and center the overlay over the given coordinates
       var roomtop = y - scrollTop,
@@ -110,20 +120,22 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     if (this.options.disabled || !this.isOpen)
       return;
 
-    var self = this;
+    var self = this,
+        hideScreen = function() {
+          self.screen.addClass("ui-screen-hidden");
+          self.isOpen = false;
+          self.element.trigger("closed");
+        };
 
     self.container
       .addClass("ui-selectmenu-hidden")
       .removeAttr("style")
       .removeClass("in");
 
-    self.screen.animate({opacity: 0.0}, "fast", function() {
-      self.screen.addClass("ui-screen-hidden");
-
-      self.isOpen = false;
-
-      self.element.trigger("closed");
-    });
+    if (self.fade)
+      self.screen.animate({opacity: 0.0}, "fast", hideScreen);
+    else
+      hideScreen();
   }
 });
 
