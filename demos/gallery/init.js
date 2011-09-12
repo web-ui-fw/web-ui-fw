@@ -2,6 +2,7 @@
 // added more than once to any single progress bar
 var progressbarAnimator = {
     intervals: {},
+    justIntervals: [], // retained to make it easier to clear the intervals
 
     // pause: pause in ms between updates
     updateProgressBar: function (progressbarToUpdate, pause) {
@@ -24,6 +25,15 @@ var progressbarAnimator = {
         }, pause);
 
         this.intervals[id] = interval;
+        this.justIntervals.push(interval);
+    },
+
+    clearIntervals: function () {
+        for (var i = 0; i < this.justIntervals.length; i++) {
+            clearInterval(this.justIntervals[i]);
+        }
+
+        this.intervals = {};
     }
 };
 
@@ -83,8 +93,16 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.updateProgressBar($(this).find('#progressbar3'), 1000);
     });
 
+    $('#progressbar-demo').bind('pagehide', function (e) {
+        progressbarAnimator.clearIntervals();
+    });
+
     $('#progressbar-dialog-demo').bind('pageshow', function (e) {
         progressbarAnimator.updateProgressBar($(this).find('#progressbarDialog1'), 200);
+    });
+
+    $('#progressbar-dialog-demo').bind('pagehide', function (e) {
+        progressbarAnimator.clearIntervals();
     });
 
     $('#switch-1').switch ();
