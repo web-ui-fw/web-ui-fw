@@ -28,10 +28,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
         hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(o.color));
 
-    /* Only necessary because of lesscss shortcomings */
-    clrpicker.css("width", ui.hs.container.outerWidth() + ui.l.container.outerWidth());
-    clrpicker.css("height", Math.max(ui.hs.container.outerHeight(), ui.l.container.outerHeight()));
-
     $.extend( self, {
       ui: ui,
       dragging: false,
@@ -133,7 +129,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       self.dragging = false;
       event.stopPropagation();
     });
-
   },
 
   _canvasMouseDown: function(event, containerStr) {

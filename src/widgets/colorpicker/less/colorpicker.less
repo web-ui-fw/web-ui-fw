@@ -14,8 +14,11 @@
   ~`Math.max(0, (parseInt("@{colorpicker-selector-total-size}") - parseInt("@{colorpicker-clrchannel-l-width}")) / 2) + "px"`;
 
 .ui-colorpicker {
+  display: table;
+
   .colorpicker-hs-container {
     position: relative;
+    display: table-cell;
     float: left;
 
     width:  @colorpicker-clrchannel-hs-width;
@@ -77,7 +80,6 @@
 
     .colorpicker-l-selector {
       left: 0px;
-      top:  0px;
       position: absolute;
       width:  @colorpicker-selector-size;
       height: @colorpicker-selector-size;

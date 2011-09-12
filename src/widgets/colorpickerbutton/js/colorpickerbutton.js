@@ -54,6 +54,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
 
         canvas = $("<div/>", {"id" : "canvas"})
+          .css("display", "table")
           .insertBefore(select)
           .colorpicker({"color" : colour})
           .attr("data-prefix", "colorpickerbutton")
@@ -71,8 +72,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
             corners: o.corners,
             shadow: o.shadow
           });
-
-    canvas.css("max-width", canvas.find("#colorpicker").outerWidth());
 
     this.element.css("display", "none");
 
@@ -94,8 +93,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       placeholder: "",
       buttonContents: buttonContents
     });
-
-    // Support for using the native select menu with a custom button
 
     // Create list from select, update state
     self.refresh();
