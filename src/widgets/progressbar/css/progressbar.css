@@ -1,56 +1,15 @@
 /* Own CSS */
-
-.ui-upper-progressbar-container {
-  height: 100px;
-  background: white;
-}
-
-#cancel-container{
-  position: relative;
-  bottom: 0px;
-  height: 60px;
-  background: gray;
-  text-align: center;
-}
-
-#cancel-button {
-  display: inline-block;
-  background-color: white;
-  color: black;
-  width: 50%;
-  }
-
-#progressbar {
+.ui-progressbar {
   position: relative;
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 24px;
   margin-bottom: 24px;
-  height: 12px;
+  height: 10px;
   background: white;
 }
 
-#text1 {
-	position: relative;
-	text-align: center;
-	margin-top: 14px;			
-}
-
-#text2 {
-	float: left;
-	text-align: left;
-	margin-left: 10px;
-	margin-bottom: 14px;			
-}
-
-#text3 {
-	float: right;
-	text-align: right;
-	margin-right: 20px;
-	margin-bottom: 14px;			
-}
-
-#boxImgId {	
+.ui-boxImg {	
 	position: relative;
 	top: 0;
 	background: gray;
@@ -58,13 +17,12 @@
 	height: 10px;
 }
 
-#barImgId {
+.ui-barImg {
 	position: relative;
 	top: -10px;
 	background: orange;
 	height: 10px;
-	width: 0;
-	
+	width: 0;	
 }
 
 
