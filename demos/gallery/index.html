@@ -159,14 +159,27 @@
             </div>
             <div data-role="content">
                 <h2>Progress bar</h2>
-                <div data-role="progressbar-dialog" id="myprogressbar-dialog">
-                Click "Show Progressbar" <br/>
-                <a href="#" id="showprogressbarButton" data-role="button" data-inline="true">Show Progressbar</a>
+                <ul data-role="listview">
+                    <li><div data-role="progressbar" id="progressbar1"></div></li>
+                    <li><div data-role="progressbar" id="progressbar2"></div></li>
+                    <li><div data-role="progressbar" id="progressbar3"></div></li>
+                </ul>
+                <div>
+                    <p><a href="#progressbar-dialog-demo" data-transition="pop"
+                          data-rel="dialog">Show progressbar in dialog</a></p>
                 </div>
-
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
+        <div data-role="page" id="progressbar-dialog-demo">
+            <div data-role="header">
+                <h1>Progress bar in dialog box</h1>
+            </div>
+            <div data-role="content">
+                <div data-role="progressbar" id="progressbarDialog1"></div>
             </div>
         </div> <!-- /page -->
 
@@ -391,13 +404,13 @@
             </div>
         </div> <!-- page -->
 
-        <div data-role="page" id="calendarDemo" data-add-back-btn="true"> 
-	    <div data-role="header"> 
+        <div data-role="page" id="calendarDemo" data-add-back-btn="true">
+	    <div data-role="header">
                 <h1>TODONS - Calendar Picker. Click Button to launch Calendar Picker</h1>
 	    </div>
             <div class="content" data-role="content" id="calendarinputcontainer">
                 <label id="label">Selected Date</label><input type="text" name = "calendardate" id="selectedCalendarDate" value="Select Date"/>
-                <input type="button" data-role="calendarpicker" data-icon="grid" data-iconpos="notext" id = "calendarbutton"> 
+                <input type="button" data-role="calendarpicker" data-icon="grid" data-iconpos="notext" id = "calendarbutton">
            </div>
            <div data-role="footer">
                <h4>Web UI Framework - Widgets gallery</h4>
