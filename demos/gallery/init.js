@@ -1,16 +1,33 @@
-$(document).bind("pagecreate", function () {
+// tracks progressbar update intervals to ensure each is not
+// added more than once to any single progress bar
+var progressbarAnimator = {
+    intervals: {},
+
     // pause: pause in ms between updates
-    var updateProgressBar = function (progressbarToUpdate, pause) {
-        setInterval(function () {
+    updateProgressBar: function (progressbarToUpdate, pause) {
+        var id = progressbarToUpdate.attr('id');
+
+        if (this.intervals[id]) {
+            return;
+        }
+
+        var interval = setInterval(function () {
+            var now = (new Date()).getTime();
+
             var progress = progressbarToUpdate.progressbar('value');
             progress++;
+
             if (progress > 100) {
                 progress = 0;
             }
             progressbarToUpdate.progressbar('value', progress);
         }, pause);
-    };
 
+        this.intervals[id] = interval;
+    }
+};
+
+$(document).bind("pagecreate", function () {
     $('#groupindex-demo').bind('pageshow', function (e) {
         $.fillPageWithContentArea($(this));
     });
@@ -61,13 +78,13 @@ $(document).bind("pagecreate", function () {
     $("#demo-date").bind("date-changed", updateDate);
 
     $('#progressbar-demo').bind('pageshow', function (e) {
-        updateProgressBar($(this).find('#progressbar1'), 200);
-        updateProgressBar($(this).find('#progressbar2'), 500);
-        updateProgressBar($(this).find('#progressbar3'), 1000);
+        progressbarAnimator.updateProgressBar($(this).find('#progressbar1'), 200);
+        progressbarAnimator.updateProgressBar($(this).find('#progressbar2'), 500);
+        progressbarAnimator.updateProgressBar($(this).find('#progressbar3'), 1000);
     });
 
     $('#progressbar-dialog-demo').bind('pageshow', function (e) {
-        updateProgressBar($(this).find('#progressbarDialog1'), 200);
+        progressbarAnimator.updateProgressBar($(this).find('#progressbarDialog1'), 200);
     });
 
     $('#switch-1').switch ();
