@@ -56,7 +56,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         canvas = $("<div/>", {"id" : "canvas"})
           .css("display", "table")
           .insertBefore(select)
-          .colorpicker({"color" : colour})
+          .hsvpicker({"color" : colour})
           .attr("data-prefix", "colorpickerbutton")
           .popupwindow(),
 
@@ -119,7 +119,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     if (clr.match(/#[0-9A-Fa-f]{6}/)) {
       if (this.canvas.attr("data-color") != clr) {
 
-        this.canvas.colorpicker("setColor", clr);
+        this.canvas.hsvpicker("setColor", clr);
         this.refresh();
         this.element.trigger("colorchanged", clr);
       }
