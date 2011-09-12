@@ -4,7 +4,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
   options: {
     disabled: false,
     initSelector: ":jqmData(role='popupwindow')",
-    overlayTheme: "a"
+    overlayTheme: "c"
   },
 
   _create: function() {
@@ -42,8 +42,8 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       return;
 
     var self = this,
-        x = (undefined === x_where ? 0 : x_where),
-        y = (undefined === y_where ? 0 : y_where);
+        x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
+        y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
     console.log("self.elem is [" + self.elem.outerWidth() + " x " + self.elem.outerHeight() + "]");
 
@@ -58,51 +58,53 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 
     self.screen
       .height($(document).height())
-      .removeClass("ui-screen-hidden");
+      .removeClass("ui-screen-hidden")
+      .animate({opacity: 0.5}, "fast", function() {
+    
+        // Try and center the overlay over the given coordinates
+        var roomtop = y - scrollTop,
+	    roombot = scrollTop + screenHeight - y,
+	    halfheight = menuHeight / 2,
+	    maxwidth = parseFloat( self.container.css( "max-width" ) ),
+	    newtop, newleft;
 
-    // Try and center the overlay over the given coordinates
-    var roomtop = y - scrollTop,
-	roombot = scrollTop + screenHeight - y,
-	halfheight = menuHeight / 2,
-	maxwidth = parseFloat( self.container.css( "max-width" ) ),
-	newtop, newleft;
+        if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+          newtop = y - halfheight;
+        }
+        else {
+          // 30px tolerance off the edges
+          newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+        }
 
-    if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-      newtop = y - halfheight;
-    }
-    else {
-      // 30px tolerance off the edges
-      newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-    }
+        // If the menuwidth is smaller than the screen center is
+        if ( menuWidth < maxwidth ) {
+          newleft = ( screenWidth - menuWidth ) / 2;
+        } 
+        else {
 
-    // If the menuwidth is smaller than the screen center is
-    if ( menuWidth < maxwidth ) {
-      newleft = ( screenWidth - menuWidth ) / 2;
-    } 
-    else {
+          //otherwise insure a >= 30px offset from the left
+          newleft = x - menuWidth / 2;
 
-      //otherwise insure a >= 30px offset from the left
-      newleft = x - menuWidth / 2;
+          // 30px tolerance off the edges
+          if ( newleft < 30 ) {
+	    newleft = 30;
+          }
+          else
+          if ( ( newleft + menuWidth ) > screenWidth ) {
+	    newleft = screenWidth - menuWidth - 30;
+          }
+        }
 
-      // 30px tolerance off the edges
-      if ( newleft < 30 ) {
-	newleft = 30;
-      }
-      else
-      if ( ( newleft + menuWidth ) > screenWidth ) {
-	newleft = screenWidth - menuWidth - 30;
-      }
-    }
+        self.container
+          .removeClass("us-selectmenu-hidden")
+          .css({
+            top: newtop,
+            left: newleft
+          })
+          .addClass("in");
 
-    self.container
-      .removeClass("us-selectmenu-hidden")
-      .css({
-        top: newtop,
-        left: newleft
-      })
-      .addClass("in");
-
-    self.isOpen = true;
+        self.isOpen = true;
+      });
   },
 
   close: function() {
@@ -111,15 +113,18 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 
     var self = this;
 
-    self.screen .addClass("ui-screen-hidden");
     self.container
       .addClass("ui-selectmenu-hidden")
       .removeAttr("style")
       .removeClass("in");
 
-    this.isOpen = false;
+    self.screen.animate({opacity: 0.0}, "fast", function() {
+      self.screen.addClass("ui-screen-hidden");
 
-    this.element.trigger("closed");
+      self.isOpen = false;
+
+      self.element.trigger("closed");
+    });
   }
 });
 
