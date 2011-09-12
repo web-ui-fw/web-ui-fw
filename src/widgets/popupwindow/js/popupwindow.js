@@ -59,52 +59,51 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     self.screen
       .height($(document).height())
       .removeClass("ui-screen-hidden")
-      .animate({opacity: 0.5}, "fast", function() {
+      .animate({opacity: 0.5}, "fast");
     
-        // Try and center the overlay over the given coordinates
-        var roomtop = y - scrollTop,
-	    roombot = scrollTop + screenHeight - y,
-	    halfheight = menuHeight / 2,
-	    maxwidth = parseFloat( self.container.css( "max-width" ) ),
-	    newtop, newleft;
+      // Try and center the overlay over the given coordinates
+      var roomtop = y - scrollTop,
+	  roombot = scrollTop + screenHeight - y,
+	  halfheight = menuHeight / 2,
+	  maxwidth = parseFloat( self.container.css( "max-width" ) ),
+	  newtop, newleft;
 
-        if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-          newtop = y - halfheight;
+      if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+        newtop = y - halfheight;
+      }
+      else {
+        // 30px tolerance off the edges
+        newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+      }
+
+      // If the menuwidth is smaller than the screen center is
+      if ( menuWidth < maxwidth ) {
+        newleft = ( screenWidth - menuWidth ) / 2;
+      } 
+      else {
+
+        //otherwise insure a >= 30px offset from the left
+        newleft = x - menuWidth / 2;
+
+        // 30px tolerance off the edges
+        if ( newleft < 30 ) {
+	  newleft = 30;
         }
-        else {
-          // 30px tolerance off the edges
-          newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+        else
+        if ( ( newleft + menuWidth ) > screenWidth ) {
+	  newleft = screenWidth - menuWidth - 30;
         }
+      }
 
-        // If the menuwidth is smaller than the screen center is
-        if ( menuWidth < maxwidth ) {
-          newleft = ( screenWidth - menuWidth ) / 2;
-        } 
-        else {
+      self.container
+        .removeClass("us-selectmenu-hidden")
+        .css({
+          top: newtop,
+          left: newleft
+        })
+        .addClass("in");
 
-          //otherwise insure a >= 30px offset from the left
-          newleft = x - menuWidth / 2;
-
-          // 30px tolerance off the edges
-          if ( newleft < 30 ) {
-	    newleft = 30;
-          }
-          else
-          if ( ( newleft + menuWidth ) > screenWidth ) {
-	    newleft = screenWidth - menuWidth - 30;
-          }
-        }
-
-        self.container
-          .removeClass("us-selectmenu-hidden")
-          .css({
-            top: newtop,
-            left: newleft
-          })
-          .addClass("in");
-
-        self.isOpen = true;
-      });
+      self.isOpen = true;
   },
 
   close: function() {
