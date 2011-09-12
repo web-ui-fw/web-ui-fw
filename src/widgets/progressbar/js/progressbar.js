@@ -30,6 +30,13 @@
             max: 100
         },
 
+        bar: null, // to hold the gray background
+        box: null,  // to hold the moving orange bar
+
+        oldValue: 0,
+        currentValue: 0,
+        delta: 0,
+
         value: function (newValue) {
             if (newValue === undefined) {
                 return this.currentValue;
@@ -62,13 +69,6 @@
          */
         _create: function () {
             var startValue, container;
-
-            this.bar = null; // to hold the gray background
-            this.box = null;  // to hold the moving orange bar
-
-            this.oldValue = 0;
-            this.currentValue = 0;
-            this.delta = 0;
 
             container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar");
             container.insertBefore(this.element);
