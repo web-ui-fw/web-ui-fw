@@ -59,12 +59,16 @@
             this.data.initial.minutes = this.data.now.getMinutes();
             this.data.initial.pm = this.data.initial.hours > 11;
 
-            this.data.year = this.data.now.getFullYear();
-            this.data.month = this.data.now.getMonth();
-            this.data.day = this.data.now.getDate();
-            this.data.hours = this.data.now.getHours();
-            this.data.minutes = this.data.now.getMinutes();
-            this.data.pm = this.data.hours > 11;
+            if (this.data.initial.hours == 0 && this.options.twentyfourHours == false) {
+                this.data.initial.hours = 12;
+            }
+
+            this.data.year = this.data.initial.year;
+            this.data.month = this.data.initial.month;
+            this.data.day = this.data.initial.day;
+            this.data.hours = this.data.initial.hours;
+            this.data.minutes = this.data.initial.minutes;
+            this.data.pm = this.data.initial.hours;
         },
 
         _initDate: function(container) {
@@ -135,7 +139,7 @@
 
         _normalizeHour: function(val) {
             val = parseInt(val);
-            val = (!this.options.twentyfourHours && val >= 12) ? (val - 12) : val;
+            val = (!this.options.twentyfourHours && val > 12) ? (val - 12) : val;
             return this._makeTwoDigitValue(val);
         },
 
@@ -178,7 +182,8 @@
                     "day", toplevel, selectorProto, itemProto);
             } else if (klass.search("hours") > 0) {
                 var values =
-                    range(0, this.options.twentyfourHours ? 23 : 11)
+                    range(this.options.twentyfourHours ? 0 : 1,
+                          this.options.twentyfourHours ? 24 : 12)
                         .map(this._makeTwoDigitValue);
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
