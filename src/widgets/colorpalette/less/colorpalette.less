@@ -1,0 +1,41 @@
+@colorpalette-choice-total-width:  54px;
+@colorpalette-choice-total-height: 54px;
+@colorpalette-choice-border-width:  4px;
+
+@colorpalette-choice-actual-width:  @colorpalette-choice-total-width  - 2 * @colorpalette-choice-border-width;
+@colorpalette-choice-actual-height: @colorpalette-choice-total-height - 2 * @colorpalette-choice-border-width;
+
+.ui-colorpalette {
+  display: table;
+  padding-left:   24px;
+  padding-right:  24px;
+  padding-top:    15px;
+  padding-bottom: 15px;
+
+  .colorpalette-bottom-row {
+    display: table;
+  }
+
+  .colorpalette-row {
+    .colorpalette-bottom-row;
+    padding-bottom: 16px;
+  }
+
+  .colorpalette-choice-left {
+    float: left;
+    width:  @colorpalette-choice-actual-width;
+    height: @colorpalette-choice-actual-width;
+    border-width: @colorpalette-choice-border-width;
+    border-style: solid;
+    border-color: #c0c0c0;
+  }
+
+  .colorpalette-choice-rest {
+    .colorpalette-choice-left;
+    margin-left: 38px;
+  }
+
+  .colorpalette-choice-active {
+    border-color: #ff8000;
+  }
+}
