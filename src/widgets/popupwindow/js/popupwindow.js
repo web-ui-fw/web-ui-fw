@@ -45,37 +45,33 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
   },
 
   open: function(x_where, y_where) {
-    console.log("popupwindow.open: Entering with (" + x_where + ", " + y_where + ")");
     if ( this.options.disabled || this.isOpen)
       return;
 
-    var self = this,
-        x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
+    var x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
         y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
-    console.log("self.elem is [" + self.elem.outerWidth() + " x " + self.elem.outerHeight() + "]");
+    this.container.css("max-width",  this.elem.outerWidth());
+    this.container.css("max-height", this.elem.outerHeight());
 
-    self.container.css("max-width",  self.elem.outerWidth());
-    self.container.css("max-height", self.elem.outerHeight());
-
-    var menuHeight = self.container.outerHeight(),
-	menuWidth = self.container.outerWidth(),
+    var menuHeight = this.container.outerHeight(),
+	menuWidth = this.container.outerWidth(),
 	scrollTop = $( window ).scrollTop(),
 	screenHeight = window.innerHeight,
 	screenWidth = window.innerWidth;
 
-    self.screen
+    this.screen
       .height($(document).height())
       .removeClass("ui-screen-hidden");
 
-      if (self.fade)
-        self.screen.animate({opacity: 0.5}, "fast");
+      if (this.fade)
+        this.screen.animate({opacity: 0.5}, "fast");
     
       // Try and center the overlay over the given coordinates
       var roomtop = y - scrollTop,
 	  roombot = scrollTop + screenHeight - y,
 	  halfheight = menuHeight / 2,
-	  maxwidth = parseFloat( self.container.css( "max-width" ) ),
+	  maxwidth = parseFloat( this.container.css( "max-width" ) ),
 	  newtop, newleft;
 
       if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
@@ -105,15 +101,15 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         }
       }
 
-      self.container
-        .removeClass("us-selectmenu-hidden")
+      this.container
+        .removeClass("ui-selectmenu-hidden")
         .css({
           top: newtop,
           left: newleft
         })
         .addClass("in");
 
-      self.isOpen = true;
+      this.isOpen = true;
   },
 
   close: function() {
@@ -127,13 +123,13 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
           self.element.trigger("closed");
         };
 
-    self.container
+    this.container
       .addClass("ui-selectmenu-hidden")
       .removeAttr("style")
       .removeClass("in");
 
-    if (self.fade)
-      self.screen.animate({opacity: 0.0}, "fast", hideScreen);
+    if (this.fade)
+      this.screen.animate({opacity: 0.0}, "fast", hideScreen);
     else
       hideScreen();
   }
