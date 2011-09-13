@@ -6,6 +6,36 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
+/**
+ * datetimepicker is a widget that lets the user select a date and/or a
+ * time.
+ *
+ * To apply, add the attribute data-datetimepicker="true", or set the
+ * type="date" to an <input> field in a <form>.
+ *
+ * Options (default in parentheses):
+ * =================================
+ *  - showDate (true): shows (and allows modification of) the date.
+ *  - showTime (true): shows (and allows modification of) the time.
+ *  - header ("Set time"): the header text of the widget.
+ *  - timeSeparator (":"): the symbol that separates hours and minutes.
+ *  - months (["Jan".."Dec"]): an array of month names (provide your
+ *    own if your interface's language is not English.
+ *  - am ("AM"): the label for the AM text.
+ *  - pm ("PM"): the lael for the PM text.
+ *  - twentyfourHours (false): if true, uses the 24h system; if false
+ *    uses the 12h system.
+ *  - anumationDuration (500): the time the item selector takes to
+ *    be animated, in milliseconds.
+ *  - initSelector (see code): the jQuery selector for the widget.
+ *
+ * How to get a return value:
+ * ==========================
+ * Bind to the 'date-changed' event, e.g.:
+ *    $("#myDatetimepicker").bind("date-changed", function(e, date) {
+ *        alert("New date: " + date.toString());
+ *    });
+ */
 (function($, window, undefined) {
     $.widget("mobile.datetimepicker", $.mobile.widget, {
         options: {
@@ -59,12 +89,16 @@
             this.data.initial.minutes = this.data.now.getMinutes();
             this.data.initial.pm = this.data.initial.hours > 11;
 
-            this.data.year = this.data.now.getFullYear();
-            this.data.month = this.data.now.getMonth();
-            this.data.day = this.data.now.getDate();
-            this.data.hours = this.data.now.getHours();
-            this.data.minutes = this.data.now.getMinutes();
-            this.data.pm = this.data.hours > 11;
+            if (this.data.initial.hours == 0 && this.options.twentyfourHours == false) {
+                this.data.initial.hours = 12;
+            }
+
+            this.data.year = this.data.initial.year;
+            this.data.month = this.data.initial.month;
+            this.data.day = this.data.initial.day;
+            this.data.hours = this.data.initial.hours;
+            this.data.minutes = this.data.initial.minutes;
+            this.data.pm = this.data.initial.hours;
         },
 
         _initDate: function(container) {
@@ -135,7 +169,7 @@
 
         _normalizeHour: function(val) {
             val = parseInt(val);
-            val = (!this.options.twentyfourHours && val >= 12) ? (val - 12) : val;
+            val = (!this.options.twentyfourHours && val > 12) ? (val - 12) : val;
             return this._makeTwoDigitValue(val);
         },
 
@@ -178,7 +212,8 @@
                     "day", toplevel, selectorProto, itemProto);
             } else if (klass.search("hours") > 0) {
                 var values =
-                    range(0, this.options.twentyfourHours ? 23 : 11)
+                    range(this.options.twentyfourHours ? 0 : 1,
+                          this.options.twentyfourHours ? 24 : 12)
                         .map(this._makeTwoDigitValue);
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
