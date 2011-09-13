@@ -11,17 +11,11 @@
  * data-role="calendarpicker" attribute to an element.
  * The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
  *
- * CalendarPicker is displayed by calling open and close to hide it.CalendarPicker
- * appears from bottom of the window and slides back when closed.CalendarPicker closes automatically when a valid
- * date selection has been made. In all other cases, close has to be explicitly called to hide it.
+ * CalendarPicker is displayed by calling open() to open it and close() to hide it. It appears
+ * as a popup window and disappears when closed. CalendarPicker closes automatically when a valid
+ * date selection has been made, or when the user clicks outside its box.
  *
  * Options:
- *
- *     slideupanimationtime: Total time for the appear animation.Default value is "fast".
- *     slideupanimation: The type of animaiton used to show the calendar picker. Default value is linear.
- *
- *     slidedownanimationtime: Total time for the disappear animation.Default value is "fast".
- *     slidedownanimation: The type of animaiton used to hide the calendar picker. Default value is linear.
  *
  *     dateFormat: The format of date. The Default value is YYYY-MM-DD.
  *
@@ -95,10 +89,6 @@
             // All widget options, including some internal runtime details      
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             monthsOfYear: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            slideupanimationtime: "fast",
-            slidedownanimationtime: "fast",
-            slideupanimation: "linear",
-            slidedownanimation: "linear",
             calShowDays: true,
             calShowOnlyMonth: true,
             dateFormat: 'YYYY-MM-DD',
@@ -352,11 +342,9 @@
             var self = this,
                 o = $.extend(this.options, this.element.data('options')),
                 input = this.element,
-                theDate = new Date(), // Internal date object, used for all operations
-                thisPage = input.closest('.ui-page');       
+                theDate = new Date(); // Internal date object, used for all operations
             $.extend(self, {
                      input:input,
-                     thisPage: thisPage,
                      theDate: theDate
             }); 
             self._buildPage();
@@ -373,7 +361,7 @@
                 cpMonthGrid = container.find('.ui-cp-month'),
                 previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true}),
                 nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true}),
-                isopen = false;    
+                isopen = false;
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
@@ -395,7 +383,12 @@
                 cpContainer: cpContainer,
                 isopen:isopen
             });     
-            cpContainer.appendTo(self.thisPage);     
+            cpContainer.appendTo(self.element)
+                       .popupwindow()
+                       .bind("closed", function(e) {
+                          console.log("calendarpicker.popupwindow.closed");
+                          self.isopen = false;
+                       });
         },
 
         refresh: function() {
@@ -411,24 +404,18 @@
             var self = this;
             if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
             self._update();
-            var windowHeight = $(window).height(),
-                contentHeight = self.cpContainer.outerHeight();
-            self.cpContainer.css({'position': 'absolute','top':windowHeight+contentHeight}).removeClass('ui-cpcontainer-hidden')
-                .stop().animate({"left" :0, "top":windowHeight-contentHeight}, self.options.slideupanimation,self.options.slideupanimation,function() {
-                self.element.trigger('appear');
-            });
+            /* 
+             * FIXME: Could pass some meaningful coordinates to "open" to make it show up in the right place, rather
+             * than the center of the screen. The problem is that no widget from the page is associated with this
+             * popup window, so we would have to start with this.element and work our way up the tree until we ran
+             * into a widget whose coordinates we could actually pass to "open".
+             */
+            self.cpContainer.popupwindow("open");
         },
 
         close: function() {
             // Close the picker
-            var self = this,
-            callback;
-            self.isopen = false;
-            self.cpContainer.stop().animate({"top":$(window).height()+self.cpContainer.outerHeight()},
-                                             self.options.slidedownanimationtime,self.options.slidedownanimation,function() {
-                self.cpContainer.addClass('ui-cpcontainer-hidden').removeAttr('style').removeClass('in');
-                self.element.trigger('dissapear');
-            });
+            this.cpContainer.popupwindow("close");
         },
     });  
     // Autoinit widget.
