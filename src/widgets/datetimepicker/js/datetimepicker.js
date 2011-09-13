@@ -6,6 +6,36 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
+/**
+ * datetimepicker is a widget that lets the user select a date and/or a
+ * time.
+ *
+ * To apply, add the attribute data-datetimepicker="true", or set the
+ * type="date" to an <input> field in a <form>.
+ *
+ * Options (default in parentheses):
+ * =================================
+ *  - showDate (true): shows (and allows modification of) the date.
+ *  - showTime (true): shows (and allows modification of) the time.
+ *  - header ("Set time"): the header text of the widget.
+ *  - timeSeparator (":"): the symbol that separates hours and minutes.
+ *  - months (["Jan".."Dec"]): an array of month names (provide your
+ *    own if your interface's language is not English.
+ *  - am ("AM"): the label for the AM text.
+ *  - pm ("PM"): the lael for the PM text.
+ *  - twentyfourHours (false): if true, uses the 24h system; if false
+ *    uses the 12h system.
+ *  - anumationDuration (500): the time the item selector takes to
+ *    be animated, in milliseconds.
+ *  - initSelector (see code): the jQuery selector for the widget.
+ *
+ * How to get a return value:
+ * ==========================
+ * Bind to the 'date-changed' event, e.g.:
+ *    $("#myDatetimepicker").bind("date-changed", function(e, date) {
+ *        alert("New date: " + date.toString());
+ *    });
+ */
 (function($, window, undefined) {
     $.widget("mobile.datetimepicker", $.mobile.widget, {
         options: {
