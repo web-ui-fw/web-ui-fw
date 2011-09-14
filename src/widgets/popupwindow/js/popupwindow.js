@@ -51,11 +51,11 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       var x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
           y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
-      this.container.css("max-width",  this.elem.outerWidth());
-      this.container.css("max-height", this.elem.outerHeight());
+      this.container.css("max-width",  this.elem.outerWidth(true));
+      this.container.css("max-height", this.elem.outerHeight(true));
 
-      var menuHeight = this.container.outerHeight(),
-          menuWidth = this.container.outerWidth(),
+      var menuHeight = this.container.outerHeight(true),
+          menuWidth = this.container.outerWidth(true),
           scrollTop = $( window ).scrollTop(),
           screenHeight = window.innerHeight,
           screenWidth = window.innerWidth;
