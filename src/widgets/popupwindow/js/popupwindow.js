@@ -10,36 +10,77 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     },
 
   _create: function() {
-      var self = this,
-          o = this.options,
-          thisPage = this.element.closest(".ui-page"),
-          myProto = $.mobile.loadPrototype("popupwindow"),
-          screen = myProto.find("#popupwindow-screen")
-                          .appendTo(thisPage),
-          container = myProto.find("#popupwindow-container")
-                             .addClass($.mobile.defaultDialogTransition)
-                             .insertAfter(screen);
+    var self = this,
+        optionKeys = _.keys(this.options),
+        thisPage = this.element.closest(".ui-page"),
+        myProto = $.mobile.loadPrototype("popupwindow"),
+        screen = myProto.find("#popupwindow-screen")
+                        .appendTo(thisPage),
+        container = myProto.find("#popupwindow-container")
+                           .addClass($.mobile.defaultDialogTransition)
+                           .insertAfter(screen);
 
-      if (o.overlayTheme.match(/[a-z]/))
-          container.addClass("ui-body-" + o.overlayTheme);
+    this.element.appendTo(container);
 
-      if (!o.shadow)
-          container.removeClass("ui-overlay-shadow");
+    $.extend( self, {
+        isOpen: false,
+        thisPage: thisPage,
+        screen: screen,
+        container: container
+    });
 
-      this.element.appendTo(container);
 
-      $.extend( self, {
-          fade: o.fade,
-          isOpen: false,
-          thisPage: thisPage,
-          screen: screen,
-          container: container
-      });
+    for (key in optionKeys)
+      this._setOption(optionKeys[key], this.options[optionKeys[key]]);
 
-      // Events on "screen" overlay
-      screen.bind( "vclick", function( event ) {
-          self.close();
-      });
+    // Events on "screen" overlay
+    screen.bind( "vclick", function( event ) {
+        self.close();
+    });
+  },
+
+  _setOverlayTheme: function(newTheme) {
+    var classes = this.container.attr("class").split(" "),
+        alreadyAdded = false;
+
+    for (var Nix in classes) {
+      if (classes[Nix].substring(0, 7) === "ui-body-") {
+        if (classes[Nix] != newTheme)
+          this.container.removeClass(classes[Nix]);
+        else
+          alreadyAdded = true;
+      }
+    }
+
+    if (!alreadyAdded)
+      this.container.addClass(newTheme);
+
+    this.options.overlayTheme = newTheme;
+  },
+
+  _setShadow: function(value) {
+    if (value) {
+      if (!this.container.hasClass("ui-overlay-shadow"))
+        this.container.addClass("ui-overlay-shadow");
+    }
+    else
+    if (this.container.hasClass("ui-overlay-shadow"))
+      this.container.removeClass("ui-overlay-shadow");
+
+    this.options.shadow = value;
+  },
+
+  _setOption: function(key, value) {
+    if (key === "overlayTheme") {
+      if (value.match(/[a-z]/))
+          this._setOverlayTheme("ui-body-" + value);
+    }
+    else
+    if (key === "shadow")
+      this._setShadow(value);
+    else
+    if (key === "fade")
+      this.options.fade = value;
   },
 
   open: function(x_where, y_where) {
@@ -62,7 +103,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
           .height($(document).height())
           .removeClass("ui-screen-hidden");
 
-      if (this.fade)
+      if (this.options.fade)
           this.screen.animate({opacity: 0.5}, "fast");
 
       // Try and center the overlay over the given coordinates
@@ -124,7 +165,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
           .removeAttr("style")
           .removeClass("in");
 
-      if (this.fade)
+      if (this.options.fade)
           this.screen.animate({opacity: 0.0}, "fast", hideScreen);
       else
           hideScreen();
