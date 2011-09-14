@@ -119,7 +119,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     if (clr.match(/#[0-9A-Fa-f]{6}/)) {
       if (this.canvas.attr("data-color") != clr) {
 
-        this.canvas.hsvpicker("setColor", clr);
+        this.canvas.hsvpicker("option", "color", clr);
         this.refresh();
         this.element.trigger("colorchanged", clr);
       }

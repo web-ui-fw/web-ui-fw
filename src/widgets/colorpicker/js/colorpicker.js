@@ -35,6 +35,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   _create: function() {
     var self = this,
+        dstAttr = this.element.is("input") ? "value" : "data-color",
         optionKeys = _.keys(this.options),
         clrpicker = $.mobile.loadPrototype("colorpicker").find("#colorpicker")
             .appendTo(this.element),
@@ -51,14 +52,15 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
         };
 
     $.extend( self, {
-        ui: ui,
-        dragging: false,
-        draggingHS: false,
-        selectorDraggingOffset: {
-            x : -1,
-            y : -1
-        },
-        dragging_hsl: undefined
+      dstAttr: dstAttr,
+      ui: ui,
+      dragging: false,
+      draggingHS: false,
+      selectorDraggingOffset: {
+          x : -1,
+          y : -1
+      },
+      dragging_hsl: undefined
     });
 
     for (key in optionKeys)
@@ -124,7 +126,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
             self.dragging_hsl[0] = potential_h * 360;
             self.dragging_hsl[1] = potential_s;
-            self.updateSelectors(self.dragging_hsl, true);
+            self._updateSelectors(self.dragging_hsl, true);
 
             event.stopPropagation();
         }
@@ -137,7 +139,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
             potential_l = Math.min(1.0, Math.max(0.0, potential_l));
 
             self.dragging_hsl[2] = potential_l;
-            self.updateSelectors(self.dragging_hsl);
+            self._updateSelectors(self.dragging_hsl);
 
             event.stopPropagation();
         }
@@ -184,12 +186,12 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
           this.selectorDraggingOffset.x = Math.ceil(this.ui[containerStr].selector.outerWidth()  / 2.0);
           this.selectorDraggingOffset.y = Math.ceil(this.ui[containerStr].selector.outerHeight() / 2.0);
-          this.updateSelectors(this.dragging_hsl, true);
+          this._updateSelectors(this.dragging_hsl, true);
           event.stopPropagation();
       }
   },
 
-  updateSelectors: function(hsl, updateHS) {
+  _updateSelectors: function(hsl, updateHS) {
       var clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
           gray = $.mobile.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
@@ -209,12 +211,8 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       this.ui.l.selector.css("top",   hsl[2] * this.ui.l.container.height());
       this.ui.l.selector.css("background",  gray);
 
-      this.element.attr("data-color", clr);
+      this.element.attr(this.dstAttr, clr);
       this.element.triggerHandler('colorchanged', clr);
-  },
-
-  refresh: function() {
-    this.updateSelectors(this.dragging_hsl);
   },
 
   _setOption: function(key, value, unconditional) {
@@ -225,10 +223,10 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   },
 
   _setColor: function(clr, unconditional) {
-    if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) || unconditional) {
+    if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr(this.dstAttr) != clr) || unconditional) {
       this.dragging_hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr));
       this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
-      this.refresh();
+      this._updateSelectors(this.dragging_hsl);
     }
   }
 });

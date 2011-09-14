@@ -8,7 +8,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        o = this.options,
+        optionKeys = _.keys(this.options),
         myProto = $.mobile.loadPrototype("hsvpicker").find("#hsvpicker")
           .appendTo(this.element),
         ui = {
@@ -41,7 +41,8 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       dragging: -1
     });
 
-    this.setColor(o.color);
+    for (key in optionKeys)
+      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
 
     myProto.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
       $(this).attr("src",
@@ -64,7 +65,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
       self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
       self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
-      self.refresh();
+      self.updateSelectors(self.dragging_hsv);
     });
 
     $( document ).bind( "vmousemove", function( event ) {
@@ -104,6 +105,13 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     ui.hue.container.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.sat.container.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.val.container.bind("vmouseup", function(e) { self.dragging = -1; });
+  },
+
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if (key === "color")
+      this._setColor(value, unconditional);
   },
 
   containerMouseDown: function(chan, idx, e) {
@@ -181,14 +189,10 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     this.element.triggerHandler('colorchanged', clr);
   },
 
-  refresh: function() {
-    this.updateSelectors(this.dragging_hsv);
-  },
-
-  setColor: function(clr) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) {
+  _setColor: function(clr, unconditional) {
+    if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr || unconditional) {
       this.dragging_hsv = $.mobile.clrlib.RGBToHSV($.mobile.clrlib.HTMLToRGB(clr));
-      this.refresh();
+      this.updateSelectors(this.dragging_hsv);
     }
   }
 });

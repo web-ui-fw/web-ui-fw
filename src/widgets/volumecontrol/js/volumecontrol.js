@@ -33,7 +33,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
       $(document).bind("keydown", function(e) {
         if (self.isOpen) {
-          var maxVolume = self.maxVolume(),
+          var maxVolume = self._maxVolume(),
               newVolume = -1;
 
           switch(event.keyCode) {
@@ -95,7 +95,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   _setVolume: function(newVolume, unconditional) {
-    newVolume = Math.max(0, Math.min(newVolume, this.maxVolume()));
+    newVolume = Math.max(0, Math.min(newVolume, this._maxVolume()));
     if (newVolume != this.options.volume || unconditional) {
       this.options.volume = newVolume;
       this._setVolumeIcon();
@@ -104,7 +104,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
     }
   },
 
-  maxVolume: function() {
+  _maxVolume: function() {
     var ret = this.volumeImage.attr(this.options.basicTone
       ? "data-basicTone-maxVolume"
       : "data-generalVolume-maxVolume");
