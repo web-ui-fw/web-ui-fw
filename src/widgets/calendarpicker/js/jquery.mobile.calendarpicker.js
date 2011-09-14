@@ -386,7 +386,6 @@
             cpContainer.appendTo(self.element)
                        .popupwindow()
                        .bind("closed", function(e) {
-                          console.log("calendarpicker.popupwindow.closed");
                           self.isopen = false;
                        });
         },
