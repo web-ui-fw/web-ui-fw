@@ -12,7 +12,6 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
   _create: function() {
       var self = this,
           o = this.options,
-          elem = this.element,
           thisPage = this.element.closest(".ui-page"),
           myProto = $.mobile.loadPrototype("popupwindow"),
           screen = myProto.find("#popupwindow-screen")
@@ -27,11 +26,10 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       if (!o.shadow)
           container.removeClass("ui-overlay-shadow");
 
-      elem.appendTo(container);
+      this.element.appendTo(container);
 
       $.extend( self, {
           fade: o.fade,
-          elem: elem,
           isOpen: false,
           thisPage: thisPage,
           screen: screen,
@@ -51,8 +49,8 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       var x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
           y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
-      this.container.css("max-width",  this.elem.outerWidth(true));
-      this.container.css("max-height", this.elem.outerHeight(true));
+      this.container.css("min-width", this.element.outerWidth(true));
+      this.container.css("min-height", this.element.outerHeight(true));
 
       var menuHeight = this.container.outerHeight(true),
           menuWidth = this.container.outerWidth(true),
