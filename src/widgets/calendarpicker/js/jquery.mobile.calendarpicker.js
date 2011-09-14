@@ -410,7 +410,7 @@
              * popup window, so we would have to start with this.element and work our way up the tree until we ran
              * into a widget whose coordinates we could actually pass to "open".
              */
-            self.cpContainer.popupwindow("open");
+            self.cpContainer.popupwindow("open", 0, window.innerHeight);
         },
 
         close: function() {
