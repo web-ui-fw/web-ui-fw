@@ -82,6 +82,45 @@ $(document).bind("pagecreate", function () {
         });
     });
 
+    $('#scroller-demo').bind('pageshow', function (e) {
+        $.fillPageWithContentArea($(this));
+    });
+
+    $('#scroller-demo').bind('pageshow', function (e) {
+        $page = $(e.target);
+
+        $.fillPageWithContentArea($(this));
+
+        /*
+         * many options cannot be set without subclassing since they're
+         * used in the _create method - it seems as if these are for
+         * internal use only and scrollDuration is only changable by
+         * chance.
+         */
+        var $scroller2List = $('#scroller2').find('ul');
+        $scroller2List.scrollview('option','scrollDuration','10000');
+
+        // only works by manipulating css
+        // the only other way is to use attribute 'scroll-method="scroll"' in html
+        $('#scroller2 .ui-scrollbar').css('visibility','hidden');
+
+        /*
+         * make toggle button switch scroll bars on and off
+         */
+        var scrollBarVisible = $('#scroller2').find('.ui-scrollbar').css('visibility')==="visible";
+
+        var $toggleScrollBars = $('#toggleScrollBars');
+        $toggleScrollBars.attr("checked",scrollBarVisible).checkboxradio("refresh");
+        /* the 'label' is the thing that is clicked, not the input element */
+        var $label = $toggleScrollBars.siblings('label').attr('for','#toggleScrollBars');
+        $label.bind("click", function() {
+            var $scrollBar = $('#scroller2').find('.ui-scrollbar');
+            var scrollBarVisible = $scrollBar.css('visibility')==="visible";
+            var newVisibility = scrollBarVisible?"hidden":"visible";
+            $scrollBar.css('visibility',scrollBarVisible?"hidden":"visible");
+        })
+    });
+
     var updateDate = function(e, newDate) {
         $("#datetimepicker-demo .selected-date").text(newDate.toString());
     };

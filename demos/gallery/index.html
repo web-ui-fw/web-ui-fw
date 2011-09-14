@@ -50,6 +50,7 @@
                             <li><a href="#spinner-demo">Spinner (aka circle process)</a></li>
                             <li><a href="#spinnerbar-demo">Spinner bar</a></li>
                             <li><a href="#calendarDemo">calendarpicker</a></li>
+                            <li><a href="#scroller-demo">Scroller</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -399,6 +400,132 @@
                     <li data-processing="spinnerbar"></li>
                 </ul>
             </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- page -->
+
+        <div data-role="page" id="scroller-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Scroller</h1>
+            </div>
+
+            <div data-role="content">
+
+                <div id="scroller1">
+                    <h4>Vertical with defaults.</h4>
+                    <p>
+                    A list of names in a short container with all default options.
+                    <pre>
+&lt;ul data-scroll="y"&gt;
+    &lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+                    </pre>
+                    </p>
+                    <ul data-scroll="y" >
+                        <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li>
+                    </ul>
+                </div>
+
+                <div id="scroller2">
+                    <h4>Vertical with toggle various changes.</h4>
+                    <p>
+                    A list of names in a longer scrollview, again by using 'data-scroll="y"' with the &lt;ul&gt; element.<br/>
+                    Use of css to control the width, height and border is shown in demo.css.
+                    Use of javascript to set options is shown in init.js. The button will toggle scrollbar visibility (initially hidden in demo.css) using the label's click event to set the css visibility attribute (see init.js).
+                    The scrollview's scrollDuration is set to 10000ms (default is 2000ms) so the scroll takes 10 seconds to finish.
+                    </p>
+                    <pre>
+/* in demo.css */
+#scroller2 .ui-scrollview-clip {
+    height: 300px; /* container height */
+    border: 1px solid #155678;
+}
+
+/*
+ * set the width of the content
+ * else the checkbox will extend to the right edge
+ */
+#scroller2Content {
+    width: 205px;
+}
+
+/* hide scroll bar from #scroller2 element */
+#scroller2 .ui-scrollbar {
+    visibility: hidden; /* bound to checkbox in init.js */
+}
+
+/* in init.js
+ * many options cannot be set without subclassing since they're
+ * used in the _create method - it seems as if these are for
+ * internal use only and scrollDuration is only changable by
+ * chance.
+ */
+var $scroller2List = $('#scroller2').find('ul');
+$scroller2List.scrollview('option','scrollDuration','10000');
+                    </pre>
+                    <div id="scroller2Content">
+                    <fieldset data-role="controlgroup" data-role="fieldcontain">
+                        <label for="toggleScrollBars">scrollbar visibility</label>
+                        <input type="checkbox" id="toggleScrollBars" checked="true"/>
+                    </fieldset>
+                    <ul data-scroll="y" >
+                        <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li>
+                    </ul>
+                    </div>
+                </div>
+
+                <div id="scroller3">
+                    <h4>Horizontal with defaults.</h4>
+                    <p>
+                    This example shows a horizontally scrolling list, done by setting the 'data-scroll' attribute of the &lt;ul&gt; element to 'x'. All other options are default.
+                    <pre>
+&lt;ul data-scroll="x" &gt;
+    &lt;li&gt;....&lt;/li&gt;
+&lt;/ul&gt;
+                    </pre>
+                    </p>
+                    <ul data-scroll="x" >
+                        <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li>
+                    </ul>
+                </div>
+
+                <div id="scroller4">
+                    <h4>Vertical with paging.</h4>
+                    <p>
+                    This example shows the list of names in short container with paging.
+                    This is done by setting the 'data-scroll' attribute of the &lt;ul&gt; element to 'yp'. All other options are default.
+                    <br/>
+                    If you scrolling up/down a small amount you can see the paging effect.
+                    Notice how the names scroll up/down by one height of its container (keep your eye on what the names are at the top/bottom of the container).
+                    </p>
+                    <pre>
+&lt;ul data-scroll="yp" &gt;
+    &lt;li&gt;....&lt;/li&gt;
+&lt;/ul&gt;
+                    </pre>
+                    <ul data-scroll="yp" >
+                        <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li>
+                    </ul>
+                </div>
+
+                <div id="scroller5">
+                    <h4>Horizontal with paging.</h4>
+                    <p>
+                    This example show the list on names horizontally with page scrolling (see above).
+                    </p>
+                    <pre>
+&lt;ul data-scroll="xp" &gt;
+    &lt;li&gt;....&lt;/li&gt;
+&lt;/ul&gt;
+                    </pre>
+                    <ul data-scroll="xp" >
+                        <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li> <li><a href="#">Adam Kinkaid</a></li> <li><a href="#">Alex Wickerham</a></li> <li><a href="#">Avery Johnson</a></li> <li><a href="#">Bob Cabot</a></li> <li><a href="#">Caleb Booth</a></li> <li><a href="#">Christopher Adams</a></li> <li><a href="#">Culver James</a></li> <li><a href="#">David Walsh</a></li> <li><a href="#">Drake Alfred</a></li> <li><a href="#">Elizabeth Bacon</a></li> <li><a href="#">Emery Parker</a></li> <li><a href="#">Enid Voldon</a></li> <li><a href="#">Francis Wall</a></li> <li><a href="#">Graham Smith</a></li> <li><a href="#">Greta Peete</a></li> <li><a href="#">Harvey Walls</a></li> <li><a href="#">Mike Farnsworth</a></li> <li><a href="#">Murray Vanderbuilt</a></li> <li><a href="#">Nathan Williams</a></li> <li><a href="#">Paul Baker</a></li> <li><a href="#">Pete Mason</a></li> <li><a href="#">Rod Tarker</a></li> <li><a href="#">Sawyer Wakefield</a></li>
+                    </ul>
+                </div>
+
+            </div> <!-- content -->
+
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
             </div>
