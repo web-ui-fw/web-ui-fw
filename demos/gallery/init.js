@@ -149,7 +149,13 @@ $(document).bind("pagecreate", function () {
     $('#groupindex').scrolllistview();
     $('#popupwindowDemoButton').bind("vclick", function (e) {
         var btn = $('#popupwindowDemoButton');
-      $('#popupContent').popupwindow("open",
+        $('#popupContent').popupwindow("open",
+        btn.offset().left + btn.outerWidth()  / 2,
+        btn.offset().top  + btn.outerHeight() / 2);
+    });
+    $('#popupwindowDemoButton2').bind("vclick", function (e) {
+        var btn = $('#popupwindowDemoButton2');
+        $('#popupContent2').popupwindow("open",
         btn.offset().left + btn.outerWidth()  / 2,
         btn.offset().top  + btn.outerHeight() / 2);
     });
