@@ -162,6 +162,18 @@ $(document).bind("pagecreate", function () {
     $("#showVolumeButton").bind("vclick", function (e) {
         $("#myVolumeControl").volumecontrol("open");
     });
+    $("#volumecontrol_setBasicTone").next('label').click(function(e) {
+      var basicTone = !$("#myVolumeControl").volumecontrol("option", "basicTone");
+
+      if (basicTone) {
+        $("#myVolumeControl").volumecontrol("option", "basicTone", true);
+        $("#myVolumeControl").volumecontrol("option", "title", "Basic Tone");
+      }
+      else {
+        $("#myVolumeControl").volumecontrol("option", "basicTone", false);
+        $("#myVolumeControl").volumecontrol("option", "title", "Volume");
+      }
+    });
 });
 
 $(document).bind("pagecreate", function() {

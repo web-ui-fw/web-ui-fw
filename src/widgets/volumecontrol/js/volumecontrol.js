@@ -11,26 +11,22 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   _create: function() {
 
     var self = this,
-        select = this.element,
-        o = this.options,
-        volume = o.volume,
         container = $.mobile.loadPrototype("volumecontrol").find("#volumecontrol")
-          .insertBefore(select)
+          .insertBefore(this.element)
           .popupwindow({overlayTheme: "", fade: false, shadow: false}),
         volumeImage = container.find("#volumecontrol-indicator");
 
       this.element.css("display", "none");
-      container.find("#volumecontrol-title").text(o.title);
+
 
       $.extend (self, {
         isOpen: false,
-        basicTone: o.basicTone,
         volumeImage: volumeImage,
         container: container,
-        volume: volume
       });
 
-      this.setVolumeIcon();
+      for (key in this.options)
+        this._setOption(key, this.options[key]);
 
       container.bind("closed", function(e) {
         self.isOpen = false;
@@ -52,11 +48,11 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
           switch(event.keyCode) {
             case $.mobile.keyCode.UP:
-              newVolume = Math.min(self.volume + 1, maxVolume);
+              newVolume = Math.min(self.options.volume + 1, maxVolume);
               break;
 
             case $.mobile.keyCode.DOWN:
-              newVolume = Math.max(self.volume - 1, 0);
+              newVolume = Math.max(self.options.volume - 1, 0);
               break;
 
             case $.mobile.keyCode.HOME:
@@ -68,35 +64,54 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
               break;
           }
 
-          if (newVolume != -1) {
-            self.setVolume(newVolume);
-          }
+          if (newVolume != -1)
+            self._setVolume(newVolume);
         }
       });
   },
 
+  _setOption: function(key, value) {
+    if (key === "volume")
+      this._setVolume(value);
+    else
+    if (key === "basicTone") {
+      this.options.basicTone = value;
+      if (!this._setVolume(this.options.volume))
+        this._setVolumeIcon();
+    }
+    else
+    if (key === "title") {
+      this.options.title = value;
+      this.container.find("#volumecontrol-title").text(value);
+    }
+  },
+
+  _setVolume: function(newVolume) {
+    newVolume = Math.max(0, Math.min(newVolume, this.maxVolume()));
+    if (newVolume != this.element.attr("data-volume")) {
+      this.options.volume = newVolume;
+      this._setVolumeIcon();
+      this.element.attr("data-volume", this.options.volume);
+      this.element.triggerHandler("volumechanged");
+      return true;
+    }
+    return false;
+  },
+
   maxVolume: function() {
-    var ret = this.volumeImage.attr(this.basicTone
+    var ret = this.volumeImage.attr(this.options.basicTone
       ? "data-basicTone-maxVolume"
       : "data-generalVolume-maxVolume");
     return ret;
   },
 
-  setVolumeIcon: function() {
+  _setVolumeIcon: function() {
     this.volumeImage.attr("src",
       this.volumeImage.attr(
-          (this.basicTone 
+          (this.options.basicTone 
             ? "data-basicTone-imageTemplate"
             : "data-generalVolume-imageTemplate"))
-        .replace("%1", ((this.volume < 10 ? "0" : "") + this.volume)));
-  },
-
-  setVolume: function(volume) {
-    if (volume != undefined)
-      if (this.volume != volume) {
-        this.volume =  Math.max(0, Math.min(volume, this.maxVolume()));
-        this.setVolumeIcon();
-      }
+        .replace("%1", ((this.options.volume < 10 ? "0" : "") + this.options.volume)));
   },
 
   open: function() {
