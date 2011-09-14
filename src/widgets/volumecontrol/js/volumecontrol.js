@@ -25,7 +25,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       });
 
       for (key in optionKeys)
-        this._setOption(optionKeys[key], this.options[optionKeys[key]]);
+        this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
 
       container.bind("closed", function(e) {
         self.isOpen = false;
@@ -69,32 +69,39 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       });
   },
 
-  _setOption: function(key, value) {
-    if (key === "volume")
-      this._setVolume(value);
-    else
-    if (key === "basicTone") {
+  _setBasicTone: function(value, unconditional) {
+    if (this.options.basicTone != value || unconditional) {
       this.options.basicTone = value;
-      if (!this._setVolume(this.options.volume))
-        this._setVolumeIcon();
-    }
-    else
-    if (key === "title") {
-      this.options.title = value;
-      this.container.find("#volumecontrol-title").text(value);
+      this._setVolume(this.options.volume, true);
     }
   },
 
-  _setVolume: function(newVolume) {
+  _setTitle: function(value, unconditional) {
+    this.options.title = value;
+    this.container.find("#volumecontrol-title").text(value);
+  },
+
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if (key === "volume")
+      this._setVolume(value, unconditional);
+    else
+    if (key === "basicTone")
+      this._setBasicTone(value, unconditional);
+    else
+    if (key === "title")
+      this._setTitle(value, unconditional)
+  },
+
+  _setVolume: function(newVolume, unconditional) {
     newVolume = Math.max(0, Math.min(newVolume, this.maxVolume()));
-    if (newVolume != this.element.attr("data-volume")) {
+    if (newVolume != this.options.volume || unconditional) {
       this.options.volume = newVolume;
       this._setVolumeIcon();
       this.element.attr("data-volume", this.options.volume);
       this.element.triggerHandler("volumechanged");
-      return true;
     }
-    return false;
   },
 
   maxVolume: function() {
