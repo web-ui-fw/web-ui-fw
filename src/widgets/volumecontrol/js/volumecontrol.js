@@ -9,8 +9,8 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   _create: function() {
-
     var self = this,
+        optionKeys = _.keys(this.options),
         container = $.mobile.loadPrototype("volumecontrol").find("#volumecontrol")
           .insertBefore(this.element)
           .popupwindow({overlayTheme: "", fade: false, shadow: false}),
@@ -18,15 +18,14 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
       this.element.css("display", "none");
 
-
       $.extend (self, {
         isOpen: false,
         volumeImage: volumeImage,
         container: container,
       });
 
-      for (key in this.options)
-        this._setOption(key, this.options[key]);
+      for (key in optionKeys)
+        this._setOption(optionKeys[key], this.options[optionKeys[key]]);
 
       container.bind("closed", function(e) {
         self.isOpen = false;
