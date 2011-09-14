@@ -18,7 +18,7 @@ FW_JS_THEME = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.js
 FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.css
 FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 
-LIBS_JS_FILES =
+LIBS_JS_FILES = underscore.js
 ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
     jquery-1.6.2.js \
