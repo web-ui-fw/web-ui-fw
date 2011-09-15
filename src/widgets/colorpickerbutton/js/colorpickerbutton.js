@@ -3,102 +3,55 @@
 $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
   options: {
     color: "#ff0000",
-    theme: null,
     disabled: false,
-    inline: true,
-    corners: true,
-    shadow: true,
+    buttonMarkup: {
+      theme: null,
+      inline: true,
+      corners: true,
+      shadow: true,
+    },
     closeText: "Close",
     initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
   },
   _create: function() {
     var self = this,
 
+        optionKeys = _.keys(this.options),
+
         dstAttr = this.element.is("input") ? "value" : "data-color",
 
-        o = this.options,
+        myProto = $.mobile.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
 
-        colour = ((undefined === this.element.attr(dstAttr)) ? o.color : this.element.attr(dstAttr)),
+        ui = {
+          button:          myProto.find("#colorpickerbutton-button"),
+          buttonContents:  myProto.find("#colorpickerbutton-button-contents"),
+          popup:           myProto.find("#colorpickerbutton-popup-container"),
+          hsvpicker:       myProto.find("#colorpickerbutton-popup-hsvpicker"),
+          closeButton:     myProto.find("#colorpickerbutton-popup-close-button"),
+          closeButtonText: myProto.find("#colorpickerbutton-popup-close-button-text"),
+        };
 
-        select = this.element.wrap( "<div class='ui-select'>" ),
+    this.element.wrap( "<div class='ui-select'>" );
 
-        selectID = select.attr( "id" ),
-
-        label = $( "label[for='"+ selectID +"']" ).addClass( "ui-select" ),
-
-        buttonContents = $("<span/>")
-          .html("&#x2587;&#x2587;&#x2587;"),
-
-        buttonId = selectID + "-button",
-
-        menuId = selectID + "-menu",
-
-        button = $( "<a>", {
-		        "href": "#",
-		        "role": "button",
-		        "id": buttonId,
-		        "aria-haspopup": "true",
-		        "aria-owns": menuId
-	        })
-	        .append(buttonContents)
-	        .insertBefore( select )
-	        .buttonMarkup({
-		        theme: o.theme,
-		        inline: o.inline,
-		        corners: o.corners,
-		        shadow: o.shadow
-	        })
-                .css("color", colour),
-
-        //button theme
-        theme = /ui-btn-up-([a-z])/.exec( button.attr( "class" ) )[1],
-
-        canvas = $("<div/>", {"id" : "canvas"})
-          .css("display", "table")
-          .insertBefore(select)
-          .hsvpicker({"color" : colour})
-          .attr("data-prefix", "colorpickerbutton")
-          .popupwindow(),
-
-        closeButton = $("<a/>", {
-          "href": "#",
-          "role": "button"
-          })
-          .text(o.closeText)
-          .appendTo(canvas)
-          .buttonMarkup({
-            theme: $.mobile.popupwindow.prototype.options.overlayTheme,
-            inline: false,
-            corners: o.corners,
-            shadow: o.shadow
-          });
+    /* Tear apart the proto */
+    ui.button.insertBefore(this.element);
+    ui.popup.insertBefore(this.element)
+            .popupwindow();
+    ui.hsvpicker.hsvpicker();
 
     this.element.css("display", "none");
-
-    // Disable if specified
-    if ( o.disabled ) {
-      this.disable();
-    }
 
     // Expose to other methods
     $.extend( self, {
       dstAttr: dstAttr,
-      select: select,
-      selectID: selectID,
-      label: label,
-      buttonId: buttonId,
-      menuId: menuId,
-      button: button,
-      canvas: canvas,
-      placeholder: "",
-      buttonContents: buttonContents
+      ui: ui,
     });
 
-    // Create list from select, update state
-    self.refresh();
+    for (key in optionKeys)
+      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
 
     // Button events
-    button.bind("vclick keydown", function(event) {
+    ui.button.bind("vclick keydown", function(event) {
       if (event.type == "vclick" ||
           event.keyCode &&
             (event.keyCode === $.mobile.keyCode.ENTER ||
@@ -108,32 +61,39 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       }
     });
 
-    closeButton.bind("vclick", function(event) {
-      self.refresh();
-      self.element.trigger("colorchanged", self.canvas.attr("data-color"));
+    ui.closeButton.bind("vclick", function(event) {
+      self._setColor(self.ui.hsvpicker.attr("data-color"));
       self.close();
     });
   },
 
-  setColor: function(clr, force) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
-      if (this.canvas.attr("data-color") != clr) {
-
-        this.canvas.hsvpicker("option", "color", clr);
-        this.refresh();
-        this.element.trigger("colorchanged", clr);
-      }
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if (key === "color")
+      this._setColor(value, unconditional);
+    else
+    if (key === "buttonMarkup") {
+      this.ui.button.buttonMarkup(value);
+      value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
+      value["inline"] = false;
+      this.ui.closeButton.buttonMarkup(value);
     }
+    else
+    if (key === "closeText")
+      this.ui.closeButtonText.text(value);
   },
 
-  refresh: function( forceRebuild ) {
-    var r, g, b, r_str, g_str, b_str, hsl,
-        clrValue = this.canvas.attr("data-color");
-
-        if (this.element.attr(this.dstAttr) != clrValue)
-          this.element.attr(this.dstAttr, clrValue);
-
-    this.buttonContents.css("color", clrValue);
+  _setColor: function(clr, unconditional) {
+    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
+      if (this.element.attr("data-color") != clr || unconditional) {
+        this.ui.hsvpicker.hsvpicker("option", "color", clr);
+        this.element.attr(this.dstAttr, clr);
+        this.element.trigger("colorchanged", clr);
+        this.ui.buttonContents.css("color", clr);
+        this.element.trigger("colorchanged", this.ui.hsvpicker.attr("data-color"));
+      }
+    }
   },
 
   open: function() {
@@ -141,15 +101,15 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       return;
     }
 
-    this.canvas.popupwindow("open",
-      this.button.position().left + this.button.outerWidth()  / 2,
-      this.button.position().top  + this.button.outerHeight() / 2);
+    this.ui.popup.popupwindow("open",
+      this.ui.button.position().left + this.ui.button.outerWidth()  / 2,
+      this.ui.button.position().top  + this.ui.button.outerHeight() / 2);
   },
 
   _focusButton : function(){
     var self = this;
     setTimeout(function() {
-      self.button.focus();
+      self.ui.button.focus();
     }, 40);
   },
 
@@ -161,18 +121,18 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     var self = this;
 
     self._focusButton();
-    self.canvas.popupwindow("close");
+    self.ui.popup.popupwindow("close");
   },
 
   disable: function() {
     this.element.attr( "disabled", true );
-    this.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
+    this.ui.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
     return this._setOption( "disabled", true );
   },
 
   enable: function() {
     this.element.attr( "disabled", false );
-    this.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
+    this.ui.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
     return this._setOption( "disabled", false );
   }
 });
