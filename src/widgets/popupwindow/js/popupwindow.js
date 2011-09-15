@@ -7,6 +7,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         overlayTheme: "c",
         shadow: true,
         fade: true,
+        transition: $.mobile.defaultDialogTransition,
     },
 
   _create: function() {
@@ -17,16 +18,16 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         screen = myProto.find("#popupwindow-screen")
                         .appendTo(thisPage),
         container = myProto.find("#popupwindow-container")
-                           .addClass($.mobile.defaultDialogTransition)
                            .insertAfter(screen);
 
     this.element.appendTo(container);
 
     $.extend( self, {
-        isOpen: false,
-        thisPage: thisPage,
-        screen: screen,
-        container: container
+      transition: undefined,
+      isOpen: false,
+      thisPage: thisPage,
+      screen: screen,
+      container: container,
     });
 
 
@@ -44,7 +45,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
         alreadyAdded = false;
 
     for (var Nix in classes) {
-      if (classes[Nix].substring(0, 7) === "ui-body-") {
+      if (classes[Nix].substring(0, 8) === "ui-body-") {
         if (classes[Nix] != newTheme)
           this.container.removeClass(classes[Nix]);
         else
@@ -52,7 +53,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       }
     }
 
-    if (!alreadyAdded)
+    if (!(alreadyAdded || undefined === newTheme))
       this.container.addClass(newTheme);
 
     this.options.overlayTheme = newTheme;
@@ -70,10 +71,20 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     this.options.shadow = value;
   },
 
+  _setTransition: function(value) {
+    if (this.transition != undefined)
+      this.container.removeClass(this.transition);
+    this.container.addClass(value);
+    this.transition = value;
+  },
+
   _setOption: function(key, value) {
     if (key === "overlayTheme") {
       if (value.match(/[a-z]/))
-          this._setOverlayTheme("ui-body-" + value);
+        this._setOverlayTheme("ui-body-" + value);
+      else
+      if (value === "")
+        this._setOverlayTheme();
     }
     else
     if (key === "shadow")
@@ -81,6 +92,9 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     else
     if (key === "fade")
       this.options.fade = value;
+    else
+    if (key === "transition")
+      this._setTransition(value);
   },
 
   open: function(x_where, y_where) {
