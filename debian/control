@@ -1,0 +1,19 @@
+Source: slp-web-fw
+Section: devel
+Priority: extra
+Maintainer: Ming Jin <ming79.jin@samsung.com>
+Uploaders:  Youmin Ha <youmin.ha@samsung.com>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 0.1.0
+
+Package: libslp-web-fw
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: SLP web framework javascript/css libraries, including CSS and resources.
+
+Package: libslp-web-fw-dev
+Architecture: all
+Depends: libslp-web-fw (= ${Source-Version})
+Description: Dev package for libslp-web-fw
+XB-Generate-Docs: yes
+
