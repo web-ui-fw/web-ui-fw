@@ -384,7 +384,7 @@
                 isopen:isopen
             });     
             cpContainer.appendTo(self.element)
-                       .popupwindow()
+                       .popupwindow({transition: "slideup"})
                        .bind("closed", function(e) {
                           self.isopen = false;
                        });
