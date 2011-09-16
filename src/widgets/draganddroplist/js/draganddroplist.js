@@ -5,6 +5,24 @@
  * License: TODO
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>
  */
+
+/**
+ * DragandDropList is a ListView extension containing class="draganddroplist".The extension can be used to add drag and drop 
+ * functionality to listview.LongPress on any item activates the draganddropmode.
+ * Warning:The extension is in proto state.The behaviour,api and functionality can be changed without notice.
+ *
+ * Events:
+ *
+ *     dragStarted: Fired on a list item after drag mode has been activated on it.
+ *     dragEnded: Fired on a list item after drag mode has ended on it.
+ *
+ * Examples:
+ *         
+ *     HTML markup for creating DragandDropList:
+ *     <ul data-role="listview" class="draganddroplist">
+ *         <li><a href="#">Demo</a></li>
+ *     </ul>
+ */
          
 (function ($, undefined) {
     $(":jqmData(role='listview')").live("listviewcreate", function () {
