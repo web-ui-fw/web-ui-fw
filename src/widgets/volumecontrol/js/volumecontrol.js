@@ -10,7 +10,6 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        optionKeys = _.keys(this.options),
         container = $.mobile.todons.loadPrototype("volumecontrol").find("#volumecontrol")
           .insertBefore(this.element)
           .popupwindow({overlayTheme: "", fade: false, shadow: false}),
@@ -24,8 +23,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
         container: container,
       });
 
-      for (key in optionKeys)
-        this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
+      $.mobile.todons.parseOptions(this, true);
 
       container.bind("closed", function(e) {
         self.isOpen = false;

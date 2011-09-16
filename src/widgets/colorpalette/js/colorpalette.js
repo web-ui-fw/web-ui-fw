@@ -11,7 +11,6 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
     var self = this,
         o = this.options,
         dstAttr = this.element.is("input") ? "value" : "data-color",
-        colour = ((undefined === this.element.attr(dstAttr)) ? o.color : this.element.attr(dstAttr)),
         clrpalette = $.mobile.todons.loadPrototype("colorpalette").find("#colorpalette")
           .appendTo(this.element);
 
@@ -20,7 +19,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
       clrpalette: clrpalette
     });
 
-    this.setColor(colour);
+    $.mobile.todons.parseOptions(this, true);
 
     clrpalette.find("[data-role=colorpalette-choice]").bind("vclick", function(e) {
       var id = $(e.target).attr("id"),
@@ -47,10 +46,17 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
     });
   },
 
-  setColor: function(clr) {
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if (key === "color")
+      this._setColor(value, unconditional);
+  },
+
+  _setColor: function(clr, unconditional) {
     var clrValue = this.element.attr("data-color");
 
-    if (clr != clrValue) {
+    if (clr != clrValue || unconditional) {
       var Nix,
           activeIdx = -1,
           nChoices = this.clrpalette.attr("data-n-choices"),

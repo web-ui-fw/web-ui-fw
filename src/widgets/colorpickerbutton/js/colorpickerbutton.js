@@ -16,8 +16,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
   _create: function() {
     var self = this,
 
-        optionKeys = _.keys(this.options),
-
         dstAttr = this.element.is("input") ? "value" : "data-color",
 
         myProto = $.mobile.todons.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
@@ -47,8 +45,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       ui: ui,
     });
 
-    for (key in optionKeys)
-      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
+    $.mobile.todons.parseOptions(this, true);
 
     // Button events
     ui.button.bind("vclick keydown", function(event) {

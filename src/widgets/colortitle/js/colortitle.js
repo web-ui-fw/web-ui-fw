@@ -8,8 +8,6 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-
-        optionKeys = _.keys(this.options),
         clrtitle = $.mobile.todons.loadPrototype("colortitle")
           .appendTo(this.element);
 
@@ -17,8 +15,7 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
         clrtitle: clrtitle
       });
 
-    for (key in optionKeys)
-      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
+    $.mobile.todons.parseOptions(this, true);
   },
 
   _setOption: function(key, value, unconditional) {

@@ -201,7 +201,7 @@ jQuery.extend(jQuery.mobile, {
        * Read data- options from the element and update a dictionary of
        * options when possible.
        */
-       parseOptions: function (widget) {
+       parseOptions: function (widget, userData) {
           var optionKeys = _.keys(widget.options);
           for (key in optionKeys) {
               opt = optionKeys[key];
@@ -210,16 +210,16 @@ jQuery.extend(jQuery.mobile, {
 
               if (dataValue !== undefined)
                   if (dataValue == "true" ||
-                      dataValue == "yes" ||
+                      dataValue == "yes"  ||
                       dataValue == "on") dataValue = true;
                   else
                   if (dataValue == "false" ||
-                      dataValue == "no" ||
+                      dataValue == "no"    ||
                       dataValue == "off") dataValue = false;
                   else
-                  if (parseInt(dataValue) != NaN) dataValue = parseInt(dataValue);
+                  if (!isNaN(parseInt(dataValue))) dataValue = parseInt(dataValue);
 
-              widget._setOption(opt, dataValue === undefined ? defaultValue : dataValue);
+              widget._setOption(opt, dataValue === undefined ? defaultValue : dataValue, userData);
           }
       }
     }

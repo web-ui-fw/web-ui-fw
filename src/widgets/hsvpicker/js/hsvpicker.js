@@ -8,7 +8,6 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        optionKeys = _.keys(this.options),
         myProto = $.mobile.todons.loadPrototype("hsvpicker").find("#hsvpicker")
           .appendTo(this.element),
         ui = {
@@ -41,8 +40,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       dragging: -1
     });
 
-    for (key in optionKeys)
-      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
+    $.mobile.todons.parseOptions(this, true);
 
     myProto.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
       $(this).attr("src",

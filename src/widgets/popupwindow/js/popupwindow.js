@@ -12,7 +12,6 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        optionKeys = _.keys(this.options),
         thisPage = this.element.closest(".ui-page"),
         myProto = $.mobile.todons.loadPrototype("popupwindow"),
         screen = myProto.find("#popupwindow-screen")
@@ -30,9 +29,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       container: container,
     });
 
-
-    for (key in optionKeys)
-      this._setOption(optionKeys[key], this.options[optionKeys[key]]);
+    $.mobile.todons.parseOptions(this, true);
 
     // Events on "screen" overlay
     screen.bind( "vclick", function( event ) {

@@ -36,7 +36,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   _create: function() {
     var self = this,
         dstAttr = this.element.is("input") ? "value" : "data-color",
-        optionKeys = _.keys(this.options),
         clrpicker = $.mobile.todons.loadPrototype("colorpicker").find("#colorpicker")
             .appendTo(this.element),
         ui = {
@@ -63,8 +62,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       dragging_hsl: undefined
     });
 
-    for (key in optionKeys)
-      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
+    $.mobile.todons.parseOptions(this, true);
 
     $( document ).bind( "vmousemove", function( event ) {
         if ( self.dragging ) {
