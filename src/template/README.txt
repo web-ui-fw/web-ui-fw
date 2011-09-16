@@ -15,13 +15,18 @@ What a developer needs to do in their application:
           data-framework-theme="default">
   </script>
 
-* They create a config.js file to specify which of their own JS files
+* They create a config.js file to specify which of their own JS, CSS files
   need to be loaded, other app config etc. For example:
 
   S.load(
-    'app/file1.js',
-    'app/file2.js',
-    'app/main.js'
+    'src/app_manage.js',
+    'src/theme.js',
+  );
+
+  /* link custom stylesheet */
+  S.css.load(
+    'app_manage.css',
+    'src/theme.css'
   );
 
   Note that as config.js is loaded last, it can reference any framework
