@@ -63,42 +63,38 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
       self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
       self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
-      self.updateSelectors(self.dragging_hsv);
+      self._updateSelectors(self.dragging_hsv);
     });
 
     $( document ).bind( "vmousemove", function( event ) {
-      if ( self.dragging != -1 ) {
-//            self.refresh( event );
+      if ( self.dragging != -1 )
         event.stopPropagation();
-      }
     });
 
     $( document ).bind( "vmouseup", function( event ) {
-      if ( self.dragging != -1 ) {
+      if ( self.dragging != -1 )
         self.dragging = false;
-//            self.refresh( event );
-      }
     });
 
-    ui.hue.selector.bind("vmousedown", function(e) { self.selectorMouseDown("hue", 0, e); });
-    ui.sat.selector.bind("vmousedown", function(e) { self.selectorMouseDown("sat", 1, e); });
-    ui.val.selector.bind("vmousedown", function(e) { self.selectorMouseDown("val", 2, e); });
+    ui.hue.selector.bind("vmousedown", function(e) { self._selectorMouseDown("hue", 0, e); });
+    ui.sat.selector.bind("vmousedown", function(e) { self._selectorMouseDown("sat", 1, e); });
+    ui.val.selector.bind("vmousedown", function(e) { self._selectorMouseDown("val", 2, e); });
 
-    ui.hue.selector.bind("vmousemove", function(e) { self.selectorMouseMove("hue", 0, e); });
-    ui.sat.selector.bind("vmousemove", function(e) { self.selectorMouseMove("sat", 1, e); });
-    ui.val.selector.bind("vmousemove", function(e) { self.selectorMouseMove("val", 2, e); });
+    ui.hue.selector.bind("vmousemove", function(e) { self._selectorMouseMove("hue", 0, e); });
+    ui.sat.selector.bind("vmousemove", function(e) { self._selectorMouseMove("sat", 1, e); });
+    ui.val.selector.bind("vmousemove", function(e) { self._selectorMouseMove("val", 2, e); });
 
     ui.hue.selector.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.sat.selector.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.val.selector.bind("vmouseup", function(e) { self.dragging = -1; });
 
-    ui.hue.container.bind("vmousedown", function(e) { self.containerMouseDown("hue", 0, e); });
-    ui.sat.container.bind("vmousedown", function(e) { self.containerMouseDown("sat", 1, e); });
-    ui.val.container.bind("vmousedown", function(e) { self.containerMouseDown("val", 2, e); });
+    ui.hue.container.bind("vmousedown", function(e) { self._containerMouseDown("hue", 0, e); });
+    ui.sat.container.bind("vmousedown", function(e) { self._containerMouseDown("sat", 1, e); });
+    ui.val.container.bind("vmousedown", function(e) { self._containerMouseDown("val", 2, e); });
 
-    ui.hue.container.bind("vmousemove", function(e) { self.containerMouseMove("hue", 0, e); });
-    ui.sat.container.bind("vmousemove", function(e) { self.containerMouseMove("sat", 1, e); });
-    ui.val.container.bind("vmousemove", function(e) { self.containerMouseMove("val", 2, e); });
+    ui.hue.container.bind("vmousemove", function(e) { self._containerMouseMove("hue", 0, e); });
+    ui.sat.container.bind("vmousemove", function(e) { self._containerMouseMove("sat", 1, e); });
+    ui.val.container.bind("vmousemove", function(e) { self._containerMouseMove("val", 2, e); });
 
     ui.hue.container.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.sat.container.bind("vmouseup", function(e) { self.dragging = -1; });
@@ -112,15 +108,15 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       this._setColor(value, unconditional);
   },
 
-  containerMouseDown: function(chan, idx, e) {
+  _containerMouseDown: function(chan, idx, e) {
     if (event.offsetX >= 0 && event.offsetX <= this.ui[chan].container.width() &&
         event.offsetY >= 0 && event.offsetY <= this.ui[chan].container.height()) {
       this.dragging = idx;
-      this.containerMouseMove(chan, idx, e);
+      this._containerMouseMove(chan, idx, e);
     }
   },
 
-  containerMouseMove: function(chan, idx, e) {
+  _containerMouseMove: function(chan, idx, e) {
     if (this.dragging === idx) {
       var potential = event.offsetX / this.ui[chan].container.width();
 
@@ -132,19 +128,19 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
       this.selectorDraggingOffset.x = Math.ceil(this.ui[chan].selector.outerWidth()  / 2.0);
       this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
-      this.updateSelectors(this.dragging_hsv);
+      this._updateSelectors(this.dragging_hsv);
       e.stopPropagation();
     }
   },
 
-  selectorMouseDown: function(chan, idx, e) {
+  _selectorMouseDown: function(chan, idx, e) {
     this.dragging = idx;
     this.selectorDraggingOffset.x = event.offsetX;
     this.selectorDraggingOffset.y = event.offsetY;
     e.stopPropagation();
   },
 
-  selectorMouseMove: function(chan, idx, e) {
+  _selectorMouseMove: function(chan, idx, e) {
     if (this.dragging === idx) {
       var potential = this.dragging_hsv[idx];
 
@@ -158,13 +154,13 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
         potential *= 360;
 
       this.dragging_hsv[idx] = potential;
-      this.updateSelectors(this.dragging_hsv);
+      this._updateSelectors(this.dragging_hsv);
 
       e.stopPropagation();
     }
   },
 
-  updateSelectors: function(hsv) {
+  _updateSelectors: function(hsv) {
     var  clr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB(hsv)),
         hclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
         vclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
@@ -190,7 +186,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
   _setColor: function(clr, unconditional) {
     if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr || unconditional) {
       this.dragging_hsv = $.mobile.todons.clrlib.RGBToHSV($.mobile.todons.clrlib.HTMLToRGB(clr));
-      this.updateSelectors(this.dragging_hsv);
+      this._updateSelectors(this.dragging_hsv);
     }
   }
 });
