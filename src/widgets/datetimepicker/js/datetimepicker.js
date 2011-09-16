@@ -353,6 +353,20 @@
             var selectorProto = container.find("#datetimepicker-selector-container").remove();
             var itemProto = selectorProto.find("#datetimepicker-item").remove();
 
+            var optionKeys = _.keys(this.options);
+            for (key in optionKeys) {
+                opt = optionKeys[key];
+                dataValue = obj.element.attr("data-" + opt);
+                defaultValue = obj.options[opt];
+
+                if (dataValue !== undefined)
+                    if (dataValue == "true") dataValue = true;
+                    else if (dataValue == "false") dataValue = false;
+                    else if (parseInt(dataValue) != NaN) dataValue = parseInt(dataValue);
+
+                obj._setOption(opt, dataValue === undefined ? defaultValue : dataValue);
+            }
+
             $(input).css("display", "none");
             $(input).after(container);
             this.data.parentInput = input;
