@@ -29,8 +29,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
           closeButtonText: myProto.find("#colorpickerbutton-popup-close-button-text"),
         };
 
-    this.element.wrap( "<div class='ui-select'>" );
-
     /* Tear apart the proto */
     ui.button.insertBefore(this.element);
     ui.popup.insertBefore(this.element)
@@ -88,7 +86,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         this.element.attr(this.dstAttr, clr);
         this.element.trigger("colorchanged", clr);
         this.ui.buttonContents.css("color", clr);
-        this.element.trigger("colorchanged", this.ui.hsvpicker.attr("data-color"));
       }
     }
   },
