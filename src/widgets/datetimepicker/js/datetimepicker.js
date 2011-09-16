@@ -353,6 +353,8 @@
             var selectorProto = container.find("#datetimepicker-selector-container").remove();
             var itemProto = selectorProto.find("#datetimepicker-item").remove();
 
+            $.parseOptions(this);
+
             $(input).css("display", "none");
             $(input).after(container);
             this.data.parentInput = input;
