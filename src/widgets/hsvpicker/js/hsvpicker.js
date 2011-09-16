@@ -9,7 +9,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
   _create: function() {
     var self = this,
         optionKeys = _.keys(this.options),
-        myProto = $.mobile.loadPrototype("hsvpicker").find("#hsvpicker")
+        myProto = $.mobile.todons.loadPrototype("hsvpicker").find("#hsvpicker")
           .appendTo(this.element),
         ui = {
           hue: {
@@ -167,9 +167,9 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
   },
 
   updateSelectors: function(hsv) {
-    var  clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB(hsv)),
-        hclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
-        vclr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
+    var  clr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB(hsv)),
+        hclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
+        vclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
     this.ui.hue.selector.css("left", this.ui.hue.container.width() * hsv[0] / 360);
     this.ui.hue.selector.css("background", clr);
@@ -191,7 +191,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
   _setColor: function(clr, unconditional) {
     if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr || unconditional) {
-      this.dragging_hsv = $.mobile.clrlib.RGBToHSV($.mobile.clrlib.HTMLToRGB(clr));
+      this.dragging_hsv = $.mobile.todons.clrlib.RGBToHSV($.mobile.todons.clrlib.HTMLToRGB(clr));
       this.updateSelectors(this.dragging_hsv);
     }
   }

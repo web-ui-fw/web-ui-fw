@@ -29,7 +29,7 @@
         if ($(this).hasClass("draganddroplist")) {
             var $this = $(this);
             function absoluteTouchPostion(event) {
-                return new $.Point(event.pageX + window.scrollX,
+                return new $.mobile.todons.Point(event.pageX + window.scrollX,
                            event.pageY + window.scrollY);
             }
 
@@ -42,7 +42,7 @@
                 dragCallBack = null,
                 dragStoppedCallback = null,
                 realObject = null,
-                newPos = new $.Point(0, 0),
+                newPos = new $.mobile.todons.Point(0, 0),
                 previousYPosition = null
 
 
@@ -64,7 +64,7 @@
                         top: draggedElement.offset().top,
                         left: draggedElement.offset().left
                     });
-                    elementTopPos = new $.Point(parseInt(draggedElement.css('left'),10),
+                    elementTopPos = new $.mobile.todons.Point(parseInt(draggedElement.css('left'),10),
                                 parseInt(draggedElement.css('top'),10));
                      jQuery(draggedElement).css('-webkit-transform', 'scale(1.001)');
                     _moveObject();
@@ -139,7 +139,7 @@
             $shadow.addClass("shadow");
             draggedObject = new dragObject();
             shadowData = {
-                $shadowRect: new $.Rect(0,0,0,0),
+                $shadowRect: new $.mobile.todons.Rect(0,0,0,0),
                 shadowIndex: null,
                 targetHeight: null
             }

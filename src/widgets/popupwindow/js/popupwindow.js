@@ -14,7 +14,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
     var self = this,
         optionKeys = _.keys(this.options),
         thisPage = this.element.closest(".ui-page"),
-        myProto = $.mobile.loadPrototype("popupwindow"),
+        myProto = $.mobile.todons.loadPrototype("popupwindow"),
         screen = myProto.find("#popupwindow-screen")
                         .appendTo(thisPage),
         container = myProto.find("#popupwindow-container")

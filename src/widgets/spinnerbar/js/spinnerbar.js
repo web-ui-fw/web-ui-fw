@@ -47,7 +47,7 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
 
     _create: function () {
         this.isRunning = false;
-        this.spinnerbar = $.mobile.loadPrototype('spinnerbar').find('div:first');
+        this.spinnerbar = $.mobile.todons.loadPrototype('spinnerbar').find('div:first');
         this.bar = this.spinnerbar.find('.ui-spinnerbar-bar');
     },
 

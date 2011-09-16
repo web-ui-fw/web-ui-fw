@@ -1,4 +1,4 @@
-jQuery.extend( jQuery.mobile, 
+jQuery.extend( jQuery.mobile.todons, 
 {
   clrlib: {
     nearestInt: function(val) { 
@@ -120,7 +120,7 @@ jQuery.extend( jQuery.mobile,
      * b is in [0, 1]
      */
     HSVToRGB: function(hsv) {
-      return $.mobile.clrlib.HSLToRGB($.mobile.clrlib.HSVToHSL(hsv));
+      return $.mobile.todons.clrlib.HSLToRGB($.mobile.todons.clrlib.HSVToHSL(hsv));
     },
 
     /*
@@ -207,7 +207,7 @@ jQuery.extend( jQuery.mobile,
      * l is in [0,   1]
      */
     RGBToHSL: function(rgb) {
-      return $.mobile.clrlib.HSVToHSL($.mobile.clrlib.RGBToHSV(rgb));
+      return $.mobile.todons.clrlib.HSVToHSL($.mobile.todons.clrlib.RGBToHSV(rgb));
     }
   }
 });

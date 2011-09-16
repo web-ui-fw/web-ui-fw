@@ -12,7 +12,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
         o = this.options,
         dstAttr = this.element.is("input") ? "value" : "data-color",
         colour = ((undefined === this.element.attr(dstAttr)) ? o.color : this.element.attr(dstAttr)),
-        clrpalette = $.mobile.loadPrototype("colorpalette").find("#colorpalette")
+        clrpalette = $.mobile.todons.loadPrototype("colorpalette").find("#colorpalette")
           .appendTo(this.element);
 
     $.extend(this, {
@@ -32,7 +32,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
       rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
 
       if (rgbMatches.length > 3)
-        clr = $.mobile.clrlib.RGBToHTML([
+        clr = $.mobile.todons.clrlib.RGBToHTML([
           parseInt(rgbMatches[1]) / 255,
           parseInt(rgbMatches[2]) / 255,
           parseInt(rgbMatches[3]) / 255]);
@@ -54,7 +54,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
       var Nix,
           activeIdx = -1,
           nChoices = this.clrpalette.attr("data-n-choices"),
-          hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr)),
+          hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr)),
           origHue = hsl[0],
           offset = hsl[0] / 36,
           theFloor = Math.floor(offset),
@@ -73,7 +73,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
         if (hsl[0] === origHue)
           activeIdx = Nix;
 
-        newClr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB(hsl));
+        newClr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB(hsl));
 
         this.clrpalette.find("#colorpalette-choice-" + Nix).css("background-color", newClr);
       }

@@ -20,7 +20,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
 
         dstAttr = this.element.is("input") ? "value" : "data-color",
 
-        myProto = $.mobile.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
+        myProto = $.mobile.todons.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
 
         ui = {
           button:          myProto.find("#colorpickerbutton-button"),

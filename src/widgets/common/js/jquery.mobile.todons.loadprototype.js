@@ -1,9 +1,9 @@
-jQuery.extend( jQuery.mobile,
+jQuery.extend( jQuery.mobile.todons,
 {
   widgetPrototypes: {},
 
   loadPrototype: function(widgetname) {
-    var ret = $.mobile.widgetPrototypes[widgetname];
+    var ret = $.mobile.todons.widgetPrototypes[widgetname];
 
     if (ret === undefined) {
       var theScriptTag = $("script[data-framework-version][data-framework-root][data-framework-theme]"),
@@ -18,8 +18,8 @@ jQuery.extend( jQuery.mobile,
         dataType: "html"
       })
         .success(function(data, textStatus, jqXHR) {
-          $.mobile.widgetPrototypes[widgetname] = $("<div>").html(data.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath));
-          ret = $.mobile.widgetPrototypes[widgetname];
+          $.mobile.todons.widgetPrototypes[widgetname] = $("<div>").html(data.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath));
+          ret = $.mobile.todons.widgetPrototypes[widgetname];
         });
     }
 

@@ -11,7 +11,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   _create: function() {
     var self = this,
         optionKeys = _.keys(this.options),
-        container = $.mobile.loadPrototype("volumecontrol").find("#volumecontrol")
+        container = $.mobile.todons.loadPrototype("volumecontrol").find("#volumecontrol")
           .insertBefore(this.element)
           .popupwindow({overlayTheme: "", fade: false, shadow: false}),
         volumeImage = container.find("#volumecontrol-indicator");

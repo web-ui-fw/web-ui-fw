@@ -37,7 +37,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     var self = this,
         dstAttr = this.element.is("input") ? "value" : "data-color",
         optionKeys = _.keys(this.options),
-        clrpicker = $.mobile.loadPrototype("colorpicker").find("#colorpicker")
+        clrpicker = $.mobile.todons.loadPrototype("colorpicker").find("#colorpicker")
             .appendTo(this.element),
         ui = {
             hs: {
@@ -192,8 +192,8 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   },
 
   _updateSelectors: function(hsl, updateHS) {
-      var clr = $.mobile.clrlib.RGBToHTML($.mobile.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
-          gray = $.mobile.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
+      var clr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
+          gray = $.mobile.todons.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
       if (hsl[2] < 0.5) {
           this.ui.hs.valMask.css("background", "#000000");
@@ -224,7 +224,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
 
   _setColor: function(clr, unconditional) {
     if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr(this.dstAttr) != clr) || unconditional) {
-      this.dragging_hsl = $.mobile.clrlib.RGBToHSL($.mobile.clrlib.HTMLToRGB(clr));
+      this.dragging_hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr));
       this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
       this._updateSelectors(this.dragging_hsl);
     }

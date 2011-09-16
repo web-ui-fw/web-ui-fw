@@ -35,7 +35,7 @@
                 _self = this,
                 startData = {
                     time: null,
-                    point: new $.Point(0,0)
+                    point: new $.mobile.todons.Point(0,0)
                 };
 
             _self._mouseDownCB = function(e) {

@@ -57,7 +57,7 @@ $.widget("TODONS.spinner", $.mobile.widget, {
     _create: function() {
         var popup, zIndex;
 
-        popup = $.mobile.loadPrototype("spinner").find("div:first");
+        popup = $.mobile.todons.loadPrototype("spinner").find("div:first");
 
         zIndex = this.element.css('z-index');
         zIndex = zIndex ? zIndex + 1 : 10;

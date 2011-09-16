@@ -349,11 +349,11 @@
         _create: function() {
             var obj = this;
             var input = this.element;
-            var container = $.mobile.loadPrototype("datetimepicker").find("#datetimepicker");
+            var container = $.mobile.todons.loadPrototype("datetimepicker").find("#datetimepicker");
             var selectorProto = container.find("#datetimepicker-selector-container").remove();
             var itemProto = selectorProto.find("#datetimepicker-item").remove();
 
-            $.parseOptions(this);
+            $.mobile.todons.parseOptions(this);
 
             $(input).css("display", "none");
             $(input).after(container);

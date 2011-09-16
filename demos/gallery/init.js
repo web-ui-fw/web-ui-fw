@@ -39,11 +39,11 @@ var progressbarAnimator = {
 
 $(document).bind("pagecreate", function () {
     $('#groupindex-demo').bind('pageshow', function (e) {
-        $.fillPageWithContentArea($(this));
+        $.mobile.todons.fillPageWithContentArea($(this));
     });
 
     $('#shortcutscroll-demo').bind('pageshow', function (e) {
-        $.fillPageWithContentArea($(this));
+        $.mobile.todons.fillPageWithContentArea($(this));
     });
 
     $('#spinner-demo').bind('pageshow', function (e) {
@@ -83,13 +83,13 @@ $(document).bind("pagecreate", function () {
     });
 
     $('#scroller-demo').bind('pageshow', function (e) {
-        $.fillPageWithContentArea($(this));
+        $.mobile.todons.fillPageWithContentArea($(this));
     });
 
     $('#scroller-demo').bind('pageshow', function (e) {
         $page = $(e.target);
 
-        $.fillPageWithContentArea($(this));
+        $.mobile.todons.fillPageWithContentArea($(this));
 
         /*
          * many options cannot be set without subclassing since they're
@@ -219,8 +219,6 @@ $(document).bind("pagecreate", function () {
     $("#hsvpicker").hsvpicker("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
   });
-
-  $("#colorpickerbutton").colorpickerbutton("option", "color", "#54a12d");
 });
 
 $(document).bind("pagecreate", function() {

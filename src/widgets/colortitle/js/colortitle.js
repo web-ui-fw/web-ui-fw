@@ -10,7 +10,7 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
     var self = this,
 
         optionKeys = _.keys(this.options),
-        clrtitle = $.mobile.loadPrototype("colortitle")
+        clrtitle = $.mobile.todons.loadPrototype("colortitle")
           .appendTo(this.element);
 
       $.extend( this, {

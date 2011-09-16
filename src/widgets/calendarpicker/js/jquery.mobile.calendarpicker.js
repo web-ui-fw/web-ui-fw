@@ -354,7 +354,7 @@
             // Build the controls
             var self = this,
                 o = self.options,
-                container = $.mobile.loadPrototype("calendarpicker"),
+                container = $.mobile.todons.loadPrototype("calendarpicker"),
                 cpContainer = container.find('.ui-cp-container'),
                 cpHeader = container.find('.ui-cp-headercontainer'),
                 cpweekDayGrid = container.find('.ui-cp-weekday'),

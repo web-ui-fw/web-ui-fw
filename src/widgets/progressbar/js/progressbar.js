@@ -70,7 +70,7 @@
         _create: function () {
             var startValue, container;
 
-            container = $.mobile.loadPrototype("progressbar").find(".ui-progressbar");
+            container = $.mobile.todons.loadPrototype("progressbar").find(".ui-progressbar");
             container.insertBefore(this.element);
 
             this.box = container.find("div.ui-boxImg");
