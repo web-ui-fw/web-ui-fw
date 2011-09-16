@@ -176,6 +176,51 @@ $(document).bind("pagecreate", function () {
         $("#myVolumeControl").volumecontrol("option", "title", "Volume");
       }
     });
+
+  $("#colorpicker").bind("colorchanged", function(e, clr) {
+    $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+    $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+    $("#hsvpicker").hsvpicker("option", "color", clr);
+    $("#colortitle").colortitle("option", "color", clr);
+    $("#colorpalette").colorpalette("setColor", clr);
+  });
+  $("#colorpickerbutton").bind("colorchanged", function(e, clr) {
+    $("#colorpicker").colorpicker("option", "color", clr);
+    $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+    $("#hsvpicker").hsvpicker("option", "color", clr);
+    $("#colortitle").colortitle("option", "color", clr);
+    $("#colorpalette").colorpalette("setColor", clr);
+  });
+  $("#colorpickerbutton-noform").bind("colorchanged", function(e, clr) {
+    $("#colorpicker").colorpicker("option", "color", clr);
+    $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+    $("#hsvpicker").hsvpicker("option", "color", clr);
+    $("#colortitle").colortitle("option", "color", clr);
+    $("#colorpalette").colorpalette("setColor", clr);
+  });
+  $("#hsvpicker").bind("colorchanged", function(e, clr) {
+    $("#colorpicker").colorpicker("option", "color", clr);
+    $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+    $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+    $("#colortitle").colortitle("option", "color", clr);
+    $("#colorpalette").colorpalette("setColor", clr);
+  });
+  $("#colortitle").bind("colorchanged", function(e, clr) {
+    $("#colorpicker").colorpicker("option", "color", clr);
+    $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+    $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+    $("#hsvpicker").hsvpicker("option", "color", clr);
+    $("#colorpalette").colorpalette("setColor", clr);
+  });
+  $("#colorpalette").bind("colorchanged", function(e, clr) {
+    $("#colorpicker").colorpicker("option", "color", clr);
+    $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+    $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+    $("#hsvpicker").hsvpicker("option", "color", clr);
+    $("#colortitle").colortitle("option", "color", clr);
+  });
+
+  $("#colorpickerbutton").colorpickerbutton("option", "color", "#54a12d");
 });
 
 $(document).bind("pagecreate", function() {

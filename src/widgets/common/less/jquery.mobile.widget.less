@@ -1,0 +1,41 @@
+@jquery-mobile-ui-widget-basic-border-color: #ddd;
+@jquery-mobile-ui-widget-left-border-color: #aaa;
+@jquery-mobile-ui-widget-basic-border: 1px solid @jquery-mobile-ui-widget-basic-border-color;
+@jquery-mobile-ui-widget-left-border: 10px solid @jquery-mobile-ui-widget-left-border-color;
+
+.jquery-mobile-ui-widget {
+  border:        @jquery-mobile-ui-widget-basic-border;
+  border-left:   @jquery-mobile-ui-widget-left-border;
+}
+
+.jquery-mobile-ui-widget-top {
+  border-top:    @jquery-mobile-ui-widget-basic-border;
+  border-right:  @jquery-mobile-ui-widget-basic-border;
+  border-left:   @jquery-mobile-ui-widget-left-border;
+}
+
+.jquery-mobile-ui-widget-mid {
+  border-right:  @jquery-mobile-ui-widget-basic-border;
+  border-left:   @jquery-mobile-ui-widget-left-border;
+}
+
+.jquery-mobile-ui-widget-bot {
+  border-right:  @jquery-mobile-ui-widget-basic-border;
+  border-bottom: @jquery-mobile-ui-widget-basic-border;
+  border-left:   @jquery-mobile-ui-widget-left-border;
+}
+
+.jquery-mobile-ui-label {
+  position: relative;
+  border-left-color: @jquery-mobile-ui-widget-basic-border-color;
+  background: @jquery-mobile-ui-widget-basic-border-color;
+  height: 40px;
+  .jquery-mobile-ui-label-text {
+    font-size: 120%;
+    position: absolute;
+    text-align: left;
+    vertical-align: bottom;
+    color: @jquery-mobile-ui-widget-left-border-color;
+    bottom: 0px;
+  }
+}

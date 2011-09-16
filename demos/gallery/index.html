@@ -37,9 +37,7 @@
                             <li data-role="list-divider">Widgets</li>
                             <li><a href="#datetimepicker-demo">Date/time picker</a></li>
                             <li><a href="#volumecontrol-demo">Volume control</a></li>
-                            <li><a href="#colorpicker-demo">Color picker widget</a></li>
-                            <li><a href="#colorpickerbutton-demo">Color picker button</a></li>
-                            <li><a href="#hsvpicker-demo">Hue-Sat-Val picker</a></li>
+                            <li><a href="#colorwidgets-demo">Color widgets</a></li>
                             <li><a href="#draganddroplist-demo">Drag &amp; drop list</a></li>
                             <li><a href="#progressbar-demo">Progress bar</a></li>
                             <li><a href="#switch-demo">Switch</a></li>
@@ -99,12 +97,32 @@
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="colorpicker-demo" data-add-back-btn="true">
+        <div data-role="page" id="colorwidgets-demo" data-add-back-btn="true">
             <div data-role="header">
-                <h1>Color picker widget</h1>
+                <h1>Color widgets</h1>
             </div>
             <div data-role="content">
-              <div data-role="colorpicker" data-color="#ff00ff"></div>
+              <div style="float: left; padding-right: 20px;">
+                <div data-role="label">Color title widget</div>
+                <div data-role="colortitle" id="colortitle"></div>
+                <div data-role="label">Color palette widget</div>
+                <div data-role="colorpalette" id="colorpalette"></div>
+                <div data-role="label">Color picker button</div>
+                <div data-role="colorpickerbutton" id="colorpickerbutton-noform"></div>
+                <div data-role="label">Color picker button (form element)</div>
+                <form action="#" method="get">
+                  <div role="fieldcontain">
+                    <label for="colorpickerbutton">Pick Colour:</label>
+                    <input type="color" id="colorpickerbutton" value="#dfddc3"></input>
+                  </div>
+                </form>
+              </div>
+              <div style="float: left; padding-right: 20px;">
+                <div data-role="label">Hue-Saturation-Value picker widget</div>
+                <div data-role="hsvpicker" id="hsvpicker"></div>
+                <div data-role="label">Hue-Saturation-Lightness picker widget</div>
+                <div data-role="colorpicker" id="colorpicker"></div>
+              </div>
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>

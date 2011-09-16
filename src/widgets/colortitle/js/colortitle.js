@@ -9,29 +9,31 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
   _create: function() {
     var self = this,
 
-        o = this.options,
-
+        optionKeys = _.keys(this.options),
         clrtitle = $.mobile.loadPrototype("colortitle")
           .appendTo(this.element);
 
       $.extend( this, {
-        clrtitle: clrtitle,
-        colour: o.color
+        clrtitle: clrtitle
       });
 
-      this.refresh();
+    for (key in optionKeys)
+      this._setOption(optionKeys[key], this.options[optionKeys[key]], true);
   },
 
-  refresh: function() {
-    this.clrtitle.find("#colortitle-string").text(this.colour);
-    this.element.attr("data-color", this.colour);
-    this.element.triggerHandler('colorchanged', this.colour);
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+
+    if (key === "color")
+      this._setColor(value, unconditional);
   },
 
-  setColor: function(clr) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) {
-      this.colour = clr;
-      this.refresh();
+  _setColor: function(clr, unconditional) {
+    if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) || unconditional) {
+      this.clrtitle.find("#colortitle-string").text(clr);
+      this.element.attr("data-color", clr);
+      this.element.triggerHandler('colorchanged', clr);
     }
   }
 });
