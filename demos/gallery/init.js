@@ -165,8 +165,6 @@ $(document).bind("pagecreate", function () {
     $("#volumecontrol_setBasicTone").next('label').click(function(e) {
       var basicTone = !($("#volumecontrol_setBasicTone").next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on"));
 
-      console.log("Setting basic tone: " + basicTone);
-
       if (basicTone) {
         $("#myVolumeControl").volumecontrol("option", "basicTone", true);
         $("#myVolumeControl").volumecontrol("option", "title", "Basic Tone");
