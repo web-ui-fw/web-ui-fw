@@ -9,7 +9,6 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
   _create: function() {
 
     var self = this,
-        o = this.options,
         dstAttr = this.element.is("input") ? "value" : "data-color",
         clrpalette = $.mobile.todons.loadPrototype("colorpalette").find("#colorpalette")
           .appendTo(this.element);
