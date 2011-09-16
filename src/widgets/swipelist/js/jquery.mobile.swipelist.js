@@ -104,11 +104,11 @@
             };
             
             var _validSweep = function(X,Y) {
-                return X>startData.point.x() && Math.abs(Y-startData.point.y()) <= 0 && X-startData.point.x() >0;
+                return X>startData.point.x() && Math.abs(Y-startData.point.y()) <= 20 && X-startData.point.x() >0;
             };
 
             var _validReverseSweep = function(X,Y) {
-                return X<startData.point.x() && Math.abs(Y-startData.point.y()) <= 10 && startData.point.x() - X >= swipeThreshold;
+                return X<startData.point.x() && Math.abs(Y-startData.point.y()) <= 20 && startData.point.x() - X >= swipeThreshold;
             };
 
             var _TouchMove = function(X,Y) {
