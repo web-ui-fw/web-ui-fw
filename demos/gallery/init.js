@@ -180,35 +180,35 @@ $(document).bind("pagecreate", function () {
     $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
     $("#hsvpicker").hsvpicker("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
-    $("#colorpalette").colorpalette("setColor", clr);
+    $("#colorpalette").colorpalette("option", "color", clr);
   });
   $("#colorpickerbutton").bind("colorchanged", function(e, clr) {
     $("#colorpicker").colorpicker("option", "color", clr);
     $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
     $("#hsvpicker").hsvpicker("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
-    $("#colorpalette").colorpalette("setColor", clr);
+    $("#colorpalette").colorpalette("option", "color", clr);
   });
   $("#colorpickerbutton-noform").bind("colorchanged", function(e, clr) {
     $("#colorpicker").colorpicker("option", "color", clr);
     $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
     $("#hsvpicker").hsvpicker("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
-    $("#colorpalette").colorpalette("setColor", clr);
+    $("#colorpalette").colorpalette("option", "color", clr);
   });
   $("#hsvpicker").bind("colorchanged", function(e, clr) {
     $("#colorpicker").colorpicker("option", "color", clr);
     $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
     $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
-    $("#colorpalette").colorpalette("setColor", clr);
+    $("#colorpalette").colorpalette("option", "color", clr);
   });
   $("#colortitle").bind("colorchanged", function(e, clr) {
     $("#colorpicker").colorpicker("option", "color", clr);
     $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
     $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
     $("#hsvpicker").hsvpicker("option", "color", clr);
-    $("#colorpalette").colorpalette("setColor", clr);
+    $("#colorpalette").colorpalette("option", "color", clr);
   });
   $("#colorpalette").bind("colorchanged", function(e, clr) {
     $("#colorpicker").colorpicker("option", "color", clr);
@@ -217,6 +217,7 @@ $(document).bind("pagecreate", function () {
     $("#hsvpicker").hsvpicker("option", "color", clr);
     $("#colortitle").colortitle("option", "color", clr);
   });
+  $("#colorpalette").colorpalette("option", "color", "#45cc98");
 });
 
 $(document).bind("pagecreate", function() {
