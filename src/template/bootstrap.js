@@ -85,6 +85,28 @@ S = {
   frameworkThemes: ['default']
 };
 
+/* Create custom user stylesheet */
+S.css = {
+ load: function () {
+	head = document.getElementsByTagName('head')[0];
+    basePath = 'src/';
+
+    for (var i = 0; i < arguments.length; i++) {
+		S.css.link_style(arguments[i]);
+    }
+  },
+  
+ link_style : function(e){
+	customstylesheetPath = basePath + e;
+	customstylesheetLink = document.createElement('link');
+    customstylesheetLink.setAttribute('rel', 'stylesheet');
+    customstylesheetLink.setAttribute('href', customstylesheetPath);
+
+    head.appendChild(customstylesheetLink);
+ } 
+};
+/* Create custom user stylesheet */
+
 // auto-run function which loads the framework
 (function () {
   domReady(function () {
@@ -113,6 +135,7 @@ S = {
 
     for (i = 0; i < scriptElements.length; i++) {
       var srcAttr = scriptElements[i].getAttribute('src');
+      if (!scriptElements[i] || !scriptElements[i].getAttribute('src')) { continue; }
       if (srcAttr && scriptElements[i].getAttribute('src').match(/bootstrap\.js/)) {
         frameworkVersionValue = scriptElements[i].getAttribute('data-framework-version');
         if (frameworkVersionValue) {
@@ -166,5 +189,6 @@ S = {
     .script('config.js' + S.cacheBust).wait(function () {
       body.style.visibility = 'visible';
     });
+    S.css.load();	
   });
 })();
