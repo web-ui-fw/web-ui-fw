@@ -174,6 +174,13 @@ $(document).bind("pagecreate", function () {
         $("#myVolumeControl").volumecontrol("option", "title", "Volume");
       }
     });
+});
+
+/* FIXME: Use pageinit as of jqm beta 3 */
+var clrWidgetsAreInit = false;
+
+$(document).bind("pagebeforeshow", function() {
+  if (clrWidgetsAreInit) return;
 
   $("#colorpicker").bind("colorchanged", function(e, clr) {
     $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
@@ -218,6 +225,8 @@ $(document).bind("pagecreate", function () {
     $("#colortitle").colortitle("option", "color", clr);
   });
   $("#colorpalette").colorpalette("option", "color", "#45cc98");
+
+  clrWidgetsAreInit = true;
 });
 
 $(document).bind("pagecreate", function() {
