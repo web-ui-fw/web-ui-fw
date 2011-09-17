@@ -179,7 +179,7 @@ $(document).bind("pagecreate", function () {
 /* FIXME: Use pageinit as of jqm beta 3 */
 var clrWidgetsAreInit = false;
 
-$(document).bind("pagebeforeshow", function() {
+$("#colorwidgets-demo").bind("pagebeforeshow", function() {
   if (clrWidgetsAreInit) return;
 
   $("#colorpicker").bind("colorchanged", function(e, clr) {
