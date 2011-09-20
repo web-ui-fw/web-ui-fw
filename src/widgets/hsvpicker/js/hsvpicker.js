@@ -1,3 +1,42 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * hsvpicker is a color picker widget. It displays three
+ * sliders that allow the user to select H, S, and V to
+ * specify the color.
+ *
+ * To apply, add the attribute data-role="hsvpicker" to a <div>
+ * element inside a page. Alternatively, call hsvpicker() 
+ * on an element (see below).
+ *
+ * The initial color can be specified in html using the
+ * data-color="#ff00ff" attribute.
+ *
+ * Alternatively, the color can be specified when constructed
+ * in javascript (usually bound to the pageload/create
+ * event), eg
+ *     $("#myhsvpicker").hsvpicker({ color: "#ff00ff" });
+ * where the html might be :
+ *     <div id="myhsvpicker"></div>
+ *
+ * The color can be changed post-construction in the usual jQuery mobile
+ * way, like this :
+ *     $("#myhsvpicker").hsvpicker("option", "color", "#ABCDEF");
+ *
+ * The default color is "#1a8039".
+ *
+ * The hsvpicker also emits an event 'colorchanged' when the color is changed.
+ * You can, for example, bind to the event like this :
+ *     $("#myhsvpicker").bind("colorchanged", function(e, clr) {
+ *         // code to run when the color is changed
+ *     });
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.hsvpicker", $.mobile.widget, {
