@@ -65,27 +65,27 @@ widgets: init
 	@@ls -l ${CODE_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js' | sort`; do \
 	            echo "		$$f"; \
 	            cat $$f >> ${FW_JS}; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js.theme'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js.theme' | sort`; do \
 	            echo "		$$f"; \
 	            cat $$f >> ${FW_JS_THEME}; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.less'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.less' | sort`; do \
 	            echo "		$$f"; \
 	            lessc $$f > $$f.css; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.css'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.css' | sort`; do \
 	            echo "		$$f"; \
 	            cat $$f >> ${FW_CSS}; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.gif' -or -iname '*.png' -or -iname '*.jpg'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.gif' -or -iname '*.png' -or -iname '*.jpg' | sort`; do \
 	            echo "		$$f"; \
 	            cp $$f ${CSS_IMAGES_OUTPUT_DIR}; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.prototype.html'`; do \
+	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
 	            echo "		$$f"; \
 	            cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
 	        done; \

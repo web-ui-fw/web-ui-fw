@@ -1,9 +1,13 @@
+(function($, undefined) {
+
+ensureNS("jQuery.mobile.todons");
+
 jQuery.extend( jQuery.mobile.todons,
 {
-  widgetPrototypes: {},
+  _widgetPrototypes: {},
 
   loadPrototype: function(widgetname) {
-    var ret = $.mobile.todons.widgetPrototypes[widgetname];
+    var ret = $.mobile.todons._widgetPrototypes[widgetname];
 
     if (ret === undefined) {
       var theScriptTag = $("script[data-framework-version][data-framework-root][data-framework-theme]"),
@@ -18,8 +22,8 @@ jQuery.extend( jQuery.mobile.todons,
         dataType: "html"
       })
         .success(function(data, textStatus, jqXHR) {
-          $.mobile.todons.widgetPrototypes[widgetname] = $("<div>").html(data.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath));
-          ret = $.mobile.todons.widgetPrototypes[widgetname];
+          $.mobile.todons._widgetPrototypes[widgetname] = $("<div>").html(data.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath));
+          ret = $.mobile.todons._widgetPrototypes[widgetname];
         });
     }
 
@@ -29,3 +33,4 @@ jQuery.extend( jQuery.mobile.todons,
     return ret;
   }
 });
+})(jQuery);

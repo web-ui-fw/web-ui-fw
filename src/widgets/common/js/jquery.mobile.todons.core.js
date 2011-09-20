@@ -6,8 +6,9 @@
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>
  */
 
-jQuery.extend(jQuery.mobile, {
-    todons: {
+ensureNS("jQuery.mobile.todons");
+
+jQuery.extend(jQuery.mobile.todons, {
       Point: function (x, y) {
           var X = isNaN(x) ? 0 : x;
           var Y = isNaN(y) ? 0 : y;
@@ -222,5 +223,4 @@ jQuery.extend(jQuery.mobile, {
               widget._setOption(opt, dataValue === undefined ? defaultValue : dataValue, userData);
           }
       }
-    }
 });
