@@ -1,10 +1,9 @@
 What a developer needs to do in their application:
 
-* Application developer drops a single bootstrap.js file into their
-  application. This contains a basic loader script, plus defaults for
-  the framework and theme to be used. It also contains inlined versions
-  of domready.js (for DOM ready checking) and LAB.js (for async script
-  loading). (Both are MIT licensed.)
+* They drop a single bootstrap.js file into their application. This contains
+  a basic loader script, plus defaults for the framework and theme to be used.
+  It also contains inlined versions of domready.js (for DOM ready checking)
+  and LAB.js (for async script loading). (Both are MIT licensed.)
 
 * In index.html, they add a script tag to load bootstrap.js
   and specify parameters for the loader. For example:
@@ -55,7 +54,7 @@ What happens when the app loads:
   - Finds the bootstrap.js <script> element in the DOM
 
   - Replaces any of the defaults (root, version, theme) with values
-    from data- attributes on the &lt;script> element; available values
+    from data- attributes on the <script> element; available values
     are:
       * root = <relative or absolute URI>
       * version = 0.1 (actually the same jQuery Mobile version)
