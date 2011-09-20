@@ -1,9 +1,8 @@
-(function( $, undefined ) {
+(function($, undefined) {
 
-$.widget( "mobile.colorpickerbutton", $.mobile.widget, {
+$.widget("mobile.colorpickerbutton", $.mobile.button, {
   options: {
     color: "#ff0000",
-    disabled: false,
     buttonMarkup: {
       theme: null,
       inline: true,
@@ -13,6 +12,7 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     closeText: "Close",
     initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
   },
+
   _create: function() {
     var self = this,
 
@@ -21,7 +21,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
         myProto = $.mobile.todons.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
 
         ui = {
-          button:          myProto.find("#colorpickerbutton-button"),
           buttonContents:  myProto.find("#colorpickerbutton-button-contents"),
           popup:           myProto.find("#colorpickerbutton-popup-container"),
           hsvpicker:       myProto.find("#colorpickerbutton-popup-hsvpicker"),
@@ -29,13 +28,16 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
           closeButtonText: myProto.find("#colorpickerbutton-popup-close-button-text"),
         };
 
+    $.mobile.button.prototype._create.call(this);
+    ui.button = this.button;
+
     /* Tear apart the proto */
-    ui.button.insertBefore(this.element);
     ui.popup.insertBefore(this.element)
             .popupwindow();
     ui.hsvpicker.hsvpicker();
-
-    this.element.css("display", "none");
+    ui.button.find("span.ui-btn-text")
+      .empty()
+      .append(ui.buttonContents);
 
     // Expose to other methods
     $.extend( self, {
@@ -69,7 +71,6 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
       this._setColor(value, unconditional);
     else
     if (key === "buttonMarkup") {
-      this.ui.button.buttonMarkup(value);
       value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
       value["inline"] = false;
       this.ui.closeButton.buttonMarkup(value);
@@ -117,25 +118,13 @@ $.widget( "mobile.colorpickerbutton", $.mobile.widget, {
     self._focusButton();
     self.ui.popup.popupwindow("close");
   },
-
-  disable: function() {
-    this.element.attr( "disabled", true );
-    this.ui.button.addClass( "ui-disabled" ).attr( "aria-disabled", true );
-    return this._setOption( "disabled", true );
-  },
-
-  enable: function() {
-    this.element.attr( "disabled", false );
-    this.ui.button.removeClass( "ui-disabled" ).attr( "aria-disabled", false );
-    return this._setOption( "disabled", false );
-  }
 });
 
 //auto self-init widgets
 $(document).bind("pagecreate create", function(e) {
   $($.mobile.colorpickerbutton.prototype.options.initSelector, e.target)
-    .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
+    .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .colorpickerbutton();
 });
 
-})( jQuery );
+})(jQuery);
