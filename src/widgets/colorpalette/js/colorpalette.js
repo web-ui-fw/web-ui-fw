@@ -1,3 +1,37 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * colorpalette is a color palette widget. It displays a grid
+ * two rows by five columns of colors. The colors are automatically
+ * computed based on the hue of the color set by the color 
+ * attribute (see below).
+ *
+ * To apply, add the attribute data-role="colorpalette" to a <div>
+ * element inside a page. Alternatively, call colorpalette() 
+ * on an element (see below).
+ *
+ * The initial color can be specified in html using the
+ * data-color="#ff00ff" attribute.
+ *
+ * Alternatively, the color can be specified when constructed
+ * in javascript (usually bound to the pageload/create
+ * event), eg
+ *     $("#mycolorpalette").colorpalette({ color: "#ff00ff" });
+ * where the html might be :
+ *     <div id="mycolorpalette"></div>
+ *
+ * The color can be changed post-construction in the usual jQuery mobile
+ * way, like this :
+ *     $("#mycolorpalette").colorpalette("option", "color", "#ABCDEF");
+ *
+ * The default color is "#1a8039".
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.colorpalette", $.mobile.widget, {
