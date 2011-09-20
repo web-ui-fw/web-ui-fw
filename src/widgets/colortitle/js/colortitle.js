@@ -8,7 +8,7 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        clrtitle = $.mobile.todons.loadPrototype("colortitle")
+        clrtitle = $.mobile.todons.loadPrototype("colortitle").find("#colortitle")
           .appendTo(this.element);
 
       $.extend( this, {
