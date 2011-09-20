@@ -25,7 +25,7 @@ What a developer needs to do in their application:
 
   /* link custom stylesheet */
   S.css.load(
-    'app_manage.css',
+    'src/app_manage.css',
     'src/theme.css'
   );
 
