@@ -1,3 +1,36 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * colortitle is a color title widget. It displays the color in
+ * text of the form '#RRGGBB' where RR, GG, and BB are in
+ * hexadecimal.
+ *
+ * To apply, add the attribute data-role="colorcolor" to a <div>
+ * element inside a page. Alternatively, call colortitle() 
+ * on an element (see below).
+ *
+ * The initial color can be specified in html using the
+ * data-color="#ff00ff" attribute.
+ *
+ * Alternatively, the color can be specified when constructed
+ * in javascript, * (usually bound to the pageload/create
+ * event) eg
+ *     $("#mycolortitle").colortitle({ color: "#ff00ff" });
+ * where the html might be :
+ *     <div id="mycolortitle"></div>
+ *
+ * The color can be changed post-construction in the usual jQuery mobile
+ * way, like this :
+ *     $("#mycolortitle").colortitle("option", "color", "#ABCDEF");
+ *
+ * The default color is "#1a8039".
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.colortitle", $.mobile.widget, {
