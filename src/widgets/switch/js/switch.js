@@ -7,15 +7,6 @@ $.widget("mobile.switch", $.mobile.widget, {
     initSelector: ":jqmData(role='switch')"
   },
 
-  /* Ugly hack used when .outerHeight() doesn't work properly */
-  _initialHeight: function(obj) {
-    return obj.outerHeight(true)
-      + parseInt(obj.css("padding-top"))
-      + parseInt(obj.css("padding-bottom"))
-      + parseInt(obj.css("border-bottom-width"))
-      + parseInt(obj.css("border-top-width"));
-  },
-
   _create: function() {
     var self = this,
         dstAttr = this.element.is("input") ? "checked" : "data-checked",
@@ -26,14 +17,13 @@ $.widget("mobile.switch", $.mobile.widget, {
           button: myProto.find("#switch-button").buttonMarkup({inline: true, corners: true})
         };
 
-    ui.background.css("height", this._initialHeight(ui.button) * 3);
-
     $.extend(this, {
       ui: ui,
       dstAttr: dstAttr
     });
 
-    $.mobile.todons.parseOptions(this, true);
+    /* FIXME: St00pid hack necessary because .outerHeight() doesn't seem to work during _create() */
+    setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
 
     ui.button.bind("vclick", function(e) {
       self._toggle();
@@ -58,9 +48,12 @@ $.widget("mobile.switch", $.mobile.widget, {
   },
 
   _setChecked: function(checked, unconditional) {
-    var dst = checked       ? 0                                   : 
-              unconditional ? this._initialHeight(this.ui.button) : 
-                this.ui.button.outerHeight();
+    var dst = checked ? 0 : this.ui.button.outerHeight();
+
+    this.ui.background.css("height", this.ui.button.outerHeight() * 3);
+
+    if (unconditional)
+      this.ui.button.removeAttr("style");
 
     if (dst != parseInt(this.ui.button.css("top")) || unconditional) {
       if (unconditional)
