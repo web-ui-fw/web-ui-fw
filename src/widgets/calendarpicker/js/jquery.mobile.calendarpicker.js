@@ -11,9 +11,10 @@
  * data-role="calendarpicker" attribute to an element.
  * The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
  *
- * CalendarPicker is displayed by calling open() to open it and close() to hide it. It appears
- * as a popup window and disappears when closed. CalendarPicker closes automatically when a valid
- * date selection has been made, or when the user clicks outside its box.
+ * CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true 
+ * during creation and close() to hide it. It appears as a popup window and disappears when closed. 
+ * CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks 
+ * outside its box.
  *
  * Options:
  *
@@ -80,6 +81,9 @@
  *            });
  *        });
  *
+ *    How to Show CalendarPicker by default:
+ *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"show": "true"}'>  </div>
+ *
  *    Passing custom options:
  *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": "false"}'>  </div>
  *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": ["Mon","e","Wed","a"]}'></div>
@@ -112,12 +116,13 @@
             maxDays: false,
             minDays: false,
             highDays: ["Sun","firstdaybutton", "Sat","lastdaybutton"],
-	    calHighToday: "e",
+            calHighToday: "e",
             highDates: false,
             highDatesTheme:"e",
             blackDays: false,
             blackDates: false,
-            disabledDayColor: '#888'
+            disabledDayColor: '#888',
+            show: false
         },
 
         _zeroPad: function(number) {
@@ -221,9 +226,9 @@
             calmode.end = self._getLastDate(self.theDate);
             calmode.lastend = self._getLastDateBefore(self.theDate);
             if ( o.calStartDay > 0 ) {
-		calmode.start = calmode.start - o.calStartDay;
-		if ( calmode.start < 0 ) { calmode.start = calmode.start + 7; }
-	    }
+                calmode.start = calmode.start - o.calStartDay;
+                if ( calmode.start < 0 ) { calmode.start = calmode.start + 7; }
+            }
             calmode.prevtoday = calmode.lastend - (calmode.start - 1);
             calmode.checkDates = ( o.afterToday !== false || o.beforeToday !== false || o.notToday !== false || o.maxDays !== false || o.minDays !== false || o.blackDates !== false || o.blackDays !== false );
                 
@@ -403,6 +408,8 @@
                        .bind("closed", function(e) {
                           self.isopen = false;
                        });
+            if (o.show)
+                self.open();
         },
 
         refresh: function() {
