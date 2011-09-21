@@ -1,3 +1,23 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
+ */
+
+/*
+ * switch is a simple two-state switch widget.
+ *
+ * To apply, add the attribute data-role="switch" to a <div>
+ * element inside a page. Alternatively, call switch() 
+ * on an element, like this :
+ *
+ *     $("#myswitch").switch();
+ * where the html might be :
+ *     <div id="myswitch"></div>
+ */
+
 (function($, undefined) {
 
 $.widget("mobile.switch", $.mobile.widget, {
