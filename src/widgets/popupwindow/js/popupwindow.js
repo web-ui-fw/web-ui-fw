@@ -1,3 +1,53 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof, Elliot Smith
+ */
+
+/*
+ * popupwindow is a widget that you can use to show other elements
+ * inside a popup window.
+ *
+ * To apply, add the attribute data-role="popupwindow" to a <div>
+ * element inside a page. Alternatively, call popupwindow() 
+ * on an element, eg :
+ *
+ *     $("#mypopupwindowContent").popupwindow();
+ * where the html might be :
+ *     <div id="mypopupwindowContent"></div>
+ *
+ * To trigger the popupwindow to appear, it is necessary to make a
+ * call to it's 'open()' method. This is typically done by binding
+ * a function to an event emitted by an input element, such as a the
+ * clicked event emitted by a button element.
+ * The open() method takes two arguments, specifying the origin of
+ * window. For example, this opens the popupwindow with id 
+ * 'popupContent' when the button with id 'popupwindowDemoButton'
+ * is clicked :
+ *
+ *     $('#popupwindowDemoButton').bind("vclick", function (e) {
+ *         var btn = $('#popupwindowDemoButton');
+ *         $('#popupContent').popupwindow("open",
+ *         btn.offset().left + btn.outerWidth()  / 2,
+ *         btn.offset().top  + btn.outerHeight() / 2);
+ *     });
+ *
+ * The html might be something like :
+ *
+ *      <a href="#" id="mypopupwindowDemoButton" data-role="button" data-inline="true">Show popup</a>
+ *
+ *      <div id="mypopupContent" style="display: table;">
+ *          <table>
+ *              <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
+ *              <tr> <td>Catch-a</td> <td>Tiger</td>   <td>By-the</td>  <td>Toe</td> </tr>
+ *              <tr> <td>If-he</td>   <td>Hollers</td> <td>Let-him</td> <td>Go</td>  </tr>
+ *              <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
+ *          </table>
+ *      </div>
+ *
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.popupwindow", $.mobile.widget, {
