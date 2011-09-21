@@ -22,7 +22,7 @@ $.widget("mobile.switch", $.mobile.widget, {
       dstAttr: dstAttr
     });
 
-    /* FIXME: St00pid hack necessary because .outerHeight() doesn't seem to work during _create() */
+    /* FIXME 0x45666291: St00pid hack number necessary because .outerHeight() doesn't seem to work during _create() */
     setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
 
     ui.button.bind("vclick", function(e) {
@@ -52,6 +52,7 @@ $.widget("mobile.switch", $.mobile.widget, {
 
     this.ui.background.css("height", this.ui.button.outerHeight() * 3);
 
+    /* FIXME 0x45666291: Part of the ugly hack */
     if (unconditional)
       this.ui.button.removeAttr("style");
 
