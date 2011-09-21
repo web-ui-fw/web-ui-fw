@@ -7,6 +7,15 @@ $.widget("mobile.switch", $.mobile.widget, {
     initSelector: ":jqmData(role='switch')"
   },
 
+  /* Ugly hack used when .outerHeight() doesn't work properly */
+  _initialHeight: function(obj) {
+    return obj.outerHeight(true)
+      + parseInt(obj.css("padding-top"))
+      + parseInt(obj.css("padding-bottom"))
+      + parseInt(obj.css("border-bottom-width"))
+      + parseInt(obj.css("border-top-width"));
+  },
+
   _create: function() {
     var self = this,
         dstAttr = this.element.is("input") ? "checked" : "data-checked",
@@ -17,12 +26,7 @@ $.widget("mobile.switch", $.mobile.widget, {
           button: myProto.find("#switch-button").buttonMarkup({inline: true, corners: true})
         };
 
-    ui.background.css("height",
-      (ui.button.outerHeight(true)
-        + parseInt(ui.button.css("padding-top"))
-        + parseInt(ui.button.css("padding-bottom"))
-        + parseInt(ui.button.css("border-bottom-width"))
-        + parseInt(ui.button.css("border-top-width"))) * 3);
+    ui.background.css("height", this._initialHeight(ui.button) * 3);
 
     $.extend(this, {
       ui: ui,
@@ -54,14 +58,21 @@ $.widget("mobile.switch", $.mobile.widget, {
   },
 
   _setChecked: function(checked, unconditional) {
-    var dst = checked ? 0 : this.ui.button.outerHeight();
+    var dst = checked       ? 0                                   : 
+              unconditional ? this._initialHeight(this.ui.button) : 
+                this.ui.button.outerHeight();
 
     if (dst != parseInt(this.ui.button.css("top")) || unconditional) {
-      this.ui.button.animate({"top" : dst + "px"}, "fast");
+      if (unconditional)
+        this.ui.button.css("top", dst + "px");
+      else
+        this.ui.button.animate({"top" : dst + "px"}, "fast");
+
       if (checked)
         this.ui.background.addClass("ui-btn-active");
       else
         this.ui.background.removeClass("ui-btn-active");
+
       this.options.checked = checked;
       this.element.attr(this.dstAttr, checked ? "true" : "false");
       this.element.triggerHandler("changed", checked);
