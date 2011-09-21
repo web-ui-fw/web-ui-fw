@@ -144,8 +144,6 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
 
-    $('#switch-1').switch ();
-    $('#switch-2').switch ();
     $('#groupindex').scrolllistview();
     $('#popupwindowDemoButton').bind("vclick", function (e) {
         var btn = $('#popupwindowDemoButton');
