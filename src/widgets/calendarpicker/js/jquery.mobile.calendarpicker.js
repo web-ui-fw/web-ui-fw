@@ -11,9 +11,10 @@
  * data-role="calendarpicker" attribute to an element.
  * The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
  *
- * CalendarPicker is displayed by calling open() to open it and close() to hide it. It appears
- * as a popup window and disappears when closed. CalendarPicker closes automatically when a valid
- * date selection has been made, or when the user clicks outside its box.
+ * CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true 
+ * during creation and close() to hide it. It appears as a popup window and disappears when closed. 
+ * CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks 
+ * outside its box.
  *
  * Options:
  *
@@ -22,25 +23,28 @@
  *     calShowDays: Default value is true. Should be set to false if name of the day should not be displayed.
  *     calShowOnlyMonth: Default Value is true. Should be set to false if previous or next month dates should be visible
  *                        along with the current month.
- *      highDays: An array of days to highlight, every week followed by the theme used to hightlight them.
- *                0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2,"b", 3, "mycustomtheme"])
- *      disabledDayColor: Colour used to show disabled dates.
- *      calHighToday: Theme used to highlight current day. By default it is set to e.Setting the value to null will disable
- *                    highlighting todays date.
- *      highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
+ *     highDays: An array of days to highlight, every week followed by the theme used to hightlight them.
+ *               Sun = Sunday, Mon = Monday, ... Sat = Saturday (e.g. ["Sun","b", "Sat", "mycustomtheme"])
+ *     disabledDayColor: Colour used to show disabled dates.
+ *     calHighToday: Theme used to highlight current day. By default it is set to e.Setting the value to null will disable
+ *                   highlighting todays date.
+ *     highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
+ *     calStartDay: Defines the start day of the week. By default it is 1(Monday).
  *
- *      Documentation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
+ *     FOllowing documentation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
  *
- *      afterToday: When set, only dates that are after or on "today" are selectable.
- *      beforeToday: When set, only dates that are before or on "today" are selectable.
- *      notToday: When set, "today" is not selectable.
- *      minDays: When set, only dates that are after *number* of days before today may be selected. 
- *               Note that minDays can be a negative number.
- *      maxDays: When set, only dates that are before *number* of days after today may be selected. 
- *               Note that maxDays can be a negative number.
- *      highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
- *      blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2])
- *      blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"])
+ *     afterToday: When set, only dates that are after or on "today" are selectable.
+ *     beforeToday: When set, only dates that are before or on "today" are selectable.
+ *     notToday: When set, "today" is not selectable.
+ *     minDays: When set, only dates that are after *number* of days before today may be selected. 
+ *              Note that minDays can be a negative number.
+ *     maxDays: When set, only dates that are before *number* of days after today may be selected. 
+ *              Note that maxDays can be a negative number.
+ *     highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
+ *     blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2]).
+ *     blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"]).
+ *     Using a calendar to select a specific day can be accomplished by setting option 'calWeekMode' to 'true' 
+ *     and 'calWeekModeFirstDay' to the day you wish to pick.
  *
  * Events:
  *
@@ -64,7 +68,8 @@
  *
  *     How to Show CalendarPicker (for example when user presses a button):
  *         <div id = "calendarbutton" data-role = "calendarpicker"> 
- *             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> Launch CalendarPicker</a>
+ *             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> 
+                Launch CalendarPicker</a>
  *         </div>
  *        $(document).bind("pagecreate", function() {
  *            var button = $('#calendarbutton');
@@ -76,11 +81,20 @@
  *            });
  *        });
  *
+ *    How to Show CalendarPicker by default:
+ *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"show": "true"}'>  </div>
+ *
  *    Passing custom options:
  *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": "false"}'>  </div>
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": [1,"e", 2,"a"]}'>  </div>
+ *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": ["Mon","e","Wed","a"]}'></div>
  *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDates": ["2011-12-24", "2011-12-25"],
  *                                                                                "highDatesTheme":"c"}'>  </div>
+ *
+ *    To select by week using Wednesday:
+ *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calWeekMode": true, 
+ *                                                                               "calWeekModeFirstDay": 3}'>  </div>
+ *    To change startday of the week to be Sunday:
+ *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
  */
 
 (function($, undefined ) {
@@ -88,24 +102,27 @@
         options: {
             // All widget options, including some internal runtime details      
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            monthsOfYear: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsOfYear: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                           'October', 'November', 'December'],
             calShowDays: true,
             calShowOnlyMonth: true,
             dateFormat: 'YYYY-MM-DD',
             calWeekMode: false,
             calWeekModeFirstDay: 1,
+            calStartDay: 1,
             notToday:false,
             afterToday: false,
             beforeToday: false,
             maxDays: false,
             minDays: false,
-            highDays: [0,"firstdaybutton", 6,"lastdaybutton"],
-	    calHighToday: "e",
+            highDays: ["Sun","firstdaybutton", "Sat","lastdaybutton"],
+            calHighToday: "e",
             highDates: false,
             highDatesTheme:"e",
             blackDays: false,
             blackDates: false,
-            disabledDayColor: '#888'
+            disabledDayColor: '#888',
+            show: false
         },
 
         _zeroPad: function(number) {
@@ -208,7 +225,10 @@
             calmode.start = self._getFirstDay(self.theDate);
             calmode.end = self._getLastDate(self.theDate);
             calmode.lastend = self._getLastDateBefore(self.theDate);
-            
+            if ( o.calStartDay > 0 ) {
+                calmode.start = calmode.start - o.calStartDay;
+                if ( calmode.start < 0 ) { calmode.start = calmode.start + 7; }
+            }
             calmode.prevtoday = calmode.lastend - (calmode.start - 1);
             calmode.checkDates = ( o.afterToday !== false || o.beforeToday !== false || o.notToday !== false || o.maxDays !== false || o.minDays !== false || o.blackDates !== false || o.blackDays !== false );
                 
@@ -236,7 +256,7 @@
                 if ( o.daysOfWeekShort.length < 8 ) { o.daysOfWeekShort = o.daysOfWeekShort.concat(o.daysOfWeekShort); }
                 calmode.weekDays = $("<div>", {'class':'ui-cp-row'}).appendTo(self.cpweekDayGrid);
                 for ( i=0; i<=6;i++ ) {
-                    $("<div>"+o.daysOfWeekShort[i]+"</div>").addClass('ui-cp-date ui-cp-date-disabled ui-cp-month').appendTo(calmode.weekDays);
+                    $("<div>"+o.daysOfWeekShort[i+o.calStartDay]+"</div>").addClass('ui-cp-date ui-cp-date-disabled ui-cp-month').appendTo(calmode.weekDays);
                 }
             }
             
@@ -296,13 +316,13 @@
                                     }
                                 }
                             }
-                                                                                
+                                               
                             if ( o.calHighToday !== null && calmode.today === calmode.highlightDay ) {
                                 calmode.thisTheme = o.calHighToday;
                             } else if ( $.isArray(o.highDates) && ($.inArray(self._isoDate(self.theDate.getFullYear(), self.theDate.getMonth()+1, calmode.today), o.highDates) > -1 ) ) {
                                 calmode.thisTheme = highDatesTheme;
-                            } else if ( $.isArray(o.highDays) && $.inArray(gridDay, o.highDays) > -1 ) {
-                                  var index = $.inArray(gridDay, o.highDays);
+                            } else if ( $.isArray(o.highDays) && $.inArray(o.daysOfWeekShort[gridDay+o.calStartDay], o.highDays) > -1 ) {
+                                  var index = $.inArray(o.daysOfWeekShort[gridDay+o.calStartDay], o.highDays);
                                   var theme = "calendarbutton";
                                   index = index == o.highDays.length-1 ? -1 :index;
                                   if (index>-1) {
@@ -388,6 +408,8 @@
                        .bind("closed", function(e) {
                           self.isopen = false;
                        });
+            if (o.show)
+                self.open();
         },
 
         refresh: function() {
