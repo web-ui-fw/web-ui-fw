@@ -8,11 +8,16 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        clrtitle = $.mobile.todons.loadPrototype("colortitle").find("#colortitle")
-          .appendTo(this.element);
+        ui = {
+          clrtitle: "#colortitle",
+          header: "#colortitle-string"
+        };
+
+      $.mobile.todons.loadPrototype("colortitle", ui);
+      this.element.append(ui.clrtitle);
 
       $.extend( this, {
-        clrtitle: clrtitle
+        ui: ui
       });
 
     $.mobile.todons.parseOptions(this, true);
@@ -28,7 +33,7 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
 
   _setColor: function(clr, unconditional) {
     if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) || unconditional) {
-      this.clrtitle.find("#colortitle-string").text(clr);
+      this.ui.header.text(clr);
       this.element.attr("data-color", clr);
       this.element.triggerHandler('colorchanged', clr);
     }
