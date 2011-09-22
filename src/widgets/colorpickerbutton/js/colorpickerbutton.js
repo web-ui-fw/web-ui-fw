@@ -15,19 +15,16 @@ $.widget("mobile.colorpickerbutton", $.mobile.button, {
 
   _create: function() {
     var self = this,
-
         dstAttr = this.element.is("input") ? "value" : "data-color",
-
-        myProto = $.mobile.todons.loadPrototype("colorpickerbutton").find("#colorpickerbutton"),
-
         ui = {
-          buttonContents:  myProto.find("#colorpickerbutton-button-contents"),
-          popup:           myProto.find("#colorpickerbutton-popup-container"),
-          hsvpicker:       myProto.find("#colorpickerbutton-popup-hsvpicker"),
-          closeButton:     myProto.find("#colorpickerbutton-popup-close-button"),
-          closeButtonText: myProto.find("#colorpickerbutton-popup-close-button-text"),
+          buttonContents:  "#colorpickerbutton-button-contents",
+          popup:           "#colorpickerbutton-popup-container",
+          hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
+          closeButton:     "#colorpickerbutton-popup-close-button",
+          closeButtonText: "#colorpickerbutton-popup-close-button-text",
         };
 
+    ui = $.mobile.todons.loadPrototype("colorpickerbutton", ui);
     $.mobile.button.prototype._create.call(this);
     ui.button = this.button;
 
