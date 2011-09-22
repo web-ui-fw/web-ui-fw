@@ -1,76 +1,83 @@
-/*!
- * jQuery Mobile Widget @VERSION
- *
- * Copyright (C) TODO
- * License: TODO
- * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
- */
+(function($, undefined) {
 
-(function($, window, undefined) {
-    $.widget("mobile.switch", $.mobile.widget, {
-        options: {
-            animationDuration: 500
-        },
+$.widget("mobile.switch", $.mobile.widget, {
 
-        data: {
-            uuid: 0,
-            precompute: {
-              needed: true,
-              slideFrom: -1,
-              slideTo: -1
-            },
-            instanceData: new Array()
-        },
+  options: {
+    checked: true,
+    initSelector: ":jqmData(role='switch')"
+  },
 
-        _buttonClicked: function(myUUID, obj) {
-          if (0 == obj.data.instanceData[myUUID].toggled)
-            obj.data.instanceData[myUUID].toggled = 1;
-          else
-            obj.data.instanceData[myUUID].toggled = 0;
+  _create: function() {
+    var self = this,
+        dstAttr = this.element.is("input") ? "checked" : "data-checked",
+        myProto = $.mobile.todons.loadPrototype("switch").find("#switch")
+          .appendTo(this.element),
+        ui = {
+          background: myProto,
+          button: myProto.find("#switch-button").buttonMarkup({inline: true, corners: true})
+        };
 
-          if (1 == obj.data.instanceData[myUUID].toggled)
-            $('#ui-switch-button-' + myUUID).animate({top: obj.data.precompute.slideTo},   {duration: obj.options.animationDuration});
-          else
-            $('#ui-switch-button-' + myUUID).animate({top: obj.data.precompute.slideFrom}, {duration: obj.options.animationDuration});
+    $.extend(this, {
+      ui: ui,
+      dstAttr: dstAttr
+    });
 
-          //$(obj).trigger('toggled');
-        },
+    /* FIXME 0x45666291: St00pid hack number necessary because .outerHeight() doesn't seem to work during _create() */
+    setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
 
-        _create: function() {
-            var container = this.element;
-            var obj = this;
+    ui.button.bind("vclick", function(e) {
+      self._toggle();
+      e.stopPropagation();
+    });
 
-            /* Give unique id to allow more instances in one page. */
-            this.data.uuid += 1;
+    ui.background.bind("vclick", function(e) {
+      self._toggle();
+      e.stopPropagation();
+    });
+  },
 
-            var myUUID = this.data.uuid;
+  _toggle: function() {
+    this._setChecked(!(parseInt(this.ui.button.css("top")) === 0));
+  },
 
-            container.attr("id", "ui-switch-" + this.data.uuid);
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if (key === "checked")
+      this._setChecked(value, unconditional);
+  },
 
-            var innerContainer = $.createSwitchInnerContainer();
-            innerContainer.attr("id", "ui-switch-inner-container-" + this.data.uuid);
+  _setChecked: function(checked, unconditional) {
+    var dst = checked ? 0 : this.ui.button.outerHeight();
 
-            var theButton = $.createSwitchButton();
-            theButton.attr("id", "ui-switch-button-" + this.data.uuid);
+    this.ui.background.css("height", this.ui.button.outerHeight() * 3);
 
-            innerContainer.append(theButton);
-            container.append(innerContainer);
+    /* FIXME 0x45666291: Part of the ugly hack */
+    if (unconditional)
+      this.ui.button.removeAttr("style");
 
-            obj.data.instanceData[myUUID] = { toggled: 0 };
+    if (dst != parseInt(this.ui.button.css("top")) || unconditional) {
+      if (unconditional)
+        this.ui.button.css("top", dst + "px");
+      else
+        this.ui.button.animate({"top" : dst + "px"}, "fast");
 
-            if (obj.data.precompute.needed) {
-              obj.data.precompute.needed = false;
-              obj.data.precompute.slideFrom = parseInt(theButton.css('top'));
-              obj.data.precompute.slideTo = innerContainer.height() - parseInt(theButton.css('top')) - theButton.height();
-            }
+      if (checked)
+        this.ui.background.addClass("ui-btn-active");
+      else
+        this.ui.background.removeClass("ui-btn-active");
 
-            innerContainer.click(function() {
-              obj._buttonClicked(myUUID, obj);
-            });
-        }
-    }); /* End of widget */
+      this.options.checked = checked;
+      this.element.attr(this.dstAttr, checked ? "true" : "false");
+      this.element.triggerHandler("changed", checked);
+    }
+  },
+});
 
-    var now = new Date();
-    $($.mobile.switch.prototype.data.uuid = now.getTime());
-})(jQuery, this);
+$(document).bind("pagecreate create", function(e) {
+  $($.mobile.switch.prototype.options.initSelector, e.target)
+    .not(":jqmData(role='none'), :jqmData(role='nojs')")
+    .switch();
+});
 
+})(jQuery);
