@@ -10,7 +10,9 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
     var self = this,
         dstAttr = this.element.is("input") ? "value" : "data-color",
-        clrpalette = $.mobile.todons.loadPrototype("colorpalette").find("#colorpalette")
+        clrpalette = $.mobile.todons.loadPrototype("colorpalette")
+          .find("#colorpalette")
+          .removeAttr("id")
           .appendTo(this.element);
 
     $.extend(this, {
@@ -20,9 +22,8 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
     $.mobile.todons.parseOptions(this, true);
 
-    clrpalette.find("[data-role=colorpalette-choice]").bind("vclick", function(e) {
-      var id = $(e.target).attr("id"),
-          clr = $(e.target).css("background-color"),
+    clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
+      var clr = $(e.target).css("background-color"),
           Nix,
           nChoices = self.clrpalette.attr("data-n-choices"),
           choiceId, rgbMatches;
@@ -36,7 +37,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
           parseInt(rgbMatches[3]) / 255]);
 
       for (Nix = 0 ; Nix < nChoices ; Nix++)
-        clrpalette.find("#colorpalette-choice-" + Nix).removeClass("colorpalette-choice-active");
+        clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
       $(e.target).addClass("colorpalette-choice-active");
 
@@ -80,14 +81,14 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
         newClr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB(hsl));
 
-        this.clrpalette.find("#colorpalette-choice-" + Nix).css("background-color", newClr);
+        this.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
       }
 
       if (activeIdx != -1) {
-        var currentlyActive = this.clrpalette.find(".colorpalette-choice-active").attr("id");
-        if (currentlyActive != "colorpalette-choice-" + activeIdx) {
-          this.clrpalette.find("#" + currentlyActive).removeClass("colorpalette-choice-active");
-          this.clrpalette.find("#colorpalette-choice-" + activeIdx).addClass("colorpalette-choice-active");
+        var currentlyActive = parseInt(this.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
+        if (currentlyActive != activeIdx) {
+          this.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
+          this.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
         }
       }
 
