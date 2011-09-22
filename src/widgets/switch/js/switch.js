@@ -7,7 +7,7 @@
  */
 
 /*
- * switch is a simple two-state switch widget.
+ * Displays a simple two-state switch.
  *
  * To apply, add the attribute data-role="switch" to a <div>
  * element inside a page. Alternatively, call switch() 
@@ -16,6 +16,13 @@
  *     $("#myswitch").switch();
  * where the html might be :
  *     <div id="myswitch"></div>
+ *
+ * Options:
+ *     checked: Boolean; the state of the switch
+ *     Default: true (up)
+ *
+ * Events:
+ *     changed: Emitted when the switch is changed
  */
 
 (function($, undefined) {
@@ -78,8 +85,8 @@ $.widget("mobile.switch", $.mobile.widget, {
     this.ui.normalBackground.css("height", this.ui.button.outerHeight() * 3);
     this.ui.activeBackground.css("height", this.ui.button.outerHeight() * 3);
     this.ui.realbutton.position({
-      my: "center center", 
-      at: "center center", 
+      my: "center center",
+      at: "center center",
       of: this.ui.button
     });
 

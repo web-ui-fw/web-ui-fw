@@ -7,8 +7,9 @@
  */
 
 /*
- * volumecontrol is a volumecontrol widget. It displays a popup
- * window with a visual volume level indicator and a speaker icon.
+ * Displays a popup window with a visual volume level indicator
+ * and a speaker icon.
+ *
  * The volume leven can be adjusted using the 'up', 'down', 'home',
  * and 'end' keys. 'home' sets the volume to zero, and 'end' set it
  * to maximum.
@@ -17,13 +18,7 @@
  * element inside a page. Alternatively, call volumecontrol() 
  * on an element (see below).
  *
- * The volumecontrol element has the following options :
- *
- *    volume : the volume level to be displayed (0-15 or 0-7 for basicTone)
- *    basicTone : display the "basic tone" volume scale, otherwise display the generic one
- *    title : the title to display at the top of the popupwindow.
- *
- * These options can be set during construction :
+ * The following options can be set during construction :
  *
  *     $("myVolumeControl").volumecontrol({volume:5, basicTone:true, title:"Basic Tone"});
  *
@@ -31,10 +26,21 @@
  *
  *     $("myVolumeControl").volumecontrol("option", "title", "Volume");
  *
- * The defaults are { volume: 0, basicTone: false, title: "Volume" }.
+ * Options:
  *
- * The volume control also has an event called "volumechanged" that is triggered when the
- * user changes the volume.
+ *    volume : Integer;the volume level to be displayed
+ *             (0-15 or 0-7 for basicTone)
+ *             Default: 0
+ *
+ *    basicTone : Boolean; display the "basic tone" volume scale,
+ *                otherwise display the generic one
+ *                Default: false
+ *
+ *    title : String; the title to display at the top of the popupwindow.
+ *            Default: 'Volume'
+ *
+ * Event:
+ *     volumechanged: triggered when the user changes the volume.
  */
 (function( $, undefined ) {
 

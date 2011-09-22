@@ -7,8 +7,7 @@
  */
 
 /*
- * popupwindow is a widget that you can use to show other elements
- * inside a popup window.
+ * Shows other elements inside a popup window.
  *
  * To apply, add the attribute data-role="popupwindow" to a <div>
  * element inside a page. Alternatively, call popupwindow() 
@@ -46,6 +45,28 @@
  *              <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
  *          </table>
  *      </div>
+ *
+ * The window can be closed with the close() method.
+ *
+ * Options:
+ *
+ *     disabled: Boolean; disable the popup
+ *               Default: false
+ *
+ *     overlayTheme: String; the theme for the popupwindow
+ *                   Default: "c"
+ *
+ *     shadow: Boolean; display a shadow around the popupwindow
+ *             Default: true
+ *
+ *     fade: Boolean; fades the opening and closing of the popupwindow
+ *
+ *     transition: String; the transition to use when opening or closing
+ *                 a popupwindow
+ *                 Default: $.mobile.defaultDialogTransition
+ *
+ * Events:
+ *     close: Emitted when the popupwindow is closed.
  *
  */
 (function( $, undefined ) {

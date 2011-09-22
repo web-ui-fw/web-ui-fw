@@ -7,35 +7,28 @@
  */
 
 /*
- * hsvpicker is a color picker widget. It displays three
- * sliders that allow the user to select H, S, and V to
- * specify the color.
+ * Displays three sliders that allow the user to select the
+ * hue, saturation, and value for a color.
  *
  * To apply, add the attribute data-role="hsvpicker" to a <div>
  * element inside a page. Alternatively, call hsvpicker() 
  * on an element (see below).
  *
- * The initial color can be specified in html using the
- * data-color="#ff00ff" attribute.
+ * Options:
  *
- * Alternatively, the color can be specified when constructed
- * in javascript (usually bound to the pageload/create
- * event), eg
- *     $("#myhsvpicker").hsvpicker({ color: "#ff00ff" });
- * where the html might be :
- *     <div id="myhsvpicker"></div>
+ *     color: String; the initial color can be specified in html using the
+ *            data-color="#ff00ff" attribute or when constructed
+ *            in javascript, eg
+ *                $("#myhsvpicker").hsvpicker({ color: "#ff00ff" });
+ *            where the html might be :
+ *                <div id="myhsvpicker"></div>
+ *            The color can be changed post-construction like this :
+ *                $("#myhsvpicker").hsvpicker("option", "color", "#ABCDEF");
+ *            Default: "#1a8039"
  *
- * The color can be changed post-construction in the usual jQuery mobile
- * way, like this :
- *     $("#myhsvpicker").hsvpicker("option", "color", "#ABCDEF");
+ * Events:
  *
- * The default color is "#1a8039".
- *
- * The hsvpicker also emits an event 'colorchanged' when the color is changed.
- * You can, for example, bind to the event like this :
- *     $("#myhsvpicker").bind("colorchanged", function(e, clr) {
- *         // code to run when the color is changed
- *     });
+ *     colorchanged: Fired when the color is changed.
  */
 (function( $, undefined ) {
 
