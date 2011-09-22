@@ -1,4 +1,7 @@
-<div id="switch" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-down-c" style="display: table;">
-  <!-- FIXME 0x45666291: "display: none;" only necessary because outerHeight() doesn't work during _create() -->
-  <a id="switch-button" href="#" data-role="button" style="top: 0px; display: none;"></a>
+<div id="switch" class="ui-switch">
+  <div id="switch-inner-active" class="switch-inner-active ui-btn ui-btn-corner-all ui-shadow ui-btn-down-c ui-btn-active"></div>
+  <div id="switch-inner" class="ui-btn ui-btn-corner-all ui-shadow ui-btn-down-c">
+    <a id="switch-button" href="#" data-role="button"></a>
+  </div>
+  <a id="switch-button-outside" href="#" data-role="button" class="switch-button-outside"></a>
 </div>
