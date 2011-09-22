@@ -8,27 +8,29 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        myProto = $.mobile.todons.loadPrototype("hsvpicker").find("#hsvpicker")
-          .appendTo(this.element),
         ui = {
+          container: "#hsvpicker",
           hue: {
-            container: myProto.find("#hsvpicker-hue-masks-container"),
-            selector:  myProto.find("#hsvpicker-hue-selector"),
-            hue:       myProto.find("#hsvpicker-hue-hue"),
-            valMask:   myProto.find("#hsvpicker-hue-mask-val")
+            container: "#hsvpicker-hue-masks-container",
+            selector:  "#hsvpicker-hue-selector",
+            hue:       "#hsvpicker-hue-hue",
+            valMask:   "#hsvpicker-hue-mask-val"
           },
           sat: {
-            container: myProto.find("#hsvpicker-sat-masks-container"),
-            selector:  myProto.find("#hsvpicker-sat-selector"),
-            hue:       myProto.find("#hsvpicker-sat-hue"),
-            valMask:   myProto.find("#hsvpicker-sat-mask-val")
+            container: "#hsvpicker-sat-masks-container",
+            selector:  "#hsvpicker-sat-selector",
+            hue:       "#hsvpicker-sat-hue",
+            valMask:   "#hsvpicker-sat-mask-val"
           },
           val: {
-            container: myProto.find("#hsvpicker-val-masks-container"),
-            selector:  myProto.find("#hsvpicker-val-selector"),
-            hue:       myProto.find("#hsvpicker-val-hue")
+            container: "#hsvpicker-val-masks-container",
+            selector:  "#hsvpicker-val-selector",
+            hue:       "#hsvpicker-val-hue"
           }
         };
+
+    $.mobile.todons.loadPrototype("hsvpicker", ui);
+    this.element.append(ui.container);
 
     $.extend(self, {
       ui: ui,
@@ -42,14 +44,14 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
 
     $.mobile.todons.parseOptions(this, true);
 
-    myProto.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
+    ui.container.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
       $(this).attr("src",
-        myProto.attr("data-arrow-btn-imageTemplate")
+        ui.container.attr("data-arrow-btn-imageTemplate")
           .replace("%1", $(this).attr("data-location"))
           .replace("%2", "_press"));
     });
 
-    myProto.find(".hsvpicker-arrow-btn").bind("vmouseup", function(e) {
+    ui.container.find(".hsvpicker-arrow-btn").bind("vmouseup", function(e) {
       var chan = $(this).attr("data-target"),
           hsvIdx = ("hue" === chan) ? 0 :
                    ("sat" === chan) ? 1 : 2,
@@ -57,7 +59,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
           step = 0.05 * max;
 
       $(this).attr("src",
-        myProto.attr("data-arrow-btn-imageTemplate")
+        ui.container.attr("data-arrow-btn-imageTemplate")
           .replace("%1", $(this).attr("data-location"))
           .replace("%2", ""));
 
