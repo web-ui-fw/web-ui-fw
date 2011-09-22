@@ -13,9 +13,14 @@ $.widget("mobile.switch", $.mobile.widget, {
         myProto = $.mobile.todons.loadPrototype("switch").find("#switch")
           .appendTo(this.element),
         ui = {
-          background: myProto,
-          button: myProto.find("#switch-button").buttonMarkup({inline: true, corners: true})
+          outer: myProto,
+          normalBackground: myProto.find("#switch-inner"),
+          activeBackground: myProto.find("#switch-inner-active"),
+          button:           myProto.find("#switch-button"),
+          realbutton:       myProto.find("#switch-button-outside")
         };
+
+    myProto.find("a").buttonMarkup({inline: true, corners: true});
 
     $.extend(this, {
       ui: ui,
@@ -25,12 +30,12 @@ $.widget("mobile.switch", $.mobile.widget, {
     /* FIXME 0x45666291: St00pid hack number necessary because .outerHeight() doesn't seem to work during _create() */
     setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
 
-    ui.button.bind("vclick", function(e) {
+    ui.realbutton.bind("vclick", function(e) {
       self._toggle();
       e.stopPropagation();
     });
 
-    ui.background.bind("vclick", function(e) {
+    ui.normalBackground.bind("vclick", function(e) {
       self._toggle();
       e.stopPropagation();
     });
@@ -50,22 +55,34 @@ $.widget("mobile.switch", $.mobile.widget, {
   _setChecked: function(checked, unconditional) {
     var dst = checked ? 0 : this.ui.button.outerHeight();
 
-    this.ui.background.css("height", this.ui.button.outerHeight() * 3);
+    this.ui.normalBackground.css("height", this.ui.button.outerHeight() * 3);
+    this.ui.activeBackground.css("height", this.ui.button.outerHeight() * 3);
+    this.ui.realbutton.position({
+      my: "center center", 
+      at: "center center", 
+      of: this.ui.button
+    });
 
     /* FIXME 0x45666291: Part of the ugly hack */
     if (unconditional)
-      this.ui.button.removeAttr("style");
+      this.ui.button.removeClass("ui-switch-button-hidden").css("opacity", 0);
+    else
+      this.ui.button.removeClass("ui-switch-button-hidden");
 
     if (dst != parseInt(this.ui.button.css("top")) || unconditional) {
-      if (unconditional)
+      var newTop = (this.ui.realbutton.position().top + (dst - this.ui.button.position().top));
+      if (unconditional) {
+        this.ui.realbutton.css("top", newTop + "px");
         this.ui.button.css("top", dst + "px");
-      else
-        this.ui.button.animate({"top" : dst + "px"}, "fast");
-
-      if (checked)
-        this.ui.background.addClass("ui-btn-active");
-      else
-        this.ui.background.removeClass("ui-btn-active");
+        this.ui.normalBackground.css("opacity", checked ? 0.0 : 1.0);
+        this.ui.activeBackground.css("opacity", checked ? 1.0 : 0.0);
+      }
+      else {
+        this.ui.realbutton.animate({"top": newTop + "px"});
+        this.ui.button.animate({"top": dst + "px"});
+        this.ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
+        this.ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
+      }
 
       this.options.checked = checked;
       this.element.attr(this.dstAttr, checked ? "true" : "false");
