@@ -36,19 +36,21 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
   _create: function() {
     var self = this,
         dstAttr = this.element.is("input") ? "value" : "data-color",
-        clrpicker = $.mobile.todons.loadPrototype("colorpicker").find("#colorpicker")
-            .appendTo(this.element),
         ui = {
+            clrpicker: "#colorpicker",
             hs: {
-                container: clrpicker.find("#colorpicker-hs-container"),
-                valMask:   clrpicker.find("#colorpicker-hs-val-mask"),
-                selector:  clrpicker.find("#colorpicker-hs-selector")
+                container: "#colorpicker-hs-container",
+                valMask:   "#colorpicker-hs-val-mask",
+                selector:  "#colorpicker-hs-selector"
             },
             l: {
-                container: clrpicker.find("#colorpicker-l-container"),
-                selector:  clrpicker.find("#colorpicker-l-selector")
+                container: "#colorpicker-l-container",
+                selector:  "#colorpicker-l-selector"
             }
         };
+
+    ui = $.mobile.todons.loadPrototype("colorpicker", ui);
+    this.element.append(ui.clrpicker);
 
     $.extend( self, {
       dstAttr: dstAttr,
