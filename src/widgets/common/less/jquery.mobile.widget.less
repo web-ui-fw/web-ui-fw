@@ -23,3 +23,18 @@
     bottom: 0px;
   }
 }
+
+.rounded-corners (@radius: 5px) {
+    border-radius: @radius;
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+}
+
+.reset-rounded-corners {
+    .rounded-corners (0px);
+}
+
+.reset-border {
+    border: 0;
+}
+
