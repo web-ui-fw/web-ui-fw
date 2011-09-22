@@ -1,4 +1,6 @@
 @import "../../common/less/jquery.mobile.todons.defines.less";
+@import "../../common/less/jquery.mobile.widget.less";
+
 @selector-height: 66px;
 @container-height: 68px;
 
@@ -33,7 +35,9 @@
         padding: 0 10px 0 0;
         display: inline-block;
         height: 38px;
+        line-height: 42px;
         font-size: 24px;
+        text-align: center;
     }
 
     .data-last {
@@ -53,9 +57,16 @@
         display: inline-block;
     }
 
-    .ampm {
+    div.ampm {
         width: 64px;
         display: inline-block;
+        border: 1px solid hsl(0, 0%, 90%);
+        background-color: hsl(0, 0%, 95%);
+        .rounded-corners;
+    }
+
+    span.ampm {
+        width: 100%;
     }
 
     .selector {
@@ -97,6 +108,12 @@
 
             .day, .hours, .minutes {
                 min-width: 30px;
+            }
+
+            .ampm {
+                .reset-rounded-corners;
+                .reset-border;
+                background-color: transparent;
             }
         }
     }
