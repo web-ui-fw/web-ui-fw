@@ -73,12 +73,10 @@
             this.data.pm = this.data.initial.hours;
         },
 
-        _initDate: function(container) {
+        _initDate: function(ui) {
             if (!this.options.showDate)
-              container.remove("#datetimepicker-date");
+              ui.date.main.remove();
             else {
-              var div = container.find("#datetimepicker-date");
-
               /* TODO: the order should depend on locale and
                * configurable in the options. */
               var dataItems = {
@@ -88,14 +86,11 @@
               };
 
               for (var data in dataItems)
-                  container.find("#datetimepicker-date-" + dataItems[data][0])
-                    .text(dataItems[data][1]);
+                ui.date[dataItems[data][0]].text(dataItems[data][1]);
             }
         },
 
-        _initTime: function(container) {
-            var div = container.find("#datetimepicker-time");
-
+        _initTime: function(ui) {
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
@@ -105,30 +100,20 @@
             };
 
             for (var data in dataItems)
-              div.find("#datetimepicker-time-" + dataItems[data][0])
-                .text(dataItems[data][1]);
+              ui.time[dataItems[data][0]].text(dataItems[data][1]);
         },
 
-        _initAmPm: function(container) {
-            container.find("#datetimepicker-ampm-span")
-              .text(this._parseAmPmValue(this.data.initial.pm));
-        },
-
-        _initDateTimeDivs: function(container) {
-            var div = container.find("#datetimepicker-main");
-
+        _initDateTimeDivs: function(ui) {
             if (this.options.showDate && this.options.showTime) {
-                div.attr("class", "ui-grid-a");
+                ui.main.attr("class", "ui-grid-a");
                 if (!this.options.twentyfourHours) {
-                    div.attr("class", "ui-grid-b");
+                    ui.main.attr("class", "ui-grid-b");
                 }
             }
 
-            this._initDate(container);
-            this._initTime(container);
-            this._initAmPm(container);
-
-            return div;
+            this._initDate(ui);
+            this._initTime(ui);
+            ui.ampm.text(this._parseAmPmValue(this.data.initial.pm));
         },
 
         _makeTwoDigitValue: function(val) {
@@ -323,7 +308,21 @@
             var ui = {
               container: "#datetimepicker",
               selectorProto: "#datetimepicker-selector-container",
-              itemProto: "#datetimepicker-item"
+              itemProto: "#datetimepicker-item",
+              main: "#datetimepicker-main",
+              date: {
+                main: "#datetimepicker-date",
+                year: "#datetimepicker-date-year",
+                month: "#datetimepicker-date-month",
+                day: "#datetimepicker-date-day"
+              },
+              time: {
+                main: "#datetimepicker-time",
+                hours: "#datetimepicker-time-hours",
+                separator: "#datetimepicker-time-separator",
+                minutes: "#datetimepicker-time-minutes"
+              },
+              ampm: "#datetimepicker-ampm-span"
             };
 
             ui = $.mobile.todons.loadPrototype("datetimepicker", ui);
@@ -380,7 +379,7 @@
 
             ui.container.find("#datetimepicker-header").text(this.options.header);
 
-            var dateTime = this._initDateTimeDivs(ui.container);
+            this._initDateTimeDivs(ui);
             var selector = ui.container.find("#datetimepicker-selector")
 
             var innerContainer = ui.container.find("#datetimepicker-inner-container");
@@ -389,7 +388,7 @@
                 obj._hideDataSelector(selector);
             });
 
-            dateTime.find(".data").each(function() {
+            ui.main.find(".data").each(function() {
                 $(this).click(function(e) {
                     obj._showDataSelector(selector, $(this), ui);
                     e.stopPropagation();
