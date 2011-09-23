@@ -53,34 +53,6 @@
             initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
 
-        data: {
-            now: 0,
-            uuid: 0,
-            parentInput: 0,
-
-            initial: {
-                year: 0,
-                month: 0,
-                day: 0,
-
-                hours: 0,
-                minutes: 0,
-                pm: false
-            },
-
-            year: 0,
-            month: 0,
-            day: 0,
-
-            hours: 0,
-            minutes: 0,
-            pm: false
-        },
-
-        state: {
-            selectorOut: false
-        },
-
         _initDateTime: function() {
             this.data.initial.year = this.data.now.getFullYear();
             this.data.initial.month = this.data.now.getMonth();
@@ -347,6 +319,36 @@
         },
 
         _create: function() {
+
+            $.extend ( this, {
+              data : {
+                now: new Date(),
+                parentInput: 0,
+
+                initial: {
+                    year: 0,
+                    month: 0,
+                    day: 0,
+
+                    hours: 0,
+                    minutes: 0,
+                    pm: false
+                },
+
+                year: 0,
+                month: 0,
+                day: 0,
+
+                hours: 0,
+                minutes: 0,
+                pm: false
+            },
+
+            state : {
+                selectorOut: false
+            }
+            });
+
             var obj = this;
             var input = this.element;
             var container = $.mobile.todons.loadPrototype("datetimepicker").find("#datetimepicker");
@@ -367,10 +369,6 @@
             }
 
             this._initDateTime();
-
-            /* Give unique id to allow more instances in one page. */
-            this.data.uuid += 1;
-            container.attr("id", "ui-datetimepicker-" + this.data.uuid);
 
             container.find("#datetimepicker-header").text(this.options.header);
 
@@ -403,10 +401,6 @@
                             this.data.minutes);
         }
     }); /* End of widget */
-
-    var now = new Date();
-    $($.mobile.datetimepicker.prototype.data.now = now);
-    $($.mobile.datetimepicker.prototype.data.uuid = now.getTime());
 
     $(document).bind("pagecreate create", function(e) {
         $($.mobile.datetimepicker.prototype.options.initSelector, e.target)
