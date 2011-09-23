@@ -37,17 +37,17 @@ $.widget("mobile.switch", $.mobile.widget, {
   _create: function() {
     var self = this,
         dstAttr = this.element.is("input") ? "checked" : "data-checked",
-        myProto = $.mobile.todons.loadPrototype("switch").find("#switch")
-          .appendTo(this.element),
         ui = {
-          outer: myProto,
-          normalBackground: myProto.find("#switch-inner"),
-          activeBackground: myProto.find("#switch-inner-active"),
-          button:           myProto.find("#switch-button"),
-          realbutton:       myProto.find("#switch-button-outside")
+          outer: "#switch",
+          normalBackground: "#switch-inner",
+          activeBackground: "#switch-inner-active",
+          button:           "#switch-button",
+          realbutton:       "#switch-button-outside"
         };
 
-    myProto.find("a").buttonMarkup({inline: true, corners: true});
+    ui = $.mobile.todons.loadPrototype("switch", ui);
+    this.element.append(ui.outer);
+    ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
     $.extend(this, {
       ui: ui,
