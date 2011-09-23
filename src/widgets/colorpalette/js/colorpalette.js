@@ -18,7 +18,7 @@
  *
  * To apply, add the attribute data-role="colorpalette" to a <div>
  * element inside a page. Alternatively, call colorpalette() on an
- * element (see below).
+ * element.
  *
  * Options:
  *
