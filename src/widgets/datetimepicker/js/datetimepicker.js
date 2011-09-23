@@ -175,8 +175,12 @@
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
-                    "hours", values, parseInt, null, obj.data,
-                    "hours", ui);
+                    "hours", values, parseInt, function(val) {
+                      if (!(obj.options.twentyfourHours))
+                        val %= 12;
+                      return val;
+                    },
+                    obj.data, "hours", ui);
             } else if (klass.search("minutes") > 0) {
                 var values = range(0, 59).map(this._makeTwoDigitValue);
                 numItems = values.length;
