@@ -84,65 +84,66 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
   _create: function() {
     var self = this,
         thisPage = this.element.closest(".ui-page"),
-        myProto = $.mobile.todons.loadPrototype("popupwindow"),
-        screen = myProto.find("#popupwindow-screen")
-                        .appendTo(thisPage),
-        container = myProto.find("#popupwindow-container")
-                           .insertAfter(screen);
+        ui = {
+          screen:    "#popupwindow-screen",
+          container: "#popupwindow-container"
+        };
 
-    this.element.appendTo(container);
+    ui = $.mobile.todons.loadPrototype("popupwindow", ui);
+    thisPage.append(ui.screen);
+    ui.container.insertAfter(ui.screen);
+    ui.container.append(this.element);
 
     $.extend( self, {
       transition: undefined,
       isOpen: false,
       thisPage: thisPage,
-      screen: screen,
-      container: container,
+      ui: ui
     });
 
     $.mobile.todons.parseOptions(this, true);
 
     // Events on "screen" overlay
-    screen.bind( "vclick", function( event ) {
+    ui.screen.bind( "vclick", function( event ) {
         self.close();
     });
   },
 
   _setOverlayTheme: function(newTheme) {
-    var classes = this.container.attr("class").split(" "),
+    var classes = this.ui.container.attr("class").split(" "),
         alreadyAdded = false;
 
     for (var Nix in classes) {
       if (classes[Nix].substring(0, 8) === "ui-body-") {
         if (classes[Nix] != newTheme)
-          this.container.removeClass(classes[Nix]);
+          this.ui.container.removeClass(classes[Nix]);
         else
           alreadyAdded = true;
       }
     }
 
     if (!(alreadyAdded || undefined === newTheme))
-      this.container.addClass(newTheme);
+      this.ui.container.addClass(newTheme);
 
     this.options.overlayTheme = newTheme;
   },
 
   _setShadow: function(value) {
     if (value) {
-      if (!this.container.hasClass("ui-overlay-shadow"))
-        this.container.addClass("ui-overlay-shadow");
+      if (!this.ui.container.hasClass("ui-overlay-shadow"))
+        this.ui.container.addClass("ui-overlay-shadow");
     }
     else
-    if (this.container.hasClass("ui-overlay-shadow"))
-      this.container.removeClass("ui-overlay-shadow");
+    if (this.ui.container.hasClass("ui-overlay-shadow"))
+      this.ui.container.removeClass("ui-overlay-shadow");
 
     this.options.shadow = value;
   },
 
   _setTransition: function(value) {
     if (this.transition != undefined)
-      this.container.removeClass(this.transition);
-    this.container.addClass(value);
+      this.ui.container.removeClass(this.transition);
+    this.ui.container.addClass(value);
     this.transition = value;
   },
 
@@ -172,27 +173,27 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
       var x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
           y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
-      this.container.css("min-width", this.element.outerWidth(true));
-      this.container.css("min-height", this.element.outerHeight(true));
+      this.ui.container.css("min-width", this.element.outerWidth(true));
+      this.ui.container.css("min-height", this.element.outerHeight(true));
 
-      var menuHeight = this.container.outerHeight(true),
-          menuWidth = this.container.outerWidth(true),
+      var menuHeight = this.ui.container.outerHeight(true),
+          menuWidth = this.ui.container.outerWidth(true),
           scrollTop = $( window ).scrollTop(),
           screenHeight = window.innerHeight,
           screenWidth = window.innerWidth;
 
-      this.screen
+      this.ui.screen
           .height($(document).height())
           .removeClass("ui-screen-hidden");
 
       if (this.options.fade)
-          this.screen.animate({opacity: 0.5}, "fast");
+          this.ui.screen.animate({opacity: 0.5}, "fast");
 
       // Try and center the overlay over the given coordinates
       var roomtop = y - scrollTop,
           roombot = scrollTop + screenHeight - y,
           halfheight = menuHeight / 2,
-          maxwidth = parseFloat( this.container.css( "max-width" ) ),
+          maxwidth = parseFloat( this.ui.container.css( "max-width" ) ),
           newtop, newleft;
 
       if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
@@ -220,7 +221,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
           }
       }
 
-      this.container
+      this.ui.container
           .removeClass("ui-selectmenu-hidden")
           .css({
               top: newtop,
@@ -237,18 +238,18 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 
       var self = this,
           hideScreen = function() {
-              self.screen.addClass("ui-screen-hidden");
+              self.ui.screen.addClass("ui-screen-hidden");
               self.isOpen = false;
               self.element.trigger("closed");
           };
 
-      this.container
+      this.ui.container
           .addClass("ui-selectmenu-hidden")
           .removeAttr("style")
           .removeClass("in");
 
       if (this.options.fade)
-          this.screen.animate({opacity: 0.0}, "fast", hideScreen);
+          this.ui.screen.animate({opacity: 0.0}, "fast", hideScreen);
       else
           hideScreen();
   }
