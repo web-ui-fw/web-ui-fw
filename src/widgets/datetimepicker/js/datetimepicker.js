@@ -250,7 +250,7 @@
 
         _createScrollableView: function(selectorProto) {
             var container = selectorProto.clone(),
-                view = container.find("#datetimepicker-selector-view");
+                view = container.find("#datetimepicker-selector-view").removeAttr("id");
 
             container.scrollview({direction: "x"});
 
@@ -307,8 +307,10 @@
 
             var ui = {
               container: "#datetimepicker",
+              selector: "#datetimepicker-selector",
               selectorProto: "#datetimepicker-selector-container",
               itemProto: "#datetimepicker-item",
+              header: "#datetimepicker-header",
               main: "#datetimepicker-main",
               date: {
                 main: "#datetimepicker-date",
@@ -377,20 +379,17 @@
 
             this._initDateTime();
 
-            ui.container.find("#datetimepicker-header").text(this.options.header);
+            ui.header.text(this.options.header);
 
             this._initDateTimeDivs(ui);
-            var selector = ui.container.find("#datetimepicker-selector")
-
-            var innerContainer = ui.container.find("#datetimepicker-inner-container");
 
             ui.container.bind("click", function () {
-                obj._hideDataSelector(selector);
+                obj._hideDataSelector(ui.selector);
             });
 
             ui.main.find(".data").each(function() {
                 $(this).click(function(e) {
-                    obj._showDataSelector(selector, $(this), ui);
+                    obj._showDataSelector(ui.selector, $(this), ui);
                     e.stopPropagation();
                 });
             });
