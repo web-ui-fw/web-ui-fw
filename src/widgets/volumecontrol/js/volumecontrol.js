@@ -54,22 +54,24 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   _create: function() {
     var self = this,
-        container = $.mobile.todons.loadPrototype("volumecontrol").find("#volumecontrol")
-          .insertBefore(this.element)
-          .popupwindow({overlayTheme: "", fade: false, shadow: false}),
-        volumeImage = container.find("#volumecontrol-indicator");
+        ui = {
+          container: "#volumecontrol",
+          volumeImage: "#volumecontrol-indicator"
+        };
 
+      ui = $.mobile.todons.loadPrototype("volumecontrol", ui);
+      ui.container.insertBefore(this.element)
+                  .popupwindow({overlayTheme: "", fade: false, shadow: false});
       this.element.css("display", "none");
 
       $.extend (self, {
         isOpen: false,
-        volumeImage: volumeImage,
-        container: container,
+        ui: ui
       });
 
       $.mobile.todons.parseOptions(this, true);
 
-      container.bind("closed", function(e) {
+      ui.container.bind("closed", function(e) {
         self.isOpen = false;
       });
 
@@ -120,7 +122,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   _setTitle: function(value, unconditional) {
     this.options.title = value;
-    this.container.find("#volumecontrol-title").text(value);
+    this.ui.container.find("#volumecontrol-title").text(value);
   },
 
   _setOption: function(key, value, unconditional) {
@@ -147,15 +149,15 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   },
 
   _maxVolume: function() {
-    var ret = this.volumeImage.attr(this.options.basicTone
+    var ret = this.ui.volumeImage.attr(this.options.basicTone
       ? "data-basicTone-maxVolume"
       : "data-generalVolume-maxVolume");
     return ret;
   },
 
   _setVolumeIcon: function() {
-    this.volumeImage.attr("src",
-      this.volumeImage.attr(
+    this.ui.volumeImage.attr("src",
+      this.ui.volumeImage.attr(
           (this.options.basicTone
             ? "data-basicTone-imageTemplate"
             : "data-generalVolume-imageTemplate"))
@@ -164,7 +166,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   open: function() {
     if (!this.isOpen) {
-      this.container.popupwindow("open",
+      this.ui.container.popupwindow("open",
         window.innerWidth  / 2,
         window.innerHeight / 2);
 
@@ -174,7 +176,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
   close: function() {
     if (this.isOpen) {
-      this.container.popupwindow("close");
+      this.ui.container.popupwindow("close");
       this.isOpen = false;
     }
   },
