@@ -1,3 +1,35 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * Displays three sliders that allow the user to select the
+ * hue, saturation, and value for a color.
+ *
+ * To apply, add the attribute data-role="hsvpicker" to a <div>
+ * element inside a page. Alternatively, call hsvpicker() 
+ * on an element (see below).
+ *
+ * Options:
+ *
+ *     color: String; the initial color can be specified in html using the
+ *            data-color="#ff00ff" attribute or when constructed
+ *            in javascript, eg
+ *                $("#myhsvpicker").hsvpicker({ color: "#ff00ff" });
+ *            where the html might be :
+ *                <div id="myhsvpicker"></div>
+ *            The color can be changed post-construction like this :
+ *                $("#myhsvpicker").hsvpicker("option", "color", "#ABCDEF");
+ *            Default: "#1a8039"
+ *
+ * Events:
+ *
+ *     colorchanged: Fired when the color is changed.
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.hsvpicker", $.mobile.widget, {

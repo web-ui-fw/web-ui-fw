@@ -1,3 +1,31 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * Displays the color in text of the form '#RRGGBB' where
+ * RR, GG, and BB are in hexadecimal.
+ *
+ * Apply a colortitle by adding the attribute data-role="colortitle"
+ * to a <div> element inside a page. Alternatively, call colortitle() 
+ * on an element (see below).
+ *
+ * Options:
+ *
+ *     color: String; the initial color can be specified in html using
+ *            the data-color="#ff00ff" attribute or when constructed
+ *            in javascipt eg
+ *                $("#mycolortitle").colortitle({ color: "#ff00ff" });
+ *            where the html might be :
+ *                <div id="mycolortitle"></div>
+ *            The color can be changed post-construction :
+ *                $("#mycolortitle").colortitle("option", "color", "#ABCDEF");
+ *            Default: "#1a8039".
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.colortitle", $.mobile.widget, {

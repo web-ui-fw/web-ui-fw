@@ -1,3 +1,47 @@
+/*!
+ * jQuery Mobile Widget @VERSION
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Gabriel Schulhof
+ */
+
+/*
+ * Displays a popup window with a visual volume level indicator
+ * and a speaker icon.
+ *
+ * The volume leven can be adjusted using the 'up', 'down', 'home',
+ * and 'end' keys. 'home' sets the volume to zero, and 'end' set it
+ * to maximum.
+ *
+ * To apply, add the attribute data-role="volumecontrol" to a <div>
+ * element inside a page. Alternatively, call volumecontrol() 
+ * on an element (see below).
+ *
+ * The following options can be set during construction :
+ *
+ *     $("myVolumeControl").volumecontrol({volume:5, basicTone:true, title:"Basic Tone"});
+ *
+ * or after using the usual jQuery Mobile method, eg to change the title :
+ *
+ *     $("myVolumeControl").volumecontrol("option", "title", "Volume");
+ *
+ * Options:
+ *
+ *    volume : Integer;the volume level to be displayed
+ *             (0-15 or 0-7 for basicTone)
+ *             Default: 0
+ *
+ *    basicTone : Boolean; display the "basic tone" volume scale,
+ *                otherwise display the generic one
+ *                Default: false
+ *
+ *    title : String; the title to display at the top of the popupwindow.
+ *            Default: 'Volume'
+ *
+ * Event:
+ *     volumechanged: triggered when the user changes the volume.
+ */
 (function( $, undefined ) {
 
 $.widget( "mobile.volumecontrol", $.mobile.widget, {
@@ -112,7 +156,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
   _setVolumeIcon: function() {
     this.volumeImage.attr("src",
       this.volumeImage.attr(
-          (this.options.basicTone 
+          (this.options.basicTone
             ? "data-basicTone-imageTemplate"
             : "data-generalVolume-imageTemplate"))
         .replace("%1", ((this.options.volume < 10 ? "0" : "") + this.options.volume)));
@@ -127,7 +171,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
       this.isOpen = true;
     }
   },
-  
+
   close: function() {
     if (this.isOpen) {
       this.container.popupwindow("close");
