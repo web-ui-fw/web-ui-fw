@@ -7,23 +7,19 @@
  */
 
 /**
- * colorpicker is a color picker widget.
+ * Displays a square color spectrum and a brightness slider.
  *
  * To apply, add the attribute data-role="colorpicker" to a <div>
  * element inside a page. Alternatively, call colorpicker() 
  * on an element (see below).
  *
- * The initial color can be specified in html using the
- * data-color="#ff00ff" attribute.
- *
- * Alternatively, the color can be specified when constructed
- * in javascript, * (usually bound to the pageload/create
- * event) eg
- *     $("#mycolorpicker").colorpicker({ color: "#ff00ff" });
- * where the html might be :
- *     <div id="mycolorpicker"/>
- *
- * The default color is "#1a8039".
+ * Options:
+ *     color: String; can be specified in html using the
+ *            data-color="#ff00ff" attribute or when constructed
+ *                $("#mycolorpicker").colorpicker({ color: "#ff00ff" });
+ *            where the html might be :
+ *                <div id="mycolorpicker"/>
+ *            Default: "#1a8039"
  */
 (function( $, undefined ) {
 
