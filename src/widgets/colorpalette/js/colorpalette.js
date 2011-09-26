@@ -36,27 +36,32 @@
 
 $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
   options: {
+    showPreview: false,
     initSelector: ":jqmData(role='colorpalette')"
   },
 
   _create: function() {
 
     var self = this,
-        clrpalette = $.mobile.todons.loadPrototype("colorpalette")
-          .find("#colorpalette")
-          .removeAttr("id")
-          .appendTo(this.element);
+        ui = {
+          clrpalette: "#colorpalette",
+          preview: "#colorpalette-preview",
+          previewContainer: "#colorpalette-preview-container"
+        };
+
+    ui = $.mobile.todons.loadPrototype("colorpalette", ui);
+    this.element.append(ui.clrpalette);
 
     $.extend(this, {
-      clrpalette: clrpalette
+      ui: ui
     });
 
     $.mobile.colorwidget.prototype._create.call(this);
 
-    clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
+    ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
       var clr = $(e.target).css("background-color"),
           Nix,
-          nChoices = self.clrpalette.attr("data-n-choices"),
+          nChoices = self.ui.clrpalette.attr("data-n-choices"),
           choiceId, rgbMatches;
 
       rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
@@ -68,23 +73,53 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
           parseInt(rgbMatches[3]) / 255]);
 
       for (Nix = 0 ; Nix < nChoices ; Nix++)
-        clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
+        ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
       $(e.target).addClass("colorpalette-choice-active");
       $.mobile.colorwidget.prototype._setColor.call(self, clr);
+      self.ui.preview.css("background", clr);
     });
+  },
+
+  _showPreview: function(show, unconditional) {
+    var currentlyVisible = (this.ui.previewContainer.attr("style") != "");
+
+    if (unconditional) {
+      if (show)
+        this.ui.previewContainer.removeAttr("style");
+      else
+        this.ui.previewContainer.css("display", "none");
+    }
+    else {
+      if (!show && currentlyVisible)
+        this.ui.previewContainer.removeAttr("style");
+      else
+      if (show && !currentlyVisible)
+        this.ui.previewContainer.css("display", "none");
+    }
+  },
+
+  _setOption: function(key, value, unconditional) {
+    if (undefined === unconditional)
+      unconditional = false;
+    if ("showPreview" === key)
+      this._showPreview(value, unconditional);
+    else
+      $.mobile.colorwidget.prototype._setOption.call(this, key, value, unconditional);
   },
 
   _setColor: function(clr, unconditional) {
     if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       var Nix,
           activeIdx = -1,
-          nChoices = this.clrpalette.attr("data-n-choices"),
+          nChoices = this.ui.clrpalette.attr("data-n-choices"),
           hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr)),
           origHue = hsl[0],
           offset = hsl[0] / 36,
           theFloor = Math.floor(offset),
           newClr;
+
+      this.ui.preview.css("background", clr);
 
       offset = (offset - theFloor < 0.5)
         ? (offset - theFloor)
@@ -101,14 +136,14 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
 
         newClr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB(hsl));
 
-        this.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
+        this.ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
       }
 
       if (activeIdx != -1) {
-        var currentlyActive = parseInt(this.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
+        var currentlyActive = parseInt(this.ui.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
         if (currentlyActive != activeIdx) {
-          this.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
-          this.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
+          this.ui.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
+          this.ui.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
         }
       }
     }
