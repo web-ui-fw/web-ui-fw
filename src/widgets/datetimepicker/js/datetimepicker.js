@@ -73,12 +73,10 @@
             this.data.pm = this.data.initial.hours;
         },
 
-        _initDate: function(container) {
+        _initDate: function(ui) {
             if (!this.options.showDate)
-              container.remove("#datetimepicker-date");
+              ui.date.main.remove();
             else {
-              var div = container.find("#datetimepicker-date");
-
               /* TODO: the order should depend on locale and
                * configurable in the options. */
               var dataItems = {
@@ -88,14 +86,11 @@
               };
 
               for (var data in dataItems)
-                  container.find("#datetimepicker-date-" + dataItems[data][0])
-                    .text(dataItems[data][1]);
+                ui.date[dataItems[data][0]].text(dataItems[data][1]);
             }
         },
 
-        _initTime: function(container) {
-            var div = container.find("#datetimepicker-time");
-
+        _initTime: function(ui) {
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
@@ -105,30 +100,20 @@
             };
 
             for (var data in dataItems)
-              div.find("#datetimepicker-time-" + dataItems[data][0])
-                .text(dataItems[data][1]);
+              ui.time[dataItems[data][0]].text(dataItems[data][1]);
         },
 
-        _initAmPm: function(container) {
-            container.find("#datetimepicker-ampm-span")
-              .text(this._parseAmPmValue(this.data.initial.pm));
-        },
-
-        _initDateTimeDivs: function(container) {
-            var div = container.find("#datetimepicker-main");
-
+        _initDateTimeDivs: function(ui) {
             if (this.options.showDate && this.options.showTime) {
-                div.attr("class", "ui-grid-a");
+                ui.main.attr("class", "ui-grid-a");
                 if (!this.options.twentyfourHours) {
-                    div.attr("class", "ui-grid-b");
+                    ui.main.attr("class", "ui-grid-b");
                 }
             }
 
-            this._initDate(container);
-            this._initTime(container);
-            this._initAmPm(container);
-
-            return div;
+            this._initDate(ui);
+            this._initTime(ui);
+            ui.ampm.text(this._parseAmPmValue(this.data.initial.pm));
         },
 
         _makeTwoDigitValue: function(val) {
@@ -149,7 +134,7 @@
             return pm ? this.options.pm : this.options.am;
         },
 
-        _showDataSelector: function(selector, owner, toplevel, selectorProto, itemProto) {
+        _showDataSelector: function(selector, owner, ui) {
             /* TODO: find out if it'd be better to prepopulate this, or
              * do some caching at least. */
             var obj = this;
@@ -161,7 +146,7 @@
                 var values = range(1900, 2100);
                 numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
-                    "year", values, parseInt, null, obj.data, "year", toplevel, selectorProto, itemProto);
+                    "year", values, parseInt, null, obj.data, "year", ui);
             } else if (klass.search("month") > 0) {
                 numItems = obj.options.months.length;
                 selectorResult = obj._populateSelector(selector, owner,
@@ -174,14 +159,14 @@
                     function (index) {
                         return obj.options.months[index];
                     },
-                    obj.data, "month", toplevel, selectorProto, itemProto);
+                    obj.data, "month", ui);
             } else if (klass.search("day") > 0) {
                 var day = new Date(
                     obj.data.year, obj.data.month, 0).getDate();
                 numItems = day;
                 selectorResult = obj._populateSelector(selector, owner,
                     "day", range(1, day), parseInt, null, obj.data,
-                    "day", toplevel, selectorProto, itemProto);
+                    "day", ui);
             } else if (klass.search("hours") > 0) {
                 var values =
                     range(this.options.twentyfourHours ? 0 : 1,
@@ -190,14 +175,18 @@
                 numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
-                    "hours", values, parseInt, null, obj.data,
-                    "hours", toplevel, selectorProto, itemProto);
+                    "hours", values, parseInt, function(val) {
+                      if (!(obj.options.twentyfourHours))
+                        val %= 12;
+                      return val;
+                    },
+                    obj.data, "hours", ui);
             } else if (klass.search("minutes") > 0) {
                 var values = range(0, 59).map(this._makeTwoDigitValue);
                 numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
                     "minutes", values, parseInt, null, obj.data,
-                    "minutes", toplevel, selectorProto, itemProto);
+                    "minutes", ui);
             } else if (klass.search("ampm") > 0) {
                 var values = [this.options.am, this.options.pm];
                 numItems = values.length;
@@ -217,7 +206,7 @@
                             return obj.options.pm;
                         }
                     },
-                    obj.data, "pm", toplevel, selectorProto, itemProto);
+                    obj.data, "pm", ui);
             }
 
             selector.slideDown(obj.options.animationDuration);
@@ -265,7 +254,7 @@
 
         _createScrollableView: function(selectorProto) {
             var container = selectorProto.clone(),
-                view = container.find("#datetimepicker-selector-view");
+                view = container.find("#datetimepicker-selector-view").removeAttr("id");
 
             container.scrollview({direction: "x"});
 
@@ -285,9 +274,9 @@
 
         _populateSelector: function(selector, owner, klass, values,
                                     parseFromFunc, parseToFunc,
-                                    dest, prop, toplevel, selectorProto, itemProto) {
+                                    dest, prop, ui) {
             var obj = this;
-            var scrollable = obj._createScrollableView(selectorProto);
+            var scrollable = obj._createScrollableView(ui.selectorProto);
             var currentIndex = 0;
             var destValue = (parseToFunc !== null ?
                                 parseToFunc(dest[prop]) :
@@ -295,7 +284,7 @@
 
             var i = 0;
             for (; i < values.length; i++) {
-                var item = obj._createSelectorItem(itemProto.clone(), klass);
+                var item = obj._createSelectorItem(ui.itemProto.clone(), klass);
                 item.link.click(function(e) {
                     var newValue = parseFromFunc(this.text);
                     dest[prop] = newValue;
@@ -320,7 +309,34 @@
 
         _create: function() {
 
+            var ui = {
+              container: "#datetimepicker",
+              selector: "#datetimepicker-selector",
+              selectorProto: "#datetimepicker-selector-container",
+              itemProto: "#datetimepicker-item",
+              header: "#datetimepicker-header",
+              main: "#datetimepicker-main",
+              date: {
+                main: "#datetimepicker-date",
+                year: "#datetimepicker-date-year",
+                month: "#datetimepicker-date-month",
+                day: "#datetimepicker-date-day"
+              },
+              time: {
+                main: "#datetimepicker-time",
+                hours: "#datetimepicker-time-hours",
+                separator: "#datetimepicker-time-separator",
+                minutes: "#datetimepicker-time-minutes"
+              },
+              ampm: "#datetimepicker-ampm-span"
+            };
+
+            ui = $.mobile.todons.loadPrototype("datetimepicker", ui);
+            ui.selectorProto.remove();
+            ui.itemProto.remove();
+
             $.extend ( this, {
+              ui: ui,
               data : {
                 now: new Date(),
                 parentInput: 0,
@@ -351,14 +367,11 @@
 
             var obj = this;
             var input = this.element;
-            var container = $.mobile.todons.loadPrototype("datetimepicker").find("#datetimepicker");
-            var selectorProto = container.find("#datetimepicker-selector-container").remove();
-            var itemProto = selectorProto.find("#datetimepicker-item").remove();
 
             $.mobile.todons.parseOptions(this);
 
             $(input).css("display", "none");
-            $(input).after(container);
+            $(input).after(ui.container);
             this.data.parentInput = input;
 
             /* We must display either time or date: if the user set both to
@@ -370,20 +383,17 @@
 
             this._initDateTime();
 
-            container.find("#datetimepicker-header").text(this.options.header);
+            ui.header.text(this.options.header);
 
-            var dateTime = this._initDateTimeDivs(container);
-            var selector = container.find("#datetimepicker-selector")
+            this._initDateTimeDivs(ui);
 
-            var innerContainer = container.find("#datetimepicker-inner-container");
-
-            container.bind("click", function () {
-                obj._hideDataSelector(selector);
+            ui.container.bind("click", function () {
+                obj._hideDataSelector(ui.selector);
             });
 
-            dateTime.find(".data").each(function() {
+            ui.main.find(".data").each(function() {
                 $(this).click(function(e) {
-                    obj._showDataSelector(selector, $(this), container, selectorProto, itemProto);
+                    obj._showDataSelector(ui.selector, $(this), ui);
                     e.stopPropagation();
                 });
             });
