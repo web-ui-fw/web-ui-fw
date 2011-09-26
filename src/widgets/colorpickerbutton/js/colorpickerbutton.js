@@ -41,9 +41,8 @@
  */
 (function($, undefined) {
 
-$.widget("mobile.colorpickerbutton", $.mobile.button, {
+$.widget("mobile.colorpickerbutton", $.mobile.colorwidget, {
   options: {
-    color: "#ff0000",
     buttonMarkup: {
       theme: null,
       inline: true,
@@ -56,8 +55,8 @@ $.widget("mobile.colorpickerbutton", $.mobile.button, {
 
   _create: function() {
     var self = this,
-        dstAttr = this.element.is("input") ? "value" : "data-color",
         ui = {
+          button:          "#colorpickerbutton-button",
           buttonContents:  "#colorpickerbutton-button-contents",
           popup:           "#colorpickerbutton-popup-container",
           hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
@@ -66,24 +65,20 @@ $.widget("mobile.colorpickerbutton", $.mobile.button, {
         };
 
     ui = $.mobile.todons.loadPrototype("colorpickerbutton", ui);
-    $.mobile.button.prototype._create.call(this);
-    ui.button = this.button;
+    ui.button.insertBefore(this.element);
+    this.element.css("display", "none");
 
     /* Tear apart the proto */
     ui.popup.insertBefore(this.element)
             .popupwindow();
     ui.hsvpicker.hsvpicker();
-    ui.button.find("span.ui-btn-text")
-      .empty()
-      .append(ui.buttonContents);
 
     // Expose to other methods
     $.extend( self, {
-      dstAttr: dstAttr,
       ui: ui,
     });
 
-    $.mobile.todons.parseOptions(this, true);
+    $.mobile.colorwidget.prototype._create.call(this);
 
     // Button events
     ui.button.bind("vclick keydown", function(event) {
@@ -109,6 +104,7 @@ $.widget("mobile.colorpickerbutton", $.mobile.button, {
       this._setColor(value, unconditional);
     else
     if (key === "buttonMarkup") {
+      this.ui.button.buttonMarkup(value);
       value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
       value["inline"] = false;
       this.ui.closeButton.buttonMarkup(value);
@@ -119,13 +115,9 @@ $.widget("mobile.colorpickerbutton", $.mobile.button, {
   },
 
   _setColor: function(clr, unconditional) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/)) {
-      if (this.element.attr("data-color") != clr || unconditional) {
-        this.ui.hsvpicker.hsvpicker("option", "color", clr);
-        this.element.attr(this.dstAttr, clr);
-        this.element.trigger("colorchanged", clr);
-        this.ui.buttonContents.css("color", clr);
-      }
+    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+      this.ui.hsvpicker.hsvpicker("option", "color", clr);
+      this.ui.buttonContents.css("color", clr);
     }
   },
 

@@ -10,9 +10,10 @@ $.widget("mobile.colorwidget", $.mobile.widget, {
       isInput: this.element.is("input")
     });
 
-    /* "value" takes precedence over "data-color" */
+    /* "value", if present, takes precedence over "data-color" */
     if (this.isInput)
-      this.element.attr("data-color", this.element.attr("value"));
+      if (this.element.attr("value").match(/#[0-9A-Fa-f]{6}/))
+        this.element.attr("data-color", this.element.attr("value"));
 
     $.mobile.todons.parseOptions(this, true);
   },
