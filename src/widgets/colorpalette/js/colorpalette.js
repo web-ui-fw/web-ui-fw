@@ -34,27 +34,24 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colorpalette", $.mobile.widget, {
+$.widget( "mobile.colorpalette", $.mobile.colorwidget, {
   options: {
-    color: "#1a8039",
     initSelector: ":jqmData(role='colorpalette')"
   },
 
   _create: function() {
 
     var self = this,
-        dstAttr = this.element.is("input") ? "value" : "data-color",
         clrpalette = $.mobile.todons.loadPrototype("colorpalette")
           .find("#colorpalette")
           .removeAttr("id")
           .appendTo(this.element);
 
     $.extend(this, {
-      dstAttr: dstAttr,
       clrpalette: clrpalette
     });
 
-    $.mobile.todons.parseOptions(this, true);
+    $.mobile.colorwidget.prototype._create.call(this);
 
     clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
       var clr = $(e.target).css("background-color"),
@@ -74,23 +71,12 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
         clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
       $(e.target).addClass("colorpalette-choice-active");
-
-      self.element.attr(self.dstAttr, clr);
-      self.element.triggerHandler("colorchanged", clr);
+      $.mobile.colorwidget.prototype._setColor.call(self, clr);
     });
   },
 
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-    if (key === "color")
-      this._setColor(value, unconditional);
-  },
-
   _setColor: function(clr, unconditional) {
-    var clrValue = this.element.attr("data-color");
-
-    if (clr != clrValue || unconditional) {
+    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       var Nix,
           activeIdx = -1,
           nChoices = this.clrpalette.attr("data-n-choices"),
@@ -125,9 +111,6 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
           this.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
         }
       }
-
-      this.element.attr(this.dstAttr, clr);
-      this.element.triggerHandler("colorchanged", clr);
     }
   }
 });

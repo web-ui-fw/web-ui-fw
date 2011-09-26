@@ -32,9 +32,8 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.hsvpicker", $.mobile.widget, {
+$.widget( "mobile.hsvpicker", $.mobile.colorwidget, {
   options: {
-    color: "#1a8039",
     initSelector: ":jqmData(role='hsvpicker')"
   },
 
@@ -74,7 +73,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
       dragging: -1
     });
 
-    $.mobile.todons.parseOptions(this, true);
+    $.mobile.colorwidget.prototype._create.call(this);
 
     ui.container.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
       $(this).attr("src",
@@ -133,13 +132,6 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     ui.hue.container.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.sat.container.bind("vmouseup", function(e) { self.dragging = -1; });
     ui.val.container.bind("vmouseup", function(e) { self.dragging = -1; });
-  },
-
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-    if (key === "color")
-      this._setColor(value, unconditional);
   },
 
   _containerMouseDown: function(chan, idx, e) {
@@ -213,12 +205,11 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, {
     this.ui.val.selector.css("background", clr);
     this.ui.val.hue.css("background", vclr);
 
-    this.element.attr("data-color", clr);
-    this.element.triggerHandler('colorchanged', clr);
+    $.mobile.colorwidget.prototype._setColor.call(this, clr);
   },
 
   _setColor: function(clr, unconditional) {
-    if (clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr || unconditional) {
+    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       this.dragging_hsv = $.mobile.todons.clrlib.RGBToHSV($.mobile.todons.clrlib.HTMLToRGB(clr));
       this._updateSelectors(this.dragging_hsv);
     }

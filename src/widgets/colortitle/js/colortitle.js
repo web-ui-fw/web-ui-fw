@@ -28,9 +28,8 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colortitle", $.mobile.widget, {
+$.widget( "mobile.colortitle", $.mobile.colorwidget, {
   options: {
-    color: "#1a8039",
     initSelector: ":jqmData(role='colortitle')"
   },
 
@@ -48,23 +47,12 @@ $.widget( "mobile.colortitle", $.mobile.widget, {
         ui: ui
       });
 
-    $.mobile.todons.parseOptions(this, true);
-  },
-
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-
-    if (key === "color")
-      this._setColor(value, unconditional);
+    $.mobile.colorwidget.prototype._create.call(this);
   },
 
   _setColor: function(clr, unconditional) {
-    if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr("data-color") != clr) || unconditional) {
+    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional))
       this.ui.header.text(clr);
-      this.element.attr("data-color", clr);
-      this.element.triggerHandler('colorchanged', clr);
-    }
   }
 });
 

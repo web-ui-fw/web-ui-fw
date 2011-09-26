@@ -27,15 +27,13 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colorpicker", $.mobile.widget, {
+$.widget( "mobile.colorpicker", $.mobile.colorwidget, {
   options: {
-      color: "#1a8039",
       initSelector: ":jqmData(role='colorpicker')"
   },
 
   _create: function() {
     var self = this,
-        dstAttr = this.element.is("input") ? "value" : "data-color",
         ui = {
             clrpicker: "#colorpicker",
             hs: {
@@ -53,7 +51,6 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     this.element.append(ui.clrpicker);
 
     $.extend( self, {
-      dstAttr: dstAttr,
       ui: ui,
       dragging: false,
       draggingHS: false,
@@ -64,7 +61,7 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
       dragging_hsl: undefined
     });
 
-    $.mobile.todons.parseOptions(this, true);
+    $.mobile.colorwidget.prototype._create.call(this);
 
     $( document ).bind( "vmousemove", function( event ) {
       if ( self.dragging )
@@ -207,19 +204,11 @@ $.widget( "mobile.colorpicker", $.mobile.widget, {
     this.ui.l.selector.css("top",   hsl[2] * this.ui.l.container.height());
     this.ui.l.selector.css("background",  gray);
 
-    this.element.attr(this.dstAttr, clr);
-    this.element.triggerHandler('colorchanged', clr);
-  },
-
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-    if (key === "color")
-      this._setColor(value, unconditional);
+    $.mobile.colorwidget.prototype._setColor.call(this, clr);
   },
 
   _setColor: function(clr, unconditional) {
-    if ((clr.match(/#[0-9A-Fa-f]{6}/) && this.element.attr(this.dstAttr) != clr) || unconditional) {
+    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       this.dragging_hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr));
       this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
       this._updateSelectors(this.dragging_hsl);
