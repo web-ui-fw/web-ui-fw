@@ -9,10 +9,29 @@ jQuery.extend( jQuery.mobile.todons,
   /*
    * load the prototype for a widget.
    *
-   * Looks for @widgetname.prototype.html in the proto-html/ subdirectory of the framework's current theme.
-   * Loads the file if found, and, if @ui is provided, fills in the hash by looking for the elements specified
-   * by the selectors in the hash.
-   * If the hash is provided, it will remove the "id" attribute for those elements that are selected by id.
+   * If @widget is a string, the function looks for @widget.prototype.html in the proto-html/ subdirectory of the
+   * framework's current theme and loads the file via AJAX into a string. Note that the file will only be loaded via
+   * AJAX once. If two widget instances based on the same @widget value are to be constructed, the second will be
+   * constructed from the cached copy of the prototype of the first instance.
+   *
+   * If @widget is not a string, it is assumed to be a hash containing at least one key, "proto", the value of which is
+   * the string to be used for the widget prototype. In this case, the prototype cannot be cached, because the key under
+   * which to cache it is not known.
+   *
+   * Given the string for the widget prototype, the following patterns occurring in the string are replaced:
+   *
+   *   "${FRAMEWORK_ROOT}" - replaced with the path to the root of the framework
+   *
+   * The function then creates a jQuery $("<div>") object containing the prototype from the string.
+   *
+   * If @ui is not provided, the jQuery object containing the prototype is returned.
+   *
+   * If @ui is provided, it is assumed to be a (possibly multi-level) hash containing CSS selectors. For every level of
+   * the hash and for each key at that level, the css selector specified as the value is sought in the prototype jQuery
+   * object and, if found, the value of the key is replaced with the jQuery object resulting from the search.
+   * Additionally, if the CSS selector is of the form "#widget-id", the "id" attribute will be removed from the elements
+   * contained within the resulting jQuery object. The resulting hash is returned.
+   *
    * Examples:
    *
    * 1.
@@ -20,7 +39,7 @@ jQuery.extend( jQuery.mobile.todons,
    * mywidget.prototype.html located in the current theme folder of the current framework.
    *
    * 2. $.mobile.todons.loadPrototype("mywidget", ui):
-   * ui is a hash that looks like this:
+   * where ui is a hash that looks like this:
    * ui = {
    *   element1: "<css selector 1>",
    *   element2: "<css selector 2>",
@@ -36,11 +55,20 @@ jQuery.extend( jQuery.mobile.todons,
    * selectors are of the form "#elementid" then the "id" attribute will be stripped from the elements selected. This
    * means that they will no longer be accessible via the selector used initially. @ui is then returned thus modified.
    */
-  loadPrototype: function(widgetname, ui) {
-    var selector,
-        ret = $.mobile.todons._widgetPrototypes[widgetname];
+
+  loadPrototype: function(widget, ui) {
+    var ret = undefined,
+        theScriptTag = $("script[data-framework-version][data-framework-root][data-framework-theme]"),
+        frameworkRootPath = theScriptTag.attr("data-framework-root")    + "/" +
+                            theScriptTag.attr("data-framework-version") + "/";
+
+    function replaceVariables(s) {
+      return s.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath);
+    }
 
     function fillObj(obj, uiProto) {
+      var selector;
+
       for (var key in obj) {
         if (typeof obj[key] === "string") {
           selector = obj[key];
@@ -55,29 +83,28 @@ jQuery.extend( jQuery.mobile.todons,
       return obj;
     }
 
-    if (ret === undefined) {
-      var theScriptTag = $("script[data-framework-version][data-framework-root][data-framework-theme]"),
-          frameworkRootPath = theScriptTag.attr("data-framework-root")    + "/" +
-                              theScriptTag.attr("data-framework-version") + "/",
-          protoPath = frameworkRootPath + "proto-html" + "/" +
-                      theScriptTag.attr("data-framework-theme");
-
-      $.ajax({
-        url: protoPath + "/" + widgetname + ".prototype.html",
-        async: false,
-        dataType: "html"
-      })
-        .success(function(data, textStatus, jqXHR) {
-          $.mobile.todons._widgetPrototypes[widgetname] = $("<div>").html(data.replace(/\$\{FRAMEWORK_ROOT\}/g, frameworkRootPath));
-          ret = $.mobile.todons._widgetPrototypes[widgetname];
-        });
+    if (typeof widget === "string") {
+      ret = $.mobile.todons._widgetPrototypes[widget];
+      if (ret === undefined) {
+        var protoPath = frameworkRootPath + "proto-html" + "/" +
+                        theScriptTag.attr("data-framework-theme");
+        $.ajax({
+          url: protoPath + "/" + widget + ".prototype.html",
+          async: false,
+          dataType: "html"
+        })
+          .success(function(data, textStatus, jqXHR) {
+            $.mobile.todons._widgetPrototypes[widget] = $("<div>").html(replaceVariables(data));
+            ret = $.mobile.todons._widgetPrototypes[widget].clone();
+          });
+      }
     }
+    else
+      ret = $("<div>").html(replaceVariables(widget["proto"]));
 
-    if (ret != undefined) {
-      ret = ret.clone();
+    if (ret != undefined)
       if (ui != undefined)
         ret = fillObj(ui, ret);
-    }
 
     return ret;
   }

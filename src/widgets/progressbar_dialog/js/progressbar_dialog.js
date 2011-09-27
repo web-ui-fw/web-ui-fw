@@ -35,7 +35,7 @@
             var self = this,
 	   		   	select = this.element;
 	        	
-	        dialogContainer = $.mobile.loadPrototype("progressbar_dialog").find("div.ui-progressbar-dialog")
+	        dialogContainer = $.mobile.todons.loadPrototype("progressbar_dialog").find("div.ui-progressbar-dialog")
 	        		.insertBefore(select);
 	                	
 	        progressBar_in_dialog = dialogContainer.find("div.ui-progressbar_dialog");

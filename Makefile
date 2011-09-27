@@ -3,6 +3,7 @@ PROJECT_NAME = web-ui-fw
 VERSION = 0.1
 THEME_NAME = default
 
+INLINE_PROTO = 1
 OUTPUT_ROOT = build
 FRAMEWORK_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}
 JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
@@ -66,10 +67,14 @@ widgets: init
 	@@ls -l ${CODE_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js' | sort`; do \
-	            echo "		$$f"; \
-	            cat $$f >> ${FW_JS}; \
-	        done; \
+                if test "x${INLINE_PROTO}x" = "x1x"; then \
+                  ./inline-protos.sh ${CODE_DIR}/$$REPLY >> ${FW_JS}; \
+                else \
+	          for f in `find ${CODE_DIR}/$$REPLY -iname '*.js' | sort`; do \
+	              echo "		$$f"; \
+	              cat $$f >> ${FW_JS}; \
+	          done; \
+                fi; \
 	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.js.theme' | sort`; do \
 	            echo "		$$f"; \
 	            cat $$f >> ${FW_JS_THEME}; \
@@ -86,10 +91,12 @@ widgets: init
 	            echo "		$$f"; \
 	            cp $$f ${CSS_IMAGES_OUTPUT_DIR}; \
 	        done; \
-	        for f in `find ${CODE_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
-	            echo "		$$f"; \
-	            cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
-	        done; \
+                if test "x${INLINE_PROTO}x" != "x1x"; then \
+	          for f in `find ${CODE_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
+	              echo "		$$f"; \
+	              cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
+	          done; \
+                fi; \
 	    done
 
 clean:

@@ -54,7 +54,7 @@ $.widget("mobile.switch", $.mobile.widget, {
       dstAttr: dstAttr
     });
 
-    /* FIXME 0x45666291: St00pid hack number necessary because .outerHeight() doesn't seem to work during _create() */
+    /* FIXME 0x45666291: St00pid hack necessary because .outerHeight() doesn't seem to work during _create() */
     setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
 
     ui.realbutton.bind("vclick", function(e) {
