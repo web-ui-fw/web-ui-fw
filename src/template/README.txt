@@ -28,17 +28,12 @@ What a developer needs to do in their application:
     'src/theme.css'
   );
 
-  In this case, 'S' is an arbitrary namespace I picked for
+  Note that as config.js is loaded last, it can reference any framework
+  functions. In this case, 'S' is an arbitrary namespace I picked for
   our framework; the load() function is defined in bootstrap.js, and
-  simply loads the remaining framework JavaScript files, followed by
-  the specified JS files (relative to the application root
+  simply loads the specified JS files (relative to the application root
   directory) in order.
 
-  Note that as config.js is loaded after jQuery but before jQuery Mobile:
-  this is so it can hook into jQuery Mobile configuration (via
-  $.mobile.* properties) and also bind to the pagecreate event for
-  the first page. Therefore, it shouldn't directly reference any
-  framework functions.
 
 What happens when the app loads:
 
@@ -71,12 +66,11 @@ What happens when the app loads:
   - Uses LAB.js to load the framework JS files; the names of the files are
     specified in bootstrap.js
 
-  - Loads config.js: any code in it runs; it should include a call
-    to S.load() to start the application; optionally, JavaScript files
-    can be passed to S.load() as arguments, to load application
-    JavaScript.
+  - Loads config.js: any code in it runs, which may include
+    loading more JavaScript files (via .load() for example); one of
+    the loaded files should do the actual application stuff (equivalent of
+    a main() function).
 
-  - Shows the <body> element once the framework and all application
-    files have finished loading; NB this occurs once all the scripts
-    in the framework and the application (loaded by S.load()) have
-    completed loading.
+  - Shows the <body> element once config.js has finished loading; NB this
+    may be before the developer's own scripts have loaded (if loaded via
+    .load()).
