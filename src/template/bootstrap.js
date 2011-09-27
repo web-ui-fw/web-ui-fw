@@ -50,205 +50,145 @@
 
 // 'S' is the framework namespace (temporary)
 S = {
-    loaderChain: $LAB,
-    cacheBust: (document.location.href.match(/debug=true/)) ?
-               '?cacheBust=' + (new Date()).getTime() :
-               '',
-    basePath: '',
+  loaderChain: $LAB,
+  cacheBust: (document.location.href.match(/debug=true/)) ?
+             '?cacheBust=' + (new Date()).getTime() : '',
 
-    // these should be loaded before config.js
-    scriptsToLoadPreConfig: ['js/jquery.js'],
+  // NB all scripts are loaded serially, but we could use a dependency
+  // graph here instead
+  load: function () {
+    for (var i = 0; i < arguments.length; i++) {
+      S.loaderChain.script(arguments[i] + S.cacheBust).wait();
+    }
+  },
 
-    // these are scripts which should be loaded after config.js
-    scriptsToLoadPostConfig: ['js/web-ui-fw-libs.js',
-                              'js/web-ui-fw-default-theme.js',
-                              'js/web-ui-fw.js'],
+  // implemented here because Underscore.js isn't available
+  member: function (item, arr) {
+    for (var i = 0; i < arr.length; i++) {
+      if (item === arr[i]) {
+        return true;
+      }
+    }
+    return false;
+  },
 
-    addBasePath: function (scripts) {
-        var mapped = [];
+  // default root path to the framework; could be an absolute file:// URI
+  defaultFrameworkRoot: 'web-ui-fw',
 
-        for (var i = 0; i < scripts.length; i++) {
-            mapped.push(this.basePath + scripts[i]);
-        }
+  // default framework version to load
+  defaultFrameworkVersion: '0.1',
 
-        return mapped;
-    },
+  // default theme to load
+  defaultFrameworkTheme: 'default',
 
-    // load jquery and then config.js; this enables us to inject
-    // configuration into jqm mobile before it is init'ed; it also
-    // allows us to define jqm widgets and capture pagecreate/pageshow
-    // events for the first page, as we turn off page autoinitialization
-    // and only turn it back on after config has finished loading its
-    // pages
-    loadConfig: function () {
-        var scriptsToLoad = this.addBasePath(this.scriptsToLoadPreConfig);
-        scriptsToLoad.push('config.js');
-
-        var callback = function () {
-            $(document).bind('mobileinit', function () {
-                $.mobile.autoInitializePage = false;
-            });
-        };
-
-        this.loadScriptsWithCallback(scriptsToLoad, callback);
-    },
-
-    // call this from config.js to load js specific to the app,
-    // followed by the rest of the framework (except jQuery itself)
-    // NB all scripts are loaded serially, but we could use a dependency
-    // graph here instead
-    load: function () {
-        var scriptsToLoad = this.addBasePath(this.scriptsToLoadPostConfig);
-
-        for (var i = 0; i < arguments.length; i++) {
-            scriptsToLoad.push(arguments[i]);
-        }
-
-        var callback = function () {
-            $.mobile.initializePage();
-            $('body').css('visibility', 'visible');
-        };
-
-        this.loadScriptsWithCallback(scriptsToLoad, callback);
-    },
-
-    // utility function to load an array of script paths, appending
-    // S.cacheBust to each; finally, invoke callback when all scripts
-    // have finished loading
-    loadScriptsWithCallback: function (scriptsToLoad, callback) {
-        var numScripts;
-        var lastScript;
-        var scriptPath;
-
-        numScripts = scriptsToLoad.length;
-        lastScript = scriptsToLoad[numScripts - 1];
-
-        for (var i = 0; i < numScripts - 1; i++) {
-            scriptPath = scriptsToLoad[i];
-            this.loaderChain.script(scriptPath + this.cacheBust).wait();
-        }
-
-        // once the last script is loaded, run the callback
-        this.loaderChain.script(lastScript + this.cacheBust).wait(callback);
-    },
-
-    member: function (item, arr) {
-        for (var i = 0; i < arr.length; i++) {
-            if (item === arr[i]) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    // default root path to the framework; could be an absolute file:// URI
-    defaultFrameworkRoot: 'web-ui-fw',
-
-    // default framework version to load
-    defaultFrameworkVersion: '0.1',
-
-    // default theme to load
-    defaultFrameworkTheme: 'default',
-
-    frameworkVersions: ['0.1'],
-    frameworkThemes: ['default']
+  frameworkVersions: ['0.1'],
+  frameworkThemes: ['default']
 };
 
 /* Create custom user stylesheet */
 S.css = {
-    load: function () {
-        var head = document.getElementsByTagName('head')[0];
-        for (var i = 0; i < arguments.length; i++) {
-            head.appendChild(this.makeLink(arguments[i] + S.cacheBust));
-        }
-    },
+ load: function () {
+	head = document.getElementsByTagName('head')[0];
+    basePath = 'src/';
 
-    makeLink : function (href) {
-        var customstylesheetLink = document.createElement('link');
-        customstylesheetLink.setAttribute('rel', 'stylesheet');
-        customstylesheetLink.setAttribute('href', href);
-        return customstylesheetLink;
+    for (var i = 0; i < arguments.length; i++) {
+		S.css.link_style(arguments[i]);
     }
+  },
+  
+ link_style : function(e){
+	customstylesheetPath = basePath + e;
+	customstylesheetLink = document.createElement('link');
+    customstylesheetLink.setAttribute('rel', 'stylesheet');
+    customstylesheetLink.setAttribute('href', customstylesheetPath);
+
+    head.appendChild(customstylesheetLink);
+ } 
 };
+/* Create custom user stylesheet */
 
 // auto-run function which loads the framework
 (function () {
-    domReady(function () {
-        var scriptElements,
-            scriptElt,
-            srcAttr,
-            i,
-            frameworkVersionValue,
-            frameworkRootValue,
-            frameworkThemeValue,
-            body,
-            basePath,
-            stylesheetPath;
+  domReady(function () {
+    var scriptElements,
+        i,
+        frameworkVersionValue,
+        frameworkRootValue,
+        frameworkThemeValue,
+        head,
+        body,
+        basePath,
+        stylesheetPath,
+        stylesheetLink;
 
-        // set some defaults
-        var frameworkRoot = S.defaultFrameworkRoot;
-        var frameworkVersion = S.defaultFrameworkVersion;
-        var frameworkTheme = S.defaultFrameworkTheme;
+    // set some defaults
+    var frameworkRoot = S.defaultFrameworkRoot;
+    var frameworkVersion = S.defaultFrameworkVersion;
+    var frameworkTheme = S.defaultFrameworkTheme;
 
-        // hide the body until everything is loaded
-        body = document.getElementsByTagName('body')[0];
-        body.style.visibility = 'hidden';
+    // hide the body until everything is loaded
+    body = document.getElementsByTagName('body')[0];
+    body.style.visibility = 'hidden';
 
-        // get framework version, root and theme from the bootstrap.js <script> element
-        scriptElements = document.getElementsByTagName('script');
+    // get framework version and root from the bootstrap.js <script> element
+    scriptElements = document.getElementsByTagName('script');
 
-        for (i = 0; i < scriptElements.length; i++) {
-            scriptElt = scriptElements[i];
-            srcAttr = scriptElt.getAttribute('src');
-
-            if (!scriptElt || !srcAttr) { continue; }
-
-            if (srcAttr && srcAttr.match(/bootstrap\.js/)) {
-                frameworkVersionValue = scriptElt.getAttribute('data-framework-version');
-                if (frameworkVersionValue) {
-                    frameworkVersion = frameworkVersionValue;
-                }
-
-                frameworkRootValue = scriptElt.getAttribute('data-framework-root');
-                if (frameworkRootValue) {
-                    frameworkRoot = frameworkRootValue;
-                }
-
-                frameworkThemeValue = scriptElt.getAttribute('data-framework-theme');
-                if (frameworkThemeValue) {
-                    frameworkTheme = frameworkThemeValue;
-                }
-            }
+    for (i = 0; i < scriptElements.length; i++) {
+      var srcAttr = scriptElements[i].getAttribute('src');
+      if (!scriptElements[i] || !scriptElements[i].getAttribute('src')) { continue; }
+      if (srcAttr && scriptElements[i].getAttribute('src').match(/bootstrap\.js/)) {
+        frameworkVersionValue = scriptElements[i].getAttribute('data-framework-version');
+        if (frameworkVersionValue) {
+          frameworkVersion = frameworkVersionValue;
         }
 
-        // display some error messages in case theme/framework not supported;
-        // NB we still try to load them anyway below, in case the developer
-        // is working with their own theme structure etc.
-        if (!S.member(frameworkVersion, S.frameworkVersions)) {
-            console.error('Framework version "' + frameworkVersion +
-                          '" is not supported');
-        }
-        if (!S.member(frameworkTheme, S.frameworkThemes)) {
-            console.error('Framework theme "' + frameworkTheme +
-                          '" is not supported');
+        frameworkRootValue = scriptElements[i].getAttribute('data-framework-root');
+        if (frameworkRootValue) {
+          frameworkRoot = frameworkRootValue;
         }
 
-        // construct (and store) base path
-        S.basePath = frameworkRoot + '/' + frameworkVersion + '/';
+        frameworkThemeValue = scriptElements[i].getAttribute('data-framework-theme');
+        if (frameworkThemeValue) {
+          frameworkTheme = frameworkThemeValue;
+        }
+      }
+    }
 
-        // load stylesheet for the theme
-        stylesheetPath = S.basePath + 'css/web-ui-fw-default-theme.css';
-        S.css.load(stylesheetPath);
+    // display some error messages in case theme/framework not supported;
+    // NB we still try to load them anyway below, in case the developer
+    // is working with their own theme structure etc.
+    if (!S.member(frameworkVersion, S.frameworkVersions)) {
+      console.error('Framework version "' + frameworkVersion + '" is not supported');
+    }
+    if (!S.member(frameworkTheme, S.frameworkThemes)) {
+      console.error('Framework theme "' + frameworkTheme + '" is not supported');
+    }
 
-        // load jquery and our config.js file, turning off jqm's page init until
-        // all our js is loaded; the S.load() method should be called from
-        // config.js, either with no arguments or with extra js files to load;
-        // once all our files are loaded, the rest of the framework (including
-        // jqm) is loaded and the first page init'ed
-        S.loadConfig();
+    // construct base paths etc.
+    basePath = frameworkRoot + '/' + frameworkVersion + '/';
 
-        // NB application should call S.load() to finish loading the framework;
-        // optionally, pass S.load() any paths to app scripts: they will
-        // get loaded before the rest of the framework
+    // load stylesheet for the theme;
+    // NB this could also be customised with a data- attribute
+    head = document.getElementsByTagName('head')[0];
+    // TODO: this should not be hardcoded.
+    stylesheetPath = basePath + 'css/web-ui-fw-default-theme.css' + S.cacheBust;
+
+    stylesheetLink = document.createElement('link');
+    stylesheetLink.setAttribute('rel', 'stylesheet');
+    stylesheetLink.setAttribute('href', stylesheetPath);
+
+    head.appendChild(stylesheetLink);
+
+    // load JS; NB we could potentially store the names of files for each version
+    // inside the S object, or keep to a small number of files
+    // with known names
+    S.loaderChain
+    .script(basePath + 'js/web-ui-fw-libs.js' + S.cacheBust).wait()
+    .script(basePath + 'js/web-ui-fw-default-theme.js' + S.cacheBust).wait() // TODO: hardcoded!
+    .script(basePath + 'js/web-ui-fw.js' + S.cacheBust).wait()
+    .script('config.js' + S.cacheBust).wait(function () {
+      body.style.visibility = 'visible';
     });
+    S.css.load();	
+  });
 })();
