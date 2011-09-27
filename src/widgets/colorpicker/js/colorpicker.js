@@ -7,7 +7,7 @@
  */
 
 /**
- * Displays a square color spectrum and a brightness slider.
+ * Displays a 2D hue/saturation spectrum and a lightness slider.
  *
  * To apply, add the attribute data-role="colorpicker" to a <div>
  * element inside a page. Alternatively, call colorpicker() 
@@ -19,7 +19,6 @@
  *                $("#mycolorpicker").colorpicker({ color: "#ff00ff" });
  *            where the html might be :
  *                <div id="mycolorpicker"/>
- *            Default: "#1a8039"
  */
 (function( $, undefined ) {
 
