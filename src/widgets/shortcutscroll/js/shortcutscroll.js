@@ -28,7 +28,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "TODONS.shortcutscroll", $.mobile.widget, {
+$.widget( "todons.shortcutscroll", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(shortcutscroll)",
         scrollview: null
@@ -120,7 +120,7 @@ $.widget( "TODONS.shortcutscroll", $.mobile.widget, {
 });
 
 $(document).bind( "pagecreate create", function (e) {
-    $($.TODONS.shortcutscroll.prototype.options.initSelector, e.target)
+    $($.todons.shortcutscroll.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .shortcutscroll();
 });

@@ -28,7 +28,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colortitle", $.mobile.colorwidget, {
+$.widget( "todons.colortitle", $.todons.colorwidget, {
   options: {
     initSelector: ":jqmData(role='colortitle')"
   },
@@ -47,17 +47,17 @@ $.widget( "mobile.colortitle", $.mobile.colorwidget, {
         ui: ui
       });
 
-    $.mobile.colorwidget.prototype._create.call(this);
+    $.todons.colorwidget.prototype._create.call(this);
   },
 
   _setColor: function(clr, unconditional) {
-    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional))
+    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional))
       this.ui.header.text(clr);
   }
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.colortitle.prototype.options.initSelector, e.target)
+  $($.todons.colortitle.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .colortitle();
 });

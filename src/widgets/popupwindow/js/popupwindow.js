@@ -71,7 +71,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.popupwindow", $.mobile.widget, {
+$.widget( "todons.popupwindow", $.mobile.widget, {
     options: {
         disabled: false,
         initSelector: ":jqmData(role='popupwindow')",
@@ -256,7 +256,7 @@ $.widget( "mobile.popupwindow", $.mobile.widget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.mobile.popupwindow.prototype.options.initSelector, e.target)
+    $($.todons.popupwindow.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .popupwindow();
 });

@@ -24,7 +24,7 @@
  */
 
 (function ($, window, undefined) {
-    $.widget("mobile.progressbar", $.mobile.widget, {
+    $.widget("todons.progressbar", $.mobile.widget, {
         options: {
             value: 0,
             max: 100

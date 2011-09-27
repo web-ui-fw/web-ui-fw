@@ -34,7 +34,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colorpalette", $.mobile.colorwidget, {
+$.widget( "todons.colorpalette", $.todons.colorwidget, {
   options: {
     showPreview: false,
     initSelector: ":jqmData(role='colorpalette')"
@@ -56,7 +56,7 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
       ui: ui
     });
 
-    $.mobile.colorwidget.prototype._create.call(this);
+    $.todons.colorwidget.prototype._create.call(this);
 
     ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
       var clr = $(e.target).css("background-color"),
@@ -76,7 +76,7 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
         ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
       $(e.target).addClass("colorpalette-choice-active");
-      $.mobile.colorwidget.prototype._setColor.call(self, clr);
+      $.todons.colorwidget.prototype._setColor.call(self, clr);
       self.ui.preview.css("background", clr);
     });
   },
@@ -105,11 +105,11 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
     if ("showPreview" === key)
       this._showPreview(value, unconditional);
     else
-      $.mobile.colorwidget.prototype._setOption.call(this, key, value, unconditional);
+      $.todons.colorwidget.prototype._setOption.call(this, key, value, unconditional);
   },
 
   _setColor: function(clr, unconditional) {
-    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       var Nix,
           activeIdx = -1,
           nChoices = this.ui.clrpalette.attr("data-n-choices"),
@@ -151,7 +151,7 @@ $.widget( "mobile.colorpalette", $.mobile.colorwidget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.colorpalette.prototype.options.initSelector, e.target)
+  $($.todons.colorpalette.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .colorpalette();
 });

@@ -41,7 +41,7 @@
  */
 (function($, undefined) {
 
-$.widget("mobile.colorpickerbutton", $.mobile.colorwidget, {
+$.widget("todons.colorpickerbutton", $.todons.colorwidget, {
   options: {
     buttonMarkup: {
       theme: null,
@@ -78,7 +78,7 @@ $.widget("mobile.colorpickerbutton", $.mobile.colorwidget, {
       ui: ui,
     });
 
-    $.mobile.colorwidget.prototype._create.call(this);
+    $.todons.colorwidget.prototype._create.call(this);
 
     // Button events
     ui.button.bind("vclick keydown", function(event) {
@@ -115,7 +115,7 @@ $.widget("mobile.colorpickerbutton", $.mobile.colorwidget, {
   },
 
   _setColor: function(clr, unconditional) {
-    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       this.ui.hsvpicker.hsvpicker("option", "color", clr);
       this.ui.buttonContents.css("color", clr);
     }
@@ -152,7 +152,7 @@ $.widget("mobile.colorpickerbutton", $.mobile.colorwidget, {
 
 //auto self-init widgets
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.colorpickerbutton.prototype.options.initSelector, e.target)
+  $($.todons.colorpickerbutton.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .colorpickerbutton();
 });

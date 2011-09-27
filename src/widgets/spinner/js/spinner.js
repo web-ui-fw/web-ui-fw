@@ -46,7 +46,7 @@
 
 (function($, undefined) {
 
-$.widget("TODONS.spinner", $.mobile.widget, {
+$.widget("todons.spinner", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(processing='spinner')",
         position: {my: 'right center', at: 'right center'},
@@ -91,7 +91,7 @@ $.widget("TODONS.spinner", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate", function (e) {
-    $($.TODONS.spinner.prototype.options.initSelector, e.target)
+    $($.todons.spinner.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .spinner();
 });

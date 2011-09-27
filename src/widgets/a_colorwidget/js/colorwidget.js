@@ -1,6 +1,6 @@
 (function($, undefined) {
 
-$.widget("mobile.colorwidget", $.mobile.widget, {
+$.widget("todons.colorwidget", $.mobile.widget, {
   options: {
     color: "#ff0972"
   },

@@ -37,7 +37,7 @@
  *    });
  */
 (function($, window, undefined) {
-    $.widget("mobile.datetimepicker", $.mobile.widget, {
+    $.widget("todons.datetimepicker", $.mobile.widget, {
         options: {
             showDate: true,
             showTime: true,
@@ -413,7 +413,7 @@
     }); /* End of widget */
 
     $(document).bind("pagecreate create", function(e) {
-        $($.mobile.datetimepicker.prototype.options.initSelector, e.target)
+        $($.todons.datetimepicker.prototype.options.initSelector, e.target)
             .not(":jqmData(role='none'), :jqmData(role='nojs')")
             .datetimepicker();
     });

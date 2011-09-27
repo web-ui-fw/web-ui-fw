@@ -22,7 +22,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.colorpicker", $.mobile.colorwidget, {
+$.widget( "todons.colorpicker", $.todons.colorwidget, {
   options: {
       initSelector: ":jqmData(role='colorpicker')"
   },
@@ -56,7 +56,7 @@ $.widget( "mobile.colorpicker", $.mobile.colorwidget, {
       dragging_hsl: undefined
     });
 
-    $.mobile.colorwidget.prototype._create.call(this);
+    $.todons.colorwidget.prototype._create.call(this);
 
     $( document ).bind( "vmousemove", function( event ) {
       if ( self.dragging )
@@ -199,11 +199,11 @@ $.widget( "mobile.colorpicker", $.mobile.colorwidget, {
     this.ui.l.selector.css("top",   hsl[2] * this.ui.l.container.height());
     this.ui.l.selector.css("background",  gray);
 
-    $.mobile.colorwidget.prototype._setColor.call(this, clr);
+    $.todons.colorwidget.prototype._setColor.call(this, clr);
   },
 
   _setColor: function(clr, unconditional) {
-    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       this.dragging_hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr));
       this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
       this._updateSelectors(this.dragging_hsl);
@@ -212,7 +212,7 @@ $.widget( "mobile.colorpicker", $.mobile.colorwidget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.colorpicker.prototype.options.initSelector, e.target)
+  $($.todons.colorpicker.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .colorpicker();
 });

@@ -44,7 +44,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.volumecontrol", $.mobile.widget, {
+$.widget( "todons.volumecontrol", $.mobile.widget, {
   options: {
     volume: 0,
     basicTone: false,
@@ -184,7 +184,7 @@ $.widget( "mobile.volumecontrol", $.mobile.widget, {
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-  $( $.mobile.volumecontrol.prototype.options.initSelector, e.target )
+  $( $.todons.volumecontrol.prototype.options.initSelector, e.target )
     .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
     .volumecontrol();
 });

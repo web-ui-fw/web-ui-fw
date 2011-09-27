@@ -23,7 +23,7 @@
 */
 
 (function($) {
-    $.widget( "mobile.swipelist", $.mobile.widget, {
+    $.widget( "todons.swipelist", $.mobile.widget, {
         _create: function() {
             var yThreshold = 2,
                 swipeThreshold = 30,

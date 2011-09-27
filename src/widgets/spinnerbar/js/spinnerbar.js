@@ -39,7 +39,7 @@
  */
 (function($, window, undefined) {
 
-$.widget("TODONS.spinnerbar", $.mobile.widget, {
+$.widget("todons.spinnerbar", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(processing='spinnerbar')",
         animationMsPerPixel: 15
@@ -111,7 +111,7 @@ $.widget("TODONS.spinnerbar", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate", function (e) {
-    $($.TODONS.spinnerbar.prototype.options.initSelector, e.target)
+    $($.todons.spinnerbar.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .spinnerbar();
 });

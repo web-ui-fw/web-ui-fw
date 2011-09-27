@@ -98,7 +98,7 @@
  */
 
 (function($, undefined ) {
-    $.widget( "TODONS.calendarpicker", $.mobile.widget, {
+    $.widget( "todons.calendarpicker", $.mobile.widget, {
         options: {
             // All widget options, including some internal runtime details      
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],

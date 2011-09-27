@@ -27,7 +27,7 @@
 
 (function($, undefined) {
 
-$.widget("mobile.switch", $.mobile.widget, {
+$.widget("todons.switch", $.mobile.widget, {
 
   options: {
     checked: true,
@@ -119,7 +119,7 @@ $.widget("mobile.switch", $.mobile.widget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.switch.prototype.options.initSelector, e.target)
+  $($.todons.switch.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .switch();
 });

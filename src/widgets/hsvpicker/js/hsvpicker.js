@@ -32,7 +32,7 @@
  */
 (function( $, undefined ) {
 
-$.widget( "mobile.hsvpicker", $.mobile.colorwidget, {
+$.widget( "todons.hsvpicker", $.todons.colorwidget, {
   options: {
     initSelector: ":jqmData(role='hsvpicker')"
   },
@@ -73,7 +73,7 @@ $.widget( "mobile.hsvpicker", $.mobile.colorwidget, {
       dragging: -1
     });
 
-    $.mobile.colorwidget.prototype._create.call(this);
+    $.todons.colorwidget.prototype._create.call(this);
 
     ui.container.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
       $(this).attr("src",
@@ -205,11 +205,11 @@ $.widget( "mobile.hsvpicker", $.mobile.colorwidget, {
     this.ui.val.selector.css("background", clr);
     this.ui.val.hue.css("background", vclr);
 
-    $.mobile.colorwidget.prototype._setColor.call(this, clr);
+    $.todons.colorwidget.prototype._setColor.call(this, clr);
   },
 
   _setColor: function(clr, unconditional) {
-    if ($.mobile.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
       this.dragging_hsv = $.mobile.todons.clrlib.RGBToHSV($.mobile.todons.clrlib.HTMLToRGB(clr));
       this._updateSelectors(this.dragging_hsv);
     }
@@ -217,7 +217,7 @@ $.widget( "mobile.hsvpicker", $.mobile.colorwidget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.mobile.hsvpicker.prototype.options.initSelector, e.target)
+  $($.todons.hsvpicker.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .hsvpicker();
 });
