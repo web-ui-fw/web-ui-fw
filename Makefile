@@ -39,7 +39,7 @@ LIBS_CSS_FILES +=\
     jquery.mobile-1.0b2.css \
     $(NULL)
 else
-LIBS_CSS_FILES +=
+LIBS_CSS_FILES +=\
     jquery.mobile-1.0b2.min.css \
     $(NULL)
 endif
