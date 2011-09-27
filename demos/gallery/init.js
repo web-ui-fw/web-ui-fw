@@ -144,7 +144,10 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
 
-    $('#groupindex').scrolllistview();
+    $('#groupindex-demo').bind('pageshow', function () {
+        $('#groupindex').scrolllistview();
+    });
+
     $('#popupwindowDemoButton').bind("vclick", function (e) {
         var btn = $('#popupwindowDemoButton');
         $('#popupContent').popupwindow("open",
