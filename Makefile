@@ -22,16 +22,16 @@ FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 LIBS_JS_FILES = underscore.js
 ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
-    jquery-1.6.2.js \
     jquery.mobile-1.0b2.js \
     jquery.ui.position.git+dfe75e1.js \
     $(NULL)
+JQUERY = jquery-1.6.2.js
 else
 LIBS_JS_FILES +=\
-    jquery-1.6.2.min.js \
     jquery.mobile-1.0b2.min.js \
     jquery.ui.position.git+dfe75e1.min.js \
     $(NULL)
+JQUERY = jquery-1.6.2.min.js
 endif
 
 LIBS_CSS_FILES =
@@ -40,7 +40,7 @@ LIBS_CSS_FILES +=\
     jquery.mobile-1.0b2.css \
     $(NULL)
 else
-LIBS_CSS_FILES +=
+LIBS_CSS_FILES +=\
     jquery.mobile-1.0b2.min.css \
     $(NULL)
 endif
@@ -53,6 +53,7 @@ third_party: init
 	    for f in ${LIBS_JS_FILES}; do \
 	        cat $$f >> $(CURDIR)/${FW_LIBS_JS}; \
 	    done
+	    cp $(CURDIR)/${LIBS_DIR}/js/${JQUERY} $(CURDIR)/${JS_OUTPUT_ROOT}/jquery.js
 	@@cd $(CURDIR)/${LIBS_DIR}/css; \
 	    for f in ${LIBS_CSS_FILES}; do \
 	        cat $$f >> $(CURDIR)/${FW_CSS}; \
