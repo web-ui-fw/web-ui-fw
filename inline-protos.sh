@@ -12,10 +12,11 @@ for FNAME in ${WIDGET_BASE_DIR}/js/*.js; do
     sed -rn '1h;1!H;${;g;s/(\$\.mobile\.todons\.loadPrototype[^"]*)("[^"]*")/\1\n@\2@\n/g;p;}' | \
     awk -v 'doPrint=1' '
       /^@[^@]*@/{
-        split($0, ar, /"/); 
-        protoFile = "'"${WIDGET_BASE_DIR}"'/proto-html/" ar[2] ".prototype.html";
+        split($0, ar, /"/);
+        protoName = ar[2];
+        protoFile = "'"${WIDGET_BASE_DIR}"'/proto-html/" protoName ".prototype.html";
         insideTag = 0;
-        printf("{ proto:\n\"");
+        printf("{ key: \"" protoName "\",\nproto:\n\"");
         while (1 == (getline inputLine < protoFile)) {
           for (Nix = 1 ; Nix <= length(inputLine) ; Nix++) {
             theChar = substr(inputLine, Nix, 1);
