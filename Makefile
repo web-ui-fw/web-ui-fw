@@ -68,7 +68,7 @@ widgets: init
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
                 if test "x${INLINE_PROTO}x" = "x1x"; then \
-                  ./inline-protos.sh ${CODE_DIR}/$$REPLY >> ${FW_JS}; \
+                  ./tools/inline-protos.sh ${CODE_DIR}/$$REPLY >> ${FW_JS}; \
                 else \
 	          for f in `find ${CODE_DIR}/$$REPLY -iname '*.js' | sort`; do \
 	              echo "		$$f"; \
