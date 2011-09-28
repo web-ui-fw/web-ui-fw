@@ -14,7 +14,7 @@ ensureNS("jQuery.mobile.todons");
  */
 jQuery.extend(jQuery.mobile.todons, {
     /*
-     * Functions for the Contact module.
+     * Functions for the Addressbook module.
      */
 
     PendingOperation: function() {
@@ -24,6 +24,11 @@ jQuery.extend(jQuery.mobile.todons, {
 
     PersonArraySuccessCallback: function() {
         this.onsuccess = function(personArray) {
+        }
+    },
+
+    AddressBookSuccessCallback: function() {
+        this.onsuccess = function(addressbook) {
         }
     },
 
@@ -40,6 +45,9 @@ jQuery.extend(jQuery.mobile.todons, {
         var ATTRIBUTE_RANGE_FILTER = 4;
 
         var type = ID_FILTER;
+    },
+
+    SortOrderArray: function() {
     },
 
     DeviceAPIError: function() {
@@ -77,6 +85,11 @@ jQuery.extend(jQuery.mobile.todons, {
         var INVALID_VALUES_ERR             = 22;
 
         var POLICY_ERR                     = 23;
-    }
+    },
+
+    getDefaultAddressBook: function(successCallback, errocCallback) {
+        successCalback.call();
+        return new PendingOperation();
+    },
 });
 
