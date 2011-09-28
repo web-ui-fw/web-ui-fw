@@ -50,12 +50,14 @@ $.widget("todons.switch", $.mobile.widget, {
     ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
     $.extend(this, {
+      realized: false,
       ui: ui,
       dstAttr: dstAttr
     });
 
-    /* FIXME 0x45666291: St00pid hack necessary because .outerHeight() doesn't seem to work during _create() */
-    setTimeout(function(){$.mobile.todons.parseOptions(self, true);}, 0);
+    $.mobile.todons.parseOptions(self, true);
+
+    this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
     ui.realbutton.bind("vclick", function(e) {
       self._toggle();
@@ -79,9 +81,7 @@ $.widget("todons.switch", $.mobile.widget, {
       this._setChecked(value, unconditional);
   },
 
-  _setChecked: function(checked, unconditional) {
-    var dst = checked ? 0 : this.ui.button.outerHeight();
-
+  _realize: function() {
     this.ui.normalBackground.css("height", this.ui.button.outerHeight() * 3);
     this.ui.activeBackground.css("height", this.ui.button.outerHeight() * 3);
     this.ui.realbutton.position({
@@ -89,28 +89,25 @@ $.widget("todons.switch", $.mobile.widget, {
       at: "center center",
       of: this.ui.button
     });
+    this.ui.button.removeClass("ui-switch-button-hidden").css("opacity", 0);
+    this._moveButton("css", this.options.checked);
+    this.rendered = true;
+  },
 
-    /* FIXME 0x45666291: Part of the ugly hack */
-    if (unconditional)
-      this.ui.button.removeClass("ui-switch-button-hidden").css("opacity", 0);
-    else
-      this.ui.button.removeClass("ui-switch-button-hidden");
+  _moveButton: function(methodToUse, checked) {
+    var dst = checked ? 0 : this.ui.button.outerHeight();
+    var newTop = (this.ui.realbutton.position().top + (dst - this.ui.button.position().top));
 
-    if (dst != parseInt(this.ui.button.css("top")) || unconditional) {
-      var newTop = (this.ui.realbutton.position().top + (dst - this.ui.button.position().top));
-      if (unconditional) {
-        this.ui.realbutton.css("top", newTop + "px");
-        this.ui.button.css("top", dst + "px");
-        this.ui.normalBackground.css("opacity", checked ? 0.0 : 1.0);
-        this.ui.activeBackground.css("opacity", checked ? 1.0 : 0.0);
-      }
-      else {
-        this.ui.realbutton.animate({"top": newTop + "px"});
-        this.ui.button.animate({"top": dst + "px"});
-        this.ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
-        this.ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
-      }
+    this.ui.realbutton[methodToUse]({"top": newTop + "px"});
+    this.ui.button[methodToUse]({"top": dst + "px"});
+    this.ui.normalBackground[methodToUse]({"opacity": checked ? 0.0 : 1.0});
+    this.ui.activeBackground[methodToUse]({"opacity": checked ? 1.0 : 0.0});
+  },
 
+  _setChecked: function(checked, unconditional) {
+    if (this.options.checked != checked || unconditional) {
+      if (this.rendered)
+        this._moveButton("animate", checked);
       this.options.checked = checked;
       this.element.attr(this.dstAttr, checked ? "true" : "false");
       this.element.triggerHandler("changed", checked);
