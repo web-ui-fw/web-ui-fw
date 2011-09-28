@@ -22,7 +22,7 @@
                 };
 	        	
 	        ui = $.mobile.todons.loadPrototype("personpicker", ui);
-            his.element.append(ui.personpicker);
+            this.element.append(ui.personpicker);
         }
     }); /* End of widget */
 
