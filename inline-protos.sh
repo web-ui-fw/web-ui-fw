@@ -27,7 +27,7 @@ for FNAME in ${WIDGET_BASE_DIR}/js/*.js; do
               insideTag = 0;
             if (insideTag && "\"" == theChar)
               theChar = "'"'"'";
-            printf(theChar);
+            printf("%s", theChar);
           }
           printf("\" +\n\"");
         }
