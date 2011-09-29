@@ -66,13 +66,32 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
 
       $.extend (self, {
         isOpen: false,
-        ui: ui
+        ui: ui,
+        dragging: false
       });
 
       $.mobile.todons.parseOptions(this, true);
 
       ui.container.bind("closed", function(e) {
         self.isOpen = false;
+      });
+
+      ui.volumeImage.bind("vmousedown", function(e) {
+        self.dragging = true;
+        self._setVolume((1.0 - e.offsetY / $(this).outerHeight()) * self._maxVolume());
+        event.preventDefault();
+      });
+
+      ui.volumeImage.bind("vmousemove", function(e) {
+        if (self.dragging) {
+          self._setVolume((1.0 - e.offsetY / $(this).outerHeight()) * self._maxVolume());
+          event.preventDefault();
+        }
+      });
+
+      $( document ).bind( "vmouseup", function( event ) {
+        if ( self.dragging )
+          self.dragging = false;
       });
 
       $(document).bind("keydown", function(e) {
@@ -138,8 +157,12 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
       this._setTitle(value, unconditional)
   },
 
-  _setVolume: function(newVolume, unconditional) {
-    newVolume = Math.max(0, Math.min(newVolume, this._maxVolume()));
+  _setVolume: function(vol, unconditional) {
+    var newVolume = Math.max(0, Math.min(vol, this._maxVolume())),
+        theFloor = Math.floor(newVolume);
+
+    newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
+
     if (newVolume != this.options.volume || unconditional) {
       this.options.volume = newVolume;
       this._setVolumeIcon();
