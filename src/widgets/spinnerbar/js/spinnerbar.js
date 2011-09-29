@@ -46,9 +46,13 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
     },
 
     _create: function () {
+        this.html = $('<div class="ui-spinnerbar-container">' +
+                      '<div class="ui-spinnerbar-clip">' +
+                      '<div class="ui-spinnerbar-bar" />' +
+                      '</div>' +
+                      '</div>');
+
         this.isRunning = false;
-        this.spinnerbar = $.mobile.todons.loadPrototype('spinnerbar').find('div:first');
-        this.bar = this.spinnerbar.find('.ui-spinnerbar-bar');
     },
 
     start: function () {
@@ -59,14 +63,17 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
         // draw the spinnerbar
         var el = $(this.element);
 
-        var zIndex = el.css('z-index');
-        zIndex = zIndex ? zIndex + 1 : 10;
-        this.spinnerbar.css('z-index', zIndex);
+        this.spinnerbar = $(this.html).find('.ui-spinnerbar-container');
+        this.bar = $(this.html).find('.ui-spinnerbar-bar');
 
         this.spinnerbar.position({my: 'center center',
                                   at: 'center center',
                                   of: el});
-        el.after(this.spinnerbar);
+        el.after(this.html);
+
+        var zIndex = el.css('z-index');
+        zIndex = zIndex ? zIndex + 1 : 10;
+        this.spinnerbar.css('z-index', zIndex);
 
         // func to animate the bar itself
         var animateFunc = function (bar, animationMsPerPixel) {
@@ -100,7 +107,7 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
         this.bar.clearQueue();
 
         // remove the DOM elements
-        this.spinnerbar.detach();
+        this.html.detach();
 
         // trigger event
         this.element.trigger('stopped');
