@@ -73,7 +73,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             var listItem = $('<li>' + text + '</li>');
 
             // bind mouse over so it moves the scroller to the divider
-            listItem.bind('touchstart mousedown', function (e) {
+            listItem.bind('touchstart mousedown vmouseover', function (e) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
                 var dividerY = $(divider).position().top;
@@ -115,7 +115,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             });
 
             // bind mouseout of the shortcutscroll container to remove popup
-            listItem.bind('touchend mouseup', function () {
+            listItem.bind('touchend mouseup vmouseout', function () {
                 removePopup();
             });
 
