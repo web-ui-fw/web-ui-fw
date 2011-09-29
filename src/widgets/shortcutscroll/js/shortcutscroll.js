@@ -115,7 +115,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             }
         });
 
-        o.scrollview.after(shortcutsContainer.append(shortcutsList));
+        shortcutsContainer.append(shortcutsList);
+        o.scrollview.append(shortcutsContainer);
     }
 });
 
