@@ -37,7 +37,7 @@
  *     stopped: Fired when stop() is called on the spinnerbar and it has been
  *              detached from the DOM
  */
-(function($, window, undefined) {
+(function($, undefined) {
 
 $.widget("todons.spinnerbar", $.mobile.widget, {
     options: {
@@ -75,24 +75,27 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
         zIndex = zIndex ? zIndex + 1 : 10;
         this.spinnerbar.css('z-index', zIndex);
 
-        // func to animate the bar itself
-        var animateFunc = function (bar, animationMsPerPixel) {
-            var moveY = bar.height() / 2;
+        // animate the bar
+        var moveY = this.bar.height() / 2;
 
-            // 15 ms for each pixel of movement
-            var animationTime = moveY * animationMsPerPixel;
+        // 15 ms for each pixel of movement
+        var animationTime = moveY * this.options.animationMsPerPixel;
 
+        // temp variable so bar can be referred to inside function
+        var bar = this.bar;
+
+        // func to animate the bar
+        var animateFunc = function () {
             bar.animate({top: '-=' + moveY},
                          animationTime,
                          'linear',
                          function () {
                              bar.css('top', 0);
-                             animateFunc(bar, animationMsPerPixel);
                          });
         };
 
-        // animate the bar
-        animateFunc(this.bar, this.options.animationMsPerPixel);
+        // start animation loop
+        this.interval = setInterval(animateFunc, animationTime);
 
         this.isRunning = true;
     },
@@ -101,6 +104,9 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
         if (!this.isRunning) {
           return;
         }
+
+        // stop the loop
+        clearInterval(this.interval);
 
         // remove all pending animations
         this.bar.stop();
@@ -117,7 +123,7 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
 });
 
 // auto self-init widgets
-$(document).bind("pagecreate", function (e) {
+$(document).bind("pagecreate create", function (e) {
     $($.todons.spinnerbar.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .spinnerbar();
