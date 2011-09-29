@@ -50,6 +50,14 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // popup for the hovering character
         var popup = null;
 
+        var removePopup = function () {
+            if (popup) {
+                popup.text('');
+                popup.remove();
+                popup = null;
+            }
+        };
+
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
             o.scrollview = $el.parent();
@@ -65,7 +73,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             var listItem = $('<li>' + text + '</li>');
 
             // bind mouse over so it moves the scroller to the divider
-            listItem.bind('vmouseover', function () {
+            listItem.bind('vmouseover', function (e) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
                 var dividerY = $(divider).position().top;
@@ -86,13 +94,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
                 // show the popup
-                if (!popup) {
-                    popup = $('<div class="ui-shortcutscroll-popup">' +
-                              '<div></div>' +
-                              '</div>');
+                popup = $('<div class="ui-shortcutscroll-popup">' +
+                          '<div></div>' +
+                          '</div>');
 
-                    o.scrollview.after(popup);
-                }
+                o.scrollview.after(popup);
 
                 popup.find('div').text(text)
                                  .position({my: 'center center',
@@ -102,6 +108,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 popup.position({my: 'center center',
                                 at: 'center center',
                                 of: o.scrollview});
+
+                e.preventDefault();
             });
 
             shortcutsList.append(listItem);
@@ -109,10 +117,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // bind mouseout of the shortcutscroll container to remove popup
         shortcutsContainer.bind('vmouseout', function () {
-            if (popup) {
-                popup.remove();
-                popup = null;
-            }
+            removePopup();
+        });
+
+        shortcutsContainer.bind('vmousemove', function (e) {
+            e.preventDefault();
         });
 
         shortcutsContainer.append(shortcutsList);
