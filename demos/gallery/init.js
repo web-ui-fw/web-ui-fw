@@ -160,6 +160,14 @@ $(document).bind("pagecreate", function () {
         btn.offset().left + btn.outerWidth()  / 2,
         btn.offset().top  + btn.outerHeight() / 2);
     });
+
+    $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition"))
+      .attr("checked", "true")
+      .checkboxradio("refresh");
+    $('input[name=popupwindow-demo-transition-choice]').bind("change", function(e) {
+      $("#popupContent2").popupwindow("option", "transition", $(this).attr("id").split("-").pop());
+    });
+
     $("#showVolumeButton").bind("vclick", function (e) {
         $("#myVolumeControl").volumecontrol("open");
     });
