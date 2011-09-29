@@ -161,9 +161,11 @@ $(document).bind("pagecreate", function () {
         btn.offset().top  + btn.outerHeight() / 2);
     });
 
-    $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition"))
-      .attr("checked", "true")
-      .checkboxradio("refresh");
+    $("#popupwindow-demo").bind("pageshow", function() {
+      $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition"))
+        .attr("checked", "true")
+        .checkboxradio("refresh");
+    });
     $('input[name=popupwindow-demo-transition-choice]').bind("change", function(e) {
       $("#popupContent2").popupwindow("option", "transition", $(this).attr("id").split("-").pop());
     });
@@ -171,7 +173,7 @@ $(document).bind("pagecreate", function () {
     $("#showVolumeButton").bind("vclick", function (e) {
         $("#myVolumeControl").volumecontrol("open");
     });
-    $("#volumecontrol_setBasicTone").next('label').click(function(e) {
+    $("#volumecontrol_setBasicTone").bind("change", function(e) {
       var basicTone = !($("#volumecontrol_setBasicTone").next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on"));
 
       if (basicTone) {
