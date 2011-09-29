@@ -244,9 +244,14 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
           };
 
       this.ui.container
-          .addClass("ui-selectmenu-hidden")
-          .removeAttr("style")
-          .removeClass("in");
+        .removeClass("in")
+        .addClass("reverse out")
+        .animationComplete(function() {
+          self.ui.container
+            .removeClass("reverse out")
+            .addClass("ui-selectmenu-hidden")
+            .removeAttr("style");
+        });
 
       if (this.options.fade)
           this.ui.screen.animate({opacity: 0.0}, "fast", hideScreen);
