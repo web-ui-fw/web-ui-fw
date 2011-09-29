@@ -93,6 +93,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 // apply the scroll
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
+                removePopup();
+
                 // show the popup
                 popup = $('<div class="ui-shortcutscroll-popup">' +
                           '<div></div>' +
