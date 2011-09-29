@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Web UI Framework - Template application</title>
+        <title>@APP_NAME@</title>
 
-        <script src="bootstrap.js"
+        <script src="@LIBDIR@/bootstrap.js"
+                @DATA_FRAMEWORK_ROOT@
                 data-framework-version="0.1"
-                data-framework-root="../../build/web-ui-fw"
                 data-framework-theme="default">
         </script>
     </head>

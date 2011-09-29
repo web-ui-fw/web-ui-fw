@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.w3.org/ns/widgets"
+            version="0.1" 
+            id="http://www.samsung.com/app/templateID"
+            width="480"
+            height="800" >
+    <!-- automatically generated name -->
+    <name>@APP_NAME@</name>
+ 
+    <!-- icon resource -->
+    <icon src="icon.png"/>
+
+    <!-- Permission : feature to access -->
+    <!-- modify here and remove comments
+    <feature name="http://waclists.org/api/deviceapis" required="false"/>
+    <feature name="http://wacapps.net/api/accelerometer" required="true" />
+    -->
+
+    <!-- access remote web resource -->
+    <!-- modify here and remove comments
+    <access origin="http://www.samsung.com" subdomain=true />
+    <access origin="*"/>
+    -->
+
+</widget>
