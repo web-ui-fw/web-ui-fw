@@ -73,7 +73,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             var listItem = $('<li>' + text + '</li>');
 
             // bind mouse over so it moves the scroller to the divider
-            listItem.bind('vmouseover', function (e) {
+            listItem.bind('touchstart mousedown', function (e) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
                 var dividerY = $(divider).position().top;
@@ -114,12 +114,12 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 e.preventDefault();
             });
 
-            shortcutsList.append(listItem);
-        });
+            // bind mouseout of the shortcutscroll container to remove popup
+            listItem.bind('touchend mouseup', function () {
+                removePopup();
+            });
 
-        // bind mouseout of the shortcutscroll container to remove popup
-        shortcutsContainer.bind('vmouseout', function () {
-            removePopup();
+            shortcutsList.append(listItem);
         });
 
         shortcutsContainer.bind('vmousemove', function (e) {
