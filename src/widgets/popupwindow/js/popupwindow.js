@@ -170,7 +170,8 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       if ( this.options.disabled || this.isOpen)
           return;
 
-      var x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
+      var self = this,
+          x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
           y = (undefined === y_where ? window.innerHeight / 2 : y_where);
 
       this.ui.container.css("min-width", this.element.outerWidth(true));
@@ -227,7 +228,10 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
               top: newtop,
               left: newleft
           })
-          .addClass("in");
+          .addClass("in")
+          .animationComplete(function() {
+            self.ui.screen.height($(document).height());
+          });
 
       this.isOpen = true;
   },
