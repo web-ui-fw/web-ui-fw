@@ -71,7 +71,7 @@
             var startValue, container;
 
             container = $.mobile.todons.loadPrototype("progressbar").find(".ui-progressbar");
-            container.insertBefore(this.element);
+            this.element.append(container);
 
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
