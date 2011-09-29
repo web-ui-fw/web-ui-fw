@@ -140,7 +140,7 @@
             var obj = this;
             var klass = owner.attr("class");
             var numItems = 0;
-            var selectorResult = {};
+            var selectorResult = undefined;
 
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
@@ -181,6 +181,8 @@
                       return val;
                     },
                     obj.data, "hours", ui);
+            } else if (klass.search("separator") > 0) {
+              console.log("datetimepicker: no dropdown for time separator");
             } else if (klass.search("minutes") > 0) {
                 var values = range(0, 59).map(this._makeTwoDigitValue);
                 numItems = values.length;
@@ -209,40 +211,42 @@
                     obj.data, "pm", ui);
             }
 
-            selector.slideDown(obj.options.animationDuration);
-            obj.state.selectorOut = true;
+            if (selectorResult !== undefined) {
+                selector.slideDown(obj.options.animationDuration);
+                obj.state.selectorOut = true;
 
-            /* Now that all the items have been added to the DOM, let's compute
-             * the size of the selector.
-             */
-            itemWidth = selector.find(".item").outerWidth();
-            selectorWidth = selector.find(".container").outerWidth();
-            var totalWidth = itemWidth * numItems;
-            var widthAtItem = itemWidth * selectorResult.currentIndex;
-            var halfWidth = selectorWidth / 2.0;
-            var x = 0;
-            /* The following code deals with the case of the item
-             * selected being one of the first ones in the list
-             */
-            if (widthAtItem > selectorWidth / 2.0) {
-                x = -((widthAtItem) - (halfWidth - itemWidth / 2.0));
-            }
-            /* And here we're dealing with the case of the item
-             * selected being one of the last ones in the list.
-             */
-            if (totalWidth - widthAtItem < halfWidth) {
-                x = -totalWidth + selectorWidth;
-            }
-            /* There's also a third option: the values are so few
-             * that we should always center them.
-             */
-            if (totalWidth < halfWidth) {
-                x = totalWidth / 2.0 + itemWidth * numItems / 2.0;
-            }
+                /* Now that all the items have been added to the DOM, let's compute
+                 * the size of the selector.
+                 */
+                itemWidth = selector.find(".item").outerWidth();
+                selectorWidth = selector.find(".container").outerWidth();
+                var totalWidth = itemWidth * numItems;
+                var widthAtItem = itemWidth * selectorResult.currentIndex;
+                var halfWidth = selectorWidth / 2.0;
+                var x = 0;
+                /* The following code deals with the case of the item
+                 * selected being one of the first ones in the list
+                 */
+                if (widthAtItem > selectorWidth / 2.0) {
+                    x = -((widthAtItem) - (halfWidth - itemWidth / 2.0));
+                }
+                /* And here we're dealing with the case of the item
+                 * selected being one of the last ones in the list.
+                 */
+                if (totalWidth - widthAtItem < halfWidth) {
+                    x = -totalWidth + selectorWidth;
+                }
+                /* There's also a third option: the values are so few
+                 * that we should always center them.
+                 */
+                if (totalWidth < halfWidth) {
+                    x = totalWidth / 2.0 + itemWidth * numItems / 2.0;
+                }
 
-            selector.find(".view").width(itemWidth * numItems);
-            selectorResult.scrollable.container.scrollview(
-                'scrollTo', x, 0);
+                selector.find(".view").width(itemWidth * numItems);
+                selectorResult.scrollable.container.scrollview(
+                    'scrollTo', x, 0);
+            }
         },
 
         _hideDataSelector: function(selector) {
