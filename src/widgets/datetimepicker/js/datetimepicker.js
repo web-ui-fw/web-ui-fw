@@ -289,7 +289,7 @@
             var i = 0;
             for (; i < values.length; i++) {
                 var item = obj._createSelectorItem(ui.itemProto.clone(), klass);
-                item.link.bind("vclick", function(e) {
+                item.link.click(function(e) {
                     var newValue = parseFromFunc(this.text);
                     dest[prop] = newValue;
                     owner.text(this.text);
@@ -396,7 +396,7 @@
             });
 
             ui.main.find(".data").each(function() {
-                $(this).bind("vclick", function(e) {
+                $(this).click(function(e) {
                     obj._showDataSelector(ui.selector, $(this), ui);
                     e.stopPropagation();
                 });
