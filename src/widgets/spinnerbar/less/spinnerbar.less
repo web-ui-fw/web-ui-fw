@@ -15,14 +15,24 @@
         left: 1%;
 
         .ui-spinnerbar-bar {
-            background-image: -webkit-linear-gradient(-45deg,
-                                                      transparent,
-                                                      transparent 25%,
-                                                      @spinnerbarBarBgColor 25%,
-                                                      @spinnerbarBarBgColor 50%,
-                                                      transparent 50%,
-                                                      transparent 75%,
-                                                      @spinnerbarBarBgColor 75%);
+            background: -webkit-linear-gradient(-45deg,
+                                                transparent,
+                                                transparent 25%,
+                                                @spinnerbarBarBgColor 25%,
+                                                @spinnerbarBarBgColor 50%,
+                                                transparent 50%,
+                                                transparent 75%,
+                                                @spinnerbarBarBgColor 75%);
+            background: -webkit-gradient(linear,
+                                         left top,
+                                         right bottom,
+                                         color-stop(0%,  rgba(0,0,0,0)),
+                                         color-stop(25%, rgba(0,0,0,0)),
+                                         color-stop(25%, @spinnerbarBarBgColor),
+                                         color-stop(50%, @spinnerbarBarBgColor),
+                                         color-stop(50%, rgba(0,0,0,0)),
+                                         color-stop(75%, rgba(0,0,0,0)),
+                                         color-stop(75%, @spinnerbarBarBgColor));
             background-color: @spinnerbarBarFgColor;
             -webkit-background-size: @spinnerbarBarBgSide @spinnerbarBarBgSide;
             height: @spinnerbarBarHeight;
