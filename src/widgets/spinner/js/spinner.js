@@ -55,17 +55,18 @@ $.widget("todons.spinner", $.mobile.widget, {
     },
 
     _create: function() {
-        var popup, zIndex;
+        var zIndex;
 
-        popup = $.mobile.todons.loadPrototype("spinner").find("div:first");
+        this.popup = $('<div class="ui-spinner-container">' +
+                       '<div class="ui-spinner">' +
+                       '</div>' +
+                       '</div>');
 
         zIndex = this.element.css('z-index');
         zIndex = zIndex ? zIndex + 1 : 10;
-        popup.css('z-index', zIndex);
+        this.popup.css('z-index', zIndex);
 
         this.options.position['of'] = this.element;
-
-        this.popup = popup;
     },
 
     start: function () {
