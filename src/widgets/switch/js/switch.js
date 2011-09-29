@@ -38,11 +38,13 @@ $.widget("todons.switch", $.mobile.widget, {
     var self = this,
         dstAttr = this.element.is("input") ? "checked" : "data-checked",
         ui = {
-          outer: "#switch",
-          normalBackground: "#switch-inner",
+          outer:            "#switch",
+          normalBackground: "#switch-inner-normal",
           activeBackground: "#switch-inner-active",
-          button:           "#switch-button",
-          realbutton:       "#switch-button-outside"
+          tButton:          "#switch-button-t",
+          fButton:          "#switch-button-f",
+          realButton:       "#switch-button-outside-real",
+          refButton:        "#switch-button-outside-ref"
         };
 
     ui = $.mobile.todons.loadPrototype("switch", ui);
@@ -59,7 +61,7 @@ $.widget("todons.switch", $.mobile.widget, {
 
     this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
-    ui.realbutton.bind("vclick", function(e) {
+    ui.realButton.bind("vclick", function(e) {
       self._toggle();
       e.stopPropagation();
     });
@@ -71,7 +73,7 @@ $.widget("todons.switch", $.mobile.widget, {
   },
 
   _toggle: function() {
-    this._setChecked(!(parseInt(this.ui.button.css("top")) === 0));
+    this._setChecked(!(this.options.checked));
   },
 
   _setOption: function(key, value, unconditional) {
@@ -82,32 +84,35 @@ $.widget("todons.switch", $.mobile.widget, {
   },
 
   _realize: function() {
-    this.ui.normalBackground.css("height", this.ui.button.outerHeight() * 3);
-    this.ui.activeBackground.css("height", this.ui.button.outerHeight() * 3);
-    this.ui.realbutton.position({
-      my: "center center",
-      at: "center center",
-      of: this.ui.button
-    });
-    this.ui.button.removeClass("ui-switch-button-hidden").css("opacity", 0);
-    this._moveButton("css", this.options.checked);
+    this.ui.realButton
+      .position({
+        my: "center center",
+        at: "center center",
+        of: this.ui[(this.options.checked ? "t" : "f") + "Button"]
+      })
+      .removeClass("switch-button-transparent");
+    this.ui.activeBackground.find("a").addClass("switch-button-transparent");
+    this.ui.normalBackground.find("a").addClass("switch-button-transparent");
+    this.ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
+    this.ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
+
     this.rendered = true;
-  },
-
-  _moveButton: function(methodToUse, checked) {
-    var dst = checked ? 0 : this.ui.button.outerHeight();
-    var newTop = (this.ui.realbutton.position().top + (dst - this.ui.button.position().top));
-
-    this.ui.realbutton[methodToUse]({"top": newTop + "px"});
-    this.ui.button[methodToUse]({"top": dst + "px"});
-    this.ui.normalBackground[methodToUse]({"opacity": checked ? 0.0 : 1.0});
-    this.ui.activeBackground[methodToUse]({"opacity": checked ? 1.0 : 0.0});
   },
 
   _setChecked: function(checked, unconditional) {
     if (this.options.checked != checked || unconditional) {
-      if (this.rendered)
-        this._moveButton("animate", checked);
+      if (this.rendered) {
+        this.ui.refButton.position({
+          my: "center center", 
+          at: "center center",
+          of: this.ui[(checked ? "t" : "f") + "Button"]
+        });
+        this.ui.realButton.animate({"top": this.ui.refButton.position().top});
+      }
+
+      this.ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
+      this.ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
+
       this.options.checked = checked;
       this.element.attr(this.dstAttr, checked ? "true" : "false");
       this.element.triggerHandler("changed", checked);
