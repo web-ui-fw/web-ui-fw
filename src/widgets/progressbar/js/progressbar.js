@@ -69,10 +69,14 @@
          */
         _create: function () {
             var startValue, container;
+            var html = $('<div class="ui-progressbar">' +
+                         '<div class="ui-boxImg"></div>' +
+                         '<div class="ui-barImg"></div>' +
+                         '</div>');
 
-            container = $.mobile.todons.loadPrototype("progressbar").find(".ui-progressbar");
-            this.element.append(container);
+            $(this.element).append(html);
 
+            container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
 
