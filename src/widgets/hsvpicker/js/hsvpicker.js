@@ -75,63 +75,55 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     $.todons.colorwidget.prototype._create.call(this);
 
-    ui.container.find(".hsvpicker-arrow-btn").bind("vmousedown", function(e) {
-      $(this).attr("src",
-        ui.container.attr("data-arrow-btn-imageTemplate")
-          .replace("%1", $(this).attr("data-location"))
-          .replace("%2", "_press"));
-    });
+    ui.container.find(".hsvpicker-arrow-btn")
+      .bind("mousedown vmousedown", function(e) {
+        self._setArrowImg($(this), "_press");
+      })
+      .bind("vmouseup", function(e) {
+        var chan = $(this).attr("data-target"),
+            hsvIdx = ("hue" === chan) ? 0 :
+                     ("sat" === chan) ? 1 : 2,
+            max = (0 == hsvIdx ? 360 : 1),
+            step = 0.05 * max;
 
-    ui.container.find(".hsvpicker-arrow-btn").bind("vmouseup", function(e) {
-      var chan = $(this).attr("data-target"),
-          hsvIdx = ("hue" === chan) ? 0 :
-                   ("sat" === chan) ? 1 : 2,
-          max = (0 == hsvIdx ? 360 : 1),
-          step = 0.05 * max;
+        self._setArrowImg($(this), "");
+        self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
+        self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
+        self._updateSelectors(self.dragging_hsv);
+      });
 
-      $(this).attr("src",
-        ui.container.attr("data-arrow-btn-imageTemplate")
-          .replace("%1", $(this).attr("data-location"))
-          .replace("%2", ""));
+    $( document )
+      .bind( "vmousemove", function( event ) {
+        if ( self.dragging != -1 )
+          event.stopPropagation();
+      })
+      .bind( "vmouseup", function( event ) {
+        self.dragging = -1;
+        ui.container.find(".hsvpicker-arrow-btn").each(function() {self._setArrowImg($(this), "");});
+      });
 
-      self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
-      self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
-      self._updateSelectors(self.dragging_hsv);
-    });
+    this._bindElements("hue", 0);
+    this._bindElements("sat", 1);
+    this._bindElements("val", 2);
+  },
 
-    $( document ).bind( "vmousemove", function( event ) {
-      if ( self.dragging != -1 )
-        event.stopPropagation();
-    });
+  _bindElements: function(chan, idx) {
+    var self = this;
+    this.ui[chan].selector
+      .bind("mousedown vmousedown", function(e) { self._selectorMouseDown(chan,  idx, e); })
+      .bind("vmousemove",           function(e) { self._selectorMouseMove(chan,  idx, e); })
+      .bind("vmouseup",             function(e) { self.dragging = -1; });
+    this.ui[chan].container
+      .bind("mousedown vmousedown", function(e) { self._containerMouseDown(chan, idx, e); })
+      .bind("vmousemove",           function(e) { self._containerMouseMove(chan, idx, e); })
+      .bind("vmouseup",             function(e) { self.dragging = -1; });
+  },
 
-    $( document ).bind( "vmouseup", function( event ) {
-      if ( self.dragging != -1 )
-        self.dragging = false;
-    });
-
-    ui.hue.selector.bind("vmousedown", function(e) { self._selectorMouseDown("hue", 0, e); });
-    ui.sat.selector.bind("vmousedown", function(e) { self._selectorMouseDown("sat", 1, e); });
-    ui.val.selector.bind("vmousedown", function(e) { self._selectorMouseDown("val", 2, e); });
-
-    ui.hue.selector.bind("vmousemove", function(e) { self._selectorMouseMove("hue", 0, e); });
-    ui.sat.selector.bind("vmousemove", function(e) { self._selectorMouseMove("sat", 1, e); });
-    ui.val.selector.bind("vmousemove", function(e) { self._selectorMouseMove("val", 2, e); });
-
-    ui.hue.selector.bind("vmouseup", function(e) { self.dragging = -1; });
-    ui.sat.selector.bind("vmouseup", function(e) { self.dragging = -1; });
-    ui.val.selector.bind("vmouseup", function(e) { self.dragging = -1; });
-
-    ui.hue.container.bind("vmousedown", function(e) { self._containerMouseDown("hue", 0, e); });
-    ui.sat.container.bind("vmousedown", function(e) { self._containerMouseDown("sat", 1, e); });
-    ui.val.container.bind("vmousedown", function(e) { self._containerMouseDown("val", 2, e); });
-
-    ui.hue.container.bind("vmousemove", function(e) { self._containerMouseMove("hue", 0, e); });
-    ui.sat.container.bind("vmousemove", function(e) { self._containerMouseMove("sat", 1, e); });
-    ui.val.container.bind("vmousemove", function(e) { self._containerMouseMove("val", 2, e); });
-
-    ui.hue.container.bind("vmouseup", function(e) { self.dragging = -1; });
-    ui.sat.container.bind("vmouseup", function(e) { self.dragging = -1; });
-    ui.val.container.bind("vmouseup", function(e) { self.dragging = -1; });
+  _setArrowImg: function(arrowImg, suffix) {
+    arrowImg.attr("src",
+      this.ui.container.attr("data-arrow-btn-imageTemplate")
+        .replace("%1", arrowImg.attr("data-location"))
+        .replace("%2", suffix));
   },
 
   _containerMouseDown: function(chan, idx, e) {
