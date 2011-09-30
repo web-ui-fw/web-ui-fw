@@ -237,6 +237,10 @@ $("#colorwidgets-demo").bind("pagebeforeshow", function() {
   });
   $("#colorpalette").colorpalette("option", "color", "#45cc98");
 
+  $("#colorwidgets-demo").bind("pageshow", function(e) {
+    $.mobile.todons.fillPageWithContentArea($("#colorwidgets-demo"))
+  });
+
   clrWidgetsAreInit = true;
 });
 
