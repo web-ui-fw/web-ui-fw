@@ -68,11 +68,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         self.dragging = false;
     });
 
-    ui.hs.container.bind( "vmousedown", function (event) {
+    ui.hs.container.bind( "vmousedown mousedown", function (event) {
       self._canvasMouseDown(event, "hs");
     });
 
-    ui.l.container.bind( "vmousedown", function (event) {
+    ui.l.container.bind( "vmousedown mousedown", function (event) {
       self._canvasMouseDown(event, "l");
     });
 
@@ -86,7 +86,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         self._canvasMouseMove(event, "l");
     });
 
-    ui.hs.selector.bind( "vmousedown", function (event) {
+    ui.hs.selector.bind( "vmousedown mousedown", function (event) {
       self.dragging = true;
       self.draggingHS = true;
       self.selectorDraggingOffset.x = event.offsetX;
@@ -95,7 +95,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       event.stopPropagation();
     });
 
-    ui.l.selector.bind( "vmousedown", function (event) {
+    ui.l.selector.bind( "vmousedown mousedown", function (event) {
       self.dragging = true;
       self.draggingHS = false;
       self.selectorDraggingOffset.x = event.offsetX;
@@ -150,6 +150,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       this.dragging = true;
       this.draggingHS = ("hs" === containerStr);
       this._canvasMouseMove(event, containerStr);
+      event.stopPropagation();
     }
   },
 
