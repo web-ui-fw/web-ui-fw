@@ -50,6 +50,14 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // popup for the hovering character
         var popup = null;
 
+        var removePopup = function () {
+            if (popup) {
+                popup.text('');
+                popup.remove();
+                popup = null;
+            }
+        };
+
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
             o.scrollview = $el.parent();
@@ -65,7 +73,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             var listItem = $('<li>' + text + '</li>');
 
             // bind mouse over so it moves the scroller to the divider
-            listItem.bind('vmouseover', function () {
+            listItem.bind('touchstart mousedown vmouseover', function (e) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
                 var dividerY = $(divider).position().top;
@@ -85,14 +93,14 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 // apply the scroll
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
-                // show the popup
-                if (!popup) {
-                    popup = $('<div class="ui-shortcutscroll-popup">' +
-                              '<div></div>' +
-                              '</div>');
+                removePopup();
 
-                    o.scrollview.after(popup);
-                }
+                // show the popup
+                popup = $('<div class="ui-shortcutscroll-popup">' +
+                          '<div></div>' +
+                          '</div>');
+
+                o.scrollview.after(popup);
 
                 popup.find('div').text(text)
                                  .position({my: 'center center',
@@ -102,20 +110,24 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 popup.position({my: 'center center',
                                 at: 'center center',
                                 of: o.scrollview});
+
+                e.preventDefault();
+            });
+
+            // bind mouseout of the shortcutscroll container to remove popup
+            listItem.bind('touchend mouseup vmouseout', function () {
+                removePopup();
             });
 
             shortcutsList.append(listItem);
         });
 
-        // bind mouseout of the shortcutscroll container to remove popup
-        shortcutsContainer.bind('vmouseout', function () {
-            if (popup) {
-                popup.remove();
-                popup = null;
-            }
+        shortcutsContainer.bind('vmousemove', function (e) {
+            e.preventDefault();
         });
 
-        o.scrollview.after(shortcutsContainer.append(shortcutsList));
+        shortcutsContainer.append(shortcutsList);
+        o.scrollview.append(shortcutsContainer);
     }
 });
 
