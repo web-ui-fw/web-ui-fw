@@ -42,21 +42,21 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         ui = {
           container: "#hsvpicker",
           hue: {
-            container: "#hsvpicker-hue-masks-container",
-            selector:  "#hsvpicker-hue-selector",
-            hue:       "#hsvpicker-hue-hue",
-            valMask:   "#hsvpicker-hue-mask-val"
+            eventSource: "[data-event-source='hue']",
+            selector:    "#hsvpicker-hue-selector",
+            hue:         "#hsvpicker-hue-hue",
+            valMask:     "#hsvpicker-hue-mask-val"
           },
           sat: {
-            container: "#hsvpicker-sat-masks-container",
-            selector:  "#hsvpicker-sat-selector",
-            hue:       "#hsvpicker-sat-hue",
-            valMask:   "#hsvpicker-sat-mask-val"
+            eventSource: "[data-event-source='sat']",
+            selector:    "#hsvpicker-sat-selector",
+            hue:         "#hsvpicker-sat-hue",
+            valMask:     "#hsvpicker-sat-mask-val"
           },
           val: {
-            container: "#hsvpicker-val-masks-container",
-            selector:  "#hsvpicker-val-selector",
-            hue:       "#hsvpicker-val-hue"
+            eventSource: "[data-event-source='val']",
+            selector:    "#hsvpicker-val-selector",
+            hue:         "#hsvpicker-val-hue"
           }
         };
 
@@ -115,7 +115,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
       .bind("mousedown vmousedown", function(e) { self._selectorMouseDown(chan,  idx, e); })
       .bind("vmousemove",           function(e) { self._selectorMouseMove(chan,  idx, e); })
       .bind("vmouseup",             function(e) { self.dragging = -1; });
-    this.ui[chan].container
+    this.ui[chan].eventSource
       .bind("mousedown vmousedown", function(e) { self._containerMouseDown(chan, idx, e); })
       .bind("vmousemove",           function(e) { self._containerMouseMove(chan, idx, e); })
       .bind("vmouseup",             function(e) { self.dragging = -1; });
@@ -129,8 +129,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
   },
 
   _containerMouseDown: function(chan, idx, e) {
-    if (event.offsetX >= 0 && event.offsetX <= this.ui[chan].container.width() &&
-        event.offsetY >= 0 && event.offsetY <= this.ui[chan].container.height()) {
+    if (event.offsetX >= 0 && event.offsetX <= this.ui[chan].eventSource.width() &&
+        event.offsetY >= 0 && event.offsetY <= this.ui[chan].eventSource.height()) {
       this.dragging = idx;
       this._containerMouseMove(chan, idx, e);
     }
@@ -138,7 +138,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
   _containerMouseMove: function(chan, idx, e) {
     if (this.dragging === idx) {
-      var potential = event.offsetX / this.ui[chan].container.width();
+      var potential = event.offsetX / this.ui[chan].eventSource.width();
 
       potential = Math.min(1.0, Math.max(0.0, potential));
       if (0 === idx)
@@ -169,7 +169,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
       if (0 === idx)
         potential /= 360;
 
-      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].container.width();
+      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width();
       potential = Math.min(1.0, Math.max(0.0, potential));
 
       if (0 === idx)
@@ -188,17 +188,17 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         hclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
         vclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
-    this.ui.hue.selector.css("left", this.ui.hue.container.width() * hsv[0] / 360);
+    this.ui.hue.selector.css("left", this.ui.hue.eventSource.width() * hsv[0] / 360);
     this.ui.hue.selector.css("background", clr);
     this.ui.hue.hue.css("opacity", hsv[1]);
     this.ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
-    this.ui.sat.selector.css("left", this.ui.sat.container.width() * hsv[1]);
+    this.ui.sat.selector.css("left", this.ui.sat.eventSource.width() * hsv[1]);
     this.ui.sat.selector.css("background", clr);
     this.ui.sat.hue.css("background", hclr);
     this.ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
-    this.ui.val.selector.css("left", this.ui.val.container.width() * hsv[2]);
+    this.ui.val.selector.css("left", this.ui.val.eventSource.width() * hsv[2]);
     this.ui.val.selector.css("background", clr);
     this.ui.val.hue.css("background", vclr);
 
