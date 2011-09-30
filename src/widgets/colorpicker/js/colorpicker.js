@@ -32,12 +32,12 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         ui = {
             clrpicker: "#colorpicker",
             hs: {
-                container: "#colorpicker-hs-container",
+                eventSource: "[data-event-source='hs']",
                 valMask:   "#colorpicker-hs-val-mask",
                 selector:  "#colorpicker-hs-selector"
             },
             l: {
-                container: "#colorpicker-l-container",
+                eventSource: "[data-event-source='l']",
                 selector:  "#colorpicker-l-selector"
             }
         },
@@ -75,7 +75,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
           self.dragging = false;
       });
 
-    ui.hs.container
+    ui.hs.eventSource
       .bind( "vmousedown mousedown", function (event) {
         self._canvasMouseDown(event, "hs");
       })
@@ -85,7 +85,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       })
       .bind( "vmouseup", stopDragging);
 
-    ui.l.container
+    ui.l.eventSource
       .bind( "vmousedown mousedown", function (event) {
         self._canvasMouseDown(event, "l");
       })
@@ -107,8 +107,8 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       })
       .bind( "vmousemove", function (event) {
         if (self.dragging && self.draggingHS) {
-          var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.container.width(),
-              potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.container.height();
+          var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.eventSource.width(),
+              potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.eventSource.height();
 
           potential_h = Math.min(1.0, Math.max(0.0, potential_h));
           potential_s = Math.min(1.0, Math.max(0.0, potential_s));
@@ -134,7 +134,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       })
       .bind( "vmousemove", function (event) {
         if (self.dragging && !self.draggingHS) {
-          var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.container.height();
+          var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.eventSource.height();
 
           potential_l = Math.min(1.0, Math.max(0.0, potential_l));
 
@@ -149,8 +149,8 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
   },
 
   _canvasMouseDown: function(event, containerStr) {
-    if (event.offsetX >= 0 && event.offsetX <= this.ui[containerStr].container.width() &&
-        event.offsetY >= 0 && event.offsetY <= this.ui[containerStr].container.height()) {
+    if (event.offsetX >= 0 && event.offsetX <= this.ui[containerStr].eventSource.width() &&
+        event.offsetY >= 0 && event.offsetY <= this.ui[containerStr].eventSource.height()) {
       this.dragging = true;
       this.draggingHS = ("hs" === containerStr);
       this._canvasMouseMove(event, containerStr);
@@ -160,8 +160,8 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
   _canvasMouseMove: function(event, containerStr) {
     if (this.dragging) {
       if (this.draggingHS) {
-        var potential_h = event.offsetX / this.ui.hs.container.width(),
-            potential_s = event.offsetY / this.ui.hs.container.height();
+        var potential_h = event.offsetX / this.ui.hs.eventSource.width(),
+            potential_s = event.offsetY / this.ui.hs.eventSource.height();
 
         potential_h = Math.min(1.0, Math.max(0.0, potential_h));
         potential_s = Math.min(1.0, Math.max(0.0, potential_s));
@@ -170,7 +170,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         this.dragging_hsl[1] = potential_s;
       }
       else {
-        var potential_l = event.offsetY / this.ui.l.container.height();
+        var potential_l = event.offsetY / this.ui.l.eventSource.height();
 
         potential_l = Math.min(1.0, Math.max(0.0, potential_l));
         this.dragging_hsl[2] = potential_l;
@@ -197,11 +197,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       this.ui.hs.valMask.css("opacity", (hsl[2] - 0.5) * 2.0);
     }
 
-    this.ui.hs.selector.css("left", hsl[0] / 360 * this.ui.hs.container.width());
-    this.ui.hs.selector.css("top",  hsl[1] * this.ui.hs.container.height());
+    this.ui.hs.selector.css("left", hsl[0] / 360 * this.ui.hs.eventSource.width());
+    this.ui.hs.selector.css("top",  hsl[1] * this.ui.hs.eventSource.height());
     this.ui.hs.selector.css("background", clr);
 
-    this.ui.l.selector.css("top",   hsl[2] * this.ui.l.container.height());
+    this.ui.l.selector.css("top",   hsl[2] * this.ui.l.eventSource.height());
     this.ui.l.selector.css("background",  gray);
 
     $.todons.colorwidget.prototype._setColor.call(this, clr);
