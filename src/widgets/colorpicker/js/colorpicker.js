@@ -40,6 +40,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
                 container: "#colorpicker-l-container",
                 selector:  "#colorpicker-l-selector"
             }
+        },
+        stopDragging = function(event) {
+          self.dragging = false;
+          event.stopPropagation();
+          event.preventDefault();
         };
 
     ui = $.mobile.todons.loadPrototype("colorpicker", ui);
@@ -58,105 +63,89 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
 
     $.todons.colorwidget.prototype._create.call(this);
 
-    $( document ).bind( "vmousemove", function( event ) {
-      if ( self.dragging ) {
-        console.log("document.vmousemove while dragging");
-        event.stopPropagation();
-        event.preventDefault();
-      }
-      else
-        console.log("document.vmousemove while not dragging");
-    });
+    $( document )
+      .bind( "vmousemove", function( event ) {
+        if ( self.dragging ) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      })
+      .bind( "vmouseup", function( event ) {
+        if ( self.dragging )
+          self.dragging = false;
+      });
 
-    $( document ).bind( "vmouseup", function( event ) {
-      if ( self.dragging ) {
-        console.log("document.vmouseup while dragging");
-        self.dragging = false;
-      }
-      else
-        console.log("document.vmouseup while not dragging");
-    });
+    ui.hs.container
+      .bind( "vmousedown mousedown", function (event) {
+        self._canvasMouseDown(event, "hs");
+      })
+      .bind( "vmousemove", function (event) {
+        if (self.dragging && self.draggingHS)
+          self._canvasMouseMove(event, "hs");
+      })
+      .bind( "vmouseup", stopDragging);
 
-    ui.hs.container.bind( "vmousedown mousedown", function (event) {
-      self._canvasMouseDown(event, "hs");
-    });
+    ui.l.container
+      .bind( "vmousedown mousedown", function (event) {
+        self._canvasMouseDown(event, "l");
+      })
+      .bind( "vmousemove", function (event) {
+        if (self.dragging && !self.draggingHS)
+          self._canvasMouseMove(event, "l");
+      })
+      .bind( "vmouseup", stopDragging);
 
-    ui.l.container.bind( "vmousedown mousedown", function (event) {
-      self._canvasMouseDown(event, "l");
-    });
-
-    ui.hs.container.bind( "vmousemove", function (event) {
-      if (self.dragging && self.draggingHS)
-        self._canvasMouseMove(event, "hs");
-    });
-
-    ui.l.container.bind( "vmousemove", function (event) {
-      if (self.dragging && !self.draggingHS)
-        self._canvasMouseMove(event, "l");
-    });
-
-    ui.hs.selector.bind( "vmousedown mousedown", function (event) {
-      self.dragging = true;
-      self.draggingHS = true;
-      self.selectorDraggingOffset.x = event.offsetX;
-      self.selectorDraggingOffset.y = event.offsetY;
-
-      event.stopPropagation();
-      event.preventDefault();
-    });
-
-    ui.l.selector.bind( "vmousedown mousedown", function (event) {
-      self.dragging = true;
-      self.draggingHS = false;
-      self.selectorDraggingOffset.x = event.offsetX;
-      self.selectorDraggingOffset.y = event.offsetY;
-
-      event.stopPropagation();
-      event.preventDefault();
-    });
-
-    ui.hs.selector.bind( "vmousemove", function (event) {
-      if (self.dragging && self.draggingHS) {
-        var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.container.width(),
-            potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.container.height();
-
-        potential_h = Math.min(1.0, Math.max(0.0, potential_h));
-        potential_s = Math.min(1.0, Math.max(0.0, potential_s));
-
-        self.dragging_hsl[0] = potential_h * 360;
-        self.dragging_hsl[1] = potential_s;
-        self._updateSelectors(self.dragging_hsl, true);
+    ui.hs.selector
+      .bind( "vmousedown mousedown", function (event) {
+        self.dragging = true;
+        self.draggingHS = true;
+        self.selectorDraggingOffset.x = event.offsetX;
+        self.selectorDraggingOffset.y = event.offsetY;
 
         event.stopPropagation();
         event.preventDefault();
-      }
-    });
+      })
+      .bind( "vmousemove", function (event) {
+        if (self.dragging && self.draggingHS) {
+          var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.container.width(),
+              potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.container.height();
 
-    ui.l.selector.bind( "vmousemove", function (event) {
-      if (self.dragging && !self.draggingHS) {
-        var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.container.height();
+          potential_h = Math.min(1.0, Math.max(0.0, potential_h));
+          potential_s = Math.min(1.0, Math.max(0.0, potential_s));
 
-        potential_l = Math.min(1.0, Math.max(0.0, potential_l));
+          self.dragging_hsl[0] = potential_h * 360;
+          self.dragging_hsl[1] = potential_s;
+          self._updateSelectors(self.dragging_hsl, true);
 
-        self.dragging_hsl[2] = potential_l;
-        self._updateSelectors(self.dragging_hsl);
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      })
+      .bind( "vmouseup", stopDragging);
 
+    ui.l.selector
+      .bind( "vmousedown mousedown", function (event) {
+        self.dragging = true;
+        self.draggingHS = false;
+        self.selectorDraggingOffset.x = event.offsetX;
+        self.selectorDraggingOffset.y = event.offsetY;
         event.stopPropagation();
         event.preventDefault();
-      }
-    });
+      })
+      .bind( "vmousemove", function (event) {
+        if (self.dragging && !self.draggingHS) {
+          var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.container.height();
 
-    ui.hs.container.bind( "vmouseup", function (event) {
-      self.dragging = false;
-      event.stopPropagation();
-      event.preventDefault();
-    });
+          potential_l = Math.min(1.0, Math.max(0.0, potential_l));
 
-    ui.hs.selector.bind( "vmouseup", function (event) {
-      self.dragging = false;
-      event.stopPropagation();
-      event.preventDefault();
-    });
+          self.dragging_hsl[2] = potential_l;
+          self._updateSelectors(self.dragging_hsl);
+
+          event.stopPropagation();
+          event.preventDefault();
+        }
+      })
+      .bind( "vmouseup", stopDragging);
   },
 
   _canvasMouseDown: function(event, containerStr) {
@@ -165,8 +154,6 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       this.dragging = true;
       this.draggingHS = ("hs" === containerStr);
       this._canvasMouseMove(event, containerStr);
-      event.stopPropagation();
-      event.preventDefault();
     }
   },
 
