@@ -59,13 +59,22 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     $.todons.colorwidget.prototype._create.call(this);
 
     $( document ).bind( "vmousemove", function( event ) {
-      if ( self.dragging )
+      if ( self.dragging ) {
+        console.log("document.vmousemove while dragging");
         event.stopPropagation();
+        event.preventDefault();
+      }
+      else
+        console.log("document.vmousemove while not dragging");
     });
 
     $( document ).bind( "vmouseup", function( event ) {
-      if ( self.dragging )
+      if ( self.dragging ) {
+        console.log("document.vmouseup while dragging");
         self.dragging = false;
+      }
+      else
+        console.log("document.vmouseup while not dragging");
     });
 
     ui.hs.container.bind( "vmousedown mousedown", function (event) {
@@ -93,6 +102,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       self.selectorDraggingOffset.y = event.offsetY;
 
       event.stopPropagation();
+      event.preventDefault();
     });
 
     ui.l.selector.bind( "vmousedown mousedown", function (event) {
@@ -102,6 +112,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       self.selectorDraggingOffset.y = event.offsetY;
 
       event.stopPropagation();
+      event.preventDefault();
     });
 
     ui.hs.selector.bind( "vmousemove", function (event) {
@@ -117,6 +128,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         self._updateSelectors(self.dragging_hsl, true);
 
         event.stopPropagation();
+        event.preventDefault();
       }
     });
 
@@ -130,17 +142,20 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         self._updateSelectors(self.dragging_hsl);
 
         event.stopPropagation();
+        event.preventDefault();
       }
     });
 
     ui.hs.container.bind( "vmouseup", function (event) {
       self.dragging = false;
       event.stopPropagation();
+      event.preventDefault();
     });
 
     ui.hs.selector.bind( "vmouseup", function (event) {
       self.dragging = false;
       event.stopPropagation();
+      event.preventDefault();
     });
   },
 
@@ -151,6 +166,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       this.draggingHS = ("hs" === containerStr);
       this._canvasMouseMove(event, containerStr);
       event.stopPropagation();
+      event.preventDefault();
     }
   },
 
@@ -177,6 +193,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       this.selectorDraggingOffset.y = Math.ceil(this.ui[containerStr].selector.outerHeight() / 2.0);
       this._updateSelectors(this.dragging_hsl, true);
       event.stopPropagation();
+      event.preventDefault();
     }
   },
 

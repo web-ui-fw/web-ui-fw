@@ -94,8 +94,10 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     $( document )
       .bind( "vmousemove", function( event ) {
-        if ( self.dragging != -1 )
+        if ( self.dragging != -1 ) {
           event.stopPropagation();
+          event.preventDefault();
+        }
       })
       .bind( "vmouseup", function( event ) {
         self.dragging = -1;
@@ -148,6 +150,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
       this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
       this._updateSelectors(this.dragging_hsv);
       e.stopPropagation();
+      e.preventDefault();
     }
   },
 
@@ -156,6 +159,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     this.selectorDraggingOffset.x = event.offsetX;
     this.selectorDraggingOffset.y = event.offsetY;
     e.stopPropagation();
+    e.preventDefault();
   },
 
   _selectorMouseMove: function(chan, idx, e) {
@@ -175,6 +179,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
       this._updateSelectors(this.dragging_hsv);
 
       e.stopPropagation();
+      e.preventDefault();
     }
   },
 
