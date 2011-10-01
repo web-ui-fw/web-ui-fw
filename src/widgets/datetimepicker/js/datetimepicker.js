@@ -258,9 +258,23 @@
 
         _createScrollableView: function(selectorProto) {
             var container = selectorProto.clone(),
+                self = this,
                 view = container.find("#datetimepicker-selector-view").removeAttr("id");
 
-            container.scrollview({direction: "x"});
+            container
+              .scrollview({direction: "x"})
+              .bind("vclick", function(event) {
+                if (self.panning) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              })
+              .bind("scrollstart", function(event) {
+                self.panning = true;
+              })
+              .bind("scrollstop", function(event) {
+                self.panning = false;
+              });
 
             return {container: container, view: view};
         },
@@ -279,6 +293,7 @@
         _populateSelector: function(selector, owner, klass, values,
                                     parseFromFunc, parseToFunc,
                                     dest, prop, ui) {
+            var self = this;
             var obj = this;
             var scrollable = obj._createScrollableView(ui.selectorProto);
             var currentIndex = 0;
@@ -290,15 +305,17 @@
             for (; i < values.length; i++) {
                 var item = obj._createSelectorItem(ui.itemProto.clone(), klass);
                 item.link.bind("vclick", function(e) {
-                    var newValue = parseFromFunc(this.text);
-                    dest[prop] = newValue;
-                    owner.text(this.text);
-                    scrollable.view.find(item.selector).each(function() {
-                        $(this).removeClass("current");
-                    });
-                    $(this).toggleClass("current");
-                    obj._hideDataSelector(selector);
-                    $(obj.data.parentInput).trigger("date-changed", obj.getValue());
+                    if (!self.panning) {
+                        var newValue = parseFromFunc(this.text);
+                        dest[prop] = newValue;
+                        owner.text(this.text);
+                        scrollable.view.find(item.selector).each(function() {
+                            $(this).removeClass("current");
+                        });
+                        $(this).toggleClass("current");
+                        obj._hideDataSelector(selector);
+                        $(obj.data.parentInput).trigger("date-changed", obj.getValue());
+                    }
                 }).text(values[i]);
                 if (values[i] == destValue) {
                     item.link.addClass("current");
@@ -340,6 +357,7 @@
             ui.itemProto.remove();
 
             $.extend ( this, {
+              panning: false,
               ui: ui,
               data : {
                 now: new Date(),
