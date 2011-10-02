@@ -39,7 +39,7 @@ var progressbarAnimator = {
 
 $(document).bind("pagecreate", function () {
     $('#groupindex-demo').bind('pageshow', function (e) {
-        $.mobile.todons.fillPageWithContentArea($(this));
+        $.mobile.todons.fillPageWithContentArea($("#groupindex-demo"));
     });
 
     $('#shortcutscroll-demo').bind('pageshow', function (e) {
