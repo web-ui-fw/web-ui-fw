@@ -21,6 +21,7 @@
         },
 
         _personArraySuccessCallback: function(personArray) {
+            var self = this;
             var list = self._data.ui.list;
             personArray.foreach(function(p) {
                 list.append("<li>" + p.id() + "</li>");
@@ -28,17 +29,16 @@
         },
 
         _create: function () {
-            var self = this,
-                ui = self._data.ui;
+            var self = this;
 
-            ui = {
+            self._data.ui = {
                 personpicker: ".ui-personpicker",
                 list: ".ui-personpicker > ul"
             };
 
             // Prepare.
-            ui = $.mobile.todons.loadPrototype("personpicker", ui); 
-            ui.personpicker.scrollview({direction: "y"});
+            self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui); 
+            self._data.ui.personpicker.scrollview({direction: "y"});
  
             // Load persons.
             if (self.options.addressBook !== undefined) {
@@ -48,7 +48,7 @@
                     undefined, undefined, undefined, undefined);
             }
 
-            this.element.append(ui.personpicker);
+            this.element.append(self._data.ui.personpicker);
         }
     }); /* End of widget */
 

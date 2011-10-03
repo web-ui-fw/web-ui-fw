@@ -87,19 +87,19 @@ jQuery.extend(jQuery.mobile.todons, {
     },
 
     AddressBook: function() {
-        findPersons = function(
+        this.findPersons = function(
             successCallback, errorCallback, filter, sortOrders,
             attributesOfInterest)
         {
-            var persons = new Array(
-                new Person("John"),
-                new Person("Matts"),
-                new Person("Rebecca"),
-                new Person("Zoe"));
+            persons = new Array(
+                new $.mobile.todons.Person("John"),
+                new $.mobile.todons.Person("Matts"),
+                new $.mobile.todons.Person("Rebecca"),
+                new $.mobile.todons.Person("Zoe"));
 
             // Simulate some time to complete the operation.
-            setTimeout("successCallback(persons)", 1000);
-            return new PendingOperation();
+            setTimeout(function() { successCallback(persons); }, 1000);
+            return new $.mobile.todons.PendingOperation();
         }
     }
 });
