@@ -83,7 +83,11 @@ jQuery.extend(jQuery.mobile.todons, {
     },
 
     Person: function(id) {
-        var id = id;
+        this._id = id;
+
+        this.id = function() {
+            return this._id;
+        }
     },
 
     AddressBook: function() {

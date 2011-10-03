@@ -20,10 +20,9 @@
             ui: undefined
         },
 
-        _personArraySuccessCallback: function(personArray) {
-            var self = this;
-            var list = self._data.ui.list;
-            personArray.foreach(function(p) {
+        _personArraySuccessCallback: function(persons) {
+            var list = this._data.ui.list;
+            persons.forEach(function(p) {
                 list.append("<li>" + p.id() + "</li>");
             });
         },
@@ -44,7 +43,7 @@
             if (self.options.addressBook !== undefined) {
                 // Replace this with actuall call when implemented.
                 self.options.addressBook.findPersons(
-                    self._personArraySuccessCallback,
+                    function(persons) { self._personArraySuccessCallback(persons); },
                     undefined, undefined, undefined, undefined);
             }
 
