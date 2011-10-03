@@ -9,7 +9,7 @@ other distributions should find their way around too:
 cd /tmp
 sudo apt-get install git-core curl build-essential openssl libssl-dev
 git clone https://github.com/joyent/node.git && cd node
-git checkout v0.4.9 # or whatever the latest stable is
+git checkout v0.4.9 # or whatever the latest stable is - last known to work v0.5.0
 ./configure && make
 sudo make install
 curl http://npmjs.org/install.sh | sudo sh
