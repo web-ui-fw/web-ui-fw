@@ -10,4 +10,10 @@ $(document).bind("pageshow", function(e) {
     $.mobile.todons.fillPageWithContentArea(page);
 });
 
+$(window)
+  .bind("orientationchange", function() {
+    $.mobile.todons.fillPageWithContentArea(
+      $(document).find(":jqmData(role='page'), :jqmData(fit-page-to-window='true'), :visible"));
+  });
+
 })(jQuery);
