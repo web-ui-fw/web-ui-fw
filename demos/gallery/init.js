@@ -164,6 +164,9 @@ $(document).bind("pagecreate", function () {
 
     $("#myoptionheader").bind('expand', function () {
         console.log('option header was expanded');
+
+    $('#personpicker-dialog').bind('pageshow', function (e) {
+        $.mobile.todons.fillPageWithContentArea($(this));
     });
 
     $('#slider-demo').bind('pageshow', function () {

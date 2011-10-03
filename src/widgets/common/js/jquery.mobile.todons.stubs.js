@@ -27,11 +27,6 @@ jQuery.extend(jQuery.mobile.todons, {
         }
     },
 
-    AddressBookSuccessCallback: function() {
-        this.onsuccess = function(addressbook) {
-        }
-    },
-
     ErrorCallback: function() {
         this.onerror = function(error) {
         }
@@ -87,9 +82,25 @@ jQuery.extend(jQuery.mobile.todons, {
         var POLICY_ERR                     = 23;
     },
 
-    getDefaultAddressBook: function(successCallback, errocCallback) {
-        successCalback.call();
-        return new PendingOperation();
+    Person: function(id) {
+        var id = id;
     },
+
+    AddressBook: function() {
+        findPersons = function(
+            successCallback, errorCallback, filter, sortOrders,
+            attributesOfInterest)
+        {
+            var persons = new Array(
+                new Person("John"),
+                new Person("Matts"),
+                new Person("Rebecca"),
+                new Person("Zoe"));
+
+            // Simulate some time to complete the operation.
+            setTimeout("successCallback(persons)", 1000);
+            return new PendingOperation();
+        }
+    }
 });
 
