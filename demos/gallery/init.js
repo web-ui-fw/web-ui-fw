@@ -38,14 +38,6 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
-    $('#groupindex-demo').bind('pageshow', function (e) {
-        $.mobile.todons.fillPageWithContentArea($(this));
-    });
-
-    $('#shortcutscroll-demo').bind('pageshow', function (e) {
-        $.mobile.todons.fillPageWithContentArea($(this));
-    });
-
     $('#spinner-demo').bind('pageshow', function (e) {
         $(this).find('li').each(function (index, element) {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
@@ -83,14 +75,7 @@ $(document).bind("pagecreate", function () {
     });
 
     $('#scroller-demo').bind('pageshow', function (e) {
-        $.mobile.todons.fillPageWithContentArea($(this));
-    });
-
-    $('#scroller-demo').bind('pageshow', function (e) {
         $page = $(e.target);
-
-        $.mobile.todons.fillPageWithContentArea($(this));
-
         /*
          * many options cannot be set without subclassing since they're
          * used in the _create method - it seems as if these are for
@@ -222,10 +207,6 @@ $("#colorwidgets-demo").bind("pagebeforeshow", function() {
     $("#colortitle").colortitle("option", "color", clr);
   });
   $("#colorpalette").colorpalette("option", "color", "#45cc98");
-
-  $("#colorwidgets-demo").bind("pageshow", function(e) {
-    $.mobile.todons.fillPageWithContentArea($("#colorwidgets-demo"))
-  });
 
   clrWidgetsAreInit = true;
 });

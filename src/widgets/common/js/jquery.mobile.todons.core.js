@@ -188,7 +188,7 @@ jQuery.extend(jQuery.mobile.todons, {
        */
       fillPageWithContentArea: function (page) {
           var $page = $(page);
-          var $content = $page.children(".ui-content");
+          var $content = $page.children(".ui-content:first");
           var hh = $page.children(".ui-header").outerHeight(); hh = hh ? hh : 0;
           var fh = $page.children(".ui-footer").outerHeight(); fh = fh ? fh : 0;
           var pt = parseFloat($content.css("padding-top"));
