@@ -383,7 +383,7 @@
                 <h1>Popup window</h1>
             </div>
             <div class="content" data-role="content">
-              <a href="#" id="popupwindowDemoButton" data-role="button" data-inline="true">Show popup</a>
+              <a href="#" id="popupwindowDemoButton" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupContent">Show popup</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupContent" data-role="popupwindow" style="display: table;">
                 <table>
@@ -394,7 +394,7 @@
                 </table>
               </div>
 
-              <a href="#" id="popupwindowDemoButton2" data-role="button" data-inline="true">Choose transition</a>
+              <a href="#" id="popupwindowDemoButton2" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupContent2">Choose transition</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupContent2" data-role="popupwindow">
                   <div>

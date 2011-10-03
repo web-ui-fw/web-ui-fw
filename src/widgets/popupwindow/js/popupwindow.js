@@ -107,6 +107,12 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
     ui.screen.bind( "vclick", function( event ) {
         self.close();
     });
+
+    $("[aria-haspopup='true'][aria-owns='" + this.element.attr("id") + "']").bind("vclick", function(e) {
+      self.open(
+        $(this).offset().left + $(this).outerWidth()  / 2,
+        $(this).offset().top  + $(this).outerHeight() / 2);
+    });
   },
 
   _setOverlayTheme: function(newTheme) {
