@@ -129,8 +129,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
   },
 
   _containerMouseDown: function(chan, idx, e) {
-    if (event.offsetX >= 0 && event.offsetX <= this.ui[chan].eventSource.width() &&
-        event.offsetY >= 0 && event.offsetY <= this.ui[chan].eventSource.height()) {
+    if (e.offsetX >= 0 && e.offsetX <= this.ui[chan].eventSource.width() &&
+        e.offsetY >= 0 && e.offsetY <= this.ui[chan].eventSource.height()) {
       this.dragging = idx;
       this._containerMouseMove(chan, idx, e);
     }
@@ -138,7 +138,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
   _containerMouseMove: function(chan, idx, e) {
     if (this.dragging === idx) {
-      var potential = event.offsetX / this.ui[chan].eventSource.width();
+      var potential = e.offsetX / this.ui[chan].eventSource.width();
 
       potential = Math.min(1.0, Math.max(0.0, potential));
       if (0 === idx)
@@ -156,8 +156,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
   _selectorMouseDown: function(chan, idx, e) {
     this.dragging = idx;
-    this.selectorDraggingOffset.x = event.offsetX;
-    this.selectorDraggingOffset.y = event.offsetY;
+    this.selectorDraggingOffset.x = e.offsetX;
+    this.selectorDraggingOffset.y = e.offsetY;
     e.stopPropagation();
     e.preventDefault();
   },
@@ -169,7 +169,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
       if (0 === idx)
         potential /= 360;
 
-      potential += (event.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width();
+      potential += (e.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width();
       potential = Math.min(1.0, Math.max(0.0, potential));
 
       if (0 === idx)
