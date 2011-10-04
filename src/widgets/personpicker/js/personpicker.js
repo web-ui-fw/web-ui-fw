@@ -23,14 +23,15 @@
 
         _personArraySuccessCallback: function(persons) {
             var list = this._data.ui.list;
-            var rowContainer = this._data.row.container;
+            var li = this._data.row.li;
             var name = this._data.row.name;
 
-            rowContainer.remove();
+            li.remove();
             persons.forEach(function(p) {
                 name.text(p.id());
-                list.append(rowContainer.clone());
+                list.append(li.clone());
             });
+            list.listview();
         },
 
         _create: function () {
@@ -42,8 +43,9 @@
             };
 
             self._data.row = {
-                container: ".ui-personpicker-row",
-                name: ".name"
+                li: "li.ui-personpicker-row",
+                container: "div.ui-personpicker-row-container",
+                name: "h3.name"
             };
 
             // Prepare.
