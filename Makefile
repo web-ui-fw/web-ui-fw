@@ -68,9 +68,10 @@ widgets: init
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
                 if test "x${INLINE_PROTO}x" = "x1x"; then \
-                  ./tools/inline-protos.sh ${CODE_DIR}/$$REPLY >> ${FW_JS}; \
+                  ./tools/inline-protos.sh ${CODE_DIR}/$$REPLY >> ${CODE_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
+                  cat ${CODE_DIR}/$$REPLY/js/$$REPLY.js.compiled >> ${FW_JS}; \
                 else \
-	          for f in `find ${CODE_DIR}/$$REPLY -iname '*.js' | sort`; do \
+	          for f in `find ${CODE_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
 	              echo "		$$f"; \
 	              cat $$f >> ${FW_JS}; \
 	          done; \
@@ -104,6 +105,7 @@ clean:
 	@@rm -rf ${OUTPUT_ROOT}
 	# Remove generated files...
 	@@rm -f `find . -iname *.less.css`
+	@@rm -f `find . -iname *.js.compiled`
 
 init: clean
 	# Initializing...
