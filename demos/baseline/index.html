@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Baseline test</title>
+
+    <script src="../../build/web-ui-fw/0.1/js/jquery.js"></script>
+    <script src="../../build/web-ui-fw/0.1/js/web-ui-fw-libs.js"></script>
+
+    <link rel="stylesheet" href="../../build/web-ui-fw/0.1/css/web-ui-fw-default-theme.css"/>
+
+    <!-- a few styles only required for this demo -->
+    <style type="text/css">
+    .shorty {
+        height: 300px;
+        margin-top: 20px;
+        padding: 16px;
+    }
+    </style>
+
+    <!-- common libs -->
+    <script src="../../src/widgets/common/js/jquery.easing.1.3.js"></script>
+    <script src="../../src/widgets/common/js/jquery.mobile.scrollview.js"></script>
+    <script src="../../src/widgets/common/js/ensurens.js"></script>
+    <script src="../../src/widgets/common/js/jquery.mobile.todons.core.js"></script>
+
+    <!-- here come the widgets... -->
+    <script src="../../src/widgets/stupid/js/stupid.js"></script>
+
+    <script src="../../src/widgets/spinnerbar/js/spinnerbar.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/spinnerbar/less/spinnerbar.less.css"/>
+
+    <script src="../../src/widgets/spinner/js/spinner.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/spinner/less/spinner.less.css"/>
+
+    <script src="../../src/widgets/shortcutscroll/js/shortcutscroll.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/shortcutscroll/css/shortcutscroll.css"/>
+
+    <script src="../../src/widgets/progressbar/js/progressbar.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/progressbar/css/progressbar.css"/>
+</head>
+
+<body>
+
+<div data-role="page" id="baseline">
+    <div data-role="header">
+        <h1>Baseline test</h1>
+    </div>
+
+    <div data-role="content">
+        <p>The idea here is to try to load every widget on one page
+        to make testing easy.</p>
+    </div>
+
+    <div data-role="content">
+        <!-- simplest possible widget -->
+        <h2>Simplest possible widget (aka "stupid")</h2>
+        <p>If this doesn't work, we're really in trouble.</p>
+        <div data-role="stupid"></div>
+    </div>
+
+    <div data-role="content">
+        <!-- web-ui-fw widgets -->
+        <h2>web-ui-fw widgets</h2>
+        <p>Spinners should disappear after 10 seconds.</p>
+        <div id="myspinnerbar" data-processing="spinnerbar"></div>
+        <div id="myspinner" data-processing="spinner">Spin, spin</div>
+        <div id="myprogressbar" data-role="progressbar"></div>
+
+        <div class="shorty" data-scroll="y">
+            <ul data-role="listview" data-shortcutscroll="true">
+                <li data-role="list-divider">A</li>
+                <li>Anton</li>
+                <li>Arabella</li>
+                <li>Art</li>
+                <li data-role="list-divider">B</li>
+                <li>Barry</li>
+                <li>Bibi</li>
+                <li>Billy</li>
+                <li>Bob</li>
+                <li data-role="list-divider">D</li>
+                <li>Daisy</li>
+                <li>Derek</li>
+                <li>Desmond</li>
+                <li data-role="list-divider">E</li>
+                <li>Eric</li>
+                <li>Ernie</li>
+                <li>Esme</li>
+                <li data-role="list-divider">F</li>
+                <li>Fay</li>
+                <li>Felicity</li>
+                <li>Francis</li>
+                <li>Frank</li>
+                <li data-role="list-divider">H</li>
+                <li>Harry</li>
+                <li>Herman</li>
+                <li>Horace</li>
+                <li data-role="list-divider">J</li>
+                <li>Jack</li>
+                <li>Jane</li>
+                <li>Jill</li>
+                <li data-role="list-divider">K</li>
+                <li>Katherine</li>
+                <li>Katy</li>
+                <li>Keith</li>
+                <li data-role="list-divider">L</li>
+                <li>Larry</li>
+                <li>Lee</li>
+                <li>Lola</li>
+                <li data-role="list-divider">M</li>
+                <li>Mark</li>
+                <li>Milly</li>
+                <li>Mort</li>
+                <li data-role="list-divider">N</li>
+                <li>Nigel</li>
+                <li>Norman</li>
+                <li data-role="list-divider">O</li>
+                <li>Organza</li>
+                <li>Orlando</li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <!-- jqm widget -->
+        <h2>jQuery standard widgets</h2>
+        <p><a data-role="button">standard button</a></p>
+    </div>
+
+    <div data-role="footer">
+        <h4>Web UI Framework - Widgets gallery</h4>
+    </div>
+</div>
+
+<script>
+var progressbarRunning = false;
+var progressbarInterval = null;
+
+$('#baseline').bind('pageshow', function () {
+    var page = $(this);
+
+    var myspinnerbar = page.find('#myspinnerbar');
+    myspinnerbar.spinnerbar('start');
+
+    var myspinner = page.find('#myspinner');
+    myspinner.spinner('start');
+
+    var myprogressbar = page.find('#myprogressbar');
+    var progress = myprogressbar.progressbar('value');
+
+    setTimeout(function () {
+        myspinnerbar.spinnerbar('stop');
+        myspinner.spinner('stop');
+    }, 10000);
+
+    if (!progressbarRunning) {
+        progressbarInterval = setInterval(function () {
+            if (++progress > 100) {
+                progress = 0;
+            }
+
+            myprogressbar.progressbar('value', progress);
+        }, 100);
+
+        progressbarRunning = true;
+    }
+});
+
+$('#baseline').bind('pagehide', function () {
+    if (progressbarRunning) {
+        clearInterval(progressbarInterval);
+        progressbarRunning = false;
+    }
+});
+</script>
+
+</body>
+</html>
