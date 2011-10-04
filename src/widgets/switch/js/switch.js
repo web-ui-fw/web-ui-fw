@@ -59,7 +59,10 @@ $.widget("todons.switch", $.mobile.widget, {
 
     $.mobile.todons.parseOptions(self, true);
 
-    this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
+    if (this.element.closest(".ui-page").is(":visible"))
+      self._realize();
+    else
+      this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
     ui.realButton.bind("vclick", function(e) {
       self._toggle();
