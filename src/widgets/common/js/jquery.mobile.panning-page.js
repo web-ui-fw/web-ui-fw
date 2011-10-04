@@ -4,16 +4,16 @@
 
 (function($, undefined) {
 
+var _fit_page_to_window_selector = ":jqmData(role='page'):jqmData(fit-page-to-window='true'):visible";
+
 $(document).bind("pageshow", function(e) {
-  var page = $(e.target);
-  if (page.attr("data-fit-page-to-window") === "true")
-    $.mobile.todons.fillPageWithContentArea(page);
+  if ($(e.target).is(_fit_page_to_window_selector))
+    $.mobile.todons.fillPageWithContentArea($(e.target));
 });
 
-$(window)
-  .bind("orientationchange", function() {
-    $.mobile.todons.fillPageWithContentArea(
-      $(document).find(":jqmData(role='page'), :jqmData(fit-page-to-window='true'), :visible"));
-  });
+$(window).resize(function() {
+  if ($(_fit_page_to_window_selector)[0] !== undefined)
+    $.mobile.todons.fillPageWithContentArea($(_fit_page_to_window_selector));
+});
 
 })(jQuery);
