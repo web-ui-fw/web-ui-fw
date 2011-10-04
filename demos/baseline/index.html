@@ -19,6 +19,10 @@
         padding: 16px;
     }
 
+    .longy {
+        height: 2048px;
+    }
+
     div.ui-content > div {
         padding-bottom: 10px;
         border-bottom: thin solid #AAA;
@@ -167,6 +171,7 @@
                 <a href="#header-and-footer-with-grouped-buttons" data-role="button" data-inline="true">Header and footer with grouped buttons in footer</a>
                 <a href="#header-with-back-btn" data-role="button" data-inline="true">Header with auto back button</a>
                 <a href="#header-and-footer-navbars-1" data-role="button" data-inline="true">Header and footer navbars</a>
+                <a href="#header-and-footer-fixed" data-role="button" data-inline="true">Fixed headers and footers</a>
             </p>
         </div>
 
@@ -681,6 +686,7 @@
 
     <div data-role="content">
         <p>page 1</p>
+        <p>NB the toolbars here have fixed positioning</p>
         <p><a href="#baseline">Back to front page</a></p>
     </div>
 
@@ -822,6 +828,27 @@
                 <li><a href="#header-and-footer-navbars-5" data-transition="none" class="ui-btn-active ui-state-persist">page 5</a></li>
             </ul>
         </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-fixed" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>fixed positioning</h1>
+    </div>
+
+    <div data-role="content">
+        <div class="longy">
+            <p>Nothing to see here, but you should scroll down to
+            check the fixed toolbar positioning.</p>
+            <p><a href="#baseline">Back to front page</a></p>
+        </div>
+        <div>
+            <p>I didn't expect you to find me down here!</p>
+        </div>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h1>fixed positioning</h1>
     </div>
 </div>
 
