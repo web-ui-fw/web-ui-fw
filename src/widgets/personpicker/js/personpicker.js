@@ -45,12 +45,12 @@
             self._data.row = {
                 li: "li.ui-personpicker-row",
                 container: "div.ui-personpicker-row-container",
+                checkbox: "div.switch",
                 name: "h3.name"
             };
 
             // Prepare.
             self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui); 
-            self._data.ui.personpicker.scrollview({direction: "y"});
             self._data.row = $.mobile.todons.loadPrototype("personpicker-row", self._data.row);
  
             // Load persons.

@@ -651,19 +651,13 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="personpicker-demo" data-add-back-btn="true">
+        <div data-role="page" id="personpicker-demo" data-add-back-btn="true" data-scroll="y" data-fit-page-to-window="true">
             <div data-role="header">
                 <h1>PersonPicker</h1>
             </div>
             <div class="content" data-role="content">
-                <a href="#personpicker-dialog" data-role="button" data-inline="true" data-rel="dialog" data-transition="pop">
-                    Click to show the PersonPicker
-                </a>
+                <div data-role="personpicker"></div>
             </div>
         </div> <!-- Page for PersonPicker button -->
- 
-        <div data-role="page" id="personpicker-dialog">
-            <div data-role="personpicker"></div>
-        </div>
     </body>
 </html>
