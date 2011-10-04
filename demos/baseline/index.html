@@ -143,6 +143,34 @@
 
         <!-- jqm widgets -->
         <div>
+            <h2>jqm dialog</h2>
+
+            <p>The buttons below open the same dialog but with different transitions.</p>
+
+            <p>
+                <a data-role="button" data-inline="true" data-rel="dialog" href="#dialog-example" data-transition="pop">Open dialog (pop)</a>
+                <a data-role="button" data-inline="true" data-rel="dialog" href="#dialog-example" data-transition="slideup">Open dialog (slideup)</a>
+                <a data-role="button" data-inline="true" data-rel="dialog" href="#dialog-example" data-transition="slidedown">Open dialog (slidedown)</a>
+                <a data-role="button" data-inline="true" data-rel="dialog" href="#dialog-example" data-transition="flip">Open dialog (flip)</a>
+                <a data-role="button" data-inline="true" data-rel="dialog" href="#dialog-example" data-transition="fade">Open dialog (fade)</a>
+            </p>
+        </div>
+
+        <div>
+            <h2>jqm header and footer</h2>
+
+            <p>The buttons below link to pages which show different header
+            and footer options.</p>
+
+            <p>
+                <a href="#header-and-footer-with-buttons" data-role="button" data-inline="true">Header and footer buttons</a>
+                <a href="#header-and-footer-with-grouped-buttons" data-role="button" data-inline="true">Header and footer with grouped buttons in footer</a>
+                <a href="#header-with-back-btn" data-role="button" data-inline="true">Header with auto back button</a>
+                <a href="#header-and-footer-navbars-1" data-role="button" data-inline="true">Header and footer navbars</a>
+            </p>
+        </div>
+
+        <div>
             <h2>jqm button</h2>
             <p><a data-role="button">standard button</a></p>
         </div>
@@ -574,6 +602,226 @@
 
     <div data-role="footer">
         <h4>baseline widget test</h4>
+    </div>
+</div>
+
+<div data-role="page" id="dialog-example">
+    <div data-role="header">
+        <h1>dialog example</h1>
+    </div>
+    <div data-role="content">
+        <p>This is for testing styling of dialogs.</p>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-with-buttons">
+    <div data-role="header">
+        <a data-role="button" data-icon="delete">A</a>
+        <h1>You are a busy person</h1>
+        <a data-role="button" data-icon="arrow-r" data-iconpos="notext">B</a>
+    </div>
+
+    <div data-role="content">
+        <p>Nothing to see here</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" class="ui-bar">
+        <a data-role="button" data-icon="delete" data-inline="true">C</a>
+        <a data-role="button" data-icon="check" data-inline="true">D</a>
+        <a data-role="button" data-icon="check" data-inline="true">E</a>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-with-grouped-buttons">
+    <div data-role="header">
+        <a data-role="button" data-icon="delete">A</a>
+        <h1>not you again - grouped buttons below</h1>
+        <a data-role="button" data-icon="arrow-r" data-iconpos="notext">B</a>
+    </div>
+
+    <div data-role="content">
+        <p>Nothing to see here</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" class="ui-bar">
+        <div data-role="controlgroup" data-type="horizontal">
+            <a data-role="button" data-icon="delete" data-inline="true">C</a>
+            <a data-role="button" data-icon="check" data-inline="true">D</a>
+            <a data-role="button" data-icon="check" data-inline="true">E</a>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-with-back-btn" data-add-back-btn="true">
+    <div data-role="header">
+        <h1>why don't you go back?</h1>
+    </div>
+
+    <div data-role="content">
+        <p>Nothing to see here</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-navbars-1">
+    <div data-role="header" data-id="header-and-footer-navbars-header" data-position="fixed">
+        <h1>navigate, navigate</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none" class="ui-btn-active ui-state-persist">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>page 1</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" data-id="header-and-footer-navbars-footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none" class="ui-btn-active ui-state-persist">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-navbars-2">
+    <div data-role="header" data-id="header-and-footer-navbars-header" data-position="fixed">
+        <h1>navigate, navigate</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none" class="ui-btn-active ui-state-persist">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>page 2</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" data-id="header-and-footer-navbars-footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none" class="ui-btn-active ui-state-persist">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-navbars-3">
+    <div data-role="header" data-id="header-and-footer-navbars-header" data-position="fixed">
+        <h1>navigate, navigate</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none" class="ui-btn-active ui-state-persist">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>page 3</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" data-id="header-and-footer-navbars-footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none" class="ui-btn-active ui-state-persist">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-navbars-4">
+    <div data-role="header" data-id="header-and-footer-navbars-header" data-position="fixed">
+        <h1>navigate, navigate</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none" class="ui-btn-active ui-state-persist">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>page 4</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" data-id="header-and-footer-navbars-footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none" class="ui-btn-active ui-state-persist">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="header-and-footer-navbars-5">
+    <div data-role="header" data-id="header-and-footer-navbars-header" data-position="fixed">
+        <h1>navigate, navigate</h1>
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none" class="ui-btn-active ui-state-persist">page 5</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>page 5</p>
+        <p><a href="#baseline">Back to front page</a></p>
+    </div>
+
+    <div data-role="footer" data-id="header-and-footer-navbars-footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#header-and-footer-navbars-1" data-transition="none">page 1</a></li>
+                <li><a href="#header-and-footer-navbars-2" data-transition="none">page 2</a></li>
+                <li><a href="#header-and-footer-navbars-3" data-transition="none">page 3</a></li>
+                <li><a href="#header-and-footer-navbars-4" data-transition="none">page 4</a></li>
+                <li><a href="#header-and-footer-navbars-5" data-transition="none" class="ui-btn-active ui-state-persist">page 5</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 
