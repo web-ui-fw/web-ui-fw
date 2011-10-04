@@ -143,9 +143,150 @@
 
         <!-- jqm widgets -->
         <div>
-            <h2>jqm button</h2>
+            <h2>jqm buttons</h2>
             <p><a data-role="button">standard button</a></p>
+            <p>
+                <a data-role="button" data-inline="true">inline 1</a>
+                <a data-role="button" data-inline="true">inline 2</a>
+                <a data-role="button" data-inline="true">inline 3</a>
+            </p>
         </div>
+
+        <div>
+            <h2>jqm sliders</h2>
+            <div data-role="fieldcontain">
+                <label for="slider">Input slider:</label>
+                <input type="range" name="slider" id="slider" value="0" min="0" max="100"  />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="switch">Select slider:</label>
+                <select name="slider" id="switch" data-role="slider">
+                    <option value="off">Off</option>
+                    <option value="on">On</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <h2>jqm radios</h2>
+
+            <fieldset data-role="controlgroup" data-role="fieldcontain">
+                <legend>Vertical radio (default):</legend>
+                <input type="radio" name="radio-choice-1" id="radio-choice-11" value="choice-1" checked="checked" />
+                <label for="radio-choice-11">Cat</label>
+
+                <input type="radio" name="radio-choice-1" id="radio-choice-12" value="choice-2"  />
+                <label for="radio-choice-12">Dog</label>
+
+                <input type="radio" name="radio-choice-1" id="radio-choice-13" value="choice-3"  />
+                <label for="radio-choice-13">Hamster</label>
+
+                <input type="radio" name="radio-choice-1" id="radio-choice-14" value="choice-4"  />
+                <label for="radio-choice-14">Lizard</label>
+            </fieldset>
+
+            <fieldset data-role="controlgroup" data-type="horizontal" data-role="fieldcontain">
+                <legend>Horizontal radio:</legend>
+                <input type="radio" name="radio-choice-2" id="radio-choice-21" value="choice-1" checked="checked" />
+                <label for="radio-choice-21">Horizontal</label>
+
+                <input type="radio" name="radio-choice-2" id="radio-choice-22" value="choice-2"  />
+                <label for="radio-choice-22">Vertical</label>
+
+                <input type="radio" name="radio-choice-2" id="radio-choice-23" value="choice-3"  />
+                <label for="radio-choice-23">Slant</label>
+            </fieldset>
+        </div>
+
+        <div>
+            <h2>jqm checks</h2>
+
+            <fieldset data-role="controlgroup" data-role="fieldcontain">
+                <legend>Agree to the terms:</legend>
+                <input type="checkbox" name="checkbox-1" id="checkbox-1" class="custom" />
+                <label for="checkbox-1">I agree</label>
+            </fieldset>
+
+            <fieldset data-role="controlgroup" data-role="fieldcontain">
+                <legend>Vertical (default):</legend>
+
+                <input type="checkbox" name="checkbox-2" id="checkbox-2" />
+                <label for="checkbox-2">Awkward</label>
+
+                <input type="checkbox" name="checkbox-3" id="checkbox-3" />
+                <label for="checkbox-3">Spontaneous</label>
+
+                <input type="checkbox" name="checkbox-4" id="checkbox-4" />
+                <label for="checkbox-4">Agreeable</label>
+            </fieldset>
+
+            <fieldset data-role="controlgroup" data-role="fieldcontain" data-type="horizontal">
+                <legend>Horizontal:</legend>
+
+                <input type="checkbox" name="checkbox-5" id="checkbox-5" />
+                <label for="checkbox-5">Awkward</label>
+
+                <input type="checkbox" name="checkbox-6" id="checkbox-6" />
+                <label for="checkbox-6">Spontaneous</label>
+
+                <input type="checkbox" name="checkbox-7" id="checkbox-7" />
+                <label for="checkbox-7">Agreeable</label>
+            </fieldset>
+        </div>
+
+        <div>
+            <h2>jqm search input</h2>
+
+            <div data-role="fieldcontain">
+                <label for="search">Search Input:</label>
+                <input type="search" name="search" id="search" value="" />
+            </div>
+        </div>
+
+        <div>
+            <h2>jqm textarea</h2>
+
+            <div data-role="fieldcontain">
+                <label for="textarea">Textarea:</label>
+                <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+            </div>
+        </div>
+
+        <div>
+            <h2>jqm inputs</h2>
+
+            <div data-role="fieldcontain">
+                <label for="text">Text Input:</label>
+                <input type="text" id="text" name="text" value="" />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="" />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="number">Number:</label>
+                <input type="number" id="number" name="number" value="" />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="" />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="url">Url:</label>
+                <input type="url" id="url" name="url" value="" />
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="tel">Tel:</label>
+                <input type="tel" id="tel" name="tel" value="" />
+            </div>
+        </div>
+
     </div>
 
     <div data-role="footer">
