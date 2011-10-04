@@ -96,6 +96,10 @@ jQuery.extend(jQuery.mobile.todons, {
             attributesOfInterest)
         {
             persons = new Array(
+                new $.mobile.todons.Person("Amy"),
+                new $.mobile.todons.Person("Betty"),
+                new $.mobile.todons.Person("Carl"),
+                new $.mobile.todons.Person("Felicia"),
                 new $.mobile.todons.Person("John"),
                 new $.mobile.todons.Person("Matts"),
                 new $.mobile.todons.Person("Rebecca"),
