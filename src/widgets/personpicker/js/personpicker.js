@@ -17,13 +17,19 @@
         },
 
         _data: {
-            ui: undefined
+            ui: undefined,
+            row: undefined
         },
 
         _personArraySuccessCallback: function(persons) {
             var list = this._data.ui.list;
+            var rowContainer = this._data.row.container;
+            var name = this._data.row.name;
+
+            rowContainer.remove();
             persons.forEach(function(p) {
-                list.append("<li>" + p.id() + "</li>");
+                name.text(p.id());
+                list.append(rowContainer.clone());
             });
         },
 
@@ -35,9 +41,15 @@
                 list: ".ui-personpicker > ul"
             };
 
+            self._data.row = {
+                container: ".ui-personpicker-row",
+                name: ".name"
+            };
+
             // Prepare.
             self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui); 
             self._data.ui.personpicker.scrollview({direction: "y"});
+            self._data.row = $.mobile.todons.loadPrototype("personpicker-row", self._data.row);
  
             // Load persons.
             if (self.options.addressBook !== undefined) {
