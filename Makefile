@@ -9,7 +9,6 @@ OUTPUT_ROOT = $(CURDIR)/build
 FRAMEWORK_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}
 JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
 export THEME_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes
-#CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/css
 CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes/${THEME_NAME}
 CSS_IMAGES_OUTPUT_DIR = ${CSS_OUTPUT_ROOT}/images
 PROTOTYPE_HTML_OUTPUT_DIR = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/proto-html/${THEME_NAME}
@@ -23,7 +22,6 @@ INSTALL_DIR = ${DESTDIR}${PREFIX}
 
 FW_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}.js
 FW_JS_THEME = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.js
-#FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.css
 FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-theme.css
 FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 
@@ -42,19 +40,7 @@ LIBS_JS_FILES +=\
 JQUERY = jquery-1.6.4.min.js
 endif
 
-LIBS_CSS_FILES =
-ifeq (${DEBUG},yes)
-LIBS_CSS_FILES +=\
-    jquery.mobile-1.0rc1.css \
-    $(NULL)
-else
-LIBS_CSS_FILES +=\
-    jquery.mobile-1.0rc1.min.css \
-    $(NULL)
-endif
-
-all: third_party widgets themes version_compat
-
+all: third_party widgets
 
 third_party: init
 	# Building third party components...
