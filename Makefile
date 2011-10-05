@@ -22,26 +22,26 @@ FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 LIBS_JS_FILES = underscore.js
 ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
-    jquery.mobile-1.0b2.js \
+    jquery.mobile-1.0rc1.js \
     jquery.ui.position.git+dfe75e1.js \
     $(NULL)
-JQUERY = jquery-1.6.2.js
+JQUERY = jquery-1.6.4.js
 else
 LIBS_JS_FILES +=\
-    jquery.mobile-1.0b2.min.js \
+    jquery.mobile-1.0rc1.min.js \
     jquery.ui.position.git+dfe75e1.min.js \
     $(NULL)
-JQUERY = jquery-1.6.2.min.js
+JQUERY = jquery-1.6.4.min.js
 endif
 
 LIBS_CSS_FILES =
 ifeq (${DEBUG},yes)
 LIBS_CSS_FILES +=\
-    jquery.mobile-1.0b2.css \
+    jquery.mobile-1.0rc1.css \
     $(NULL)
 else
 LIBS_CSS_FILES +=\
-    jquery.mobile-1.0b2.min.css \
+    jquery.mobile-1.0rc1.min.css \
     $(NULL)
 endif
 
