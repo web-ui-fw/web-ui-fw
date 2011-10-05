@@ -7,6 +7,12 @@
  * http://jquery.org/license
  */
 
+/* general border width */
+@borderWidth: 1px;
+
+/* width of bottom border on header */
+@barBorderWidth: 5px;
+
 /* A
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -51,7 +57,7 @@
 @aBtnDownTextShadowColor: @aTextShadowColor;
 
 .ui-bar-a {
-    border-bottom: 1px solid @aBarBorderColor;
+    border: @borderWidth solid @aBarBorderColor;
     color: @aBarTextColor;
     font-weight: bold;
     background: @aBarBgTo;
@@ -64,7 +70,7 @@
 }
 
 .ui-body-a {
-    border-bottom: 1px solid @aBodyBorderColor;
+    border: @borderWidth solid @aBodyBorderColor;
     color: @aBodyTextColor;
     text-shadow: 0 1px 0 @aTextShadowColor;
     background: @aBodyBgTo;
@@ -102,7 +108,7 @@
 }
 
 .ui-btn-up-a {
-    border: 1px solid @aBtnUpBorderColor;
+    border: @borderWidth solid @aBtnUpBorderColor;
     background: @aBtnUpBgTo;
     font-weight: bold;
     color: @aBtnUpTextColor;
@@ -116,7 +122,7 @@
 }
 
 .ui-btn-hover-a {
-    border: 1px solid @aBtnHoverBorderColor;
+    border: @borderWidth solid @aBtnHoverBorderColor;
     background: @aBtnHoverBgTo;
     font-weight: bold;
     color: @aBtnHoverTextColor;
@@ -130,7 +136,7 @@
 }
 
 .ui-btn-down-a {
-    border: 1px solid @aBtnDownBorderColor;
+    border: @borderWidth solid @aBtnDownBorderColor;
     background: @aBtnDownBgTo;
     font-weight: bold;
     color: @aBtnDownTextColor;
@@ -199,7 +205,7 @@
 @bBtnDownTextShadowColor: #225377;
 
 .ui-bar-b {
-    border-bottom: 1px solid @bBarBorderColor;
+    border: @borderWidth solid @bBarBorderColor;
     color: @bBarTextColor;
     font-weight: bold;
     background: @bBarBgTo;
@@ -212,7 +218,7 @@
 }
 
 .ui-body-b {
-    border-bottom: 1px solid @bBodyBorderColor;
+    border: @borderWidth solid @bBodyBorderColor;
     color: @bBodyTextColor;
     text-shadow: 0 1px 0 @bTextShadowColor;
     background: @bBodyBgTo;
@@ -250,7 +256,7 @@
 }
 
 .ui-btn-up-b {
-    border: 1px solid @bBtnUpBorderColor;
+    border: @borderWidth solid @bBtnUpBorderColor;
     background: @bBtnUpBgTo;
     font-weight: bold;
     color: @bBtnUpTextColor;
@@ -264,7 +270,7 @@
 }
 
 .ui-btn-hover-b {
-    border: 1px solid @bBtnHoverBorderColor;
+    border: @borderWidth solid @bBtnHoverBorderColor;
     background: @bBtnHoverBgTo;
     font-weight: bold;
     color: @bBtnHoverTextColor;
@@ -278,7 +284,7 @@
 }
 
 .ui-btn-down-b {
-    border: 1px solid @bBtnDownBorderColor;
+    border: @borderWidth solid @bBtnDownBorderColor;
     background: @bBtnDownBgTo;
     font-weight: bold;
     color: @bBtnDownTextColor;
@@ -347,7 +353,7 @@
 @cBtnDownTextShadowColor: @cTextShadowColor;
 
 .ui-bar-c {
-    border-bottom: 1px solid @cBarBorderColor;
+    border: @borderWidth solid @cBarBorderColor;
     color: @cBarTextColor;
     text-shadow: 0 1px 1px @cTextShadowColor;
     font-weight: bold;
@@ -361,7 +367,7 @@
 }
 
 .ui-body-c {
-    border-bottom: 1px solid @cBodyBorderColor;
+    border: @borderWidth solid @cBodyBorderColor;
     color: @cBodyTextColor;
     text-shadow: 0 1px 0 @cTextShadowColor;
     background: @cBodyBgTo;
@@ -399,7 +405,7 @@
 }
 
 .ui-btn-up-c {
-    border: 1px solid @cBtnUpBorderColor;
+    border: @borderWidth solid @cBtnUpBorderColor;
     background: @cBtnUpBgTo;
     font-weight: bold;
     color: @cBtnUpTextColor;
@@ -413,7 +419,7 @@
 }
 
 .ui-btn-hover-c {
-    border: 1px solid @cBtnHoverBorderColor;
+    border: @borderWidth solid @cBtnHoverBorderColor;
     background: @cBtnHoverBgTo;
     font-weight: bold;
     color: @cBtnHoverTextColor;
@@ -427,7 +433,7 @@
 }
 
 .ui-btn-down-c {
-    border: 1px solid @cBtnDownBorderColor;
+    border: @borderWidth solid @cBtnDownBorderColor;
     background: @cBtnDownBgTo;
     font-weight: bold;
     color: @cBtnDownTextColor;
@@ -457,7 +463,7 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-bar-d {
-    border: 1px solid         #ccc;
+    border: @borderWidth solid         #ccc;
     background:             #bbb;
     color:                     #333;
     text-shadow: 0 1px 0 #eee;
@@ -483,7 +489,7 @@
     font-weight: bold;
 }
 .ui-body-d {
-    border: 1px solid         #ccc;
+    border: @borderWidth solid         #ccc;
     color:                     #333333;
     text-shadow: 0 1px 0     #fff;
     background:             #ffffff;
@@ -503,7 +509,7 @@
     font-weight: bold;
 }
 .ui-btn-up-d {
-    border: 1px solid         #ccc;
+    border: @borderWidth solid         #ccc;
     background:             #fff;
     font-weight: bold;
     color:                     #444;
@@ -513,7 +519,7 @@
     color:                     #333;
 }
 .ui-btn-hover-d {
-    border: 1px solid         #aaa;
+    border: @borderWidth solid         #aaa;
     background:             #eeeeee;
     font-weight: bold;
     color:                     #222;
@@ -530,7 +536,7 @@
     color:                     #222;
 }
 .ui-btn-down-d {
-    border: 1px solid         #aaaaaa;
+    border: @borderWidth solid         #aaaaaa;
     background:             #ffffff;
     font-weight: bold;
     color:                     #111;
@@ -557,7 +563,7 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-bar-e {
-    border: 1px solid         #F7C942;
+    border: @borderWidth solid         #F7C942;
     background:             #fadb4e;
     color:                     #333;
     text-shadow: 0 1px 0     #fff;
@@ -583,7 +589,7 @@
     font-weight: bold;
 }
 .ui-body-e {
-    border: 1px solid         #F7C942;
+    border: @borderWidth solid         #F7C942;
     color:                     #333333;
     text-shadow: 0 1px 0     #fff;
     background:             #faeb9e;
@@ -609,7 +615,7 @@
     font-weight: bold;
 }
 .ui-btn-up-e {
-    border: 1px solid         #F7C942;
+    border: @borderWidth solid         #F7C942;
     background:             #fadb4e;
     font-weight: bold;
     color:                     #333;
@@ -625,7 +631,7 @@
     color:                     #333;
 }
 .ui-btn-hover-e {
-    border: 1px solid         #e79952;
+    border: @borderWidth solid         #e79952;
     background:             #fbe26f;
     font-weight: bold;
     color:                     #111;
@@ -642,7 +648,7 @@
     color:                     #333;
 }
 .ui-btn-down-e {
-    border: 1px solid         #F7C942;
+    border: @borderWidth solid         #F7C942;
     background:             #fceda7;
     font-weight: bold;
     color:                     #111;
@@ -686,7 +692,7 @@ a.ui-link-inherit {
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-btn-active {
-    border: 1px solid         #155678;
+    border: @borderWidth solid         #155678;
     background:             #4596ce;
     font-weight: bold;
     color:                     #fff;
@@ -1132,7 +1138,13 @@ a.ui-link-inherit {
 .ui-header .ui-btn-left { position: absolute; left: 10px; top: .4em;  }
 .ui-header .ui-btn-right { position: absolute; right: 10px; top: .4em; }
 .ui-header .ui-title, .ui-footer .ui-title { min-height: 1.1em; text-align: center; font-size: 16px; display: block; margin: .6em 90px .8em;  padding: 0;  text-overflow: ellipsis; overflow: hidden; white-space: nowrap; outline: 0 !important; }
-.ui-footer { border-bottom: none !important; }
+.ui-header {
+    border-width: 0 !important;
+    border-bottom-width: @barBorderWidth !important;
+}
+.ui-footer {
+    border-width: 0 !important;
+}
 
 /*content area*/
 .ui-content { border-width: 0; overflow: visible; overflow-x: hidden; padding: 15px; }
