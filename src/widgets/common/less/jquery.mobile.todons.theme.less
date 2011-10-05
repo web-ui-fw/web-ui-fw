@@ -14,7 +14,7 @@
 @aBarBgFrom: #dbc9ae;
 @aBarBgTo: #dbc9ae;
 
-@aBarTextColor: #ffffff;
+@aBarTextColor: rgb(73,44,7);
 
 /* for ui-body gradients */
 @aBodyBgFrom: #eeeeee;
@@ -23,7 +23,7 @@
 @aBodyTextColor: #333333;
 
 @aTextShadowColor: #000000;
-@aBorder: #2a2a2a;
+@aBorder: #cf8013;
 
 @aLinkColor: #7cc4e7;
 @aLinkInheritColor: #ffffff;
@@ -50,9 +50,8 @@
 @aBtnDownTextShadowColor: @aTextShadowColor;
 
 .ui-bar-a {
-    border: 1px solid @aBorder;
+    border-bottom: 1px solid @aBorder;
     color: @aBarTextColor;
-    text-shadow: 0 1px 1px @aTextShadowColor;
     font-weight: bold;
     background: @aBarBgTo;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@aBarBgFrom), to(@aBarBgTo)); /* Saf4+, Chrome */
@@ -64,7 +63,6 @@
 }
 
 .ui-body-a {
-    border: 1px solid @aBorder;
     color: @aBodyTextColor;
     text-shadow: 0 1px 0 @aTextShadowColor;
     background: @aBodyBgTo;
@@ -154,7 +152,6 @@
 .ui-btn-down-a {
     text-decoration: none;
 }
-
 
 /* B
 -----------------------------------------------------------------------------------------------------------*/
@@ -269,7 +266,6 @@
     text-decoration: none;
 }
 
-
 /* C
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -280,8 +276,8 @@
 @cBarTextColor: #3e3e3e;
 
 /* for ui-body gradients */
-@cBodyBgFrom: #eee;
-@cBodyBgTo: #ddd;
+@cBodyBgFrom: rgb(249,249,249);
+@cBodyBgTo: rgb(249,249,249);
 
 @cBodyTextColor: #333;
 
