@@ -13,14 +13,20 @@
 /* width of bottom border on header */
 @barBorderWidth: 5px;
 
+/* the brown used for header bar */
+@barColorBrown: #dbc9ae;
+
+/* the orange used for option header, progress bar foreground etc. */
+@orange: #cf8013;
+
 /* A
 -----------------------------------------------------------------------------------------------------------*/
 
 /* for ui-bar gradients */
-@aBarBgFrom: #dbc9ae;
-@aBarBgTo: #dbc9ae;
+@aBarBgFrom: @barColorBrown;
+@aBarBgTo: @barColorBrown;
 
-@aBarBorderColor: #cf8013;
+@aBarBorderColor: @orange;
 @aBarTextColor: rgb(73,44,7);
 
 /* for ui-body gradients */
@@ -334,23 +340,23 @@
 /* for link text which is styled as a button */
 @cBtnLinkInheritColor: #2F3E46;
 
-@cBtnUpBorderColor: #cccccc;
-@cBtnUpBgFrom: #fdfdfd;
-@cBtnUpBgTo: #eeeeee;
-@cBtnUpTextColor: #444444;
+@cBtnUpBorderColor: #c7c7c7;
+@cBtnUpBgFrom: #f3efe9;
+@cBtnUpBgTo: #f3efe9;
+@cBtnUpTextColor: rgb(78,73,69);
 @cBtnUpTextShadowColor: #f6f6f6;
 
-@cBtnHoverBorderColor: #bbbbbb;
-@cBtnHoverBgFrom: #ededed;
-@cBtnHoverBgTo: #dadada;
-@cBtnHoverTextColor: #101010;
-@cBtnHoverTextShadowColor: @cTextShadowColor;
+@cBtnHoverBorderColor: #c7c7c7;
+@cBtnHoverBgFrom: #f3efe9;
+@cBtnHoverBgTo: #f3efe9;
+@cBtnHoverTextColor: rgb(78,73,69);
+@cBtnHoverTextShadowColor: @cBtnUpTextShadowColor;
 
-@cBtnDownBorderColor: #808080;
-@cBtnDownBgFrom: #eeeeee;
-@cBtnDownBgTo: #fdfdfd;
-@cBtnDownTextColor: #111111;
-@cBtnDownTextShadowColor: @cTextShadowColor;
+@cBtnDownBorderColor: #c88410;
+@cBtnDownBgFrom: #d9931a;
+@cBtnDownBgTo: #d9931a;
+@cBtnDownTextColor: #ffffff;
+@cBtnDownTextShadowColor: @cBtnUpTextShadowColor;
 
 .ui-bar-c {
     border: @borderWidth solid @cBarBorderColor;
@@ -409,7 +415,6 @@
     background: @cBtnUpBgTo;
     font-weight: bold;
     color: @cBtnUpTextColor;
-    text-shadow: 0 1px 1px @cBtnUpTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@cBtnUpBgFrom), to(@cBtnUpBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @cBtnUpBgFrom, @cBtnUpBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @cBtnUpBgFrom, @cBtnUpBgTo); /* FF3.6 */
@@ -423,7 +428,6 @@
     background: @cBtnHoverBgTo;
     font-weight: bold;
     color: @cBtnHoverTextColor;
-    text-shadow: 0 1px 1px @cBtnHoverTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@cBtnHoverBgFrom), to(@cBtnHoverBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @cBtnHoverBgFrom, @cBtnHoverBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @cBtnHoverBgFrom, @cBtnHoverBgTo); /* FF3.6 */
@@ -437,7 +441,6 @@
     background: @cBtnDownBgTo;
     font-weight: bold;
     color: @cBtnDownTextColor;
-    text-shadow: 0 1px 1px @cBtnDownTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@cBtnDownBgFrom), to(@cBtnDownBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* FF3.6 */
@@ -688,27 +691,32 @@ a.ui-link-inherit {
 }
 
 
-/* Active class used as the "on" state across all themes
+/* Active class used as the "on" state across all themes; for now, these match the 'c' swatch
 -----------------------------------------------------------------------------------------------------------*/
 
+@activeBorderColor: @cBtnDownBorderColor;
+@activeBgFrom: @cBtnDownBgFrom;
+@activeBgTo: @cBtnDownBgTo;
+@activeTextColor: @cBtnDownTextColor;
+@activeLinkInheritColor: @cBtnLinkInheritColor;
+
 .ui-btn-active {
-    border: @borderWidth solid         #155678;
-    background:             #4596ce;
+    border: @borderWidth solid @activeBorderColor;
+    background: @activeBgTo;
     font-weight: bold;
-    color:                     #fff;
+    color: @activeTextColor;
     cursor: pointer;
-    text-shadow: 0 -1px 1px #145072;
     text-decoration: none;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#85bae4), to(#5393c5)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #85bae4, #5393c5); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #85bae4, #5393c5); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #85bae4, #5393c5); /* IE10 */
-    background-image:        -o-linear-gradient(top, #85bae4, #5393c5); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #85bae4, #5393c5);
-      outline: none;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@activeBgFrom), to(@activeBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @activeBgFrom, @activeBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @activeBgFrom, @activeBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @activeBgFrom, @activeBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @activeBgFrom, @activeBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @activeBgFrom, @activeBgTo);
+    outline: none;
 }
 .ui-btn-active a.ui-link-inherit {
-    color:                     #fff;
+    color: @activeLinkInheritColor;
 }
 
 
@@ -928,7 +936,7 @@ a.ui-link-inherit {
 }
 .ui-checkbox-on .ui-icon,
 .ui-radio-on .ui-icon {
-    background-color: #4596ce; /* NOTE: this hex should match the active state color. It's repeated here for cascade */
+    background-color: @activeBgFrom;
 }
 .ui-icon-searchfield {
     background-image: url(images/icon-search-black.png);
