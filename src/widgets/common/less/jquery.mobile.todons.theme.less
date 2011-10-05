@@ -337,6 +337,7 @@
 
 /* for link text which is styled as a button */
 @cBtnLinkInheritColor: #2F3E46;
+@cBtnDownLinkInheritColor: #ffffff;
 
 @cBtnUpBorderColor: #c7c7c7;
 @cBtnUpBgFrom: #f3efe9;
@@ -446,9 +447,12 @@
 }
 
 .ui-btn-hover-c a.ui-link-inherit,
-.ui-btn-up-c a.ui-link-inherit,
-.ui-btn-down-c a.ui-link-inherit {
+.ui-btn-up-c a.ui-link-inherit {
     color: @cBtnLinkInheritColor;
+}
+
+.ui-btn-down-c a.ui-link-inherit {
+    color: @cBtnDownLinkInheritColor;
 }
 
 .ui-btn-up-c,
@@ -694,7 +698,7 @@ a.ui-link-inherit {
 @activeBgFrom: @cBtnDownBgFrom;
 @activeBgTo: @cBtnDownBgTo;
 @activeTextColor: @cBtnDownTextColor;
-@activeLinkInheritColor: @cBtnLinkInheritColor;
+@activeLinkInheritColor: @cBtnDownLinkInheritColor;
 
 .ui-btn-active {
     border: @borderWidth solid @activeBorderColor;
