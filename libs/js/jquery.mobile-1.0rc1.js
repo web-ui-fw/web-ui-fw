@@ -529,40 +529,6 @@ function getNativeEvent( event ) {
 	return event;
 }
 
-/**
- * Get document-relative mouse coordinates from a given event
- *
- * From: http://www.quirksmode.org/js/events_properties.html#position
- */
-function documentRelativeCoordsFromEvent(e) {
-  var posx = 0;
-  var posy = 0;
-
-  if (!e) var e = window.event;
-  if (e.pageX || e.pageY) {
-    posx = e.pageX;
-    posy = e.pageY;
-  }
-  else if (e.clientX || e.clientY) {
-    posx = e.clientX + document.body.scrollLeft
-	    + document.documentElement.scrollLeft;
-    posy = e.clientY + document.body.scrollTop
-	    + document.documentElement.scrollTop;
-  }
-
-  return { x: posx, y: posy };
-}
-
-function targetRelativeCoordsFromEvent(e) {
-  var coords = documentRelativeCoordsFromEvent(e),
-      offset = $(e.target).offset();
-
-  coords.x -= $(e.target).offset().left;
-  coords.y -= $(e.target).offset().top;
-
-  return coords;
-}
-
 function createVirtualEvent( event, eventType ) {
 
 	var t = event.type,
@@ -601,13 +567,6 @@ function createVirtualEvent( event, eventType ) {
 				prop = touchEventProps[ j ];
 				event[ prop ] = touch[ prop ];
 			}
-                        if (event.offsetX === undefined || event.offsetY === undefined) {
-			  // TouchEvent doesn't have offsetX and offsetY.
-			  // add offsetX, offsetY property to virtual event.
-                          var relCoords = targetRelativeCoordsFromEvent(event);
-                          event.offsetX = relCoords.x;
-                          event.offsetY = relCoords.y;
-                        }
 		}
 	}
 
