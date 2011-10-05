@@ -14,6 +14,7 @@
 @aBarBgFrom: #dbc9ae;
 @aBarBgTo: #dbc9ae;
 
+@aBarBorderColor: #cf8013;
 @aBarTextColor: rgb(73,44,7);
 
 /* for ui-body gradients */
@@ -21,9 +22,7 @@
 @aBodyBgTo: #dddddd;
 
 @aBodyTextColor: #333333;
-
 @aTextShadowColor: #000000;
-@aBorder: #cf8013;
 
 @aLinkColor: #7cc4e7;
 @aLinkInheritColor: #ffffff;
@@ -50,7 +49,7 @@
 @aBtnDownTextShadowColor: @aTextShadowColor;
 
 .ui-bar-a {
-    border-bottom: 1px solid @aBorder;
+    border-bottom: 1px solid @aBarBorderColor;
     color: @aBarTextColor;
     font-weight: bold;
     background: @aBarBgTo;
@@ -273,6 +272,7 @@
 @cBarBgFrom: #f0f0f0;
 @cBarBgTo: #e9eaeb;
 
+@cBarBorderColor: #b3b3b3;
 @cBarTextColor: #3e3e3e;
 
 /* for ui-body gradients */
@@ -280,9 +280,7 @@
 @cBodyBgTo: rgb(249,249,249);
 
 @cBodyTextColor: #333;
-
 @cTextShadowColor: #fff;
-@cBorder: #b3b3b3;
 
 @cLinkColor: #2489CE;
 @cLinkInheritColor: #333;
@@ -309,7 +307,7 @@
 @cBtnDownTextShadowColor: @cTextShadowColor;
 
 .ui-bar-c {
-    border: 1px solid @cBorder;
+    border: 1px solid @cBarBorderColor;
     color: @cBarTextColor;
     text-shadow: 0 1px 1px @cTextShadowColor;
     font-weight: bold;
@@ -323,7 +321,6 @@
 }
 
 .ui-body-c {
-    border: 1px solid @cBorder;
     color: @cBodyTextColor;
     text-shadow: 0 1px 0 @cTextShadowColor;
     background: @cBodyBgTo;
