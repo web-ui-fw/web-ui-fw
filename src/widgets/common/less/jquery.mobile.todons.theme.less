@@ -21,7 +21,9 @@
 @aBodyBgFrom: #eeeeee;
 @aBodyBgTo: #dddddd;
 
+@aBodyBorderColor: #cf8013;
 @aBodyTextColor: #333333;
+
 @aTextShadowColor: #000000;
 
 @aLinkColor: #7cc4e7;
@@ -62,6 +64,7 @@
 }
 
 .ui-body-a {
+    border-bottom: 1px solid @aBodyBorderColor;
     color: @aBodyTextColor;
     text-shadow: 0 1px 0 @aTextShadowColor;
     background: @aBodyBgTo;
@@ -155,113 +158,148 @@
 /* B
 -----------------------------------------------------------------------------------------------------------*/
 
+/* for ui-bar gradients */
+@bBarBgFrom: #dad8d4;
+@bBarBgTo: #dad8d4;
+
+@bBarBorderColor: #c7c7c7;
+@bBarTextColor: rgb(108,108,108);
+
+/* for ui-body gradients */
+@bBodyBgFrom: #e6e6e6;
+@bBodyBgTo: #cccccc;
+
+@bBodyBorderColor: rgb(199,199,199);
+@bBodyTextColor: #333333;
+
+@bTextShadowColor: #ffffff;
+
+@bLinkColor: #2489ce;
+@bLinkInheritColor: #333333;
+
+/* for link text which is styled as a button */
+@bBtnLinkInheritColor: #ffffff;
+
+@bBtnUpBorderColor: #145072;
+@bBtnUpBgFrom: #5f9cc5;
+@bBtnUpBgTo: #396b9e;
+@bBtnUpTextColor: #ffffff;
+@bBtnUpTextShadowColor: #145072;
+
+@bBtnHoverBorderColor: #00516e;
+@bBtnHoverBgFrom: #72b0d4;
+@bBtnHoverBgTo: #4b88b6;
+@bBtnHoverTextColor: #ffffff;
+@bBtnHoverTextShadowColor: #014d68;
+
+@bBtnDownBorderColor: #225377;
+@bBtnDownBgFrom: #396b9e;
+@bBtnDownBgTo: #4e89c5;
+@bBtnDownTextColor: #ffffff;
+@bBtnDownTextShadowColor: #225377;
+
 .ui-bar-b {
-    border: 1px solid         #456f9a;
-    background:             #5e87b0;
-    color:                     #fff;
+    border-bottom: 1px solid @bBarBorderColor;
+    color: @bBarTextColor;
     font-weight: bold;
-    text-shadow: 0 -1px 1px #254f7a;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#81a8ce), to(#5e87b0)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #81a8ce, #5e87b0); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #81a8ce, #5e87b0); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #81a8ce, #5e87b0); /* IE10 */
-    background-image:        -o-linear-gradient(top, #81a8ce, #5e87b0); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #81a8ce, #5e87b0);
+    background: @bBarBgTo;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@bBarBgFrom), to(@bBarBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @bBarBgFrom, @bBarBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @bBarBgFrom, @bBarBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @bBarBgFrom, @bBarBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @bBarBgFrom, @bBarBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @bBarBgFrom, @bBarBgTo);
 }
+
+.ui-body-b {
+    border-bottom: 1px solid @bBodyBorderColor;
+    color: @bBodyTextColor;
+    text-shadow: 0 1px 0 @bTextShadowColor;
+    background: @bBodyBgTo;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@bBodyBgFrom), to(@bBodyBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @bBodyBgFrom, @bBodyBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @bBodyBgFrom, @bBodyBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @bBodyBgFrom, @bBodyBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @bBodyBgFrom, @bBodyBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @bBodyBgFrom, @bBodyBgTo);
+}
+
 .ui-bar-b,
 .ui-bar-b input,
 .ui-bar-b select,
 .ui-bar-b textarea,
-.ui-bar-b button {
-    font-family: Helvetica, Arial, sans-serif;
-}
-.ui-bar-b .ui-link-inherit {
-    color:                     #fff;
-}
-.ui-bar-b .ui-link {
-    color:                     #7cc4e7;
-    font-weight: bold;
-}
-
-.ui-body-b {
-    border: 1px solid         #C6C6C6;
-    background:             #cccccc;
-    color:                     #333333;
-    text-shadow: 0 1px 0     #fff;
-    font-weight: normal;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#ccc)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #e6e6e6, #ccc); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #e6e6e6, #ccc); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #e6e6e6, #ccc); /* IE10 */
-    background-image:        -o-linear-gradient(top, #e6e6e6, #ccc); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #e6e6e6, #ccc);
-}
+.ui-bar-b button,
 .ui-body-b,
 .ui-body-b input,
 .ui-body-b select,
 .ui-body-b textarea,
-.ui-body-b button {
-    font-family: Helvetica, Arial, sans-serif;
-}
-.ui-body-b .ui-link-inherit {
-    color:                     #333333;
-}
-.ui-body-b .ui-link {
-    color:                     #2489CE;
-    font-weight: bold;
-}
-.ui-btn-up-b {
-    border: 1px solid         #145072;
-    background:             #2567ab;
-    font-weight: bold;
-    color:                     #fff;
-    text-shadow: 0 -1px 1px #145072;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#5f9cc5), to(#396b9e)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #5f9cc5, #396b9e); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #5f9cc5, #396b9e); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #5f9cc5, #396b9e); /* IE10 */
-    background-image:        -o-linear-gradient(top, #5f9cc5, #396b9e); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #5f9cc5, #396b9e);
-}
-.ui-btn-up-b a.ui-link-inherit {
-    color:                     #fff;
-}
-.ui-btn-hover-b {
-    border: 1px solid         #00516e;
-    background:             #4b88b6;
-    font-weight: bold;
-    color:                     #fff;
-    text-shadow: 0 -1px 1px #014D68;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#72b0d4), to(#4b88b6)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #72b0d4, #4b88b6); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #72b0d4, #4b88b6); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #72b0d4, #4b88b6); /* IE10 */
-    background-image:        -o-linear-gradient(top, #72b0d4, #4b88b6); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #72b0d4, #4b88b6);
-}
-.ui-btn-hover-b a.ui-link-inherit {
-    color:                     #fff;
-}
-.ui-btn-down-b {
-    border: 1px solid         #225377;
-    background:             #4e89c5;
-    font-weight: bold;
-    color:                     #fff;
-    text-shadow: 0 -1px 1px #225377;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#396b9e), to(#4e89c5)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, #396b9e, #4e89c5); /* Chrome 10+, Saf5.1+ */
-    background-image:     -moz-linear-gradient(top, #396b9e, #4e89c5); /* FF3.6 */
-    background-image:      -ms-linear-gradient(top, #396b9e, #4e89c5); /* IE10 */
-    background-image:        -o-linear-gradient(top, #396b9e, #4e89c5); /* Opera 11.10+ */
-    background-image:            linear-gradient(top, #396b9e, #4e89c5);
-}
-.ui-btn-down-b a.ui-link-inherit {
-    color:                     #fff;
-}
+.ui-body-b button,
 .ui-btn-up-b,
 .ui-btn-hover-b,
 .ui-btn-down-b {
     font-family: Helvetica, Arial, sans-serif;
+}
+
+.ui-body-b .ui-link-inherit {
+    color: @bLinkInheritColor;
+}
+
+.ui-body-b .ui-link {
+    color: @bLinkColor;
+    font-weight: bold;
+}
+
+.ui-btn-up-b {
+    border: 1px solid @bBtnUpBorderColor;
+    background: @bBtnUpBgTo;
+    font-weight: bold;
+    color: @bBtnUpTextColor;
+    text-shadow: 0 1px 1px @bBtnUpTextShadowColor;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnUpBgFrom), to(@bBtnUpBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo);
+}
+
+.ui-btn-hover-b {
+    border: 1px solid @bBtnHoverBorderColor;
+    background: @bBtnHoverBgTo;
+    font-weight: bold;
+    color: @bBtnHoverTextColor;
+    text-shadow: 0 1px 1px @bBtnHoverTextShadowColor;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnHoverBgFrom), to(@bBtnHoverBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo);
+}
+
+.ui-btn-down-b {
+    border: 1px solid @bBtnDownBorderColor;
+    background: @bBtnDownBgTo;
+    font-weight: bold;
+    color: @bBtnDownTextColor;
+    text-shadow: 0 1px 1px @bBtnDownTextShadowColor;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnDownBgFrom), to(@bBtnDownBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo);
+}
+
+.ui-btn-hover-b a.ui-link-inherit,
+.ui-btn-up-b a.ui-link-inherit,
+.ui-btn-down-b a.ui-link-inherit {
+    color: @bBtnLinkInheritColor;
+}
+
+.ui-btn-up-b,
+.ui-btn-hover-b,
+.ui-btn-down-b {
     text-decoration: none;
 }
 
@@ -279,35 +317,37 @@
 @cBodyBgFrom: rgb(249,249,249);
 @cBodyBgTo: rgb(249,249,249);
 
-@cBodyTextColor: #333;
-@cTextShadowColor: #fff;
+@cBodyBorderColor: #b3b3b3;
+@cBodyTextColor: #333333;
+
+@cTextShadowColor: #ffffff;
 
 @cLinkColor: #2489CE;
-@cLinkInheritColor: #333;
+@cLinkInheritColor: #333333;
 
 /* for link text which is styled as a button */
 @cBtnLinkInheritColor: #2F3E46;
 
-@cBtnUpBorderColor: #ccc;
+@cBtnUpBorderColor: #cccccc;
 @cBtnUpBgFrom: #fdfdfd;
-@cBtnUpBgTo: #eee;
-@cBtnUpTextColor: #444;
+@cBtnUpBgTo: #eeeeee;
+@cBtnUpTextColor: #444444;
 @cBtnUpTextShadowColor: #f6f6f6;
 
-@cBtnHoverBorderColor: #bbb;
+@cBtnHoverBorderColor: #bbbbbb;
 @cBtnHoverBgFrom: #ededed;
 @cBtnHoverBgTo: #dadada;
 @cBtnHoverTextColor: #101010;
 @cBtnHoverTextShadowColor: @cTextShadowColor;
 
 @cBtnDownBorderColor: #808080;
-@cBtnDownBgFrom: #eee;
+@cBtnDownBgFrom: #eeeeee;
 @cBtnDownBgTo: #fdfdfd;
 @cBtnDownTextColor: #111111;
 @cBtnDownTextShadowColor: @cTextShadowColor;
 
 .ui-bar-c {
-    border: 1px solid @cBarBorderColor;
+    border-bottom: 1px solid @cBarBorderColor;
     color: @cBarTextColor;
     text-shadow: 0 1px 1px @cTextShadowColor;
     font-weight: bold;
@@ -321,6 +361,7 @@
 }
 
 .ui-body-c {
+    border-bottom: 1px solid @cBodyBorderColor;
     color: @cBodyTextColor;
     text-shadow: 0 1px 0 @cTextShadowColor;
     background: @cBodyBgTo;
@@ -1091,6 +1132,7 @@ a.ui-link-inherit {
 .ui-header .ui-btn-left { position: absolute; left: 10px; top: .4em;  }
 .ui-header .ui-btn-right { position: absolute; right: 10px; top: .4em; }
 .ui-header .ui-title, .ui-footer .ui-title { min-height: 1.1em; text-align: center; font-size: 16px; display: block; margin: .6em 90px .8em;  padding: 0;  text-overflow: ellipsis; overflow: hidden; white-space: nowrap; outline: 0 !important; }
+.ui-footer { border-bottom: none !important; }
 
 /*content area*/
 .ui-content { border-width: 0; overflow: visible; overflow-x: hidden; padding: 15px; }
