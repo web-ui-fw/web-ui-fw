@@ -43,6 +43,7 @@
 
 /* for link text which is styled as a button */
 @aBtnLinkInheritColor: #ffffff;
+@aBtnDownLinkInheritColor: #ffffff;
 
 @aBtnUpBorderColor: #222222;
 @aBtnUpBgFrom: #555555;
@@ -78,7 +79,6 @@
 .ui-body-a {
     border: @borderWidth solid @aBodyBorderColor;
     color: @aBodyTextColor;
-    text-shadow: 0 1px 0 @aTextShadowColor;
     background: @aBodyBgTo;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@aBodyBgFrom), to(@aBodyBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @aBodyBgFrom, @aBodyBgTo); /* Chrome 10+, Saf5.1+ */
@@ -118,7 +118,6 @@
     background: @aBtnUpBgTo;
     font-weight: bold;
     color: @aBtnUpTextColor;
-    text-shadow: 0 1px 1px @aBtnUpTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@aBtnUpBgFrom), to(@aBtnUpBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @aBtnUpBgFrom, @aBtnUpBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @aBtnUpBgFrom, @aBtnUpBgTo); /* FF3.6 */
@@ -132,7 +131,6 @@
     background: @aBtnHoverBgTo;
     font-weight: bold;
     color: @aBtnHoverTextColor;
-    text-shadow: 0 1px 1px @aBtnHoverTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@aBtnHoverBgFrom), to(@aBtnHoverBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @aBtnHoverBgFrom, @aBtnHoverBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @aBtnHoverBgFrom, @aBtnHoverBgTo); /* FF3.6 */
@@ -146,7 +144,6 @@
     background: @aBtnDownBgTo;
     font-weight: bold;
     color: @aBtnDownTextColor;
-    text-shadow: 0 1px 1px @aBtnDownTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@aBtnDownBgFrom), to(@aBtnDownBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @aBtnDownBgFrom, @aBtnDownBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @aBtnDownBgFrom, @aBtnDownBgTo); /* FF3.6 */
@@ -156,9 +153,12 @@
 }
 
 .ui-btn-hover-a a.ui-link-inherit,
-.ui-btn-up-a a.ui-link-inherit,
-.ui-btn-down-a a.ui-link-inherit {
+.ui-btn-up-a a.ui-link-inherit {
     color: @aBtnLinkInheritColor;
+}
+
+.ui-btn-down-a a.ui-link-inherit {
+    color: @aBtnDownLinkInheritColor;
 }
 
 .ui-btn-up-a,
@@ -191,6 +191,7 @@
 
 /* for link text which is styled as a button */
 @bBtnLinkInheritColor: #ffffff;
+@bBtnDownLinkInheritColor: #ffffff;
 
 @bBtnUpBorderColor: #145072;
 @bBtnUpBgFrom: #5f9cc5;
@@ -226,7 +227,6 @@
 .ui-body-b {
     border: @borderWidth solid @bBodyBorderColor;
     color: @bBodyTextColor;
-    text-shadow: 0 1px 0 @bTextShadowColor;
     background: @bBodyBgTo;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@bBodyBgFrom), to(@bBodyBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @bBodyBgFrom, @bBodyBgTo); /* Chrome 10+, Saf5.1+ */
@@ -266,7 +266,6 @@
     background: @bBtnUpBgTo;
     font-weight: bold;
     color: @bBtnUpTextColor;
-    text-shadow: 0 1px 1px @bBtnUpTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnUpBgFrom), to(@bBtnUpBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @bBtnUpBgFrom, @bBtnUpBgTo); /* FF3.6 */
@@ -280,7 +279,6 @@
     background: @bBtnHoverBgTo;
     font-weight: bold;
     color: @bBtnHoverTextColor;
-    text-shadow: 0 1px 1px @bBtnHoverTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnHoverBgFrom), to(@bBtnHoverBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @bBtnHoverBgFrom, @bBtnHoverBgTo); /* FF3.6 */
@@ -294,7 +292,6 @@
     background: @bBtnDownBgTo;
     font-weight: bold;
     color: @bBtnDownTextColor;
-    text-shadow: 0 1px 1px @bBtnDownTextShadowColor;
     background-image: -webkit-gradient(linear, left top, left bottom, from(@bBtnDownBgFrom), to(@bBtnDownBgTo)); /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* Chrome 10+, Saf5.1+ */
     background-image:    -moz-linear-gradient(top, @bBtnDownBgFrom, @bBtnDownBgTo); /* FF3.6 */
@@ -304,9 +301,12 @@
 }
 
 .ui-btn-hover-b a.ui-link-inherit,
-.ui-btn-up-b a.ui-link-inherit,
-.ui-btn-down-b a.ui-link-inherit {
+.ui-btn-up-b a.ui-link-inherit {
     color: @bBtnLinkInheritColor;
+}
+
+.ui-btn-down-b a.ui-link-inherit {
+    color: @bBtnDownLinkInheritColor;
 }
 
 .ui-btn-up-b,
