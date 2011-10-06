@@ -142,14 +142,15 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         this.selectorDraggingOffset.y = coords.y;
       }
 
-      this._handleMouseMove(chan, idx, e, isSelector);
+      this._handleMouseMove(chan, idx, e, isSelector, coords);
     }
   },
 
-  _handleMouseMove: function(chan, idx, e, isSelector) {
+  _handleMouseMove: function(chan, idx, e, isSelector, coords) {
     if (this.dragging === idx) {
-      var coords = $.mobile.targetRelativeCoordsFromEvent(e),
-          factor = ((0 === idx) ? 360 : 1),
+      if (coords === undefined)
+        var coords = $.mobile.targetRelativeCoordsFromEvent(e);
+      var factor = ((0 === idx) ? 360 : 1),
           potential = (isSelector
             ? ((this.dragging_hsv[idx] / factor) +
                ((coords.x - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width()))
