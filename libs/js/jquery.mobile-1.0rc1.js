@@ -529,8 +529,63 @@ function getNativeEvent( event ) {
 	return event;
 }
 
-function createVirtualEvent( event, eventType ) {
+/**
+ * Get document-relative mouse coordinates from a given event
+ *
+ * From: http://www.quirksmode.org/js/events_properties.html#position
+ */
+function documentRelativeCoordsFromEvent(ev) {
+  var e = ev ? ev : window.event,
+      client = { x: e.clientX, y: e.clientY },
+      page   = { x: e.pageX,   y: e.pageY   },
+      posx = 0,
+      posy = 0;
 
+  /* Grab useful coordinates from touch events */
+  if (e.type.match(/^touch/)) {
+    page = { 
+      x: e.originalEvent.targetTouches[0].pageX,
+      y: e.originalEvent.targetTouches[0].pageY
+    };
+    client = {
+      x: e.originalEvent.targetTouches[0].clientX,
+      y: e.originalEvent.targetTouches[0].clientY
+    };
+  }
+
+  if (page.x || page.y) {
+    posx = page.x;
+    posy = page.y;
+  }
+  else
+  if (client.x || client.y) {
+    posx = client.x + document.body.scrollLeft + document.documentElement.scrollLeft;
+    posy = client.y + document.body.scrollTop  + document.documentElement.scrollTop;
+  }
+
+  return { x: posx, y: posy };
+}
+
+$.mobile.documentRelativeCoordsFromEvent = documentRelativeCoordsFromEvent;
+
+function targetRelativeCoordsFromEvent(e) {
+  var coords = { x: e.offsetX, y: e.offsetY };
+
+  if (coords.x === undefined || isNaN(coords.x) || 
+      coords.y === undefined || isNaN(coords.y)) {
+    var offset = $(e.target).offset();
+
+    coords = documentRelativeCoordsFromEvent(e);
+    coords.x -= offset.left;
+    coords.y -= offset.top;
+  }
+
+  return coords;
+}
+
+$.mobile.targetRelativeCoordsFromEvent = targetRelativeCoordsFromEvent;
+
+function createVirtualEvent( event, eventType ) {
 	var t = event.type,
 		oe, props, ne, prop, ct, touch, i, j;
 
@@ -567,6 +622,13 @@ function createVirtualEvent( event, eventType ) {
 				prop = touchEventProps[ j ];
 				event[ prop ] = touch[ prop ];
 			}
+                        if (event.offsetX === undefined || event.offsetY === undefined) {
+			  // TouchEvent doesn't have offsetX and offsetY.
+			  // add offsetX, offsetY property to virtual event.
+                          var relCoords = targetRelativeCoordsFromEvent(event);
+                          event.offsetX = relCoords.x;
+                          event.offsetY = relCoords.y;
+                        }
 		}
 	}
 
