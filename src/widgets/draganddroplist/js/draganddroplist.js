@@ -135,7 +135,7 @@
             $realObject = null,
             $targetObject = null
             $clone = document.createElement("li");
-            $shadow = $($.createShadowListItem());
+            $shadow = $("<li><div class = 'shadow'> </div></li>");
             $shadow.addClass("shadow");
             draggedObject = new dragObject();
             shadowData = {
