@@ -1,4 +1,16 @@
 /*
+ * Debugging functions
+ *
+ * To add a rudimentary console to a page, add the following HTML. Change it to fit your needs, but do not change the IDs
+ * of the two divs, nor their relationship to each other (#console is immediately inside #consoleContainer).
+   <div id="consoleContainer" style="width: 480px; height: 200px; border: 1px solid black;" data-scroll="y">
+    <div id="console"></div>
+   </div>
+ * To log to this console, do
+ *   myConsoleLog("some string");
+ * This will also send the string to console.log();
+ */
+/*
 function dumpObject(obj) {
   var str;
   if (undefined === obj) {
