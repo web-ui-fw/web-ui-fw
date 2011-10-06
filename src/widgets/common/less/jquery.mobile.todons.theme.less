@@ -14,7 +14,7 @@
 @barBorderWidth: 5px;
 
 /* the brown used for header bar */
-@barColorBrown: #dbc9ae;
+@brown: #dbc9ae;
 
 /* the orange used for option header, progress bar foreground etc. */
 @orange: #cf8013;
@@ -23,8 +23,8 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 /* for ui-bar gradients */
-@aBarBgFrom: @barColorBrown;
-@aBarBgTo: @barColorBrown;
+@aBarBgFrom: @brown;
+@aBarBgTo: @brown;
 
 @aBarBorderColor: @orange;
 @aBarTextColor: rgb(73,44,7);
@@ -36,8 +36,6 @@
 @aBodyBorderColor: rgba(255,255,255,0);
 @aBodyTextColor: #333333;
 
-@aTextShadowColor: #000000;
-
 @aLinkColor: #7cc4e7;
 @aLinkInheritColor: #ffffff;
 
@@ -45,23 +43,20 @@
 @aBtnLinkInheritColor: #ffffff;
 @aBtnDownLinkInheritColor: #ffffff;
 
-@aBtnUpBorderColor: #222222;
-@aBtnUpBgFrom: #555555;
-@aBtnUpBgTo: #333333;
-@aBtnUpTextColor: #ffffff;
-@aBtnUpTextShadowColor: #000000;
+@aBtnUpBgFrom: @brown;
+@aBtnUpBgTo: @brown;
+@aBtnUpBorderColor: rgba(214,217,219); /* use Title_time text color */
+@aBtnUpTextColor: @aBtnUpBorderColor; /* same as border color */
 
 @aBtnHoverBorderColor: #000000;
 @aBtnHoverBgFrom: #666666;
 @aBtnHoverBgTo: #444444;
 @aBtnHoverTextColor: #ffffff;
-@aBtnHoverTextShadowColor: @aTextShadowColor;
 
 @aBtnDownBorderColor: #000000;
 @aBtnDownBgFrom: #333333;
 @aBtnDownBgTo: #3d3d3d;
 @aBtnDownTextColor: #ffffff;
-@aBtnDownTextShadowColor: @aTextShadowColor;
 
 .ui-bar-a {
     border: @borderWidth solid @aBarBorderColor;
@@ -184,8 +179,6 @@
 @bBodyBorderColor: rgb(199,199,199);
 @bBodyTextColor: #333333;
 
-@bTextShadowColor: #ffffff;
-
 @bLinkColor: #2489ce;
 @bLinkInheritColor: #333333;
 
@@ -197,19 +190,16 @@
 @bBtnUpBgFrom: #5f9cc5;
 @bBtnUpBgTo: #396b9e;
 @bBtnUpTextColor: #ffffff;
-@bBtnUpTextShadowColor: #145072;
 
 @bBtnHoverBorderColor: #00516e;
 @bBtnHoverBgFrom: #72b0d4;
 @bBtnHoverBgTo: #4b88b6;
 @bBtnHoverTextColor: #ffffff;
-@bBtnHoverTextShadowColor: #014d68;
 
 @bBtnDownBorderColor: #225377;
 @bBtnDownBgFrom: #396b9e;
 @bBtnDownBgTo: #4e89c5;
 @bBtnDownTextColor: #ffffff;
-@bBtnDownTextShadowColor: #225377;
 
 .ui-bar-b {
     border: @borderWidth solid @bBarBorderColor;
@@ -343,19 +333,16 @@
 @cBtnUpBgFrom: #f3efe9;
 @cBtnUpBgTo: #f3efe9;
 @cBtnUpTextColor: rgb(78,73,69);
-@cBtnUpTextShadowColor: #f6f6f6;
 
 @cBtnHoverBorderColor: #c7c7c7;
 @cBtnHoverBgFrom: #f3efe9;
 @cBtnHoverBgTo: #f3efe9;
 @cBtnHoverTextColor: rgb(78,73,69);
-@cBtnHoverTextShadowColor: @cBtnUpTextShadowColor;
 
 @cBtnDownBorderColor: #c88410;
 @cBtnDownBgFrom: #d9931a;
 @cBtnDownBgTo: #d9931a;
 @cBtnDownTextColor: #ffffff;
-@cBtnDownTextShadowColor: @cBtnUpTextShadowColor;
 
 .ui-bar-c {
     border: @borderWidth solid @cBarBorderColor;
