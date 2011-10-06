@@ -1,0 +1,21 @@
+a.ui-slider-handle { /**/
+    margin-top: -19px; /* -15-(36-28)/2 */
+    width: 36px; /* from nbeat */
+    height: 36px; /* from nbeat */
+
+    /*
+     * following are for ui-btn-corner-all, which is removed in js
+     */
+	/*-moz-border-radius: 				.0em; /* from jquery-movile.css */
+	/*-webkit-border-radius: 				.0em; /* from jquery-movile.css */
+	/*border-radius: 						.0em; /* from jquery-movile.css */
+} /**/
+
+div.ui-slider { /**/
+    width: 440px; /**/
+} /**/
+
+.ui-btn-hover-c { /**/
+    left: -30px; /**/
+    button: -30px; /**/
+} /**/
