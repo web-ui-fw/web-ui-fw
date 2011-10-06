@@ -70,8 +70,8 @@
 
             this.element.append(self._data.ui.personpicker);
 
-            self._data.ui.cancel.button();
-            self._data.ui.done.button();
+            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
+            self._data.ui.done.buttonMarkup({shadow: true, inline: true});
         }
     }); /* End of widget */
 
