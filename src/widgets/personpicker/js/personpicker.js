@@ -44,7 +44,9 @@
 
             self._data.ui = {
                 personpicker: ".ui-personpicker",
-                list: ".ui-personpicker > ul"
+                list: ".ui-personpicker > ul",
+                cancel: ".ui-personpicker .cancel-btn",
+                done: ".ui-personpicker .done-btn"
             };
 
             self._data.row = {
@@ -67,6 +69,9 @@
             }
 
             this.element.append(self._data.ui.personpicker);
+
+            self._data.ui.cancel.button();
+            self._data.ui.done.button();
         }
     }); /* End of widget */
 
