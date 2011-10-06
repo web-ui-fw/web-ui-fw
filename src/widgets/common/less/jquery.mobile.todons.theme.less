@@ -19,6 +19,9 @@
 /* the orange used for option header, progress bar foreground etc. */
 @orange: #cf8013;
 
+/* lighter orange used in navbar, above option header */
+@lightOrange: #d9931a;
+
 /* A
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -43,19 +46,19 @@
 @aBtnLinkInheritColor: #ffffff;
 @aBtnDownLinkInheritColor: #ffffff;
 
+@aBtnUpBorderColor: rgb(148,125,99); /* use Title_time text color */
 @aBtnUpBgFrom: @brown;
 @aBtnUpBgTo: @brown;
-@aBtnUpBorderColor: rgba(214,217,219); /* use Title_time text color */
 @aBtnUpTextColor: @aBtnUpBorderColor; /* same as border color */
 
-@aBtnHoverBorderColor: #000000;
-@aBtnHoverBgFrom: #666666;
-@aBtnHoverBgTo: #444444;
-@aBtnHoverTextColor: #ffffff;
+@aBtnHoverBorderColor: @aBtnUpBorderColor;
+@aBtnHoverBgFrom: @brown;
+@aBtnHoverBgTo: @brown;
+@aBtnHoverTextColor: @aBtnUpBorderColor;
 
-@aBtnDownBorderColor: #000000;
-@aBtnDownBgFrom: #333333;
-@aBtnDownBgTo: #3d3d3d;
+@aBtnDownBorderColor: #c88410;
+@aBtnDownBgFrom: @lightOrange;
+@aBtnDownBgTo: @lightOrange;
 @aBtnDownTextColor: #ffffff;
 
 .ui-bar-a {
@@ -340,8 +343,8 @@
 @cBtnHoverTextColor: rgb(78,73,69);
 
 @cBtnDownBorderColor: #c88410;
-@cBtnDownBgFrom: #d9931a;
-@cBtnDownBgTo: #d9931a;
+@cBtnDownBgFrom: @lightOrange;
+@cBtnDownBgTo: @lightOrange;
 @cBtnDownTextColor: #ffffff;
 
 .ui-bar-c {
