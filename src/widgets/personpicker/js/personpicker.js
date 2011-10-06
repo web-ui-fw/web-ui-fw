@@ -24,13 +24,16 @@
         _personArraySuccessCallback: function(persons) {
             var list = this._data.ui.list;
             var li = this._data.row.li;
-            var checkbox = this._data.row.checkbox;
             var name = this._data.row.name;
 
             li.remove();
             persons.forEach(function(p) {
+                currentListItem = li.clone();
+                currentCheckbox = currentListItem.find('.switch');
+
                 name.text(p.id());
-                list.append(li.clone().find('.switch').switch());
+                list.append(currentListItem);
+                currentCheckbox.switch();
             });
             list.listview();
         },
