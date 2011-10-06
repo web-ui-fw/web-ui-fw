@@ -24,15 +24,16 @@
         _personArraySuccessCallback: function(persons) {
             var list = this._data.ui.list;
             var li = this._data.row.li;
-            var name = this._data.row.name;
 
             li.remove();
             persons.forEach(function(p) {
                 currentListItem = li.clone();
                 currentCheckbox = currentListItem.find('.switch');
+                currentName = currentListItem.find('.name');
 
-                name.text(p.id());
+                currentName.text(p.id());
                 list.append(currentListItem);
+
                 currentCheckbox.switch({"checked": false});
             });
             list.listview();
