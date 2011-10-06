@@ -59,7 +59,6 @@ S = {
 
     // these are scripts which should be loaded after config.js
     scriptsToLoadPostConfig: ['js/web-ui-fw-libs.js',
-                              'js/web-ui-fw-default-theme.js',
                               'js/web-ui-fw.js'],
 
     addBasePath: function (scripts) {
