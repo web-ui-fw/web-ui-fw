@@ -112,12 +112,12 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
   _bindElements: function(chan, idx) {
     var self = this;
     this.ui[chan].selector
-      .bind("mousedown vmousedown", function(e) { self._selectorMouseDown(chan,  idx, e); })
-      .bind("vmousemove",           function(e) { self._selectorMouseMove(chan,  idx, e); })
+      .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan,  idx, e, true); })
+      .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan,  idx, e, true); })
       .bind("vmouseup",             function(e) { self.dragging = -1; });
     this.ui[chan].eventSource
-      .bind("mousedown vmousedown", function(e) { self._containerMouseDown(chan, idx, e); })
-      .bind("vmousemove",           function(e) { self._containerMouseMove(chan, idx, e); })
+      .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan, idx, e, false); })
+      .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan, idx, e, false); })
       .bind("vmouseup",             function(e) { self.dragging = -1; });
   },
 
@@ -128,56 +128,41 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         .replace("%2", suffix));
   },
 
-  _containerMouseDown: function(chan, idx, e) {
-    if (e.offsetX >= 0 && e.offsetX <= this.ui[chan].eventSource.width() &&
-        e.offsetY >= 0 && e.offsetY <= this.ui[chan].eventSource.height()) {
+  _handleMouseDown: function(chan, idx, e, isSelector) {
+    var coords = $.mobile.targetRelativeCoordsFromEvent(e),
+        widgetStr = (isSelector ? "selector" : "eventSource");
+
+    if (coords.x >= 0 && coords.x <= this.ui[chan][widgetStr].outerWidth() &&
+        coords.y >= 0 && coords.y <= this.ui[chan][widgetStr].outerHeight()) {
+
       this.dragging = idx;
-      this._containerMouseMove(chan, idx, e);
+
+      if (isSelector) {
+        this.selectorDraggingOffset.x = coords.x;
+        this.selectorDraggingOffset.y = coords.y;
+      }
+
+      this._handleMouseMove(chan, idx, e, isSelector);
     }
   },
 
-  _containerMouseMove: function(chan, idx, e) {
+  _handleMouseMove: function(chan, idx, e, isSelector) {
     if (this.dragging === idx) {
-      var potential = e.offsetX / this.ui[chan].eventSource.width();
+      var coords = $.mobile.targetRelativeCoordsFromEvent(e),
+          factor = ((0 === idx) ? 360 : 1),
+          potential = (isSelector
+            ? ((this.dragging_hsv[idx] / factor) +
+               ((coords.x - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width()))
+            : (coords.x / this.ui[chan].eventSource.width()));
 
-      potential = Math.min(1.0, Math.max(0.0, potential));
-      if (0 === idx)
-        potential *= 360;
+        this.dragging_hsv[idx] = Math.min(1.0, Math.max(0.0, potential)) * factor;
 
-      this.dragging_hsv[idx] = potential;
+        if (!isSelector) {
+          this.selectorDraggingOffset.x = Math.ceil(this.ui[chan].selector.outerWidth()  / 2.0);
+          this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
+        }
 
-      this.selectorDraggingOffset.x = Math.ceil(this.ui[chan].selector.outerWidth()  / 2.0);
-      this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
       this._updateSelectors(this.dragging_hsv);
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  },
-
-  _selectorMouseDown: function(chan, idx, e) {
-    this.dragging = idx;
-    this.selectorDraggingOffset.x = e.offsetX;
-    this.selectorDraggingOffset.y = e.offsetY;
-    e.stopPropagation();
-    e.preventDefault();
-  },
-
-  _selectorMouseMove: function(chan, idx, e) {
-    if (this.dragging === idx) {
-      var potential = this.dragging_hsv[idx];
-
-      if (0 === idx)
-        potential /= 360;
-
-      potential += (e.offsetX - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width();
-      potential = Math.min(1.0, Math.max(0.0, potential));
-
-      if (0 === idx)
-        potential *= 360;
-
-      this.dragging_hsv[idx] = potential;
-      this._updateSelectors(this.dragging_hsv);
-
       e.stopPropagation();
       e.preventDefault();
     }
