@@ -88,6 +88,11 @@ jQuery.extend(jQuery.mobile.todons, {
         this.id = function() {
             return this._id;
         }
+
+        // TODO: this is not the real API!
+        this.avatar = function() {
+            return "../../build/web-ui-fw/0.1/css/images/avatar.png";
+        }
     },
 
     AddressBook: function() {

@@ -30,8 +30,10 @@
                 currentListItem = li.clone();
                 currentCheckbox = currentListItem.find('.switch');
                 currentName = currentListItem.find('.name');
+                currentAvatar = currentListItem.find('.avatar');
 
                 currentName.text(p.id());
+                currentAvatar.find("img").attr({src: p.avatar()});
                 list.append(currentListItem);
 
                 currentCheckbox.switch({"checked": false});
@@ -53,7 +55,8 @@
                 li: "li.ui-personpicker-row",
                 container: "div.ui-personpicker-row-container",
                 checkbox: "div.switch",
-                name: "h3.name"
+                name: "h3.name",
+                avatar: "div.avatar"
             };
 
             // Prepare.
