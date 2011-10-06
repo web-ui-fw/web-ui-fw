@@ -410,6 +410,18 @@
     background-image:         linear-gradient(top, @cBtnUpBgFrom, @cBtnUpBgTo);
 }
 
+/* override background styling for list items which are styled as buttons */
+li.ui-btn-up-c,
+li.ui-btn-hover-c {
+    background: @cBodyBgTo;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@cBodyBgFrom), to(@cBodyBgTo)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @cBodyBgFrom, @cBodyBgTo); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @cBodyBgFrom, @cBodyBgTo); /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @cBodyBgFrom, @cBodyBgTo); /* IE10 */
+    background-image:      -o-linear-gradient(top, @cBodyBgFrom, @cBodyBgTo); /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @cBodyBgFrom, @cBodyBgTo);
+}
+
 .ui-btn-hover-c {
     border: @borderWidth solid @cBtnHoverBorderColor;
     background: @cBtnHoverBgTo;
@@ -423,17 +435,19 @@
     background-image:         linear-gradient(top, @cBtnHoverBgFrom, @cBtnHoverBgTo);
 }
 
+/* NB uses !important here to ensure that button presses are highlighted correctly,
+   regardless of whether they occur on buttons inside or outside listviews */
 .ui-btn-down-c {
     border: @borderWidth solid @cBtnDownBorderColor;
-    background: @cBtnDownBgTo;
+    background: @cBtnDownBgTo  !important;
     font-weight: bold;
     color: @cBtnDownTextColor;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(@cBtnDownBgFrom), to(@cBtnDownBgTo)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* Chrome 10+, Saf5.1+ */
-    background-image:    -moz-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* FF3.6 */
-    background-image:     -ms-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* IE10 */
-    background-image:      -o-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo); /* Opera 11.10+ */
-    background-image:         linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(@cBtnDownBgFrom), to(@cBtnDownBgTo))  !important; /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo) !important; /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo) !important; /* FF3.6 */
+    background-image:     -ms-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo) !important; /* IE10 */
+    background-image:      -o-linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo) !important; /* Opera 11.10+ */
+    background-image:         linear-gradient(top, @cBtnDownBgFrom, @cBtnDownBgTo) !important;
 }
 
 .ui-btn-hover-c a.ui-link-inherit,
@@ -450,7 +464,6 @@
 .ui-btn-down-c {
     text-decoration: none;
 }
-
 
 /* D
 -----------------------------------------------------------------------------------------------------------*/
@@ -683,28 +696,13 @@ a.ui-link-inherit {
 
 /* Active class used as the "on" state across all themes; for now, these match the 'c' swatch
 -----------------------------------------------------------------------------------------------------------*/
-
-@activeBorderColor: @cBtnDownBorderColor;
 @activeBgFrom: @cBtnDownBgFrom;
-@activeBgTo: @cBtnDownBgTo;
-@activeTextColor: @cBtnDownTextColor;
 @activeLinkInheritColor: @cBtnDownLinkInheritColor;
 
 .ui-btn-active {
-    border: @borderWidth solid @activeBorderColor;
-    background: @activeBgTo;
-    font-weight: bold;
-    color: @activeTextColor;
-    cursor: pointer;
-    text-decoration: none;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(@activeBgFrom), to(@activeBgTo)); /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(top, @activeBgFrom, @activeBgTo); /* Chrome 10+, Saf5.1+ */
-    background-image:    -moz-linear-gradient(top, @activeBgFrom, @activeBgTo); /* FF3.6 */
-    background-image:     -ms-linear-gradient(top, @activeBgFrom, @activeBgTo); /* IE10 */
-    background-image:      -o-linear-gradient(top, @activeBgFrom, @activeBgTo); /* Opera 11.10+ */
-    background-image:         linear-gradient(top, @activeBgFrom, @activeBgTo);
-    outline: none;
+    .ui-btn-down-c;
 }
+
 .ui-btn-active a.ui-link-inherit {
     color: @activeLinkInheritColor;
 }
