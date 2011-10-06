@@ -177,7 +177,7 @@
                 selectorResult = obj._populateSelector(selector, owner,
                     "hours", values, parseInt, function(val) {
                       if (!(obj.options.twentyfourHours))
-                        val %= 12;
+                        val = ((val + 11) % 12) + 1;
                       return val;
                     },
                     obj.data, "hours", ui);

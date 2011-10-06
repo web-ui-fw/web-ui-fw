@@ -76,115 +76,78 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       });
 
     ui.hs.eventSource
-      .bind( "vmousedown mousedown", function (event) {
-        self._canvasMouseDown(event, "hs");
-      })
-      .bind( "vmousemove", function (event) {
-        if (self.dragging && self.draggingHS)
-          self._canvasMouseMove(event, "hs");
-      })
-      .bind( "vmouseup", stopDragging);
+      .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "hs", false); })
+      .bind( "vmousemove"          , function (event) { self._handleMouseMove(event, "hs", false); })
+      .bind( "vmouseup"            , stopDragging);
 
     ui.l.eventSource
-      .bind( "vmousedown mousedown", function (event) {
-        self._canvasMouseDown(event, "l");
-      })
-      .bind( "vmousemove", function (event) {
-        if (self.dragging && !self.draggingHS)
-          self._canvasMouseMove(event, "l");
-      })
-      .bind( "vmouseup", stopDragging);
+      .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "l",  false); })
+      .bind( "vmousemove"          , function (event) { self._handleMouseMove(event, "l",  false); })
+      .bind( "vmouseup"            , stopDragging);
 
     ui.hs.selector
-      .bind( "vmousedown mousedown", function (event) {
-        self.dragging = true;
-        self.draggingHS = true;
-        self.selectorDraggingOffset.x = event.offsetX;
-        self.selectorDraggingOffset.y = event.offsetY;
-
-        event.stopPropagation();
-        event.preventDefault();
-      })
-      .bind( "vmousemove", function (event) {
-        if (self.dragging && self.draggingHS) {
-          var potential_h = self.dragging_hsl[0] / 360 + (event.offsetX - self.selectorDraggingOffset.x) / self.ui.hs.eventSource.width(),
-              potential_s = self.dragging_hsl[1] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.hs.eventSource.height();
-
-          potential_h = Math.min(1.0, Math.max(0.0, potential_h));
-          potential_s = Math.min(1.0, Math.max(0.0, potential_s));
-
-          self.dragging_hsl[0] = potential_h * 360;
-          self.dragging_hsl[1] = potential_s;
-          self._updateSelectors(self.dragging_hsl, true);
-
-          event.stopPropagation();
-          event.preventDefault();
-        }
-      })
-      .bind( "vmouseup", stopDragging);
+      .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "hs", true); })
+      .bind( "touchmove vmousemove", function (event) { self._handleMouseMove(event, "hs", true); })
+      .bind( "vmouseup"            , stopDragging);
 
     ui.l.selector
-      .bind( "vmousedown mousedown", function (event) {
-        self.dragging = true;
-        self.draggingHS = false;
-        self.selectorDraggingOffset.x = event.offsetX;
-        self.selectorDraggingOffset.y = event.offsetY;
-        event.stopPropagation();
-        event.preventDefault();
-      })
-      .bind( "vmousemove", function (event) {
-        if (self.dragging && !self.draggingHS) {
-          var potential_l = self.dragging_hsl[2] + (event.offsetY - self.selectorDraggingOffset.y) / self.ui.l.eventSource.height();
-
-          potential_l = Math.min(1.0, Math.max(0.0, potential_l));
-
-          self.dragging_hsl[2] = potential_l;
-          self._updateSelectors(self.dragging_hsl);
-
-          event.stopPropagation();
-          event.preventDefault();
-        }
-      })
-      .bind( "vmouseup", stopDragging);
+      .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "l",  true); })
+      .bind( "touchmove vmousemove", function (event) { self._handleMouseMove(event, "l",  true); })
+      .bind( "vmouseup"            , stopDragging);
   },
 
-  _canvasMouseDown: function(event, containerStr) {
-    if (event.offsetX >= 0 && event.offsetX <= this.ui[containerStr].eventSource.width() &&
-        event.offsetY >= 0 && event.offsetY <= this.ui[containerStr].eventSource.height()) {
+  _handleMouseDown: function(event, containerStr, isSelector) {
+    var coords = $.mobile.targetRelativeCoordsFromEvent(event),
+        widgetStr = isSelector ? "selector" : "eventSource";
+    if ((coords.x >= 0 && coords.x <= this.ui[containerStr][widgetStr].width() &&
+         coords.y >= 0 && coords.y <= this.ui[containerStr][widgetStr].height()) || isSelector) {
       this.dragging = true;
       this.draggingHS = ("hs" === containerStr);
-      this._canvasMouseMove(event, containerStr);
+
+      if (isSelector) {
+        this.selectorDraggingOffset.x = coords.x;
+        this.selectorDraggingOffset.y = coords.y;
+      }
+
+      this._handleMouseMove(event, containerStr, isSelector, coords);
     }
   },
 
-  _canvasMouseMove: function(event, containerStr) {
+  _handleMouseMove: function(event, containerStr, isSelector, coords) {
     if (this.dragging) {
+      if (coords === undefined)
+        var coords = $.mobile.targetRelativeCoordsFromEvent(event);
       if (this.draggingHS) {
-        var potential_h = event.offsetX / this.ui.hs.eventSource.width(),
-            potential_s = event.offsetY / this.ui.hs.eventSource.height();
+        var potential_h = isSelector
+              ? this.dragging_hsl[0] / 360 + (coords.x - this.selectorDraggingOffset.x) / this.ui[containerStr].eventSource.width()
+              : coords.x / this.ui[containerStr].eventSource.width(),
+            potential_s = isSelector
+              ? this.dragging_hsl[1]       + (coords.y - this.selectorDraggingOffset.y) / this.ui[containerStr].eventSource.height()
+              : coords.y / this.ui[containerStr].eventSource.height();
 
-        potential_h = Math.min(1.0, Math.max(0.0, potential_h));
-        potential_s = Math.min(1.0, Math.max(0.0, potential_s));
-
-        this.dragging_hsl[0] = potential_h * 360;
-        this.dragging_hsl[1] = potential_s;
+        this.dragging_hsl[0] = Math.min(1.0, Math.max(0.0, potential_h)) * 360;
+        this.dragging_hsl[1] = Math.min(1.0, Math.max(0.0, potential_s));
       }
       else {
-        var potential_l = event.offsetY / this.ui.l.eventSource.height();
+        var potential_l = isSelector
+              ? this.dragging_hsl[2]       + (coords.y - this.selectorDraggingOffset.y) / this.ui[containerStr].eventSource.height()
+              : coords.y / this.ui[containerStr].eventSource.height();
 
-        potential_l = Math.min(1.0, Math.max(0.0, potential_l));
-        this.dragging_hsl[2] = potential_l;
+        this.dragging_hsl[2] = Math.min(1.0, Math.max(0.0, potential_l));
       }
 
-      this.selectorDraggingOffset.x = Math.ceil(this.ui[containerStr].selector.outerWidth()  / 2.0);
-      this.selectorDraggingOffset.y = Math.ceil(this.ui[containerStr].selector.outerHeight() / 2.0);
-      this._updateSelectors(this.dragging_hsl, true);
+      if (!isSelector) {
+        this.selectorDraggingOffset.x = Math.ceil(this.ui[containerStr].selector.outerWidth()  / 2.0);
+        this.selectorDraggingOffset.y = Math.ceil(this.ui[containerStr].selector.outerHeight() / 2.0);
+      }
+
+      this._updateSelectors(this.dragging_hsl);
       event.stopPropagation();
       event.preventDefault();
     }
   },
 
-  _updateSelectors: function(hsl, updateHS) {
+  _updateSelectors: function(hsl) {
     var clr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
         gray = $.mobile.todons.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
