@@ -130,7 +130,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
       }
       else {
         var potential_l = isSelector
-              ? this.dragging_hsl[2] + (coords.y - this.selectorDraggingOffset.y) / this.ui[containerStr].eventSource.height()
+              ? this.dragging_hsl[2]       + (coords.y - this.selectorDraggingOffset.y) / this.ui[containerStr].eventSource.height()
               : coords.y / this.ui[containerStr].eventSource.height();
 
         this.dragging_hsl[2] = Math.min(1.0, Math.max(0.0, potential_l));
