@@ -33,7 +33,7 @@
 
                 name.text(p.id());
                 list.append(currentListItem);
-                currentCheckbox.switch();
+                currentCheckbox.switch({"checked": false});
             });
             list.listview();
         },
