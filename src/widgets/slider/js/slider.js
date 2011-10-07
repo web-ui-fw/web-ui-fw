@@ -26,14 +26,37 @@
 (function ($, window, undefined) {
     // auto self-init widgets
     $(document).bind("pagecreate", function (e) {
-        var slider = $(e.target).find(".ui-slider");
-        var sliderHandle = $(e.target).find(".ui-slider-handle");
+        var page = e.target
+        var slider = $(page).find(".ui-slider");
+        var sliderHandle = $(page).find(".ui-slider-handle");
         var text = sliderHandle.find(".ui-btn-text");
-        var inputElement = $(e.target).find(".ui-slider-input");
+        var inputElement = $(page).find(".ui-slider-input");
 
         // remove corner radii
         slider.removeClass("ui-btn-corner-all");
         sliderHandle.removeClass("ui-btn-corner-all");
+
+        // add popup
+        popupText=$("<div class='ui-slider-popup-text'></div>");
+        popup=$("<div class='ui-slider-popup ui-shadow ui-slider-handle' data-theme='c'></div>");
+        popup.append(popupText);
+        sliderHandle.append(popup);
+        popup.hide();
+        sliderHandle.bind( {
+            "vmousedown": function( event ) {
+                popup.show();
+                text.hide();
+                sliderHandle.addClass("ui-slider-popup");
+
+                var val = inputElement.val();
+                popupText.html(val);
+            },
+            "vmousecancel vmouseup": function( event ) {
+                popup.hide();
+                sliderHandle.removeClass("ui-slider-popup");
+                text.show();
+            }
+        });
 
         // set initial value of handle text
         var val = inputElement.val();
@@ -43,9 +66,11 @@
         inputElement.change( function(e) {
             var val = $(e.target).val();
             text.html(val);
+            popupText.html(val);
         });
 
         // hide input element
+        // not in nbeat but need it to get value
         inputElement.hide();
 
     });

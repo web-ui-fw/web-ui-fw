@@ -1,5 +1,6 @@
 a.ui-slider-handle { /**/
-    margin-top: -19px; /* -15-(36-28)/2 */
+    margin-top: -18px;
+    margin-left: -18px;
     width: 36px; /* from nbeat */
     height: 36px; /* from nbeat */
 
@@ -15,7 +16,35 @@ div.ui-slider { /**/
     width: 440px; /**/
 } /**/
 
-.ui-btn-hover-c { /**/
-    left: -30px; /**/
-    button: -30px; /**/
+/* the slider handle when popup is visible */
+a.ui-slider-popup { /**/
+    margin-top: -20px;
+    margin-left: -20px;
+    width: 40px;
+    height: 40px;
+} /**/
+
+div.ui-slider-popup { /**/
+    margin-top: -89px; /*
+                        * -40/2 ; top of handle
+                        * -5    ; gap
+                        * -64   ; popup height
+                        */
+    margin-left: -13px; /**/
+    width: 64px; /* from nbeat */
+    height: 64px; /* from nbeat */
+	border: 1px solid 		#CCC;/**/
+	-moz-border-radius: 				.2px; /* from jquery-movile.css */
+	-webkit-border-radius: 				.2px; /* from jquery-movile.css */
+	border-radius: 						.2px; /* from jquery-movile.css */
+    z-index: 9999; /**/
+} /**/
+
+div.ui-slider-popup-text { /**/
+    margin-top: 10px; /*
+                       * 20 ; middle of popup
+                       * -20; half height of font
+                       */
+    font-size: 40px; /**/
+    z-index: 100 !important; /**/
 } /**/
