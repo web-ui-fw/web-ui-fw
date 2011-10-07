@@ -1,23 +1,22 @@
 .ui-option-header-1-row {
     min-height: 60px;
 }
-.ui-option-header-1-row .ui-grid-a {
+.ui-option-header-2-row {
+    min-height: 119px;
+}
+
+.ui-option-header-row-1 {
     padding: 5px;
 }
+.ui-option-header-row-2 {
+    margin-top: -2px;
+    padding: 0px 5px 4px 5px;
+}
+
 .ui-option-header .ui-btn {
     display: block;
     margin: 5px;
 }
 .ui-option-header .ui-btn-text {
     line-height: 46px;
-}
-
-.ui-option-header-2-row {
-    min-height: 119px;
-}
-.ui-option-header-2-row-1 {
-    padding: 5px 5px 3px 5px;
-}
-.ui-option-header-2-row-2 {
-    padding: 0px 5px 4px 5px;
 }
