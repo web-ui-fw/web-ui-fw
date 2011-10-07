@@ -6,11 +6,14 @@
 @hsvpicker-clrchannel-masks-container-hpadding: 12px;
 @hsvpicker-clrchannel-masks-container-vpadding: 16px;
 
+@hsvpicker-clrchannel-selector-actual-height: @hsvpicker-clrchannel-selector-height -
+  2 * @hsvpicker-clrchannel-selector-border-width;
+
 @hsvpicker-clrchannel-masks-container-actual-hpadding:
   @hsvpicker-clrchannel-selector-width / 2
     + @hsvpicker-clrchannel-selector-border-width;
 @hsvpicker-clrchannel-masks-container-actual-vpadding:
-  (@hsvpicker-clrchannel-selector-height - @hsvpicker-clrchannel-masks-height) / 2
+  (@hsvpicker-clrchannel-selector-actual-height - @hsvpicker-clrchannel-masks-height) / 2
     + @hsvpicker-clrchannel-selector-border-width;
 @hsvpicker-clrchannel-masks-container-hmargin:
   ~`Math.max(0,
@@ -63,7 +66,7 @@
         left: 0px;
         top: 0px;
         width: @hsvpicker-clrchannel-selector-width;
-        height: @hsvpicker-clrchannel-selector-height;
+        height: @hsvpicker-clrchannel-selector-actual-height;
         border: @hsvpicker-clrchannel-selector-border-width solid black;
       }
 

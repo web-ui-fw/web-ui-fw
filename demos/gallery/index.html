@@ -58,14 +58,14 @@
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="datetimepicker-demo" data-add-back-btn="true">
+        <div data-role="page" id="datetimepicker-demo" data-add-back-btn="true" data-fit-page-to-window="true">
             <div data-role="header">
                 <h1>Date/time picker</h1>
             </div>
-            <div data-role="content">
-                <h2>Date/time picker</h2>
+            <div data-role="content" data-scroll="y">
                 <form action="#" action="get">
-                    <div data-role="fieldcontain">
+                    <div data-role="fieldcontain" style="display: table;">
+                        <div data-role="label">Date/time picker</div>
                         <input type="date" name="demo-date" id="demo-date" />
                     </div>
                 </form>
