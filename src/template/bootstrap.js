@@ -230,7 +230,7 @@ S.css = {
         S.basePath = frameworkRoot + '/' + frameworkVersion + '/';
 
         // load stylesheet for the theme
-        stylesheetPath = S.basePath + 'css/web-ui-fw-default-theme.css';
+        stylesheetPath = S.basePath + 'themes/' + frameworkTheme + '/web-ui-fw-theme.css';
         S.css.load(stylesheetPath);
 
         // load jquery and our config.js file, turning off jqm's page init until

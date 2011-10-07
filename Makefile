@@ -1,22 +1,30 @@
 DEBUG = yes
 PROJECT_NAME = web-ui-fw
 VERSION = 0.1
+VERSION_COMPAT =
 THEME_NAME = default
 
 INLINE_PROTO = 1
-OUTPUT_ROOT = build
+OUTPUT_ROOT = $(CURDIR)/build
 FRAMEWORK_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}
 JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
-CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/css
+export THEME_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes
+#CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/css
+CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes/${THEME_NAME}
 CSS_IMAGES_OUTPUT_DIR = ${CSS_OUTPUT_ROOT}/images
 PROTOTYPE_HTML_OUTPUT_DIR = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}/proto-html/${THEME_NAME}
 
 CODE_DIR = src/widgets
 LIBS_DIR = libs
 
+DESTDIR ?= 
+PREFIX ?= /usr
+INSTALL_DIR = ${DESTDIR}${PREFIX}
+
 FW_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}.js
 FW_JS_THEME = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.js
-FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.css
+#FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-${THEME_NAME}-theme.css
+FW_CSS = ${CSS_OUTPUT_ROOT}/${PROJECT_NAME}-theme.css
 FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 
 LIBS_JS_FILES = underscore.js
@@ -45,22 +53,23 @@ LIBS_CSS_FILES +=\
     $(NULL)
 endif
 
-all: third_party widgets
+all: third_party widgets themes version_compat
+
 
 third_party: init
 	# Building third party components...
-	@@cd $(CURDIR)/${LIBS_DIR}/js; \
+	@@cd ${LIBS_DIR}/js; \
 	    for f in ${LIBS_JS_FILES}; do \
-	        cat $$f >> $(CURDIR)/${FW_LIBS_JS}; \
+	        cat $$f >> ${FW_LIBS_JS}; \
 	    done
-	    cp $(CURDIR)/${LIBS_DIR}/js/${JQUERY} $(CURDIR)/${JS_OUTPUT_ROOT}/jquery.js
-	@@cd $(CURDIR)/${LIBS_DIR}/css; \
+	    cp ${LIBS_DIR}/js/${JQUERY} ${JS_OUTPUT_ROOT}/jquery.js
+	@@cd ${LIBS_DIR}/css; \
 	    for f in ${LIBS_CSS_FILES}; do \
-	        cat $$f >> $(CURDIR)/${FW_CSS}; \
+	        cat $$f >> ${FW_CSS}; \
 	    done; \
-	    cp -r images/* $(CURDIR)/${CSS_IMAGES_OUTPUT_DIR}
+	    cp -r images/* ${CSS_IMAGES_OUTPUT_DIR}
 
-	@@cp -a $(CURDIR)/${LIBS_DIR}/images $(CURDIR)/${FRAMEWORK_ROOT}/
+	@@cp -a ${LIBS_DIR}/images ${FRAMEWORK_ROOT}/
 
 widgets: init
 	# Building widgets...
@@ -100,6 +109,25 @@ widgets: init
                 fi; \
 	    done
 
+themes:
+	make -C src/themes || exit $?
+
+version_compat: third_party widgets
+	# Creating compatible version dirs...
+	for v_compat in ${VERSION_COMPAT}; do \
+		ln -sf ${VERSION} ${FRAMEWORK_ROOT}/../$$v_compat; \
+	done;
+
+demo: widgets 
+	mkdir -p ${OUTPUT_ROOT}/demos
+	cp -av demos/* ${OUTPUT_ROOT}/demos/
+	cp -f src/template/bootstrap.js ${OUTPUT_ROOT}/demos/gallery/
+
+install: all
+	mkdir -p ${INSTALL_DIR}/share/slp-web-fw ${INSTALL_DIR}/bin
+	cp -av ${OUTPUT_ROOT}/* src/template ${INSTALL_DIR}/share/slp-web-fw/
+	cp -av tools/* ${INSTALL_DIR}/bin
+
 clean:
 	# Removing destination directory...
 	@@rm -rf ${OUTPUT_ROOT}
@@ -110,6 +138,7 @@ clean:
 init: clean
 	# Initializing...
 	@@mkdir -p ${JS_OUTPUT_ROOT}
+	@@mkdir -p ${THEME_OUTPUT_ROOT}
 	@@mkdir -p ${CSS_OUTPUT_ROOT}
 	@@mkdir -p ${CSS_IMAGES_OUTPUT_DIR}
 	@@mkdir -p ${PROTOTYPE_HTML_OUTPUT_DIR}
