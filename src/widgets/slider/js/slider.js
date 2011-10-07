@@ -51,7 +51,7 @@
                 var val = inputElement.val();
                 popupText.html(val);
             },
-            "vmousecancel vmouseup": function( event ) {
+            "vmousecancel vmouseup vmouseout": function( event ) {
                 popup.hide();
                 sliderHandle.removeClass("ui-slider-popup");
                 text.show();
