@@ -142,6 +142,8 @@
             var numItems = 0;
             var selectorResult = undefined;
 
+            ui.triangle.triangle("option", "offsetX", owner.position().left + owner.outerWidth(true) / 2);
+
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
                 numItems = values.length;
@@ -250,8 +252,15 @@
         },
 
         _hideDataSelector: function(selector) {
+            var self = this;
             if (this.state.selectorOut) {
-                selector.slideUp(this.options.animationDuration);
+                selector.slideUp(this.options.animationDuration,
+                  function() {
+                    if (self.ui.scrollview !== undefined) {
+                      self.ui.scrollview.remove();
+                      self.ui.scrollview = undefined;
+                    }
+                  });
                 this.state.selectorOut = false;
             }
         },
@@ -323,7 +332,13 @@
                 }
                 scrollable.view.append(item.container);
             }
-            selector.html(scrollable.container);
+
+            if (this.ui.scrollview !== undefined)
+              this.ui.scrollview.remove();
+
+            selector.append(scrollable.container);
+
+            this.ui.scrollview = scrollable.container;
 
             return {scrollable: scrollable, currentIndex: currentIndex};
         },
@@ -333,6 +348,7 @@
             var ui = {
               container: "#datetimepicker",
               selector: "#datetimepicker-selector",
+              triangle: "#datetimepicker-selector-triangle",
               selectorProto: "#datetimepicker-selector-container",
               itemProto: "#datetimepicker-item",
               header: "#datetimepicker-header",
@@ -394,6 +410,7 @@
 
             $(input).css("display", "none");
             $(input).after(ui.container);
+            ui.triangle.triangle();
             this.data.parentInput = input;
 
             /* We must display either time or date: if the user set both to

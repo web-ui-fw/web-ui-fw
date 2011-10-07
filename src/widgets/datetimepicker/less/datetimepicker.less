@@ -3,6 +3,9 @@
 
 @selector-height: 66px;
 @container-height: 68px;
+@selector-triangle-height: 9px;
+
+@selector-actual-height: @selector-height + @selector-triangle-height;
 
 .ui-datetimepicker {
     width: 480px;
@@ -64,15 +67,19 @@
     .selector {
         display: none;
         z-index: 9999;
-        background: @todons-selected-color;
         color: white;
-        height: @selector-height;
+        height: @selector-actual-height;
         font-size: 24px;
         padding: 0;
         margin: 14px 0 0 0;
         text-align: center;
 
+        .selector-triangle {
+          height: @selector-triangle-height;
+        }
+
         .container {
+          background: @todons-selected-color;
             > .view {
                 height: @selector-height;
             }
