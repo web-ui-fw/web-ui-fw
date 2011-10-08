@@ -613,8 +613,18 @@ $scroller2List.scrollview('option','scrollDuration','10000');
                 <h1>Option header</h1>
                 <div class="ui-bar-c ui-option-header ui-option-header-1-row" data-role="optionheader">
                     <div class="ui-grid-a ui-option-header-row-1">
-                        <div class="ui-block-a"><a data-role="button">Cancel</a></div>
+                        <div class="ui-block-a"><a data-role="button" data-icon="delete">Cancel</a></div>
                         <div class="ui-block-b"><a data-role="button">Save</a></div>
+                    </div>
+                </div>
+                <div class="ui-bar-c ui-option-header ui-option-header-1-row" data-role="optionheader">
+                    <div class="ui-grid-a ui-option-header-row-1">
+                        <div class="ui-block-a"><a data-role="button">Cancel</a></div>
+                        <div class="ui-block-b" data-role="controlgroup" data-type="horizontal">
+                            <a data-role="button" data-icon="home">Home</a>
+                            <a data-role="button" data-icon="delete">Delete</a>
+                            <a data-role="button" data-icon="arrow-l">Back</a>
+                        </div>
                     </div>
                 </div>
                 <div class="ui-bar-c ui-option-header ui-option-header-2-row" data-role="optionheader" data-options='{"rows": 2}'>
