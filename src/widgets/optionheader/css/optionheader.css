@@ -37,3 +37,17 @@
 .ui-option-header .ui-controlgroup-horizontal .ui-corner-right {
     margin-right: 5px !important;
 }
+
+/* for the triangle */
+.ui-option-header-triangle-arrow {
+  border-color: transparent transparent #e9eaeb transparent;
+  border-style: solid;
+  border-width: 10px;
+  height:0;
+  width:0;
+  position:relative;
+  top:-20px;
+  margin-bottom: -20px;
+  margin-left: -10px;
+  left:50%;
+}
