@@ -49,7 +49,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // and this.options.showIndicator,
         // insert a triangle arrow as the first element inside the
         // optionheader div to show the header has hidden content
-        if (el.children().length > 0 && this.options.showIndicator) {
+        if (this.options.showIndicator) {
             this.element.before(arrow);
         }
 
@@ -73,7 +73,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         });
 
         // redraw the buttons (now that the optionheader has the right
-        // theme class)
+        // swatch)
         el.find('.ui-btn').each(function () {
             $(this).attr('data-theme', theme);
 
@@ -97,14 +97,16 @@ $.widget("todons.optionheader", $.mobile.widget, {
 
     _setHeight: function (height, isCollapsed, options) {
         var self = this,
+            duration,
             commonCallback,
             callback;
 
         options = options || {};
 
         // set default duration if not specified
-        if (typeof options.duration == 'undefined') {
-            options.duration = this.options.duration;
+        duration = options.duration;
+        if (typeof duration == 'undefined') {
+            duration = this.options.duration;
         }
 
         // the callback to always call after expanding or collapsing
@@ -133,7 +135,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         }
 
         // apply the animation
-        if (options.duration > 0) {
+        if (duration > 0) {
             // add a handler to invoke a callback when the animation is done
             var elt = this.element.get(0);
 
@@ -148,7 +150,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
 
             // apply the transition
             this.element.css('-webkit-transition',
-                             'height ' + options.duration + 's ease-out');
+                             'height ' + duration + 's ease-out');
             this.element.css('height', height);
         }
         // make sure the callback gets called even when there's no
