@@ -162,7 +162,7 @@
                     obj.data, "month", ui);
             } else if (klass.search("day") > 0) {
                 var day = new Date(
-                    obj.data.year, obj.data.month, 0).getDate();
+                    obj.data.year, obj.data.month + 1, 0).getDate();
                 numItems = day;
                 selectorResult = obj._populateSelector(selector, owner,
                     "day", range(1, day), parseInt, null, obj.data,
