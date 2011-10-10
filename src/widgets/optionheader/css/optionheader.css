@@ -1,8 +1,10 @@
 .ui-option-header-1-row {
-    min-height: 65px;
+    height: 65px;
+    border: none;
 }
 .ui-option-header-2-row {
-    min-height: 124px;
+    height: 124px;
+    border: none;
 }
 
 .ui-option-header-row-1 {
@@ -10,7 +12,7 @@
 }
 .ui-option-header-row-2 {
     margin-top: -2px;
-    padding: 0px 5px 4px 5px;
+    padding: 0px 5px 6px 5px;
 }
 
 /* for standard buttons */
@@ -19,7 +21,7 @@
     margin: 5px;
 }
 .ui-option-header .ui-btn-text {
-    line-height: 46px;
+    line-height: 34px;
 }
 
 /* for segmented control */
@@ -42,11 +44,11 @@
 .ui-option-header-triangle-arrow {
   border-color: transparent transparent #e9eaeb transparent;
   border-style: solid;
+  top:-20px;
   border-width: 10px;
-  height:0;
+  height:0px;
   width:0;
   position:relative;
-  top:-20px;
   margin-bottom: -20px;
   margin-left: -10px;
   left:50%;

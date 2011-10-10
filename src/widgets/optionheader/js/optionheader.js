@@ -6,12 +6,14 @@ $.widget("todons.optionheader", $.mobile.widget, {
         showIndicator: true,
         theme: 'c',
         collapsed: false,
-        expandable: true
+        expandable: true,
+        duration: 0.5
     },
 
     _create: function () {
         var el = $(this.element),
-            arrowHtml = '<div class="ui-option-header-triangle-arrow"></div>',
+            arrow = $('<div class="ui-option-header-triangle-arrow"></div>'),
+            self = this,
             options,
             numRows,
             rowsClass,
@@ -21,6 +23,9 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // parse data-options
         options = el.data('options');
         $.extend(this.options, options);
+
+        this.isCollapsed = this.options.collapsed;
+        this.expandedHeight = null;
 
         // count ui-grid-a elements to get number of rows
         numRows = el.find('.ui-grid-a').length;
@@ -43,15 +48,22 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // if there are elements inside the option header
         // and this.options.showIndicator,
         // insert a triangle arrow as the first element inside the
-        // optionheader div to show the header is expandable
+        // optionheader div to show the header has hidden content
         if (el.children().length > 0 && this.options.showIndicator) {
-            // add the arrow
-            el.children().first().before(arrowHtml);
+            this.element.before(arrow);
         }
 
-        // if expandable, bind clicks to the toggleExpanded() method
+        // if expandable, bind clicks to the toggle() method
         if (this.options.expandable) {
+            var self = this;
 
+            el.bind('vclick', function () {
+                self.toggle();
+            });
+
+            arrow.bind('vclick', function () {
+                self.toggle();
+            });
         }
 
         // for each ui-grid-a element, append a class ui-option-header-row-M
@@ -71,7 +83,62 @@ $.widget("todons.optionheader", $.mobile.widget, {
             $(this).addClass('ui-btn-up-' + theme);
         });
 
-        // show collapsed or not?
+        // bind to the pageshow to get the element's dimensions
+        // and to set its initial collapse state
+        this.element.closest(':jqmData(role="page")').bind('pageshow show', function () {
+            self.expandedHeight = self.element.height();
+
+            if (self.isCollapsed) {
+                self.collapse({duration: 0});
+            }
+        });
+    },
+
+    _setHeight: function (height, isCollapsed, options) {
+        options = options || {};
+
+        if (typeof options.duration == 'undefined') {
+            options.duration = this.options.duration;
+        }
+
+        // apply the animation
+        if (options.duration > 0) {
+            this.element.css('-webkit-transition', 'height ' + options.duration + 's ease-out');
+        }
+        this.element.css('height', height);
+
+        // set the new state
+        this.isCollapsed = isCollapsed;
+    },
+
+
+    /**
+     * Toggle the expanded/collapsed state of the widget.
+     * {Integer} options.duration Duration of the expand/collapse;
+     * defaults to this.options.duration
+     * {Function} options.callback Function to call after toggle completes
+     */
+    toggle: function (options) {
+        if (this.isCollapsed) {
+            this.expand(options);
+        }
+        else {
+            this.collapse(options);
+        }
+    },
+
+    /**
+     * Takes the same options as toggle()
+     */
+    collapse: function (options) {
+        this._setHeight('5px', true, options);
+    },
+
+    /**
+     * Takes the same options as toggle()
+     */
+    expand: function (options) {
+        this._setHeight(this.expandedHeight, false, options);
     }
 });
 
