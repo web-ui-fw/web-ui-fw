@@ -142,8 +142,6 @@
             var numItems = 0;
             var selectorResult = undefined;
 
-            ui.triangle.triangle("option", "offsetX", owner.position().left + owner.outerWidth(true) / 2);
-
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
                 numItems = values.length;
@@ -214,6 +212,18 @@
             }
 
             if (selectorResult !== undefined) {
+                /*
+                 * This assumes the offset of the header is identical to the offset of the triangle. Such an assumption
+                 * is unfortunately necessary, because the offset of the triangle cannot be determined while it is hidden.
+                 *
+                 * If the @owner has any padding/border/margins, then they are not taken into account. Thus, if you want
+                 * to space/pad your @owner divs, you should wrap them in other divs which give them
+                 * padding/borders/margins rather than adding padding/borders/margins directly.
+                 *
+                 * Currently, this happens to work, because the @owner divs have no left border/margin/padding.
+                 */
+                ui.triangle.triangle("option", "offsetX", owner.offset().left + owner.width() / 2 - this.ui.header.offset().left);
+
                 selector.slideDown(obj.options.animationDuration);
                 obj.state.selectorOut = true;
 
