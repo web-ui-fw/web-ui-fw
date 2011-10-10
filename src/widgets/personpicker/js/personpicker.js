@@ -33,7 +33,7 @@
                 currentAvatar = currentListItem.find('.avatar');
 
                 currentName.text(p.id());
-                currentAvatar.find("img").attr({src: p.avatar()});
+                currentAvatar.find("img").attr({src: p.avatar(), alt: p.id()});
                 list.append(currentListItem);
 
                 currentCheckbox.switch({"checked": false});
