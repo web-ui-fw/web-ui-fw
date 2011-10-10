@@ -1,12 +1,12 @@
 .ui-option-header-1-row {
-    min-height: 60px;
+    min-height: 65px;
 }
 .ui-option-header-2-row {
-    min-height: 119px;
+    min-height: 124px;
 }
 
 .ui-option-header-row-1 {
-    padding: 5px;
+    padding: 5px 5px 5px 5px;
 }
 .ui-option-header-row-2 {
     margin-top: -2px;
