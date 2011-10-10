@@ -135,7 +135,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         }
 
         // apply the animation
-        if (duration > 0) {
+        if (duration > 0 && $.support.cssTransitions) {
             // add a handler to invoke a callback when the animation is done
             var elt = this.element.get(0);
 

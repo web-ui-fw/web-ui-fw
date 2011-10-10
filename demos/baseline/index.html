@@ -49,6 +49,9 @@
 
     <script src="../../src/widgets/progressbar/js/progressbar.js"></script>
     <link rel="stylesheet" href="../../src/widgets/progressbar/css/progressbar.css"/>
+
+    <script src="../../src/widgets/optionheader/js/optionheader.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/optionheader/css/optionheader.css"/>
 </head>
 
 <body>
@@ -143,6 +146,12 @@
                     <li>Orlando</li>
                 </ul>
             </div>
+        </div>
+
+        <div>
+            <h2>optionheader</h2>
+
+            <p><a data-role="button" data-inline="true" href="#optionheader-2btn-example">Option header with two buttons</a></p>
         </div>
 
         <!-- jqm widgets -->
@@ -615,6 +624,26 @@
 
     <div data-role="footer">
         <h4>baseline widget test</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-2btn-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header</h1>
+        <div data-role="optionheader" data-options='{"collapsed":true}'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-b"><a data-role="button">Save</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
     </div>
 </div>
 
