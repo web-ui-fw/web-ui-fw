@@ -70,7 +70,7 @@
             this.data.day = this.data.initial.day;
             this.data.hours = this.data.initial.hours;
             this.data.minutes = this.data.initial.minutes;
-            this.data.pm = this.data.initial.hours;
+            this.data.pm = this.data.initial.pm;
         },
 
         _initDate: function(ui) {
@@ -94,7 +94,7 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["hours", this._normalizeHour(this._makeTwoDigitValue(this.data.initial.hours))],
+                0: ["hours", this._makeTwoDigitValue(this._clampHours(this.data.initial.hours))],
                 1: ["separator", this.options.timeSeparator],
                 2: ["minutes", this._makeTwoDigitValue(this.data.initial.minutes)],
             };
@@ -117,21 +117,19 @@
         },
 
         _makeTwoDigitValue: function(val) {
-          var ret = val.toString(10);
-
-          if (val < 10)
-            ret = "0" + ret;
-          return ret;
+          return ((val < 10 ? "0" : "") + val.toString(10));
         },
 
-        _normalizeHour: function(val) {
-            val = parseInt(val);
-            val = (!this.options.twentyfourHours && val > 12) ? (val - 12) : val;
-            return this._makeTwoDigitValue(val);
+        _parseDayHoursMinutes: function(val) {
+          return parseInt((val.substring(0, 1) === "0") ? val.substring(1) : val);
         },
 
         _parseAmPmValue: function(pm) {
             return pm ? this.options.pm : this.options.am;
+        },
+
+        _clampHours: function(val) {
+          return ((this.options.twentyfourHours) ? val : (((val + 11) % 12) + 1));
         },
 
         _showDataSelector: function(selector, owner, ui) {
@@ -139,16 +137,13 @@
              * do some caching at least. */
             var obj = this;
             var klass = owner.attr("class");
-            var numItems = 0;
             var selectorResult = undefined;
 
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
-                numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
                     "year", values, parseInt, null, obj.data, "year", ui);
             } else if (klass.search("month") > 0) {
-                numItems = obj.options.months.length;
                 selectorResult = obj._populateSelector(selector, owner,
                     "month", obj.options.months,
                     function (month) {
@@ -163,101 +158,82 @@
             } else if (klass.search("day") > 0) {
                 var day = new Date(
                     obj.data.year, obj.data.month + 1, 0).getDate();
-                numItems = day;
                 selectorResult = obj._populateSelector(selector, owner,
-                    "day", range(1, day), parseInt, null, obj.data,
+                    "day", range(1, day), this._parseDayHoursMinutes, null, obj.data,
                     "day", ui);
             } else if (klass.search("hours") > 0) {
                 var values =
                     range(this.options.twentyfourHours ? 0 : 1,
                           this.options.twentyfourHours ? 24 : 12)
                         .map(this._makeTwoDigitValue);
-                numItems = values.length;
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
-                    "hours", values, parseInt, function(val) {
-                      if (!(obj.options.twentyfourHours))
-                        val = ((val + 11) % 12) + 1;
-                      return val;
-                    },
+                    "hours", values, this._parseDayHoursMinutes,
+                      function(val) { return obj._makeTwoDigitValue(obj._clampHours(val)); },
                     obj.data, "hours", ui);
             } else if (klass.search("separator") > 0) {
               console.log("datetimepicker: no dropdown for time separator");
             } else if (klass.search("minutes") > 0) {
                 var values = range(0, 59).map(this._makeTwoDigitValue);
-                numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
-                    "minutes", values, parseInt, null, obj.data,
+                    "minutes", values, this._parseDayHoursMinutes, this._makeTwoDigitValue, obj.data,
                     "minutes", ui);
             } else if (klass.search("ampm") > 0) {
                 var values = [this.options.am, this.options.pm];
-                numItems = values.length;
                 selectorResult = obj._populateSelector(selector, owner,
                     "ampm", values,
-                    function (val) {
-                        if (val == obj.options.am) {
-                            return 0;
-                        } else {
-                            return 1;
-                        }
-                    },
-                    function (index) {
-                        if (index == 0) {
-                            return obj.options.am;
-                        } else {
-                            return obj.options.pm;
-                        }
-                    },
+                    function (val) { return (val !== obj.options.am); },
+                    function (index) { return obj.options[index ? "pm" : "am"]; },
                     obj.data, "pm", ui);
             }
 
             if (selectorResult !== undefined) {
-                /*
-                 * This assumes the offset of the header is identical to the offset of the triangle. Such an assumption
-                 * is unfortunately necessary, because the offset of the triangle cannot be determined while it is hidden.
-                 *
-                 * If the @owner has any padding/border/margins, then they are not taken into account. Thus, if you want
-                 * to space/pad your @owner divs, you should wrap them in other divs which give them
-                 * padding/borders/margins rather than adding padding/borders/margins directly.
-                 *
-                 * Currently, this happens to work, because the @owner divs have no left border/margin/padding.
-                 */
-                ui.triangle.triangle("option", "offsetX", owner.offset().left + owner.width() / 2 - this.ui.header.offset().left);
+                var totalWidth = 0,
+                    widthAtItem = 0,
+                    x = 0;
 
+                /* 
+                 * slideDown() seems to synchronously make things visible (albeit at height = 0px), so we can actually
+                 * compute widths/heights below
+                 */
                 selector.slideDown(obj.options.animationDuration);
                 obj.state.selectorOut = true;
 
-                /* Now that all the items have been added to the DOM, let's compute
-                 * the size of the selector.
+                /*
+                 * If the @owner has any padding/border/margins, then they are not taken into account. Thus, if you want
+                 * to space/pad your @owner divs, you should wrap them in other divs which give them
+                 * padding/borders/margins rather than adding left padding/borders/margins directly. Currently, this
+                 * happens to work, because the @owner divs have no left border/margin/padding.
                  */
-                itemWidth = selector.find(".item").outerWidth();
+                ui.triangle.triangle("option", "offsetX", owner.offset().left + owner.width() / 2 - this.ui.triangle.offset().left);
+
+                /*
+                 * Now that all the items have been added to the DOM, let's compute the size of the selector.
+                 */
                 selectorWidth = selector.find(".container").outerWidth();
-                var totalWidth = itemWidth * numItems;
-                var widthAtItem = itemWidth * selectorResult.currentIndex;
-                var halfWidth = selectorWidth / 2.0;
-                var x = 0;
-                /* The following code deals with the case of the item
-                 * selected being one of the first ones in the list
-                 */
-                if (widthAtItem > selectorWidth / 2.0) {
-                    x = -((widthAtItem) - (halfWidth - itemWidth / 2.0));
+                selector.find(".item").each(function(idx) {
+                  var width = $(this).outerWidth(true);
+                  totalWidth += width;
+                  if (idx < selectorResult.currentIndex)
+                    widthAtItem += width;
+                });
+
+                /* If the contents doesn't fill the selector, pad it out width empty divs so it's centered */
+                if (totalWidth < selectorWidth) {
+                  var half = (selectorWidth - totalWidth) / 2;
+
+                  selector.find(".item:first").before($("<div/>").css("float", "left").width(half).height(1));
+                  selector.find(".item:last" ).after( $("<div/>").css("float", "left").width(half).height(1));
+                  totalWidth = selectorWidth;
                 }
-                /* And here we're dealing with the case of the item
-                 * selected being one of the last ones in the list.
-                 */
-                if (totalWidth - widthAtItem < halfWidth) {
-                    x = -totalWidth + selectorWidth;
-                }
-                /* There's also a third option: the values are so few
-                 * that we should always center them.
-                 */
-                if (totalWidth < halfWidth) {
-                    x = totalWidth / 2.0 + itemWidth * numItems / 2.0;
+                /* Otherwise, try to center the current item as much as possible */
+                else {
+                  x = (selectorWidth - $(selector.find(".item")[selectorResult.currentIndex]).outerWidth(true)) / 2 - widthAtItem;
+                  x = Math.min(0, Math.max(selectorWidth - totalWidth, x));
                 }
 
-                selector.find(".view").width(itemWidth * numItems);
-                selectorResult.scrollable.container.scrollview(
-                    'scrollTo', x, 0);
+                selector.find(".view").width(totalWidth);
+                selectorResult.scrollable.container.scrollview('scrollTo', x, 0);
             }
         },
 
@@ -336,7 +312,7 @@
                         $(obj.data.parentInput).trigger("date-changed", obj.getValue());
                     }
                 }).text(values[i]);
-                if (values[i] == destValue) {
+                if (values[i] === destValue) {
                     item.link.addClass("current");
                     currentIndex = i;
                 }
@@ -449,10 +425,12 @@
         },
 
         getValue: function() {
-            var actualHours = this.data.hours;
-            if (!this.options.twentyfourHours && this.data.pm) {
-                actualHours += 12;
-            }
+            var actualHours = this._clampHours(this.data.hours);
+            if (actualHours === 12 && !this.data.pm)
+              actualHours = 0;
+            else
+            if (actualHours < 12 && this.data.pm)
+              actualHours += 12;
             return new Date(this.data.year,
                             this.data.month,
                             this.data.day,
