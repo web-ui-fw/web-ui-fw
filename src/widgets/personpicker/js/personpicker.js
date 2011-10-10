@@ -18,12 +18,14 @@
 
         _data: {
             ui: undefined,
-            row: undefined
+            row: undefined,
+            checked: new Array()
         },
 
         _personArraySuccessCallback: function(persons) {
-            var list = this._data.ui.list;
-            var li = this._data.row.li;
+            var self = this;
+            var list = self._data.ui.list;
+            var li = self._data.row.li;
 
             li.remove();
             persons.forEach(function(p) {
@@ -36,7 +38,22 @@
                 currentAvatar.find("img").attr({src: p.avatar(), alt: p.id()});
                 list.append(currentListItem);
 
-                currentCheckbox.switch({"checked": false});
+                currentCheckbox
+                    .switch({"checked": false})
+                    .data("Person", p)
+                    .bind("changed", function(e, checked) {
+                        var p = $(this).data("Person");
+                        if (checked) {
+                            if ($.inArray(p, self._data.checked) == -1) {
+                                self._data.checked.push(p);
+                            }
+                        } else {
+                            self._data.checked = $.grep(
+                                self._data.checked, function(value) {
+                                    return value != p;
+                                });
+                        }
+                    });
             });
             list.listview();
         },
