@@ -17,12 +17,7 @@ $.widget( "todons.triangle", $.mobile.widget, {
       offsetX: undefined
     });
 
-    this.element
-      .append(triangle)
-      .css({
-        position: "relative",
-        overflow: "hidden"
-      });
+    this.element.css("position", "relative").append(triangle);
 
     if (thePage.is(":visible"))
       this._realize();
@@ -33,7 +28,9 @@ $.widget( "todons.triangle", $.mobile.widget, {
   },
 
   _realize: function() {
-    this.triangle.css("border-width", this.element.height());
+    this.triangle.css("border-left-width",   this.element.height());
+    this.triangle.css("border-right-width",  this.element.height());
+    this.triangle.css("border-bottom-width", this.element.height());
     this.realized = true;
     if (this.offsetX != undefined)
       this._setOffsetX(this.offsetX, true);
@@ -41,9 +38,8 @@ $.widget( "todons.triangle", $.mobile.widget, {
 
   _setOffsetX: function(value, unconditional) {
     if (value != this.offsetX || unconditional) {
+      this.triangle.css("left", value - this.element.height());
       this.offsetX = value;
-      if (this.realized)
-        this.triangle.css("left", this.offsetX - this.triangle.css("border-width"));
     }
   },
 
