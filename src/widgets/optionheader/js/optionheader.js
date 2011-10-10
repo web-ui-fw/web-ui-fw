@@ -83,7 +83,8 @@ $.widget("todons.optionheader", $.mobile.widget, {
             $(this).addClass('ui-btn-up-' + theme);
         });
 
-        // bind to the pageshow to get the element's dimensions
+        // bind to the pageshow on the page containing
+        // the optionheader to get the element's dimensions
         // and to set its initial collapse state
         this.element.closest(':jqmData(role="page")').bind('pageshow show', function () {
             self.expandedHeight = self.element.height();
@@ -95,22 +96,68 @@ $.widget("todons.optionheader", $.mobile.widget, {
     },
 
     _setHeight: function (height, isCollapsed, options) {
+        var self = this,
+            commonCallback,
+            callback;
+
         options = options || {};
 
+        // set default duration if not specified
         if (typeof options.duration == 'undefined') {
             options.duration = this.options.duration;
         }
 
+        // the callback to always call after expanding or collapsing
+        commonCallback = function () {
+            self.isCollapsed = isCollapsed;
+
+            if (isCollapsed) {
+                self.element.trigger('collapse');
+            }
+            else {
+                self.element.trigger('expand');
+            }
+        };
+
+        // combine commonCallback with any user-specified callback
+        if (options.callback) {
+            callback = function () {
+                options.callback();
+                commonCallback();
+            };
+        }
+        else {
+            callback = function () {
+                commonCallback();
+            }
+        }
+
         // apply the animation
         if (options.duration > 0) {
-            this.element.css('-webkit-transition', 'height ' + options.duration + 's ease-out');
+            // add a handler to invoke a callback when the animation is done
+            var elt = this.element.get(0);
+
+            var handler = {
+                handleEvent: function (e) {
+                    elt.removeEventListener('webkitTransitionEnd', this);
+                    callback();
+                }
+            };
+
+            elt.addEventListener('webkitTransitionEnd', handler, false);
+
+            // apply the transition
+            this.element.css('-webkit-transition',
+                             'height ' + options.duration + 's ease-out');
+            this.element.css('height', height);
         }
-        this.element.css('height', height);
-
-        // set the new state
-        this.isCollapsed = isCollapsed;
+        // make sure the callback gets called even when there's no
+        // animation
+        else {
+            this.element.css('height', height);
+            callback();
+        }
     },
-
 
     /**
      * Toggle the expanded/collapsed state of the widget.
@@ -120,10 +167,10 @@ $.widget("todons.optionheader", $.mobile.widget, {
      */
     toggle: function (options) {
         if (this.isCollapsed) {
-            this.expand(options);
+            this.expand();
         }
         else {
-            this.collapse(options);
+            this.collapse();
         }
     },
 

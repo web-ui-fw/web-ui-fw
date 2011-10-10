@@ -156,6 +156,14 @@ $(document).bind("pagecreate", function () {
         $("#myVolumeControl").volumecontrol("option", "title", "Volume");
       }
     });
+
+    $("#myoptionheader").bind('collapse', function () {
+        console.log('option header was collapsed');
+    });
+
+    $("#myoptionheader").bind('expand', function () {
+        console.log('option header was expanded');
+    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */
