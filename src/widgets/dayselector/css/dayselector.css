@@ -1,0 +1,27 @@
+/* dayselector CSS */
+.ui-days li {
+	display: inline;
+	list-style: none;
+	background: rgb(66,82,90);
+}
+
+.ui-days li a {
+	color: #ffffff;
+	background: rgb(199,199,199);
+	display: inline-block;	
+	outline: none;
+	padding-left: 1px;
+	height: 56px;
+	width: 64px;
+	text-align: center;
+	line-height: 4em;
+}
+
+.ui-days li a:active {
+	background: orange;
+}
+
+.ui-days li a:hover {
+	background: orange;
+}
+

@@ -128,6 +128,10 @@ $(document).bind("pagecreate", function () {
     $('#progressbar-dialog-demo').bind('pagehide', function (e) {
         progressbarAnimator.clearIntervals();
     });
+    
+     $('#day-selector-demo').bind('pageshow',  function (e) {
+    	$('#daySelector1').dayselector();
+    });
 
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
