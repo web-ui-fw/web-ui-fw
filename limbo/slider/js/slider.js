@@ -15,9 +15,13 @@
 (function ($, window, undefined) {
     $.widget("todons.todonsslider", $.mobile.widget, {
         _create: function() {
-            var inputElement = $(this.element);
             this.currentValue = null;
-            var self = this;
+
+            var self = this,
+                inputElement = $(this.element),
+                slider,
+                handleText,
+                updateSlider;
 
             // apply jqm slider
             inputElement.slider();
@@ -25,11 +29,18 @@
             // hide the slider input element proper
             inputElement.hide();
 
+            // get the actual slider added by jqm
+            slider = inputElement.next('.ui-slider');
+
+            // remove the title attribute from the handle (which is
+            // responsible for the annoying tooltip)
+            slider.find('.ui-slider-handle').attr('title', '');
+
             // get the element where value can be displayed
-            var handleText = inputElement.next('.ui-slider').find('.ui-btn-text');
+            handleText = slider.find('.ui-btn-text');
 
             // show value in that element
-            var updateSlider = function (e) {
+            updateSlider = function () {
                 var newValue = self.element.val();
 
                 if (newValue !== self.currentValue) {
