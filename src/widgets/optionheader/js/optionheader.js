@@ -67,7 +67,7 @@
  *
  *   {Boolean} [showIndicator=true] Set to true (the default) to show
  *   the upward-pointing arrow indicator on top of the title bar.
- *   {Boolean} [collapsed=false] Sets the appearance when the option
+ *   {Boolean} [collapseOnInit=false] Sets the appearance when the option
  *   header is first displayed; defaults to false (i.e. show the header
  *   expanded on first draw). NB setting this option later has no
  *   effect: use collapse() to collapse a widget which is already
@@ -96,7 +96,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         initSelector: ":jqmData(role='optionheader')",
         showIndicator: true,
         theme: 'b',
-        collapsed: false,
+        startCollapsed: false,
         expandable: true,
         duration: 0.25
     },
@@ -110,7 +110,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         options = this.element.data('options');
         $.extend(this.options, options);
 
-        this.isCollapsed = this.options.collapsed;
+        this.isCollapsed = this.options.collapseOnInit;
         this.expandedHeight = null;
 
         // parse data-theme and reset options.theme if it's present
