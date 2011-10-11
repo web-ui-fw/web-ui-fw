@@ -36,6 +36,9 @@
             // responsible for the annoying tooltip)
             slider.find('.ui-slider-handle').attr('title', '');
 
+            // remove the rounded corners
+            slider.removeClass('ui-btn-corner-all');
+
             // get the element where value can be displayed
             handleText = slider.find('.ui-btn-text');
 
