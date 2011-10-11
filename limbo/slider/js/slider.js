@@ -22,8 +22,11 @@
                 slider,
                 handle,
                 handleText,
+                showPopup,
+                hidePopup,
+                positionPopup,
                 updateSlider,
-                popup = $('<div class="ui-slider-popup ui-shadow"></div>');
+                popup = $('<div class="ui-slider-popup ui-slider-handle ui-shadow"></div>');
 
             // apply jqm slider
             inputElement.slider();
@@ -37,10 +40,6 @@
             // get the handle
             handle = slider.find('.ui-slider-handle');
 
-            // remove the title attribute from the handle (which is
-            // responsible for the annoying tooltip)
-            handle.attr('title', '');
-
             // remove the rounded corners
             slider.removeClass('ui-btn-corner-all');
 
@@ -53,12 +52,18 @@
 
             // show the popup
             showPopup = function () {
-                popup.show();
+                if (!self.popupVisible) {
+                    popup.show();
+                    self.popupVisible = true;
+                }
             };
 
             // hide the popup
             hidePopup = function () {
-                popup.hide();
+                if (self.popupVisible) {
+                    popup.hide();
+                    self.popupVisible = false;
+                }
             };
 
             // position the popup
@@ -73,6 +78,12 @@
             updateSlider = function () {
                 positionPopup();
 
+                // remove the title attribute from the handle (which is
+                // responsible for the annoying tooltip); NB we have
+                // to do it here as the jqm slider sets it every time
+                // the slider's value changes :(
+                handle.removeAttr('title');
+
                 var newValue = self.element.val();
 
                 if (newValue !== self.currentValue) {
@@ -81,8 +92,6 @@
                     popup.html(newValue);
                     self.element.trigger('update', newValue);
                 }
-
-                return false;
             };
 
             // set initial value
@@ -93,7 +102,9 @@
 
             // bind clicks on the handle to show the popup
             handle.bind('vmousedown', showPopup);
-            handle.bind('vmouseup', hidePopup);
+
+            // watch events on the document to turn off the slider popup
+            slider.add(document).bind('vmouseup', hidePopup);
         },
     });
 
