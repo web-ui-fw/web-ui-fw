@@ -13,7 +13,8 @@
 (function ($, window, undefined) {
     $.widget("todons.personpicker", $.mobile.widget, {
         options: {
-            addressBook: new $.mobile.todons.AddressBook()
+            addressBook: new $.mobile.todons.AddressBook(),
+            multipleSelection: true,
         },
 
         _data: {
@@ -44,6 +45,11 @@
                     .bind("changed", function(e, checked) {
                         var p = $(this).data("Person");
                         if (checked) {
+                            if (!self.options.multipleSelection) {
+                                self._data.checked.forEach(function(item) {
+                                    // TODO: uncheck item here.
+                                });
+                            }
                             if ($.inArray(p, self._data.checked) == -1) {
                                 self._data.checked.push(p);
                             }
@@ -79,6 +85,8 @@
             // Prepare.
             self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui); 
             self._data.row = $.mobile.todons.loadPrototype("personpicker-row", self._data.row);
+
+            $.mobile.todons.parseOptions(self, true);
  
             // Load persons.
             if (self.options.addressBook !== undefined) {
