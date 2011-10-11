@@ -16,6 +16,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
             elBgColor,
             self = this,
             options,
+            gridRowSelector = '.ui-grid-a,.ui-grid-b,.ui-grid-c,.ui-grid-d,.ui-grid-e',
             numRows,
             rowsClass,
             theme,
@@ -28,8 +29,8 @@ $.widget("todons.optionheader", $.mobile.widget, {
         this.isCollapsed = this.options.collapsed;
         this.expandedHeight = null;
 
-        // count ui-grid-a elements to get number of rows
-        numRows = el.find('.ui-grid-a').length;
+        // count ui-grid-* elements to get number of rows
+        numRows = el.find(gridRowSelector).length;
 
         // ...at least one row
         numRows = Math.max(1, numRows);
@@ -54,8 +55,11 @@ $.widget("todons.optionheader", $.mobile.widget, {
             // set the border-color for the triangle to the
             // background-color of the outer div
             elBgColor = el.css('background-color');
+
             arrow.css('border-color',
                       'transparent transparent ' + elBgColor + ' transparent');
+
+            console.log(el.css('background-image'));
 
             el.before(arrow);
         }
@@ -75,7 +79,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
 
         // for each ui-grid-a element, append a class ui-option-header-row-M
         // to it, where M is the xpath position() of the div
-        el.find('.ui-grid-a').each(function (index) {
+        el.find(gridRowSelector).each(function (index) {
             $(this).addClass('ui-option-header-row-' + (index + 1));
         });
 
