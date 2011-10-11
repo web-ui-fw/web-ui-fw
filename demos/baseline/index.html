@@ -54,7 +54,7 @@
     <link rel="stylesheet" href="../../src/widgets/optionheader/css/optionheader.css"/>
 
     <script src="../../limbo/slider/js/slider.js"></script>
-    <link rel="stylesheet" href="../../limbo/slider//css/slider.css"/>
+    <link rel="stylesheet" href="../../limbo/slider/css/slider.css"/>
 
 </head>
 
@@ -836,47 +836,10 @@
 </div>
 
 <script>
-var progressbarRunning = false;
-var progressbarInterval = null;
-
 $('#baseline').bind('pageshow', function () {
-    var page = $(this);
-
-    var myslider = page.find('#mySlider');
-    myslider.val(11).slider("refresh");
-
-    var myspinnerbar = page.find('#myspinnerbar');
-    myspinnerbar.spinnerbar('start');
-
-    var myspinner = page.find('#myspinner');
-    myspinner.spinner('start');
-
-    var myprogressbar = page.find('#myprogressbar');
-    var progress = myprogressbar.progressbar('value');
-
-    setTimeout(function () {
-        myspinnerbar.spinnerbar('stop');
-        myspinner.spinner('stop');
-    }, 10000);
-
-    if (!progressbarRunning) {
-        progressbarInterval = setInterval(function () {
-            if (++progress > 100) {
-                progress = 0;
-            }
-
-            myprogressbar.progressbar('value', progress);
-        }, 100);
-
-        progressbarRunning = true;
-    }
-});
-
-$('#baseline').bind('pagehide', function () {
-    if (progressbarRunning) {
-        clearInterval(progressbarInterval);
-        progressbarRunning = false;
-    }
+    $('#mySlider').bind('update', function (e, value) {
+        console.log(value);
+    });
 });
 
 $('#optionheader-programmatic-example').bind('pageshow', function () {
