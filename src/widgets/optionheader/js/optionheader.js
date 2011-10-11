@@ -162,7 +162,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         //   ui-bar-X, where X = options.theme (defaults to 'c')
         //   ui-option-header
         rowsClass = 'ui-option-header-' + numRows + '-row';
-        themeClass = 'ui-bar-' + this.options.theme;
+        themeClass = 'ui-body-' + this.options.theme;
 
         el.removeClass(rowsClass).addClass(rowsClass);
         el.removeClass(themeClass).addClass(themeClass);
