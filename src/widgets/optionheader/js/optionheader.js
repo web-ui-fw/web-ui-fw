@@ -7,7 +7,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         theme: 'b',
         collapsed: false,
         expandable: true,
-        duration: 0.5
+        duration: 0.25
     },
 
     _create: function () {
