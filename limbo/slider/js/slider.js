@@ -20,8 +20,10 @@
             var self = this,
                 inputElement = $(this.element),
                 slider,
+                handle,
                 handleText,
-                updateSlider;
+                updateSlider,
+                popup = $('<div class="ui-slider-popup ui-shadow"></div>');
 
             // apply jqm slider
             inputElement.slider();
@@ -32,23 +34,51 @@
             // get the actual slider added by jqm
             slider = inputElement.next('.ui-slider');
 
+            // get the handle
+            handle = slider.find('.ui-slider-handle');
+
             // remove the title attribute from the handle (which is
             // responsible for the annoying tooltip)
-            slider.find('.ui-slider-handle').attr('title', '');
+            handle.attr('title', '');
 
             // remove the rounded corners
             slider.removeClass('ui-btn-corner-all');
 
+            // add a popup element (hidden initially)
+            slider.before(popup);
+            popup.hide();
+
             // get the element where value can be displayed
             handleText = slider.find('.ui-btn-text');
 
-            // show value in that element
+            // show the popup
+            showPopup = function () {
+                popup.show();
+            };
+
+            // hide the popup
+            hidePopup = function () {
+                popup.hide();
+            };
+
+            // position the popup
+            positionPopup = function () {
+                popup.position({my: 'center bottom',
+                                at: 'center top',
+                                offset: '0 -5px',
+                                of: handle});
+            };
+
+            // show value on the handle and in popup
             updateSlider = function () {
+                positionPopup();
+
                 var newValue = self.element.val();
 
                 if (newValue !== self.currentValue) {
                     self.currentValue = newValue;
                     handleText.html(newValue);
+                    popup.html(newValue);
                     self.element.trigger('update', newValue);
                 }
 
@@ -60,6 +90,10 @@
 
             // bind to changes in the slider's value to update handle text
             this.element.bind('change', updateSlider);
+
+            // bind clicks on the handle to show the popup
+            handle.bind('vmousedown', showPopup);
+            handle.bind('vmouseup', hidePopup);
         },
     });
 
