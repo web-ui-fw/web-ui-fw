@@ -22,6 +22,9 @@
 /* lighter orange used in navbar, above option header */
 @lightOrange: #d9931a;
 
+/* darker orange used for option header border */
+@darkOrange: #b27815;
+
 /* A
 -----------------------------------------------------------------------------------------------------------*/
 
@@ -176,8 +179,8 @@
 @bBarTextColor: rgb(108,108,108);
 
 /* for ui-body gradients */
-@bBodyBgFrom: #e6e6e6;
-@bBodyBgTo: #cccccc;
+@bBodyBgFrom: @orange;
+@bBodyBgTo: @orange;
 
 @bBodyBorderColor: rgb(199,199,199);
 @bBodyTextColor: #333333;
@@ -189,19 +192,19 @@
 @bBtnLinkInheritColor: #ffffff;
 @bBtnDownLinkInheritColor: #ffffff;
 
-@bBtnUpBorderColor: #145072;
-@bBtnUpBgFrom: #5f9cc5;
-@bBtnUpBgTo: #396b9e;
+@bBtnUpBorderColor: @darkOrange;
+@bBtnUpBgFrom: @orange;
+@bBtnUpBgTo: @orange;
 @bBtnUpTextColor: #ffffff;
 
-@bBtnHoverBorderColor: #00516e;
-@bBtnHoverBgFrom: #72b0d4;
-@bBtnHoverBgTo: #4b88b6;
+@bBtnHoverBorderColor: @darkOrange;
+@bBtnHoverBgFrom: @orange;
+@bBtnHoverBgTo: @orange;
 @bBtnHoverTextColor: #ffffff;
 
-@bBtnDownBorderColor: #225377;
-@bBtnDownBgFrom: #396b9e;
-@bBtnDownBgTo: #4e89c5;
+@bBtnDownBorderColor: @orange;
+@bBtnDownBgFrom: @lightOrange;
+@bBtnDownBgTo: @lightOrange;
 @bBtnDownTextColor: #ffffff;
 
 .ui-bar-b {
