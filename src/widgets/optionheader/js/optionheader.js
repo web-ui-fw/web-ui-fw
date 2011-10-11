@@ -4,7 +4,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(role='optionheader')",
         showIndicator: true,
-        theme: 'c',
+        theme: 'b',
         collapsed: false,
         expandable: true,
         duration: 0.5
@@ -13,6 +13,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
     _create: function () {
         var el = $(this.element),
             arrow = $('<div class="ui-option-header-triangle-arrow"></div>'),
+            elBgColor,
             self = this,
             options,
             numRows,
@@ -50,7 +51,13 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // insert a triangle arrow as the first element inside the
         // optionheader div to show the header has hidden content
         if (this.options.showIndicator) {
-            this.element.before(arrow);
+            // set the border-color for the triangle to the
+            // background-color of the outer div
+            elBgColor = el.css('background-color');
+            arrow.css('border-color',
+                      'transparent transparent ' + elBgColor + ' transparent');
+
+            el.before(arrow);
         }
 
         // if expandable, bind clicks to the toggle() method

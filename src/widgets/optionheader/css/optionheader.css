@@ -42,7 +42,6 @@
 
 /* for the triangle */
 .ui-option-header-triangle-arrow {
-  border-color: transparent transparent #e9eaeb transparent;
   border-style: solid;
   top:-20px;
   border-width: 10px;
