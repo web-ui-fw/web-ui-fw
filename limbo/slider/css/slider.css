@@ -1,54 +1,8 @@
-.ui-slider-container { /* use to add space for popup */
-    padding-top: 64px; /* guess */
-} /**/
+.ui-slider .ui-btn-corner-all {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
 
-a.ui-slider-handle { /**/
-    margin-top: -18px; /**/
-    margin-left: -18px; /**/
-    width: 36px; /* from nbeat */
-    height: 36px; /* from nbeat */
-
-    /*
-     * following are for ui-btn-corner-all, which is removed in js
-     */
-    /*-moz-border-radius:       .0em; /* from jquery-movile.css */
-    /*-webkit-border-radius:    .0em; /* from jquery-movile.css */
-    /*border-radius:            .0em; /* from jquery-movile.css */
-} /**/
-
-div.ui-slider { /**/
-    width: 440px; /**/
-} /**/
-
-/* the slider handle when popup is visible */
-a.ui-slider-handle-pressed { /**/
-    margin-top: -20px; /**/
-    margin-left: -20px; /**/
-    width: 40px; /**/
-    height: 40px; /**/
-} /**/
-
-div.ui-slider-popup { /**/
-    position: absolute; /**/
-    /*margin-top: -32px; /* center is on the handle = -40/2 - (64-40)/2*/
-    /*margin-top: -89px; /**/
-                         /* -40/2 ; top of handle*/
-                         /* -5    ; gap*/
-                         /* -64   ; popup height*/
-                         /**/
-    /*margin-left: -13px; /**/
-    width: 64px; /* from nbeat */
-    height: 64px; /* from nbeat */
-    border: 1px solid 		#CCC;/**/
-    -moz-border-radius:         .2px; /* from jquery-movile.css */
-    -webkit-border-radius:      .2px; /* from jquery-movile.css */
-    border-radius:              .2px; /* from jquery-movile.css */
-} /**/
-
-div.ui-slider-popup-text { /**/
-    margin-top: 10px; /*
-                       * 20 ; middle of popup
-                       * -20; half height of font
-                       */
-    font-size: 40px; /**/
-} /**/
+.ui-slider .ui-btn-inner {
+    padding: 4px 0 0 0 !important;
+}
