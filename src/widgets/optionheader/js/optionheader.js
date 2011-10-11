@@ -53,6 +53,11 @@
  *     </div>
  * </div>
  *
+ * Options can also be set with $(...).optionheader('option', 'name', value).
+ * However, if you do this, you'll need to call $(...).optionheader('refresh')
+ * afterwards for the new values to take effect (note that optionheader()
+ * can be applied multiple times to an element without side effects).
+ *
  * See below for the available options.
  *
  * Theme: by default, gets a 'b' swatch; override with data-theme="X"
@@ -64,7 +69,9 @@
  *   the upward-pointing arrow indicator on top of the title bar.
  *   {Boolean} [collapsed=false] Sets the appearance when the option
  *   header is first displayed; defaults to false (i.e. show the header
- *   expanded on first draw)
+ *   expanded on first draw). NB setting this option later has no
+ *   effect: use collapse() to collapse a widget which is already
+ *   drawn.
  *   {Boolean} [expandable=true] Sets whether the header will expand
  *   in response to clicks; default = true.
  *   {Float} [duration=0.25] Duration of the expand/collapse animation.
@@ -95,23 +102,54 @@ $.widget("todons.optionheader", $.mobile.widget, {
     },
 
     _create: function () {
-        var el = $(this.element),
-            arrow = $('<div class="ui-option-header-triangle-arrow"></div>'),
-            elBgColor,
-            self = this,
-            options,
-            gridRowSelector = '.ui-grid-a,.ui-grid-b,.ui-grid-c,.ui-grid-d,.ui-grid-e',
-            numRows,
-            rowsClass,
+        var options,
             theme,
-            themeClass;
+            self = this;
 
         // parse data-options
-        options = el.data('options');
+        options = this.element.data('options');
         $.extend(this.options, options);
 
         this.isCollapsed = this.options.collapsed;
         this.expandedHeight = null;
+
+        // parse data-theme and reset options.theme if it's present
+        theme = this.element.data('theme') || this.options.theme;
+        this.options.theme = theme;
+
+        // bind to the pageshow on the page containing
+        // the optionheader to get the element's dimensions
+        // and to set its initial collapse state
+        this.element.closest(':jqmData(role="page")').bind('pageshow show', function () {
+            self.expandedHeight = self.element.height();
+
+            if (self.isCollapsed) {
+                self.collapse({duration: 0});
+            }
+        });
+
+        // set up the click handler; it's done here so it can
+        // easily be removed, as there should only be one instance
+        // of the handler function for each class instance
+        this.clickHandler = function () {
+            self.toggle();
+        };
+
+        this.refresh();
+    },
+
+    // Draw the option header, according to current options
+    refresh: function () {
+        var el = this.element,
+            arrow = $('<div class="ui-option-header-triangle-arrow"></div>'),
+            optionHeaderClass = 'ui-option-header',
+            self = this,
+            gridRowSelector = '.ui-grid-a,.ui-grid-b,.ui-grid-c,.ui-grid-d,.ui-grid-e',
+            theme = this.options.theme,
+            numRows,
+            rowsClass,
+            themeClass,
+            elBgColor;
 
         // count ui-grid-* elements to get number of rows
         numRows = el.find(gridRowSelector).length;
@@ -119,17 +157,19 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // ...at least one row
         numRows = Math.max(1, numRows);
 
-        // parse data-theme and reset options.theme if it's present
-        theme = el.data('theme') || this.options.theme;
-        this.options.theme = theme;
-
         // add classes to outer div:
         //   ui-option-header-N-row, where N = options.rows
         //   ui-bar-X, where X = options.theme (defaults to 'c')
         //   ui-option-header
         rowsClass = 'ui-option-header-' + numRows + '-row';
         themeClass = 'ui-bar-' + this.options.theme;
-        el.addClass(rowsClass + ' ' + themeClass + ' ui-option-header');
+
+        el.removeClass(rowsClass).addClass(rowsClass);
+        el.removeClass(themeClass).addClass(themeClass);
+        el.removeClass(optionHeaderClass).addClass(optionHeaderClass);
+
+        // remove any arrow currently visible
+        el.prev('.ui-option-header-triangle-arrow').remove();
 
         // if there are elements inside the option header
         // and this.options.showIndicator,
@@ -143,28 +183,24 @@ $.widget("todons.optionheader", $.mobile.widget, {
             arrow.css('border-color',
                       'transparent transparent ' + elBgColor + ' transparent');
 
-            console.log(el.css('background-image'));
-
             el.before(arrow);
         }
 
         // if expandable, bind clicks to the toggle() method
         if (this.options.expandable) {
-            var self = this;
-
-            el.bind('vclick', function () {
-                self.toggle();
-            });
-
-            arrow.bind('vclick', function () {
-                self.toggle();
-            });
+            el.bind('vclick', this.clickHandler);
+            arrow.bind('vclick', this.clickHandler);
+        }
+        else {
+            el.unbind('vclick', this.clickHandler);
+            arrow.unbind('vclick', this.clickHandler);
         }
 
-        // for each ui-grid-a element, append a class ui-option-header-row-M
+        // for each ui-grid-a element, add a class ui-option-header-row-M
         // to it, where M is the xpath position() of the div
         el.find(gridRowSelector).each(function (index) {
-            $(this).addClass('ui-option-header-row-' + (index + 1));
+            var klass = 'ui-option-header-row-' + (index + 1);
+            $(this).removeClass(klass).addClass(klass);
         });
 
         // redraw the buttons (now that the optionheader has the right
@@ -175,18 +211,8 @@ $.widget("todons.optionheader", $.mobile.widget, {
             // add a ui-btn-up class for the current theme; this is
             // a bit of a hack, as it doesn't remove the ui-btn-up-*
             // for the old swatch, but precedence means it works OK
-            $(this).addClass('ui-btn-up-' + theme);
-        });
-
-        // bind to the pageshow on the page containing
-        // the optionheader to get the element's dimensions
-        // and to set its initial collapse state
-        this.element.closest(':jqmData(role="page")').bind('pageshow show', function () {
-            self.expandedHeight = self.element.height();
-
-            if (self.isCollapsed) {
-                self.collapse({duration: 0});
-            }
+            $(this).removeClass('ui-btn-up-' + theme)
+                   .addClass('ui-btn-up-' + theme);
         });
     },
 
