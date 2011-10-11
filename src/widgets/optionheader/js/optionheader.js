@@ -180,8 +180,10 @@ $.widget("todons.optionheader", $.mobile.widget, {
             // background-color of the outer div
             elBgColor = el.css('background-color');
 
-            arrow.css('border-color',
-                      'transparent transparent ' + elBgColor + ' transparent');
+            if (elBgColor) {
+                arrow.css('border-color',
+                          'transparent transparent ' + elBgColor + ' transparent');
+            }
 
             el.before(arrow);
         }

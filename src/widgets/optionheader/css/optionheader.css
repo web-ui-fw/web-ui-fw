@@ -42,6 +42,7 @@
 
 /* for the triangle */
 .ui-option-header-triangle-arrow {
+  border-color: transparent transparent black transparent; /* to be overwritten by widget init*/
   border-style: solid;
   top:-20px;
   border-width: 10px;
