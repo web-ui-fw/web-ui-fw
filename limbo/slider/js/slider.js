@@ -14,25 +14,38 @@
  */
 (function ($, window, undefined) {
     $.widget("todons.todonsslider", $.mobile.widget, {
+        options: {
+            theme: 'c',
+            popupEnabled: true,
+        },
+
+        popup: null,
+
         _create: function() {
             this.currentValue = null;
+            this.popupVisible = false;
 
             var self = this,
                 inputElement = $(this.element),
+                themeClass,
                 slider,
                 handle,
                 handleText,
                 showPopup,
                 hidePopup,
                 positionPopup,
-                updateSlider,
-                popup = $('<div class="ui-slider-handle ui-slider-popup ui-shadow"></div>');
+                updateSlider;
 
             // apply jqm slider
             inputElement.slider();
 
             // hide the slider input element proper
             inputElement.hide();
+
+            // theming; override default with the slider's theme if present
+            this.options.theme = this.element.data('theme') || this.options.theme;
+            themeClass = 'ui-body-' + this.options.theme;
+            self.popup = $('<div class="' + themeClass + ' ui-slider-popup ui-shadow"></div>');
 
             // get the actual slider added by jqm
             slider = inputElement.next('.ui-slider');
@@ -44,31 +57,15 @@
             slider.removeClass('ui-btn-corner-all');
 
             // add a popup element (hidden initially)
-            slider.before(popup);
-            popup.hide();
+            slider.before(self.popup);
+            self.popup.hide();
 
             // get the element where value can be displayed
             handleText = slider.find('.ui-btn-text');
 
-            // show the popup
-            showPopup = function () {
-                if (!self.popupVisible) {
-                    popup.show();
-                    self.popupVisible = true;
-                }
-            };
-
-            // hide the popup
-            hidePopup = function () {
-                if (self.popupVisible) {
-                    popup.hide();
-                    self.popupVisible = false;
-                }
-            };
-
             // position the popup
             positionPopup = function () {
-                popup.position({my: 'center bottom',
+                self.popup.position({my: 'center bottom',
                                 at: 'center top',
                                 offset: '0 -5px',
                                 of: handle});
@@ -89,7 +86,7 @@
                 if (newValue !== self.currentValue) {
                     self.currentValue = newValue;
                     handleText.html(newValue);
-                    popup.html(newValue);
+                    self.popup.html(newValue);
                     self.element.trigger('update', newValue);
                 }
             };
@@ -101,11 +98,40 @@
             this.element.bind('change', updateSlider);
 
             // bind clicks on the handle to show the popup
-            handle.bind('vmousedown', showPopup);
+            handle.bind('vmousedown', self.showPopup(this));
 
             // watch events on the document to turn off the slider popup
-            slider.add(document).bind('vmouseup', hidePopup);
+            slider.add(document).bind('vmouseup', self.hidePopup);
         },
+
+        // show the popup
+        showPopup: function (self) {
+            if (self.options.popupEnabled && !self.popupVisible) {
+                self.popup.show();
+                self.popupVisible = true;
+            }
+        },
+
+        // hide the popup
+        hidePopup: function () {
+            if (this.options.popupEnabled && this.popupVisible) {
+                this.popup.hide();
+                this.popupVisible = false;
+            }
+        },
+
+        _setOption: function(key, value) {
+            console.log("MAXMAXMAX/_setOption/"+key+","+value);
+            if ( key === 'popupEnabled' ) {
+                this.options.popupEnabled = value;
+                if (this.options.popupEnabled) {
+                    this.showPopup();
+                } else {
+                    this.hidePopup();
+                }
+            }
+        },
+
     });
 
     // stop jqm from initialising sliders
