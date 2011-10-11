@@ -26,7 +26,7 @@
                 hidePopup,
                 positionPopup,
                 updateSlider,
-                popup = $('<div class="ui-slider-popup ui-slider-handle ui-shadow"></div>');
+                popup = $('<div class="ui-slider-handle ui-slider-popup ui-shadow"></div>');
 
             // apply jqm slider
             inputElement.slider();
