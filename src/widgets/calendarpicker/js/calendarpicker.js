@@ -379,9 +379,21 @@
                 cpHeader = container.find('.ui-cp-headercontainer'),
                 cpweekDayGrid = container.find('.ui-cp-weekday'),
                 cpMonthGrid = container.find('.ui-cp-month'),
-                previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true, icon:'arrow-l', iconpos:'notext'}),
-                nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true, icon:'arrow-r', iconpos:'notext'}),
-                isopen = false;
+                isopen = false,
+                previousButtonMarkup = {inline: true,
+                                        corners:true,
+                                        icon:'arrow-l',
+                                        iconpos:'notext'},
+                nextButtonMarkup = {inline: true,
+                                    corners:true,
+                                    icon:'arrow-r',
+                                    iconpos:'notext'},
+                previousButton = container.find('.ui-cp-previous'),
+                nextButton = container.find('.ui-cp-next');
+
+            previousButton.buttonMarkup(previousButtonMarkup);
+            nextButton.buttonMarkup(nextButtonMarkup);
+
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
