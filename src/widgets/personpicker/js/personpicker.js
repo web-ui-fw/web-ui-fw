@@ -123,7 +123,11 @@
             self._data.ui.done
                 .buttonMarkup({shadow: true, inline: true})
                 .bind("vclick", function(e) {
-                    self.options.successCallback(self._data.checked);
+                    var persons = new Array();
+                    self._data.checked.forEach(function(item) {
+                        persons.push(item.data("Person"));
+                    });
+                    self.options.successCallback(persons);
                 });
 
 

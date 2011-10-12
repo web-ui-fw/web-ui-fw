@@ -165,6 +165,17 @@ $(document).bind("pagecreate", function () {
     $("#myoptionheader").bind('expand', function () {
         console.log('option header was expanded');
     });
+
+    $("#personpicker-demo").bind('pageshow', function() {
+        $(":jqmData(role='personpicker')").personpicker(
+        "option", "successCallback", function(persons) {
+            s = "PersonPicker succedeed! These are the selected persons:\n";
+            persons.forEach(function(p) {
+                s += p.id() + " ";
+            });
+            alert(s);
+        });
+    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */
