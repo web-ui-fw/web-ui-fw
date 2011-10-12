@@ -68,12 +68,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // get all the dividers from the list and turn them into
         // shortcuts
-        dividers.each(function (index, divider) {
-            var text = $(divider).text();
-            var listItem = $('<li>' + text + '</li>');
 
-            // bind mouse over so it moves the scroller to the divider
-            listItem.bind('touchstart mousedown vmousedown vmouseover', function (e) {
+        var jumpToDivider = function(divider) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
                 var dividerY = $(divider).position().top;
@@ -102,7 +98,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
                 o.scrollview.after(popup);
 
-                popup.find('div').text(text)
+                popup.find('div').text($(divider).text())
                                  .position({my: 'center center',
                                             at: 'center center',
                                             of: popup});
@@ -110,20 +106,45 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 popup.position({my: 'center center',
                                 at: 'center center',
                                 of: o.scrollview});
+            };
 
-                e.preventDefault();
-            });
+        shortcutsList
+          // bind mouse over so it moves the scroller to the divider
+          .bind('touchstart mousedown vmousedown touchmove vmousemove vmouseover', function (e) {
+              // Get coords relative to the element
+              var coords = $.mobile.targetRelativeCoordsFromEvent(e);
 
-            // bind mouseout of the shortcutscroll container to remove popup
-            listItem.bind('touchend mouseup vmouseup vmouseout', function () {
-                removePopup();
-            });
+              // If the element is a list item, get coordinates relative to the shortcuts list
+              if (e.target.tagName.toLowerCase() === "li") {
+                  coords.x += $(e.target).offset().left - shortcutsList.offset().left;
+                  coords.y += $(e.target).offset().top  - shortcutsList.offset().top;
+              }
 
-            shortcutsList.append(listItem);
-        });
+              // Hit test each list item
+              shortcutsList.find('li').each(function() {
+                  var listItem = $(this),
+                      l = listItem.offset().left - shortcutsList.offset().left,
+                      t = listItem.offset().top  - shortcutsList.offset().top,
+                      r = l + Math.abs(listItem.outerWidth(true)),
+                      b = t + Math.abs(listItem.outerHeight(true));
 
-        shortcutsContainer.bind('vmousemove', function (e) {
-            e.preventDefault();
+                  if (coords.x >= l && coords.x <= r && coords.y >= t && coords.y <= b) {
+                      jumpToDivider($(listItem.data('divider')));
+                      return false;
+                  }
+                  return true;
+              });
+
+              e.preventDefault();
+              e.stopPropagation();
+          })
+          // bind mouseout of the shortcutscroll container to remove popup
+          .bind('touchend mouseup vmouseup vmouseout', function () {
+              removePopup();
+          });
+
+        dividers.each(function (index, divider) {
+            shortcutsList.append($('<li>' + $(divider).text() + '</li>').data('divider', divider));
         });
 
         shortcutsContainer.append(shortcutsList);
