@@ -20,6 +20,8 @@
         },
 
         popup: null,
+		handle: null,
+		handleText: null,
 
         _create: function() {
             this.currentValue = null;
@@ -29,8 +31,6 @@
                 inputElement = $(this.element),
                 themeClass,
                 slider,
-                handle,
-                handleText,
                 showPopup,
                 hidePopup,
                 positionPopup,
@@ -51,7 +51,7 @@
             slider = inputElement.next('.ui-slider');
 
             // get the handle
-            handle = slider.find('.ui-slider-handle');
+            self.handle = slider.find('.ui-slider-handle');
 
             // remove the rounded corners
             slider.removeClass('ui-btn-corner-all');
@@ -61,44 +61,18 @@
             self.popup.hide();
 
             // get the element where value can be displayed
-            handleText = slider.find('.ui-btn-text');
-
-            // position the popup
-            positionPopup = function () {
-                self.popup.position({my: 'center bottom',
-                                at: 'center top',
-                                offset: '0 -5px',
-                                of: handle});
-            };
-
-            // show value on the handle and in popup
-            updateSlider = function () {
-                positionPopup();
-
-                // remove the title attribute from the handle (which is
-                // responsible for the annoying tooltip); NB we have
-                // to do it here as the jqm slider sets it every time
-                // the slider's value changes :(
-                handle.removeAttr('title');
-
-                var newValue = self.element.val();
-
-                if (newValue !== self.currentValue) {
-                    self.currentValue = newValue;
-                    handleText.html(newValue);
-                    self.popup.html(newValue);
-                    self.element.trigger('update', newValue);
-                }
-            };
+            self.handleText = slider.find('.ui-btn-text');
 
             // set initial value
-            updateSlider();
+            self.updateSlider();
 
             // bind to changes in the slider's value to update handle text
-            this.element.bind('change', updateSlider);
+            this.element.bind('change', function () {
+			    self.updateSlider();
+			});
 
             // bind clicks on the handle to show the popup
-            handle.bind('vmousedown', function () {
+            self.handle.bind('vmousedown', function () {
                 self.showPopup();
             });
 
@@ -108,9 +82,38 @@
             });
         },
 
+		// position the popup
+		positionPopup: function () {
+			this.popup.position({my: 'center bottom',
+							at: 'center top',
+							offset: '0 -5px',
+							of: this.handle});
+		},
+
+		// show value on the handle and in popup
+		updateSlider: function () {
+			this.positionPopup();
+
+			// remove the title attribute from the handle (which is
+			// responsible for the annoying tooltip); NB we have
+			// to do it here as the jqm slider sets it every time
+			// the slider's value changes :(
+			this.handle.removeAttr('title');
+
+			var newValue = this.element.val();
+
+			if (newValue !== this.currentValue) {
+				this.currentValue = newValue;
+				this.handleText.html(newValue);
+				this.popup.html(newValue);
+				this.element.trigger('update', newValue);
+			}
+		},
+
         // show the popup
         showPopup: function () {
-            if (this.options.popupEnabled && !this.popupVisible) {
+            var needToShow = (this.options.popupEnabled && !this.popupVisible);
+            if (needToShow) {
                 this.popup.show();
                 this.popupVisible = true;
             }
@@ -118,21 +121,26 @@
 
         // hide the popup
         hidePopup: function () {
-            if (this.options.popupEnabled && this.popupVisible) {
+			var needToHide = (this.options.popupEnabled && this.popupVisible);
+            if (needToHide) {
                 this.popup.hide();
                 this.popupVisible = false;
             }
         },
 
         _setOption: function(key, value) {
-            console.log("MAXMAXMAX/_setOption/"+key+","+value);
-            if ( key === 'popupEnabled' ) {
-                this.options.popupEnabled = value;
-                if (this.options.popupEnabled) {
-                    this.showPopup();
-                } else {
-                    this.hidePopup();
-                }
+            switch (key) {
+            case 'popupEnabled':
+				var needToChange = value !== this.options.popupEnabled;
+                if (needToChange) {
+					this.options.popupEnabled = value;
+					if (this.options.popupEnabled) {
+						this.updateSlider();
+					} else {
+						this.hidePopup();
+					}
+				}
+				break;
             }
         },
 
