@@ -46,8 +46,8 @@
         },
 
         _data: {
-            ui: undefined,
-            row: undefined,
+            ui: null,
+            row: null,
             checked: new Array()
         },
 
@@ -118,14 +118,14 @@
             $.mobile.todons.parseOptions(self, true);
  
             // Load persons.
-            if (self.options.addressBook !== undefined) {
+            if (self.options.addressBook !== null) {
                 // Replace this with actuall call when implemented.
                 self.options.addressBook.findPersons(
                     function(persons) { self._personArraySuccessCallback(persons); },
                     self.options.errorCallback,
                     self.options.filter,
-                    undefined,
-                    undefined);
+                    null,
+                    null);
             }
 
             this.element.append(self._data.ui.personpicker);
