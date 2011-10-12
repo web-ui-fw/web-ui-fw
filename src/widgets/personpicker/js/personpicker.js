@@ -99,7 +99,7 @@
             self._data.ui = {
                 personpicker: ".ui-personpicker",
                 list: ".ui-personpicker > ul",
-                header: ".ui-personpicker > header",
+                header: ".ui-personpicker > .header",
                 cancel: ".ui-personpicker .cancel-btn",
                 done: ".ui-personpicker .done-btn"
             };
@@ -118,10 +118,10 @@
 
             $.mobile.todons.parseOptions(self, true);
 
-            self._data.ui.header.optionheader();
+            self._data.ui.header.optionheader({showIndicator: true});
             self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
             self._data.ui.done
-                .buttonMarkup({shadow: true, inline: true})
+                .buttonMarkup({shadow: true, inline: true, icon: "delete"})
                 .bind("vclick", function(e) {
                     var persons = new Array();
                     self._data.checked.forEach(function(item) {
