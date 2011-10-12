@@ -210,11 +210,11 @@ $.widget("todons.optionheader", $.mobile.widget, {
         el.find('.ui-btn').each(function () {
             $(this).attr('data-theme', theme);
 
-            // add a ui-btn-up class for the current theme; this is
-            // a bit of a hack, as it doesn't remove the ui-btn-up-*
-            // for the old swatch, but precedence means it works OK
-            $(this).removeClass('ui-btn-up-' + theme)
-                   .addClass('ui-btn-up-' + theme);
+            // hack the class of the button to remove the old swatch
+            var klass = $(this).attr('class');
+            klass = klass.replace(/ui-btn-up-\w{1}\s*/, '');
+            klass = klass + ' ui-btn-up-' + theme;
+            $(this).attr('class', klass);
         });
     },
 
