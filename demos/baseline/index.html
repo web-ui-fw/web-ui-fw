@@ -49,6 +49,9 @@
 
     <script src="../../src/widgets/progressbar/js/progressbar.js"></script>
     <link rel="stylesheet" href="../../src/widgets/progressbar/css/progressbar.css"/>
+
+    <script src="../../src/widgets/optionheader/js/optionheader.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/optionheader/css/optionheader.css"/>
 </head>
 
 <body>
@@ -143,6 +146,18 @@
                     <li>Orlando</li>
                 </ul>
             </div>
+        </div>
+
+        <div>
+            <h2>optionheader</h2>
+
+            <p>
+                <a data-role="button" data-inline="true" href="#optionheader-2btn-example">2 buttons</a>
+                <a data-role="button" data-inline="true" href="#optionheader-3btn-example">3 buttons</a>
+                <a data-role="button" data-inline="true" href="#optionheader-4btn-example">4 buttons</a>
+                <a data-role="button" data-inline="true" href="#optionheader-8btn-example">8 buttons</a>
+                <a data-role="button" data-inline="true" href="#optionheader-2seg-example">2 seg + function</a>
+            </p>
         </div>
 
         <!-- jqm widgets -->
@@ -615,6 +630,124 @@
 
     <div data-role="footer">
         <h4>baseline widget test</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-2btn-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header - 2 buttons</h1>
+        <div data-role="optionheader" data-options='{"collapseOnInit":true}'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-b"><a data-role="button">Save</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>NB this option header starts in a collapsed state.</p>
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-3btn-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header - 3 buttons</h1>
+        <div data-role="optionheader">
+            <div class="ui-grid-b">
+                <div class="ui-block-a"><a data-role="button" data-icon="arrow-l">Previous</a></div>
+                <div class="ui-block-b"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-c"><a data-role="button" data-icon="arrow-r">Next</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-4btn-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header - 4 buttons</h1>
+        <div data-role="optionheader">
+            <div class="ui-grid-c">
+                <div class="ui-block-a"><a data-role="button" data-icon="arrow-l">Previous</a></div>
+                <div class="ui-block-b"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-c"><a data-role="button" data-icon="arrow-d">Save</a></div>
+                <div class="ui-block-d"><a data-role="button" data-icon="arrow-r">Next</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-8btn-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header - 8 buttons (2 rows with 4 buttons each)</h1>
+        <div data-role="optionheader">
+            <div class="ui-grid-c">
+                <div class="ui-block-a"><a data-role="button" data-icon="arrow-l">Previous</a></div>
+                <div class="ui-block-b"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-c"><a data-role="button" data-icon="arrow-d">Save</a></div>
+                <div class="ui-block-d"><a data-role="button" data-icon="arrow-r">Next</a></div>
+            </div>
+            <div class="ui-grid-c">
+                <div class="ui-block-a"><a data-role="button" data-icon="arrow-l">Previous</a></div>
+                <div class="ui-block-b"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-c"><a data-role="button" data-icon="arrow-d">Save</a></div>
+                <div class="ui-block-d"><a data-role="button" data-icon="arrow-r">Next</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-2seg-example" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+        <h1>Option header - empty cell + 2 seg + function</h1>
+        <div data-role="optionheader">
+            <div class="ui-grid-b">
+                <div class="ui-block-a"></div>
+                <div class="ui-block-b">
+                    <div data-role="controlgroup" data-type="horizontal">
+                        <a data-role="button" data-icon="delete" data-inline="true">A</a>
+                        <a data-role="button" data-icon="check" data-inline="true">B</a>
+                    </div>
+                </div>
+                <div class="ui-block-c"><a data-role="button" data-icon="delete">Cancel</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="content">
+        <p>Some content would be here</p>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
     </div>
 </div>
 
