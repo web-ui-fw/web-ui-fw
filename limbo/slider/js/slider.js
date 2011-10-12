@@ -16,7 +16,7 @@
     $.widget("todons.todonsslider", $.mobile.widget, {
         options: {
             theme: 'c',
-            popupEnabled: true,
+            popupEnabled: true
         },
 
         popup: null,
@@ -98,17 +98,21 @@
             this.element.bind('change', updateSlider);
 
             // bind clicks on the handle to show the popup
-            handle.bind('vmousedown', self.showPopup(this));
+            handle.bind('vmousedown', function () {
+                self.showPopup();
+            });
 
             // watch events on the document to turn off the slider popup
-            slider.add(document).bind('vmouseup', self.hidePopup);
+            slider.add(document).bind('vmouseup', function () {
+                self.hidePopup();
+            });
         },
 
         // show the popup
-        showPopup: function (self) {
-            if (self.options.popupEnabled && !self.popupVisible) {
-                self.popup.show();
-                self.popupVisible = true;
+        showPopup: function () {
+            if (this.options.popupEnabled && !this.popupVisible) {
+                this.popup.show();
+                this.popupVisible = true;
             }
         },
 
