@@ -9,6 +9,7 @@ FRAMEWORK_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}
 
 JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
 THEMES_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes
+WIDGET_CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/widget-css
 PROTOTYPE_HTML_OUTPUT_DIR = ${FRAMEWORK_ROOT}/proto-html
 
 WIDGETS_DIR = $(CURDIR)/src/widgets
@@ -21,7 +22,8 @@ INSTALL_DIR = ${DESTDIR}${PREFIX}
 
 FW_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}.js
 FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
-FW_THEME_CSS_FILE = web-ui-fw-theme.css
+FW_THEME_CSS_FILE = ${PROJECT_NAME}-theme.css
+FW_WIDGET_CSS_FILE = ${WIDGET_CSS_OUTPUT_ROOT}/${PROJECT_NAME}-widget.css
 
 LIBS_JS_FILES = underscore.js
 ifeq (${DEBUG},yes)
@@ -39,6 +41,19 @@ JQUERY = jquery-1.6.4.min.js
 endif
 
 all: third_party_widgets widgets widget_styling third_party_themes themes
+
+widget_styling: init
+	# Building non-theme-specific styling for web-ui-fw widgets...
+	@@for w in `find ${WIDGETS_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
+	    for l in `find $$w -iname *.less`; do \
+					echo "	# Compiling CSS from "`basename $$l`; \
+	        lessc $$l >> $$l.css; \
+	    done; \
+	    touch ${FW_WIDGET_CSS_FILE}; \
+	    for c in `find $$w -iname *.css`; do \
+	        cat $$c >> ${FW_WIDGET_CSS_FILE}; \
+	    done; \
+	done
 
 third_party_widgets: init
 	# Building third party components...
@@ -70,10 +85,7 @@ widgets: init
           fi; \
 	    done
 
-widget_styling: init
-	# Building non-theme-specific styling for web-ui-fw widgets...
-
-third_party_themes: widget_styling
+third_party_themes: init
 	# Building jqm themes...
 	@@cd ${LIBS_DIR}/themes; \
 	for f in `find ${LIBS_DIR}/themes -maxdepth 1 -mindepth 1 -type d`; do \
@@ -86,7 +98,7 @@ third_party_themes: widget_styling
 	    done; \
 	done
 
-themes: widget_styling
+themes: init
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \
 	for f in `find ${THEMES_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
@@ -132,3 +144,4 @@ init: clean
 	@@mkdir -p ${JS_OUTPUT_ROOT}
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}
 	@@mkdir -p ${PROTOTYPE_HTML_OUTPUT_DIR}
+	@@mkdir -p ${WIDGET_CSS_OUTPUT_ROOT}

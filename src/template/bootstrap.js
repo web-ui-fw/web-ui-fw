@@ -233,6 +233,10 @@ S.css = {
         stylesheetPath = S.basePath + 'themes/' + frameworkTheme + '/web-ui-fw-theme.css';
         S.css.load(stylesheetPath);
 
+        // load stylesheet for the widgets
+        stylesheetPath = S.basePath + 'widget-css/web-ui-fw-widget.css';
+        S.css.load(stylesheetPath);
+
         // load jquery and our config.js file, turning off jqm's page init until
         // all our js is loaded; the S.load() method should be called from
         // config.js, either with no arguments or with extra js files to load;
