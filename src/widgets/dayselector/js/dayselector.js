@@ -39,8 +39,57 @@
 			container.find("a.sunday").bind("vclick" ,function(event) {
        			self.selectedDays = self.selectedDays ^ 0x40 ;
        		 	container.trigger("day-changed",self.getValue());
-       		 //	event.preventDefault();
-       		//	event.stopPropagation();       			
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		//Button events
+			container.find("a.monday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x20 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		//Button events
+			container.find("a.tuesday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x10 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		//Button events
+			container.find("a.wednesday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x08 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		//Button events
+			container.find("a.thursday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x04 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		//Button events
+			container.find("a.friday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x02 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
+    		});
+    		
+    		
+    		//Button events
+			container.find("a.saturday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x01 ;
+       		 	container.trigger("day-changed",self.getValue());
+       			event.preventDefault();
+       			event.stopPropagation();       			
     		});
     		
 						
