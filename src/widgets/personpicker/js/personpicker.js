@@ -21,7 +21,15 @@
  *
  * Options:
  *     addressBook:
- *         AddressBook; the addressbook used to populate the picker.
+ *         AddressBook; the address book used to populate the picker.
+ *     successCallback:
+ *         Function; the function to call after the Done button has
+ *         been clicked, and no errors occurred.
+ *     errorCallback:
+ *         Function; the function to call if there was an error while
+ *         showing the widget.
+ *     filter:
+ *         Filter; a filter used when querying the address book.
  *     multipleSelection:
  *         Boolean; weather the widget allows picking more than one
  *         person. Default: true.
@@ -31,6 +39,9 @@
     $.widget("todons.personpicker", $.mobile.widget, {
         options: {
             addressBook: new $.mobile.todons.AddressBook(),
+            successCallback: null,
+            errorCallback: null,
+            filter: null,
             multipleSelection: true,
         },
 
@@ -111,13 +122,22 @@
                 // Replace this with actuall call when implemented.
                 self.options.addressBook.findPersons(
                     function(persons) { self._personArraySuccessCallback(persons); },
-                    undefined, undefined, undefined, undefined);
+                    self.options.errorCallback,
+                    self.options.filter,
+                    undefined,
+                    undefined);
             }
 
             this.element.append(self._data.ui.personpicker);
 
             self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
-            self._data.ui.done.buttonMarkup({shadow: true, inline: true});
+
+            self._data.ui.done
+                .buttonMarkup({shadow: true, inline: true})
+                .bind("vclick", function(e) {
+                    self.options.successCallback(self._data.checked);
+                });
+
         }
     }); /* End of widget */
 
