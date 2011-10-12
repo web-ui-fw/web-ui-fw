@@ -157,6 +157,7 @@
                 <a data-role="button" data-inline="true" href="#optionheader-4btn-example">4 buttons</a>
                 <a data-role="button" data-inline="true" href="#optionheader-8btn-example">8 buttons</a>
                 <a data-role="button" data-inline="true" href="#optionheader-2seg-example">2 seg + function</a>
+                <a data-role="button" data-inline="true" href="#optionheader-2btn-inline-example">2 buttons, inline</a>
             </p>
         </div>
 
@@ -747,6 +748,33 @@
     </div>
 
     <div data-role="footer" data-position="fixed">
+        <h4>fixed footer</h4>
+    </div>
+</div>
+
+<div data-role="page" id="optionheader-2btn-inline-example" data-add-back-btn="true">
+    <div data-role="header">
+        <h1>Option header - 2 buttons, inline</h1>
+    </div>
+
+    <div data-role="content">
+        <div>
+            <p>The start of the content</p>
+        </div>
+
+        <div data-role="optionheader" data-options='{"showIndicator":false}'>
+            <div class="ui-grid-a">
+                <div class="ui-block-a"><a data-role="button" data-icon="delete">Cancel</a></div>
+                <div class="ui-block-b"><a data-role="button">Save</a></div>
+            </div>
+        </div>
+
+        <div>
+            <p>The rest of the content</p>
+        </div>
+    </div>
+
+    <div data-role="footer">
         <h4>fixed footer</h4>
     </div>
 </div>
