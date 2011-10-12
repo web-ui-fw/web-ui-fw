@@ -5,10 +5,11 @@
 	background: #f4efeb;
 }
 
+
 .ui-days li a {
 	color: #645f5b;
-	background: #f4efeb;
 	display: inline-block;	
+	background-color: rgb(255, 255, 255);
 	padding-left: 1px;
 	height: 56px;
 	width: 64px;
@@ -16,6 +17,7 @@
 	line-height: 4em;
 	text-decoration: none;
 }
+
 
 .ui-days li a.sunday{
 	color: red;
@@ -25,12 +27,9 @@
 	color: blue;
 }
 
-.ui-days li a:active {
-	background: green;
-}
 
 /*
 .ui-days li a:hover {
-	background: orange;
+	background: orange; // rgb(255,165,0) ffA500
 }
 */
