@@ -165,26 +165,6 @@ $(document).bind("pagecreate", function () {
     $("#myoptionheader").bind('expand', function () {
         console.log('option header was expanded');
     });
-
-    $('#personpicker-dialog').bind('pageshow', function (e) {
-        $.mobile.todons.fillPageWithContentArea($(this));
-    });
-
-    $('#slider-demo').bind('pageshow', function () {
-        var popupEnabled=false;
-
-        var setPopupEnabled = function( newState ) {
-            $('#mySlider').todonsslider('option','popupEnabled',newState);
-            $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
-        };
-
-        setPopupEnabled(popupEnabled);
-
-        $("#togglePopup").bind("vclick", function (e) {
-            popupEnabled = !popupEnabled;
-            setPopupEnabled(popupEnabled);
-        });
-    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */
