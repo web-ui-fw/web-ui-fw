@@ -27,6 +27,9 @@
  *     </div>
  * </div>
  *
+ * The optionheader can also be used inline (e.g. in a content block or
+ * a widget).
+ *
  * Alternatively, use $('...').optionheader() to apply programmatically.
  *
  * The grid inside the optionheader should be marked up as for
