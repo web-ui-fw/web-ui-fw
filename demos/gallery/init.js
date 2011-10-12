@@ -129,9 +129,14 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
     
-     $('#day-selector-demo').bind('pageshow',  function (e) {
-    	$('#daySelector1').dayselector();
-    });
+    var updateDay = function(e, newDay) {
+    	console.log("in updateDay func : newDays = " + newDay + "toString(2) = " + newDay.toString(2));
+    	
+    	//if(newDay )
+    	
+    	$("#day-selector-demo .selectedDay").text(newDay.toString());
+    }; 
+    $('#day-selector-demo').bind('day-changed', updateDay);
 
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();

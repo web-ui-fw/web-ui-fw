@@ -25,8 +25,30 @@
 		_create: function () {
 			var self= this,
 				select = this.element,
+				selectedDays = 0x0,
 				container = $.mobile.todons.loadPrototype("dayselector").find("div.ui-dayselector").insertBefore(select);
-								
+		
+			
+			$.extend( self, {
+				container: container,
+				selectedDays: selectedDays
+			});
+			
+			
+			//Button events
+			container.find("a.sunday").bind("vclick" ,function(event) {
+       			self.selectedDays = self.selectedDays ^ 0x40 ;
+       		 	container.trigger("day-changed",self.getValue());
+       		 //	event.preventDefault();
+       		//	event.stopPropagation();       			
+    		});
+    		
+						
+		},
+		
+		getValue: function() {
+			console.log("getValue is called, val= " + this.selectedDays);
+			return this.selectedDays;
 		},
 		
 	}); /* End of Widget */

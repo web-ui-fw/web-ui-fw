@@ -2,26 +2,35 @@
 .ui-days li {
 	display: inline;
 	list-style: none;
-	background: rgb(66,82,90);
+	background: #f4efeb;
 }
 
 .ui-days li a {
-	color: #ffffff;
-	background: rgb(199,199,199);
+	color: #645f5b;
+	background: #f4efeb;
 	display: inline-block;	
-	outline: none;
 	padding-left: 1px;
 	height: 56px;
 	width: 64px;
 	text-align: center;
 	line-height: 4em;
+	text-decoration: none;
+}
+
+.ui-days li a.sunday{
+	color: red;
+}
+
+.ui-days li a.saturday{
+	color: blue;
 }
 
 .ui-days li a:active {
-	background: orange;
+	background: green;
 }
 
+/*
 .ui-days li a:hover {
 	background: orange;
 }
-
+*/
