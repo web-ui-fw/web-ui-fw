@@ -99,6 +99,7 @@
             self._data.ui = {
                 personpicker: ".ui-personpicker",
                 list: ".ui-personpicker > ul",
+                header: ".ui-personpicker > header",
                 cancel: ".ui-personpicker .cancel-btn",
                 done: ".ui-personpicker .done-btn"
             };
@@ -116,7 +117,16 @@
             self._data.row = $.mobile.todons.loadPrototype("personpicker-row", self._data.row);
 
             $.mobile.todons.parseOptions(self, true);
- 
+
+            self._data.ui.header.optionheader();
+            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
+            self._data.ui.done
+                .buttonMarkup({shadow: true, inline: true})
+                .bind("vclick", function(e) {
+                    self.options.successCallback(self._data.checked);
+                });
+
+
             // Load persons.
             if (self.options.addressBook !== null) {
                 // Replace this with actuall call when implemented.
@@ -129,15 +139,6 @@
             }
 
             this.element.append(self._data.ui.personpicker);
-
-            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
-
-            self._data.ui.done
-                .buttonMarkup({shadow: true, inline: true})
-                .bind("vclick", function(e) {
-                    self.options.successCallback(self._data.checked);
-                });
-
         }
     }); /* End of widget */
 
