@@ -47,16 +47,17 @@
                         if (checked) {
                             if (!self.options.multipleSelection) {
                                 self._data.checked.forEach(function(item) {
-                                    // TODO: uncheck item here.
+                                    item.switch("option", "checked", false);
                                 });
+                                self._data.checked.length = 0;
                             }
                             if ($.inArray(p, self._data.checked) == -1) {
-                                self._data.checked.push(p);
+                                self._data.checked.push($(this));
                             }
                         } else {
                             self._data.checked = $.grep(
                                 self._data.checked, function(value) {
-                                    return value != p;
+                                    return value != $(this);
                                 });
                         }
                     });
