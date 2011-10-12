@@ -146,7 +146,7 @@ S = {
     defaultFrameworkTheme: 'default',
 
     frameworkVersions: ['0.1'],
-    frameworkThemes: ['default']
+    frameworkThemes: ['default', 'tizen']
 };
 
 /* Create custom user stylesheet */
