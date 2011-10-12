@@ -3,7 +3,7 @@ PROJECT_NAME = web-ui-fw
 VERSION = 0.1
 VERSION_COMPAT =
 
-INLINE_PROTO = 0
+INLINE_PROTO = 1
 OUTPUT_ROOT = $(CURDIR)/build
 FRAMEWORK_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/${VERSION}
 
@@ -11,8 +11,9 @@ JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
 THEMES_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes
 PROTOTYPE_HTML_OUTPUT_DIR = ${FRAMEWORK_ROOT}/proto-html
 
-WIDGETS_DIR = src/widgets
-LIBS_DIR = libs
+WIDGETS_DIR = $(CURDIR)/src/widgets
+THEMES_DIR = $(CURDIR)/src/themes
+LIBS_DIR = $(CURDIR)/libs
 
 DESTDIR ?=
 PREFIX ?= /usr
@@ -20,6 +21,7 @@ INSTALL_DIR = ${DESTDIR}${PREFIX}
 
 FW_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}.js
 FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
+FW_THEME_CSS_FILE = web-ui-fw-theme.css
 
 LIBS_JS_FILES = underscore.js
 ifeq (${DEBUG},yes)
@@ -36,7 +38,7 @@ LIBS_JS_FILES +=\
 JQUERY = jquery-1.6.4.min.js
 endif
 
-all: third_party_widgets widgets
+all: third_party_widgets widgets widget_styling third_party_themes themes
 
 third_party_widgets: init
 	# Building third party components...
@@ -47,26 +49,58 @@ third_party_widgets: init
 	    cp ${LIBS_DIR}/js/${JQUERY} ${JS_OUTPUT_ROOT}/jquery.js
 
 widgets: init
-	# Building widgets...
+	# Building web-ui-fw widgets...
 	@@ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
-                if test "x${INLINE_PROTO}x" = "x1x"; then \
-                  ./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
-                  cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled >> ${FW_JS}; \
-                else \
-	          for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
-	              echo "		$$f"; \
-	              cat $$f >> ${FW_JS}; \
-	          done; \
-                fi; \
-                if test "x${INLINE_PROTO}x" != "x1x"; then \
-	          for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
-	              echo "		$$f"; \
-	              cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
-	          done; \
-                fi; \
+          if test "x${INLINE_PROTO}x" = "x1x"; then \
+              ./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
+              cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled >> ${FW_JS}; \
+          else \
+              for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
+                  echo "		$$f"; \
+                  cat $$f >> ${FW_JS}; \
+              done; \
+          fi; \
+          if test "x${INLINE_PROTO}x" != "x1x"; then \
+              for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
+                  echo "		$$f"; \
+                  cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
+              done; \
+          fi; \
 	    done
+
+widget_styling: init
+	# Building non-theme-specific styling for web-ui-fw widgets...
+
+third_party_themes: widget_styling
+	# Building jqm themes...
+	@@cd ${LIBS_DIR}/themes; \
+	for f in `find ${LIBS_DIR}/themes -maxdepth 1 -mindepth 1 -type d`; do \
+	    outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
+	    mkdir -p $$outdir/images; \
+	    cp -a $$f/images/* $$outdir/images/; \
+	    touch $$outdir/${FW_THEME_CSS_FILE}; \
+	    for c in `find $$f -iname *.css` ; do \
+          cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
+	    done; \
+	done
+
+themes: widget_styling
+	# Building web-ui-fw themes...
+	@@cd ${THEMES_DIR}; \
+	for f in `find ${THEMES_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
+	    outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
+	    mkdir -p $$outdir/images; \
+	    cp -a $$f/images/* $$outdir/images/; \
+	    touch $$outdir/${FW_THEME_CSS_FILE}; \
+	    for l in `find $$f -iname *.less` ; do \
+	        lessc $$l >> $$l.css; \
+	    done; \
+	    for c in `find $$f -iname *.css` ; do \
+          cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
+	    done; \
+	done
 
 version_compat: third_party_widgets widgets
 	# Creating compatible version dirs...
@@ -74,7 +108,8 @@ version_compat: third_party_widgets widgets
 		ln -sf ${VERSION} ${FRAMEWORK_ROOT}/../$$v_compat; \
 	done;
 
-demo: third_party_widgets widgets
+demos: all
+  # Building demo...
 	mkdir -p ${OUTPUT_ROOT}/demos
 	cp -av demos/* ${OUTPUT_ROOT}/demos/
 	@@rm -f `find ${OUTPUT_ROOT}/demos/ -iname bootstrap.js`
