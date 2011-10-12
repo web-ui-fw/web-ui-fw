@@ -22,10 +22,14 @@
 /* for standard buttons */
 .ui-option-header .ui-btn {
     display: block;
-    margin: 5px;
+    margin: 3px 5px 5px 5px;
 }
 .ui-option-header .ui-btn-text {
     line-height: 34px;
+}
+.ui-option-header .ui-btn-inner {
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 /* for segmented control */
