@@ -107,7 +107,8 @@ $.widget("todons.optionheader", $.mobile.widget, {
     _create: function () {
         var options,
             theme,
-            self = this;
+            self = this,
+            parentPage;
 
         // parse data-options
         options = this.element.data('options');
@@ -120,17 +121,6 @@ $.widget("todons.optionheader", $.mobile.widget, {
         theme = this.element.data('theme') || this.options.theme;
         this.options.theme = theme;
 
-        // bind to the pageshow on the page containing
-        // the optionheader to get the element's dimensions
-        // and to set its initial collapse state
-        this.element.closest(':jqmData(role="page")').bind('pageshow show', function () {
-            self.expandedHeight = self.element.height();
-
-            if (self.isCollapsed) {
-                self.collapse({duration: 0});
-            }
-        });
-
         // set up the click handler; it's done here so it can
         // easily be removed, as there should only be one instance
         // of the handler function for each class instance
@@ -138,7 +128,31 @@ $.widget("todons.optionheader", $.mobile.widget, {
             self.toggle();
         };
 
-        this.refresh();
+        // get the element's dimensions
+        // and to set its initial collapse state;
+        // either do it now (if the page is visible already)
+        // or on pageshow
+        page = this.element.closest(':jqmData(role="page")');
+
+        if (page.is(":visible")) {
+            self.refresh();
+            self._realize();
+        }
+        else {
+            self.refresh();
+
+            page.bind("pageshow", function () {
+                self._realize();
+            });
+        }
+    },
+
+    _realize: function () {
+        this.expandedHeight = this.element.height();
+
+        if (this.isCollapsed) {
+            this.collapse({duration: 0});
+        }
     },
 
     // Draw the option header, according to current options
