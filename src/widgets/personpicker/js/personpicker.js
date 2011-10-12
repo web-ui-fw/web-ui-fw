@@ -90,7 +90,6 @@
                         }
                     });
             });
-            list.listview();
         },
 
         _create: function () {
@@ -98,7 +97,7 @@
 
             self._data.ui = {
                 personpicker: ".ui-personpicker",
-                list: ".ui-personpicker > ul",
+                list: ".ui-personpicker ul",
                 header: ".ui-personpicker > .header",
                 cancel: ".ui-personpicker .cancel-btn",
                 done: ".ui-personpicker .done-btn"
@@ -143,6 +142,11 @@
             }
 
             this.element.append(self._data.ui.personpicker);
+
+            self._data.ui.list.listview();
+            self._data.ui.list.parent().scrollview({direction: "y"});
+
+
         }
     }); /* End of widget */
 
