@@ -19,6 +19,9 @@
  *
  *     <div id="my_personpicker"></div>
  *
+ * Theme: by default, gets a 'b' swatch; override with data-theme="X"
+ * as per usual.
+ *
  * Options:
  *     addressBook:
  *         AddressBook; the address book used to populate the picker.
@@ -43,6 +46,7 @@
             errorCallback: null,
             filter: null,
             multipleSelection: true,
+            theme: 'b'
         },
 
         _data: {
@@ -68,7 +72,7 @@
                 list.append(currentListItem);
 
                 currentCheckbox
-                    .switch({"checked": false})
+                    .switch({"checked": false, theme: self.options.theme})
                     .data("Person", p)
                     .bind("changed", function(e, checked) {
                         var p = $(this).data("Person");
@@ -117,10 +121,10 @@
 
             $.mobile.todons.parseOptions(self, true);
 
-            self._data.ui.header.optionheader({showIndicator: true});
-            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true});
+            self._data.ui.header.optionheader({showIndicator: true, theme: self.options.theme});
+            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true, theme: self.options.theme});
             self._data.ui.done
-                .buttonMarkup({shadow: true, inline: true, icon: "delete"})
+                .buttonMarkup({shadow: true, inline: true, icon: "delete", theme: self.options.theme})
                 .bind("vclick", function(e) {
                     var persons = new Array();
                     self._data.checked.forEach(function(item) {
@@ -143,7 +147,7 @@
 
             this.element.append(self._data.ui.personpicker);
 
-            self._data.ui.list.listview();
+            self._data.ui.list.listview({theme: self.options.theme});
             self._data.ui.list.parent().scrollview({direction: "y"});
 
 
