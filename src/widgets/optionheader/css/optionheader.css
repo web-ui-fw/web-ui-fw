@@ -1,3 +1,7 @@
+.ui-option-header {
+    overflow: hidden;
+}
+
 .ui-option-header-1-row {
     height: 65px;
     border: none;
