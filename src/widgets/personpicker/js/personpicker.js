@@ -7,7 +7,24 @@
  */
 
 /**
- * TODO: documentation.
+ * Displays a list of contacts fetched from the provided AddressBook.
+ *
+ * To apply, add the attribute data-role="personpicker" to a <div>
+ * element inside a page or a dialog. Alternative, call personpicker()
+ * on an element, like this:
+ *
+ *     $("#my_personpicker").personpicker();
+ *
+ * where the HTML might be:
+ *
+ *     <div id="my_personpicker"></div>
+ *
+ * Options:
+ *     addressBook:
+ *         AddressBook; the addressbook used to populate the picker.
+ *     multipleSelection:
+ *         Boolean; weather the widget allows picking more than one
+ *         person. Default: true.
  */
 
 (function ($, window, undefined) {
