@@ -37,11 +37,20 @@
 			var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 			
 			jQuery.each( days, function() {
+				
 				container.find("a." + this).bind("vclick" ,function(event) {
        				self.selectedDays = self.selectedDays ^ this.dataset.dayflag ;
-       				var bg = $(this).css("background-color");
-	       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-	       			$(this).css("background-color",bg);
+       				
+       				if($(this).hasClass("bgWhite")) {
+	       				console.log("bgWhite is there");
+	       				$(this).removeClass("bgWhite");
+	       				$(this).addClass("bgOrange");
+	       			}
+	       			else if($(this).hasClass("bgOrange")) {
+	       				$(this).removeClass("bgOrange");
+	       				$(this).addClass("bgWhite");
+	       			} 
+	       			
 	       			container.trigger("day-changed",self.getValue());
 	       			event.preventDefault();
 	       			event.stopPropagation();
@@ -52,7 +61,6 @@
 		},
 		
 		getValue: function() {
-			console.log("getValue is called, val= " + this.selectedDays);
 			return this.selectedDays;
 		},
 		

@@ -130,17 +130,15 @@ $(document).bind("pagecreate", function () {
     });
     
     var updateDay = function(e, newDay) {
-    	console.log("in updateDay func : newDays = " + newDay + "toString(2) = " + newDay.toString(2));
-    	
     	var dayString = "";
     	
-    	if(newDay & 64 ) dayString += "sunday,";
-    	if(newDay & 32 ) dayString += "monday,";
-    	if(newDay & 16 ) dayString += "tuesday,";
-    	if(newDay & 8 ) dayString += "wednesday,";
-    	if(newDay & 4 ) dayString += "thursday,";
-    	if(newDay & 2 ) dayString += "friday,";
-    	if(newDay & 1 ) dayString += "saturday,";
+    	if(newDay & 64 ) dayString += "Sunday ";
+    	if(newDay & 32 ) dayString += "Monday ";
+    	if(newDay & 16 ) dayString += "Tuesday ";
+    	if(newDay & 8 ) dayString += "Wednesday ";
+    	if(newDay & 4 ) dayString += "Thursday ";
+    	if(newDay & 2 ) dayString += "Friday ";
+    	if(newDay & 1 ) dayString += "Saturday ";
     	
     	$("#day-selector-demo .selectedDay").text(dayString);
     }; 

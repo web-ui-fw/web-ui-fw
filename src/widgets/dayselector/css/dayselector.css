@@ -5,11 +5,22 @@
 	background: #f4efeb;
 }
 
+.bgWhite {
+	background-color: white;
+}
+
+.bgOrange {
+	background-color: orange;
+}
 
 .ui-days li a {
 	color: #645f5b;
 	display: inline-block;	
+	/*
 	background-color: rgb(255, 255, 255);
+	*/
+	/*background-color: white;
+	*/
 	padding-left: 1px;
 	height: 56px;
 	width: 64px;
