@@ -38,11 +38,11 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
             item.addClass('ui-swipelist-item');
 
-            coverZIndex = parseInt(item.css('z-index')) + 1;
-
             var cover = item.find(':jqmData(role="swipelist-item-cover")').first();
 
             if (cover) {
+                coverZIndex = parseInt(item.css('z-index')) + 1;
+
                 cover.removeClass('ui-swipelist-item-cover')
                      .addClass('ui-swipelist-item-cover');
 
