@@ -96,6 +96,7 @@
             });
 
             self._data.ui.list.parent().scrollview({direction: 'y'});
+            self._data.ui.search.textinput('enable');
         },
 
         _create: function () {
@@ -103,7 +104,7 @@
 
             self._data.ui = {
                 personpicker: ".ui-personpicker",
-                list: ".ui-personpicker ul",
+                list: ".ui-personpicker ul"
             };
 
             self._data.row = {
@@ -133,6 +134,10 @@
 
             this.element.append(self._data.ui.personpicker);
             self._data.ui.list.listview({theme: self.options.theme});
+
+            // disable search input until list is populated
+            self._data.ui.search = $(this.element).find(':jqmData(type="search")');
+            self._data.ui.search.textinput('disable');
         },
 
         getPersons: function() {
