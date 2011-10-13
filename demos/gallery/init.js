@@ -240,3 +240,17 @@ $(document).bind("pagecreate", function() {
         });
     });
 });
+
+function launchPersonPicker() {
+    $("#personpicker-page-demo").personpicker_page({
+        title: "Choose contacts",
+        successCallback: function(persons) {
+            s = "The following contacts were chosen:\n";
+            persons.forEach(function(p) {
+                s+= p.id() + " ";
+            });
+            alert(s);
+        }
+    });
+    $.mobile.changePage("#personpicker-page-demo");
+}

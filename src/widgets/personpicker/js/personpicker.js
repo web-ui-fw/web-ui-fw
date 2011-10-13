@@ -131,7 +131,16 @@
 
             this.element.append(self._data.ui.personpicker);
             self._data.ui.list.listview({theme: self.options.theme});
+        },
+
+        getPersons: function() {
+            var persons = new Array();
+            this._data.checked.forEach(function(item) {
+                persons.push(item.data("Person"));
+            });
+            return persons;
         }
+
     }); /* End of widget */
 
     //auto self-init widgets
