@@ -114,6 +114,7 @@
         showPopup: function () {
             var needToShow = (this.options.popupEnabled && !this.popupVisible);
             if (needToShow) {
+                this.handleText.hide();
                 this.popup.show();
                 this.popupVisible = true;
             }
@@ -123,6 +124,7 @@
         hidePopup: function () {
 			var needToHide = (this.options.popupEnabled && this.popupVisible);
             if (needToHide) {
+                this.handleText.show();
                 this.popup.hide();
                 this.popupVisible = false;
             }
