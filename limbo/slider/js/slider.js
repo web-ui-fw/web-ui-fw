@@ -3,20 +3,56 @@
  *
  * Copyright (C) TODO
  * License: TODO
- * Authors:
+ * Authors: Max Waterman <max.waterman@intel.com>
  */
 
 /**
- * Because the slider 'change' event is so rubbish (it gets triggered
- * whenever the slider handle moves, not just when the slider
- * value changes), intercept it to provide a new 'update' event,
- * which only fires when the value of the slider is updated.
+ * Todonsslider modifies the JQuery Mobile slider and is created in the same way.
+ *
+ * See the JQuery Mobile slider widget for more information :
+ *     http://jquerymobile.com/demos/1.0a4.1/docs/forms/forms-slider.html
+ *
+ * The JQuery Mobile slider option:
+ *     theme: specify the theme using the 'data-theme' attribute
+ *
+ * Options:
+ *     theme: string; the theme to use if none is specified using the 'data-theme' attribute
+ *            default: 'c'
+ *     popupEnabled: boolean; controls whether the popup is displayed or not
+ *                   specify if the popup is enabled using the 'data-popupEnabled' attribute
+ *                   set from javascript using .todonsslider('option','popupEnabled',newValue)
+ *
+ * Events:
+ *     changed: triggers when the value is changed (rather than when the handle is moved)
+ *
+ * Examples:
+ *         
+ *     <a href="#" id="popupEnabler" data-role="button" data-inline="true">Enable popup</a>
+ *     <a href="#" id="popupDisabler" data-role="button" data-inline="true">Disable popup</a>
+ *     <div data-role="fieldcontain">
+ *         <input id="mySlider" data-theme='a' data-popupenabled='false' type="range" name="slider" value="7" min="0" max="9" />
+ *     </div>
+ *     <div data-role="fieldcontain">
+ *         <input id="mySlider2" type="range" name="slider" value="77" min="0" max="777" />
+ *     </div>
+ *
+ *     // disable popup from javascript
+ *     $('#mySlider').todonsslider('option','popupEnabled',false);
+ *
+ *     // from buttons
+ *     $('#popupEnabler').bind('vclick', function() {
+ *         $('#mySlider').todonsslider('option','popupEnabled',true);
+ *     });
+ *     $('#popupDisabler').bind('vclick', function() {
+ *         $('#mySlider').todonsslider('option','popupEnabled',false);
+ *     });
  */
+
 (function ($, window, undefined) {
     $.widget("todons.todonsslider", $.mobile.widget, {
         options: {
             theme: 'c',
-            popupEnabled: true
+            popupEnabled: true,
         },
 
         popup: null,
@@ -46,6 +82,12 @@
             this.options.theme = this.element.data('theme') || this.options.theme;
             themeClass = 'ui-body-' + this.options.theme;
             self.popup = $('<div class="' + themeClass + ' ui-slider-popup ui-shadow"></div>');
+
+            // set the popupEnabled according to the html attribute
+            var popupEnabledAttr = inputElement.attr('data-popupenabled');
+            if ( popupEnabledAttr !== undefined ) {
+                self.options.popupEnabled = popupEnabledAttr==='true';
+            }
 
             // get the actual slider added by jqm
             slider = inputElement.next('.ui-slider');
@@ -131,9 +173,9 @@
         },
 
         _setOption: function(key, value) {
+            var needToChange = value !== this.options[key];
             switch (key) {
             case 'popupEnabled':
-				var needToChange = value !== this.options.popupEnabled;
                 if (needToChange) {
 					this.options.popupEnabled = value;
 					if (this.options.popupEnabled) {
