@@ -80,6 +80,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
         });
     },
 
+    // NB I tried to use CSS animations for this, but the performance
+    // and appearance was terrible on Android 2.2 browser;
+    // so I reverted to jQuery animations
     _animateCover: function (cover, leftPercentage) {
         cover.stop();
         cover.clearQueue();
