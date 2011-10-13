@@ -140,7 +140,7 @@ $(document).bind("pagecreate", function () {
     	if(newDay & 8 ) dayString += "wednesday,";
     	if(newDay & 4 ) dayString += "thursday,";
     	if(newDay & 2 ) dayString += "friday,";
-    	if(newDay & 1 ) dayString += "friday,";
+    	if(newDay & 1 ) dayString += "saturday,";
     	
     	$("#day-selector-demo .selectedDay").text(dayString);
     }; 
