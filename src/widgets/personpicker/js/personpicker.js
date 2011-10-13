@@ -102,9 +102,6 @@
             self._data.ui = {
                 personpicker: ".ui-personpicker",
                 list: ".ui-personpicker ul",
-                header: ".ui-personpicker > .header",
-                cancel: ".ui-personpicker .cancel-btn",
-                done: ".ui-personpicker .done-btn"
             };
 
             self._data.row = {
@@ -121,19 +118,6 @@
 
             $.mobile.todons.parseOptions(self, true);
 
-            self._data.ui.header.optionheader({showIndicator: true, theme: self.options.theme});
-            self._data.ui.cancel.buttonMarkup({shadow: true, inline: true, theme: self.options.theme});
-            self._data.ui.done
-                .buttonMarkup({shadow: true, inline: true, icon: "delete", theme: self.options.theme})
-                .bind("vclick", function(e) {
-                    var persons = new Array();
-                    self._data.checked.forEach(function(item) {
-                        persons.push(item.data("Person"));
-                    });
-                    self.options.successCallback(persons);
-                });
-
-
             // Load persons.
             if (self.options.addressBook !== null) {
                 // Replace this with actuall call when implemented.
@@ -146,11 +130,7 @@
             }
 
             this.element.append(self._data.ui.personpicker);
-
             self._data.ui.list.listview({theme: self.options.theme});
-            self._data.ui.list.parent().scrollview({direction: "y"});
-
-
         }
     }); /* End of widget */
 
