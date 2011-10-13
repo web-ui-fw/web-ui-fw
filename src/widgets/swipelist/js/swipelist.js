@@ -33,9 +33,12 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
         $(this.element).find('li').each(function () {
             var item = $(this),
-                cover;
+                cover,
+                coverZIndex;
 
             item.addClass('ui-swipelist-item');
+
+            coverZIndex = parseInt(item.css('z-index')) + 1;
 
             var cover = item.find(':jqmData(role="swipelist-item-cover")').first();
 
@@ -53,6 +56,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
                 // vertically-align text in cover
                 cover.css('line-height', item.outerHeight() + 'px');
+
+                // put cover over the item
+                cover.css('z-index', coverZIndex);
 
                 // bind to swipe events on the cover and the item
                 cover.bind('swiperight', function (e) {
