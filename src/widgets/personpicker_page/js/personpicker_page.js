@@ -65,9 +65,8 @@
             $.mobile.todons.parseOptions(self, true);
 
             // Prepare.
-            self._data.ui = $.mobile.todons.loadPrototype("personpicker_page", self._data.ui); 
+            self._data.ui = $.mobile.todons.loadPrototype("personpicker_page", self._data.ui);
             self._data.ui.title.text(self.options.title);
-            self._data.ui.optionheader.optionheader({theme: self.options.theme});
             self._data.ui.cancel.buttonMarkup({shadow: true, inline: true, icon: "delete", theme: self.options.theme});
             self._data.ui.done
                 .buttonMarkup({shadow: true, inline: true, theme: self.options.theme})
@@ -76,6 +75,8 @@
                 });
 
             this.element.append(self._data.ui.container);
+
+            self._data.ui.optionheader.optionheader({theme: self.options.theme});
 
             $.mobile.page.prototype._create.call(this);
             $.mobile.dialog.prototype._create.call(this);
@@ -100,4 +101,3 @@
         $(e.target).find(":jqmData(role='personpicker-page')").personpicker_page();
     });
 })(jQuery, this);
-
