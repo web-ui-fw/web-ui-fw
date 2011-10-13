@@ -132,7 +132,9 @@ $(document).bind("pagecreate", function () {
     var updateDay = function(e, newDay) {
     	console.log("in updateDay func : newDays = " + newDay + "toString(2) = " + newDay.toString(2));
     	
-    	//if(newDay )
+    	var dayString="";
+    	
+    	if(newDay & 64 )
     	
     	$("#day-selector-demo .selectedDay").text(newDay.toString());
     }; 

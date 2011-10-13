@@ -34,85 +34,20 @@
 				selectedDays: selectedDays
 			});
 			
+			var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 			
-			//Button events
-			container.find("a.sunday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x40 ;
-       			var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       			container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		//Button events
-			container.find("a.monday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x20 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       			container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		//Button events
-			container.find("a.tuesday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x10 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       		 	container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		//Button events
-			container.find("a.wednesday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x08 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       		 	container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		//Button events
-			container.find("a.thursday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x04 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       		 	container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		//Button events
-			container.find("a.friday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x02 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       		 	container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
-    		
-    		//Button events
-			container.find("a.saturday").bind("vclick" ,function(event) {
-       			self.selectedDays = self.selectedDays ^ 0x01 ;
-       		 	var bg = $(this).css("background-color");
-       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
-       			$(this).css("background-color",bg);
-       		 	container.trigger("day-changed",self.getValue());
-       			event.preventDefault();
-       			event.stopPropagation();       			
-    		});
-    		
+			jQuery.each( days, function() {
+				container.find("a." + this).bind("vclick" ,function(event) {
+       				self.selectedDays = self.selectedDays ^ this.dataset.dayflag ;
+       				var bg = $(this).css("background-color");
+	       			bg = ( bg === "rgb(255, 255, 255)") ? "rgb(255, 165, 0)" : "rgb(255, 255, 255)"; 
+	       			$(this).css("background-color",bg);
+	       			container.trigger("day-changed",self.getValue());
+	       			event.preventDefault();
+	       			event.stopPropagation();
+	 			});
+			});
+			
 						
 		},
 		
