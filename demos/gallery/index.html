@@ -652,12 +652,26 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="personpicker-demo" data-add-back-btn="true" data-scroll="y" data-fit-page-to-window="true">
+        <div data-role="page" id="personpicker-demo" data-add-back-btn="true" data-fit-page-to-window="true">
             <div data-role="header">
                 <h1>PersonPicker</h1>
             </div>
             <div class="content" data-role="content">
-                <div data-role="personpicker" data-multipleSelection="true" data-theme="b"></div>
+                <p>NB to get the scrollview to work inside the personpicker,
+                the following style is applied to automatically shorten
+                the scrollview clip div:</p>
+
+                <pre>
+/* short-person-picker is the ID of the div used to create the personpicker */
+#short-person-picker .ui-scrollview-clip {
+    height: 400px;
+}
+                </pre>
+
+                <div id="short-person-picker"
+                     data-role="personpicker"
+                     data-multipleSelection="true"
+                     data-theme="b"></div>
             </div>
         </div> <!-- Page for PersonPicker button -->
 
