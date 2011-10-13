@@ -29,35 +29,55 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
     _sizeAndPositionCovers: function () {
         var theme = this.options.theme;
-        var listItems = $(this.element).find('li');
+        var self = this;
 
-        listItems.each(function () {
-            var item = $(this);
+        $(this.element).find('li').each(function () {
+            var item = $(this),
+                cover;
+
+            item.addClass('ui-swipelist-item');
+
             var cover = item.find(':jqmData(role="swipelist-item-cover")').first();
 
             if (cover) {
                 cover.removeClass('ui-swipelist-item-cover')
                      .addClass('ui-swipelist-item-cover');
 
+                // set swatch on cover
                 cover.removeClass('ui-body-' + theme).addClass('ui-body-' + theme);
 
+                // position cover over the list item
                 cover.position({my: 'left top',
                                 at: 'left top',
                                 of: item});
 
+                // vertically-align text in cover
+                cover.css('line-height', item.outerHeight() + 'px');
+
+                // bind to swipe events on the cover and the item
                 cover.bind('swiperight', function (e) {
-                    cover.stop();
-                    cover.clearQueue();
-                    cover.animate({left: '100%'}, 'fast', 'linear');
+                    self._animateCover(cover, 100);
+                    return false;
                 });
 
                 item.bind('swipeleft', function (e) {
-                    cover.stop();
-                    cover.clearQueue();
-                    cover.animate({left: '0%'}, 'fast', 'linear');
+                    self._animateCover(cover, 0);
+                    return false;
+                });
+
+                // any clicks on buttons inside the item also trigger
+                // the cover to slide back to the left
+                item.find('.ui-btn').bind('click', function () {
+                    self._animateCover(cover, 0);
                 });
             }
         });
+    },
+
+    _animateCover: function (cover, leftPercentage) {
+        cover.stop();
+        cover.clearQueue();
+        cover.animate({left: '' + leftPercentage + '%'}, 'fast', 'linear');
     }
 
 });
