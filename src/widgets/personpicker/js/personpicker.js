@@ -94,6 +94,8 @@
                         }
                     });
             });
+
+            self._data.ui.list.parent().scrollview({direction: 'y'});
         },
 
         _create: function () {
@@ -113,7 +115,7 @@
             };
 
             // Prepare.
-            self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui); 
+            self._data.ui = $.mobile.todons.loadPrototype("personpicker", self._data.ui);
             self._data.row = $.mobile.todons.loadPrototype("personpicker-row", self._data.row);
 
             $.mobile.todons.parseOptions(self, true);
@@ -148,4 +150,3 @@
         $(e.target).find(":jqmData(role='personpicker')").personpicker();
     });
 })(jQuery, this);
-
