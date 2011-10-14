@@ -129,6 +129,7 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
     
+    /*
     var updateDay = function(e, newDay) {
     	var dayString = "";
     	
@@ -143,7 +144,11 @@ $(document).bind("pagecreate", function () {
     	$("#day-selector-demo .selectedDay").text(dayString);
     }; 
     $('#day-selector-demo').bind('day-changed', updateDay);
-
+	*/
+	$('#day-selector-demo').bind('pageshow', function(){
+		$("#daySelector1").dayselector();
+	});
+	
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
     });
