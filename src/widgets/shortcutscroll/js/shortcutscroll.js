@@ -67,7 +67,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
-            o.scrollview = $el.parent();
+            o.scrollview = $el.closest('.ui-scrollview-clip');
         }
 
         // find the bottom of the last item in the listview
