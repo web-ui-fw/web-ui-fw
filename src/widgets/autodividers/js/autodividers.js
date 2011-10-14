@@ -16,6 +16,10 @@
  * is the type of divider to create. The default divider type is 'alpha',
  * meaning first characters of list items, upper-cased.
  *
+ * Any time a new li element is added to the list, or an li element is
+ * removed, this extension will update the dividers in the listview
+ * accordingly.
+ *
  * Note that if a listview already has dividers, applying this
  * extension will remove all the existing dividers and replace them
  * with new ones.
@@ -63,10 +67,19 @@
  *   type: 'alpha' (default) sets the auto divider type to "uppercased
  *         first character of each list item"
  *
+ * Events:
+ *
+ *   update: Triggered if the dividers in the list change; generally
+ *           happens if items are added to the listview which cause
+ *           the dividers to change.
+ *
  * Methods:
  *
  *   refresh: Renew all the dividers in the list, replacing all of
- *            the existing dividers where necessary.
+ *            the existing dividers where necessary. An 'update' event
+ *            is triggered if the new set of dividers contains
+ *            different text from the old set (NOT if the dividers
+ *            just change position in the list).
  */
 
 (function ($, undefined) {
@@ -94,11 +107,20 @@ $.widget("todons.autodividers", $.mobile.widget, {
         this.refresh();
     },
 
+    /**
+     * Rebuild the list dividers.
+     */
     refresh: function () {
         var dividerType = this.options.type;
 
         // this will track the text on the last divider
         var lastDividerText = null;
+
+        // track the text on the old dividers
+        var oldDividersText = '';
+
+        // track the text on the new dividers
+        var newDividersText = '';
 
         // remove the old dividers and add new ones
         $(this.element).find('li').each(function () {
@@ -106,6 +128,7 @@ $.widget("todons.autodividers", $.mobile.widget, {
 
             // remove if a divider
             if ($(this).is(':jqmData(role="list-divider")')) {
+                oldDividersText += $(this).text();
                 $(this).remove();
                 return;
             }
@@ -133,6 +156,7 @@ $.widget("todons.autodividers", $.mobile.widget, {
             // found a new divider
             if (lastDividerText !== text) {
                 lastDividerText = text;
+                newDividersText += text;
 
                 // add a divider for this character above the current
                 // list item
@@ -152,6 +176,12 @@ $.widget("todons.autodividers", $.mobile.widget, {
 
         // show the new dividers
         $(this.element).find(':jqmData(role="list-divider")').show();
+
+        // compare the old dividers with the new ones; if they are
+        // different, trigger an 'update' event
+        if (newDividersText != oldDividersText) {
+            this.element.trigger('update');
+        }
     }
 });
 

@@ -124,6 +124,10 @@ $(document).bind('pagecreate', function () {
     $('#remove-bertie-button').bind('click', function () {
         $('#refreshable-dividers').find('li:contains("Bertie")').remove();
     });
+
+    $('#refreshable-dividers').bind('update', function () {
+        console.log('dividers were updated on refreshable list');
+    });
 });
 </script>
 
