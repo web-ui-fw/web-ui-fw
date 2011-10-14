@@ -78,8 +78,19 @@ $.widget("todons.autodividers", $.mobile.widget, {
     },
 
     _create: function () {
+        var self = this;
+
         this.options.type = this.element.attr('data-autodividers') ||
                             this.options.type;
+
+        // refresh on addition/removal of list elements on the listview
+        this.element.bind('DOMNodeInserted DOMNodeRemoved', function (e) {
+            if ($(e.target).is('li:not(:jqmData(role="list-divider"))')) {
+                $(e.target).data('pending-dom-event-type', e.type);
+                self.refresh();
+            }
+        });
+
         this.refresh();
     },
 
@@ -96,6 +107,13 @@ $.widget("todons.autodividers", $.mobile.widget, {
             // remove if a divider
             if ($(this).is(':jqmData(role="list-divider")')) {
                 $(this).remove();
+                return;
+            }
+
+            // hackery: ignore list item if it is just about to be removed;
+            // this is to work around the fact that the DOMNodeRemoved
+            // event is fired _before_ the node is actually removed
+            if ($(this).data('pending-dom-event-type') === 'DOMNodeRemoved') {
                 return;
             }
 

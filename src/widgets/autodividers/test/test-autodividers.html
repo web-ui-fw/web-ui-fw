@@ -42,8 +42,8 @@
 
         <p>
             <button id="refresh-dividers-button" data-inline="true">Refresh</button>
-            <button id="add-gary-button" data-inline="true">Add item and refresh</button>
-            <button id="remove-bertie-button" data-inline="true">Remove item and refresh</button>
+            <button id="add-gary-button" data-inline="true">Add Gary and refresh</button>
+            <button id="remove-bertie-button" data-inline="true">Remove Bertie and refresh</button>
         </p>
 
         <ul id="refreshable-dividers" data-role="listview" data-autodividers="alpha">
@@ -119,12 +119,10 @@ $(document).bind('pagecreate', function () {
     $('#add-gary-button').bind('click', function () {
         var gary = $('<li><a href="#">Gary</a></li>');
         $('#refreshable-dividers').find('li:contains("Ian")').before(gary);
-        $('#refreshable-dividers').autodividers('refresh');
     });
 
     $('#remove-bertie-button').bind('click', function () {
         $('#refreshable-dividers').find('li:contains("Bertie")').remove();
-        $('#refreshable-dividers').autodividers('refresh');
     });
 });
 </script>
