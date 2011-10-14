@@ -26,7 +26,7 @@
  *     changed: triggers when the value is changed (rather than when the handle is moved)
  *
  * Examples:
- *         
+ *
  *     <a href="#" id="popupEnabler" data-role="button" data-inline="true">Enable popup</a>
  *     <a href="#" id="popupDisabler" data-role="button" data-inline="true">Disable popup</a>
  *     <div data-role="fieldcontain">
@@ -95,8 +95,9 @@
             // get the handle
             self.handle = slider.find('.ui-slider-handle');
 
-            // remove the rounded corners
+            // remove the rounded corners from the slider and its children
             slider.removeClass('ui-btn-corner-all');
+            slider.find('*').removeClass('ui-btn-corner-all');
 
             // add a popup element (hidden initially)
             slider.before(self.popup);
