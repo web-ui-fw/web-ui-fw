@@ -342,10 +342,10 @@ jQuery.widget( "mobile.scrollview", jQuery.mobile.widget, {
 		//      occurred on something other than an input element or a link
 		//      before preventing its default and stopping its propagation
 		if (this.options.eventType == "mouse" || this.options.delayedClickEnabled) {
-			var eventOnInputElement = $(e.target).is('a, :input') ||
-                                $(e.target).parents('a, :input').first();
+			var shouldBlockEvent = !($(e.target).is('a, :input') ||
+                               $(e.target).parents('a, :input').first());
 
-			if (!eventOnInputElement) {
+			if (shouldBlockEvent) {
 				e.preventDefault();
 				e.stopPropagation();
 			}
