@@ -25,6 +25,13 @@
  *
  * If a listview has no dividers or a single divider, the widget won't
  * display.
+ *
+ * Options:
+ *
+ *   scrollview:   Element to use as the scrollview for the shortcutscroll.
+ *                 Can only be set programmatically. Defaults to the parent
+ *                 element of the list which has data-shortcutscroll="true"
+ *                 set on it.
  */
 (function( $, undefined ) {
 
