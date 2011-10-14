@@ -27,22 +27,17 @@
 		_create: function () {
 			var self= this,
 				select = this.element,
-				container = $.mobile.todons.loadPrototype("dayselector").find("div.ui-dayselector").insertBefore(select);
-		
-			/*
-			this.options.theme = this.element.data('theme') || this.options.theme;
-            themeClass = 'ui-body-' + this.options.theme;
-			*/
-			
-			
-			
+                proto = $.mobile.todons.loadPrototype("dayselector");
+
+            $(proto).find("fieldset").controlgroup({excludeInvisible: false});
+
+            var container = $(proto).find("div.ui-dayselector").insertBefore(select);
+                
 			
 			$.extend( self, {
 				container: container,
 				
-			});
-			
-			container.find(":jqmData(role='controlgroup')").controlgroup();						
+			});				
 		},
 		
 	
@@ -50,7 +45,7 @@
 	}); /* End of Widget */
 	
 	 // auto self-init widgets
-    $(document).bind("pagecreate", function (e) {
+    $(document).bind("pagebeforecreate", function (e) {
         $(e.target).find(":jqmData(role='dayselector')").dayselector();
     });
     
