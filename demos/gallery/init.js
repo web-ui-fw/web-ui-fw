@@ -132,6 +132,7 @@ $(document).bind("pagecreate", function () {
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
     });
+
     $("#popupwindow-demo").bind("pageshow", function() {
       $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition"))
         .attr("checked", "true")
@@ -163,6 +164,22 @@ $(document).bind("pagecreate", function () {
 
     $("#myoptionheader").bind('expand', function () {
         console.log('option header was expanded');
+    });
+
+    $('#slider-demo').bind('pageshow', function () {
+        var popupEnabled=false;
+
+        var setPopupEnabled = function( newState ) {
+            $('#mySlider').todonsslider('option','popupEnabled',newState);
+            $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
+        };
+
+        setPopupEnabled(popupEnabled);
+
+        $("#togglePopup").bind("vclick", function (e) {
+            popupEnabled = !popupEnabled;
+            setPopupEnabled(popupEnabled);
+        });
     });
 });
 

@@ -52,6 +52,10 @@
 
     <script src="../../src/widgets/optionheader/js/optionheader.js"></script>
     <link rel="stylesheet" href="../../src/widgets/optionheader/css/optionheader.css"/>
+
+    <script src="../../src/widgets/slider/js/slider.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/slider/css/slider.css"/>
+
 </head>
 
 <body>
@@ -162,6 +166,22 @@
             </p>
         </div>
 
+        <div>
+            <h2>sliders</h2>
+
+            <a href="#" id="togglePopup" data-role="button" data-inline="true"></a>
+
+            <div data-role="fieldcontain">
+                <label for="mySlider">Theme 'a', popups disabled, value=7 on 0-9 scale</label>
+                <input id="mySlider" name="mySlider" data-theme='a' data-popupenabled='false' type="range" name="slider" value="7" min="0" max="9" />
+            </div>
+            <br>
+            <div data-role="fieldcontain">
+                <label for="mySlider2">Default, value=77 on 0-99 scale</label>
+                <input id="mySlider2" name="mySlider2" type="range" value="77" min="0" max="99" />
+            </div>
+        </div>
+
         <!-- jqm widgets -->
         <div>
             <h2>jqm listviews</h2>
@@ -209,49 +229,49 @@
             <h2>jqm button icons</h2>
 
             <p><strong>Left arrow</strong> - data-icon="arrow-l"</p>
-			      <a href="index.html" data-role="button" data-icon="arrow-l">My button</a>
-			      <p><strong>Right arrow</strong> - data-icon="arrow-r"</p>
-			      <a href="index.html" data-role="button" data-icon="arrow-r">My button</a>
-			      <p><strong>Up arrow</strong> - data-icon="arrow-u"</p>
-			      <a href="index.html" data-role="button" data-icon="arrow-u">My button</a>
-			      <p><strong>Down arrow</strong> - data-icon="arrow-d"</p>
-			      <a href="index.html" data-role="button" data-icon="arrow-d">My button</a>
-			      <p><strong>Delete</strong> - data-icon="delete"</p>
-			      <a href="index.html" data-role="button" data-icon="delete">My button</a>
-			      <p><strong>Plus</strong> - data-icon="plus"</p>
-			      <a href="index.html" data-role="button" data-icon="plus">My button</a>
-			      <p><strong>Minus</strong> - data-icon="minus"</p>
-			      <a href="index.html" data-role="button" data-icon="minus">My button</a>
-			      <p><strong>Check</strong> - data-icon="check"</p>
-			      <a href="index.html" data-role="button" data-icon="check">My button</a>
-			      <p><strong>Gear</strong> - data-icon="gear"</p>
-			      <a href="index.html" data-role="button" data-icon="gear">My button</a>
-			      <p><strong>Refresh</strong> - data-icon="refresh"</p>
-			      <a href="index.html" data-role="button" data-icon="refresh">My button</a>
-			      <p><strong>Forward</strong> - data-icon="forward"</p>
-			      <a href="index.html" data-role="button" data-icon="forward">My button</a>
-			      <p><strong>Back</strong> - data-icon="back"</p>
-			      <a href="index.html" data-role="button" data-icon="back">My button</a>
-			      <p><strong>Grid</strong> - data-icon="grid"</p>
-			      <a href="index.html" data-role="button" data-icon="grid">My button</a>
-			      <p><strong>Star</strong> - data-icon="star"</p>
-			      <a href="index.html" data-role="button" data-icon="star">My button</a>
-			      <p><strong>Alert</strong> - data-icon="alert"</p>
-			      <a href="index.html" data-role="button" data-icon="alert">My button</a>
-			      <p><strong>Info</strong> - data-icon="info"</p>
-			      <a href="index.html" data-role="button" data-icon="info">My button</a>
-			      <p><strong>Home</strong> - data-icon="home"</p>
-			      <a href="index.html" data-role="button" data-icon="home">My button</a>
-			      <p><strong>Search</strong> - data-icon="search"</p>
-			      <a href="index.html" data-role="button" data-icon="search">My button</a>
+            <a href="index.html" data-role="button" data-icon="arrow-l">My button</a>
+            <p><strong>Right arrow</strong> - data-icon="arrow-r"</p>
+            <a href="index.html" data-role="button" data-icon="arrow-r">My button</a>
+            <p><strong>Up arrow</strong> - data-icon="arrow-u"</p>
+            <a href="index.html" data-role="button" data-icon="arrow-u">My button</a>
+            <p><strong>Down arrow</strong> - data-icon="arrow-d"</p>
+            <a href="index.html" data-role="button" data-icon="arrow-d">My button</a>
+            <p><strong>Delete</strong> - data-icon="delete"</p>
+            <a href="index.html" data-role="button" data-icon="delete">My button</a>
+            <p><strong>Plus</strong> - data-icon="plus"</p>
+            <a href="index.html" data-role="button" data-icon="plus">My button</a>
+            <p><strong>Minus</strong> - data-icon="minus"</p>
+            <a href="index.html" data-role="button" data-icon="minus">My button</a>
+            <p><strong>Check</strong> - data-icon="check"</p>
+            <a href="index.html" data-role="button" data-icon="check">My button</a>
+            <p><strong>Gear</strong> - data-icon="gear"</p>
+            <a href="index.html" data-role="button" data-icon="gear">My button</a>
+            <p><strong>Refresh</strong> - data-icon="refresh"</p>
+            <a href="index.html" data-role="button" data-icon="refresh">My button</a>
+            <p><strong>Forward</strong> - data-icon="forward"</p>
+            <a href="index.html" data-role="button" data-icon="forward">My button</a>
+            <p><strong>Back</strong> - data-icon="back"</p>
+            <a href="index.html" data-role="button" data-icon="back">My button</a>
+            <p><strong>Grid</strong> - data-icon="grid"</p>
+            <a href="index.html" data-role="button" data-icon="grid">My button</a>
+            <p><strong>Star</strong> - data-icon="star"</p>
+            <a href="index.html" data-role="button" data-icon="star">My button</a>
+            <p><strong>Alert</strong> - data-icon="alert"</p>
+            <a href="index.html" data-role="button" data-icon="alert">My button</a>
+            <p><strong>Info</strong> - data-icon="info"</p>
+            <a href="index.html" data-role="button" data-icon="info">My button</a>
+            <p><strong>Home</strong> - data-icon="home"</p>
+            <a href="index.html" data-role="button" data-icon="home">My button</a>
+            <p><strong>Search</strong> - data-icon="search"</p>
+            <a href="index.html" data-role="button" data-icon="search">My button</a>
         </div>
 
         <div>
             <h2>jqm button icon positioning</h2>
 
-		        <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="right">Delete</a></p>
-		        <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="top">Delete</a></p>
-		        <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="bottom">Delete</a></p>
+            <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="right">Delete</a></p>
+            <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="top">Delete</a></p>
+            <p><a href="index.html" data-role="button" data-icon="delete" data-iconpos="bottom">Delete</a></p>
         </div>
 
         <div>
@@ -1115,6 +1135,27 @@ $('#baseline').bind('pageshow', function () {
 
         progressbarRunning = true;
     }
+
+    // slider
+    $('#mySlider').todonsslider('option','popupEnabled',false);
+
+    $('#mySlider').bind('update', function (e, value) {
+        console.log(value);
+    });
+
+    var popupEnabled=false;
+
+    var setPopupEnabled = function( newState ) {
+        $('#mySlider').todonsslider('option','popupEnabled',newState);
+        $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
+    };
+
+    setPopupEnabled(popupEnabled);
+
+    $("#togglePopup").bind("vclick", function (e) {
+        popupEnabled = !popupEnabled;
+        setPopupEnabled(popupEnabled);
+    });
 });
 
 $('#baseline').bind('pagehide', function () {
