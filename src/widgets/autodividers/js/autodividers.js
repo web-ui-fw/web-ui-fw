@@ -16,9 +16,9 @@
  * is the type of divider to create. The default divider type is 'alpha',
  * meaning first characters of list items, upper-cased.
  *
- * Note that if a listview already has dividers, this extension won't
- * be applied to it. This also protects the list against this extension
- * being applied multiple times.
+ * Note that if a listview already has dividers, applying this
+ * extension will remove all the existing dividers and replace them
+ * with new ones.
  *
  * Also note that this extension doesn't sort the list: it only creates
  * dividers based on text inside list items. So if your list isn't
@@ -68,7 +68,7 @@
 
 $.widget("todons.autodividers", $.mobile.widget, {
     options: {
-        initSelector: ':jqmData(autodividers):not(:has(li:jqmData(role="list-divider")))',
+        initSelector: ':jqmData(autodividers)',
         type: 'alpha'
     },
 
@@ -84,11 +84,18 @@ $.widget("todons.autodividers", $.mobile.widget, {
         // this will track the text on the last divider
         var lastDividerText = null;
 
-        $(this.element).find('li').not(':jqmData(role="list-divider")').each(function () {
-            var divider;
+        // remove the old dividers and add new ones
+        $(this.element).find('li').each(function () {
+            var divider, text;
 
-            // look for some text
-            var text = $(this).find('a').text() || $(this).text() || null;
+            // remove if a divider
+            if ($(this).is(':jqmData(role="list-divider")')) {
+                $(this).remove();
+                return;
+            }
+
+            // look for some text in the item
+            text = $(this).find('a').text() || $(this).text() || null;
 
             // no text, so don't do anything
             if (!text) {
@@ -100,6 +107,7 @@ $.widget("todons.autodividers", $.mobile.widget, {
                 text = text.slice(0, 1).toUpperCase();
             }
 
+            // found a new divider
             if (lastDividerText !== text) {
                 lastDividerText = text;
 
@@ -112,9 +120,6 @@ $.widget("todons.autodividers", $.mobile.widget, {
                 $(this).before(divider);
             }
         });
-
-        // remove any visible dividers
-        $(this.element).find(':jqmData(role="list-divider"):visible').remove();
 
         $(this.element).listview('refresh');
 
