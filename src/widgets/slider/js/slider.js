@@ -56,8 +56,8 @@
         },
 
         popup: null,
-		handle: null,
-		handleText: null,
+        handle: null,
+        handleText: null,
 
         _create: function() {
             this.currentValue = null;
@@ -110,8 +110,8 @@
 
             // bind to changes in the slider's value to update handle text
             this.element.bind('change', function () {
-			    self.updateSlider();
-			});
+                self.updateSlider();
+            });
 
             // bind clicks on the handle to show the popup
             self.handle.bind('vmousedown', function () {
@@ -124,33 +124,33 @@
             });
         },
 
-		// position the popup
-		positionPopup: function () {
-			this.popup.position({my: 'center bottom',
-							at: 'center top',
-							offset: '0 -5px',
-							of: this.handle});
-		},
+        // position the popup
+        positionPopup: function () {
+            this.popup.position({my: 'center bottom',
+                                 at: 'center top',
+                                 offset: '0 -5px',
+                                 of: this.handle});
+        },
 
-		// show value on the handle and in popup
-		updateSlider: function () {
-			this.positionPopup();
+        // show value on the handle and in popup
+        updateSlider: function () {
+            this.positionPopup();
 
-			// remove the title attribute from the handle (which is
-			// responsible for the annoying tooltip); NB we have
-			// to do it here as the jqm slider sets it every time
-			// the slider's value changes :(
-			this.handle.removeAttr('title');
+            // remove the title attribute from the handle (which is
+            // responsible for the annoying tooltip); NB we have
+            // to do it here as the jqm slider sets it every time
+            // the slider's value changes :(
+            this.handle.removeAttr('title');
 
-			var newValue = this.element.val();
+            var newValue = this.element.val();
 
-			if (newValue !== this.currentValue) {
-				this.currentValue = newValue;
-				this.handleText.html(newValue);
-				this.popup.html(newValue);
-				this.element.trigger('update', newValue);
-			}
-		},
+            if (newValue !== this.currentValue) {
+                this.currentValue = newValue;
+                this.handleText.html(newValue);
+                this.popup.html(newValue);
+                this.element.trigger('update', newValue);
+            }
+        },
 
         // show the popup
         showPopup: function () {
@@ -164,7 +164,7 @@
 
         // hide the popup
         hidePopup: function () {
-			var needToHide = (this.options.popupEnabled && this.popupVisible);
+            var needToHide = (this.options.popupEnabled && this.popupVisible);
             if (needToHide) {
                 this.handleText.show();
                 this.popup.hide();
@@ -177,14 +177,14 @@
             switch (key) {
             case 'popupEnabled':
                 if (needToChange) {
-					this.options.popupEnabled = value;
-					if (this.options.popupEnabled) {
-						this.updateSlider();
-					} else {
-						this.hidePopup();
-					}
-				}
-				break;
+                    this.options.popupEnabled = value;
+                    if (this.options.popupEnabled) {
+                        this.updateSlider();
+                    } else {
+                        this.hidePopup();
+                    }
+                }
+                break;
             }
         },
 
