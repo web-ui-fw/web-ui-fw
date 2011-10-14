@@ -24,7 +24,8 @@
 		_create: function () {
 			var self= this,
 				select = this.element,
-                proto = $.mobile.todons.loadPrototype("dayselector");
+                proto = $.mobile.todons.loadPrototype("dayselector"),
+                daysArray = [];
 
             $(proto).find("fieldset").controlgroup({excludeInvisible: false});
 
@@ -34,10 +35,17 @@
             	console.log("change val = " + $('input:radio[name=radio-choice]:checked').val());
             	            		
             });
-  		
+  			
+  			$('input:checkbox[name=checkbox-choice').bind('click' ,function () {
+            	if( $(this).is(':checked')) {
+            		console.log("chkbox val = " + $(this).val());
+            		this.daysArray.push($(this).val());
+            	}
+            });
+  				
 			$.extend( self, {
 				container: container,
-				
+				daysArray: daysArray
 			});				
 		},
 		
