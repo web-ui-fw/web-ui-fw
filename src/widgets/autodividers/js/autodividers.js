@@ -104,18 +104,21 @@ $.widget("todons.autodividers", $.mobile.widget, {
                 lastDividerText = text;
 
                 // add a divider for this character above the current
-                // list item, but only if a divider isn't there already
-                if ($(this).prev(':jqmData(role="list-divider")').length === 0) {
-                    divider = $('<li data-role="list-divider">' +
-                                lastDividerText +
-                                '</li>');
-                    divider.hide();
-                    $(this).before(divider);
-                }
+                // list item
+                divider = $('<li data-role="list-divider">' +
+                            lastDividerText +
+                            '</li>');
+                divider.hide();
+                $(this).before(divider);
             }
         });
 
+        // remove any visible dividers
+        $(this.element).find(':jqmData(role="list-divider"):visible').remove();
+
         $(this.element).listview('refresh');
+
+        // show the new dividers
         $(this.element).find(':jqmData(role="list-divider")').show();
     }
 });

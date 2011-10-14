@@ -37,9 +37,14 @@
 
     <div data-role="content">
         <p>This should get auto-dividers based on link text but
-        shouldn't produce duplicate dividers on refresh.</p>
+        shouldn't produce duplicate dividers on refresh. Should also
+        add more dividers if new list elements are added.</p>
 
-        <p><button id="refresh-dividers-button" data-inline="true">Refresh</button></p>
+        <p>
+            <button id="refresh-dividers-button" data-inline="true">Refresh</button>
+            <button id="add-gary-button" data-inline="true">Add item and refresh</button>
+            <button id="remove-bertie-button" data-inline="true">Remove item and refresh</button>
+        </p>
 
         <ul id="refreshable-dividers" data-role="listview" data-autodividers="alpha">
             <li><a href="#">Amy</a></li>
@@ -108,6 +113,17 @@
 <script>
 $(document).bind('pagecreate', function () {
     $('#refresh-dividers-button').bind('click', function () {
+        $('#refreshable-dividers').autodividers('refresh');
+    });
+
+    $('#add-gary-button').bind('click', function () {
+        var gary = $('<li><a href="#">Gary</a></li>');
+        $('#refreshable-dividers').find('li:contains("Ian")').before(gary);
+        $('#refreshable-dividers').autodividers('refresh');
+    });
+
+    $('#remove-bertie-button').bind('click', function () {
+        $('#refreshable-dividers').find('li:contains("Bertie")').remove();
         $('#refreshable-dividers').autodividers('refresh');
     });
 });
