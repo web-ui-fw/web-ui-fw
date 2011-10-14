@@ -62,6 +62,11 @@
  *
  *   type: 'alpha' (default) sets the auto divider type to "uppercased
  *         first character of each list item"
+ *
+ * Methods:
+ *
+ *   refresh: Renew all the dividers in the list, replacing all of
+ *            the existing dividers where necessary.
  */
 
 (function ($, undefined) {
@@ -116,7 +121,11 @@ $.widget("todons.autodividers", $.mobile.widget, {
                 divider = $('<li data-role="list-divider">' +
                             lastDividerText +
                             '</li>');
+
+                // NB we hide the dividers so that they aren't shown
+                // until after the listview has been refreshed
                 divider.hide();
+
                 $(this).before(divider);
             }
         });
