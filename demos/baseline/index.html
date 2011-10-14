@@ -635,8 +635,7 @@
         <div>
             <h2>sliders</h2>
 
-            <a href="#" id="popupEnabler" data-role="button" data-inline="true">Enable popup</a>
-            <a href="#" id="popupDisabler" data-role="button" data-inline="true">Disable popup</a>
+            <a href="#" id="togglePopup" data-role="button" data-inline="true"></a>
 
             <div data-role="fieldcontain">
                 <label for="mySlider">Theme 'a', popups disabled, value=7 on 0-9 scale</label>
@@ -1144,11 +1143,18 @@ $('#baseline').bind('pageshow', function () {
         console.log(value);
     });
 
-    $('#popupEnabler').bind('vclick', function() {
-        $('#mySlider').todonsslider('option','popupEnabled',true);
-    });
-    $('#popupDisabler').bind('vclick', function() {
-        $('#mySlider').todonsslider('option','popupEnabled',false);
+    var popupEnabled=false;
+
+    var setPopupEnabled = function( newState ) {
+        $('#mySlider').todonsslider('option','popupEnabled',newState);
+        $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
+    };
+
+    setPopupEnabled(popupEnabled);
+
+    $("#togglePopup").bind("vclick", function (e) {
+        popupEnabled = !popupEnabled;
+        setPopupEnabled(popupEnabled);
     });
 });
 

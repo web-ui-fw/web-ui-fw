@@ -167,13 +167,18 @@ $(document).bind("pagecreate", function () {
     });
 
     $('#slider-demo').bind('pageshow', function () {
-        $('#mySlider').todonsslider('option','popupEnabled',false);
+        var popupEnabled=false;
 
-        $('#popupEnabler').bind('vclick', function() {
-            $('#mySlider').todonsslider('option','popupEnabled',true);
-        });
-        $('#popupDisabler').bind('vclick', function() {
-            $('#mySlider').todonsslider('option','popupEnabled',false);
+        var setPopupEnabled = function( newState ) {
+            $('#mySlider').todonsslider('option','popupEnabled',newState);
+            $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
+        };
+
+        setPopupEnabled(popupEnabled);
+
+        $("#togglePopup").bind("vclick", function (e) {
+            popupEnabled = !popupEnabled;
+            setPopupEnabled(popupEnabled);
         });
     });
 });
