@@ -95,7 +95,8 @@
                     });
             });
 
-            self._data.ui.list.parent().scrollview({direction: 'y'});
+            self._data.ui.container.scrolllistview({direction: 'y'});
+            self._data.ui.container.addClass('ui-scrolllistview');
             self._data.ui.search.textinput('enable');
         },
 
@@ -104,6 +105,7 @@
 
             self._data.ui = {
                 personpicker: ".ui-personpicker",
+                container: ".ui-personpicker-container",
                 list: ".ui-personpicker ul"
             };
 
