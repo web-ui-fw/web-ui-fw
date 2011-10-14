@@ -20,20 +20,29 @@
 
 (function ($, window, undefined) {
 	$.widget("todons.dayselector", $.mobile.widget, {
-		
+		options: {
+            theme: 'c',
+        },
 		
 		_create: function () {
 			var self= this,
 				select = this.element,
 				container = $.mobile.todons.loadPrototype("dayselector").find("div.ui-dayselector").insertBefore(select);
 		
+			/*
+			this.options.theme = this.element.data('theme') || this.options.theme;
+            themeClass = 'ui-body-' + this.options.theme;
+			*/
+			
+			
+			
 			
 			$.extend( self, {
 				container: container,
 				
 			});
 			
-								
+			container.find(":jqmData(role='controlgroup')").controlgroup();						
 		},
 		
 	
