@@ -20,9 +20,6 @@
 
 (function ($, window, undefined) {
 	$.widget("todons.dayselector", $.mobile.widget, {
-		options: {
-            theme: 'c',
-        },
 		
 		_create: function () {
 			var self= this,
@@ -32,8 +29,12 @@
             $(proto).find("fieldset").controlgroup({excludeInvisible: false});
 
             var container = $(proto).find("div.ui-dayselector").insertBefore(select);
-                
-			
+        	
+            $('input:radio[name=radio-choice]').change(function () {
+            	console.log("change val = " + $('input:radio[name=radio-choice]:checked').val());
+            	            		
+            });
+  		
 			$.extend( self, {
 				container: container,
 				

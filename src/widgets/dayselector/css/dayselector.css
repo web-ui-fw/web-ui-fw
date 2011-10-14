@@ -1,10 +1,22 @@
 /* dayselector CSS */
 
 .custom-checkbox-label {
+	display: inline-block;
 	height : 56px;
 	width : 64px;
+}
+
+.ui-weekly {
 	text-align: center;
 	font: 12px;
+}
+
+.chbx-saturday {
+	color: blue;
+}
+
+.chbx-sunday {
+	color: red;
 }
 
 fieldset {
