@@ -59,6 +59,18 @@
     </div>
 
     <div data-role="content">
+        <p>This uses a custom selector to draw text from formatted list
+        items.</p>
+
+        <ul data-role="listview" data-autodividers="alpha" data-autodividers-selector="span">
+            <li><span>Anne</span> likes to eat sweets</li>
+            <li><span>Beth</span> likes to eat treats</li>
+            <li><span>Bill</span> likes to eat meats</li>
+            <li><span>Carl</span> likes to eat beets</li>
+        </ul>
+    </div>
+
+    <div data-role="content">
         <p>This should get auto-dividers based on text. NB this has
         intentionally blank li elements to check they don't get dividers.</p>
         <ul id="text-dividers" data-role="listview" data-autodividers="alpha">

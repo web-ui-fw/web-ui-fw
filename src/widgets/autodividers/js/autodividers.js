@@ -14,7 +14,13 @@
  * Apply using autodividers({type: 'X'}) on a <ul> with
  * data-role="listview", or with data-autodividers="X", where X
  * is the type of divider to create. The default divider type is 'alpha',
- * meaning first characters of list items, upper-cased.
+ * meaning first characters of list item text, upper-cased.
+ *
+ * The element used to derive the text for the auto dividers defaults
+ * to the first link inside the li; failing that, the text directly inside
+ * the li element is used. This can be overridden with the
+ * data-autodividers-selector attribute or via options; the selector
+ * will use each li element as its context.
  *
  * Any time a new li element is added to the list, or an li element is
  * removed, this extension will update the dividers in the listview
@@ -65,7 +71,15 @@
  * Options:
  *
  *   type: 'alpha' (default) sets the auto divider type to "uppercased
- *         first character of each list item"
+ *         first character of text selected from each item". Set in
+ *         the data-autodividers="X" attribute on the listview or via
+ *         options.
+ *   selector: The jQuery selector to use to find text for the
+ *             generated dividers. Default is to use the first 'a'
+ *             (link) element. If this selector doesn't find any
+ *             text, the widget automatically falls back to the text
+ *             inside the li (for read-only lists). Can be set
+ *             via data-autodividers-selector="...".
  *
  * Events:
  *
@@ -87,7 +101,8 @@
 $.widget("todons.autodividers", $.mobile.widget, {
     options: {
         initSelector: ':jqmData(autodividers)',
-        type: 'alpha'
+        type: 'alpha',
+        selector: 'a'
     },
 
     _create: function () {
@@ -95,6 +110,9 @@ $.widget("todons.autodividers", $.mobile.widget, {
 
         this.options.type = this.element.attr('data-autodividers') ||
                             this.options.type;
+
+        this.options.selector = this.element.attr('data-autodividers-selector') ||
+                                this.options.selector;
 
         // refresh on addition/removal of list elements on the listview
         this.element.bind('DOMNodeInserted DOMNodeRemoved', function (e) {
@@ -111,6 +129,7 @@ $.widget("todons.autodividers", $.mobile.widget, {
      * Rebuild the list dividers.
      */
     refresh: function () {
+        var textSelector = this.options.selector;
         var dividerType = this.options.type;
 
         // this will track the text on the last divider
@@ -141,7 +160,9 @@ $.widget("todons.autodividers", $.mobile.widget, {
             }
 
             // look for some text in the item
-            text = $(this).find('a').text() || $(this).text() || null;
+            text = $(this).find(textSelector).text() ||
+                   $(this).text() ||
+                   null;
 
             // no text, so don't do anything
             if (!text) {
