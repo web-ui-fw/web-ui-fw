@@ -343,7 +343,7 @@ jQuery.widget( "mobile.scrollview", jQuery.mobile.widget, {
 		//      before preventing its default and stopping its propagation
 		if (this.options.eventType == "mouse" || this.options.delayedClickEnabled) {
 			var shouldBlockEvent = !($(e.target).is('a, :input') ||
-                               $(e.target).parents('a, :input').first());
+                               $(e.target).parents('a, :input').length > 0);
 
 			if (shouldBlockEvent) {
 				e.preventDefault();
