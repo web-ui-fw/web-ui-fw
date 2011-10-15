@@ -6,18 +6,20 @@ style the widgets. Here are some instruction to install it on Ubuntu
 11.04, and it should work on other Debian based distributions. Users of
 other distributions should find their way around too:
 
-1.`cd /tmp`
-2.`sudo apt-get install git-core curl build-essential openssl libssl-dev`
-3.`git clone https://github.com/joyent/node.git && cd node`
-4.`git checkout v0.4.9` # or whatever the latest stable is - last known to work v0.5.0
-5.`./configure && make`
-6.`sudo make install`
-7.`curl http://npmjs.org/install.sh | sudo sh`
-8.`npm install less`
-9.`export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH`
+1. `cd /tmp`
+2. `sudo apt-get install git-core curl build-essential openssl libssl-dev`
+3. `git clone https://github.com/joyent/node.git && cd node`
+4. `git checkout v0.4.9` # or whatever the latest stable is - last known to work v0.5.0
+5. `./configure && make`
+6. `sudo make install`
+7. `curl http://npmjs.org/install.sh | sudo sh`
+8. `npm install less`
+9. `export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH`
 
 You may want to add the final export to your .bashrc and source it.
 
+Ubuntu 11.10 
+------------
 
 Installing uglifyjs
 ===================
@@ -74,20 +76,20 @@ npm install docco
 Installing on Ubuntu 11.10 
 --------------------------
 
-  `sudo apt-get update && sudo apt-get install libnode-less`
+ `sudo apt-get update && sudo apt-get install libnode-less`
 
 
-Installing on OS X Lion with Homebrew
--------------------------------------
+OS X Lion with Homebrew
+-----------------------
 
-1.`brew update `
-2.`brew install node`
-3.`brew install npm`
-4.`npm install less -g`
+1. `brew update `
+2. `brew install node`
+3. `brew install npm`
+4. `npm install less -g`
 
 Notice
 ------
-if there is error on connecting npm server , try to set regsitry to http:
+if there is error on connecting npm server , try to set regsitry  to http:
    
   `npm config set regsitry http://registry.npmjs.org/`
 
