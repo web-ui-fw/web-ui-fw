@@ -126,7 +126,7 @@ You'll need to build the project first (see above).
 
 In a browser, open:
 
-  demos/gallery/index.html
+  `demos/gallery/index.html`
 
 This shows the widgets currently available for the web UI framework.
 
@@ -135,13 +135,13 @@ widgets), you may want to bypass the framework loader's cache
 mechanism (so you get the latest version of every JS file). To
 do this, append a debug=true parameter to the URL, e.g.
 
-file://<path>/demos/gallery/index.html?debug=true
+ `file://<path>/demos/gallery/index.html?debug=true`
 
-where <path> is the full, absolute (with leading /) path to your
+where `<path>` is the full, absolute (with leading /) path to your
 checked out copy of the web-ui-fw repo.
 
 Also note that each time you change your widget code, you'll
-need to do "make clean ; make" to rebuild the CSS and JS files.
+need to do `make clean && make` to rebuild the CSS and JS files.
 
 
 Writing more widgets
