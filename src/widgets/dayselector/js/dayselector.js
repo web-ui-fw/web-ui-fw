@@ -30,12 +30,7 @@
             $(proto).find("fieldset").controlgroup({excludeInvisible: false});
 
             var container = $(proto).find("div.ui-dayselector").insertBefore(select);
-        	
-            $('input:radio[name=radio-choice]').change(function () {
-            	console.log("change val = " + $('input:radio[name=radio-choice]:checked').val());
-            	            		
-            });
-  			
+        	            
   			$('input:checkbox').change(function () {
             	if( $(this).is(':checked')) {
             		console.log("chkbox val = " + $(this).val());
