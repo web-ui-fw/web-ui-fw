@@ -185,18 +185,11 @@ $.widget("todons.autodividers", $.mobile.widget, {
                             lastDividerText +
                             '</li>');
 
-                // NB we hide the dividers so that they aren't shown
-                // until after the listview has been refreshed
-                divider.hide();
-
                 $(this).before(divider);
             }
         });
 
         $(this.element).listview('refresh');
-
-        // show the new dividers
-        $(this.element).find(':jqmData(role="list-divider")').show();
 
         // compare the old dividers with the new ones; if they are
         // different, trigger an 'update' event
