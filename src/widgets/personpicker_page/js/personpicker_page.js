@@ -105,16 +105,19 @@
                 self._resizePersonpicker();
             });
 
-            // Resize when page is ready.
-            if (this.element.closest(".ui-page").is(":visible"))
-                self._resizePersonpicker();
-            else
-                this.element.closest(".ui-page").bind("pageshow", function() { self._resizePersonpicker(); });
-
             // Resize when optionheader collapses or expands.
             self._data.ui.optionheader.bind('collapse expand', function() {
                 self._resizePersonpicker();
             });
+
+            // Resize when page is ready; always expand the optionheader
+            // on pageshow (which triggers a resize anyway)
+            if (this.element.closest(".ui-page").is(":visible"))
+                self._resizePersonpicker();
+            else
+                this.element.closest(".ui-page").bind("pageshow", function() {
+                    self._data.ui.optionheader.optionheader('expand', {duration:0});
+                });
         }
     }); /* End of widget */
 
