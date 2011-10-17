@@ -146,7 +146,7 @@ S = {
     defaultFrameworkTheme: 'default',
 
     frameworkVersions: ['0.1'],
-    frameworkThemes: ['default']
+    frameworkThemes: ['default', 'tizen']
 };
 
 /* Create custom user stylesheet */
@@ -231,6 +231,10 @@ S.css = {
 
         // load stylesheet for the theme
         stylesheetPath = S.basePath + 'themes/' + frameworkTheme + '/web-ui-fw-theme.css';
+        S.css.load(stylesheetPath);
+
+        // load stylesheet for the widgets
+        stylesheetPath = S.basePath + 'widget-css/web-ui-fw-widget.css';
         S.css.load(stylesheetPath);
 
         // load jquery and our config.js file, turning off jqm's page init until
