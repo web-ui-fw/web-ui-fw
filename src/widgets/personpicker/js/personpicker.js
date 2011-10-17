@@ -96,6 +96,8 @@
             });
 
             self._data.ui.personpicker.find('.ui-personpicker-container').scrollview({direction: 'y'});
+            self._data.ui.list.autodividers({selector: '.content > h3'});
+            self._data.ui.list.shortcutscroll();
             self._data.ui.search.textinput('enable');
         },
 
