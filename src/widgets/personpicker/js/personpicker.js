@@ -95,7 +95,7 @@
                     });
             });
 
-            self._data.ui.list.parent().scrollview({direction: 'y'});
+            self._data.ui.personpicker.find('.ui-personpicker-container').scrollview({direction: 'y'});
             self._data.ui.search.textinput('enable');
         },
 
@@ -146,8 +146,11 @@
                 persons.push(item.data("Person"));
             });
             return persons;
-        }
+        },
 
+        resizeScrollview: function(height) {
+            this._data.ui.personpicker.find('.ui-personpicker-container').height(height);
+        }
     }); /* End of widget */
 
     //auto self-init widgets
