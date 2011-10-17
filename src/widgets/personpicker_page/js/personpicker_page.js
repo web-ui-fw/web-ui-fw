@@ -47,8 +47,13 @@
         },
 
         _data: {
-            ui: null,
-            scrollViewResizeConstant: 138
+            ui: null
+        },
+
+        _resizePersonpicker: function() {
+            this._data.ui.personpicker.personpicker(
+                "resizeScrollview",
+                $(window).height() - this._data.ui.container.find('.page-header').outerHeight(true));
         },
 
         _create: function () {
@@ -90,17 +95,18 @@
                multipleSelection: self.options.multipleSelection,
                theme: self.options.theme
             });
-            self._data.ui.personpicker.personpicker(
-                "resizeScrollview", $(window).height() - self._data.scrollViewResizeConstant);
 
             // Hack: the JQM Dialog is unconfigurable in its will to
             // place a Close button there.
             self._data.ui.container.find(".page-header > a:first-child").remove();
 
             $(window).bind('resize', function() {
-                self._data.ui.personpicker.personpicker(
-                    "resizeScrollview", $(window).height() - self._data.scrollViewResizeConstant);
+                self._resizePersonpicker();
             });
+            if (this.element.closest(".ui-page").is(":visible"))
+                self._resizePersonpicker();
+            else
+                this.element.closest(".ui-page").bind("pageshow", function() { self._resizePersonpicker(); });
         }
     }); /* End of widget */
 
