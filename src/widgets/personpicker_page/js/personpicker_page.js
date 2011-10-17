@@ -100,13 +100,21 @@
             // place a Close button there.
             self._data.ui.container.find(".page-header > a:first-child").remove();
 
+            // Resize on window resize.
             $(window).bind('resize', function() {
                 self._resizePersonpicker();
             });
+
+            // Resize when page is ready.
             if (this.element.closest(".ui-page").is(":visible"))
                 self._resizePersonpicker();
             else
                 this.element.closest(".ui-page").bind("pageshow", function() { self._resizePersonpicker(); });
+
+            // Resize when optionheader collapses or expands.
+            self._data.ui.optionheader.bind('collapse expand', function() {
+                self._resizePersonpicker();
+            });
         }
     }); /* End of widget */
 
