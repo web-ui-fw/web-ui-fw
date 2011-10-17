@@ -148,7 +148,9 @@ $.widget("todons.optionheader", $.mobile.widget, {
     },
 
     _realize: function () {
-        this.expandedHeight = this.element.height();
+        if (!this.expandedHeight) {
+            this.expandedHeight = this.element.height();
+        }
 
         if (this.isCollapsed) {
             this.collapse({duration: 0});
