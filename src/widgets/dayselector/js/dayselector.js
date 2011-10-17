@@ -36,10 +36,13 @@
             	            		
             });
   			
-  			$('input:checkbox[name=checkbox-choice').bind('click' ,function () {
+  			$('input:checkbox').change(function () {
             	if( $(this).is(':checked')) {
             		console.log("chkbox val = " + $(this).val());
-            		this.daysArray.push($(this).val());
+            		self.daysArray.push($(this).val());
+            	}
+            	else {
+            		console.log("unchecked -->" + $(this).val());
             	}
             });
   				
