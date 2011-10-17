@@ -53,6 +53,7 @@
                             <li><a href="#slider-demo">Slider</a></li>
                             <li><a href="#personpicker-demo">PersonPicker</a></li>
                             <li><a onClick="launchPersonPicker()">PersonPicker Page</a></li>
+                            <li><a href="#autodividers-demo">Listview auto-dividers</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -676,5 +677,29 @@ $scroller2List.scrollview('option','scrollDuration','10000');
         </div> <!-- Page for PersonPicker button -->
 
         <div id="personpicker-page-demo" data-role="page"></div>
+
+        <div data-role="page" id="autodividers-demo" data-add-back-btn="true">
+            <div data-role="header" data-position="fixed">
+                <h1>Listview auto-dividers</h1>
+            </div>
+            <div data-role="content">
+                <p>This gets auto-dividers based on link text, or just
+                text (for read-only lists).</p>
+                <ul data-role="listview" data-autodividers="alpha">
+                    <li><a href="#">Amy</a></li>
+                    <li><a href="#">Andrew</a></li>
+                    <li><a href="#">Astrid</a></li>
+                    <li><a href="#">Bertie</a></li>
+                    <li><a href="#">Carrie</a></li>
+                    <li><a href="#">Derek</a></li>
+                    <li><a href="#">Ian</a></li>
+                    <li><a href="#">Matthew</a></li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div>
+
     </body>
 </html>

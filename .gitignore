@@ -5,3 +5,4 @@ build
 *.js.compiled
 .DS_Store
 *~
+*.orig
