@@ -52,6 +52,9 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // find the bottom of the last item in the listview
         this.lastListItem = $el.children().last();
 
+        // remove scrollbars from scrollview
+        this.scrollview.find('.ui-scrollbar').hide();
+
         var jumpToDivider = function(divider) {
             // get the vertical position of the divider (so we can
             // scroll to it)
