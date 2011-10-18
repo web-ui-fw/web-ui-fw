@@ -57,6 +57,15 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
         ui = {
           container: "#volumecontrol",
           volumeImage: "#volumecontrol-indicator"
+        },
+        yCoord = function(volumeImage, e) {
+          var target = $(e.target),
+              coords = $.mobile.targetRelativeCoordsFromEvent(e);
+
+          if (target.hasClass("ui-volumecontrol-level"))
+            coords.y += target.offset().top  - volumeImage.offset().top;
+
+          return coords.y;
         };
 
       ui = $.mobile.todons.loadPrototype("volumecontrol", ui);
@@ -85,13 +94,13 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
 
       ui.volumeImage.bind("vmousedown", function(e) {
         self.dragging = true;
-        self._setVolume((1.0 - e.offsetY / $(this).outerHeight()) * self._maxVolume());
+        self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
         event.preventDefault();
       });
 
       ui.volumeImage.bind("vmousemove", function(e) {
         if (self.dragging) {
-          self._setVolume((1.0 - e.offsetY / $(this).outerHeight()) * self._maxVolume());
+          self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
           event.preventDefault();
         }
       });
@@ -191,9 +200,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
   },
 
   _setVolumeIcon: function() {
-    while (this.volumeElemStack.length > this.options.volume)
-      this.volumeElemStack.pop().remove();
-    if (this.volumeElemStack.length < this.options.volume) {
+    if (this.volumeElemStack.length === 0) {
       var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
           cx = this.ui.volumeImage.width(),
           cy = this.ui.volumeImage.height(),
@@ -203,7 +210,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
           yStart = cy - 2 * cyElem,
           elem;
 
-      for (var Nix = this.volumeElemStack.length; Nix < this.options.volume ; Nix++) {
+      for (var Nix = this.volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
         elem = $("<div>", { class: "ui-volumecontrol-level"})
           .css({
             left: (cx - (cxStart + Nix * cxInc)) / 2,
@@ -215,6 +222,11 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
         this.ui.volumeImage.append(elem);
       }
     }
+    for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
+      if (Nix < this.options.volume)
+        this.volumeElemStack[Nix].addClass("ui-volumecontrol-level-set");
+      else
+        this.volumeElemStack[Nix].removeClass("ui-volumecontrol-level-set");
   },
 
   open: function() {
