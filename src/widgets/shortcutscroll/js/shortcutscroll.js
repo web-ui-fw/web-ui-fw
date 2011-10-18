@@ -137,7 +137,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         });
     },
 
-    refresh: function (visibleDividersOnly) {
+    refresh: function (visibleOnly) {
         var self = this,
             shortcutsTop;
 
@@ -150,7 +150,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // get all the list items
         var listItems = this.element.find('li:not(:jqmData(role="list-divider"))');
 
-        if (visibleDividersOnly) {
+        if (visibleOnly) {
             dividers = dividers.filter(':visible');
             listItems = listItems.filter(':visible');
         }
