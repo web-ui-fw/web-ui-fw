@@ -61,12 +61,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         }
 
         // popup for the hovering character
+        shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
         $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
-        if (!$popup.size()) {
-            // create popup, add it to shortcutsContainer
-            shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
-            $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
-        }
 
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
