@@ -56,34 +56,34 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         lastListItem = $el.children().last();
 
         var jumpToDivider = function(divider) {
-                // get the vertical position of the divider (so we can
-                // scroll to it)
-                var dividerY = $(divider).position().top;
+            // get the vertical position of the divider (so we can
+            // scroll to it)
+            var dividerY = $(divider).position().top;
 
-                // find the bottom of the last list item
-                var bottomOffset = lastListItem.outerHeight(true) +
-                                   lastListItem.position().top;
+            // find the bottom of the last list item
+            var bottomOffset = lastListItem.outerHeight(true) +
+                               lastListItem.position().top;
 
-                var scrollviewHeight = self.scrollview.height();
+            var scrollviewHeight = self.scrollview.height();
 
-                // check that after the candidate scroll, the bottom of the
-                // last item will still be at the bottom of the scroll view
-                // and not some way up the page
-                var maxScroll = bottomOffset - scrollviewHeight;
-                dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
+            // check that after the candidate scroll, the bottom of the
+            // last item will still be at the bottom of the scroll view
+            // and not some way up the page
+            var maxScroll = bottomOffset - scrollviewHeight;
+            dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
 
-                // don't apply a negative scroll, as this means the
-                // divider should already be visible
-                dividerY = Math.max(dividerY, 0);
+            // don't apply a negative scroll, as this means the
+            // divider should already be visible
+            dividerY = Math.max(dividerY, 0);
 
-                // apply the scroll
-                self.scrollview.scrollview('scrollTo', 0, -dividerY);
+            // apply the scroll
+            self.scrollview.scrollview('scrollTo', 0, -dividerY);
 
-                $popup.text($(divider).text())
-                      .position({my: 'center center',
-                                 at: 'center center',
-                                 of: self.scrollview})
-                      .show();
+            $popup.text($(divider).text())
+                  .position({my: 'center center',
+                             at: 'center center',
+                             of: self.scrollview})
+                  .show();
         };
 
         shortcutsList
