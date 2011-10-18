@@ -12,11 +12,13 @@
 }
 .ui-shortcutscroll ul{
 	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 .ui-shortcutscroll li {
-  min-height: 14px;
   cursor: pointer;
   color:rgba(0,0,0,0.6);
+  padding: 2px 2px 2px 5px;
 }
 
 .ui-shortcutscroll-popup {
