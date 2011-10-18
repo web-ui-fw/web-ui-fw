@@ -55,8 +55,6 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
-        // get all the dividers from the list and turn them into
-        // shortcuts
         var jumpToDivider = function(divider) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
@@ -123,6 +121,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             $popup.hide();
         });
 
+        // get all the dividers from the list and turn them into
+        // shortcuts
         dividers.each(function (index, divider) {
             shortcutsList.append($('<li>' + $(divider).text() + '</li>').data('divider', divider));
         });
