@@ -34,21 +34,21 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
     _create: function () {
         var $el = this.element,
-            shortcutsContainer = $('<div class="ui-shortcutscroll"/>'),
             lastListItem = null,
             self = this,
             $popup,
             page = $el.closest(':jqmData(role="page")');
 
         this.scrollview = $el.closest('.ui-scrollview-clip');
+        this.shortcutsContainer = $('<div class="ui-shortcutscroll"/>');
         this.shortcutsList = $('<ul></ul>');
 
         // popup for the hovering character
-        shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
-        $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
+        this.shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
+        $popup = this.shortcutsContainer.find('.ui-shortcutscroll-popup');
 
-        shortcutsContainer.append(this.shortcutsList);
-        this.scrollview.append(shortcutsContainer);
+        this.shortcutsContainer.append(this.shortcutsList);
+        this.scrollview.append(this.shortcutsContainer);
 
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
@@ -129,7 +129,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
     },
 
     refresh: function () {
-        var self = this;
+        var self = this,
+            shortcutsTop;
 
         this.shortcutsList.find('li').remove();
 
@@ -148,6 +149,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             self.shortcutsList.append($('<li>' + $(divider).text() + '</li>')
                               .data('divider', divider));
         });
+
+        // position the shortcut flush with the top of the first
+        // list divider
+        shortcutsTop = dividers.first().position().top;
+        this.shortcutsContainer.css('top', shortcutsTop);
     }
 });
 
