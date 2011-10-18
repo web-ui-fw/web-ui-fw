@@ -367,6 +367,9 @@
                      input:input,
                      theDate: theDate
             });
+
+            $(this.element).buttonMarkup();
+
             self._buildPage();
         },
 
