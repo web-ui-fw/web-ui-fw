@@ -90,6 +90,10 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 var maxScroll = bottomOffset - scrollviewHeight;
                 dividerY = (dividerY > maxScroll ? maxScroll : dividerY);
 
+                // don't apply a negative scroll, as this means the
+                // divider should already be visible
+                dividerY = Math.max(dividerY, 0);
+
                 // apply the scroll
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
