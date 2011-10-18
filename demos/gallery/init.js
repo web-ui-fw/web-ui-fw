@@ -167,14 +167,18 @@ $(document).bind("pagecreate", function () {
     });
 
     $("#personpicker-demo").bind('pageshow', function() {
-        $(":jqmData(role='personpicker')").personpicker(
-        "option", "successCallback", function(persons) {
+        var personpicker = $(":jqmData(role='personpicker')");
+        personpicker.personpicker('option', 'addressBook', new $.mobile.todons.AddressBook());
+
+        personpicker.personpicker('option', 'successCallback', function(persons) {
             s = "PersonPicker succedeed! These are the selected persons:\n";
             persons.forEach(function(p) {
                 s += p.id() + " ";
             });
             alert(s);
         });
+
+        personpicker.personpicker('refresh');
     });
 });
 
@@ -244,6 +248,7 @@ $(document).bind("pagecreate", function() {
 function launchPersonPicker() {
     $("#personpicker-page-demo").personpicker_page({
         title: "Choose contacts",
+        addressBook: new $.mobile.todons.AddressBook(),
         successCallback: function(persons) {
             s = "The following contacts were chosen:\n";
             persons.forEach(function(p) {
