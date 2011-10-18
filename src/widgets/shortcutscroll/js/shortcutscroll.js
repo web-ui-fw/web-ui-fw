@@ -126,6 +126,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         else {
             this.refresh();
         }
+
+        // refresh the list when the dividers change
+        $el.bind('listChanged', function () {
+            self.refresh();
+        });
     },
 
     refresh: function () {
