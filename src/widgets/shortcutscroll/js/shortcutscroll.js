@@ -34,7 +34,6 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
     _create: function () {
         var $el = this.element,
-            lastListItem = null,
             self = this,
             $popup,
             page = $el.closest(':jqmData(role="page")');
@@ -51,7 +50,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         this.scrollview.append(this.shortcutsContainer);
 
         // find the bottom of the last item in the listview
-        lastListItem = $el.children().last();
+        this.lastListItem = $el.children().last();
 
         var jumpToDivider = function(divider) {
             // get the vertical position of the divider (so we can
@@ -59,8 +58,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             var dividerY = $(divider).position().top;
 
             // find the bottom of the last list item
-            var bottomOffset = lastListItem.outerHeight(true) +
-                               lastListItem.position().top;
+            var bottomOffset = self.lastListItem.outerHeight(true) +
+                               self.lastListItem.position().top;
 
             var scrollviewHeight = self.scrollview.height();
 
@@ -134,7 +133,6 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // refresh the list when dividers are filtered out
         $el.bind('listFiltered', function () {
-            console.log('list was filtered');
             self.refresh(true);
         });
     },
@@ -149,8 +147,12 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // shortcuts
         var dividers = this.element.find(':jqmData(role="list-divider")');
 
+        // get all the list items
+        var listItems = this.element.find('li:not(:jqmData(role="list-divider"))');
+
         if (visibleDividersOnly) {
             dividers = dividers.filter(':visible');
+            listItems = listItems.filter(':visible');
         }
 
         if (dividers.length < 2) {
@@ -159,6 +161,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         }
 
         this.shortcutsList.show();
+
+        this.lastListItem = listItems.last();
 
         dividers.each(function (index, divider) {
             self.shortcutsList.append($('<li>' + $(divider).text() + '</li>')
