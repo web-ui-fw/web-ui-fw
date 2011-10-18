@@ -40,7 +40,7 @@ LIBS_JS_FILES +=\
 JQUERY = jquery-1.6.4.min.js
 endif
 
-all: third_party_widgets widgets widget_styling third_party_themes themes
+all: third_party_widgets widgets widget_styling themes
 
 widget_styling: init
 	# Building non-theme-specific styling for web-ui-fw widgets...
@@ -84,20 +84,6 @@ widgets: init
               done; \
           fi; \
 	    done
-
-third_party_themes: widget_styling
-	# Building jqm themes...
-	@@cd ${LIBS_DIR}/themes; \
-	for f in `find ${LIBS_DIR}/themes -maxdepth 1 -mindepth 1 -type d`; do \
-	    outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
-	    mkdir -p $$outdir/images; \
-	    cp -a $$f/images/* $$outdir/images/; \
-	    touch $$outdir/${FW_THEME_CSS_FILE}; \
-	    for c in `find $$f -iname *.css` ; do \
-          cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
-	    done; \
-	    cp -a ${FW_WIDGET_CSS_FILE} $$outdir/ ; \
-	done
 
 themes: widget_styling
 	# Building web-ui-fw themes...
