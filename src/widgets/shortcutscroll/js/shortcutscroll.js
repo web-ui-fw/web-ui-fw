@@ -34,11 +34,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
     _create: function () {
         var $el = this.element,
-            o = this.options,
             shortcutsContainer = $('<div class="ui-shortcutscroll"/>'),
             lastListItem = null,
             self = this,
-            $popup;
+            $popup,
+            page = $el.closest(':jqmData(role="page")');
 
         this.scrollview = $el.closest('.ui-scrollview-clip');
         this.shortcutsList = $('<ul></ul>');
@@ -120,7 +120,12 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             $popup.hide();
         });
 
-        this.refresh();
+        if (page && !(page.is(':visible'))) {
+            page.bind('pageshow', function () { self.refresh(); });
+        }
+        else {
+            this.refresh();
+        }
     },
 
     refresh: function () {
