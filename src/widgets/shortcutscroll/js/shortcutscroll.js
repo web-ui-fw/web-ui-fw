@@ -36,21 +36,19 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         var $el = this.element,
             o = this.options,
             shortcutsContainer = $('<div class="ui-shortcutscroll"/>'),
-            shortcutsList = $('<ul></ul>'),
-            dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
             self = this,
             $popup;
 
         this.scrollview = $el.closest('.ui-scrollview-clip');
-
-        if (dividers.length < 2) {
-          return;
-        }
+        this.shortcutsList = $('<ul></ul>');
 
         // popup for the hovering character
         shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
         $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
+
+        shortcutsContainer.append(this.shortcutsList);
+        this.scrollview.append(shortcutsContainer);
 
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
@@ -86,7 +84,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                   .show();
         };
 
-        shortcutsList
+        this.shortcutsList
         // bind mouse over so it moves the scroller to the divider
         .bind('touchstart mousedown vmousedown touchmove vmousemove vmouseover', function (e) {
             // Get coords relative to the element
@@ -94,15 +92,15 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
             // If the element is a list item, get coordinates relative to the shortcuts list
             if (e.target.tagName.toLowerCase() === "li") {
-                coords.x += $(e.target).offset().left - shortcutsList.offset().left;
-                coords.y += $(e.target).offset().top  - shortcutsList.offset().top;
+                coords.x += $(e.target).offset().left - self.shortcutsList.offset().left;
+                coords.y += $(e.target).offset().top  - self.shortcutsList.offset().top;
             }
 
             // Hit test each list item
-            shortcutsList.find('li').each(function() {
+            self.shortcutsList.find('li').each(function() {
                 var listItem = $(this),
-                    l = listItem.offset().left - shortcutsList.offset().left,
-                    t = listItem.offset().top  - shortcutsList.offset().top,
+                    l = listItem.offset().left - self.shortcutsList.offset().left,
+                    t = listItem.offset().top  - self.shortcutsList.offset().top,
                     r = l + Math.abs(listItem.outerWidth(true)),
                     b = t + Math.abs(listItem.outerHeight(true));
 
@@ -121,14 +119,24 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             $popup.hide();
         });
 
+        this.refresh();
+    },
+
+    refresh: function () {
+        var self = this;
+
         // get all the dividers from the list and turn them into
         // shortcuts
-        dividers.each(function (index, divider) {
-            shortcutsList.append($('<li>' + $(divider).text() + '</li>').data('divider', divider));
-        });
+        var dividers = this.element.find(':jqmData(role="list-divider")');
 
-        shortcutsContainer.append(shortcutsList);
-        this.scrollview.append(shortcutsContainer);
+        if (dividers.length < 2) {
+          return;
+        }
+
+        dividers.each(function (index, divider) {
+            self.shortcutsList.append($('<li>' + $(divider).text() + '</li>')
+                              .data('divider', divider));
+        });
     }
 });
 
