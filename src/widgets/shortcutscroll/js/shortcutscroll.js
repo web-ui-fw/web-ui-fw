@@ -17,28 +17,19 @@
  *
  * To apply, add the attribute data-shortcutscroll="true" to a listview
  * (a <ul> or <ol> element inside a page). Alternatively, call
- * shortcutscroll() on an element (this allows configuration of
- * the scrollview to be controlled).
+ * shortcutscroll() on an element.
  *
- * If a scrollview is not passed as an option to the widget, the parent
- * of the listview is assumed to be the scrollview under control.
+ * The closest element with class ui-scrollview-clip is used as the
+ * scrollview to be controlled.
  *
  * If a listview has no dividers or a single divider, the widget won't
  * display.
- *
- * Options:
- *
- *   scrollview:   Element to use as the scrollview for the shortcutscroll.
- *                 Can only be set programmatically. Defaults to the parent
- *                 element of the list which has data-shortcutscroll="true"
- *                 set on it.
  */
 (function( $, undefined ) {
 
 $.widget( "todons.shortcutscroll", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(shortcutscroll)",
-        scrollview: null
+        initSelector: ":jqmData(shortcutscroll)"
     },
 
     _create: function () {
@@ -48,16 +39,13 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             shortcutsList = $('<ul></ul>'),
             dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
-            shortcutscroll = this,
+            self = this,
             $popup;
+
+        this.scrollview = $el.closest('.ui-scrollview-clip');
 
         if (dividers.length < 2) {
           return;
-        }
-
-        // if no scrollview has been specified, use the parent of the listview
-        if (o.scrollview === null) {
-            o.scrollview = $el.closest('.ui-scrollview-clip');
         }
 
         // popup for the hovering character
@@ -78,7 +66,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 var bottomOffset = lastListItem.outerHeight(true) +
                                    lastListItem.position().top;
 
-                var scrollviewHeight = o.scrollview.height();
+                var scrollviewHeight = self.scrollview.height();
 
                 // check that after the candidate scroll, the bottom of the
                 // last item will still be at the bottom of the scroll view
@@ -91,12 +79,12 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 dividerY = Math.max(dividerY, 0);
 
                 // apply the scroll
-                o.scrollview.scrollview('scrollTo', 0, -dividerY);
+                self.scrollview.scrollview('scrollTo', 0, -dividerY);
 
                 $popup.text($(divider).text())
                       .position({my: 'center center',
                                  at: 'center center',
-                                 of: o.scrollview})
+                                 of: self.scrollview})
                       .show();
         };
 
@@ -140,7 +128,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         });
 
         shortcutsContainer.append(shortcutsList);
-        o.scrollview.append(shortcutsContainer);
+        this.scrollview.append(shortcutsContainer);
     }
 });
 
