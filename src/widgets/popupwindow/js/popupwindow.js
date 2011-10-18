@@ -107,12 +107,6 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
     ui.screen.bind( "vclick", function( event ) {
         self.close();
     });
-
-    $("[aria-haspopup='true'][aria-owns='" + this.element.attr("id") + "']").bind("vclick", function(e) {
-      self.open(
-        $(this).offset().left + $(this).outerWidth()  / 2,
-        $(this).offset().top  + $(this).outerHeight() / 2);
-    });
   },
 
   _setOverlayTheme: function(newTheme) {
@@ -274,6 +268,12 @@ $(document).bind("pagecreate create", function(e) {
     $($.todons.popupwindow.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .popupwindow();
+
+    $("[aria-haspopup='true'][aria-owns]").bind("vclick", function(e) {
+      $("#" + $(this).attr("aria-owns")).popupwindow('open',
+        $(this).offset().left + $(this).outerWidth()  / 2,
+        $(this).offset().top  + $(this).outerHeight() / 2);
+    });
 });
 
 })(jQuery);
