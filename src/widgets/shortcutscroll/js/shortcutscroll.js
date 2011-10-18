@@ -126,13 +126,18 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
     refresh: function () {
         var self = this;
 
+        this.shortcutsList.find('li').remove();
+
         // get all the dividers from the list and turn them into
         // shortcuts
         var dividers = this.element.find(':jqmData(role="list-divider")');
 
         if (dividers.length < 2) {
-          return;
+            this.shortcutsList.hide();
+            return;
         }
+
+        this.shortcutsList.show();
 
         dividers.each(function (index, divider) {
             self.shortcutsList.append($('<li>' + $(divider).text() + '</li>')
