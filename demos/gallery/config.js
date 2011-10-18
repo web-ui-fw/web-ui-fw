@@ -2,5 +2,6 @@
 // object (e.g. called CONFIG) and assign a "deps" property to it; then
 // load each of the files in the deps property inside bootstrap.js
 S.load(
+    'stubs.js',
     'init.js'
 );

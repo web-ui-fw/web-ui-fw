@@ -38,7 +38,7 @@
     $.widget("todons.personpicker_page", $.mobile.dialog, {
         options: {
             title: "",
-            addressBook: new $.mobile.todons.AddressBook(),
+            addressBook: null,
             successCallback: null,
             errorCallback: null,
             filter: null,

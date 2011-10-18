@@ -41,7 +41,7 @@
 (function ($, window, undefined) {
     $.widget("todons.personpicker", $.mobile.widget, {
         options: {
-            addressBook: new $.mobile.todons.AddressBook(),
+            addressBook: null,
             successCallback: null,
             errorCallback: null,
             filter: null,
@@ -60,7 +60,8 @@
             var list = self._data.ui.list;
             var li = self._data.row.li;
 
-            li.remove();
+            list.find('li').remove();
+
             persons.forEach(function(p) {
                 currentListItem = li.clone();
                 currentCheckbox = currentListItem.find('.switch');
@@ -123,23 +124,14 @@
 
             $.mobile.todons.parseOptions(self, true);
 
-            // Load persons.
-            if (self.options.addressBook !== null) {
-                // Replace this with actuall call when implemented.
-                self.options.addressBook.findPersons(
-                    function(persons) { self._personArraySuccessCallback(persons); },
-                    self.options.errorCallback,
-                    self.options.filter,
-                    null,
-                    null);
-            }
-
             this.element.append(self._data.ui.personpicker);
             self._data.ui.list.listview({theme: self.options.theme});
 
             // disable search input until list is populated
             self._data.ui.search = $(this.element).find(':jqmData(type="search")');
             self._data.ui.search.textinput('disable');
+
+            this.refresh();
         },
 
         getPersons: function() {
@@ -148,6 +140,21 @@
                 persons.push(item.data("Person"));
             });
             return persons;
+        },
+
+        refresh: function () {
+            var self = this;
+
+            // Load persons.
+            if (this.options.addressBook !== null) {
+                // Replace this with actuall call when implemented.
+                this.options.addressBook.findPersons(
+                    function (persons) { self._personArraySuccessCallback(persons); },
+                    this.options.errorCallback,
+                    this.options.filter,
+                    null,
+                    null);
+            }
         },
 
         resizeScrollview: function(height) {

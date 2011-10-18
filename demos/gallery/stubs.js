@@ -31,7 +31,7 @@ jQuery.extend(jQuery.mobile.todons, {
 
         // TODO: this is not the real API!
         this.avatar = function() {
-            return "../../build/web-ui-fw/0.1/themes/default/images/avatar.png";
+            return "images/avatar.png";
         }
     },
 
@@ -56,4 +56,3 @@ jQuery.extend(jQuery.mobile.todons, {
         }
     }
 });
-
