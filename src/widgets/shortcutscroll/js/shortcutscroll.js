@@ -89,18 +89,19 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         .bind('touchstart mousedown vmousedown touchmove vmousemove vmouseover', function (e) {
             // Get coords relative to the element
             var coords = $.mobile.targetRelativeCoordsFromEvent(e);
+            var shortcutsListOffset = self.shortcutsList.offset();
 
             // If the element is a list item, get coordinates relative to the shortcuts list
             if (e.target.tagName.toLowerCase() === "li") {
-                coords.x += $(e.target).offset().left - self.shortcutsList.offset().left;
-                coords.y += $(e.target).offset().top  - self.shortcutsList.offset().top;
+                coords.x += $(e.target).offset().left - shortcutsListOffset.left;
+                coords.y += $(e.target).offset().top  - shortcutsListOffset.top;
             }
 
             // Hit test each list item
             self.shortcutsList.find('li').each(function() {
                 var listItem = $(this),
-                    l = listItem.offset().left - self.shortcutsList.offset().left,
-                    t = listItem.offset().top  - self.shortcutsList.offset().top,
+                    l = listItem.offset().left - shortcutsListOffset.left,
+                    t = listItem.offset().top  - shortcutsListOffset.top,
                     r = l + Math.abs(listItem.outerWidth(true)),
                     b = t + Math.abs(listItem.outerHeight(true));
 
