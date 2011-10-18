@@ -12,14 +12,25 @@
   .ui-volumecontrol-icon {
     display: table;
     margin: auto;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    padding-left: 104px;
-    padding-right: 104px;
+    background-image: url('images/00_volume_icon.png');
+    width:  54px;
+    height: 54px;
+    padding-top:     13px;
+    padding-bottom:  13px;
+    padding-left:   104px;
+    padding-right:  104px;
   }
 
   .ui-volumecontrol-indicator {
-    margin: auto;
+    position: relative;
     display: table;
+    margin: auto;
+    width: 175px;
+    height: 263px;
+
+    .ui-volumecontrol-level {
+      position: absolute;
+      background: rgba(1, 1, 1, 0.25);
+    }
   }
 }

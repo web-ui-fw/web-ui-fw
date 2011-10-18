@@ -67,10 +67,17 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
       $.extend (self, {
         isOpen: false,
         ui: ui,
-        dragging: false
+        dragging: false,
+        realized: false,
+        volumeElemStack: []
       });
 
       $.mobile.todons.parseOptions(this, true);
+
+      if (this.element.closest(".ui-page").is(":visible"))
+        self._realize();
+      else
+        this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
       ui.container.bind("closed", function(e) {
         self.isOpen = false;
@@ -132,8 +139,16 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
       });
   },
 
+  _realize: function() {
+    if (!this.realized)
+      this._setVolume(this.options.volume, true);
+    this.realized = true;
+  },
+
   _setBasicTone: function(value, unconditional) {
     if (this.options.basicTone != value || unconditional) {
+      while (this.volumeElemStack.length > 0)
+        this.volumeElemStack.pop().remove();
       this.options.basicTone = value;
       this._setVolume(this.options.volume, true);
     }
@@ -172,19 +187,34 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
   },
 
   _maxVolume: function() {
-    var ret = this.ui.volumeImage.attr(this.options.basicTone
-      ? "data-basicTone-maxVolume"
-      : "data-generalVolume-maxVolume");
-    return ret;
+    return (this.options.basicTone ? 7 : 15);
   },
 
   _setVolumeIcon: function() {
-    this.ui.volumeImage.attr("src",
-      this.ui.volumeImage.attr(
-          (this.options.basicTone
-            ? "data-basicTone-imageTemplate"
-            : "data-generalVolume-imageTemplate"))
-        .replace("%1", ((this.options.volume < 10 ? "0" : "") + this.options.volume)));
+    while (this.volumeElemStack.length > this.options.volume)
+      this.volumeElemStack.pop().remove();
+    if (this.volumeElemStack.length < this.options.volume) {
+      var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
+          cx = this.ui.volumeImage.width(),
+          cy = this.ui.volumeImage.height(),
+          cxInc = (cx - cxStart) / this._maxVolume(),
+          nDivisions = 2 * this._maxVolume() + 1,
+          cyElem = cy / nDivisions,
+          yStart = cy - 2 * cyElem,
+          elem;
+
+      for (var Nix = this.volumeElemStack.length; Nix < this.options.volume ; Nix++) {
+        elem = $("<div>", { class: "ui-volumecontrol-level"})
+          .css({
+            left: (cx - (cxStart + Nix * cxInc)) / 2,
+            top:  yStart - Nix * 2 * cyElem,
+            width: cxStart + Nix * cxInc,
+            height: cyElem
+          });
+        this.volumeElemStack.push(elem);
+        this.ui.volumeImage.append(elem);
+      }
+    }
   },
 
   open: function() {
