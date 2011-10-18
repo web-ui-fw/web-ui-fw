@@ -131,9 +131,15 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         $el.bind('listChanged', function () {
             self.refresh();
         });
+
+        // refresh the list when dividers are filtered out
+        $el.bind('listFiltered', function () {
+            console.log('list was filtered');
+            self.refresh(true);
+        });
     },
 
-    refresh: function () {
+    refresh: function (visibleDividersOnly) {
         var self = this,
             shortcutsTop;
 
@@ -142,6 +148,10 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // get all the dividers from the list and turn them into
         // shortcuts
         var dividers = this.element.find(':jqmData(role="list-divider")');
+
+        if (visibleDividersOnly) {
+            dividers = dividers.filter(':visible');
+        }
 
         if (dividers.length < 2) {
             this.shortcutsList.hide();
