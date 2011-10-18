@@ -48,28 +48,27 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             shortcutsList = $('<ul></ul>'),
             dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
-            shortcutscroll = this;
+            shortcutscroll = this,
+            $popup;
 
         if (dividers.length < 2) {
           return;
         }
-
-        // popup for the hovering character
-        var popup = null;
-
-        var removePopup = function () {
-            if (popup) {
-                popup.text('');
-                popup.remove();
-                popup = null;
-            }
-        };
 
         // if no scrollview has been specified, use the parent of the listview
         if (o.scrollview === null) {
             o.scrollview = $el.closest('.ui-scrollview-clip');
         }
 
+        // popup for the hovering character 
+        
+        $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
+        if (!$popup.size()) {
+            // create popup, add it to shortcutsContainer 
+            shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
+            $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
+        }
+        
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
@@ -96,23 +95,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 // apply the scroll
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
-                removePopup();
-
-                // show the popup
-                popup = $('<div class="ui-shortcutscroll-popup">' +
-                          '<div></div>' +
-                          '</div>');
-
-                o.scrollview.after(popup);
-
-                popup.find('div').text($(divider).text())
-                                 .position({my: 'center center',
-                                            at: 'center center',
-                                            of: popup});
-
-                popup.position({my: 'center center',
+        
+                $popup.text($(divider).text())
+                    .position({my: 'center center',
                                 at: 'center center',
-                                of: o.scrollview});
+                                of: o.scrollview}).show();
         };
 
         shortcutsList
@@ -147,7 +134,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         })
         // bind mouseout of the shortcutscroll container to remove popup
         .bind('touchend mouseup vmouseup vmouseout', function () {
-            removePopup();
+            $popup.hide();
         });
 
         dividers.each(function (index, divider) {
