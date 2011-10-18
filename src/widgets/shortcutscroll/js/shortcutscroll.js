@@ -60,21 +60,19 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             o.scrollview = $el.closest('.ui-scrollview-clip');
         }
 
-        // popup for the hovering character 
-        
+        // popup for the hovering character
         $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
         if (!$popup.size()) {
-            // create popup, add it to shortcutsContainer 
+            // create popup, add it to shortcutsContainer
             shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
             $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
         }
-        
+
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
         // get all the dividers from the list and turn them into
         // shortcuts
-
         var jumpToDivider = function(divider) {
                 // get the vertical position of the divider (so we can
                 // scroll to it)
@@ -95,11 +93,11 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
                 // apply the scroll
                 o.scrollview.scrollview('scrollTo', 0, -dividerY);
 
-        
                 $popup.text($(divider).text())
-                    .position({my: 'center center',
-                                at: 'center center',
-                                of: o.scrollview}).show();
+                      .position({my: 'center center',
+                                 at: 'center center',
+                                 of: o.scrollview})
+                      .show();
         };
 
         shortcutsList
