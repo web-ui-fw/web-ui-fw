@@ -166,6 +166,23 @@ $(document).bind("pagecreate", function () {
         console.log('option header was expanded');
     });
 
+    $('#slider-demo').bind('pageshow', function () {
+        var popupEnabled = false;
+
+        var setPopupEnabled = function( newState ) {
+            $('#mySlider').todonsslider('option','popupEnabled',newState);
+            $("#togglePopup .ui-btn-text").text((newState?"Dis":"En")+"able popup");
+        };
+
+        setPopupEnabled(popupEnabled);
+
+        $("#togglePopup").bind("vclick", function (e) {
+            popupEnabled = !popupEnabled;
+            setPopupEnabled(popupEnabled);
+        });
+    });
+
+
     $("#personpicker-demo").bind('pageshow', function() {
         var personpicker = $(":jqmData(role='personpicker')");
         personpicker.personpicker('option', 'addressBook', new $.mobile.todons.AddressBook());
