@@ -49,7 +49,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             dividers = $el.find(':jqmData(role="list-divider")'),
             lastListItem = null,
             shortcutscroll = this,
-			$popup;
+            $popup;
 
         if (dividers.length < 2) {
           return;
@@ -60,15 +60,15 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             o.scrollview = $el.closest('.ui-scrollview-clip');
         }
 
-		// popup for the hovering character	
-		
+        // popup for the hovering character 
+        
         $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
-		if (!$popup.size()) {
-			// create popup, add it to shortcutsContainer 
-			shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
-			$popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
-		}
-		
+        if (!$popup.size()) {
+            // create popup, add it to shortcutsContainer 
+            shortcutsContainer.append($('<div class="ui-shortcutscroll-popup"></div>'));
+            $popup = shortcutsContainer.find('.ui-shortcutscroll-popup');
+        }
+        
         // find the bottom of the last item in the listview
         lastListItem = $el.children().last();
 
@@ -97,7 +97,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         
                 $popup.text($(divider).text())
-					.position({my: 'center center',
+                    .position({my: 'center center',
                                 at: 'center center',
                                 of: o.scrollview}).show();
         };
