@@ -54,12 +54,13 @@
             	container.trigger("day-changed", self.getValue());
             });
             
-            $('input:checkbox[name=checkAll]').change(function() { self.selectAll(); });
-  			/*
+            //$('input:checkbox[name=checkAll]').change(function() { self.selectAll(); });
+  			
   			$('input:checkbox[name=checkAll]').change(function() {
   				console.log(".checkall is clicked");
-				//$('input:checkbox[name=checkAll]').parent('fieldset:eq(0)').find(':checkbox').attr('checked', true);
 				if( $(this).is(':checked')) {
+					$('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').attr('checked', true);
+				
 					var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 					self.daysArray = [];
 					jQuery.each( days, function() {
@@ -67,13 +68,12 @@
 					});
 				}
 				else {
+					$('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').removeAttr('checked');
 					self.daysArray = [];
 				}
 				
 				container.trigger("day-changed", self.getValue());
 	  			});
-	  			*/
- 	
 				
 					
 		},
