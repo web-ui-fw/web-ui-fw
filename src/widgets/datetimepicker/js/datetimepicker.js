@@ -205,7 +205,7 @@
                  * padding/borders/margins rather than adding left padding/borders/margins directly. Currently, this
                  * happens to work, because the @owner divs have no left border/margin/padding.
                  */
-                ui.triangle.triangle("option", "offsetX", owner.offset().left + owner.width() / 2 - this.ui.triangle.offset().left);
+                ui.triangle.triangle("option", "offset", owner.offset().left + owner.width() / 2 - this.ui.triangle.offset().left);
 
                 /*
                  * Now that all the items have been added to the DOM, let's compute the size of the selector.
@@ -396,7 +396,7 @@
 
             $(input).css("display", "none");
             $(input).after(ui.container);
-            ui.triangle.triangle();
+            ui.triangle.triangle({"class" : "selector-triangle-color"});
             this.data.parentInput = input;
 
             /* We must display either time or date: if the user set both to

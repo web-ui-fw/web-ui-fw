@@ -2,7 +2,9 @@
 
 $.widget( "todons.triangle", $.mobile.widget, {
   options: {
-    offsetX: 50,
+    class: "",
+    offset: 50,
+    color: undefined,
     initSelector: ":jqmData(role='triangle')"
   },
 
@@ -14,7 +16,6 @@ $.widget( "todons.triangle", $.mobile.widget, {
     $.extend(this, {
       realized: false,
       triangle: triangle,
-      offsetX: undefined
     });
 
     this.element.css("position", "relative").append(triangle);
@@ -28,26 +29,45 @@ $.widget( "todons.triangle", $.mobile.widget, {
   },
 
   _realize: function() {
-    this.triangle.css("border-left-width",   this.element.height());
-    this.triangle.css("border-right-width",  this.element.height());
-    this.triangle.css("border-bottom-width", this.element.height());
+    this.triangle.css("border-left-width",    this.element.height());
+    this.triangle.css("border-right-width",   this.element.height());
+    this.triangle.css("border-bottom-width",  this.element.height());
+    this.triangle.css("margin-left",         -this.element.height());
+    this._setOffset(this.options.offset, true);
     this.realized = true;
-    if (this.offsetX != undefined)
-      this._setOffsetX(this.offsetX, true);
   },
 
-  _setOffsetX: function(value, unconditional) {
-    if (value != this.offsetX || unconditional) {
-      this.triangle.css("left", value - this.element.height());
-      this.offsetX = value;
+  _setOffset: function(value, unconditional) {
+    if (value != this.options.offset || unconditional) {
+      this.triangle.css("left", value);
+      this.options.offset = value;
     }
+  },
+
+  _setClass: function(value, unconditional) {
+    if (value != this.options.class || unconditional) {
+      this.triangle.addClass(value);
+      this.options.class = value;
+    }
+  },
+
+  _setColor: function(value, unconditional) {
+    if (value != this.options.color || unconditional)
+      if (value != undefined)
+        this.triangle.css("border-bottom-color", value);
   },
 
   _setOption: function(key, value, unconditional) {
     if (undefined === unconditional)
       unconditional = false;
-    if (key === "offsetX")
-      this._setOffsetX(value, unconditional);
+    if (key === "offset")
+      this._setOffset(value, unconditional);
+    else
+    if (key === "class")
+      this._setClass(value, unconditional);
+    else
+    if (key === "color")
+      this._setColor(value, unconditional);
   },
 });
 
