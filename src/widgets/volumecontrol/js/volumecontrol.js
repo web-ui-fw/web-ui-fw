@@ -60,7 +60,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
         },
         yCoord = function(volumeImage, e) {
           var target = $(e.target),
-              coords = $.mobile.targetRelativeCoordsFromEvent(e);
+              coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
 
           if (target.hasClass("ui-volumecontrol-level"))
             coords.y += target.offset().top  - volumeImage.offset().top;

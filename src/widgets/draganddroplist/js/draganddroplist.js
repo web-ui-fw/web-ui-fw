@@ -92,7 +92,7 @@
                         return;
                     draggedElement.bind('vmousemove',
                             function (event) {
-                    var coords = $.mobile.targetRelativeCoordsFromEvent(event);
+                    var coords = $.mobile.todons.targetRelativeCoordsFromEvent(event);
                     dragging = true;
                     _evaluatePosition(event);
                     draggedElement.css({

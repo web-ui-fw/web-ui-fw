@@ -124,7 +124,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
   },
 
   _handleMouseDown: function(chan, idx, e, isSelector) {
-    var coords = $.mobile.targetRelativeCoordsFromEvent(e),
+    var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e),
         widgetStr = (isSelector ? "selector" : "eventSource");
 
     if (coords.x >= 0 && coords.x <= this.ui[chan][widgetStr].outerWidth() &&
@@ -144,7 +144,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
   _handleMouseMove: function(chan, idx, e, isSelector, coords) {
     if (this.dragging === idx) {
       if (coords === undefined)
-        var coords = $.mobile.targetRelativeCoordsFromEvent(e);
+        var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
       var factor = ((0 === idx) ? 360 : 1),
           potential = (isSelector
             ? ((this.dragging_hsv[idx] / factor) +

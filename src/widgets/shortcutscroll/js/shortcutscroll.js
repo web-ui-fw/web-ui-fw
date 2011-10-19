@@ -90,7 +90,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // bind mouse over so it moves the scroller to the divider
         .bind('touchstart mousedown vmousedown touchmove vmousemove vmouseover', function (e) {
             // Get coords relative to the element
-            var coords = $.mobile.targetRelativeCoordsFromEvent(e);
+            var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
             var shortcutsListOffset = self.shortcutsList.offset();
 
             // If the element is a list item, get coordinates relative to the shortcuts list
