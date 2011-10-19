@@ -92,13 +92,14 @@
                         return;
                     draggedElement.bind('vmousemove',
                             function (event) {
+                    var coords = $.mobile.targetRelativeCoordsFromEvent(event);
                     dragging = true;
                     _evaluatePosition(event);
                     draggedElement.css({
                         top: newPos.y(),
                         left: newPos.x()
                     });
-                    newPos.setY(newPos.y() + event.offsetY);
+                    newPos.setY(newPos.y() + coords.y);
                     var p = newPos.y();
                     if (previousYPosition === p)
                         return true;
