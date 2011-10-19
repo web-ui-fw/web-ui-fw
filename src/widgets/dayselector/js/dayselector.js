@@ -53,7 +53,8 @@
                 container.trigger("day-changed", self.getValue());
             });
 
-            //$('input:checkbox[name=checkAll]').change(function() { self.selectAll(); });
+            $('input:checkbox[name=checkAll]').change(function() { self.selectAll(); });
+			/*
             $('input:checkbox[name=checkAll]').change(function () {
                 console.log(".checkall is clicked");
                 if ($(this).is(':checked')) {
@@ -74,24 +75,29 @@
 
                 container.trigger("day-changed", self.getValue());
             });
-
+			*/
 
         },
 
         selectAll: function () {
-            console.log(".checkall is clicked");
-            //$('input:checkbox[name=checkAll]').parent('fieldset:eq(0)').find(':checkbox').attr('checked', true);
-            if ($(this).is(':checked')) {
-                var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                self.daysArray = [];
-                jQuery.each(days, function () {
-                    self.daysArray.push(this);
-                });
-            } else {
-                self.daysArray = [];
-            }
+			 console.log(".checkall is clicked");
+                if ($(this).is(':checked')) {
+                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').attr('checked', true);
+					$('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
+					//container.find('custom-checkbox-label').addClass('ui-checkbox-on');
+                    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    self.daysArray = [];
+                    jQuery.each(days, function () {
+                        self.daysArray.push(this);
+                    });
+                } else {
+                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').removeAttr('checked');
+                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
+					
+                    self.daysArray = [];
+                }
 
-            self.container.trigger("day-changed", self.getValue());
+                self.container.trigger("day-changed", self.getValue());
         },
 
         getValue: function () {
