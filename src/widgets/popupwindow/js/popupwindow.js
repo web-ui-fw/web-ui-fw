@@ -79,6 +79,7 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
         shadow: true,
         fade: true,
         transition: $.mobile.defaultDialogTransition,
+        showArrow: false,
     },
 
   _create: function() {
@@ -86,13 +87,15 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
         thisPage = this.element.closest(".ui-page"),
         ui = {
           screen:    "#popupwindow-screen",
-          container: "#popupwindow-container"
+          container: "#popupwindow-container",
+          arrow:     "#popupwindow-arrow",
         };
 
     ui = $.mobile.todons.loadPrototype("popupwindow", ui);
     thisPage.append(ui.screen);
     ui.container.insertAfter(ui.screen);
     ui.container.append(this.element);
+    ui.arrow.remove();
 
     $.extend( self, {
       transition: undefined,
@@ -164,24 +167,131 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
     else
     if (key === "transition")
       this._setTransition(value);
+    else
+    if (key === "showArrow")
+      this.options.showArrow = value;
+  },
+
+  _placementCoords: function(x, y) {
+      // Try and center the overlay over the given coordinates
+      var ret,
+          menuHeight = this.ui.container.outerHeight(true),
+          menuWidth = this.ui.container.outerWidth(true),
+          scrollTop = $( window ).scrollTop(),
+          screenHeight = window.innerHeight,
+          screenWidth = window.innerWidth,
+          halfheight = menuHeight / 2,
+          maxwidth = parseFloat( this.ui.container.css( "max-width" ) ),
+          calcCoords = function(coords) {
+            var roomtop = coords.y - scrollTop,
+                roombot = scrollTop + screenHeight - coords.y,
+                newtop, newleft;
+
+            if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+                newtop = coords.y - halfheight;
+            }
+            else {
+                // 30px tolerance off the edges
+                newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+            }
+
+            // If the menuwidth is smaller than the screen center is
+            if ( menuWidth < maxwidth ) {
+                newleft = ( screenWidth - menuWidth ) / 2;
+            }
+            else {
+                //otherwise insure a >= 30px offset from the left
+                newleft = coords.x - menuWidth / 2;
+
+                // 30px tolerance off the edges
+                if ( newleft < 30 ) {
+                    newleft = 30;
+                }
+                else if ( ( newleft + menuWidth ) > screenWidth ) {
+                    newleft = screenWidth - menuWidth - 30;
+                }
+            }
+
+            return { x : newleft, y : newtop };
+          }
+
+    if (this.options.showArrow) {
+      var possibleLocations = {}, coords, desired, minDiff, minDiffIdx;
+
+      /* Check above */
+      desired = {x : x, y : y - halfheight - parseInt(this.ui.arrow.css("height"))};
+      coords = calcCoords(desired);
+      console.log("Above (" + x + ", " + y + ") is (" + desired.x + ", " + desired.y + ") and results in (" + coords.x + ", " + coords.y + ")");
+      possibleLocations.above = {
+        coords: coords,
+        diff: {
+          x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+          y: Math.abs(desired.y - (coords.y + halfheight)),
+        }
+      };
+      minDiff = possibleLocations.above.diff;
+      minDiffIdx = "above";
+
+      /* Check below */
+      desired = {x : x, y : y + halfheight + parseInt(this.ui.arrow.css("height"))};
+      coords = calcCoords(desired);
+      console.log("Below (" + x + ", " + y + ") is (" + desired.x + ", " + desired.y + ") and results in (" + coords.x + ", " + coords.y + ")");
+      possibleLocations.below = {
+        coords: coords,
+        diff: {
+          x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+          y: Math.abs(desired.y - (coords.y + halfheight)),
+        }
+      };
+
+      /*
+       * Compute minimum deviation from desired distance.
+       * Not sure if Euclidean distance is best here, especially since it is expensive to compute.
+       */
+      for (var Nix in possibleLocations) {
+        console.log("Calculating minDiff: Considering location " + Nix
+          + ": (" + possibleLocations[Nix].diff.x + ", " + possibleLocations[Nix].diff.y + ") vs. " + minDiffIdx
+          + ": (" + minDiff.x + ", " + minDiff.y + ")");
+        if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
+          minDiff = possibleLocations[Nix].diff;
+          minDiffIdx = Nix;
+          console.log("Found new minimum: " + Nix);
+        }
+        else
+          console.log("Keeping old minimum: " + minDiffIdx);
+      }
+
+      console.log("result: " + minDiffIdx + ": diff: (" + minDiff.x + ", " + minDiff.y + ")");
+
+      ret = possibleLocations[minDiffIdx].coords;
+      ret.arrowLocation = (("above" === minDiffIdx) ? "bottom" : "top");
+    }
+    else
+      ret = calcCoords({x : x, y : y});
+
+    return ret;
   },
 
   open: function(x_where, y_where) {
       if ( this.options.disabled || this.isOpen)
           return;
 
-      var self = this,
-          x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
-          y = (undefined === y_where ? window.innerHeight / 2 : y_where);
-
       this.ui.container.css("min-width", this.element.outerWidth(true));
       this.ui.container.css("min-height", this.element.outerHeight(true));
 
-      var menuHeight = this.ui.container.outerHeight(true),
-          menuWidth = this.ui.container.outerWidth(true),
-          scrollTop = $( window ).scrollTop(),
-          screenHeight = window.innerHeight,
-          screenWidth = window.innerWidth;
+      var self = this,
+          x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
+          y = (undefined === y_where ? window.innerHeight / 2 : y_where),
+          coords = this._placementCoords(x, y);
+
+      if (this.options.showArrow) {
+        console.log("Creating arrow: " + coords.arrowLocation);
+        this.ui.currentArrow = this.ui.arrow
+          .clone()
+          .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
+          [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this.ui.container)
+          .triangle({location: coords.arrowLocation, offset: "50%"});
+      }
 
       this.ui.screen
           .height($(document).height())
@@ -190,43 +300,11 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       if (this.options.fade)
           this.ui.screen.animate({opacity: 0.5}, "fast");
 
-      // Try and center the overlay over the given coordinates
-      var roomtop = y - scrollTop,
-          roombot = scrollTop + screenHeight - y,
-          halfheight = menuHeight / 2,
-          maxwidth = parseFloat( this.ui.container.css( "max-width" ) ),
-          newtop, newleft;
-
-      if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-          newtop = y - halfheight;
-      }
-      else {
-          // 30px tolerance off the edges
-          newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-      }
-
-      // If the menuwidth is smaller than the screen center is
-      if ( menuWidth < maxwidth ) {
-          newleft = ( screenWidth - menuWidth ) / 2;
-      }
-      else {
-          //otherwise insure a >= 30px offset from the left
-          newleft = x - menuWidth / 2;
-
-          // 30px tolerance off the edges
-          if ( newleft < 30 ) {
-              newleft = 30;
-          }
-          else if ( ( newleft + menuWidth ) > screenWidth ) {
-              newleft = screenWidth - menuWidth - 30;
-          }
-      }
-
       this.ui.container
           .removeClass("ui-selectmenu-hidden")
           .css({
-              top: newtop,
-              left: newleft
+              left: coords.x,
+              top: coords.y,
           })
           .addClass("in")
           .animationComplete(function() {
@@ -255,6 +333,10 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
             .removeClass("reverse out")
             .addClass("ui-selectmenu-hidden")
             .removeAttr("style");
+          if (self.ui.currentArrow != undefined) {
+            self.ui.currentArrow.remove();
+            self.ui.currentArrow = undefined;
+          }
         });
 
       if (this.options.fade)
