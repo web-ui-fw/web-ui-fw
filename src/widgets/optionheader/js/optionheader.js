@@ -167,8 +167,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
             theme = this.options.theme,
             numRows,
             rowsClass,
-            themeClass,
-            elBgColor;
+            themeClass;
 
         // count ui-grid-* elements to get number of rows
         numRows = el.find(gridRowSelector).length;
@@ -195,16 +194,8 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // insert a triangle arrow as the first element inside the
         // optionheader div to show the header has hidden content
         if (this.options.showIndicator) {
-            // set the border-color for the triangle to the
-            // background-color of the outer div
-            elBgColor = el.css('background-color');
-
-            if (elBgColor) {
-                arrow.css('border-color',
-                          'transparent transparent ' + elBgColor + ' transparent');
-            }
-
             el.before(arrow);
+            arrow.triangle({"color": el.css('background-color'), offset: "50%"});
         }
 
         // if expandable, bind clicks to the toggle() method

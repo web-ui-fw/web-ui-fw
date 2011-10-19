@@ -50,14 +50,9 @@
 
 /* for the triangle */
 .ui-option-header-triangle-arrow {
-  border-color: transparent transparent black transparent; /* to be overwritten by widget init*/
-  border-style: solid;
-  top:-20px;
-  border-width: 10px;
-  height:0px;
-  width:0;
+  top:-10px;
+  height:10px;
+  width:100%;
   position:relative;
-  margin-bottom: -20px;
-  margin-left: -10px;
-  left:50%;
+  margin-bottom: -10px;
 }
