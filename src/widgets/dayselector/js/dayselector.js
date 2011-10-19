@@ -31,23 +31,52 @@
 
             var container = $(proto).find("div.ui-dayselector").insertBefore(select);
         	            
-  			$('input:checkbox').change(function () {
+  			$('input:checkbox[name=checkbox-choice]').change(function () {
             	if( $(this).is(':checked')) {
-            		console.log("chkbox val = " + $(this).val());
-            		self.daysArray.push($(this).val());
+            		console.log("chkbox val = " + $(this).eq(0).val());
+            		self.daysArray.push($(this).eq(0).val());
             	}
             	else {
-            		console.log("unchecked -->" + $(this).val());
+            		removeItem = $(this).eq(0).val();
+            		console.log("unchecked -->" + removeItem);
+            		
+            		self.daysArray = jQuery.grep(self.daysArray, function(value) {
+   					     return value != removeItem;
+					});
+					
             	}
+            	
+            	container.trigger("day-changed", self.getValue());
             });
+            
+            $('input:checkbox[name=checkAll]').change(self.selectAll);
   				
 			$.extend( self, {
 				container: container,
 				daysArray: daysArray
-			});				
+			});		
+					
 		},
 		
-	
+		selectAll: function() {
+			console.log(".checkall is clicked");
+			$('input:checkbox[name=checkAll]').parent('fieldset:eq(0)').find(':checkbox').attr('checked', true);
+			//$('input:checkbox[name=checkbox-choice]').attr('checked', true);
+			
+			var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+			self.daysArray = [];
+			jQuery.each( days, function() {
+				self.daysArray.push(this);
+			});
+			
+			self.container.trigger("day-changed", self.getValue());
+		},
+		
+		getValue: function() {
+			var dayString = this.daysArray.join(); 
+			console.log("get value here .. daystring= " + dayString);
+			return dayString ;
+		}
 		
 	}); /* End of Widget */
 	

@@ -129,26 +129,18 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
     
-    /*
-    var updateDay = function(e, newDay) {
-    	var dayString = "";
-    	
-    	if(newDay & 64 ) dayString += "Sunday ";
-    	if(newDay & 32 ) dayString += "Monday ";
-    	if(newDay & 16 ) dayString += "Tuesday ";
-    	if(newDay & 8 ) dayString += "Wednesday ";
-    	if(newDay & 4 ) dayString += "Thursday ";
-    	if(newDay & 2 ) dayString += "Friday ";
-    	if(newDay & 1 ) dayString += "Saturday ";
-    	
+    
+    var updateDay = function(e, dayString) {
+    	    	
     	$("#day-selector-demo .selectedDay").text(dayString);
     }; 
     $('#day-selector-demo').bind('day-changed', updateDay);
-	*/
+	
+	/*
 	$('#day-selector-demo').bind('pageshow', function(){
 		$("#daySelector1").dayselector();
 	});
-	
+	*/
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
     });
