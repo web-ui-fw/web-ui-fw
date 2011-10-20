@@ -8,10 +8,14 @@
 /**
  * Displays a day selector element
  *
- * The element displays the 7 days of a week in a control group 
- * containing buttons in a horizontal 
+ * The element displays the 7 days of a week in a control group
+ * containing buttons in a horizontal
  * the widget can be invoked like ->
- * e.g. $('#dayselector').day_selector()
+ * e.g. $('#dayselector').dayselector()
+ * 
+ * $("#daySelector1").dayselector('value') returns the values of the selected checkboxes
+ *  
+ * selectAll() : method can be used to select all the options in the fieldset ( all days of the week) 
  *
  * Options:
  * - none
@@ -21,91 +25,32 @@
 
         _create: function () {
             var self = this,
-                select = this.element,
-                proto = $.mobile.todons.loadPrototype("dayselector"),
-                daysArray = [];
+                proto = $.mobile.todons.loadPrototype("dayselector");
 
-            $(proto).find("fieldset").controlgroup({
-                excludeInvisible: false
+            proto.insertBefore(this.element);
+
+            this.checkboxes = proto.find('.custom-checkbox')
+                                   .checkboxradio();
+
+            proto.find('.checkall').click(function () {
+                self.selectAll();
             });
-
-            var container = $(proto).find("div.ui-dayselector").insertBefore(select);
-
-            $.extend(self, {
-                container: container,
-                daysArray: daysArray
-            });
-
-            $('input:checkbox[name=checkbox-choice]').change(function () {
-                if ($(this).is(':checked')) {
-                    console.log("chkbox val = " + $(this).eq(0).val());
-                    self.daysArray.push($(this).eq(0).val());
-                } else {
-                    removeItem = $(this).eq(0).val();
-                    console.log("unchecked -->" + removeItem);
-
-                    self.daysArray = jQuery.grep(self.daysArray, function (value) {
-                        return value != removeItem;
-                    });
-
-                }
-
-                container.trigger("day-changed", self.getValue());
-            });
-
-            $('input:checkbox[name=checkAll]').change(function() { self.selectAll(); });
-			/*
-            $('input:checkbox[name=checkAll]').change(function () {
-                console.log(".checkall is clicked");
-                if ($(this).is(':checked')) {
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').attr('checked', true);
-					$('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
-					//container.find('custom-checkbox-label').addClass('ui-checkbox-on');
-                    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                    self.daysArray = [];
-                    jQuery.each(days, function () {
-                        self.daysArray.push(this);
-                    });
-                } else {
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').removeAttr('checked');
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
-					
-                    self.daysArray = [];
-                }
-
-                container.trigger("day-changed", self.getValue());
-            });
-			*/
-
+            
+        },
+        
+        value: function () {
+           var values = $('input:checkbox:checked.custom-checkbox').map(function () {
+           		return this.value;
+           }).get();
+           return values.join(',');
         },
 
         selectAll: function () {
-			 console.log(".checkall is clicked");
-                if ($(this).is(':checked')) {
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').attr('checked', true);
-					$('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
-					//container.find('custom-checkbox-label').addClass('ui-checkbox-on');
-                    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                    self.daysArray = [];
-                    jQuery.each(days, function () {
-                        self.daysArray.push(this);
-                    });
-                } else {
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').removeAttr('checked');
-                    $('input:checkbox[name=checkAll]').parents('fieldset:eq(0)').find('input:checkbox').checkboxradio('refresh');
-					
-                    self.daysArray = [];
-                }
-
-                self.container.trigger("day-changed", self.getValue());
+            this.checkboxes.attr('checked', 'checked')
+                           .checkboxradio('refresh');
         },
-
-        getValue: function () {
-            var dayString = this.daysArray.join();
-            console.log("get value here .. daystring= " + dayString);
-            return dayString;
-        }
-
+        
+        
     }); /* End of Widget */
 
     // auto self-init widgets

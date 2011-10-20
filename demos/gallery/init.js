@@ -129,18 +129,20 @@ $(document).bind("pagecreate", function () {
         progressbarAnimator.clearIntervals();
     });
     
-    
+/*    
     var updateDay = function(e, dayString) {
     	    	
     	$("#day-selector-demo .selectedDay").text(dayString);
     }; 
-    $('#day-selector-demo').bind('day-changed', updateDay);
-	
-	/*
+  */
+    
 	$('#day-selector-demo').bind('pageshow', function(){
-		$("#daySelector1").dayselector();
+		
+		$('#day-selector-demo .getDays').click(function () {
+			$(".selectedDay").text($("#daySelector1").dayselector('value'));	
+		});		
 	});
-	*/
+	
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
     });
