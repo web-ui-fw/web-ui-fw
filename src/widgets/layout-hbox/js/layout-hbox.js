@@ -48,28 +48,29 @@ $.widget("todons.layouthbox", $.mobile.widget, {
     },
 
     refresh: function () {
-        var elt = this.element;
+        var container;
+        var hasScrollview = this.element.children().is('.ui-scrollview-view');
 
-        if (this.element.children().is('.ui-scrollview-view')) {
-            elt = this.element.find('.ui-scrollview-view')
+        if (!hasScrollview && this.config.scrollable) {
+            // create the scrollview
+            this.element.scrollview({direction: 'x',
+                                     showScrollBars: this.config.showScrollBars});
         }
 
-        var items = elt.children();
+        if (this.config.scrollable) {
+            container = this.element.find('.ui-scrollview-view');
+        }
+        else {
+            container = this.element;
+        }
 
-        var layoutOptions = this.config;
-        $.extend(layoutOptions, {items: items});
-
-        this.element.layout(layoutOptions);
+        var layout = container.layout(this.config);
 
         this.element.show();
 
         if (this.config.scrollable) {
-            // create the scrollview
-            this.element.scrollview({direction: 'x',
-                                     showScrollBars: this.config.showScrollBars});
-
             // get the right-most edge of the last child after layout
-            var lastItem = items.last();
+            var lastItem = container.children().last();
 
             var rightEdge = lastItem.position().left +
                             lastItem.outerWidth(true);
@@ -81,8 +82,7 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             // set the scrollview's view width to the original width,
             // and height to the height of the scrollview
             this.element.find('.ui-scrollview-view')
-                        .width(rightEdge)
-                        .height('100%');
+                        .width(rightEdge);
         }
     }
 });
