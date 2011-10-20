@@ -13,11 +13,14 @@
 (function ($, undefined) {
 
 $.widget("todons.layouthbox", $.mobile.widget, {
+    fixed: {
+        type: 'flexGrid',
+        rows: 1
+    },
+
     options: {
         initSelector: ':jqmData(layout="hbox")',
         hgap: 0,
-        type: 'flexGrid',
-        rows: 1,
         scrollable: true,
         showScrollBars: true
     },
@@ -28,6 +31,9 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             page = $(this.element).closest(':jqmData(role="page")');
 
         $.extend(this.options, options);
+
+        this.config = {};
+        $.extend(this.config, this.options, this.fixed);
 
         if (page && !page.is(':visible')) {
             this.element.hide();
@@ -50,17 +56,17 @@ $.widget("todons.layouthbox", $.mobile.widget, {
 
         var items = elt.children();
 
-        var layoutOptions = this.options;
+        var layoutOptions = this.config;
         $.extend(layoutOptions, {items: items});
 
         this.element.layout(layoutOptions);
 
         this.element.show();
 
-        if (this.options.scrollable) {
+        if (this.config.scrollable) {
             // create the scrollview
             this.element.scrollview({direction: 'x',
-                                     showScrollBars: this.options.showScrollBars});
+                                     showScrollBars: this.config.showScrollBars});
 
             // get the right-most edge of the last child after layout
             var lastItem = items.last();
