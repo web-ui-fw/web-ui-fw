@@ -22,10 +22,10 @@
  */
 (function ($, window, undefined) {
     $.widget("todons.dayselector", $.mobile.widget, {
-    	options: {
-    		theme: 'e'
-    	}, 
-    	
+        options: {
+            theme: 'e'
+        },
+
 
         _create: function () {
             var self = this,
@@ -33,37 +33,31 @@
                 themeClass;
 
             proto.insertBefore(this.element);
-			
-			// theming; override default with the slider's theme if present
+
+            // theming; override default with the slider's theme if present
             this.options.theme = this.element.data('theme') || this.options.theme;
             themeClass = 'ui-body-' + this.options.theme;
             var daySelectorTheme = proto.find('.ui-weekly');
             daySelectorTheme[0].setAttribute('data-theme', this.options.theme);
-            daySelectorTheme[0].setAttribute('class',themeClass);
-            
-            
-            this.checkboxes = proto.find('.custom-checkbox')
-                                   .checkboxradio();
+            daySelectorTheme[0].setAttribute('class', themeClass);
 
-            proto.find('.checkall').click(function () {
-                self.selectAll();
-            });
-            
+
+            this.checkboxes = proto.find('.custom-checkbox').checkboxradio();
+
         },
-        
+
         value: function () {
-           var values = $('input:checkbox:checked.custom-checkbox').map(function () {
-           		return this.value;
-           }).get();
-           return values.join(',');
+            var values = $('input:checkbox:checked.custom-checkbox').map(function () {
+                return this.value;
+            }).get();
+            return values.join(',');
         },
 
         selectAll: function () {
-            this.checkboxes.attr('checked', 'checked')
-                           .checkboxradio('refresh');
+            this.checkboxes.attr('checked', 'checked').checkboxradio('refresh');
         },
-        
-        
+
+
     }); /* End of Widget */
 
     // auto self-init widgets
