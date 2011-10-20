@@ -18,7 +18,8 @@ $.widget("todons.layouthbox", $.mobile.widget, {
         hgap: 0,
         type: 'flexGrid',
         rows: 1,
-        scrollable: true
+        scrollable: true,
+        showScrollBars: true
     },
 
     _create: function () {
@@ -50,7 +51,8 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             var originalWidth = this.element.width();
 
             // create the scrollview
-            this.element.scrollview({direction: 'x'});
+            this.element.scrollview({direction: 'x',
+                                     showScrollBars: this.options.showScrollBars});
 
             // manually reset the width of the div so it horizontally
             // fills its parent
