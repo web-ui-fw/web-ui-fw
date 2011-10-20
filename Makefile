@@ -28,10 +28,10 @@ FW_WIDGET_CSS_FILE = ${WIDGET_CSS_OUTPUT_ROOT}/${PROJECT_NAME}-widget.css
 LIBS_JS_FILES = underscore.js \
                 jlayout/jquery.sizes.js \
                 jlayout/jlayout.border.js \
+                jlayout/jlayout.grid.js \
                 jlayout/jlayout.flexgrid.js \
                 jlayout/jlayout.flow.js \
-                jlayout/jlayout.grid.js \
-                jquery.jlayout.js \
+                jlayout/jquery.jlayout.js \
                 $(NULL)
 ifeq (${DEBUG},yes)
 LIBS_JS_FILES +=\
