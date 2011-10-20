@@ -50,6 +50,11 @@
                             <li><a href="#spinnerbar-demo">Spinner bar</a></li>
                             <li><a href="#calendarDemo">Calendar picker</a></li>
                             <li><a href="#scroller-demo">Scroller</a></li>
+                            <li><a href="#option-header-demo">Option header</a></li>
+                            <li><a href="#slider-demo">Slider</a></li>
+                            <li><a href="#personpicker-demo">PersonPicker</a></li>
+                            <li><a onClick="launchPersonPicker()">PersonPicker Page</a></li>
+                            <li><a href="#autodividers-demo">Listview auto-dividers</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -353,36 +358,38 @@
             <div data-role="header">
                 <h1>SwipeList. Swipe any list item from left to right to reveal the associated actions.</h1>
             </div>
-            <div data-role="content" class="ui-scrolllistview">
+            <div data-role="content">
                 <ul data-role="swipelist">
                     <li>
-                        <a href="#" data-role="button" data-theme="a">Twitter</a>
-                        <div data-role ="ui-list-cover">Jack</div>
+                        <div class="ui-grid-b">
+                            <div class="ui-block-a">
+                                <a href="#" data-role="button" data-theme="a">Twitter</a>
+                            </div>
+                            <div class="ui-block-b">
+                                <a href="#" data-role="button" data-theme="b">FaceBook</a>
+                            </div>
+                            <div class="ui-block-c">
+                                <a href="#" data-role="button" data-theme="c">Google+</a>
+                            </div>
+                        </div>
+                        <div data-role="swipelist-item-cover">Nigel</div>
                     </li>
                     <li>
-                        <a href="#" data-role="button" data-theme="a">Twitter</a>
-                         <!-- THIS IS NOT RECOMMENDED WAY, IT IS HERE FOR TESTING PURPOSE ONLY -->
-                        <div data-role ="ui-list-cover">Barry</div>
-                        <a href="#" data-role="button" data-theme="b">Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#" data-role="button" data-theme="a">Twitter</a>
-                        <a href="#" data-role="button" data-theme="b">FaceBook</a>
-                        <a href="#" data-role="button" data-theme="c">Google+</a>
-                        <div data-role ="ui-list-cover">Jane</div>
-                    </li>
-                    <li>
-                        <a href="#" data-role="button" data-theme="a">Twitter</a>
-                        <a href="#" data-role="button" data-theme="b">FaceBook</a>
-                        <a href="#" data-role="button" data-theme="c">Google+</a>
-                        <a href="#" data-role="button" data-theme="d">Yahoo</a>
-                        <div data-role ="ui-list-cover">Nigel</div>
-                    </li>
-                </ul>
-                <ul data-role="swipelist">
-                    <li>
-                        <a href="#" data-role="button" data-theme="a">Twitter</a>
-                        <div data-role ="ui-list-cover">Norman</div>
+                        <div class="ui-grid-c">
+                            <div class="ui-block-a">
+                                <a href="#" data-role="button" data-theme="a">Twitter</a>
+                            </div>
+                            <div class="ui-block-b">
+                                <a href="#" data-role="button" data-theme="b">FaceBook</a>
+                            </div>
+                            <div class="ui-block-c">
+                                <a href="#" data-role="button" data-theme="c">Google+</a>
+                            </div>
+                            <div class="ui-block-d">
+                                <a href="#" data-role="button" data-theme="d">Yahoo</a>
+                            </div>
+                        </div>
+                        <div data-role="swipelist-item-cover">Bethany</div>
                     </li>
                 </ul>
             </div> <!-- content -->
@@ -614,11 +621,101 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
             <div class="content" data-role="content" id="calendarinputcontainer">
                 <label id="label">Selected Date</label><input type="text" name = "calendardate" id="selectedCalendarDate" value="Select Date"/>
-                <input type="button" data-role="calendarpicker" data-icon="grid" data-iconpos="notext" id = "calendarbutton">
+                <a data-role="calendarpicker" data-icon="grid" data-iconpos="notext" id="calendarbutton" data-inline="true"></a>
+            </div>
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div>
+
+        <div data-role="page" id="option-header-demo" data-add-back-btn="true">
+            <div data-role="header" data-position="fixed">
+                <h1>Option header - 4 buttons</h1>
+                <div id="myoptionheader" data-role="optionheader">
+                    <div class="ui-grid-c">
+                        <div class="ui-block-a"><a data-role="button" data-icon="arrow-l">Previous</a></div>
+                        <div class="ui-block-b"><a data-role="button" data-icon="delete">Cancel</a></div>
+                        <div class="ui-block-c"><a data-role="button" data-icon="arrow-d">Save</a></div>
+                        <div class="ui-block-d"><a data-role="button" data-icon="arrow-r">Next</a></div>
+                    </div>
+                </div>
+            </div>
+            <div data-role="content">
+                <p>Some content would be here</p>
            </div>
-           <div data-role="footer">
+           <div data-role="footer" data-position="fixed">
                <h4>Web UI Framework - Widgets gallery</h4>
            </div>
         </div>
+
+        <div data-role="page" id="slider-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Slider</h1>
+            </div>
+            <div data-role="content">
+                <a id="togglePopup" data-role="button" data-inline="true"></a>
+                <div data-role="fieldcontain">
+                    <label for="mySlider">Theme 'a', popups disabled, value=7 on 0-9 scale</label>
+                    <input id="mySlider" name="mySlider" data-theme='a' data-popupenabled='false' type="range" name="slider" value="7" min="0" max="9" />
+                </div>
+                <hr>
+                <div data-role="fieldcontain">
+                    <label for="mySlider2">Default, value=77 on 0-99 scale</label>
+                    <input id="mySlider2" name="mySlider2" type="range" value="77" min="0" max="99" />
+                </div>
+            </div><!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
+        <div data-role="page" id="personpicker-demo" data-add-back-btn="true" data-fit-page-to-window="true">
+            <div data-role="header">
+                <h1>PersonPicker</h1>
+            </div>
+            <div class="content" data-role="content">
+                <p>NB to get the scrollview to work inside the personpicker,
+                the following style is applied to automatically shorten
+                the scrollview clip div:</p>
+
+                <pre>
+/* short-person-picker is the ID of the div used to create the personpicker */
+#short-person-picker .ui-scrollview-clip {
+    height: 400px;
+}
+                </pre>
+
+                <div id="short-person-picker"
+                     data-role="personpicker"
+                     data-multipleSelection="true"
+                     data-theme="b"></div>
+            </div>
+        </div> <!-- Page for PersonPicker button -->
+
+        <div id="personpicker-page-demo" data-role="page"></div>
+
+        <div data-role="page" id="autodividers-demo" data-add-back-btn="true">
+            <div data-role="header" data-position="fixed">
+                <h1>Listview auto-dividers</h1>
+            </div>
+            <div data-role="content">
+                <p>This gets auto-dividers based on link text, or just
+                text (for read-only lists).</p>
+                <ul data-role="listview" data-autodividers="alpha">
+                    <li><a href="#">Amy</a></li>
+                    <li><a href="#">Andrew</a></li>
+                    <li><a href="#">Astrid</a></li>
+                    <li><a href="#">Bertie</a></li>
+                    <li><a href="#">Carrie</a></li>
+                    <li><a href="#">Derek</a></li>
+                    <li><a href="#">Ian</a></li>
+                    <li><a href="#">Matthew</a></li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div>
+
     </body>
 </html>

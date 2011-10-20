@@ -3,7 +3,7 @@
 
 @selector-height: 66px;
 @container-height: 68px;
-@selector-triangle-height: 9px;
+@selector-triangle-height: 10px;
 
 @selector-actual-height: @selector-height + @selector-triangle-height;
 
@@ -76,6 +76,9 @@
 
         .selector-triangle {
           height: @selector-triangle-height;
+          .selector-triangle-color {
+            border-bottom-color: @todons-selected-color;
+          }
         }
 
         .container {

@@ -1,0 +1,58 @@
+.ui-option-header {
+    overflow: hidden;
+}
+
+.ui-option-header-1-row {
+    height: 65px;
+    border: none;
+}
+.ui-option-header-2-row {
+    height: 124px;
+    border: none;
+}
+
+.ui-option-header-row-1 {
+    padding: 5px 5px 5px 5px;
+}
+.ui-option-header-row-2 {
+    margin-top: -2px;
+    padding: 0px 5px 6px 5px;
+}
+
+/* for standard buttons */
+.ui-option-header .ui-btn {
+    display: block;
+    margin: 3px 5px 5px 5px;
+}
+.ui-option-header .ui-btn-text {
+    line-height: 34px;
+}
+.ui-option-header .ui-btn-inner {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+/* for segmented control */
+.ui-option-header .ui-controlgroup-horizontal .ui-btn {
+    display: inline-block !important;
+    margin: -3px !important;
+}
+.ui-option-header .ui-controlgroup,
+.ui-option-header fieldset.ui-controlgroup {
+    margin-bottom: 0px !important;
+}
+.ui-option-header .ui-controlgroup-horizontal .ui-corner-left {
+    margin-left: 5px !important;
+}
+.ui-option-header .ui-controlgroup-horizontal .ui-corner-right {
+    margin-right: 5px !important;
+}
+
+/* for the triangle */
+.ui-option-header-triangle-arrow {
+  top:-10px;
+  height:10px;
+  width:100%;
+  position:relative;
+  margin-bottom: -10px;
+}

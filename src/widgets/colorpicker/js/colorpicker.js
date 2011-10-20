@@ -97,7 +97,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
   },
 
   _handleMouseDown: function(event, containerStr, isSelector) {
-    var coords = $.mobile.targetRelativeCoordsFromEvent(event),
+    var coords = $.mobile.todons.targetRelativeCoordsFromEvent(event),
         widgetStr = isSelector ? "selector" : "eventSource";
     if ((coords.x >= 0 && coords.x <= this.ui[containerStr][widgetStr].width() &&
          coords.y >= 0 && coords.y <= this.ui[containerStr][widgetStr].height()) || isSelector) {
@@ -116,7 +116,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
   _handleMouseMove: function(event, containerStr, isSelector, coords) {
     if (this.dragging) {
       if (coords === undefined)
-        var coords = $.mobile.targetRelativeCoordsFromEvent(event);
+        var coords = $.mobile.todons.targetRelativeCoordsFromEvent(event);
       if (this.draggingHS) {
         var potential_h = isSelector
               ? this.dragging_hsl[0] / 360 + (coords.x - this.selectorDraggingOffset.x) / this.ui[containerStr].eventSource.width()

@@ -27,19 +27,18 @@ h1, h4 {
 }
 
 #calendarinputcontainer #label {
-    float: left; 
+    float: left;
     width: 110px;
     padding-top:10px;
 }
 
-#calendarinputcontainer #selectedCalendarDate { 
+#calendarinputcontainer #selectedCalendarDate {
     float: left;
     width: 130px;
 }
 
 #calendarinputcontainer #calendarbutton{
     float: left;
-    width: 33%;
 }
 
 /*
@@ -110,3 +109,7 @@ h1, h4 {
 }
 
 /* end of scrollview widgets */
+
+#short-person-picker .ui-scrollview-clip {
+    height: 400px;
+}

@@ -337,10 +337,20 @@ jQuery.widget( "mobile.scrollview", jQuery.mobile.widget, {
 		// generation of "click" events.
 		//
 		// XXX: We should test if this has an effect on links! - kin
+		// XXX: It does affect links, and other input elements, if they
+		//      occur inside a scrollview; so make sure the event
+		//      occurred on something other than an input element or a link
+		//      before preventing its default and stopping its propagation
+		if (this.options.eventType == "mouse" || this.options.delayedClickEnabled) {
+			var shouldBlockEvent = !($(e.target).is('a, :input') ||
+                               $(e.target).parents('a, :input').length > 0);
 
-		if (this.options.eventType == "mouse" || this.options.delayedClickEnabled)
-			e.preventDefault();
-		e.stopPropagation();
+			if (shouldBlockEvent) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		}
+
 	},
 
 	_propagateDragMove: function(sv, e, ex, ey, dir)

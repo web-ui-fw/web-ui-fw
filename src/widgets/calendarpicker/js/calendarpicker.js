@@ -11,9 +11,9 @@
  * data-role="calendarpicker" attribute to an element.
  * The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
  *
- * CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true 
- * during creation and close() to hide it. It appears as a popup window and disappears when closed. 
- * CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks 
+ * CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true
+ * during creation and close() to hide it. It appears as a popup window and disappears when closed.
+ * CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks
  * outside its box.
  *
  * Options:
@@ -36,14 +36,14 @@
  *     afterToday: When set, only dates that are after or on "today" are selectable.
  *     beforeToday: When set, only dates that are before or on "today" are selectable.
  *     notToday: When set, "today" is not selectable.
- *     minDays: When set, only dates that are after *number* of days before today may be selected. 
+ *     minDays: When set, only dates that are after *number* of days before today may be selected.
  *              Note that minDays can be a negative number.
- *     maxDays: When set, only dates that are before *number* of days after today may be selected. 
+ *     maxDays: When set, only dates that are before *number* of days after today may be selected.
  *              Note that maxDays can be a negative number.
  *     highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
  *     blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2]).
  *     blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"]).
- *     Using a calendar to select a specific day can be accomplished by setting option 'calWeekMode' to 'true' 
+ *     Using a calendar to select a specific day can be accomplished by setting option 'calWeekMode' to 'true'
  *     and 'calWeekModeFirstDay' to the day you wish to pick.
  *
  * Events:
@@ -51,29 +51,29 @@
  *     appear: Fired after calendarpicker becomes visible and appear animation has ended.
  *     disappear: Fired after calendarpicker is closed and disappear animation has ended.
  *     selectedDate: Fired after user has selected a valid date. The formateddate(which user has selected)
- *                   is sent as additional parameter. 
+ *                   is sent as additional parameter.
  *
  * Properties:
- *     
+ *
  *     open: Shows the CalendarPicker with an animation.
  *     close: Hides the CalendarPicker with an animation.
  *     visible: Returns true if calendarpicker is visible.
- *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change, 
+ *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change,
  *              changing options dynamically etc.
  *
  * Examples:
- *         
+ *
  *     HTML markup for creating CalendarPicker:
  *         <div id = "calendarbutton" data-role = "calendarpicker">  </div>
  *
  *     How to Show CalendarPicker (for example when user presses a button):
- *         <div id = "calendarbutton" data-role = "calendarpicker"> 
- *             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false> 
+ *         <div id = "calendarbutton" data-role = "calendarpicker">
+ *             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false>
                 Launch CalendarPicker</a>
  *         </div>
  *        $(document).bind("pagecreate", function() {
  *            var button = $('#calendarbutton');
- *            button.bind('vclick', function (e) { 
+ *            button.bind('vclick', function (e) {
  *	          button.calendarpicker('open'); --> Shows the CalendarPicker.
  *                button.unbind('selectedDate').bind('selectedDate',function(e,val) {
  *                // val should contain the selected date in specified format.
@@ -91,7 +91,7 @@
  *                                                                                "highDatesTheme":"c"}'>  </div>
  *
  *    To select by week using Wednesday:
- *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calWeekMode": true, 
+ *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calWeekMode": true,
  *                                                                               "calWeekModeFirstDay": 3}'>  </div>
  *    To change startday of the week to be Sunday:
  *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
@@ -100,7 +100,7 @@
 (function($, undefined ) {
     $.widget( "todons.calendarpicker", $.mobile.widget, {
         options: {
-            // All widget options, including some internal runtime details      
+            // All widget options, including some internal runtime details
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
             monthsOfYear: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
                            'October', 'November', 'December'],
@@ -191,7 +191,7 @@
             //   update = false to prevent controls refresh
             var self = this,
             o = this.options;
-            
+
             if ( typeof(update) === "undefined" ) { update = true; }
             switch(mode) {
             case 'y':
@@ -210,7 +210,7 @@
         _update: function() {
             // Update the display on date change
             var self = this,
-                o = self.options, 
+                o = self.options,
                 testDate = null,
                 i, gridWeek, gridDay, skipThis, thisRow, y, cTheme, inheritDate, thisPRow, tmpVal,
                 interval = {'d': 60*60*24, 'h': 60*60, 'i': 60, 's':1},
@@ -218,7 +218,7 @@
 
             self.cpMonthGrid.text( o.monthsOfYear[self.theDate.getMonth()] + " " + self.theDate.getFullYear() );
             self.cpweekDayGrid.html('');
-            
+
             calmode = {'today': -1, 'highlightDay': -1, 'presetDay': -1, 'nexttoday': 1,
                 'thisDate': new Date(), 'maxDate': new Date(), 'minDate': new Date(),
                 'currentMonth': false, 'weekMode': 0, 'weekDays': null, 'thisTheme': o.pickPageButtoTheme };
@@ -231,18 +231,18 @@
             }
             calmode.prevtoday = calmode.lastend - (calmode.start - 1);
             calmode.checkDates = ( o.afterToday !== false || o.beforeToday !== false || o.notToday !== false || o.maxDays !== false || o.minDays !== false || o.blackDates !== false || o.blackDays !== false );
-                
-            if ( calmode.thisDate.getMonth() === self.theDate.getMonth() && calmode.thisDate.getFullYear() === self.theDate.getFullYear() ) { calmode.currentMonth = true; calmode.highlightDay = calmode.thisDate.getDate(); } 
-            
+
+            if ( calmode.thisDate.getMonth() === self.theDate.getMonth() && calmode.thisDate.getFullYear() === self.theDate.getFullYear() ) { calmode.currentMonth = true; calmode.highlightDay = calmode.thisDate.getDate(); }
+
             self.calNoPrev = false; self.calNoNext = false;
-            
-            if ( o.afterToday === true && 
-                ( calmode.currentMonth === true || ( calmode.thisDate.getMonth() >= self.theDate.getMonth() && self.theDate.getFullYear() === calmode.thisDate.getFullYear() ) ) ) { 
+
+            if ( o.afterToday === true &&
+                ( calmode.currentMonth === true || ( calmode.thisDate.getMonth() >= self.theDate.getMonth() && self.theDate.getFullYear() === calmode.thisDate.getFullYear() ) ) ) {
                 self.calNoPrev = true; }
             if ( o.beforeToday === true &&
                 ( calmode.currentMonth === true || ( calmode.thisDate.getMonth() <= self.theDate.getMonth() && self.theDate.getFullYear() === calmode.thisDate.getFullYear() ) ) ) {
                 self.calNoNext = true; }
-            
+
             if ( o.minDays !== false ) {
                 calmode.minDate.setDate(calmode.minDate.getDate() - o.minDays);
                 if ( self.theDate.getFullYear() === calmode.minDate.getFullYear() && self.theDate.getMonth() <= calmode.minDate.getMonth() ) { self.calNoPrev = true;}
@@ -251,7 +251,7 @@
                 calmode.maxDate.setDate(calmode.maxDate.getDate() + o.maxDays);
                 if ( self.theDate.getFullYear() === calmode.maxDate.getFullYear() && self.theDate.getMonth() >= calmode.maxDate.getMonth() ) { self.calNoNext = true;}
             }
-            
+
             if ( o.calShowDays ) {
                 if ( o.daysOfWeekShort.length < 8 ) { o.daysOfWeekShort = o.daysOfWeekShort.concat(o.daysOfWeekShort); }
                 calmode.weekDays = $("<div>", {'class':'ui-cp-row'}).appendTo(self.cpweekDayGrid);
@@ -259,7 +259,7 @@
                     $("<div>"+o.daysOfWeekShort[i+o.calStartDay]+"</div>").addClass('ui-cp-date ui-cp-date-disabled ui-cp-month').appendTo(calmode.weekDays);
                 }
             }
-            
+
             for ( gridWeek=0; gridWeek<=5; gridWeek++ ) {
                 if ( gridWeek === 0 || ( gridWeek > 0 && (calmode.today > 0 && calmode.today <= calmode.end) ) ) {
                     thisRow = $("<div>", {'class': 'ui-cp-row'}).appendTo(self.cpweekDayGrid);
@@ -277,7 +277,7 @@
                                     ( o.blackDates !== false && $.inArray(self._isoDate(self.theDate.getFullYear(), (self.theDate.getMonth()+2), calmode.nexttoday), o.blackDates) > -1 ) ) {
                                         skipThis = true;
                                 } else { skipThis = false; }
-                                    
+
                                 if ( gridWeek === 0 ) {
                                     $("<div>"+String(calmode.prevtoday)+"</div>")
                                         .addClass('ui-cp-date ui-cp-date-disabled').appendTo(thisRow)
@@ -295,7 +295,7 @@
                             if ( calmode.checkDates ) {
                                 if ( o.afterToday && self._checker(calmode.thisDate) > (self._checker(self.theDate)+calmode.today-self.theDate.getDate()) ) {
                                     skipThis = true;
-                                } 
+                                }
                                 if ( !skipThis && o.beforeToday && self._checker(calmode.thisDate) < (self._checker(self.theDate)+calmode.today-self.theDate.getDate()) ) {
                                     skipThis = true;
                                 }
@@ -304,19 +304,19 @@
                                 }
                                 if ( !skipThis && o.maxDays !== false && self._checker(calmode.maxDate) < (self._checker(self.theDate)+calmode.today-self.theDate.getDate()) ) {
                                     skipThis = true;
-                                } 
+                                }
                                 if ( !skipThis && o.minDays !== false && self._checker(calmode.minDate) > (self._checker(self.theDate)+calmode.today-self.theDate.getDate()) ) {
                                     skipThis = true;
-                                } 
+                                }
                                 if ( !skipThis && ( o.blackDays !== false || o.blackDates !== false ) ) { // Blacklists
-                                    if ( 
+                                    if (
                                         ( $.inArray(gridDay, o.blackDays) > -1 ) ||
-                                        ( $.inArray(self._isoDate(self.theDate.getFullYear(), self.theDate.getMonth()+1, calmode.today), o.blackDates) > -1 ) ) { 
+                                        ( $.inArray(self._isoDate(self.theDate.getFullYear(), self.theDate.getMonth()+1, calmode.today), o.blackDates) > -1 ) ) {
                                             skipThis = true;
                                     }
                                 }
                             }
-                                               
+
                             if ( o.calHighToday !== null && calmode.today === calmode.highlightDay ) {
                                 calmode.thisTheme = o.calHighToday;
                             } else if ( $.isArray(o.highDates) && ($.inArray(self._isoDate(self.theDate.getFullYear(), self.theDate.getMonth()+1, calmode.today), o.highDates) > -1 ) ) {
@@ -335,7 +335,7 @@
                                 calmode.thisTheme = "calendarbutton";
                             }
 
-                            
+
                             $("<div>"+String(calmode.today)+"</div>")
                                 .addClass('ui-cp-date ui-calendarbtncommon')
                                 .attr('data-date', ((o.calWeekMode)?calmode.weekMode:calmode.today))
@@ -349,7 +349,7 @@
                                         self.close();
                                 })
                                 .css((skipThis)?'color':'nocolor', o.disabledDayColor);
-                            
+
                             calmode.today++;
                         }
                     }
@@ -366,7 +366,10 @@
             $.extend(self, {
                      input:input,
                      theDate: theDate
-            }); 
+            });
+
+            $(this.element).buttonMarkup();
+
             self._buildPage();
         },
 
@@ -379,9 +382,21 @@
                 cpHeader = container.find('.ui-cp-headercontainer'),
                 cpweekDayGrid = container.find('.ui-cp-weekday'),
                 cpMonthGrid = container.find('.ui-cp-month'),
-                previousButton = container.find('.ui-cp-previous').buttonMarkup({inline: true, corners:true}),
-                nextButton = container.find('.ui-cp-next').buttonMarkup({inline: true, corners:true}),
-                isopen = false;
+                isopen = false,
+                previousButtonMarkup = {inline: true,
+                                        corners:true,
+                                        icon:'arrow-l',
+                                        iconpos:'notext'},
+                nextButtonMarkup = {inline: true,
+                                    corners:true,
+                                    icon:'arrow-r',
+                                    iconpos:'notext'},
+                previousButton = container.find('.ui-cp-previous'),
+                nextButton = container.find('.ui-cp-next');
+
+            previousButton.buttonMarkup(previousButtonMarkup);
+            nextButton.buttonMarkup(nextButtonMarkup);
+
             nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
@@ -396,13 +411,13 @@
                     self._offset('m',-1);
                 }
             });
-                    
+
             $.extend(self, {
                 cpMonthGrid: cpMonthGrid,
                 cpweekDayGrid: cpweekDayGrid,
                 cpContainer: cpContainer,
                 isopen:isopen
-            });     
+            });
             cpContainer.appendTo(self.element)
                        .popupwindow({transition: "slideup"})
                        .bind("closed", function(e) {
@@ -425,7 +440,7 @@
             var self = this;
             if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
             self._update();
-            /* 
+            /*
              * FIXME: Could pass some meaningful coordinates to "open" to make it show up in the right place, rather
              * than the center of the screen. The problem is that no widget from the page is associated with this
              * popup window, so we would have to start with this.element and work our way up the tree until we ran
@@ -438,10 +453,10 @@
             // Close the picker
             this.cpContainer.popupwindow("close");
         },
-    });  
+    });
     // Autoinit widget.
     $( document ).bind( "pagecreate", function( e ){
         $( ":jqmData(role='calendarpicker')", e.target ).calendarpicker();
     });
-	
+
 })( jQuery );
