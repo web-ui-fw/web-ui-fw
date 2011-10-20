@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>layout-hbox tests</title>
+
+    <style>
+    .test-hbox-threehundred {
+        height: 300px;
+        width: 300px;
+        background-color: white;
+    }
+    .test-hbox-fourhundred {
+        height: 400px;
+        width: 400px;
+        background-color: white;
+    }
+    </style>
+
+    <script src="../../../../build/web-ui-fw/0.1/js/jquery.js"></script>
+    <script src="../../../../build/web-ui-fw/0.1/js/web-ui-fw-libs.js"></script>
+
+    <link rel="stylesheet" href="../../../../build/web-ui-fw/0.1/themes/default/web-ui-fw-theme.css"/>
+
+    <!-- NB needs scrollview first -->
+    <link rel="stylesheet" href="../../common/css/jquery.mobile.scrollview.css"/>
+    <script src="../../common/js/jquery.easing.1.3.js"></script>
+    <script src="../../common/js/jquery.mobile.scrollview.js"></script>
+
+    <script src="../js/layout-hbox.js"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="test-hbox-home">
+    <div data-role="header">
+        <h1>layout-hbox tests</h1>
+    </div>
+
+    <div data-role="content">
+        <p>NB as this is the front page, the hbox layout is applied
+        every time this page is shown, hence the flicker. Note
+        that this doesn't happen on the other pages.</p>
+
+        <div>
+            <a href="#test-hbox-content-area" data-role="button" data-inline="true">Applied directly to content area</a>
+        </div>
+
+        <div data-layout="hbox" data-layout-options='{"hgap":10}'>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-hbox-fourhundred">
+                <p>Each of the divs laid out by this hbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="test-hbox-content-area" data-add-back-btn="true">
+    <div data-role="header">
+        <h1>layout-hbox: applied direct to content</h1>
+    </div>
+
+    <div data-role="content" data-layout="hbox" data-layout-options='{"hgap":10}'>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+        <div class="test-hbox-threehundred">
+            <p>Each of the divs laid out by this hbox has a
+            size 300px x 300px, set via CSS. Horizontal gap is
+            configured using <code>data-layout-options='{"hgap":10}'</code>.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
