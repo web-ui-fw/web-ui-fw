@@ -22,13 +22,26 @@
  */
 (function ($, window, undefined) {
     $.widget("todons.dayselector", $.mobile.widget, {
+    	options: {
+    		theme: 'e'
+    	}, 
+    	
 
         _create: function () {
             var self = this,
-                proto = $.mobile.todons.loadPrototype("dayselector");
+                proto = $.mobile.todons.loadPrototype("dayselector"),
+                themeClass;
 
             proto.insertBefore(this.element);
-
+			
+			// theming; override default with the slider's theme if present
+            this.options.theme = this.element.data('theme') || this.options.theme;
+            themeClass = 'ui-body-' + this.options.theme;
+            var daySelectorTheme = proto.find('.ui-weekly');
+            daySelectorTheme[0].setAttribute('data-theme', this.options.theme);
+            daySelectorTheme[0].setAttribute('class',themeClass);
+            
+            
             this.checkboxes = proto.find('.custom-checkbox')
                                    .checkboxradio();
 
