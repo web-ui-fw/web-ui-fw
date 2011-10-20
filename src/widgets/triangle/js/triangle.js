@@ -5,6 +5,7 @@ $.widget( "todons.triangle", $.mobile.widget, {
     class: "",
     offset: 50,
     color: undefined,
+    location: "top",
     initSelector: ":jqmData(role='triangle')"
   },
 
@@ -28,11 +29,30 @@ $.widget( "todons.triangle", $.mobile.widget, {
     $.mobile.todons.parseOptions(this, true);
   },
 
+  /* The widget needs to be realized for this function */
+  _setBorders: function() {
+    if (this.options.location === "top") {
+      this.triangle.css("border-left-width",   this.element.height());
+      this.triangle.css("border-top-width",    0);
+      this.triangle.css("border-right-width",  this.element.height());
+      this.triangle.css("border-bottom-width", this.element.height());
+      this.triangle.css("border-left-color",   "rgba(0, 0, 0, 0)");
+      this.triangle.css("border-right-color",  "rgba(0, 0, 0, 0)");
+    }
+    else
+    if (this.options.location === "bottom") {
+      this.triangle.css("border-left-width",   this.element.height());
+      this.triangle.css("border-top-width",    this.element.height());
+      this.triangle.css("border-right-width",  this.element.height());
+      this.triangle.css("border-bottom-width", 0);
+      this.triangle.css("border-left-color",   "rgba(0, 0, 0, 0)");
+      this.triangle.css("border-right-color",  "rgba(0, 0, 0, 0)");
+    }
+  },
+
   _realize: function() {
-    this.triangle.css("border-left-width",    this.element.height());
-    this.triangle.css("border-right-width",   this.element.height());
-    this.triangle.css("border-bottom-width",  this.element.height());
-    this.triangle.css("margin-left",         -this.element.height());
+    this._setBorders();
+    this.triangle.css("margin-left", -this.element.height());
     this._setOffset(this.options.offset, true);
     this.realized = true;
   },
@@ -57,6 +77,14 @@ $.widget( "todons.triangle", $.mobile.widget, {
         this.triangle.css("border-bottom-color", value);
   },
 
+  _setLocation: function(value, unconditional) {
+    if (value != this.options.location || unconditional) {
+      this.options.location = value;
+      if (this.realized)
+        this._setBorders();
+    }
+  },
+
   _setOption: function(key, value, unconditional) {
     if (undefined === unconditional)
       unconditional = false;
@@ -68,6 +96,9 @@ $.widget( "todons.triangle", $.mobile.widget, {
     else
     if (key === "color")
       this._setColor(value, unconditional);
+    else
+    if (key === "location")
+      this._setLocation(value, unconditional);
   },
 });
 
