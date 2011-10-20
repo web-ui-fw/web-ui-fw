@@ -42,17 +42,31 @@ $.widget("todons.layouthbox", $.mobile.widget, {
     },
 
     refresh: function () {
-        $(this.element).layout(this.options);
+        var elt = this.element;
+
+        if (this.element.children().is('.ui-scrollview-view')) {
+            elt = this.element.find('.ui-scrollview-view')
+        }
+
+        var items = elt.children();
+
+        var layoutOptions = this.options;
+        $.extend(layoutOptions, {items: items});
+
+        this.element.layout(layoutOptions);
 
         this.element.show();
 
         if (this.options.scrollable) {
-            // get the width of the element after layout
-            var originalWidth = this.element.width();
-
             // create the scrollview
             this.element.scrollview({direction: 'x',
                                      showScrollBars: this.options.showScrollBars});
+
+            // get the right-most edge of the last child after layout
+            var lastItem = items.last();
+
+            var rightEdge = lastItem.position().left +
+                            lastItem.outerWidth(true);
 
             // manually reset the width of the div so it horizontally
             // fills its parent
@@ -61,7 +75,7 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             // set the scrollview's view width to the original width,
             // and height to the height of the scrollview
             this.element.find('.ui-scrollview-view')
-                        .width(originalWidth)
+                        .width(rightEdge)
                         .height('100%');
         }
     }
