@@ -127,8 +127,8 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     }
 
     this.ui.popup.popupwindow("open",
-      this.ui.button.position().left + this.ui.button.outerWidth()  / 2,
-      this.ui.button.position().top  + this.ui.button.outerHeight() / 2);
+      this.ui.button.offset().left + this.ui.button.outerWidth()  / 2,
+      this.ui.button.offset().top  + this.ui.button.outerHeight() / 2);
   },
 
   _focusButton : function(){
