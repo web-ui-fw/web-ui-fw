@@ -12,23 +12,26 @@
  *
  * To apply, add the attribute data-expandable="true" to list item
  * (a <li> element inside a list). Alternatively, call
- * expandable_list_item() on an element.
+ * expandable() on an element.
  *
- * The last <div> element with data-role="expandable-content" is hidden,
+ * The next list element with data-role="expandable-content" is hidden,
  * and then its visibility is toggled with an animation when the
- * parent <li> is clicked.
+ * previous <li> is clicked.
  */
 (function( $, undefined ) {
 
 $.widget( "todons.expandable", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(expandable)"
+        initSelector: ":jqmData(expandable)",
+        contentSelector: ':jqmData(role="expandable-content")'
     },
 
     _create: function () {
         var $el = this.element,
             self = this,
-            expandable_content = $el.find(':jqmData(role="expandable-content"');
+            expandable_content = $el.next(self.options.contentSelector);
+
+        expandable_content.hide();
     }
 });
 
