@@ -213,15 +213,15 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
             }
 
             return { x : newleft, y : newtop };
-          }
+          };
 
     if (this.options.showArrow) {
-      var possibleLocations = {}, coords, desired, minDiff, minDiffIdx;
+      var possibleLocations = {}, coords, desired, minDiff, minDiffIdx,
+          arrowHeight = parseInt(this.ui.arrow.css("height"));
 
       /* Check above */
-      desired = {x : x, y : y - halfheight - parseInt(this.ui.arrow.css("height"))};
+      desired = {x : x, y : y - halfheight - (arrowHeight * 2)};
       coords = calcCoords(desired);
-      console.log("Above (" + x + ", " + y + ") is (" + desired.x + ", " + desired.y + ") and results in (" + coords.x + ", " + coords.y + ")");
       possibleLocations.above = {
         coords: coords,
         diff: {
@@ -233,9 +233,8 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       minDiffIdx = "above";
 
       /* Check below */
-      desired = {x : x, y : y + halfheight + parseInt(this.ui.arrow.css("height"))};
+      desired = {x : x, y : y + halfheight + (arrowHeight * 2)};
       coords = calcCoords(desired);
-      console.log("Below (" + x + ", " + y + ") is (" + desired.x + ", " + desired.y + ") and results in (" + coords.x + ", " + coords.y + ")");
       possibleLocations.below = {
         coords: coords,
         diff: {
@@ -249,19 +248,14 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
        * Not sure if Euclidean distance is best here, especially since it is expensive to compute.
        */
       for (var Nix in possibleLocations) {
-        console.log("Calculating minDiff: Considering location " + Nix
-          + ": (" + possibleLocations[Nix].diff.x + ", " + possibleLocations[Nix].diff.y + ") vs. " + minDiffIdx
-          + ": (" + minDiff.x + ", " + minDiff.y + ")");
         if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
           minDiff = possibleLocations[Nix].diff;
           minDiffIdx = Nix;
-          console.log("Found new minimum: " + Nix);
         }
-        else
-          console.log("Keeping old minimum: " + minDiffIdx);
-      }
 
-      console.log("result: " + minDiffIdx + ": diff: (" + minDiff.x + ", " + minDiff.y + ")");
+        if (0 === minDiff.x + minDiff.y)
+          break;
+      }
 
       ret = possibleLocations[minDiffIdx].coords;
       ret.arrowLocation = (("above" === minDiffIdx) ? "bottom" : "top");
@@ -276,22 +270,17 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       if ( this.options.disabled || this.isOpen)
           return;
 
-      this.ui.container.css("min-width", this.element.outerWidth(true));
-      this.ui.container.css("min-height", this.element.outerHeight(true));
-
       var self = this,
           x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
           y = (undefined === y_where ? window.innerHeight / 2 : y_where),
           coords = this._placementCoords(x, y);
 
-      if (this.options.showArrow) {
-        console.log("Creating arrow: " + coords.arrowLocation);
+      if (this.options.showArrow)
         this.ui.currentArrow = this.ui.arrow
           .clone()
           .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
           [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this.ui.container)
           .triangle({location: coords.arrowLocation, offset: "50%"});
-      }
 
       this.ui.screen
           .height($(document).height())

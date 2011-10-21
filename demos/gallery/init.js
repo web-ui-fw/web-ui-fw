@@ -276,3 +276,17 @@ function launchPersonPicker() {
     });
     $.mobile.changePage("#personpicker-page-demo");
 }
+
+$(document).bind("pagecreate", function() {
+  $("[data-id=arrow-popup]").each(function() {
+    $(this).bind("vclick", function(e) {
+      console.log($(this).attr("data-tmp") + ": opening popup at " +
+        "(" + ($(this).offset().left + $(this).outerWidth()  / 2) + 
+        "," + ($(this).offset().top  + $(this).outerHeight() / 2) + ")");
+
+      $("#arrowedPopupWindow").popupwindow("open",
+        $(this).offset().left + $(this).outerWidth()  / 2,
+        $(this).offset().top  + $(this).outerHeight() / 2);
+    });
+  });
+});
