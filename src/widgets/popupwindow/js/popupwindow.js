@@ -216,11 +216,13 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
           };
 
     if (this.options.showArrow) {
+      this.ui.arrow.appendTo(this.ui.container);
       var possibleLocations = {}, coords, desired, minDiff, minDiffIdx,
-          arrowHeight = parseInt(this.ui.arrow.css("height"));
+          arrowHeight = this.ui.arrow.height();
+      this.ui.arrow.remove();
 
       /* Check above */
-      desired = {x : x, y : y - halfheight - (arrowHeight * 2)};
+      desired = {x : x, y : y - halfheight - arrowHeight};
       coords = calcCoords(desired);
       possibleLocations.above = {
         coords: coords,
@@ -233,7 +235,7 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       minDiffIdx = "above";
 
       /* Check below */
-      desired = {x : x, y : y + halfheight + (arrowHeight * 2)};
+      desired = {x : x, y : y + halfheight + arrowHeight};
       coords = calcCoords(desired);
       possibleLocations.below = {
         coords: coords,
