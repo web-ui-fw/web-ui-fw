@@ -34,13 +34,13 @@
 
             proto.insertBefore(this.element);
 
-			// theming; override default with the slider's theme if present
+            // theming; override default with the slider's theme if present
             this.options.theme = this.element.data('theme') || this.options.theme;
             themeClass = 'ui-body-' + this.options.theme;
             var daySelectorTheme = proto.find('.ui-weekly');
             daySelectorTheme.attr('data-theme', this.options.theme);
             daySelectorTheme.addClass(themeClass);
-            			
+
             this.checkboxes = proto.find('.custom-checkbox').checkboxradio();
 
         },
