@@ -13,13 +13,9 @@
     color: red;
 }
 
-.daycheckboxes {
-    width: auto;
-    height: auto;
-}
-
 .ui-dayselector {
     height: 58px;
+    width: auto;
 }
 
 fieldset {
