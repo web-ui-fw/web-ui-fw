@@ -23,7 +23,7 @@
  *
  * Options can be set programmatically:
  *
- *
+ *   $(element).layouthbox('option', 'scrollable', false)
  *
  * or via a data-layout-options attribute on the container:
  *
@@ -34,13 +34,16 @@
  *
  * If you change any options after creating the widget, call
  * $(element).layouthbox('refresh') to have them picked up.
+ * However, note that it's currently not feasible to turn off scrolling
+ * once it's on (as calling scrollview('destroy') doesn't remove the
+ * scrollview custom mouse handlers).
  *
  * Options:
  *
  *   {Integer} hgap (default=0)
  *   Horizontal gap (in pixels) between the child elements.
  *
- *   {Boolean} scrollable (default=true)
+ *   {Boolean} scrollable (default=true; can only be set at create time)
  *   Set to true to enable a scrollview on the
  *   container. If false, children will be clipped if
  *   they fall outside the edges of the container after
@@ -73,9 +76,6 @@ $.widget("todons.layouthbox", $.mobile.widget, {
 
         $.extend(this.options, options);
 
-        this.config = {};
-        $.extend(this.config, this.options, this.fixed);
-
         if (page && !page.is(':visible')) {
             this.element.hide();
 
@@ -90,26 +90,32 @@ $.widget("todons.layouthbox", $.mobile.widget, {
 
     refresh: function () {
         var container;
-        var hasScrollview = this.element.children().is('.ui-scrollview-view');
+        var config = $.extend(this.options, this.fixed);
 
-        if (!hasScrollview && this.config.scrollable) {
-            // create the scrollview
-            this.element.scrollview({direction: 'x',
-                                     showScrollBars: this.config.showScrollBars});
-        }
+        if (config.scrollable) {
+            if (!(this.element.children().is('.ui-scrollview-view'))) {
+                // create the scrollview
+                this.element.scrollview({direction: 'x',
+                                         showScrollBars: config.showScrollBars});
+            }
+            else if (config.showScrollBars) {
+                this.element.find('.ui-scrollbar').show();
+            }
+            else {
+                this.element.find('.ui-scrollbar').hide();
+            }
 
-        if (this.config.scrollable) {
             container = this.element.find('.ui-scrollview-view');
         }
         else {
             container = this.element;
         }
 
-        var layout = container.layout(this.config);
+        var layout = container.layout(config);
 
         this.element.show();
 
-        if (this.config.scrollable) {
+        if (config.scrollable) {
             // get the right-most edge of the last child after layout
             var lastItem = container.children().last();
 

@@ -165,6 +165,9 @@
             <a data-role="button" data-inline="true" id="test-hbox-add-start-sv">Add element at start</a>
             <a data-role="button" data-inline="true" id="test-hbox-add-end-sv">Add element at end</a>
             <a data-role="button" data-inline="true" id="test-hbox-add-reset-sv">Reset</a>
+            <a data-role="button" data-inline="true" id="test-hbox-add-increase-sv">Increase hgap</a>
+            <a data-role="button" data-inline="true" id="test-hbox-add-decrease-sv">Decrease hgap</a>
+            <a data-role="button" data-inline="true" id="test-hbox-add-toggle-sv" value="on">Scrollbars off</a>
         </p>
 
         <div data-layout="hbox" data-layout-options='{"hgap":2}' id="test-hbox-add-container-sv">
@@ -296,6 +299,35 @@ $('#test-hbox-home').bind('pagecreate', function () {
                  .remove();
         container.layouthbox('refresh');
         container.scrollview('scrollTo', 0, 0);
+    });
+    $('#test-hbox-add-increase-sv').bind('vclick', function () {
+        var hgap = container.layouthbox('option', 'hgap');
+        hgap += 5;
+        container.layouthbox('option', 'hgap', hgap);
+        container.layouthbox('refresh');
+    });
+    $('#test-hbox-add-decrease-sv').bind('vclick', function () {
+        var hgap = container.layouthbox('option', 'hgap');
+        hgap -= 5;
+        hgap = Math.max(hgap, 0);
+        container.layouthbox('option', 'hgap', hgap);
+        container.layouthbox('refresh');
+    });
+    $('#test-hbox-add-toggle-sv').bind('vclick', function () {
+        var val = $(this).attr('value');
+        var newVal, newText;
+        if (val === 'on') {
+            newVal = 'off';
+            container.layouthbox('option', 'showScrollBars', false);
+        }
+        else {
+            newVal = 'on';
+            container.layouthbox('option', 'showScrollBars', true);
+        }
+        newText = 'Scrollbars ' + val;
+        $(this).find('.ui-btn-text').text(newText);
+        $(this).attr('value', newVal);
+        container.layouthbox('refresh');
     });
 });
 </script>
