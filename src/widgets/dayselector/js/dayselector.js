@@ -13,7 +13,7 @@
  * the widget can be invoked like ->
  * e.g. $('#dayselector').dayselector()
  *
- * $("#daySelector1").dayselector('value') returns the values of the selected checkboxes
+ * value() : returns the values of the selected checkboxes is a comma separated string
  *
  * selectAll() : method can be used to select all the options in the fieldset ( all days of the week)
  *
@@ -35,7 +35,7 @@
 
             topElement.insertBefore(this.element);
 
-            // theming; override default with the slider's theme if present
+            // theming; override default with the dayselector's theme if present
             this.options.theme = this.element.data('theme') ||
                                  this.element.closest(':jqmData(theme)').attr('data-theme') ||
                                  this.options.theme;
