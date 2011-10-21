@@ -737,11 +737,25 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             <div data-role="content">
                 <ul data-role="listview">
                     <li><a href="#">Regular list item</a></li>
+
                     <li data-expandable="true">
                         <a href="#">Expandable list item (click me)</a>
                     </li>
                     <li data-role="expandable-content">
                         Hello world!
+                    </li>
+
+                    <li data-expandable="true">
+                        <a href="#">Another expandable list item</a>
+                    </li>
+                    <li data-role="expandable-content">
+                        <div>
+                            <p>You can put anything you want in an expandable</p>
+                            <form action="#">
+                                <input type="text" value="Even a form."/>
+                                <input type="button" value="Submit" />
+                            </form>
+                        </div>
                     </li>
                 </ul>
             </div>

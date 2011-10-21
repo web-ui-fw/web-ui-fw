@@ -26,14 +26,26 @@ $.widget( "todons.expandable", $.mobile.widget, {
         contentSelector: ':jqmData(role="expandable-content")'
     },
 
+    _toggleIcon: function(el) {
+        if (el.hasClass('ui-icon-arrow-d')) {
+            el.removeClass('ui-icon-arrow-d').addClass('ui-icon-arrow-u');
+        } else if (el.hasClass('ui-icon-arrow-u')) {
+            el.removeClass('ui-icon-arrow-u').addClass('ui-icon-arrow-d');
+        }
+    },
+
     _create: function () {
         var el = this.element,
             self = this,
+            icon = el.find('span.ui-icon'),
             expandable_content = el.next(self.options.contentSelector);
 
+        icon.removeClass('ui-icon-arrow-r')
+            .addClass('ui-icon-arrow-d');
         expandable_content.hide();
         el.bind('vclick', function() {
             expandable_content.toggle('fast', 'swing');
+            self._toggleIcon(icon);
         });
     }
 });
