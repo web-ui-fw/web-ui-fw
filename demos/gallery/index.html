@@ -735,6 +735,15 @@ $scroller2List.scrollview('option','scrollDuration','10000');
                 <h1>Expandable list item</h1>
             </div>
             <div data-role="content">
+                <ul data-role="listview">
+                    <li><a href="#">Regular list item</a></li>
+                    <li data-expandable="true">
+                        <a href="#">Expandable list item (click me)</a>
+                        <div data-role="expandable-content">
+                            <span>Hello world!</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div data-role="footer" data-position="fixed">
                 <h4>Web UI Framework - Widgets gallery</h4>
