@@ -41,6 +41,21 @@ h1, h4 {
     float: left;
 }
 
+/* for layout demos */
+.layout-demo-big {
+    width: 400px;
+    height: 200px;
+    background-color: white;
+    padding: 10px;
+}
+
+.layout-demo-tiny {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    padding: 10px;
+}
+
 /*
  * manipulating scrollview elements' style
  */
