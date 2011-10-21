@@ -27,11 +27,14 @@ $.widget( "todons.expandable", $.mobile.widget, {
     },
 
     _create: function () {
-        var $el = this.element,
+        var el = this.element,
             self = this,
-            expandable_content = $el.next(self.options.contentSelector);
+            expandable_content = el.next(self.options.contentSelector);
 
         expandable_content.hide();
+        el.bind('vclick', function() {
+            expandable_content.toggle('fast', 'swing');
+        });
     }
 });
 
