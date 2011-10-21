@@ -9,7 +9,8 @@
 .ui-weekly {
 	text-align: center;
 	font: 12px;
-	width:auto;
+	height: 58px;
+	width: 455px;
 }
 
 .chbx-saturday {
@@ -20,6 +21,17 @@
 	color: red;
 }
 
-fieldset {
-  padding: 1em;
+.daycheckboxes {
+	width:auto;
+	height :auto;
 }
+
+.ui-dayselector {
+	height : 58px;
+}
+
+fieldset {
+	padding: 1em;
+}
+
+
