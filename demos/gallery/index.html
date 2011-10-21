@@ -54,6 +54,7 @@
                             <li><a href="#personpicker-demo">PersonPicker</a></li>
                             <li><a onClick="launchPersonPicker()">PersonPicker Page</a></li>
                             <li><a href="#autodividers-demo">Listview auto-dividers</a></li>
+                            <li><a href="#expandable-li-demo">Explandable list item</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -729,5 +730,38 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
         </div>
 
+        <div data-role="page" id="expandable-li-demo" data-add-back-btn="true">
+            <div data-role="header" data-position="fixed">
+                <h1>Expandable list item</h1>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview">
+                    <li><a href="#">Regular list item</a></li>
+
+                    <li data-expandable="true">
+                        <a href="#">Expandable list item (click me)</a>
+                    </li>
+                    <li data-role="expandable-content">
+                        Hello world!
+                    </li>
+
+                    <li data-expandable="true">
+                        <a href="#">Another expandable list item</a>
+                    </li>
+                    <li data-role="expandable-content">
+                        <div>
+                            <p>You can put anything you want in an expandable</p>
+                            <form action="#">
+                                <input type="text" value="Even a form."/>
+                                <input type="button" value="Submit" />
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div>
     </body>
 </html>
