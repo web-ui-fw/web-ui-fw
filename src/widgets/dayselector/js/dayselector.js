@@ -18,7 +18,7 @@
  * selectAll() : method can be used to select all the options in the fieldset ( all days of the week) 
  *
  * Options:
- * - none
+ * -> data-theme : override the data-theme of the widget
  */
 (function ($, window, undefined) {
     $.widget("todons.dayselector", $.mobile.widget, {
