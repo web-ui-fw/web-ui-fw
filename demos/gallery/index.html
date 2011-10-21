@@ -391,6 +391,14 @@
                 <h1>Popup window</h1>
             </div>
             <div class="content" data-role="content">
+
+              <div id="popupList" data-role="popupwindow">
+                  <ul data-role="listview">
+                      <li><a href='#' data-role='button' data-icon='arrow-l' data-iconpos='left' data-inline='true' style="width:400px;">maximillian</a></li>
+                  </ul>
+              </div>
+              <a href="#" id="popupListButton" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupList">Popup list</a>
+
               <a href="#" id="popupwindowDemoButton" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupContent">Show popup</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupContent" data-role="popupwindow" style="display: table;">
