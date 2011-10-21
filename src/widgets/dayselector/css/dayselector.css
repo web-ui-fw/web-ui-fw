@@ -1,14 +1,13 @@
 /* dayselector CSS */
-.custom-checkbox-label {
-    display: inline-block;
+.ui-dayselector label {
     height: 56px;
     width: 64px;
 }
 
-.chbx-saturday {
+.ui-dayselector-label-saturday {
     color: blue;
 }
 
-.chbx-sunday {
+.ui-dayselector-label-sunday {
     color: red;
 }

@@ -219,13 +219,54 @@
                 <h1>Day selector</h1>
             </div>
             <div data-role="content">
-                <form>
-                    <div data-role="dayselector" id="daySelector1"></div>
-                </form>
+
+                <h2>With a legend (also API demo)</h2>
+
+                <fieldset id="dayselector1" data-role="dayselector" data-type="horizontal">
+                    <legend>Choose some days</legend>
+                </fieldset>
 
                 <div><a data-role="button" class="checkall" data-inline="true">Check all</a></div>
                 <div><a data-role="button" class="getDays" data-inline="true">Get Days</a></div>
-                <p>The day(s) you selected is: <span class="selectedDay"><em>(select a day first)</em></span></p>
+                <p>The day(s) you selected are:
+                    <span class="selectedDay">
+                        <em>(select a day first)</em>
+                    </span>
+                </p>
+
+                <hr/>
+
+                <h2>With a legend, with custom swatch</h2>
+
+                <fieldset id="dayselector1" data-role="dayselector" data-theme="a">
+                    <legend>Choose some days</legend>
+                </fieldset>
+
+                <hr/>
+
+                <h2>Without a legend</h2>
+
+                <fieldset data-role="dayselector">
+                </fieldset>
+
+                <hr/>
+
+                <h2>Without a legend, vertical layout</h2>
+
+                <p>Note that the checkboxes are visible as icons
+                (this is the default behaviour for vertical checkbox
+                controlgroups in jQuery Mobile).</p>
+
+                <fieldset data-role="dayselector" data-type="vertical">
+                </fieldset>
+
+                <hr/>
+
+                <h2>With a legend, vertical layout</h2>
+
+                <fieldset data-role="dayselector" data-type="vertical">
+                    <legend>Choose some days</legend>
+                </fieldset>
 
             </div>
         </div> <!-- /page -->

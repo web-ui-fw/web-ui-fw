@@ -130,11 +130,12 @@ $(document).bind("pagecreate", function () {
 
     $('#day-selector-demo').bind('pageshow', function () {
         $('#day-selector-demo .checkall').click(function () {
-            $("#daySelector1").dayselector('selectAll');
+            $("#dayselector1").dayselector('selectAll');
         });
 
         $('#day-selector-demo .getDays').click(function () {
-            $(".selectedDay").text($("#daySelector1").dayselector('value'));
+            var valuesStr = $("#dayselector1").dayselector('value').join(', ');
+            $(".selectedDay").text(valuesStr);
         });
     });
 
