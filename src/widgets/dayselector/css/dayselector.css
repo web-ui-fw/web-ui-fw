@@ -1,0 +1,13 @@
+/* dayselector CSS */
+.ui-dayselector label {
+    height: 56px;
+    width: 64px;
+}
+
+.ui-dayselector-label-saturday {
+    color: blue;
+}
+
+.ui-dayselector-label-sunday {
+    color: red;
+}

@@ -10,7 +10,7 @@
 }
 
 .ui-boxImg {	
-	position: relative;
+	position: absolute;
 	top: 0;
 	background: gray;
 	width: 100%;
@@ -18,8 +18,8 @@
 }
 
 .ui-barImg {
-	position: relative;
-	top: -10px;
+	position: absolute;
+	top: 0px;
 	background: orange;
 	height: 10px;
 	width: 0;	

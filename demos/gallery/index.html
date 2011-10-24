@@ -39,6 +39,7 @@
                             <li><a href="#volumecontrol-demo">Volume control</a></li>
                             <li><a href="#colorwidgets-demo">Color widgets</a></li>
                             <li><a href="#draganddroplist-demo">Drag &amp; drop list</a></li>
+                            <li><a href="#day-selector-demo">Day Selector</a></li>
                             <li><a href="#progressbar-demo">Progress bar</a></li>
                             <li><a href="#switch-demo">Switch</a></li>
                             <li><a href="#groupindex-demo">Group index</a></li>
@@ -213,6 +214,64 @@
                 <div data-role="progressbar" id="progressbarDialog1"></div>
             </div>
         </div> <!-- /page -->
+
+        <div data-role="page" id="day-selector-demo">
+            <div data-role="header">
+                <h1>Day selector</h1>
+            </div>
+            <div data-role="content">
+
+                <h2>With a legend (also API demo)</h2>
+
+                <fieldset id="dayselector1" data-role="dayselector" data-type="horizontal">
+                    <legend>Choose some days</legend>
+                </fieldset>
+
+                <div><a data-role="button" class="checkall" data-inline="true">Check all</a></div>
+                <div><a data-role="button" class="getDays" data-inline="true">Get Days</a></div>
+                <p>The day(s) you selected are:
+                    <span class="selectedDay">
+                        <em>(select a day first)</em>
+                    </span>
+                </p>
+
+                <hr/>
+
+                <h2>With a legend, with custom swatch</h2>
+
+                <fieldset id="dayselector1" data-role="dayselector" data-theme="a">
+                    <legend>Choose some days</legend>
+                </fieldset>
+
+                <hr/>
+
+                <h2>Without a legend</h2>
+
+                <fieldset data-role="dayselector">
+                </fieldset>
+
+                <hr/>
+
+                <h2>Without a legend, vertical layout</h2>
+
+                <p>Note that the checkboxes are visible as icons
+                (this is the default behaviour for vertical checkbox
+                controlgroups in jQuery Mobile).</p>
+
+                <fieldset data-role="dayselector" data-type="vertical">
+                </fieldset>
+
+                <hr/>
+
+                <h2>With a legend, vertical layout</h2>
+
+                <fieldset data-role="dayselector" data-type="vertical">
+                    <legend>Choose some days</legend>
+                </fieldset>
+
+            </div>
+        </div> <!-- /page -->
+
 
         <div data-role="page" id="switch-demo" data-add-back-btn="true">
             <div data-role="header">
