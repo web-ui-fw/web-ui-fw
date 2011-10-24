@@ -57,6 +57,7 @@
                             <li><a href="#autodividers-demo">Listview auto-dividers</a></li>
                             <li><a href="#expandable-li-demo">Expandable list item</a></li>
                             <li><a href="#layouthbox-demo">Horizontal box layout</a></li>
+                            <li><a href="#layoutvbox-demo">Vertical box layout</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -902,6 +903,112 @@ $scroller2List.scrollview('option','scrollDuration','10000');
 
                 <p>See <a rel="external" href="../../src/widgets/layout-box/test/test-layout-hbox.html">the
                 layouthbox test page</a> for more examples and explanation.</p>
+            </div>
+        </div>
+
+        <div data-role="page" id="layoutvbox-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Vertical box layout</h1>
+            </div>
+
+            <div data-role="content">
+                <p><strong>Note that in these demos, the height of each div
+                with vbox layout has been constrained to 600px.</strong></p>
+
+                <p>An example with 5px vertical gap and scrollable on
+                (the default is for scrollable to be on). Configured with
+                <code>data-layout-options='{"vgap":5}'</code>.</p>
+
+                <div class="layout-demo-short-div"
+                     data-layout="vbox"
+                     data-layout-options='{"vgap":5}'>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                </div>
+
+                <p>An example with 15px vertical gap, scrollable on
+                but scrollbars off. Configured with
+                <code>data-layout-options='{"vgap":15,
+                "showScrollBars":false}'</code>.</p>
+
+                <div class="layout-demo-short-div"
+                     data-layout="vbox"
+                     data-layout-options='{"vgap":15, "showScrollBars":false}'>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                </div>
+
+                <p>An example with 2px vgap and scrollable off (configured
+                with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
+                Note that (unlike hbox layout) the outer div is extended
+                to accommodate its children where scrollable=false.</p>
+
+                <div class="layout-demo-short-div"
+                     data-layout="vbox"
+                     data-layout-options='{"vgap":2, "scrollable":false}'>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                </div>
+
+                <p>See <a rel="external" href="../../src/widgets/layout-box/test/test-layout-vbox.html">the
+                layoutvbox test page</a> for more examples and explanation.</p>
             </div>
         </div>
 
