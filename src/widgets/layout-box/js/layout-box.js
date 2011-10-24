@@ -45,6 +45,15 @@
  * once it's on (as calling scrollview('destroy') doesn't remove the
  * scrollview custom mouse handlers).
  *
+ * There is one major difference between the horizontal and
+ * vertical box layouts: if scrollable=false, the horizontal layout
+ * will clip children which overflow the edge of the parent container;
+ * by comparison, the vertical container will grow vertically to
+ * accommodate the height of its children. This mirrors the behaviour
+ * of jQuery Mobile, where elements only ever expand horizontally
+ * to fill the width of the window; but will expand vertically forever,
+ * unless the page height is artificially constrained.
+ *
  * Options:
  *
  *   {Integer} hgap (default=0)

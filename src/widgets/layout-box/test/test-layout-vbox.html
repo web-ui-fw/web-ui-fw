@@ -113,7 +113,10 @@
         </div>
 
         <p>Here's an example with 2px vgap and scrollable off (set
-        with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).</p>
+        with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
+        Note that even though the outer div has its height set to 600px,
+        because it doesn't have a scrollview, the div is sized so
+        its children fit vertically (this is a jLayout "feature").</p>
 
         <div class="test-vbox-shorten"
              data-layout="vbox"
@@ -148,8 +151,10 @@
         with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
         Notice that layouting can be dynamically applied as children are
         added by calling <code>$(&lt;container&gt;).layoutvbox('refresh')</code>.
-        Note that children will be clipped as they move out of the end
-        of the container (no scrollview is applied in this case).</p>
+        Note that children are <em>not clipped</em>, as the container
+        will grow to accommodate them (unlike the horizontal layout
+        box, which is constrained by jqm to only ever be as wide as the
+        page).</p>
 
         <p>
             <a data-role="button" data-inline="true" id="test-vbox-add-start">Add element at start</a>
