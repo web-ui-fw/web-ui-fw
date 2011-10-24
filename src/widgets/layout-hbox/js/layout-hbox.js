@@ -111,7 +111,7 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             container = this.element;
         }
 
-        var layout = container.layout(config);
+        container.layout(config);
 
         this.element.show();
 
