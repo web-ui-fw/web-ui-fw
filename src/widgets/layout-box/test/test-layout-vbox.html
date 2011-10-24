@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>layout-vbox tests</title>
+
+    <style>
+    .test-vbox-shorten {
+        height: 600px;
+    }
+    .test-vbox-onehundred {
+        height: 100px;
+        width: 100px;
+        background-color: white;
+    }
+    .test-vbox-twohundred {
+        height: 200px;
+        width: 200px;
+        background-color: white;
+    }
+    .test-vbox-threehundred {
+        height: 300px;
+        width: 300px;
+        background-color: white;
+    }
+    .test-vbox-fourhundred {
+        height: 400px;
+        width: 400px;
+        background-color: white;
+    }
+    .test-vbox-red {
+        background-color: #700;
+        color: white;
+    }
+    .test-vbox-blue {
+        background-color: #007;
+        color: white;
+    }
+    </style>
+
+    <script src="../../../../build/web-ui-fw/0.1/js/jquery.js"></script>
+    <script src="../../../../build/web-ui-fw/0.1/js/web-ui-fw-libs.js"></script>
+
+    <link rel="stylesheet" href="../../../../build/web-ui-fw/0.1/themes/default/web-ui-fw-theme.css"/>
+
+    <!-- NB needs scrollview first -->
+    <link rel="stylesheet" href="../../common/css/jquery.mobile.scrollview.css"/>
+    <script src="../../common/js/jquery.easing.1.3.js"></script>
+    <script src="../../common/js/jquery.mobile.scrollview.js"></script>
+
+    <!-- for debugging -->
+    <script src="../../common/js/ensurens.js"></script>
+    <script src="../../common/js/jquery.mobile.todons.core.js"></script>
+
+    <script src="../../common/js/jquery.mobile.todons.jlayoutadaptor.js"></script>
+    <script src="../js/layout-box.js"></script>
+</head>
+
+<body>
+
+<div data-role="page" id="test-vbox-home">
+    <div data-role="header">
+        <h1>layout-vbox tests</h1>
+    </div>
+
+    <div data-role="content">
+        <div>
+            <a href="#test-vbox-content-area" data-role="button" data-inline="true">vbox
+            applied directly to div with <code>data-role="content"</code></a>
+        </div>
+
+        <p>Here's an example with 10px vgap, scrolling on, but scrollbars off (set
+        with <code>data-layout-options='{"vgap":10, "scrollable":true,
+        "showScrollBars":false}'</code>).</p>
+
+        <div class="test-vbox-shorten"
+             data-layout="vbox"
+             data-layout-options='{"vgap":10, "scrollable":true, "showScrollBars":false}'>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+            <div class="test-vbox-fourhundred">
+                <p>Each of the divs laid out by this vbox has a
+                size 400px x 400px, set via CSS..</p>
+            </div>
+        </div>
+
+        <p>Here's an example with 2px vgap and scrollable off (set
+        with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).</p>
+
+        <div class="test-vbox-shorten"
+             data-layout="vbox"
+             data-layout-options='{"vgap":2, "scrollable":false}'>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+        </div>
+
+        <p>Here's an example with 2px vgap and scrollable off (set
+        with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
+        Notice that layouting can be dynamically applied as children are
+        added by calling <code>$(&lt;container&gt;).layoutvbox('refresh')</code>.
+        Note that children will be clipped as they move out of the end
+        of the container (no scrollview is applied in this case).</p>
+
+        <p>
+            <a data-role="button" data-inline="true" id="test-vbox-add-start">Add element at start</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-end">Add element at end</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-reset">Reset</a>
+        </p>
+
+        <div class="test-vbox-shorten"
+             data-layout="vbox"
+             data-layout-options='{"vgap":2, "scrollable":false}'
+             id="test-vbox-add-container">
+            <div class="test-vbox-onehundred">
+                <p>tiny tiny tiny tiny tiny tiny</p>
+            </div>
+        </div>
+
+        <p>Here is an example similar to the above, but with a scrollview.</p>
+
+        <p>
+            <a data-role="button" data-inline="true" id="test-vbox-add-start-sv">Add element at start</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-end-sv">Add element at end</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-reset-sv">Reset</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-increase-sv">Increase vgap</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-decrease-sv">Decrease vgap</a>
+            <a data-role="button" data-inline="true" id="test-vbox-add-toggle-sv" value="on">Scrollbars off</a>
+        </p>
+
+        <div class="test-vbox-shorten"
+             data-layout="vbox"
+             data-layout-options='{"vgap":2}'
+             id="test-vbox-add-container-sv">
+            <div>
+                <div class="test-vbox-twohundred">
+                    <p>bigger bigger bigger bigger bigger</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-role="page" id="test-vbox-content-area" data-add-back-btn="true">
+    <div data-role="header">
+        <h1>layout-vbox: applied direct to content</h1>
+    </div>
+
+    <div class="test-vbox-shorten"
+         data-role="content"
+         data-layout="vbox"
+         data-layout-options='{"vgap":10}'>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+        <div class="test-vbox-threehundred">
+            <p>Each of the divs laid out by this vbox has a
+            size 300px x 300px, set via CSS. Vertical gap is
+            configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+            that the content area loses its padding, so you might want to
+            use a div inside the content area.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#test-vbox-home').bind('pagecreate', function () {
+    var tinyDiv = $('<div class="test-vbox-onehundred">' +
+                    '<p>tiny tiny tiny tiny tiny tiny</p>' +
+                    '</div>');
+
+    var biggerDiv = $('<div class="test-vbox-twohundred">' +
+                      '<p>bigger bigger bigger bigger bigger!</p>' +
+                      '</div>');
+
+    $('#test-vbox-add-start').bind('vclick', function () {
+        var newDiv = tinyDiv.clone();
+        newDiv.addClass('test-vbox-red');
+        $('#test-vbox-add-container').prepend(newDiv);
+        $('#test-vbox-add-container').layoutvbox('refresh');
+    });
+    $('#test-vbox-add-end').bind('vclick', function () {
+        var newDiv = tinyDiv.clone();
+        newDiv.addClass('test-vbox-blue');
+        $('#test-vbox-add-container').append(newDiv);
+        $('#test-vbox-add-container').layoutvbox('refresh');
+    });
+    $('#test-vbox-add-reset').bind('vclick', function () {
+        $('#test-vbox-add-container').find('.test-vbox-blue,.test-vbox-red')
+                                     .remove();
+        $('#test-vbox-add-container').layoutvbox('refresh');
+    });
+
+    var container = $('#test-vbox-add-container-sv');
+
+    $('#test-vbox-add-start-sv').bind('vclick', function () {
+        var newDiv = biggerDiv.clone();
+        newDiv.addClass('test-vbox-red');
+        container.find('.ui-scrollview-view').prepend(newDiv);
+        container.layoutvbox('refresh');
+    });
+    $('#test-vbox-add-end-sv').bind('vclick', function () {
+        var newDiv = biggerDiv.clone();
+        newDiv.addClass('test-vbox-blue');
+        container.find('.ui-scrollview-view').append(newDiv);
+        container.layoutvbox('refresh');
+    });
+    $('#test-vbox-add-reset-sv').bind('vclick', function () {
+        container.find('.test-vbox-blue,.test-vbox-red')
+                 .remove();
+        container.layoutvbox('refresh');
+        container.scrollview('scrollTo', 0, 0);
+    });
+    $('#test-vbox-add-increase-sv').bind('vclick', function () {
+        var vgap = container.layoutvbox('option', 'vgap');
+        vgap += 5;
+        container.layoutvbox('option', 'vgap', vgap);
+        container.layoutvbox('refresh');
+    });
+    $('#test-vbox-add-decrease-sv').bind('vclick', function () {
+        var vgap = container.layoutvbox('option', 'vgap');
+        vgap -= 5;
+        vgap = Math.max(vgap, 0);
+        container.layoutvbox('option', 'vgap', vgap);
+        container.layoutvbox('refresh');
+    });
+    $('#test-vbox-add-toggle-sv').bind('vclick', function () {
+        var val = $(this).attr('value');
+        var newVal, newText;
+        if (val === 'on') {
+            newVal = 'off';
+            container.layoutvbox('option', 'showScrollBars', false);
+        }
+        else {
+            newVal = 'on';
+            container.layoutvbox('option', 'showScrollBars', true);
+        }
+        newText = 'Scrollbars ' + val;
+        $(this).find('.ui-btn-text').text(newText);
+        $(this).attr('value', newVal);
+        container.layoutvbox('refresh');
+    });
+});
+</script>
+
+</body>
+</html>
