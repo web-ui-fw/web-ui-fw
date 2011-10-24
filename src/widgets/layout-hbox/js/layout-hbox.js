@@ -56,15 +56,11 @@
 
 (function ($, undefined) {
 
-$.widget("todons.layouthbox", $.mobile.widget, {
-    fixed: {
-        type: 'flexGrid',
-        rows: 1
-    },
 
+$.widget("todons.jlayoutadaptor", $.mobile.widget, {
     options: {
-        initSelector: ':jqmData(layout="hbox")',
-        hgap: 0,
+        hgap: null,
+        vgap: null,
         scrollable: true,
         showScrollBars: true
     },
@@ -95,7 +91,7 @@ $.widget("todons.layouthbox", $.mobile.widget, {
         if (config.scrollable) {
             if (!(this.element.children().is('.ui-scrollview-view'))) {
                 // create the scrollview
-                this.element.scrollview({direction: 'x',
+                this.element.scrollview({direction: config.direction,
                                          showScrollBars: config.showScrollBars});
             }
             else if (config.showScrollBars) {
@@ -126,16 +122,32 @@ $.widget("todons.layouthbox", $.mobile.widget, {
             // fills its parent
             this.element.width('100%');
 
-            // set the scrollview's view width to the original width,
-            // and height to the height of the scrollview
+            // set the scrollview's view width to the original width
             this.element.find('.ui-scrollview-view')
                         .width(rightEdge);
         }
     }
 });
 
+$.widget("todons.layouthbox", $.todons.jlayoutadaptor, {
+    fixed: {
+        type: 'flexGrid',
+        rows: 1,
+        direction: 'x',
+        initSelector: ':jqmData(layout="hbox")'
+    },
+
+    _create: function () {
+        if (!this.options.hgap) {
+            this.options.hgap = 0;
+        }
+
+        $.todons.jlayoutadaptor.prototype._create.apply(this, arguments);
+    }
+});
+
 $(document).bind("pagecreate", function (e) {
-    $($.todons.layouthbox.prototype.options.initSelector, e.target)
+    $($.todons.layouthbox.prototype.fixed.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .layouthbox();
 });
