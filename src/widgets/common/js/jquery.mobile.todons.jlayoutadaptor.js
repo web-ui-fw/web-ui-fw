@@ -72,7 +72,10 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
                        lastItem.outerWidth(true);
 
                 // manually reset the width of the div so it horizontally
-                // fills its parent
+                // fills its parent; NB we can do this for horizontal
+                // scroll but not vertical, as the horizontal width
+                // for a jqm page is set to the window width; but the
+                // same isn't necessarily so for jqm page height
                 this.element.width('100%');
 
                 // set the scrollview's view width to the original width
@@ -82,10 +85,6 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
             else if (config.direction === 'y') {
                 edge = lastItem.position().top +
                        lastItem.outerHeight(true);
-
-                // manually reset the height of the div so it vertically
-                // fills its parent
-                this.element.height('100%');
 
                 // set the scrollview's view height to the original height
                 this.element.find('.ui-scrollview-view')
