@@ -56,6 +56,7 @@
                             <li><a onClick="launchPersonPicker()">PersonPicker Page</a></li>
                             <li><a href="#autodividers-demo">Listview auto-dividers</a></li>
                             <li><a href="#expandable-li-demo">Expandable list item</a></li>
+                            <li><a href="#layouthbox-demo">Horizontal box layout</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -794,6 +795,113 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
             <div data-role="footer" data-position="fixed">
                 <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div>
+
+        <div data-role="page" id="layouthbox-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Horizontal box layout</h1>
+            </div>
+
+            <div data-role="content">
+                <p>An example with 5px horizontal gap and scrollable on
+                (the default is for scrollable to be on). Configured with
+                <code>data-layout-options='{"hgap":5}'</code>.</p>
+
+                <div data-layout="hbox" data-layout-options='{"hgap":5}'>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                </div>
+
+                <p>An example with 15px horizontal gap, scrollable on
+                but scrollbars off. Configured with
+                <code>data-layout-options='{"hgap":15,
+                "showScrollBars":false}'</code>.</p>
+
+                <div data-layout="hbox" data-layout-options='{"hgap":15, "showScrollBars":false}'>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                    <div class="layout-demo-big">
+                        <p>bigger bigger bigger bigger bigger</p>
+                    </div>
+                </div>
+
+                <p>An example with 2px hgap and scrollable off (configured
+                with <code>data-layout-options='{"hgap":2, "scrollable":false}'</code>).</p>
+
+                <div data-layout="hbox" data-layout-options='{"hgap":2, "scrollable":false}'>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-tiny">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                </div>
+
+                <p>See <a rel="external" href="../../src/widgets/layout-hbox/test/test-layout-hbox.html">the
+                layouthbox test page</a> for more examples and explanation.</p>
             </div>
         </div>
 
