@@ -38,6 +38,33 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
+
+    $('#singleimagedisplay-demo').live('pageshow', function (e) {
+        /*
+        $(this).find('img').each( function (index, element) {
+            var image = $(element);
+            var realImageWidth = this.naturalWidth;
+            var realImageHeight = this.naturalHeight;
+            var landscape = realImageWidth>realImageHeight;
+            if (landscape) {
+                image.css( 'width','inherit' );
+                var imageWidth = image.width();
+                var windowWidth = window.innerWidth;
+                if (imageWidth>windowWidth) {
+                    image.width( "100%" );
+                }
+            } else {
+                image.css( 'height','inherit' );
+                var imageHeight = image.height();
+                var windowHeight = window.innerHeight;
+                if (imageHeight>windowHeight) {
+                    image.height( "100%" );
+                }
+            }
+
+        });*/
+    });
+
     $('#spinner-demo').bind('pageshow', function (e) {
         $(this).find('li').each(function (index, element) {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);

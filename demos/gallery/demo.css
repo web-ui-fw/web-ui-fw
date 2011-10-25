@@ -132,3 +132,20 @@ h1, h4 {
 #short-person-picker .ui-scrollview-clip {
     height: 400px;
 }
+
+#singleimagecontainer {
+    /*border: solid #AAA;/**/
+    padding-bottom: 0;
+    width: 100px;/**/
+    height: 100px;/**/
+}
+
+.singleimagedisplay { /**/
+    /*width: inherit; /**/
+    /*height: inherit; /**/
+} /**/
+
+/*.singleimagedisplay { /**/
+    /*width: inherit; /**/
+    /*height: auto; /**/
+/*} /**/
