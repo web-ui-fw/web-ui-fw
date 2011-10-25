@@ -72,16 +72,21 @@ third_party_widgets: init
 
 widgets: init
 	# Building web-ui-fw widgets...
-	@@ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
+	@@uglify=cat; \
+	if test "x${DEBUG}x" = "xyesx" && hash uglifyjs 2>&-; then \
+		echo "	# uglifyjs enabled"; \
+		uglify=uglifyjs ; \
+	fi; \
+	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	    while read REPLY; do \
 	        echo "	# Building widget $$REPLY"; \
           if test "x${INLINE_PROTO}x" = "x1x"; then \
               ./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
-              cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled >> ${FW_JS}; \
+              cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled | $${uglify} >> ${FW_JS}; \
           else \
               for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
                   echo "		$$f"; \
-                  cat $$f >> ${FW_JS}; \
+                  cat $$f | $${uglify} >> ${FW_JS}; \
               done; \
           fi; \
           if test "x${INLINE_PROTO}x" != "x1x"; then \
