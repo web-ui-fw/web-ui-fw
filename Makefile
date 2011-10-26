@@ -73,7 +73,7 @@ third_party_widgets: init
 widgets: init
 	# Building web-ui-fw widgets...
 	@@uglify=cat; \
-	if test "x${DEBUG}x" = "xyesx" && hash uglifyjs 2>&-; then \
+	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
 		echo "	# uglifyjs enabled"; \
 		uglify=uglifyjs ; \
 	fi; \
