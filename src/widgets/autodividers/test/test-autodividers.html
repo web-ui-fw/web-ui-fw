@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="../../../../build/web-ui-fw/0.1/themes/default/web-ui-fw-theme.css"/>
 
-    <script src="../js/autodividers.js"></script>
+    <script src="../../common/js/jquery.mobile.listview.autodividers.js"></script>
 </head>
 
 <body>
@@ -130,7 +130,7 @@ $(document).bind('pagecreate', function () {
 
     $('#add-gary-button').bind('click', function () {
         var gary = $('<li><a href="#">Gary</a></li>');
-        $('#refreshable-dividers').find('li:contains("Ian")').before(gary);
+        $('#refreshable-dividers').find('li.ui-li-divider:contains(I)').before(gary);
     });
 
     $('#remove-bertie-button').bind('click', function () {
