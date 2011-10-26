@@ -297,6 +297,21 @@
             return {container: itemProto, link: itemProto.find("a"), selector: selector};
         },
 
+        _updateDate: function(owner, field, value, text) {
+            if (field === "month") {
+                    /* From http://www.javascriptkata.com/2007/05/24/how-to-know-if-its-a-leap-year/ */
+                var days = [31,(((new Date(this.data.year,1,29).getDate())===29) ? 29 : 28),31,30,31,30,31,31,30,31,30,31],
+                    newDay = Math.min(this.data.day, days[value]);
+
+                if (newDay != this.data.day) {
+                    this.data.day = newDay;
+                    this.ui.date.day.text(newDay);
+                }
+            }
+            this.data[field] = value;
+            owner.text(text);
+        },
+
         _populateSelector: function(selector, owner, klass, values,
                                     parseFromFunc, parseToFunc,
                                     dest, prop, ui) {
@@ -313,12 +328,8 @@
                 var item = obj._createSelectorItem(ui.itemProto.clone(), klass);
                 item.link.bind("vclick", function(e) {
                     if (!self.panning) {
-                        var newValue = parseFromFunc(this.text);
-                        dest[prop] = newValue;
-                        owner.text(this.text);
-                        scrollable.view.find(item.selector).each(function() {
-                            $(this).removeClass("current");
-                        });
+                        self._updateDate(owner, prop, parseFromFunc(this.text), this.text);
+                        scrollable.view.find(item.selector).removeClass("current");
                         $(this).toggleClass("current");
                         obj._hideDataSelector(selector);
                         $(obj.data.parentInput).trigger("date-changed", obj.getValue());
