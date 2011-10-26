@@ -91,6 +91,9 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
             arrow:     "#popupwindow-arrow",
         };
 
+    if (thisPage[0] === undefined)
+        thisPage = $("body");
+
     ui = $.mobile.todons.loadPrototype("popupwindow", ui);
     thisPage.append(ui.screen);
     ui.container.insertAfter(ui.screen);
