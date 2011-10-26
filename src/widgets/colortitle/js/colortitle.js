@@ -29,37 +29,37 @@
 (function( $, undefined ) {
 
 $.widget( "todons.colortitle", $.todons.colorwidget, {
-  options: {
-    initSelector: ":jqmData(role='colortitle')"
-  },
+    options: {
+        initSelector: ":jqmData(role='colortitle')"
+    },
 
-  _create: function() {
-    var self = this,
-        ui = {
-          clrtitle: "#colortitle",
-          header: "#colortitle-string"
-        };
+    _create: function() {
+      var self = this,
+          ui = {
+            clrtitle: "#colortitle",
+            header: "#colortitle-string"
+          };
 
-      $.mobile.todons.loadPrototype("colortitle", ui);
-      this.element.append(ui.clrtitle);
+        $.mobile.todons.loadPrototype("colortitle", ui);
+        this.element.append(ui.clrtitle);
 
-      $.extend( this, {
-        ui: ui
-      });
+        $.extend( this, {
+            ui: ui
+        });
 
-    $.todons.colorwidget.prototype._create.call(this);
-  },
+      $.todons.colorwidget.prototype._create.call(this);
+    },
 
-  _setColor: function(clr, unconditional) {
-    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional))
-      this.ui.header.text(clr);
-  }
+    _setColor: function(clr, unconditional) {
+        if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional))
+            this.ui.header.text(clr);
+    }
 });
 
 $(document).bind("pagecreate create", function(e) {
-  $($.todons.colortitle.prototype.options.initSelector, e.target)
-    .not(":jqmData(role='none'), :jqmData(role='nojs')")
-    .colortitle();
+    $($.todons.colortitle.prototype.options.initSelector, e.target)
+        .not(":jqmData(role='none'), :jqmData(role='nojs')")
+        .colortitle();
 });
 
 })(jQuery);

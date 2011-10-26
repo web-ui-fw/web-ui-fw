@@ -12,59 +12,59 @@
 @colorpalette-preview-actual-height: @colorpalette-preview-total-height - 2 * @colorpalette-item-border-width;
 
 .ui-colorpalette {
-  display: table;
-  padding-left:   24px;
-  padding-right:  24px;
-  padding-top:    15px;
-  padding-bottom: 15px;
-
-  .colorpalette-preview-container {
-    padding-top: 48px;
-    padding-bottom: 39px;
     display: table;
-    margin: auto;
+    padding-left:   24px;
+    padding-right:  24px;
+    padding-top:    15px;
+    padding-bottom: 15px;
 
-    .colorpalette-preview {
-      display: table;
-      margin: auto;
-      width:  @colorpalette-preview-actual-width;
-      height: @colorpalette-preview-actual-height;
-      border: @colorpalette-item-border-color @colorpalette-item-border-width solid;
-    }
-  }
+    .colorpalette-preview-container {
+        padding-top: 48px;
+        padding-bottom: 39px;
+        display: table;
+        margin: auto;
 
-  .colorpalette-table {
-    .colorpalette-bottom-row {
-      display: table-row;
-    }
-
-    .colorpalette-normal-row {
-      .colorpalette-bottom-row;
-    }
-
-    .colorpalette-choice-container-left {
-      display: table-cell;
+        .colorpalette-preview {
+            display: table;
+            margin: auto;
+            width:  @colorpalette-preview-actual-width;
+            height: @colorpalette-preview-actual-height;
+            border: @colorpalette-item-border-color @colorpalette-item-border-width solid;
+        }
     }
 
-    .colorpalette-choice-container-rest {
-      .colorpalette-choice-container-left;
-      padding-left: 38px;
-    }
+    .colorpalette-table {
+        .colorpalette-bottom-row {
+            display: table-row;
+        }
 
-    .colorpalette-normal-row .colorpalette-choice-container-left {
-      padding-bottom: 16px;
-    }
+        .colorpalette-normal-row {
+            .colorpalette-bottom-row;
+        }
 
-    .colorpalette-choice {
-      width:      @colorpalette-choice-actual-width;
-      height:     @colorpalette-choice-actual-width;
-      border-width: @colorpalette-item-border-width;
-      border-style: solid;
-      border-color: @colorpalette-item-border-color;
-    }
+        .colorpalette-choice-container-left {
+            display: table-cell;
+        }
 
-    .colorpalette-choice-active {
-      border-color: @todons-selected-color;
+        .colorpalette-choice-container-rest {
+            .colorpalette-choice-container-left;
+            padding-left: 38px;
+        }
+
+        .colorpalette-normal-row .colorpalette-choice-container-left {
+            padding-bottom: 16px;
+        }
+
+        .colorpalette-choice {
+            width:      @colorpalette-choice-actual-width;
+            height:     @colorpalette-choice-actual-width;
+            border-width: @colorpalette-item-border-width;
+            border-style: solid;
+            border-color: @colorpalette-item-border-color;
+        }
+
+        .colorpalette-choice-active {
+            border-color: @todons-selected-color;
+        }
     }
-  }
 }

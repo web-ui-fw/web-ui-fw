@@ -91,11 +91,11 @@ function myConsoleLog(str) {
  * This is kinda like the mkdir -p command.
  */
 function ensureNS(ns) {
-  var nsAr = ns.split("."),
-  nsSoFar = "";
+    var nsAr = ns.split("."),
+    nsSoFar = "";
 
-  for (var Nix in nsAr) {
-    nsSoFar = nsSoFar + (Nix > 0 ? "." : "") + nsAr[Nix];
-    eval (nsSoFar + " = " + nsSoFar + " || {};");
-  }
+    for (var Nix in nsAr) {
+        nsSoFar = nsSoFar + (Nix > 0 ? "." : "") + nsAr[Nix];
+        eval (nsSoFar + " = " + nsSoFar + " || {};");
+    }
 }

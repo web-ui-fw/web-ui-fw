@@ -75,18 +75,18 @@
 
         _initDate: function(ui) {
             if (!this.options.showDate)
-              ui.date.main.remove();
+                ui.date.main.remove();
             else {
-              /* TODO: the order should depend on locale and
-               * configurable in the options. */
-              var dataItems = {
-                  0: ["year", this.data.initial.year],
-                  1: ["month", this.options.months[this.data.initial.month]],
-                  2: ["day", this.data.initial.day],
-              };
+                /* TODO: the order should depend on locale and
+                 * configurable in the options. */
+                var dataItems = {
+                    0: ["year", this.data.initial.year],
+                    1: ["month", this.options.months[this.data.initial.month]],
+                    2: ["day", this.data.initial.day],
+                };
 
-              for (var data in dataItems)
-                ui.date[dataItems[data][0]].text(dataItems[data][1]);
+                for (var data in dataItems)
+                    ui.date[dataItems[data][0]].text(dataItems[data][1]);
             }
         },
 
@@ -100,7 +100,7 @@
             };
 
             for (var data in dataItems)
-              ui.time[dataItems[data][0]].text(dataItems[data][1]);
+                ui.time[dataItems[data][0]].text(dataItems[data][1]);
         },
 
         _initDateTimeDivs: function(ui) {
@@ -117,11 +117,11 @@
         },
 
         _makeTwoDigitValue: function(val) {
-          return ((val < 10 ? "0" : "") + val.toString(10));
+            return ((val < 10 ? "0" : "") + val.toString(10));
         },
 
         _parseDayHoursMinutes: function(val) {
-          return parseInt((val.substring(0, 1) === "0") ? val.substring(1) : val);
+            return parseInt((val.substring(0, 1) === "0") ? val.substring(1) : val);
         },
 
         _parseAmPmValue: function(pm) {
@@ -129,7 +129,7 @@
         },
 
         _clampHours: function(val) {
-          return ((this.options.twentyfourHours) ? val : (((val + 11) % 12) + 1));
+            return ((this.options.twentyfourHours) ? val : (((val + 11) % 12) + 1));
         },
 
         _showDataSelector: function(selector, owner, ui) {
@@ -143,7 +143,9 @@
                 var values = range(1900, 2100);
                 selectorResult = obj._populateSelector(selector, owner,
                     "year", values, parseInt, null, obj.data, "year", ui);
-            } else if (klass.search("month") > 0) {
+            }
+            else
+            if (klass.search("month") > 0) {
                 selectorResult = obj._populateSelector(selector, owner,
                     "month", obj.options.months,
                     function (month) {
@@ -155,13 +157,17 @@
                         return obj.options.months[index];
                     },
                     obj.data, "month", ui);
-            } else if (klass.search("day") > 0) {
+            }
+            else
+            if (klass.search("day") > 0) {
                 var day = new Date(
                     obj.data.year, obj.data.month + 1, 0).getDate();
                 selectorResult = obj._populateSelector(selector, owner,
                     "day", range(1, day), this._parseDayHoursMinutes, null, obj.data,
                     "day", ui);
-            } else if (klass.search("hours") > 0) {
+            }
+            else
+            if (klass.search("hours") > 0) {
                 var values =
                     range(this.options.twentyfourHours ? 0 : 1,
                           this.options.twentyfourHours ? 24 : 12)
@@ -171,14 +177,20 @@
                     "hours", values, this._parseDayHoursMinutes,
                       function(val) { return obj._makeTwoDigitValue(obj._clampHours(val)); },
                     obj.data, "hours", ui);
-            } else if (klass.search("separator") > 0) {
-              console.log("datetimepicker: no dropdown for time separator");
-            } else if (klass.search("minutes") > 0) {
+            }
+            else
+            if (klass.search("separator") > 0) {
+                console.log("datetimepicker: no dropdown for time separator");
+            }
+            else
+            if (klass.search("minutes") > 0) {
                 var values = range(0, 59).map(this._makeTwoDigitValue);
                 selectorResult = obj._populateSelector(selector, owner,
                     "minutes", values, this._parseDayHoursMinutes, this._makeTwoDigitValue, obj.data,
                     "minutes", ui);
-            } else if (klass.search("ampm") > 0) {
+            }
+            else
+            if (klass.search("ampm") > 0) {
                 var values = [this.options.am, this.options.pm];
                 selectorResult = obj._populateSelector(selector, owner,
                     "ampm", values,
@@ -212,24 +224,24 @@
                  */
                 selectorWidth = selector.find(".container").outerWidth();
                 selector.find(".item").each(function(idx) {
-                  var width = $(this).outerWidth(true);
-                  totalWidth += width;
-                  if (idx < selectorResult.currentIndex)
-                    widthAtItem += width;
+                    var width = $(this).outerWidth(true);
+                    totalWidth += width;
+                    if (idx < selectorResult.currentIndex)
+                        widthAtItem += width;
                 });
 
                 /* If the contents doesn't fill the selector, pad it out width empty divs so it's centered */
                 if (totalWidth < selectorWidth) {
-                  var half = (selectorWidth - totalWidth) / 2;
+                    var half = (selectorWidth - totalWidth) / 2;
 
-                  selector.find(".item:first").before($("<div/>").css("float", "left").width(half).height(1));
-                  selector.find(".item:last" ).after( $("<div/>").css("float", "left").width(half).height(1));
-                  totalWidth = selectorWidth;
+                    selector.find(".item:first").before($("<div/>").css("float", "left").width(half).height(1));
+                    selector.find(".item:last" ).after( $("<div/>").css("float", "left").width(half).height(1));
+                    totalWidth = selectorWidth;
                 }
                 /* Otherwise, try to center the current item as much as possible */
                 else {
-                  x = (selectorWidth - $(selector.find(".item")[selectorResult.currentIndex]).outerWidth(true)) / 2 - widthAtItem;
-                  x = Math.min(0, Math.max(selectorWidth - totalWidth, x));
+                    x = (selectorWidth - $(selector.find(".item")[selectorResult.currentIndex]).outerWidth(true)) / 2 - widthAtItem;
+                    x = Math.min(0, Math.max(selectorWidth - totalWidth, x));
                 }
 
                 selector.find(".view").width(totalWidth);
@@ -241,12 +253,12 @@
             var self = this;
             if (this.state.selectorOut) {
                 selector.slideUp(this.options.animationDuration,
-                  function() {
-                    if (self.ui.scrollview !== undefined) {
-                      self.ui.scrollview.remove();
-                      self.ui.scrollview = undefined;
-                    }
-                  });
+                    function() {
+                      if (self.ui.scrollview !== undefined) {
+                          self.ui.scrollview.remove();
+                          self.ui.scrollview = undefined;
+                      }
+                    });
                 this.state.selectorOut = false;
             }
         },
@@ -257,19 +269,19 @@
                 view = container.find("#datetimepicker-selector-view").removeAttr("id");
 
             container
-              .scrollview({direction: "x"})
-              .bind("vclick", function(event) {
-                if (self.panning) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-              })
-              .bind("scrollstart", function(event) {
-                self.panning = true;
-              })
-              .bind("scrollstop", function(event) {
-                self.panning = false;
-              });
+                .scrollview({direction: "x"})
+                .bind("vclick", function(event) {
+                  if (self.panning) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                  }
+                })
+                .bind("scrollstart", function(event) {
+                    self.panning = true;
+                })
+                .bind("scrollstop", function(event) {
+                    self.panning = false;
+                });
 
             return {container: container, view: view};
         },
@@ -278,9 +290,9 @@
             var selector = itemProto.attr("data-selector");
 
             itemProto
-              .removeAttr("data-selector")
-              .removeAttr("id")
-              .addClass(klass);
+                .removeAttr("data-selector")
+                .removeAttr("id")
+                .addClass(klass);
 
             return {container: itemProto, link: itemProto.find("a"), selector: selector};
         },
@@ -292,9 +304,9 @@
             var obj = this;
             var scrollable = obj._createScrollableView(ui.selectorProto);
             var currentIndex = 0;
-            var destValue = (parseToFunc !== null ?
-                                parseToFunc(dest[prop]) :
-                                dest[prop]);
+            var destValue = ((parseToFunc !== null)
+                ? parseToFunc(dest[prop])
+                : dest[prop]);
 
             var i = 0;
             for (; i < values.length; i++) {
@@ -320,7 +332,7 @@
             }
 
             if (this.ui.scrollview !== undefined)
-              this.ui.scrollview.remove();
+                this.ui.scrollview.remove();
 
             selector.append(scrollable.container);
 
@@ -332,26 +344,26 @@
         _create: function() {
 
             var ui = {
-              container: "#datetimepicker",
-              selector: "#datetimepicker-selector",
-              triangle: "#datetimepicker-selector-triangle",
-              selectorProto: "#datetimepicker-selector-container",
-              itemProto: "#datetimepicker-item",
-              header: "#datetimepicker-header",
-              main: "#datetimepicker-main",
-              date: {
-                main: "#datetimepicker-date",
-                year: "#datetimepicker-date-year",
-                month: "#datetimepicker-date-month",
-                day: "#datetimepicker-date-day"
-              },
-              time: {
-                main: "#datetimepicker-time",
-                hours: "#datetimepicker-time-hours",
-                separator: "#datetimepicker-time-separator",
-                minutes: "#datetimepicker-time-minutes"
-              },
-              ampm: "#datetimepicker-ampm-span"
+                container: "#datetimepicker",
+                selector: "#datetimepicker-selector",
+                triangle: "#datetimepicker-selector-triangle",
+                selectorProto: "#datetimepicker-selector-container",
+                itemProto: "#datetimepicker-item",
+                header: "#datetimepicker-header",
+                main: "#datetimepicker-main",
+                date: {
+                    main: "#datetimepicker-date",
+                    year: "#datetimepicker-date-year",
+                    month: "#datetimepicker-date-month",
+                    day: "#datetimepicker-date-day"
+                },
+                time: {
+                    main: "#datetimepicker-time",
+                    hours: "#datetimepicker-time-hours",
+                    separator: "#datetimepicker-time-separator",
+                    minutes: "#datetimepicker-time-minutes"
+                },
+                ampm: "#datetimepicker-ampm-span"
             };
 
             ui = $.mobile.todons.loadPrototype("datetimepicker", ui);
@@ -359,13 +371,22 @@
             ui.itemProto.remove();
 
             $.extend ( this, {
-              panning: false,
-              ui: ui,
-              data : {
-                now: new Date(),
-                parentInput: 0,
+                panning: false,
+                ui: ui,
+                data : {
+                    now: new Date(),
+                    parentInput: 0,
 
-                initial: {
+                    initial: {
+                        year: 0,
+                        month: 0,
+                        day: 0,
+
+                        hours: 0,
+                        minutes: 0,
+                        pm: false
+                    },
+
                     year: 0,
                     month: 0,
                     day: 0,
@@ -375,18 +396,9 @@
                     pm: false
                 },
 
-                year: 0,
-                month: 0,
-                day: 0,
-
-                hours: 0,
-                minutes: 0,
-                pm: false
-            },
-
-            state : {
-                selectorOut: false
-            }
+                state : {
+                    selectorOut: false
+                }
             });
 
             var obj = this;
@@ -427,10 +439,10 @@
         getValue: function() {
             var actualHours = this._clampHours(this.data.hours);
             if (actualHours === 12 && !this.data.pm)
-              actualHours = 0;
+                actualHours = 0;
             else
             if (actualHours < 12 && this.data.pm)
-              actualHours += 12;
+                actualHours += 12;
             return new Date(this.data.year,
                             this.data.month,
                             this.data.day,
@@ -446,4 +458,3 @@
     });
 
 })(jQuery, this);
-

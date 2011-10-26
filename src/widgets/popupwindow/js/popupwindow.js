@@ -86,9 +86,9 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
     var self = this,
         thisPage = this.element.closest(".ui-page"),
         ui = {
-          screen:    "#popupwindow-screen",
-          container: "#popupwindow-container",
-          arrow:     "#popupwindow-arrow",
+            screen:    "#popupwindow-screen",
+            container: "#popupwindow-container",
+            arrow:     "#popupwindow-arrow",
         };
 
     ui = $.mobile.todons.loadPrototype("popupwindow", ui);
@@ -98,10 +98,10 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
     ui.arrow.remove();
 
     $.extend( self, {
-      transition: undefined,
-      isOpen: false,
-      thisPage: thisPage,
-      ui: ui
+        transition: undefined,
+        isOpen: false,
+        thisPage: thisPage,
+        ui: ui
     });
 
     $.mobile.todons.parseOptions(this, true);
@@ -117,59 +117,59 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
         alreadyAdded = false;
 
     for (var Nix in classes) {
-      if (classes[Nix].substring(0, 8) === "ui-body-") {
-        if (classes[Nix] != newTheme)
-          this.ui.container.removeClass(classes[Nix]);
-        else
-          alreadyAdded = true;
-      }
+        if (classes[Nix].substring(0, 8) === "ui-body-") {
+            if (classes[Nix] != newTheme)
+                this.ui.container.removeClass(classes[Nix]);
+            else
+                alreadyAdded = true;
+        }
     }
 
     if (!(alreadyAdded || undefined === newTheme))
-      this.ui.container.addClass(newTheme);
+        this.ui.container.addClass(newTheme);
 
     this.options.overlayTheme = newTheme;
   },
 
   _setShadow: function(value) {
-    if (value) {
-      if (!this.ui.container.hasClass("ui-overlay-shadow"))
-        this.ui.container.addClass("ui-overlay-shadow");
-    }
-    else
-    if (this.ui.container.hasClass("ui-overlay-shadow"))
-      this.ui.container.removeClass("ui-overlay-shadow");
+      if (value) {
+          if (!this.ui.container.hasClass("ui-overlay-shadow"))
+            this.ui.container.addClass("ui-overlay-shadow");
+      }
+      else
+      if (this.ui.container.hasClass("ui-overlay-shadow"))
+          this.ui.container.removeClass("ui-overlay-shadow");
 
-    this.options.shadow = value;
+      this.options.shadow = value;
   },
 
   _setTransition: function(value) {
     if (this.transition != undefined)
-      this.ui.container.removeClass(this.transition);
+        this.ui.container.removeClass(this.transition);
     this.ui.container.addClass(value);
     this.transition = value;
   },
 
   _setOption: function(key, value) {
     if (key === "overlayTheme") {
-      if (value.match(/[a-z]/))
-        this._setOverlayTheme("ui-body-" + value);
-      else
-      if (value === "")
-        this._setOverlayTheme();
+        if (value.match(/[a-z]/))
+            this._setOverlayTheme("ui-body-" + value);
+        else
+        if (value === "")
+            this._setOverlayTheme();
     }
     else
     if (key === "shadow")
-      this._setShadow(value);
+        this._setShadow(value);
     else
     if (key === "fade")
-      this.options.fade = value;
+        this.options.fade = value;
     else
     if (key === "transition")
-      this._setTransition(value);
+        this._setTransition(value);
     else
     if (key === "showArrow")
-      this.options.showArrow = value;
+        this.options.showArrow = value;
   },
 
   _placementCoords: function(x, y) {
@@ -225,11 +225,11 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       desired = {x : x, y : y - halfheight - arrowHeight};
       coords = calcCoords(desired);
       possibleLocations.above = {
-        coords: coords,
-        diff: {
-          x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
-          y: Math.abs(desired.y - (coords.y + halfheight)),
-        }
+          coords: coords,
+          diff: {
+              x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+              y: Math.abs(desired.y - (coords.y + halfheight)),
+          }
       };
       minDiff = possibleLocations.above.diff;
       minDiffIdx = "above";
@@ -238,11 +238,11 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
       desired = {x : x, y : y + halfheight + arrowHeight};
       coords = calcCoords(desired);
       possibleLocations.below = {
-        coords: coords,
-        diff: {
-          x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
-          y: Math.abs(desired.y - (coords.y + halfheight)),
-        }
+          coords: coords,
+          diff: {
+              x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+              y: Math.abs(desired.y - (coords.y + halfheight)),
+          }
       };
 
       /*
@@ -250,20 +250,20 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
        * Not sure if Euclidean distance is best here, especially since it is expensive to compute.
        */
       for (var Nix in possibleLocations) {
-        if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
-          minDiff = possibleLocations[Nix].diff;
-          minDiffIdx = Nix;
-        }
+          if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
+              minDiff = possibleLocations[Nix].diff;
+              minDiffIdx = Nix;
+          }
 
-        if (0 === minDiff.x + minDiff.y)
-          break;
+          if (0 === minDiff.x + minDiff.y)
+              break;
       }
 
       ret = possibleLocations[minDiffIdx].coords;
       ret.arrowLocation = (("above" === minDiffIdx) ? "bottom" : "top");
     }
     else
-      ret = calcCoords({x : x, y : y});
+        ret = calcCoords({x : x, y : y});
 
     return ret;
   },
@@ -278,11 +278,11 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
           coords = this._placementCoords(x, y);
 
       if (this.options.showArrow)
-        this.ui.currentArrow = this.ui.arrow
-          .clone()
-          .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
-          [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this.ui.container)
-          .triangle({location: coords.arrowLocation, offset: "50%"});
+          this.ui.currentArrow = this.ui.arrow
+              .clone()
+              .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
+              [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this.ui.container)
+              .triangle({location: coords.arrowLocation, offset: "50%"});
 
       this.ui.screen
           .height($(document).height())
@@ -299,7 +299,7 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
           })
           .addClass("in")
           .animationComplete(function() {
-            self.ui.screen.height($(document).height());
+              self.ui.screen.height($(document).height());
           });
 
       this.isOpen = true;
@@ -307,7 +307,7 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
 
   close: function() {
       if (this.options.disabled || !this.isOpen)
-        return;
+          return;
 
       var self = this,
           hideScreen = function() {
@@ -317,18 +317,18 @@ $.widget( "todons.popupwindow", $.mobile.widget, {
           };
 
       this.ui.container
-        .removeClass("in")
-        .addClass("reverse out")
-        .animationComplete(function() {
-          self.ui.container
-            .removeClass("reverse out")
-            .addClass("ui-selectmenu-hidden")
-            .removeAttr("style");
-          if (self.ui.currentArrow != undefined) {
-            self.ui.currentArrow.remove();
-            self.ui.currentArrow = undefined;
-          }
-        });
+          .removeClass("in")
+          .addClass("reverse out")
+          .animationComplete(function() {
+              self.ui.container
+                  .removeClass("reverse out")
+                  .addClass("ui-selectmenu-hidden")
+                  .removeAttr("style");
+              if (self.ui.currentArrow != undefined) {
+                  self.ui.currentArrow.remove();
+                  self.ui.currentArrow = undefined;
+              }
+          });
 
       if (this.options.fade)
           this.ui.screen.animate({opacity: 0.0}, "fast", hideScreen);
@@ -343,9 +343,9 @@ $(document).bind("pagecreate create", function(e) {
     .popupwindow();
 
     $("[aria-haspopup='true'][aria-owns]").bind("vclick", function(e) {
-      $("#" + $(this).attr("aria-owns")).popupwindow('open',
-        $(this).offset().left + $(this).outerWidth()  / 2,
-        $(this).offset().top  + $(this).outerHeight() / 2);
+        $("#" + $(this).attr("aria-owns")).popupwindow('open',
+            $(this).offset().left + $(this).outerWidth()  / 2,
+            $(this).offset().top  + $(this).outerHeight() / 2);
     });
 });
 
