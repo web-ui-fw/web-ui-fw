@@ -19,8 +19,8 @@ export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH
 You may want to add the final export to your .bashrc and source it.
 
 
-Instally uglifyjs
-=================
+Installing uglifyjs
+===================
 
 `uglifyjs` is a JavaScript parser/compressor/beautifier. It can be
 installed via NPM. On a Debian based distribution, this should work:
