@@ -42,119 +42,119 @@
 (function($, undefined) {
 
 $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
-  options: {
-    buttonMarkup: {
-      theme: null,
-      inline: true,
-      corners: true,
-      shadow: true,
+    options: {
+        buttonMarkup: {
+            theme: null,
+            inline: true,
+            corners: true,
+            shadow: true,
+        },
+        closeText: "Close",
+        initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
     },
-    closeText: "Close",
-    initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
-  },
 
-  _create: function() {
-    var self = this,
-        ui = {
-          button:          "#colorpickerbutton-button",
-          buttonContents:  "#colorpickerbutton-button-contents",
-          popup:           "#colorpickerbutton-popup-container",
-          hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
-          closeButton:     "#colorpickerbutton-popup-close-button",
-          closeButtonText: "#colorpickerbutton-popup-close-button-text",
-        };
+    _create: function() {
+        var self = this,
+            ui = {
+                button:          "#colorpickerbutton-button",
+                buttonContents:  "#colorpickerbutton-button-contents",
+                popup:           "#colorpickerbutton-popup-container",
+                hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
+                closeButton:     "#colorpickerbutton-popup-close-button",
+                closeButtonText: "#colorpickerbutton-popup-close-button-text",
+            };
 
-    ui = $.mobile.todons.loadPrototype("colorpickerbutton", ui);
-    ui.button.insertBefore(this.element);
-    this.element.css("display", "none");
+        ui = $.mobile.todons.loadPrototype("colorpickerbutton", ui);
+        ui.button.insertBefore(this.element);
+        this.element.css("display", "none");
 
-    /* Tear apart the proto */
-    ui.popup.insertBefore(this.element)
-            .popupwindow();
-    ui.hsvpicker.hsvpicker();
+        /* Tear apart the proto */
+        ui.popup.insertBefore(this.element)
+                .popupwindow();
+        ui.hsvpicker.hsvpicker();
 
-    // Expose to other methods
-    $.extend( self, {
-      ui: ui,
-    });
+        // Expose to other methods
+        $.extend( self, {
+            ui: ui,
+        });
 
-    $.todons.colorwidget.prototype._create.call(this);
+        $.todons.colorwidget.prototype._create.call(this);
 
-    // Button events
-    ui.button.bind("vclick keydown", function(event) {
-      if (event.type == "vclick" ||
-          event.keyCode &&
-            (event.keyCode === $.mobile.keyCode.ENTER ||
-             event.keyCode === $.mobile.keyCode.SPACE)) {
-        self.open();
-        event.preventDefault();
-      }
-    });
+        // Button events
+        ui.button.bind("vclick keydown", function(event) {
+            if (event.type == "vclick" ||
+                event.keyCode &&
+                  (event.keyCode === $.mobile.keyCode.ENTER ||
+                   event.keyCode === $.mobile.keyCode.SPACE)) {
+                self.open();
+                event.preventDefault();
+            }
+        });
 
-    ui.closeButton.bind("vclick", function(event) {
-      self._setColor(self.ui.hsvpicker.attr("data-color"));
-      self.close();
-    });
-  },
+        ui.closeButton.bind("vclick", function(event) {
+            self._setColor(self.ui.hsvpicker.attr("data-color"));
+            self.close();
+        });
+      },
 
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-    if (key === "color")
-      this._setColor(value, unconditional);
-    else
-    if (key === "buttonMarkup") {
-      this.ui.button.buttonMarkup(value);
-      value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
-      value["inline"] = false;
-      this.ui.closeButton.buttonMarkup(value);
-    }
-    else
-    if (key === "closeText")
-      this.ui.closeButtonText.text(value);
-  },
+      _setOption: function(key, value, unconditional) {
+          if (undefined === unconditional)
+              unconditional = false;
+          if (key === "color")
+              this._setColor(value, unconditional);
+          else
+          if (key === "buttonMarkup") {
+              this.ui.button.buttonMarkup(value);
+              value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
+              value["inline"] = false;
+              this.ui.closeButton.buttonMarkup(value);
+          }
+          else
+          if (key === "closeText")
+              this.ui.closeButtonText.text(value);
+      },
 
-  _setColor: function(clr, unconditional) {
-    if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
-      this.ui.hsvpicker.hsvpicker("option", "color", clr);
-      this.ui.buttonContents.css("color", clr);
-    }
-  },
+      _setColor: function(clr, unconditional) {
+          if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+              this.ui.hsvpicker.hsvpicker("option", "color", clr);
+              this.ui.buttonContents.css("color", clr);
+          }
+      },
 
-  open: function() {
-    if ( this.options.disabled ) {
-      return;
-    }
+    open: function() {
+        if ( this.options.disabled ) {
+            return;
+        }
 
-    this.ui.popup.popupwindow("open",
-      this.ui.button.offset().left + this.ui.button.outerWidth()  / 2,
-      this.ui.button.offset().top  + this.ui.button.outerHeight() / 2);
-  },
+        this.ui.popup.popupwindow("open",
+            this.ui.button.offset().left + this.ui.button.outerWidth()  / 2,
+            this.ui.button.offset().top  + this.ui.button.outerHeight() / 2);
+      },
 
-  _focusButton : function(){
-    var self = this;
-    setTimeout(function() {
-      self.ui.button.focus();
-    }, 40);
-  },
+    _focusButton : function(){
+        var self = this;
+        setTimeout(function() {
+            self.ui.button.focus();
+        }, 40);
+    },
 
-  close: function() {
-    if ( this.options.disabled ) {
-      return;
-    }
+    close: function() {
+        if ( this.options.disabled ) {
+            return;
+        }
 
-    var self = this;
+        var self = this;
 
-    self._focusButton();
-    self.ui.popup.popupwindow("close");
-  },
+        self._focusButton();
+        self.ui.popup.popupwindow("close");
+    },
 });
 
 //auto self-init widgets
 $(document).bind("pagecreate create", function(e) {
-  $($.todons.colorpickerbutton.prototype.options.initSelector, e.target)
-    .not(":jqmData(role='none'), :jqmData(role='nojs')")
-    .colorpickerbutton();
+    $($.todons.colorpickerbutton.prototype.options.initSelector, e.target)
+        .not(":jqmData(role='none'), :jqmData(role='nojs')")
+        .colorpickerbutton();
 });
 
 })(jQuery);

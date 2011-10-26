@@ -45,213 +45,213 @@
 (function( $, undefined ) {
 
 $.widget( "todons.volumecontrol", $.mobile.widget, {
-  options: {
-    volume: 0,
-    basicTone: false,
-    title: "Volume",
-    initSelector: ":jqmData(role='volumecontrol')"
-  },
+    options: {
+        volume: 0,
+        basicTone: false,
+        title: "Volume",
+        initSelector: ":jqmData(role='volumecontrol')"
+    },
 
-  _create: function() {
-    var self = this,
-        ui = {
-          container: "#volumecontrol",
-          volumeImage: "#volumecontrol-indicator"
-        },
-        yCoord = function(volumeImage, e) {
-          var target = $(e.target),
-              coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
+    _create: function() {
+        var self = this,
+            ui = {
+                container: "#volumecontrol",
+                volumeImage: "#volumecontrol-indicator"
+            },
+            yCoord = function(volumeImage, e) {
+                var target = $(e.target),
+                    coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
 
-          if (target.hasClass("ui-volumecontrol-level"))
-            coords.y += target.offset().top  - volumeImage.offset().top;
+                if (target.hasClass("ui-volumecontrol-level"))
+                    coords.y += target.offset().top  - volumeImage.offset().top;
 
-          return coords.y;
-        };
+                return coords.y;
+            };
 
-      ui = $.mobile.todons.loadPrototype("volumecontrol", ui);
-      ui.container.insertBefore(this.element)
-                  .popupwindow({overlayTheme: "", fade: false, shadow: false});
-      this.element.css("display", "none");
+          ui = $.mobile.todons.loadPrototype("volumecontrol", ui);
+          ui.container.insertBefore(this.element)
+                      .popupwindow({overlayTheme: "", fade: false, shadow: false});
+          this.element.css("display", "none");
 
-      $.extend (self, {
-        isOpen: false,
-        ui: ui,
-        dragging: false,
-        realized: false,
-        volumeElemStack: []
-      });
-
-      $.mobile.todons.parseOptions(this, true);
-
-      if (this.element.closest(".ui-page").is(":visible"))
-        self._realize();
-      else
-        this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
-
-      ui.container.bind("closed", function(e) {
-        self.isOpen = false;
-      });
-
-      ui.volumeImage.bind("vmousedown", function(e) {
-        self.dragging = true;
-        self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-        event.preventDefault();
-      });
-
-      ui.volumeImage.bind("vmousemove", function(e) {
-        if (self.dragging) {
-          self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-          event.preventDefault();
-        }
-      });
-
-      $( document ).bind( "vmouseup", function( event ) {
-        if ( self.dragging )
-          self.dragging = false;
-      });
-
-      $(document).bind("keydown", function(e) {
-        if (self.isOpen) {
-          var maxVolume = self._maxVolume(),
-              newVolume = -1;
-
-          switch(event.keyCode) {
-            case $.mobile.keyCode.UP:
-            case $.mobile.keyCode.DOWN:
-            case $.mobile.keyCode.HOME:
-            case $.mobile.keyCode.END:
-              event.preventDefault();
-              break;
-          }
-
-          switch(event.keyCode) {
-            case $.mobile.keyCode.UP:
-              newVolume = Math.min(self.options.volume + 1, maxVolume);
-              break;
-
-            case $.mobile.keyCode.DOWN:
-              newVolume = Math.max(self.options.volume - 1, 0);
-              break;
-
-            case $.mobile.keyCode.HOME:
-              newVolume = 0;
-              break;
-
-            case $.mobile.keyCode.END:
-              newVolume = maxVolume;
-              break;
-          }
-
-          if (newVolume != -1)
-            self._setVolume(newVolume);
-        }
-      });
-  },
-
-  _realize: function() {
-    if (!this.realized)
-      this._setVolume(this.options.volume, true);
-    this.realized = true;
-  },
-
-  _setBasicTone: function(value, unconditional) {
-    if (this.options.basicTone != value || unconditional) {
-      while (this.volumeElemStack.length > 0)
-        this.volumeElemStack.pop().remove();
-      this.options.basicTone = value;
-      this._setVolume(this.options.volume, true);
-    }
-  },
-
-  _setTitle: function(value, unconditional) {
-    this.options.title = value;
-    this.ui.container.find("#volumecontrol-title").text(value);
-  },
-
-  _setOption: function(key, value, unconditional) {
-    if (undefined === unconditional)
-      unconditional = false;
-    if (key === "volume")
-      this._setVolume(value, unconditional);
-    else
-    if (key === "basicTone")
-      this._setBasicTone(value, unconditional);
-    else
-    if (key === "title")
-      this._setTitle(value, unconditional)
-  },
-
-  _setVolume: function(vol, unconditional) {
-    var newVolume = Math.max(0, Math.min(vol, this._maxVolume())),
-        theFloor = Math.floor(newVolume);
-
-    newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
-
-    if (newVolume != this.options.volume || unconditional) {
-      this.options.volume = newVolume;
-      this._setVolumeIcon();
-      this.element.attr("data-volume", this.options.volume);
-      this.element.triggerHandler("volumechanged");
-    }
-  },
-
-  _maxVolume: function() {
-    return (this.options.basicTone ? 7 : 15);
-  },
-
-  _setVolumeIcon: function() {
-    if (this.volumeElemStack.length === 0) {
-      var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
-          cx = this.ui.volumeImage.width(),
-          cy = this.ui.volumeImage.height(),
-          cxInc = (cx - cxStart) / this._maxVolume(),
-          nDivisions = 2 * this._maxVolume() + 1,
-          cyElem = cy / nDivisions,
-          yStart = cy - 2 * cyElem,
-          elem;
-
-      for (var Nix = this.volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
-        elem = $("<div>", { class: "ui-volumecontrol-level"})
-          .css({
-            left: (cx - (cxStart + Nix * cxInc)) / 2,
-            top:  yStart - Nix * 2 * cyElem,
-            width: cxStart + Nix * cxInc,
-            height: cyElem
+          $.extend (self, {
+              isOpen: false,
+              ui: ui,
+              dragging: false,
+              realized: false,
+              volumeElemStack: []
           });
-        this.volumeElemStack.push(elem);
-        this.ui.volumeImage.append(elem);
-      }
-    }
-    for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
-      if (Nix < this.options.volume)
-        this.volumeElemStack[Nix].addClass("ui-volumecontrol-level-set");
-      else
-        this.volumeElemStack[Nix].removeClass("ui-volumecontrol-level-set");
-  },
 
-  open: function() {
-    if (!this.isOpen) {
-      this.ui.container.popupwindow("open",
-        window.innerWidth  / 2,
-        window.innerHeight / 2);
+          $.mobile.todons.parseOptions(this, true);
 
-      this.isOpen = true;
-    }
-  },
+          if (this.element.closest(".ui-page").is(":visible"))
+              self._realize();
+          else
+              this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
-  close: function() {
-    if (this.isOpen) {
-      this.ui.container.popupwindow("close");
-      this.isOpen = false;
-    }
-  },
+          ui.container.bind("closed", function(e) {
+              self.isOpen = false;
+          });
+
+          ui.volumeImage.bind("vmousedown", function(e) {
+              self.dragging = true;
+              self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
+              event.preventDefault();
+          });
+
+          ui.volumeImage.bind("vmousemove", function(e) {
+              if (self.dragging) {
+                  self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
+                  event.preventDefault();
+              }
+          });
+
+          $( document ).bind( "vmouseup", function( event ) {
+              if ( self.dragging )
+                  self.dragging = false;
+          });
+
+          $(document).bind("keydown", function(e) {
+              if (self.isOpen) {
+                  var maxVolume = self._maxVolume(),
+                      newVolume = -1;
+
+                  switch(event.keyCode) {
+                      case $.mobile.keyCode.UP:
+                      case $.mobile.keyCode.DOWN:
+                      case $.mobile.keyCode.HOME:
+                      case $.mobile.keyCode.END:
+                          event.preventDefault();
+                          break;
+                  }
+
+                  switch(event.keyCode) {
+                      case $.mobile.keyCode.UP:
+                          newVolume = Math.min(self.options.volume + 1, maxVolume);
+                          break;
+
+                      case $.mobile.keyCode.DOWN:
+                          newVolume = Math.max(self.options.volume - 1, 0);
+                          break;
+
+                      case $.mobile.keyCode.HOME:
+                          newVolume = 0;
+                          break;
+
+                      case $.mobile.keyCode.END:
+                          newVolume = maxVolume;
+                          break;
+                  }
+
+                  if (newVolume != -1)
+                      self._setVolume(newVolume);
+              }
+          });
+    },
+
+    _realize: function() {
+        if (!this.realized)
+            this._setVolume(this.options.volume, true);
+        this.realized = true;
+    },
+
+    _setBasicTone: function(value, unconditional) {
+        if (this.options.basicTone != value || unconditional) {
+            while (this.volumeElemStack.length > 0)
+                this.volumeElemStack.pop().remove();
+            this.options.basicTone = value;
+            this._setVolume(this.options.volume, true);
+        }
+    },
+
+    _setTitle: function(value, unconditional) {
+        this.options.title = value;
+        this.ui.container.find("#volumecontrol-title").text(value);
+    },
+
+    _setOption: function(key, value, unconditional) {
+        if (undefined === unconditional)
+            unconditional = false;
+        if (key === "volume")
+            this._setVolume(value, unconditional);
+        else
+        if (key === "basicTone")
+            this._setBasicTone(value, unconditional);
+        else
+        if (key === "title")
+            this._setTitle(value, unconditional)
+    },
+
+    _setVolume: function(vol, unconditional) {
+        var newVolume = Math.max(0, Math.min(vol, this._maxVolume())),
+            theFloor = Math.floor(newVolume);
+
+        newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
+
+        if (newVolume != this.options.volume || unconditional) {
+            this.options.volume = newVolume;
+            this._setVolumeIcon();
+            this.element.attr("data-volume", this.options.volume);
+            this.element.triggerHandler("volumechanged");
+        }
+    },
+
+    _maxVolume: function() {
+        return (this.options.basicTone ? 7 : 15);
+    },
+
+    _setVolumeIcon: function() {
+        if (this.volumeElemStack.length === 0) {
+            var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
+                cx = this.ui.volumeImage.width(),
+                cy = this.ui.volumeImage.height(),
+                cxInc = (cx - cxStart) / this._maxVolume(),
+                nDivisions = 2 * this._maxVolume() + 1,
+                cyElem = cy / nDivisions,
+                yStart = cy - 2 * cyElem,
+                elem;
+
+            for (var Nix = this.volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
+                elem = $("<div>", { class: "ui-volumecontrol-level"})
+                    .css({
+                        left: (cx - (cxStart + Nix * cxInc)) / 2,
+                        top:  yStart - Nix * 2 * cyElem,
+                        width: cxStart + Nix * cxInc,
+                        height: cyElem
+                    });
+                this.volumeElemStack.push(elem);
+                this.ui.volumeImage.append(elem);
+            }
+        }
+        for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
+            if (Nix < this.options.volume)
+                this.volumeElemStack[Nix].addClass("ui-volumecontrol-level-set");
+            else
+                this.volumeElemStack[Nix].removeClass("ui-volumecontrol-level-set");
+    },
+
+    open: function() {
+        if (!this.isOpen) {
+            this.ui.container.popupwindow("open",
+                window.innerWidth  / 2,
+                window.innerHeight / 2);
+
+            this.isOpen = true;
+        }
+    },
+
+    close: function() {
+        if (this.isOpen) {
+            this.ui.container.popupwindow("close");
+            this.isOpen = false;
+        }
+    },
 });
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-  $( $.todons.volumecontrol.prototype.options.initSelector, e.target )
-    .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
-    .volumecontrol();
+    $( $.todons.volumecontrol.prototype.options.initSelector, e.target )
+        .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
+        .volumecontrol();
 });
 
 })( jQuery );
