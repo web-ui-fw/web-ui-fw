@@ -31,11 +31,7 @@
  *
  * Also note that this extension doesn't sort the list: it only creates
  * dividers based on text inside list items. So if your list isn't
- * alphabetically-sorted, you will get duplicate dividers with the
- * 'alpha' autodivider type. (Dividers are added before individual
- * list items, and change each time the first character of a list item
- * is different from the first character of the immediately preceding
- * list item).
+ * alphabetically-sorted, you may get duplicate dividers.
  *
  * So, for example, this markup:
  *
@@ -48,7 +44,7 @@
  *		<li>Hetty</li>
  * </ul>
  *
- * will produce divider markup like this:
+ * will produce dividers like this:
  *
  * <ul data-role="listview" data-autodividers="alpha">
  *	<li data-role="list-divider">B</li>
@@ -73,8 +69,8 @@
  *			generated dividers. Default is to use the first 'a'
  *			(link) element. If this selector doesn't find any
  *			text, the widget automatically falls back to the text
- *			inside the li (for read-only lists). Can be set
- *			via data-autodividers-selector="..." or the 'selector'
+ *			inside the li (for read-only lists). Can be set to a custom
+ *			selector via data-autodividers-selector="..." or the 'selector'
  *			option.
  *
  *	 type: 'alpha' (default) sets the auto divider type to "uppercased
@@ -233,11 +229,9 @@ $.fn.autodividers = autodividers;
 $( ":jqmData(role=listview)" ).live( "listviewcreate", function() {
 	var list = $( this );
 
-	if ( !list.is( ':jqmData(autodividers)' ) ) {
-		return;
-	}
-
+	if ( list.is( ':jqmData(autodividers)' ) ) {
 	list.autodividers();
+	}
 });
 
 })( jQuery );
