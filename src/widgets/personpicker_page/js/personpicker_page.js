@@ -114,10 +114,12 @@
             // on pageshow (which triggers a resize anyway)
             if (this.element.closest(".ui-page").is(":visible"))
                 self._resizePersonpicker();
-            else
+            else {
                 this.element.closest(".ui-page").bind("pageshow", function() {
                     self._data.ui.optionheader.optionheader('expand', {duration:0});
+                    self._data.ui.optionheader.optionheader('refresh');
                 });
+            }
         }
     }); /* End of widget */
 
