@@ -156,7 +156,7 @@ var autodividers = function(options) {
 
 		if ( existingDividers.length === 0 ) {
 			var divider = $( '<li>' + dividerText + '</li>' );
-			divider.jqmData( 'role', 'list-divider' );
+			divider.attr( 'data-role', 'list-divider' );
 			li.before( divider );
 
 			listview.refresh();
