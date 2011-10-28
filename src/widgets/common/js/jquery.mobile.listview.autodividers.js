@@ -115,6 +115,8 @@ var autodividers = function(options) {
 	};
 
 	var mergeDividers = function() {
+	  var dividersChanged = false;
+
 		// any dividers which are following siblings of a divider, where
 		// there are no dividers with different text inbetween, can be removed
 		list.find( 'li.ui-li-divider' ).each(function() {
@@ -122,8 +124,17 @@ var autodividers = function(options) {
 			var dividerText = divider.text();
 			var selector = '.ui-li-divider:not(:contains(' + dividerText + '))';
 			var nextDividers = divider.nextUntil( selector );
-			nextDividers.filter( '.ui-li-divider:contains(' + dividerText + ')' ).remove();
+			nextDividers = nextDividers.filter( '.ui-li-divider:contains(' + dividerText + ')' );
+
+			if (nextDividers.length > 0) {
+				nextDividers.remove();
+				dividersChanged = true;
+			}
 		});
+
+		if (dividersChanged) {
+		  list.trigger('listviewchange');
+		}
 	};
 
 	// check that elt is a non-divider li element
@@ -151,8 +162,6 @@ var autodividers = function(options) {
 			listview.refresh();
 
 			mergeDividers();
-
-			list.trigger( 'dividerschange' );
 		}
 		else {
 			listview.refresh();
@@ -180,8 +189,6 @@ var autodividers = function(options) {
 			listview.refresh();
 
 			mergeDividers();
-
-			list.trigger( 'dividerschange' );
 		}
 		else {
 			listview.refresh();
