@@ -33,19 +33,12 @@ LIBS_JS_FILES = underscore.js \
                 jlayout/jlayout.flow.js \
                 jlayout/jquery.jlayout.js \
                 $(NULL)
-ifeq (${DEBUG},yes)
+
 LIBS_JS_FILES +=\
     jquery.mobile-1.0rc1.js \
     jquery.ui.position.git+dfe75e1.js \
     $(NULL)
 JQUERY = jquery-1.6.4.js
-else
-LIBS_JS_FILES +=\
-    jquery.mobile-1.0rc1.min.js \
-    jquery.ui.position.git+dfe75e1.min.js \
-    $(NULL)
-JQUERY = jquery-1.6.4.min.js
-endif
 
 all: third_party_widgets widgets widget_styling themes
 
@@ -64,33 +57,43 @@ widget_styling: init
 
 third_party_widgets: init
 	# Building third party components...
-	@@cd ${LIBS_DIR}/js; \
-	    for f in ${LIBS_JS_FILES}; do \
-	        cat $$f >> ${FW_LIBS_JS}; \
-	    done
-	    cp ${LIBS_DIR}/js/${JQUERY} ${JS_OUTPUT_ROOT}/jquery.js
+	@@uglify=cat; \
+	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
+		echo "	# uglifyjs enabled"; \
+		uglify=uglifyjs; \
+	fi; \
+	cd ${LIBS_DIR}/js; \
+	for f in ${LIBS_JS_FILES}; do \
+		cat $$f | $${uglify} >> ${FW_LIBS_JS}; \
+	done; \
+	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery.js
 
 widgets: init
 	# Building web-ui-fw widgets...
-	@@ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
-	    while read REPLY; do \
-	        echo "	# Building widget $$REPLY"; \
-          if test "x${INLINE_PROTO}x" = "x1x"; then \
-              ./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
-              cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled >> ${FW_JS}; \
-          else \
-              for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
-                  echo "		$$f"; \
-                  cat $$f >> ${FW_JS}; \
-              done; \
-          fi; \
-          if test "x${INLINE_PROTO}x" != "x1x"; then \
-              for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
-                  echo "		$$f"; \
-                  cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
-              done; \
-          fi; \
-	    done
+	@@uglify=cat; \
+	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
+		echo "	# uglifyjs enabled"; \
+		uglify=uglifyjs; \
+	fi; \
+	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
+	while read REPLY; do \
+		echo "	# Building widget $$REPLY"; \
+		if test "x${INLINE_PROTO}x" = "x1x"; then \
+			./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
+			cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled | $${uglify} >> ${FW_JS}; \
+		else \
+			for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
+				echo "		$$f"; \
+				cat $$f | $${uglify} >> ${FW_JS}; \
+			done; \
+		fi; \
+		if test "x${INLINE_PROTO}x" != "x1x"; then \
+			for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
+				echo "		$$f"; \
+				cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
+			done; \
+		fi; \
+	done
 
 themes: widget_styling
 	# Building web-ui-fw themes...
