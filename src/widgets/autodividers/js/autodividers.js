@@ -82,7 +82,7 @@
  *
  * Events:
  *
- *	dividerschange: Triggered if the dividers in the list change;
+ *	updatelayout: Triggered if the dividers in the list change;
  *		this happens if list items are added to the listview,
  *		which causes the autodividers to be regenerated.
  */
