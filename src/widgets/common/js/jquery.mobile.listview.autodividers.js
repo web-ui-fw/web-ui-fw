@@ -133,7 +133,7 @@ var autodividers = function(options) {
 		});
 
 		if (dividersChanged) {
-		  list.trigger('listviewchange');
+		  list.trigger( 'updatelayout' );
 		}
 	};
 
