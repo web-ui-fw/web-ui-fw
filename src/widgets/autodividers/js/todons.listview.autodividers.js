@@ -1,9 +1,10 @@
 /*
-* jQuery Mobile Framework : "listview" autodividers extension
-* Copyright (c) jQuery Project
-* Dual licensed under the MIT or GPL Version 2 licenses.
-* http://jquery.org/license
-*/
+ * jQuery Mobile Widget @VERSION - listview autodividers
+ *
+ * Copyright (C) TODO
+ * License: TODO
+ * Authors: Elliot Smith <elliot.smith@intel.com>
+ */
 
 /**
  * Applies dividers automatically to a listview, using link text
@@ -115,7 +116,7 @@ var autodividers = function(options) {
 	};
 
 	var mergeDividers = function() {
-	  var dividersChanged = false;
+		var dividersChanged = false;
 
 		// any dividers which are following siblings of a divider, where
 		// there are no dividers with different text inbetween, can be removed
@@ -133,7 +134,7 @@ var autodividers = function(options) {
 		});
 
 		if (dividersChanged) {
-		  list.trigger( 'updatelayout' );
+			list.trigger( 'updatelayout' );
 		}
 	};
 
@@ -237,7 +238,7 @@ $( ":jqmData(role=listview)" ).live( "listviewcreate", function() {
 	var list = $( this );
 
 	if ( list.is( ':jqmData(autodividers)' ) ) {
-	list.autodividers();
+		list.autodividers();
 	}
 });
 
