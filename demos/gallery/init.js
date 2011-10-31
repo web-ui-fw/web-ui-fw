@@ -204,6 +204,25 @@ $(document).bind("pagecreate", function () {
 
         personpicker.personpicker('refresh');
     });
+
+    $("#autodividers-demo").bind('pagecreate', function () {
+        $('#refresh-dividers-button').bind('click', function () {
+            $('#refreshable-dividers').autodividers('refresh');
+        });
+
+        $('#add-gary-button').bind('click', function () {
+            var gary = $('<li><a href="#">Gary</a></li>');
+            $('#refreshable-dividers').find('li.ui-li-divider:contains(I)').before(gary);
+        });
+
+        $('#remove-bertie-button').bind('click', function () {
+            $('#refreshable-dividers').find('li:contains("Bertie")').remove();
+        });
+
+        $('#refreshable-dividers').bind('updatelayout', function () {
+            console.log('dividers were updated on refreshable list');
+        });
+    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */
