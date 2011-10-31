@@ -133,19 +133,19 @@ h1, h4 {
     height: 400px;
 }
 
-#singleimagecontainer {
-    /*border: solid #AAA;/**/
-    padding-bottom: 0;
-    width: 100px;/**/
-    height: 100px;/**/
-}
-
-.singleimagedisplay { /**/
-    /*width: inherit; /**/
-    /*height: inherit; /**/
+.singleimagedisplay-hcenter { /**/
+    display: block; /**/
+    margin-left: auto; /**/
+    margin-right: auto; /**/
 } /**/
 
-/*.singleimagedisplay { /**/
-    /*width: inherit; /**/
-    /*height: auto; /**/
-/*} /**/
+.singleimagedisplay-vcenter { /**/
+    display: table-cell; /**/
+    vertical-align: middle; /**/
+} /**/
+
+.singleimagedisplaycontainer { /**/
+    border: 10px ridge #155678; /**/
+    width: 100px; /**/
+    height: 100px; /**/
+} /**/

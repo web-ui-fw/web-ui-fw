@@ -74,29 +74,59 @@
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="singleimagedisplay-demo" data-fullscreen="true" data-add-back-btn="true" data-fit-page-to-window="false">
+        <div data-role="page" id="singleimagedisplay-display" data-fullscreen="true" data-add-back-btn="true" data-fit-page-to-window="false">
+            <div data-role="header" data-position="fixed">
+                <h1></h1>
+            </div>
+            <div data-role="content">
+                <div id="image" class="singleimagedisplay" src="images/singleimage_s.jpg">
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
+        <div data-role="page" id="singleimagedisplay-demo" data-add-back-btn="true" data-fit-page-to-window="false">
             <div data-role="header" data-position="fixed">
                 <h1>Single image display</h1>
             </div>
             <div data-role="content">
                 <!--
-                <div id="mugshot3" src="blabla" class="singleimagedisplay">
-                </div>
-                <div id="mugshot3" src="images/singleimage_s.jpg" class="singleimagedisplay">
-                </div>
-                <div id="mugshot0" src="images/singleimage_p.jpg" class="singleimagedisplay">
-                </div>
                 -->
-                <div>
-                    <div id="mugshot1" src="images/singleimage_sm_l.jpg" class="singleimagedisplay"></div>
+                <h5>Click the images to display as single images</h5>
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                    <img src="images/singleimage_sm_s.jpg" class="singleimagedisplay-hcenter">
                 </div>
-                <!--
-                <div id="singleimagecontainer">
-                    <div id="mugshot2" src="images/singleimage_l.jpg" class="singleimagedisplay"></div>
+                <ul>
+                <li>
+                Display a big square image. This is reduced to fit the browser. Try resizing your browser to a landscape shape (or vice versa).
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                    <div src="images/singleimage_s.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
                 </div>
-                -->
+                </li><li>
+                Display a big landscape image. This is reduced to fit the browser. Try resizing your browser to a height smaller than the image - the image should be reduced in width to fit.
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                    <div src="images/singleimage_l.jpg" class="singleimagedisplay singleimage-hcenter"></div>
+                </div>
+                </li><li>
+                Display a bit portrait image. This is reduced to fit the browser. Try resizing your browser to a width smaller than the image - the image is reduced in height to fit.
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                    <div src="images/singleimage_p.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                </div>
+                </li><li>
+                Display a small landscape image. This is enlarged to fit the browser.
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                <div src="images/singleimage_sm_l.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                </div>
+                </li><li>
+                Display an image from the internet.
+                <div class="singleimagedisplaycontainer singleimagedisplay-vcenter">
+                    <div src="http://farm7.static.flickr.com/6194/6113426630_e19840defd_b.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                </div>
+                </ul>
             </div>
-            <div data-role="footer" data-position="fixed">
+            <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
             </div>
         </div> <!-- /page -->
