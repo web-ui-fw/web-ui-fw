@@ -46,7 +46,7 @@ You'll also need make.
 
 Then, from a command line inside the project directory, do:
 
-  make clean
+  cd libs/js/submodules/jquery-mobule; make && cd -
   make
 
 This compiles the stylesheets for all the widgets using lessc,

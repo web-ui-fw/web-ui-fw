@@ -32,12 +32,9 @@ LIBS_JS_FILES = underscore.js \
                 jlayout/jlayout.flexgrid.js \
                 jlayout/jlayout.flow.js \
                 jlayout/jquery.jlayout.js \
+                submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.js \
+                jquery.ui.position.git+dfe75e1.js \
                 $(NULL)
-
-LIBS_JS_FILES +=\
-    jquery.mobile-1.0rc1.js \
-    jquery.ui.position.git+dfe75e1.js \
-    $(NULL)
 JQUERY = jquery-1.6.4.js
 
 all: third_party_widgets widgets widget_styling themes
