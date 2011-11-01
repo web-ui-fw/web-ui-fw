@@ -167,4 +167,38 @@ of the JS file.
 
 * A demo of how the widget can be used in demos/gallery.
 
-* Unit tests in a tests/mywidget directory.
+* Unit tests in a tests/mywidget directory. See below for instructions
+on writing new tests.
+
+
+Writing tests
+===============================
+
+To add a new test for your widget:
+
+* Create a directory under tests/, named after your widget (e.g.
+tests/mywidget).
+
+* Add an index.html file to that directory, marked up for your test
+pages (see tests/autodividers/index.html for an example: you need
+all the JavaScript and CSS in the order shown there).
+
+* Add a JavaScript file called mywidget-tests.js to the same directory.
+This should contain your QUnit tests
+(see tests/autodividers/autodividers-tests.js for an example).
+
+* Edit the tests/tests.js file and add the path to your test file
+to it, e.g.
+
+  var TESTS = {
+      "testPages":[
+          "mywidget/index.html", // this is my new test file
+          "autodividers/index.html"
+      ]
+  };
+
+* Run your tests by opening the tests/index.html file (to run the
+whole suite) or your individual index.html file to run just your tests.
+
+NB you'll need to do a full build so the JS and CSS files are in
+the build/ directory before running tests.
