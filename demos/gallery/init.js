@@ -206,16 +206,16 @@ $(document).bind("pagecreate", function () {
     });
 
     $("#autodividers-demo").bind('pageshow', function () {
-        $('#add-gary-button').bind('click', function () {
+        $('#add-gary-button').unbind('click').bind('click', function () {
             var gary = $('<li><a href="#">Gary</a></li>');
             $('#refreshable-dividers').find('li.ui-li-divider:contains(I)').before(gary);
         });
 
-        $('#remove-bertie-button').bind('click', function () {
+        $('#remove-bertie-button').unbind('click').bind('click', function () {
             $('#refreshable-dividers').find('li:contains("Bertie")').remove();
         });
 
-        $('#refreshable-dividers').bind('updatelayout', function () {
+        $('#refreshable-dividers').unbind('updatelayout').bind('updatelayout', function () {
             console.log('dividers were updated on refreshable list');
         });
     });
