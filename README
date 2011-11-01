@@ -79,3 +79,92 @@ checked out copy of the web-ui-fw repo.
 
 Also note that each time you change your widget code, you'll
 need to do "make clean ; make" to rebuild the CSS and JS files.
+
+
+Writing more widgets
+===============================
+
+The best way to start is to copy an existing widget. A simple one
+like progressbar is a good starting point.
+
+Note that your widget JavaScript code should provide the following:
+
+* Programmatic access: $(selector).mywidget() should create an instance
+of your widget.
+
+* Declarative access: <div data-role="mywidget">...</div> should also
+create an instance of your widget.
+
+* A _create() method which initialises your widget.
+
+* A set of options which can be set via a
+$(selector).mywidget('option', value) style method, or by attributes
+on the selected element, e.g. data-mywidget-myoption="value".
+Where there are multiple options, you should
+use a data-mywidget-options='{...json...}' style attribute (see
+layout-hbox for an example).
+
+* Options should include an initSelector, specifying the
+jQuery selector for finding elements to which your widget applies. Typically
+this will involve looking for data-role attributes, e.g.
+
+  ':jqmData(role=optionheader)'
+
+See optionheader for an example. Alternatively, if the widget applies
+to all instances of a particular HTML element, you may need a more
+general selector: see the jQuery Mobile widgets for examples.
+
+* An auto-init handler which will bind your widget to the appropriate
+elements when pages are created, using that initSelector to find
+them, e.g.
+
+  $(document).bind("pagecreate", function (e) {
+      $($.todons.mywidget.prototype.options.initSelector, e.target)
+      .not(":jqmData(role='none'), :jqmData(role='nojs')")
+      .mywidget();
+  });
+
+* Theme-awareness. This means both setting a default theme swatch for
+the widget and capturing any data-theme attribute set on the target element
+(the one your widget constructor is being applied to). See optionheader
+for an example of getting the data-theme and setting the swatch on
+the target element. You should also consider whether a swatch should
+be inherited by your widget (c.f. how buttons inherit their parent's
+swatch).
+
+* A refresh() method which will draw/redraw the widget. If you are
+adding new markup, you should always test for the existence of the
+markup you intend to add first, and remove it if it is present.
+
+* If your widget relies on measuring the dimensions or position of
+other widgets, you should provide for situations both where it is
+being created on a visible page, and where it's being created on a page
+which isn't yet visible. Code like the following, typically in the widget's
+_create() method, should accomplish this:
+
+  var page = this.element.closest(':jqmData(role="page")');
+  var self = this;
+
+  if (page.is(":visible")) {
+      self.refresh();
+  }
+  else {
+      page.bind("pageshow", function () {
+          self.refresh();
+      });
+  }
+
+* Respond to and fire events appropriately. In particular, if your
+widget changes the page size (e.g. it expands/contracts) it should
+fire an updatelayout event so widgets on the same page can respond
+appropriately. Similarly, your widget should bind to updatelayout
+events on any elements it is associated with (e.g. its parent container).
+
+You should also supply:
+
+* Basic API documentation about how to use the widget, at the top
+of the JS file.
+
+* A demo of how the widget can be used in demos/gallery.
+
+* Unit tests in a tests/mywidget directory.
