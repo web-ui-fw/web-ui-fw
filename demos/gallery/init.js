@@ -205,11 +205,7 @@ $(document).bind("pagecreate", function () {
         personpicker.personpicker('refresh');
     });
 
-    $("#autodividers-demo").bind('pagecreate', function () {
-        $('#refresh-dividers-button').bind('click', function () {
-            $('#refreshable-dividers').autodividers('refresh');
-        });
-
+    $("#autodividers-demo").bind('pageshow', function () {
         $('#add-gary-button').bind('click', function () {
             var gary = $('<li><a href="#">Gary</a></li>');
             $('#refreshable-dividers').find('li.ui-li-divider:contains(I)').before(gary);
