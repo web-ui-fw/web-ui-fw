@@ -145,7 +145,7 @@ S = {
     // default theme to load
     defaultFrameworkTheme: 'default',
 
-    frameworkVersions: ['0.1'],
+    frameworkVersions: ['0.1', 'latest'],
     frameworkThemes: ['default', 'tizen']
 };
 
