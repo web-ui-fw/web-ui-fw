@@ -25,6 +25,7 @@ FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 FW_THEME_CSS_FILE = ${PROJECT_NAME}-theme.css
 FW_WIDGET_CSS_FILE = ${WIDGET_CSS_OUTPUT_ROOT}/${PROJECT_NAME}-widget.css
 
+JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.js
 LIBS_JS_FILES = underscore.js \
                 jlayout/jquery.sizes.js \
                 jlayout/jlayout.border.js \
@@ -32,8 +33,8 @@ LIBS_JS_FILES = underscore.js \
                 jlayout/jlayout.flexgrid.js \
                 jlayout/jlayout.flow.js \
                 jlayout/jquery.jlayout.js \
-                submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.js \
                 jquery.ui.position.git+dfe75e1.js \
+                ${JQUERY_MOBILE} \
                 $(NULL)
 JQUERY = jquery-1.6.4.js
 
@@ -135,6 +136,8 @@ clean:
 	@@rm -f `find . -iname *.js.compiled`
 
 init: clean
+	# Checking for JQM
+	@@[ -e ${LIBS_DIR}/js/${JQUERY_MOBILE} ] || (echo "You must compile jquery-mobile first. See README."; exit 1;)
 	# Initializing...
 	@@mkdir -p ${JS_OUTPUT_ROOT}
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}
