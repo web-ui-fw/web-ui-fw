@@ -140,7 +140,8 @@ var autodividers = function(options) {
 
 	// check that elt is a non-divider li element
 	var isNonDividerLi = function( elt ) {
-		return elt.is('li') && elt.jqmData( 'role' ) !== 'list-divider';
+		return elt.is('li') &&
+		       elt.jqmData( 'role' ) !== 'list-divider';
 	};
 
 	// li element inserted, so check whether it needs a divider
@@ -157,6 +158,7 @@ var autodividers = function(options) {
 
 		if ( existingDividers.length === 0 ) {
 			var divider = $( '<li>' + dividerText + '</li>' );
+			divider.jqmData( 'role', 'list-divider' );
 			divider.attr( 'data-role', 'list-divider' );
 			li.before( divider );
 
