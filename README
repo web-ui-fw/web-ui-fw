@@ -46,6 +46,8 @@ You'll also need make.
 
 Then, from a command line inside the project directory, do:
 
+  git submodule update
+
   cd libs/js/submodules/jquery-mobile; make && cd -
   make
 
