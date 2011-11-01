@@ -143,10 +143,10 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // get all the dividers from the list and turn them into
         // shortcuts
-        var dividers = this.element.find(':jqmData(role="list-divider")');
+        var dividers = this.element.find('.ui-li-divider');
 
         // get all the list items
-        var listItems = this.element.find('li:not(:jqmData(role="list-divider"))');
+        var listItems = this.element.find('li:not(.ui-li-divider))');
 
         // only use visible dividers
         dividers = dividers.filter(':visible');
