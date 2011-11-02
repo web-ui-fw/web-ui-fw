@@ -133,19 +133,28 @@ h1, h4 {
     height: 400px;
 }
 
+/* singleimagedisplay style */
+
+/* horizontally center the thumbnail images in the container */
 .singleimagedisplay-hcenter { /**/
     display: block; /**/
     margin-left: auto; /**/
     margin-right: auto; /**/
 } /**/
 
+/* vertically center the thumbnail images in the container */
 .singleimagedisplay-vcenter { /**/
     display: table-cell; /**/
     vertical-align: middle; /**/
 } /**/
 
-.singleimagedisplaycontainer { /**/
+/* size the container of the thumbnail images
+ * and put a frame around it
+ */
+.singleimagedisplay-container { /**/
     border: 10px ridge #155678; /**/
     width: 100px; /**/
     height: 100px; /**/
 } /**/
+
+/* end of singleimagedisplay style */

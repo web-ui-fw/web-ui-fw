@@ -286,12 +286,12 @@ $(document).bind("pagecreate", function () {
 
 $(document).bind("pageinit", function() {
     $("#singleimagedisplay-demo").bind("pageinit", function(e) {
-        console.log("MAXMAXMAX/initing");
-        $(this).find('.singleimagedisplay').bind("vclick", function (e) {
-            console.log("MAXMAXMAX/click");
-            $("#image").attr("src",$(this).attr("src"));
+        $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {
+            $("#image").attr("src",$(this).find(".singleimagedisplay").attr("src"));
             $.mobile.changePage("#singleimagedisplay-display");
         });
+
+        //$(this).find('.singleimagedisplay').todonssingleimagedisplay('option','noContents','images/noContent-2.png');
     });
 });
 

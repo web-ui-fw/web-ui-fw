@@ -26,7 +26,7 @@
     $.widget("todons.todonssingleimagedisplay", $.mobile.widget, {
         options: {
             initSelector: '.singleimagedisplay',
-            noContents: "images/noContent.gif",
+            noContents: "images/noContent.png",
         },
 
         image: null,
