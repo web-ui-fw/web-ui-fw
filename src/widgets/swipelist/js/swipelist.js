@@ -74,26 +74,32 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
         covers.each(function () {
             var cover = $(this);
-            var text = cover.html();
 
             // get the parent li element and add classes
             var item = cover.closest('li');
 
+            var liClasses = item.attr('class').split(' ');
+
+            // add swipelist CSS classes
             item.removeClass('ui-swipelist-item')
                 .addClass('ui-swipelist-item');
 
             cover.removeClass('ui-swipelist-item-cover')
                  .addClass('ui-swipelist-item-cover');
 
+            // copy classes from the li to the cover
+            $.each(liClasses, function () {
+                var klass = this.toString().replace(' ', '');
+                cover.removeClass(klass).addClass(klass);
+            });
+
             // set swatch on cover
             cover.removeClass('ui-body-' + theme)
                  .addClass('ui-body-' + theme);
 
-            // wrap the text inside the cover so it can be centered
-            // vertically
-            if (text) {
-                var wrappedText = $('<div class="ui-swipelist-item-cover-text">' + text + '</div>');
-                cover.html(wrappedText);
+            // wrap inner HTML (so it can potentially be styled)
+            if (cover.html()) {
+                cover.wrapInner($('<span/>').addClass('ui-swipelist-item-cover-inner'));
             }
 
             // bind to swipe events on the cover and the item

@@ -19,10 +19,5 @@
     z-index: 100;
 }
 
-.ui-swipelist-item-cover-text {
-    text-align: center;
-    position: relative;
-    top: 50%;
-    font-size: 1em;
-    margin-top: -0.5em;
+.ui-swipelist-item-cover-inner {
 }

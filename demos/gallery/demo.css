@@ -60,6 +60,16 @@ h1, h4 {
     height: 600px;
 }
 
+/* for swipelist demo */
+#swipelist-demo .ui-swipelist-item-cover-inner {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    margin-top: -14px;
+}
+
 /*
  * manipulating scrollview elements' style
  */
