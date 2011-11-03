@@ -59,6 +59,7 @@
             var self = this;
             var list = self._data.ui.list;
             var li = self._data.row.li;
+            var container = self._data.ui.personpicker.find('.ui-personpicker-container');
 
             list.find('li').remove();
 
@@ -96,9 +97,17 @@
                     });
             });
 
-            self._data.ui.personpicker.find('.ui-personpicker-container').scrollview({direction: 'y'});
+            container.scrollview({direction: 'y'});
             self._data.ui.list.shortcutscroll();
             self._data.ui.list.autodividers({selector: '.content > h3'});
+
+            // bind to events on the search input so that the listview
+            // can be scrolled when the list is filtered
+            self._data.ui.search.bind("keyup change", function () {
+              container.scrollview('scrollTo', 0, 0);
+            });
+
+            // re-enable search input
             self._data.ui.search.textinput('enable');
         },
 
@@ -127,8 +136,9 @@
             this.element.append(self._data.ui.personpicker);
             self._data.ui.list.listview({theme: self.options.theme});
 
-            // disable search input until list is populated
             self._data.ui.search = $(this.element).find(':jqmData(type="search")');
+
+            // disable search input until list is populated
             self._data.ui.search.textinput('disable');
 
             this.refresh();
