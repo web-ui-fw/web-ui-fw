@@ -287,11 +287,19 @@ $(document).bind("pagecreate", function () {
 $(document).bind("pageinit", function() {
     $("#singleimagedisplay-demo").bind("pageinit", function(e) {
         $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {
-            $("#image").attr("src",$(this).find(".singleimagedisplay").attr("src"));
+            var img = $(this).find('img');
+            var src = img.singleimagedisplay('option', 'src');
+            var noContent = img.singleimagedisplay('option', 'noContent');
+
             $.mobile.changePage("#singleimagedisplay-display");
+
+            $("#singleimagedisplay-display-image").singleimagedisplay('option','src',src);
+            $("#singleimagedisplay-display-image").singleimagedisplay('option','noContent',noContent);
         });
 
-        $(this).find('.singleimagedisplay').todonssingleimagedisplay('option','noContents','images/noContent-2.png');
+        // this sets the "broken" src image for #broken
+        //$(this).find('#broken:jqmData(role=singleimagedisplay)')
+        //.singleimagedisplay('option','noContent','images/noContent-2.png');
     });
 });
 

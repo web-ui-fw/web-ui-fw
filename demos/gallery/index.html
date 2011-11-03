@@ -79,8 +79,7 @@
                 <h1></h1>
             </div>
             <div data-role="content">
-                <div id="image" class="singleimagedisplay" src="images/singleimage_s.jpg">
-                </div>
+                <img id="singleimagedisplay-display-image" data-role="singleimagedisplay"/>
             </div>
             <div data-role="footer" data-position="fixed">
                 <h4>Web UI Framework - Widgets gallery</h4>
@@ -97,51 +96,66 @@
                 <div class="ui-grid-d">
                     <div class="ui-block-a">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter singleimagedisplay-hcenter">
-                            <div src="images/singleimage_sm_s.jpg" class="singleimagedisplay-hcenter singleimagedisplay"></div>
+                            <img data-src="images/singleimage_sm_s.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display a small square image. This is enlarged to fit the container.</div>
                     </div>
 
                     <div class="ui-block-b">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="images/singleimage_s.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                            <img data-src="images/singleimage_s.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display a big square image. This is reduced to fit the browser.</div>
                     </div>
 
                     <div class="ui-block-c">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="images/singleimage_l.jpg" class="singleimagedisplay singleimage-hcenter"></div>
+                            <img data-src="images/singleimage_l.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display a big landscape image. This is reduced to fit the browser.</div>
                     </div>
 
                     <div class="ui-block-d">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="images/singleimage_p.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                            <img data-src="images/singleimage_p.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display a bit portrait image. This is reduced to fit the browser.</div>
                     </div>
 
                     <div class="ui-block-e">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="images/singleimage_sm_l.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                            <img data-src="images/singleimage_sm_l.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display a small landscape image. This is enlarged to fit the browser.</div>
                     </div>
 
                     <div class="ui-block-a">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="http://farm7.static.flickr.com/6194/6113426630_e19840defd_b.jpg" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                            <img data-src="http://farm7.static.flickr.com/6194/6113426630_e19840defd_b.jpg"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
                         <div>Display an image from the internet.</div>
                     </div>
 
                     <div class="ui-block-b">
                         <div class="singleimagedisplay-container singleimagedisplay-vcenter">
-                            <div src="broken" class="singleimagedisplay singleimagedisplay-hcenter"></div>
+                            <img id="broken"
+                                 data-src="broken"
+                                 data-role="singleimagedisplay"
+                                 class="singleimagedisplay-hcenter" />
                         </div>
-                        <div>Display an image from the internet.</div>
+                        <div>Customisable broken image.</div>
                     </div>
 
                 </div>

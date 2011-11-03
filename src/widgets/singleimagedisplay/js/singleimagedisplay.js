@@ -10,78 +10,88 @@
  * Displays the given image resizing it to fit its container or the browser
  * while maintaining the original aspect ratio.
  *
- * To make a singleimagedisplay element use the todonssingleimagedisplay() method on a div
- * or by adding the 'singleimagedisplay' class to a div element. Other attributes typical
- * for an img element can also be added, most notably the src attribute :
+ * To make a singleimagedisplay element use the singleimagedisplay() method
+ * on an img element or add data-role='singleimagedisplay' to an img tag.
  *
- *     <div class="singleimagedisplay" src="myimage.jpg">
+ *     <img data-role="singleimagedisplay" data-src="myimage.jpg" />
+ *
+ * Note that you should not set the src on the img directly.
+ *
+ * To set the source image, use a data-src attribute on the img. This
+ * enables the widget to handle loading the image and displaying a
+ * substitute if the image fails to load.
  *
  * Options:
  *
- *    noContents: String; path to an image to show when an error occurs while loading
- *                the image.
+ *    src: String; path to the src for the image; initial value can
+ *                 be set using data-src on the img element.
+ *    noContent: String; path to an image to show when an error occurs
+ *                while loading the image.
+ *
+ * Either option can be changed at runtime with the
+ * singleimagedisplay('option', 'name', 'value') method
  */
 
 (function ($, undefined) {
-    $.widget("todons.todonssingleimagedisplay", $.mobile.widget, {
+    $.widget("todons.singleimagedisplay", $.mobile.widget, {
         options: {
-            initSelector: '.singleimagedisplay',
-            noContents: "images/noContent.png",
+            initSelector: 'img:jqmData(role=singleimagedisplay)',
+            noContent: "images/noContent.png",
             src: null,
         },
 
         page: null,
         image: null,
-        srcError: false,
+        usingNoContent: false,
+
+        _setImgSrc: function () {
+            this.image.attr('src', this.options.src);
+        },
 
         _create: function() {
             var self = this;
-            var element = self.element[0];
+            this.image = this.element;
 
-            this.image = $("<img>");
+            this.options.src = this.image.jqmData('src') || this.options.noContent;
+
+            this.image.addClass('singleimagedisplay');
             this.image.hide();
 
             // when the image is loaded, resize it
             this.image.load( function() {
-                // record that src is valid
-                self.srcError = false;
-
                 self.resize();
             });
 
-            // when the image fails to load,
+            // when the image fails to load, substitute noContent
             this.image.error( function() {
                 // record that src is not valid
-                self.srcError = true;
+                self.usingNoContent = true;
                 self.options.src = undefined;
 
-                // set image src to noContents image
-                self.image.attr( 'src', self.options.noContents );
-
+                // set image src to noContent image
+                self.image.attr( 'src', self.options.noContent );
                 self.resize();
             });
-
-            // copy attributes from source div into img
-            $.each(element.attributes, function(index) {
-                var thisAttribute = element.attributes[index];
-                self.image.attr(thisAttribute.name, thisAttribute.value);
-            });
-
-            // record current src for when it is changed by user
-            this.options.src = this.image.attr('src');
 
             // record error if src has not been defined
-            this.srcError = this.options.src===undefined;
+            this.usingNoContent = this.options.src===undefined;
 
-            // replace source div with new img
-            $(element).replaceWith(this.image);
+            // set the src for the image
+            this._setImgSrc();
 
-            // when the page is resized, resize the image
-            // note that this widget is created on pagecreate
-            this.page = this.image.closest(".ui-page");
-            this.page.resize( function() {
+            // resize the image immediately if it is visible
+            if (self.image.is(':visible')) {
                 self.resize();
-            });
+            }
+
+            // when the page is shown, resize the image
+            // note that this widget is created on pagecreate
+            this.page = this.image.closest('.ui-page');
+            if (this.page) {
+                this.page.bind('pageshow', function() {
+                    self.resize();
+                });
+            }
 
             // when the window is resized, resize the image
             $(window).resize( function() {
@@ -137,33 +147,33 @@
         },
 
         _setOption: function(key, value) {
-            var needToChange = value !== this.options[key];
+            if (value == this.options[key]) {
+                return;
+            }
 
             switch (key) {
-            case "noContents":
-                if (needToChange) {
-                    // change the value in options
-                    this.options.noContents = value;
+            case "noContent":
+                this.options.noContent = value;
 
-                    // if using the noContents, change the src on the
-                    // image too
-                    if (!this.srcError) {
-                        this.image.attr( 'src', this.options.src );
-                    }
-
-                    this.resize();
+                if (this.usingNoContent) {
+                    this.image.attr( 'src', this.options.noContent );
                 }
                 break;
             case "src":
-                if (needToChange) {
-                    // change the value in options
-                    this.options.src = value;
+                this.options.src = value;
 
-                    // change the image
-                    this.image.attr( 'src', this.options.src );
-
-                    this.resize();
+                if (this.options.src === undefined) {
+                    if (!this.usingNoContent) {
+                        this.usingNoContent = true;
+                        this.image.attr( 'src', this.options.noContent );
+                    }
+                } else {
+                    // trigger a load attempt - error handler will
+                    // deal with failed load
+                    this.usingNoContent = false;
+                    this._setImgSrc();
                 }
+                this.resize();
                 break;
             default:
                 break;
@@ -174,8 +184,8 @@
 
     // initialise singleimagedisplays with our own singleimagedisplay
     $(document).bind("pagecreate", function(e) {
-        $($.todons.todonssingleimagedisplay.prototype.options.initSelector, e.target)
-        .todonssingleimagedisplay();
+        $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
+        .singleimagedisplay();
     });
 
 })(jQuery);
