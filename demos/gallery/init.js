@@ -291,7 +291,7 @@ $(document).bind("pageinit", function() {
             $.mobile.changePage("#singleimagedisplay-display");
         });
 
-        //$(this).find('.singleimagedisplay').todonssingleimagedisplay('option','noContents','images/noContent-2.png');
+        $(this).find('.singleimagedisplay').todonssingleimagedisplay('option','noContents','images/noContent-2.png');
     });
 });
 

@@ -27,44 +27,67 @@
         options: {
             initSelector: '.singleimagedisplay',
             noContents: "images/noContent.png",
+            src: null,
         },
 
+        page: null,
         image: null,
+        srcError: false,
 
         _create: function() {
-            var self = this,
-                element = self.element[0];
+            var self = this;
+            var element = self.element[0];
 
-            self.image = $("<img>");
-            self.image.hide();
+            this.image = $("<img>");
+            this.image.hide();
 
             // when the image is loaded, resize it
-            self.image.load( function() {
+            this.image.load( function() {
+                // record that src is valid
+                self.srcError = false;
+
                 self.resize();
             });
 
-            // when the image fails to load, substitute noContents
-            self.image.error( function() {
+            // when the image fails to load,
+            this.image.error( function() {
+                // record that src is not valid
+                self.srcError = true;
+                self.options.src = undefined;
+
+                // set image src to noContents image
                 self.image.attr( 'src', self.options.noContents );
+
                 self.resize();
             });
 
+            // copy attributes from source div into img
             $.each(element.attributes, function(index) {
                 var thisAttribute = element.attributes[index];
                 self.image.attr(thisAttribute.name, thisAttribute.value);
             });
 
-            $(element).replaceWith(self.image);
+            // record current src for when it is changed by user
+            this.options.src = this.image.attr('src');
 
-            // when the page is shown, resize the image
+            // record error if src has not been defined
+            this.srcError = this.options.src===undefined;
+
+            // replace source div with new img
+            $(element).replaceWith(this.image);
+
+            // when the page is resized, resize the image
             // note that this widget is created on pagecreate
-            $(document).bind('pageshow', function() {
+            this.page = this.image.closest(".ui-page");
+            this.page.resize( function() {
                 self.resize();
             });
 
             // when the window is resized, resize the image
             $(window).resize( function() {
-                self.resize()
+                if (self.image.is(':visible')) {
+                    self.resize();
+                }
             });
         },
 
@@ -119,8 +142,26 @@
             switch (key) {
             case "noContents":
                 if (needToChange) {
+                    // change the value in options
                     this.options.noContents = value;
-                    self.image.attr( 'src', this.options.noContents );
+
+                    // if using the noContents, change the src on the
+                    // image too
+                    if (!this.srcError) {
+                        this.image.attr( 'src', this.options.src );
+                    }
+
+                    this.resize();
+                }
+                break;
+            case "src":
+                if (needToChange) {
+                    // change the value in options
+                    this.options.src = value;
+
+                    // change the image
+                    this.image.attr( 'src', this.options.src );
+
                     this.resize();
                 }
                 break;
