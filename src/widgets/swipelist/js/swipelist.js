@@ -6,7 +6,6 @@
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>,
  *          Elliot Smith <elliot.smith@intel.com>
  */
-
 // Widget which turns a list into a "swipe list":
 // i.e. each list item has a sliding "cover" which can be swiped
 // to the right (to reveal buttons underneath) or left (to
@@ -46,7 +45,6 @@
 // Theme: default is to use the parent theme (if set), or 'c' if not;
 // can be set explicitly with data-theme="X" or via
 // swipelist('option', 'theme', 'X') (though only at create time).
-
 (function ($) {
 
 $.widget("todons.swipelist", $.mobile.widget, {
