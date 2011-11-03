@@ -57,6 +57,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
     _create: function () {
         var self = this,
             theme,
+            defaultCoverTheme,
             covers;
 
         // use the theme set on the element, set in options,
@@ -66,19 +67,24 @@ $.widget("todons.swipelist", $.mobile.widget, {
                 this.element.parent().data('theme') ||
                 'c';
 
+        defaultCoverTheme = 'ui-body-' + theme;
+
         // swipelist is a listview
-        $(this.element).listview();
+        if (!this.element.hasClass('ui-listview')) {
+            this.element.listview();
+        }
+
+        this.element.removeClass('ui-swipelist').addClass('ui-swipelist');
 
         // get the list item covers
-        covers = $(this.element).find(':jqmData(role="swipelist-item-cover")');
+        covers = this.element.find(':jqmData(role="swipelist-item-cover")');
 
         covers.each(function () {
             var cover = $(this);
+            var coverTheme = defaultCoverTheme;
 
             // get the parent li element and add classes
             var item = cover.closest('li');
-
-            var liClasses = item.attr('class').split(' ');
 
             // add swipelist CSS classes
             item.removeClass('ui-swipelist-item')
@@ -87,20 +93,21 @@ $.widget("todons.swipelist", $.mobile.widget, {
             cover.removeClass('ui-swipelist-item-cover')
                  .addClass('ui-swipelist-item-cover');
 
-            // copy classes from the li to the cover
-            $.each(liClasses, function () {
-                var klass = this.toString().replace(' ', '');
-                cover.removeClass(klass).addClass(klass);
-            });
+            // set swatch on cover: if the nearest list item has
+            // a swatch set on it, that will be used; otherwise, use
+            // the swatch set for the swipelist
+            var itemHasThemeClass = item.attr('class')
+                                        .match(/ui\-body\-[a-z]|ui\-bar\-[a-z]/);
 
-            // set swatch on cover
-            cover.removeClass('ui-body-' + theme)
-                 .addClass('ui-body-' + theme);
+            if (itemHasThemeClass) {
+                coverTheme = itemHasThemeClass[0];
+            }
+
+            cover.removeClass(coverTheme)
+                 .addClass(coverTheme);
 
             // wrap inner HTML (so it can potentially be styled)
-            if (cover.html()) {
-                cover.wrapInner($('<span/>').addClass('ui-swipelist-item-cover-inner'));
-            }
+            cover.wrapInner($('<span/>').addClass('ui-swipelist-item-cover-inner'));
 
             // bind to swipe events on the cover and the item
             cover.bind('swiperight', function (e) {
