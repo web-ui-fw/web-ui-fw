@@ -67,6 +67,8 @@ $.widget("todons.swipelist", $.mobile.widget, {
     },
 
     refresh: function () {
+        this.destroy();
+
         var self = this,
             defaultCoverTheme,
             covers;
@@ -78,8 +80,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
             this.element.listview();
         }
 
-        this.element.removeClass('ui-swipelist')
-                    .addClass('ui-swipelist');
+        this.element.addClass('ui-swipelist');
 
         // get the list item covers
         covers = this.element.find(':jqmData(role="swipelist-item-cover")');
@@ -92,11 +93,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
             var item = cover.closest('li');
 
             // add swipelist CSS classes
-            item.removeClass('ui-swipelist-item')
-                .addClass('ui-swipelist-item');
+            item.addClass('ui-swipelist-item');
 
-            cover.removeClass('ui-swipelist-item-cover')
-                 .addClass('ui-swipelist-item-cover');
+            cover.addClass('ui-swipelist-item-cover');
 
             // set swatch on cover: if the nearest list item has
             // a swatch set on it, that will be used; otherwise, use
@@ -108,8 +107,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
                 coverTheme = itemHasThemeClass[0];
             }
 
-            cover.removeClass(coverTheme)
-                 .addClass(coverTheme);
+            cover.addClass(coverTheme);
 
             // wrap inner HTML (so it can potentially be styled)
             if (cover.has('.ui-swipelist-item-cover-inner').length === 0) {
@@ -127,17 +125,66 @@ $.widget("todons.swipelist", $.mobile.widget, {
                 });
             }
 
-            cover.unbind('swiperight', cover.data('animateRight'))
-                 .bind('swiperight', cover.data('animateRight'));
+            cover.bind('swiperight', cover.data('animateRight'));
 
-            item.unbind('swipeleft', cover.data('animateLeft'))
-                .bind('swipeleft', cover.data('animateLeft'));
+            item.bind('swipeleft', cover.data('animateLeft'));
 
             // any clicks on buttons inside the item also trigger
             // the cover to slide back to the left
-            item.find('.ui-btn')
-                .unbind('click', cover.data('animateLeft'))
-                .bind('click', cover.data('animateLeft'));
+            item.find('.ui-btn').bind('click', cover.data('animateLeft'));
+        });
+    },
+
+    destroy: function () {
+        var self = this,
+            defaultCoverTheme,
+            covers;
+
+        defaultCoverTheme = 'ui-body-' + this.options.theme;
+
+        this.element.removeClass('ui-swipelist');
+
+        // get the list item covers
+        covers = this.element.find(':jqmData(role="swipelist-item-cover")');
+
+        covers.each(function () {
+            var cover = $(this);
+            var coverTheme = defaultCoverTheme;
+
+            // get the parent li element and add classes
+            var item = cover.closest('li');
+
+            // remove swipelist CSS classes
+            item.removeClass('ui-swipelist-item');
+            cover.removeClass('ui-swipelist-item-cover');
+
+            // remove swatch from cover: if the nearest list item has
+            // a swatch set on it, that will be used; otherwise, use
+            // the swatch set for the swipelist
+            var itemClass = item.attr('class');
+            var itemHasThemeClass = itemClass &&
+                                    itemClass.match(/ui\-body\-[a-z]|ui\-bar\-[a-z]/);
+
+            if (itemHasThemeClass) {
+                coverTheme = itemHasThemeClass[0];
+            }
+
+            cover.removeClass(coverTheme);
+
+            // remove wrapper HTML
+            cover.find('.ui-swipelist-item-cover-inner').children().unwrap();
+
+            // unbind swipe events
+            if (cover.data('animateRight') && cover.data('animateLeft')) {
+                cover.unbind('swiperight', cover.data('animateRight'));
+                item.unbind('swipeleft', cover.data('animateLeft'));
+
+                // unbind clicks on buttons inside the item
+                item.find('.ui-btn').unbind('click', cover.data('animateLeft'));
+
+                cover.data('animateRight', null);
+                cover.data('animateLeft', null);
+            }
         });
     },
 
