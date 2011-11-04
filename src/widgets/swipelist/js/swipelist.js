@@ -56,9 +56,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
     _create: function () {
         // use the theme set on the element, set in options,
         // the parent theme, or 'c' (in that order of preference)
-        var theme = this.element.data('theme') ||
+        var theme = this.element.jqmData('theme') ||
                     this.options.theme ||
-                    this.element.parent().data('theme') ||
+                    this.element.parent().jqmData('theme') ||
                     'c';
 
         this.options.theme = theme;
