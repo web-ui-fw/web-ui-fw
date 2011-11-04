@@ -1,0 +1,4 @@
+.ui-singleimagedisplay-nocontent {
+    background-image: url('images/noContent.png');
+    background-size: cover;
+}

@@ -287,14 +287,20 @@ $(document).bind("pagecreate", function () {
 $(document).bind("pageinit", function() {
     $("#singleimagedisplay-demo").bind("pageinit", function(e) {
         $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {
-            var img = $(this).find('img');
-            var src = img.singleimagedisplay('option', 'src');
-            var noContent = img.singleimagedisplay('option', 'noContent');
+            var displayImage = $("#singleimagedisplay-display-image");
+
+            var img = $(this).find('img:jqmData(role=singleimagedisplay)');
+            var src = null;
+            var noContent = null;
+            if (img.length>0) {
+                src = img.singleimagedisplay('option', 'source');
+                noContent = img.singleimagedisplay('option', 'noContent');
+            };
 
             $.mobile.changePage("#singleimagedisplay-display");
 
-            $("#singleimagedisplay-display-image").singleimagedisplay('option','src',src);
-            $("#singleimagedisplay-display-image").singleimagedisplay('option','noContent',noContent);
+            displayImage.singleimagedisplay('option', 'source', src);
+            displayImage.singleimagedisplay('option', 'noContent', noContent);
         });
 
         // this sets the "broken" src image for #broken

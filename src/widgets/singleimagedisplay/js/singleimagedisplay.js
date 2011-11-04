@@ -36,96 +36,156 @@
     $.widget("todons.singleimagedisplay", $.mobile.widget, {
         options: {
             initSelector: 'img:jqmData(role=singleimagedisplay)',
-            noContent: "images/noContent.png",
-            src: null,
+            noContent: null,
+            source: null,
         },
 
-        page: null,
         image: null,
-        usingNoContent: false,
+        imageParent: null,
+        cover: null,
+        usingNoContents: false,
 
         _setImgSrc: function () {
-            this.image.attr('src', this.options.src);
+            if (!this.usingNoContents) {
+                // if there is a source image, show it
+                this.image.attr('src', this.options.source);
+                this.cover.hide();
+                this.imageParent.append(this.image);
+                this.image.show();
+            } else {
+                this._showNoContents();
+            }
+        },
+
+        _showNoContents: function () {
+            if (!this.options.noContent) {
+                this.resize( this.cover );
+
+                this.image.detach();
+                this.cover.show();
+            }
+            else {
+                // unbind the error handler, otherwise we could
+                // get into an infinite loop if the custom noContent
+                // image is missing too
+                this.image.unbind('error');
+
+                this.image.attr('src', this.options.noContent);
+                this.cover.hide();
+                this.imageParent.append(this.image);
+                this.resize( this.image );
+                this.image.show();
+            }
         },
 
         _create: function() {
+            console.log("MAXMAXMAX/_create");
             var self = this;
-            this.image = this.element;
 
-            this.options.src = this.image.jqmData('src') || this.options.noContent;
+            // make a copy of image element
+            this.image = this.element.clone()
+                .removeAttr('data-role')
+                .removeAttr('id')
+                .addClass('ui-singleimagedisplay')
+                .css('float','left'); // so the cover overlays the image
+            this.imageParent = this.element.parent();
 
-            this.image.addClass('singleimagedisplay');
-            this.image.hide();
+            this.element.css('float','left'); // so the cover overlays the other elements
+
+            this.cover = ($('<div class="ui-singleimagedisplay-nocontent"/>'));
+            this.cover.hide(); //this.cover.css('visibility','hidden');
+            this.imageParent.append(this.cover);
+
+            this.options.source = this.element.jqmData('src');
 
             // when the image is loaded, resize it
-            this.image.load( function() {
-                self.resize();
+            this.image.load(function () {
+                console.log("MAXMAXMAX/load");
+                self.usingNoContents = false;
+                self.resize( self.image );
+                self.image.show();
             });
 
             // when the image fails to load, substitute noContent
-            this.image.error( function() {
-                // record that src is not valid
-                self.usingNoContent = true;
-                self.options.src = undefined;
-
-                // set image src to noContent image
-                self.image.attr( 'src', self.options.noContent );
-                self.resize();
+            this.image.error(function () {
+                console.log("MAXMAXMAX/error");
+                self.usingNoContents = true;
+                self._showNoContents();
             });
-
-            // record error if src has not been defined
-            this.usingNoContent = this.options.src===undefined;
 
             // set the src for the image
             this._setImgSrc();
 
             // resize the image immediately if it is visible
             if (self.image.is(':visible')) {
-                self.resize();
+                self.resize( self.image );
+                self.image.show();
             }
 
             // when the page is shown, resize the image
             // note that this widget is created on pagecreate
-            this.page = this.image.closest('.ui-page');
-            if (this.page) {
-                this.page.bind('pageshow', function() {
-                    self.resize();
-                });
+            var page = this.element.closest('.ui-page');
+            if (page) {
+                //page.bind('pageshow', function() {
+                    //if (!self.usingNoContents) {
+                        //self.resize( self.image );
+                        //self.image.show();
+                    //} else {
+                        //self.resize( self.cover );
+                    //}
+                //});
             }
 
             // when the window is resized, resize the image
             $(window).resize( function() {
                 if (self.image.is(':visible')) {
-                    self.resize();
+                    self.resize( self.image );
+                    self.image.show();
+                } else {
+                    self.resize( self.cover );
                 }
             });
         },
 
-        resize: function() {
+        resize: function(elementToResize) {
+            console.log('MAXMAXMAX/resize');
             var finalWidth  = 0;
             var finalHeight = 0;
 
-            var realImageWidth       = this.image[0].naturalWidth;
-            var realImageHeight      = this.image[0].naturalHeight;
-            var realImageAspectRatio = realImageWidth/realImageHeight;
+            var measuringImg = $('<img>')
+                .css( 'width', '0px' )
+                .css( 'height', '0px' )
+                .css( 'opacity', '0' )
+                .css( 'width', 'inherit' )
+                .css( 'height', 'inherit' )
+                .insertAfter(elementToResize);
+
+            var elementIsImage = elementToResize[0];
+            var realImageWidth  =
+                (elementIsImage?
+                 elementToResize[0].naturalWidth
+                 :elementToResize.width());
+            var realImageHeight =
+                (elementIsImage?
+                 elementToResize[0].naturalHeight
+                 :elementToResize.height());
+            var realImageAspectRatio = realImageWidth/realImageHeight || 1.0;
 
             var windowWidth  = window.innerWidth;
             var windowHeight = window.innerHeight;
 
             // hide while we use the fiddle with the images dimensions
-            this.image.hide();
+            var measuringImageWidth = measuringImg.width();
+            var measuringImageHeight = measuringImg.height();
 
-            this.image.css( 'width', 'inherit' );
-            this.image.css( 'height', 'inherit' );
+            measuringImg.remove();
 
-            var imageWidth = this.image.width();
-            var imageHeight = this.image.height();
-
-            var insideContainer = (imageWidth!=realImageWidth) || (imageHeight!=realImageHeight);
+            var insideContainer = (measuringImageWidth>0) || (measuringImageHeight>0);
+            console.log('MAXMAXMAX/insideContainer/'+insideContainer);
 
             if (insideContainer) {
-                finalWidth = imageWidth;
-                finalHeight = imageHeight;
+                finalWidth = measuringImageWidth;
+                finalHeight = measuringImageHeight;
             } else {
                 finalWidth = windowWidth;
                 finalHeight = windowHeight;
@@ -139,14 +199,12 @@
             }
 
             // assign the final size
-            this.image.width( finalWidth );
-            this.image.height( finalHeight );
-
-            // show the image now it has been resized
-            this.image.show();
+            elementToResize.width( finalWidth );
+            elementToResize.height( finalHeight );
         },
 
         _setOption: function(key, value) {
+            console.log("MAXMAXMAX/setoption/"+key+"/"+value);
             if (value == this.options[key]) {
                 return;
             }
@@ -154,36 +212,72 @@
             switch (key) {
             case "noContent":
                 this.options.noContent = value;
-
-                if (this.usingNoContent) {
-                    this.image.attr( 'src', this.options.noContent );
-                }
+                this._setImgSrc();
                 break;
-            case "src":
-                this.options.src = value;
-
-                if (this.options.src === undefined) {
-                    if (!this.usingNoContent) {
-                        this.usingNoContent = true;
-                        this.image.attr( 'src', this.options.noContent );
-                    }
-                } else {
-                    // trigger a load attempt - error handler will
-                    // deal with failed load
-                    this.usingNoContent = false;
-                    this._setImgSrc();
-                }
-                this.resize();
+            case "source":
+                this.options.source = value;
+                this.usingNoContents = false;
+                this._setImgSrc();
+                this.resize( this.image );
                 break;
             default:
                 break;
             }
         },
 
+        reset: function() {
+            // put the original image element back
+        }
+
+//        beingDestroyed: false,
+//	    destroy: function() {
+//            if (!this.beingDestroyed) {
+//                console.log("MAXMAXMAX/destroy");
+//                this.beingDestroyed = true;
+//                // reset options back to defaults
+//		        $.extend( this.options, this.defaults );
+//
+//                // remove working elements
+//                if (this.image) {
+//                    this.image.remove();
+//                }
+//                if (this.cover) {
+//                    this.cover.remove();
+//                }
+//
+//                // restore original image
+//                this.imageParent.append( this.original.image );
+//                if (this.original.image) {
+//                    this.original.image.show();
+//                }
+//
+//                // reset variables back to null
+//                this.page = null;
+//                this.image = null;
+//                this.imageParent = null;
+//                this.cover = null;
+//
+//                // reset original to null
+//                this.original.image = null;
+//
+//		        // call the base destroy function
+//		        //$.Widget.prototype.destroy.call( this );
+//                this.beingDestroyed=false;
+//            }
+//	    }
+//
     });
 
     // initialise singleimagedisplays with our own singleimagedisplay
+//    $(document).bind("pagehide", function(e) {
+//        console.log("MAXMAXMAX/pagehide");
+//        $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
+//        .singleimagedisplay( 'reset' );
+//    });
+
+    // initialise singleimagedisplays with our own singleimagedisplay
     $(document).bind("pagecreate", function(e) {
+        console.log("MAXMAXMAX/pagecreate");
         $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
         .singleimagedisplay();
     });
