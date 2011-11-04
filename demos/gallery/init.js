@@ -273,6 +273,13 @@ $(document).bind("pagecreate", function () {
         listview.find('input[type="checkbox"]')
                 .unbind('change', clearUberCheck)
                 .bind('change', clearUberCheck);
+
+    // this tests that refreshing a swipelist multiple times only
+    // causes the event handlers to be bound once
+    $('#swipelist-demo').bind('pageshow', function () {
+        for (var i = 0 ; i < 4 ; i++) {
+            $(this).find(':jqmData(role=swipelist)').swipelist('refresh');
+        }
     });
 });
 

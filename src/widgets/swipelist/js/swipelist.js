@@ -54,26 +54,32 @@ $.widget("todons.swipelist", $.mobile.widget, {
     },
 
     _create: function () {
+        // use the theme set on the element, set in options,
+        // the parent theme, or 'c' (in that order of preference)
+        var theme = this.element.data('theme') ||
+                    this.options.theme ||
+                    this.element.parent().data('theme') ||
+                    'c';
+
+        this.options.theme = theme;
+
+        this.refresh();
+    },
+
+    refresh: function () {
         var self = this,
-            theme,
             defaultCoverTheme,
             covers;
 
-        // use the theme set on the element, set in options,
-        // the parent theme, or 'c' (in that order of preference)
-        theme = this.element.data('theme') ||
-                this.options.theme ||
-                this.element.parent().data('theme') ||
-                'c';
-
-        defaultCoverTheme = 'ui-body-' + theme;
+        defaultCoverTheme = 'ui-body-' + this.options.theme;
 
         // swipelist is a listview
         if (!this.element.hasClass('ui-listview')) {
             this.element.listview();
         }
 
-        this.element.removeClass('ui-swipelist').addClass('ui-swipelist');
+        this.element.removeClass('ui-swipelist')
+                    .addClass('ui-swipelist');
 
         // get the list item covers
         covers = this.element.find(':jqmData(role="swipelist-item-cover")');
@@ -106,24 +112,32 @@ $.widget("todons.swipelist", $.mobile.widget, {
                  .addClass(coverTheme);
 
             // wrap inner HTML (so it can potentially be styled)
-            cover.wrapInner($('<span/>').addClass('ui-swipelist-item-cover-inner'));
+            if (cover.has('.ui-swipelist-item-cover-inner').length === 0) {
+                cover.wrapInner($('<span/>').addClass('ui-swipelist-item-cover-inner'));
+            }
 
             // bind to swipe events on the cover and the item
-            cover.bind('swiperight', function (e) {
-                self._animateCover(cover, 100);
-                return false;
-            });
+            if (!(cover.data('animateRight') && cover.data('animateLeft'))) {
+                cover.data('animateRight', function () {
+                    self._animateCover(cover, 100);
+                });
 
-            item.bind('swipeleft', function (e) {
-                self._animateCover(cover, 0);
-                return false;
-            });
+                cover.data('animateLeft', function () {
+                    self._animateCover(cover, 0);
+                });
+            }
+
+            cover.unbind('swiperight', cover.data('animateRight'))
+                 .bind('swiperight', cover.data('animateRight'));
+
+            item.unbind('swipeleft', cover.data('animateLeft'))
+                .bind('swipeleft', cover.data('animateLeft'));
 
             // any clicks on buttons inside the item also trigger
             // the cover to slide back to the left
-            item.find('.ui-btn').bind('click', function () {
-                self._animateCover(cover, 0);
-            });
+            item.find('.ui-btn')
+                .unbind('click', cover.data('animateLeft'))
+                .bind('click', cover.data('animateLeft'));
         });
     },
 
