@@ -31,6 +31,19 @@ After the installation, make sure that `uglifyjs` is in your PATH,
 then set DEBUG=no in the Makefile to compress the Javascript code.
 
 
+Installing docco
+================
+
+`docco` is used to generate API documentation. It needs Pygments for
+the syntax hilighting:
+
+sudo apt-get install python-setuptools
+sudo easy_install Pygments
+npm install docco
+
+(Then add docco to your PATH).
+
+
 Building
 ========
 
