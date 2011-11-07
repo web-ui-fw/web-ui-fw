@@ -219,6 +219,16 @@ $(document).bind("pagecreate", function () {
             console.log('dividers were updated on refreshable list');
         });
     });
+
+    $("#listviewcontrols-demo").bind("pageshow", function () {
+        var listview = $(this).find('#listviewcontrols-demo-listview');
+        var toggler = $(this).find('#listviewcontrols-demo-toggler');
+
+        toggler.unbind("change").bind("change", function () {
+            var value = toggler.val();
+            listview.listviewcontrols('option', 'mode', value);
+        });
+    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */

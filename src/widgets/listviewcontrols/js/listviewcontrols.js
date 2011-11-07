@@ -75,15 +75,10 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             optionsValid = true,
             listview = $(this.element),
             page = listview.closest('.ui-page'),
-            controlsSelectorAttr,
-            controlsSelector,
-            dataOptions;
+            controlsSelectorAttr = 'data-' + $.mobile.ns + 'listviewcontrols',
+            dataOptions = listview.jqmData('listviewcontrols-options');
 
-        controlsSelectorAttr = 'data-' + $.mobile.ns + 'listviewcontrols';
-        controlsSelector = listview.attr(controlsSelectorAttr);
-        options['controlsSelector'] = controlsSelector;
-
-        dataOptions = listview.jqmData('listviewcontrols-options');
+        options['controlsSelector'] = listview.attr(controlsSelectorAttr);
 
         // precedence for options: defaults < jqmData attribute < options arg
         $.extend(dataOptions, this._defaults);
@@ -110,51 +105,58 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
         }
 
         if (page && !page.is(':visible')) {
-            page.bind('pageshow', function () {
-                self.refresh();
-            });
+            page.bind('pageshow', function () { self.refresh(); });
         }
         else {
             this.refresh();
         }
     },
 
+    refresh: function () {
+        // we only operate on visible list items which aren't dividers
+        var listItems = this.element.find('li:not(:jqmData(role=list-divider))');
+        var showInEditItems = listItems.find(':jqmData(listviewcontrols-show-in=edit)');
+        var showInViewItems = listItems.find(':jqmData(listviewcontrols-show-in=view)');
+
+        // hide show the control panel and
+        // hide/show controls inside list items based on their "show-in"
+        // attribute
+        if (this.options.mode === 'edit') {
+            this.controls.show();
+            showInViewItems.hide();
+            showInEditItems.show();
+        }
+        else {
+            this.controls.hide();
+            showInViewItems.show();
+            showInEditItems.hide();
+        }
+    },
+
     destroy: function () {
     },
 
-    refresh: function () {
-    },
-
     _validOption: function (name, value) {
-        switch (name) {
-            case 'mode':
-                if (!(value == 'view' || value == 'edit')) {
-                    console.error('Invalid mode for listviewcontrols widget ' +
-                                  '(should be "view" or "edit")');
-                    return false;
-                }
-            case 'controlsSelector':
-                if (!value) {
-                    console.error('Invalid controlsSelector for ' +
-                                  'listviewcontrols widget');
-                    return false;
-                }
-        };
+        if (name === 'mode' && !(value === 'view' || value === 'edit')) {
+            console.error('Invalid mode for listviewcontrols widget ' +
+                          '(should be "view" or "edit")');
+            return false;
+        }
+        else if (name === 'controlsSelector' && !value) {
+            console.error('Invalid controlsSelector for ' +
+                          'listviewcontrols widget');
+            return false;
+        }
 
         return true;
     },
 
-    _setOption: function (name, value) {
-        var oldValue, newValue;
+    _setOption: function (varName, value) {
+        var oldValue = this.options[varName];
 
-        oldValue = this.options[name];
-
-        if (this._validOption(name, value)) {
-            newValue = this.options[name];
-
-            if (oldValue != newValue) {
-                this.refresh();
-            }
+        if (oldValue !== value && this._validOption(varName, value)) {
+            this.options[varName] = value;
+            this.refresh();
         }
     }
 });

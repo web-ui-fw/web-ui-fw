@@ -1123,13 +1123,16 @@ $scroller2List.scrollview('option','scrollDuration','10000');
                     <label for="listviewcontrols-demo-toggler">Edit mode (this is
                     here to demonstrate the effect of switching the mode):</label>
                     <select id="listviewcontrols-demo-toggler" data-role="slider">
-                        <option value="on">On</option>
-                        <option value="off">Off</option>
+                        <option value="edit">On</option>
+                        <option value="view">Off</option>
                     </select>
                 </fieldset>
             </div>
-            <div data-role="content">
+            <div data-role="content" data-theme="e">
                 <form id="listviewcontrols-demo-control-panel" style="padding-bottom: 14px;">
+                    <p>These are the controls which can operate over all of
+                    the items in the listview.</p>
+
                     <fieldset data-role="controlgroup">
                         <input type="checkbox" id="listviewcontrols-demo-checkbox-uber" />
                         <label for="listviewcontrols-demo-checkbox-uber">Select all</label>
@@ -1138,7 +1141,9 @@ $scroller2List.scrollview('option','scrollDuration','10000');
 
                 <ul data-role="listview"
                     data-listviewcontrols="#listviewcontrols-demo-control-panel"
-                    data-listviewcontrols-options='{"mode":"edit"}'>
+                    data-listviewcontrols-options='{"mode":"edit"}'
+                    id="listviewcontrols-demo-listview"
+                    data-filter="true">
                     <li>
                         <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
                             <input type="checkbox" id="listviewcontrols-demo-checkbox-1" />
