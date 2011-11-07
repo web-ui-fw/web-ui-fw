@@ -73,8 +73,10 @@
 
             $(this.element).append(html);
 
-
-            this.options.theme = this.options.theme || this.element.data('theme') || this.element.closest(':jqmData(theme)').attr('data-theme') || 'b';
+            this.options.theme = this.options.theme || 
+            					 this.element.data('theme') || 
+            					 this.element.closest(':jqmData(theme)').attr('data-theme') || 
+            					 'b';
 
             container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
