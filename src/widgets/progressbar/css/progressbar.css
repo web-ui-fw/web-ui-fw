@@ -12,18 +12,15 @@
 .ui-boxImg {	
 	position: absolute;
 	top: 0;
-	background: gray;
 	width: 100%;
-	height: 10px;
+	height: 1px;
 }
+
 
 .ui-barImg {
 	position: absolute;
 	top: 0px;
-	background: orange;
-	height: 10px;
+	height: 1px;
 	width: 0;	
 }
-
-
 
