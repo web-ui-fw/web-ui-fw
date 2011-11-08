@@ -1135,7 +1135,7 @@ $scroller2List.scrollview('option','scrollDuration','10000');
                     <p>These are the controls which can operate over all of
                     the items in the listview. Note that if you filter the
                     list, these controls will only affect the currently-visible
-                    items.</p>
+                    items. Also note that we're using autodividers here too :)</p>
 
                     <fieldset data-role="controlgroup">
                         <input type="checkbox" id="listviewcontrols-demo-checkbox-uber" />
@@ -1147,7 +1147,9 @@ $scroller2List.scrollview('option','scrollDuration','10000');
                     data-listviewcontrols="#listviewcontrols-demo-control-panel"
                     data-listviewcontrols-options='{"mode":"edit"}'
                     id="listviewcontrols-demo-listview"
-                    data-filter="true">
+                    data-filter="true"
+                    data-autodividers="alpha"
+                    data-autodividers-selector="span">
                     <li>
                         <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
                             <input type="checkbox" id="listviewcontrols-demo-checkbox-1" />
