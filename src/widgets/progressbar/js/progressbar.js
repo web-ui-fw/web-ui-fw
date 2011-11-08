@@ -5,7 +5,6 @@
  * License: TODO
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
-
 /**
  * Displays a progressbar element
  *
@@ -22,17 +21,18 @@
  *                from 0 to max.
  *
  */
-
 (function ($, window, undefined) {
     $.widget("todons.progressbar", $.mobile.widget, {
         options: {
             value: 0,
-            max: 100
+            max: 100,
+            theme: 'b'
         },
 
-        bar: null, // to hold the gray background
-        box: null,  // to hold the moving orange bar
-
+        bar: null,
+        // to hold the gray background
+        box: null,
+        // to hold the moving orange bar
         oldValue: 0,
         currentValue: 0,
         delta: 0,
@@ -69,16 +69,19 @@
          */
         _create: function () {
             var startValue, container;
-            var html = $('<div class="ui-progressbar">' +
-                         '<div class="ui-boxImg"></div>' +
-                         '<div class="ui-barImg"></div>' +
-                         '</div>');
+            var html = $('<div class="ui-progressbar">' + '<div class="ui-boxImg " ></div>' + '<div class="ui-barImg " ></div>' + '</div>');
 
             $(this.element).append(html);
+
+            this.options.theme = this.options.theme || 
+            					 this.element.data('theme') || 
+            					 this.element.closest(':jqmData(theme)').attr('data-theme') || 
+            					 'b';
 
             container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
+            this.bar.addClass("ui-bar-" + this.options.theme);
 
             startValue = this.options.value ? this.options.value : 0;
             this.value(startValue);
