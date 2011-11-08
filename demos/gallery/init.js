@@ -260,10 +260,19 @@ $(document).bind("pagecreate", function () {
                 uberCheck.removeAttr('checked');
                 uberCheck.checkboxradio('refresh');
             }
+            else if (listItems.length - unchecked.length === listItems.length) {
+                uberCheck.attr('checked', 'checked');
+                uberCheck.checkboxradio('refresh');
+            }
         };
 
         searchFilter.unbind("keyup change", clearUberCheck)
                     .bind("keyup change", clearUberCheck);
+
+        // also bind all the list items to the same function
+        listview.find('input[type="checkbox"]')
+                .unbind('change', clearUberCheck)
+                .bind('change', clearUberCheck);
     });
 });
 
