@@ -223,10 +223,30 @@ $(document).bind("pagecreate", function () {
     $("#listviewcontrols-demo").bind("pageshow", function () {
         var listview = $(this).find('#listviewcontrols-demo-listview');
         var toggler = $(this).find('#listviewcontrols-demo-toggler');
+        var uberCheck = $(this).find('#listviewcontrols-demo-checkbox-uber');
 
         toggler.unbind("change").bind("change", function () {
             var value = toggler.val();
             listview.listviewcontrols('option', 'mode', value);
+        });
+
+        uberCheck.unbind("change").bind("change", function () {
+            var checked = uberCheck.is(':checked');
+
+            var listItems = listview.listviewcontrols('visibleListItems');
+
+            listItems.each(function () {
+                var checkbox = $(this).find('input[type="checkbox"]');
+
+                if (checked) {
+                    checkbox.attr('checked', 'checked');
+                }
+                else {
+                    checkbox.removeAttr('checked');
+                }
+
+                checkbox.checkboxradio('refresh');
+            });
         });
     });
 });
