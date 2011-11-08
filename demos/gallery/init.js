@@ -224,6 +224,8 @@ $(document).bind("pagecreate", function () {
         var listview = $(this).find('#listviewcontrols-demo-listview');
         var toggler = $(this).find('#listviewcontrols-demo-toggler');
         var uberCheck = $(this).find('#listviewcontrols-demo-checkbox-uber');
+        var searchFilter = $(this).find('input:jqmData(type=search)');
+        var clearUberCheck = null;
 
         toggler.unbind("change").bind("change", function () {
             var value = toggler.val();
@@ -248,6 +250,20 @@ $(document).bind("pagecreate", function () {
                 checkbox.checkboxradio('refresh');
             });
         });
+
+        // when a search filter is applied, uncheck the uberCheck
+        // if _any_ of the remaining items displayed are unchecked
+        clearUberCheck = function () {
+            var listItems = listview.listviewcontrols('visibleListItems');
+            var unchecked = listItems.has('input[type="checkbox"]:not(:checked)');
+            if (unchecked.length > 0) {
+                uberCheck.removeAttr('checked');
+                uberCheck.checkboxradio('refresh');
+            }
+        };
+
+        searchFilter.unbind("keyup change", clearUberCheck)
+                    .bind("keyup change", clearUberCheck);
     });
 });
 
