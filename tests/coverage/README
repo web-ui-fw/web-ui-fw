@@ -1,0 +1,14 @@
+Used to produce coverage reports from the automated tests
+via jscoverage (http://siliconforks.com/jscoverage/).
+
+You'll need to install jscoverage first.
+You'll also need Google Chrome.
+
+Then:
+
+$ cd tests/test-coverage
+$ ./instrument.sh
+
+See the Summary tab for the coverage report.
+
+This is only tested on Linux.

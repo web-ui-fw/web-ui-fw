@@ -129,6 +129,10 @@ install: all
 	cp -av ${OUTPUT_ROOT}/* src/template ${INSTALL_DIR}/share/slp-web-fw/
 	cp -av tools/* ${INSTALL_DIR}/bin
 
+coverage: all
+	# Checking unit test coverage
+	$(CURDIR)/tests/coverage/instrument.sh
+
 clean:
 	# Removing destination directory...
 	@@rm -rf ${OUTPUT_ROOT}
