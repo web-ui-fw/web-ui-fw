@@ -32,8 +32,8 @@
  *                   $("#mycolorpickerbutton").colorpickerbutton("option","buttonMarkup",
  *                     "<a href='#' data-role='button'>ignored</a>");
  *
- *     buttonText: String; the text to display on the close button on the popupwindow.
- *                 The text set in the buttonMarkup will be ignored and this used instead.
+ *     closeText: String; the text to display on the close button on the popupwindow.
+ *                The text set in the buttonMarkup will be ignored and this used instead.
  *
  * Events:
  *
