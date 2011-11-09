@@ -133,15 +133,16 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             page = this.element.closest('.ui-page'),
             controlPanelSelectorAttr = 'data-' + $.mobile.ns + 'listviewcontrols',
             controlPanelSelector = this.element.attr(controlPanelSelectorAttr),
-            dataOptions = this.element.jqmData('listviewcontrols-options');
+            dataOptions = this.element.jqmData('listviewcontrols-options'),
+            controlPanelShowInAttr;
 
         o.controlPanelSelector = o.controlPanelSelector || controlPanelSelector;
 
         // precedence for options: defaults < jqmData attribute < options arg
         o = $.extend({}, this._defaults, dataOptions, o);
 
-        optionsValid = (this._validOption('modesAvailable', o.modesAvailable, o) &
-                        this._validOption('controlPanelSelector', o.controlPanelSelector, o) &
+        optionsValid = (this._validOption('modesAvailable', o.modesAvailable, o) &&
+                        this._validOption('controlPanelSelector', o.controlPanelSelector, o) &&
                         this._validOption('mode', o.mode, o));
 
         if (!optionsValid) {
@@ -161,15 +162,18 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
 
         // once we have the controls element, we may need to override the
         // mode in which controls are shown
-        o.controlPanelShowIn = this.controlPanel.jqmData('listviewcontrols-show-in') || o.controlPanelShowIn;
+        controlPanelShowInAttr = this.controlPanel.jqmData('listviewcontrols-show-in');
+        if (controlPanelShowInAttr) {
+            o.controlPanelShowIn = controlPanelShowInAttr;
+        }
+        else if (!o.controlPanelShowIn) {
+            o.controlPanelShowIn = o.modesAvailable[0];
+        }
 
         if (!this._validOption('controlPanelShowIn', o.controlPanelShowIn, o)) {
             console.error('Could not create listviewcontrols widget due to ' +
                           'invalid show-in option on controls element');
             return;
-        }
-        else {
-            o.controlPanelShowIn = o.modesAvailable[0];
         }
 
         // mark the controls and the list with a class to demonstrate
