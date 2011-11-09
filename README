@@ -31,6 +31,34 @@ After the installation, make sure that `uglifyjs` is in your PATH,
 then set DEBUG=no in the Makefile to compress the Javascript code.
 
 
+Installing Google Chrome
+========================
+
+The main browser used for developing web-ui-fw is Google Chrome. This
+is also used to produce the coverage reports (see below). So it's
+recommended that you install it if you intend to do any work on the
+project.
+
+Get it from http://www.google.com/chrome
+
+
+Installing jscoverage
+=====================
+
+jscoverage produces code coverage reports from instrumented JavaScript
+code. It's used here to produce coverage reports from the QUnit test
+suite (in tests/unit-tests): see the section on "Running the test coverage
+report" for more details.
+
+It's not essential to install this unless you want to get coverage
+reports for the web-ui-fw test suite.
+
+The source is available from: http://siliconforks.com/jscoverage/
+It has minimal dependencies and is easy to build.
+
+Once you've built it, put the jscoverage binary on your PATH.
+
+
 Building
 ========
 
@@ -57,7 +85,7 @@ JavaScript into framework files.
 
 
 The widget gallery demo
-===============================
+=======================
 
 You'll need to build the project first (see above).
 
@@ -82,7 +110,7 @@ need to do "make clean ; make" to rebuild the CSS and JS files.
 
 
 Writing more widgets
-===============================
+====================
 
 The best way to start is to copy an existing widget. A simple one
 like progressbar is a good starting point.
@@ -172,7 +200,7 @@ on writing new tests.
 
 
 Writing tests
-===============================
+=============
 
 To add a new test for your widget:
 
@@ -202,3 +230,15 @@ whole suite) or your individual index.html file to run just your tests.
 
 NB you'll need to do a full build so the JS and CSS files are in
 the build/ directory before running tests.
+
+
+Running the test coverage report
+================================
+
+To get a coverage report, run jscoverage from the top level directory
+with:
+
+  make coverage
+
+This will open the unit tests in Google Chrome and run them. Once they're
+done, the coverage report is available from the "Summary" tab of the page.
