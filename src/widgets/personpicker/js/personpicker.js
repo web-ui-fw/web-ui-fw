@@ -6,37 +6,35 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
-/**
- * Displays a list of contacts fetched from the provided AddressBook.
- *
- * To apply, add the attribute data-role="personpicker" to a <div>
- * element inside a page or a dialog. Alternative, call personpicker()
- * on an element, like this:
- *
- *     $("#my_personpicker").personpicker();
- *
- * where the HTML might be:
- *
- *     <div id="my_personpicker"></div>
- *
- * Theme: by default, gets a 'b' swatch; override with data-theme="X"
- * as per usual.
- *
- * Options:
- *     addressBook:
- *         AddressBook; the address book used to populate the picker.
- *     successCallback:
- *         Function; the function to call after the Done button has
- *         been clicked, and no errors occurred.
- *     errorCallback:
- *         Function; the function to call if there was an error while
- *         showing the widget.
- *     filter:
- *         Filter; a filter used when querying the address book.
- *     multipleSelection:
- *         Boolean; weather the widget allows picking more than one
- *         person. Default: true.
- */
+// Displays a list of contacts fetched from the provided AddressBook.
+//
+// To apply, add the attribute data-role="personpicker" to a <div>
+// element inside a page or a dialog. Alternative, call personpicker()
+// on an element, like this:
+//
+//     $("#my_personpicker").personpicker();
+//
+// where the HTML might be:
+//
+//     <div id="my_personpicker"></div>
+//
+// Theme: by default, gets a 'b' swatch; override with data-theme="X"
+// as per usual.
+//
+// Options:
+//     addressBook:
+//         AddressBook; the address book used to populate the picker.
+//     successCallback:
+//         Function; the function to call after the Done button has
+//         been clicked, and no errors occurred.
+//     errorCallback:
+//         Function; the function to call if there was an error while
+//         showing the widget.
+//     filter:
+//         Filter; a filter used when querying the address book.
+//     multipleSelection:
+//         Boolean; weather the widget allows picking more than one
+//         person. Default: true.
 
 (function ($, window, undefined) {
     $.widget("todons.personpicker", $.mobile.widget, {

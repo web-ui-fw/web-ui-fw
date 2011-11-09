@@ -7,16 +7,15 @@
  *          Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * Widget which turns a list into a "swipe list":
- * i.e. each list item has a sliding "cover" which can be swiped
- * to the right (to reveal buttons underneath) or left (to
- * cover the buttons again). Clicking on a button under a swipelist
- * also moves the cover back to the left.
- *
- * To create a swipelist, you need markup like this:
- *
- * <ul data-role="swipelist">
+// Widget which turns a list into a "swipe list":
+// i.e. each list item has a sliding "cover" which can be swiped
+// to the right (to reveal buttons underneath) or left (to
+// cover the buttons again). Clicking on a button under a swipelist
+// also moves the cover back to the left.
+//
+// To create a swipelist, you need markup like this:
+//
+// <ul data-role="swipelist">
        <li>
            <div class="ui-grid-b">
                <div class="ui-block-a">
@@ -32,23 +31,22 @@
            <div data-role="swipelist-item-cover">Nigel</div>
        </li>
        ...
- * </ul>
- *
- * In this case, the cover is over a grid of buttons;
- * but it is should also be possible to use other types of markup under the
- * list items.
- *
- * Note the use of a separate div, parented by the li element, marked
- * up with data-role="swipelist-item-cover". This div will usually
- * contain text (and has styling to cope with this). If you want
- * other elements in your swipelist covers, you may need to style
- * them yourself.
- *
- * Theme: default is to use the parent theme (if set), or 'c' if not;
- * can be set explicitly with data-theme="X" or via
- * swipelist('option', 'theme', 'X') (though only at create time).
- *
- */
+// </ul>
+//
+// In this case, the cover is over a grid of buttons;
+// but it is should also be possible to use other types of markup under the
+// list items.
+//
+// Note the use of a separate div, parented by the li element, marked
+// up with data-role="swipelist-item-cover". This div will usually
+// contain text (and has styling to cope with this). If you want
+// other elements in your swipelist covers, you may need to style
+// them yourself.
+//
+// Theme: default is to use the parent theme (if set), or 'c' if not;
+// can be set explicitly with data-theme="X" or via
+// swipelist('option', 'theme', 'X') (though only at create time).
+
 (function ($) {
 
 $.widget("todons.swipelist", $.mobile.widget, {

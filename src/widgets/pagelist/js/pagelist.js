@@ -1,14 +1,12 @@
-/*
- * pagelist widget
- *
- * Given an element, this widget collects all links contained in the descendants of the element and constructs
- * a popupwindow widget containing numbered buttons for each encountered link.
- *
- * You can mark any one element in your document with "data-pagelist='true'" and a pagelist will be created that
- * will allow the user to navigate between the pages linked to within the element.
- *
- * Currently, only one pagelist can exist in a document and, once created, it cannot be modified.
- */
+// pagelist widget
+//
+// Given an element, this widget collects all links contained in the descendants of the element and constructs
+// a popupwindow widget containing numbered buttons for each encountered link.
+//
+// You can mark any one element in your document with "data-pagelist='true'" and a pagelist will be created that
+// will allow the user to navigate between the pages linked to within the element.
+//
+// Currently, only one pagelist can exist in a document and, once created, it cannot be modified.
 
 (function($, undefined) {
 
@@ -63,7 +61,7 @@ $.widget("todons.pagelist", $.mobile.widget, {
                             cy: $(this).outerHeight(true)
                         };
 
-                        /* Make sure things will be even later, because padding cannot have decimals - apparently :-S */
+                        // Make sure things will be even later, because padding cannot have decimals - apparently :-S
                         if (dim.cx % 2) $(this).css("padding-left",   parseInt($(this).css("padding-left"))   + 1);
                         if (dim.cy % 2) $(this).css("padding-bottom", parseInt($(this).css("padding-bottom")) + 1);
 
@@ -94,10 +92,8 @@ $.widget("todons.pagelist", $.mobile.widget, {
     }
 });
 
-/* 
- * Look for an element marked as a pagelist and assign $.mobile.todons.pagelist with a newly created pagelist.
- * If $.mobile.todons.pagelist is already assigned, ignore any new "data-pagelist='true'" designations.
- */
+// Look for an element marked as a pagelist and assign $.mobile.todons.pagelist with a newly created pagelist.
+// If $.mobile.todons.pagelist is already assigned, ignore any new "data-pagelist='true'" designations.
 $(document).bind("pagecreate create", function(e) {
     $(":jqmData(pagelist='true')", e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")

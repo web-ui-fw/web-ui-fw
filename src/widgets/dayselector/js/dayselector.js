@@ -7,41 +7,40 @@
  *          Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * Displays a day selector element: a control group with 7 check
- * boxes which can be toggled on and off.
- *
- * The widget can be invoked on fieldset element with
- * $(element).dayselector() or by creating a fieldset element with
- * data-role="dayselector". If you try to apply it to an element
- * of type other than fieldset, results will be unpredictable.
- *
- * The default is to display the controlgroup horizontally; you can
- * override this by setting data-type="vertical" on the fieldset,
- * or by passing a type option to the constructor. The data-type
- * attribute has precedence.
- *
- * If no ID is supplied for the dayselector, one will be generated
- * automatically.
- *
- * Methods:
- *
- *     value: Return the day numbers (0=Sunday, ..., 6=Saturday) of
- *            the selected checkboxes as an array.
- *
- *     selectAll: Select all 7 days of the week by automatically "ticking"
- *                all of the checkboxes.
- *
- * Options:
- *
- *     theme : Override the data-theme of the widget; note that the
- *             order of preference is: 1) set from option; 2) set from
- *             data-theme attribute; 3) set from closest parent data-theme;
- *             4) default to 'c'
- *
- *     type: 'horizontal' (default) or 'vertical'; specifies the type
- *           of controlgroup to create around the day check boxes.
- */
+// Displays a day selector element: a control group with 7 check
+// boxes which can be toggled on and off.
+//
+// The widget can be invoked on fieldset element with
+// $(element).dayselector() or by creating a fieldset element with
+// data-role="dayselector". If you try to apply it to an element
+// of type other than fieldset, results will be unpredictable.
+//
+// The default is to display the controlgroup horizontally; you can
+// override this by setting data-type="vertical" on the fieldset,
+// or by passing a type option to the constructor. The data-type
+// attribute has precedence.
+//
+// If no ID is supplied for the dayselector, one will be generated
+// automatically.
+//
+// Methods:
+//
+//     value: Return the day numbers (0=Sunday, ..., 6=Saturday) of
+//            the selected checkboxes as an array.
+//
+//     selectAll: Select all 7 days of the week by automatically "ticking"
+//                all of the checkboxes.
+//
+// Options:
+//
+//     theme : Override the data-theme of the widget; note that the
+//             order of preference is: 1) set from option; 2) set from
+//             data-theme attribute; 3) set from closest parent data-theme;
+//             4) default to 'c'
+//
+//     type: 'horizontal' (default) or 'vertical'; specifies the type
+//           of controlgroup to create around the day check boxes.
+
 (function ($, window, undefined) {
     $.widget("todons.dayselector", $.mobile.widget, {
         options: {

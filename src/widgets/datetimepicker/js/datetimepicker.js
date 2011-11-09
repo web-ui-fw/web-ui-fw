@@ -6,36 +6,35 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
-/**
- * datetimepicker is a widget that lets the user select a date and/or a
- * time.
- *
- * To apply, add the attribute data-datetimepicker="true", or set the
- * type="date" to an <input> field in a <form>.
- *
- * Options (default in parentheses):
- * =================================
- *  - showDate (true): shows (and allows modification of) the date.
- *  - showTime (true): shows (and allows modification of) the time.
- *  - header ("Set time"): the header text of the widget.
- *  - timeSeparator (":"): the symbol that separates hours and minutes.
- *  - months (["Jan".."Dec"]): an array of month names (provide your
- *    own if your interface's language is not English.
- *  - am ("AM"): the label for the AM text.
- *  - pm ("PM"): the lael for the PM text.
- *  - twentyfourHours (false): if true, uses the 24h system; if false
- *    uses the 12h system.
- *  - anumationDuration (500): the time the item selector takes to
- *    be animated, in milliseconds.
- *  - initSelector (see code): the jQuery selector for the widget.
- *
- * How to get a return value:
- * ==========================
- * Bind to the 'date-changed' event, e.g.:
- *    $("#myDatetimepicker").bind("date-changed", function(e, date) {
- *        alert("New date: " + date.toString());
- *    });
- */
+// datetimepicker is a widget that lets the user select a date and/or a
+// time.
+//
+// To apply, add the attribute data-datetimepicker="true", or set the
+// type="date" to an <input> field in a <form>.
+//
+// Options (default in parentheses):
+// =================================
+//  - showDate (true): shows (and allows modification of) the date.
+//  - showTime (true): shows (and allows modification of) the time.
+//  - header ("Set time"): the header text of the widget.
+//  - timeSeparator (":"): the symbol that separates hours and minutes.
+//  - months (["Jan".."Dec"]): an array of month names (provide your
+//    own if your interface's language is not English.
+//  - am ("AM"): the label for the AM text.
+//  - pm ("PM"): the lael for the PM text.
+//  - twentyfourHours (false): if true, uses the 24h system; if false
+//    uses the 12h system.
+//  - anumationDuration (500): the time the item selector takes to
+//    be animated, in milliseconds.
+//  - initSelector (see code): the jQuery selector for the widget.
+//
+// How to get a return value:
+// ==========================
+// Bind to the 'date-changed' event, e.g.:
+//    $("#myDatetimepicker").bind("date-changed", function(e, date) {
+//        alert("New date: " + date.toString());
+//    });
+
 (function($, window, undefined) {
     $.widget("todons.datetimepicker", $.mobile.widget, {
         options: {
@@ -204,24 +203,19 @@
                     widthAtItem = 0,
                     x = 0;
 
-                /* 
-                 * slideDown() seems to synchronously make things visible (albeit at height = 0px), so we can actually
-                 * compute widths/heights below
-                 */
+                // slideDown() seems to synchronously make things visible (albeit at height = 0px), so we can actually
+                // compute widths/heights below
                 selector.slideDown(obj.options.animationDuration);
                 obj.state.selectorOut = true;
 
-                /*
-                 * If the @owner has any padding/border/margins, then they are not taken into account. Thus, if you want
-                 * to space/pad your @owner divs, you should wrap them in other divs which give them
-                 * padding/borders/margins rather than adding left padding/borders/margins directly. Currently, this
-                 * happens to work, because the @owner divs have no left border/margin/padding.
-                 */
+                // If the @owner has any padding/border/margins, then they are not taken into account. Thus, if you want
+                // to space/pad your @owner divs, you should wrap them in other divs which give them
+                // padding/borders/margins rather than adding left padding/borders/margins directly. Currently, this
+                // happens to work, because the @owner divs have no left border/margin/padding.
+
                 ui.triangle.triangle("option", "offset", owner.offset().left + owner.width() / 2 - this.ui.triangle.offset().left);
 
-                /*
-                 * Now that all the items have been added to the DOM, let's compute the size of the selector.
-                 */
+                // Now that all the items have been added to the DOM, let's compute the size of the selector.
                 selectorWidth = selector.find(".container").outerWidth();
                 selector.find(".item").each(function(idx) {
                     var width = $(this).outerWidth(true);
@@ -230,7 +224,7 @@
                         widthAtItem += width;
                 });
 
-                /* If the contents doesn't fill the selector, pad it out width empty divs so it's centered */
+                // If the contents doesn't fill the selector, pad it out width empty divs so it's centered
                 if (totalWidth < selectorWidth) {
                     var half = (selectorWidth - totalWidth) / 2;
 
@@ -238,7 +232,7 @@
                     selector.find(".item:last" ).after( $("<div/>").css("float", "left").width(half).height(1));
                     totalWidth = selectorWidth;
                 }
-                /* Otherwise, try to center the current item as much as possible */
+                // Otherwise, try to center the current item as much as possible
                 else {
                     x = (selectorWidth - $(selector.find(".item")[selectorResult.currentIndex]).outerWidth(true)) / 2 - widthAtItem;
                     x = Math.min(0, Math.max(selectorWidth - totalWidth, x));
@@ -299,7 +293,7 @@
 
         _updateDate: function(owner, field, value, text) {
             if (field === "month") {
-                    /* From http://www.javascriptkata.com/2007/05/24/how-to-know-if-its-a-leap-year/ */
+                // From http://www.javascriptkata.com/2007/05/24/how-to-know-if-its-a-leap-year/
                 var days = [31,(((new Date(this.data.year,1,29).getDate())===29) ? 29 : 28),31,30,31,30,31,31,30,31,30,31],
                     newDay = Math.min(this.data.day, days[value]);
 
@@ -422,9 +416,8 @@
             ui.triangle.triangle({"class" : "selector-triangle-color"});
             this.data.parentInput = input;
 
-            /* We must display either time or date: if the user set both to
-             * false, we override that.
-             */
+            // We must display either time or date: if the user set both to
+            // false, we override that.
             if (!this.options.showDate && !this.options.showTime) {
                 this.options.showDate = true;
             }

@@ -6,37 +6,36 @@
  * Authors: Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * Converts a div into an indeterminate progressbar, displaying
- * as an animated "candy stripe" bar.
- *
- * Apply it by setting data-processing="spinnerbar" on an element
- * (the "target" element) or with $(...).spinnerbar().
- *
- * The spinnerbar overlays its own DOM elements on top of the target
- * element. It will fill the horizontal and vertical space occupied by
- * the element, and position the animated bar in the center of its
- * vertical and horizontal space. This makes it easy to overlay list
- * items.
- *
- * Once you have a spinnerbar, start its animation with start();
- * stop the animation with stop() (which also detaches its DOM elements).
- * NB if you start() a spinnerbar again, it will redraw itself
- * at the same position on the page.
- *
- * Options:
- *
- *     animationMsPerPixel: Integer; default = 15; the number of ms of
- *                          animation to use per pixel of vertical
- *                          height in the animated bar. Increasing this
- *                          number will make the animation of the bar
- *                          faster.
- *
- * Events:
- *
- *     stopped: Fired when stop() is called on the spinnerbar and it has been
- *              detached from the DOM
- */
+// Converts a div into an indeterminate progressbar, displaying
+// as an animated "candy stripe" bar.
+//
+// Apply it by setting data-processing="spinnerbar" on an element
+// (the "target" element) or with $(...).spinnerbar().
+//
+// The spinnerbar overlays its own DOM elements on top of the target
+// element. It will fill the horizontal and vertical space occupied by
+// the element, and position the animated bar in the center of its
+// vertical and horizontal space. This makes it easy to overlay list
+// items.
+//
+// Once you have a spinnerbar, start its animation with start();
+// stop the animation with stop() (which also detaches its DOM elements).
+// NB if you start() a spinnerbar again, it will redraw itself
+// at the same position on the page.
+//
+// Options:
+//
+//     animationMsPerPixel: Integer; default = 15; the number of ms of
+//                          animation to use per pixel of vertical
+//                          height in the animated bar. Increasing this
+//                          number will make the animation of the bar
+//                          faster.
+//
+// Events:
+//
+//     stopped: Fired when stop() is called on the spinnerbar and it has been
+//              detached from the DOM
+
 (function($, undefined) {
 
 $.widget("todons.spinnerbar", $.mobile.widget, {
