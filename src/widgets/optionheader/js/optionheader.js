@@ -6,91 +6,89 @@
  * Authors: Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * optionheader provides a collapsible toolbar for buttons and
- * segmented controls directly under the title bar. It
- * wraps a jQuery Mobile grid in a collapsible container; clicking
- * on the container, or on one of the buttons inside the container,
- * will collapse it.
- *
- * To add an option header to a page, mark up the header with a
- * data-role="optionheader" attribute, as shown in this example:
- *
- * <div data-role="header">
- *     <h1>Option header - 3 buttons example</h1>
- *     <div data-role="optionheader">
- *        <div class="ui-grid-b">
- *             <div class="ui-block-a"><a data-role="button">Previous</a></div>
- *             <div class="ui-block-b"><a data-role="button">Cancel</a></div>
- *             <div class="ui-block-c"><a data-role="button">Next</a></div>
- *        </div>
- *     </div>
- * </div>
- *
- * The optionheader can also be used inline (e.g. in a content block or
- * a widget).
- *
- * Alternatively, use $('...').optionheader() to apply programmatically.
- *
- * The grid inside the optionheader should be marked up as for
- * a standard jQuery Mobile grid. (The widget has been tested with one
- * or two rows of 2-4 columns each.)
- *
- * Note that if you use this with fixed headers, you may find that
- * expanding the option header increases the page size so that scrollbars
- * appear (jQuery Mobile's own collapsible content areas cause the
- * same issue). You can alleviate this somewhat by calling the show() method
- * on the page toolbars each time the size of the header changes.
- *
- * The widget is configurable via a data-options attribute on the same
- * div as the data-role="optionheader" attribute, e.g.
- *
- * <div data-role="header">
- *     <h1>Option header - configured</h1>
- *     <div data-role="optionheader" data-options='{"collapsed":true, "duration":1.5}'>
- *        <div class="ui-grid-b">
- *             <div class="ui-block-a"><a data-role="button">Previous</a></div>
- *             <div class="ui-block-b"><a data-role="button">Cancel</a></div>
- *             <div class="ui-block-c"><a data-role="button">Next</a></div>
- *        </div>
- *     </div>
- * </div>
- *
- * Options can also be set with $(...).optionheader('option', 'name', value).
- * However, if you do this, you'll need to call $(...).optionheader('refresh')
- * afterwards for the new values to take effect (note that optionheader()
- * can be applied multiple times to an element without side effects).
- *
- * See below for the available options.
- *
- * Theme: by default, gets a 'b' swatch; override with data-theme="X"
- * as per usual
- *
- * Options (can be set with a data-options attribute):
- *
- *   {Boolean} [showIndicator=true] Set to true (the default) to show
- *   the upward-pointing arrow indicator on top of the title bar.
- *   {Boolean} [collapseOnInit=false] Sets the appearance when the option
- *   header is first displayed; defaults to false (i.e. show the header
- *   expanded on first draw). NB setting this option later has no
- *   effect: use collapse() to collapse a widget which is already
- *   drawn.
- *   {Boolean} [expandable=true] Sets whether the header will expand
- *   in response to clicks; default = true.
- *   {Float} [duration=0.25] Duration of the expand/collapse animation.
- *
- * Methods (see below for docs):
- *
- *   toggle(options)
- *   expand(options)
- *   collapse(options)
- *
- * Events:
- *
- *   expand: Triggered when the option header is expanded
- *   collapse: Triggered when the option header is collapsed
- *
- */
+// optionheader provides a collapsible toolbar for buttons and
+// segmented controls directly under the title bar. It
+// wraps a jQuery Mobile grid in a collapsible container; clicking
+// on the container, or on one of the buttons inside the container,
+// will collapse it.
+//
+// To add an option header to a page, mark up the header with a
+// data-role="optionheader" attribute, as shown in this example:
+//
+// <div data-role="header">
+//     <h1>Option header - 3 buttons example</h1>
+//     <div data-role="optionheader">
+//        <div class="ui-grid-b">
+//             <div class="ui-block-a"><a data-role="button">Previous</a></div>
+//             <div class="ui-block-b"><a data-role="button">Cancel</a></div>
+//             <div class="ui-block-c"><a data-role="button">Next</a></div>
+//        </div>
+//     </div>
+// </div>
+//
+// The optionheader can also be used inline (e.g. in a content block or
+// a widget).
+//
+// Alternatively, use $('...').optionheader() to apply programmatically.
+//
+// The grid inside the optionheader should be marked up as for
+// a standard jQuery Mobile grid. (The widget has been tested with one
+// or two rows of 2-4 columns each.)
+//
+// Note that if you use this with fixed headers, you may find that
+// expanding the option header increases the page size so that scrollbars
+// appear (jQuery Mobile's own collapsible content areas cause the
+// same issue). You can alleviate this somewhat by calling the show() method
+// on the page toolbars each time the size of the header changes.
+//
+// The widget is configurable via a data-options attribute on the same
+// div as the data-role="optionheader" attribute, e.g.
+//
+// <div data-role="header">
+//     <h1>Option header - configured</h1>
+//     <div data-role="optionheader" data-options='{"collapsed":true, "duration":1.5}'>
+//        <div class="ui-grid-b">
+//             <div class="ui-block-a"><a data-role="button">Previous</a></div>
+//             <div class="ui-block-b"><a data-role="button">Cancel</a></div>
+//             <div class="ui-block-c"><a data-role="button">Next</a></div>
+//        </div>
+//     </div>
+// </div>
+//
+// Options can also be set with $(...).optionheader('option', 'name', value).
+// However, if you do this, you'll need to call $(...).optionheader('refresh')
+// afterwards for the new values to take effect (note that optionheader()
+// can be applied multiple times to an element without side effects).
+//
+// See below for the available options.
+//
+// Theme: by default, gets a 'b' swatch; override with data-theme="X"
+// as per usual
+//
+// Options (can be set with a data-options attribute):
+//
+//   {Boolean} [showIndicator=true] Set to true (the default) to show
+//   the upward-pointing arrow indicator on top of the title bar.
+//   {Boolean} [collapseOnInit=false] Sets the appearance when the option
+//   header is first displayed; defaults to false (i.e. show the header
+//   expanded on first draw). NB setting this option later has no
+//   effect: use collapse() to collapse a widget which is already
+//   drawn.
+//   {Boolean} [expandable=true] Sets whether the header will expand
+//   in response to clicks; default = true.
+//   {Float} [duration=0.25] Duration of the expand/collapse animation.
+//
+// Methods (see below for docs):
+//
+//   toggle(options)
+//   expand(options)
+//   collapse(options)
+//
+// Events:
+//
+//   expand: Triggered when the option header is expanded
+//   collapse: Triggered when the option header is collapsed
+//
 
 (function($, undefined) {
 
@@ -294,13 +292,11 @@ $.widget("todons.optionheader", $.mobile.widget, {
         }
     },
 
-    /**
-     * Toggle the expanded/collapsed state of the widget.
-     * {Object} [options] Configuration for the expand/collapse
-     * {Integer} [options.duration] Duration of the expand/collapse;
-     * defaults to this.options.duration
-     * {Function} options.callback Function to call after toggle completes
-     */
+    // Toggle the expanded/collapsed state of the widget.
+    // {Object} [options] Configuration for the expand/collapse
+    // {Integer} [options.duration] Duration of the expand/collapse;
+    // defaults to this.options.duration
+    // {Function} options.callback Function to call after toggle completes
     toggle: function (options) {
         if (this.isCollapsed) {
             this.expand(options);
@@ -310,16 +306,12 @@ $.widget("todons.optionheader", $.mobile.widget, {
         }
     },
 
-    /**
-     * Takes the same options as toggle()
-     */
+    // Takes the same options as toggle()
     collapse: function (options) {
         this._setHeight('5px', true, options);
     },
 
-    /**
-     * Takes the same options as toggle()
-     */
+    // Takes the same options as toggle()
     expand: function (options) {
         this._setHeight(this.expandedHeight, false, options);
     }

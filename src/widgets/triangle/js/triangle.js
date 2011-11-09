@@ -29,7 +29,7 @@ $.widget( "todons.triangle", $.mobile.widget, {
         $.mobile.todons.parseOptions(this, true);
     },
 
-    /* The widget needs to be realized for this function */
+    // The widget needs to be realized for this function/
     _setBorders: function() {
         if (this.options.location === "top") {
             this.triangle.css("border-left-width",   this.element.height());

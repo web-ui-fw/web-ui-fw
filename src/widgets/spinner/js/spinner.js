@@ -6,43 +6,41 @@
  * Authors: Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * Displays a spinner icon over the DOM element it is applied to
- * (the "target").
- *
- * A spinner doesn't have a progress value, as it is used in situations
- * where the exact amount of time a process would take is not known.
- *
- * Apply a spinner using the spinner() method or by adding a
- * data-processing="spinner" attribute to an element.
- *
- * Once you have a spinner, call the start() method on it to display it
- * and start the animation.
- *
- * The spinner uses a div directly after the element. Calling stop()
- * on a spinner detaches this element from the DOM.
- *
- * Options:
- *
- *     position: Object; positioning specifier, allowing positioning of the
- *               spinner with respect to the target element; default
- *               is to align 'right center' of the spinner
- *               with 'right center' of the target element; change by passing
- *               an object with 'my' and 'at' properties, as per the jQuery UI
- *               position() options (see http://jqueryui.com/demos/position/);
- *               e.g. to position the center of the spinner over the center
- *               of the target element, use:
- *                   position: {my:'center center', at: 'center center'}
- *               where 'my' specifies the point on the spinner, and 'at'
- *               specifies the point on the target element
- *     duration: Integer; number of seconds the spinner should take to rotate
- *               the full 360 degrees
- *
- * Events:
- *
- *     stopped: Fired when stop() is called on the spinner and it has been
- *              detached from the DOM
- */
+// Displays a spinner icon over the DOM element it is applied to
+// (the "target").
+//
+// A spinner doesn't have a progress value, as it is used in situations
+// where the exact amount of time a process would take is not known.
+//
+// Apply a spinner using the spinner() method or by adding a
+// data-processing="spinner" attribute to an element.
+//
+// Once you have a spinner, call the start() method on it to display it
+// and start the animation.
+//
+// The spinner uses a div directly after the element. Calling stop()
+// on a spinner detaches this element from the DOM.
+//
+// Options:
+//
+//     position: Object; positioning specifier, allowing positioning of the
+//               spinner with respect to the target element; default
+//               is to align 'right center' of the spinner
+//               with 'right center' of the target element; change by passing
+//               an object with 'my' and 'at' properties, as per the jQuery UI
+//               position() options (see http://jqueryui.com/demos/position/);
+//               e.g. to position the center of the spinner over the center
+//               of the target element, use:
+//                   position: {my:'center center', at: 'center center'}
+//               where 'my' specifies the point on the spinner, and 'at'
+//               specifies the point on the target element
+//     duration: Integer; number of seconds the spinner should take to rotate
+//               the full 360 degrees
+//
+// Events:
+//
+//     stopped: Fired when stop() is called on the spinner and it has been
+//              detached from the DOM
 
 (function($, undefined) {
 

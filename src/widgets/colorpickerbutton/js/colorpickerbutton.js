@@ -6,39 +6,38 @@
  * Authors: Gabriel Schulhof
  */
 
-/*
- * Displays a button which, when pressed, opens a popupwindow
- * containing hsvpicker.
- *
- * To apply, add the attribute data-role="colorpickerbutton" to a <div>
- * element inside a page. Alternatively, call colorpickerbutton() on an
- * element.
- *
- * Options:
- *
- *     color: String; color displayed on the button and the base color
- *            of the hsvpicker (see hsvpicker).
- *            initial color can be specified in html using the
- *            data-color="#ff00ff" attribute or when constructed in
- *            javascript, eg :
- *                $("#mycolorpickerbutton").colorpickerbutton({ color: "#ff00ff" });
- *            where the html might be :
- *                <div id="colorpickerbutton"></div>
- *            The color can be changed post-construction like this :
- *                $("#mycolorpickerbutton").colorpickerbutton("option", "color", "#ABCDEF");
- *            Default: "#1a8039"
- *
- *     buttonMarkup: String; markup to use for the close button on the popupwindow, eg :
- *                   $("#mycolorpickerbutton").colorpickerbutton("option","buttonMarkup",
- *                     "<a href='#' data-role='button'>ignored</a>");
- *
- *     closeText: String; the text to display on the close button on the popupwindow.
- *                The text set in the buttonMarkup will be ignored and this used instead.
- *
- * Events:
- *
- *     colorchanged: emitted when the color has been changed and the popupwindow is closed.
- */
+// Displays a button which, when pressed, opens a popupwindow
+// containing hsvpicker.
+//
+// To apply, add the attribute data-role="colorpickerbutton" to a <div>
+// element inside a page. Alternatively, call colorpickerbutton() on an
+// element.
+//
+// Options:
+//
+//     color: String; color displayed on the button and the base color
+//            of the hsvpicker (see hsvpicker).
+//            initial color can be specified in html using the
+//            data-color="#ff00ff" attribute or when constructed in
+//            javascript, eg :
+//                $("#mycolorpickerbutton").colorpickerbutton({ color: "#ff00ff" });
+//            where the html might be :
+//                <div id="colorpickerbutton"></div>
+//            The color can be changed post-construction like this :
+//                $("#mycolorpickerbutton").colorpickerbutton("option", "color", "#ABCDEF");
+//            Default: "#1a8039"
+//
+//     buttonMarkup: String; markup to use for the close button on the popupwindow, eg :
+//                   $("#mycolorpickerbutton").colorpickerbutton("option","buttonMarkup",
+//                     "<a href='#' data-role='button'>ignored</a>");
+//
+//     buttonText: String; the text to display on the close button on the popupwindow.
+//                 The text set in the buttonMarkup will be ignored and this used instead.
+//
+// Events:
+//
+//     colorchanged: emitted when the color has been changed and the popupwindow is closed.
+
 (function($, undefined) {
 
 $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
