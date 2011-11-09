@@ -59,10 +59,9 @@
 // To associate the listview with the control panel, add
 // data-listviewcontrols="..selector.." to a listview, where
 // selector selects a single element (the control panel
-// you defined). If you then call
-// listviewcontrols('option', 'mode', 'edit') on the
-// listview, the controls are made visible (this is just a proxy for
-// calling show() on the associated form containing the controls).
+// you defined). You can then call
+// listviewcontrols('option', 'mode', '<mode>') on the
+// listview to set the mode.
 //
 // Inside the listview's items, add controls to each item
 // which are only visible when in one of the modes. To do this,
@@ -100,14 +99,14 @@
 //   modesAvailable {String[]; default=['edit', 'view']}
 //     An array of the modes available for these controls.
 //
-//   mode {String}
+//   mode {String; default='view'}
 //     Current mode for the widget, which governs the visibility
 //     of the listview control panel and any elements marked
 //     with data-listviewcontrols-show-in="<mode>".
 //     Set declaratively with
 //       data-listviewcontrols-options='{"mode":"<mode>"}'.
 //
-//   controlPanelShowIn {String}
+//   controlPanelShowIn {String; default=modesAvailable[0]}
 //     The mode in which the control panel is visible; defaults to the
 //     first element of modesAvailable. Can be set declaratively
 //     on the listview controls element with
@@ -176,7 +175,7 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             return;
         }
 
-        // mark the controls and the list with a class to demonstrate
+        // mark the controls and the list with a class
         this.element.removeClass(this._listviewCssClass).addClass(this._listviewCssClass);
         this.controlPanel.removeClass(this._controlsCssClass).addClass(this._controlsCssClass);
 
