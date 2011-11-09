@@ -199,12 +199,9 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
     refresh: function () {
         var self = this,
             triggerUpdateLayout = false,
-            isVisible = null;
-
-        // we only operate on elements inside list items which aren't
-        // dividers
-        var togglableElts = this.element.find('li:not(:jqmData(role=list-divider))')
-                                        .find(':jqmData(listviewcontrols-show-in)');
+            isVisible = null,
+            showIn,
+            modalElements;
 
         // hide/show the control panel and hide/show controls inside
         // list items based on their "show-in" option
@@ -221,8 +218,13 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             triggerUpdateLayout = true;
         }
 
-        togglableElts.each(function () {
-            var showIn = $(this).jqmData('listviewcontrols-show-in');
+        // we only operate on elements inside list items which aren't dividers
+        modalElements = this.element.find('li:not(:jqmData(role=list-divider))')
+                                    .find(':jqmData(listviewcontrols-show-in)');
+
+        modalElements.each(function () {
+            showIn = $(this).jqmData('listviewcontrols-show-in');
+
             isVisible = $(this).is(':visible');
 
             if (showIn === self.options.mode) {
