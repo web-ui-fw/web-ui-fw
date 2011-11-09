@@ -48,11 +48,41 @@
 	  <div id="listviewcontrols-test-defaults-controls">
 	    <p>I am bogus</p>
 	  </div>
-	  <ul data-role="listview" id="listviewcontrols-test-defaults-target">
+	  <ul data-nstest-role="listview" id="listviewcontrols-test-defaults-target">
 	    <li>Summat</li>
 	    <li>Summat else</li>
 	  </ul>
 	</div>
+</div>
+
+<div data-nstest-role="page" id="listviewcontrols-test-attrs">
+	<div data-nstest-role="header" data-nstest-position="inline">
+		<h1>listviewcontrols test - defaults</h1>
+	</div>
+	<div data-nstest-role="content">
+	  <div id="listviewcontrols-test-attrs-controls-1">
+	    <p>I am bogus</p>
+	  </div>
+	  <ul data-nstest-role="listview"
+        data-nstest-listviewcontrols="#listviewcontrols-test-attrs-controls-1"
+        data-nstest-listviewcontrols-options='{"modesAvailable": ["foo", "bar"], "mode": "bar", "controlPanelShowIn": "foo"}'
+        id="listviewcontrols-test-attrs-target-1">
+	    <li>Summat</li>
+	    <li>Summat else</li>
+	  </ul>
+	</div>
+
+	<div id="listviewcontrols-test-attrs-controls-2"
+	     data-nstest-listviewcontrols-show-in="bat">
+    <p>I am bogus</p>
+  </div>
+  <ul data-nstest-role="listview"
+      data-nstest-listviewcontrols="#listviewcontrols-test-attrs-controls-2"
+      data-nstest-listviewcontrols-options='{"modesAvailable": ["fox", "bat"], "mode": "bat"}'
+      id="listviewcontrols-test-attrs-target-2">
+    <li>Summat</li>
+    <li>Summat else</li>
+  </ul>
 </div>
 
 </body>

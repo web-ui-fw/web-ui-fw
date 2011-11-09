@@ -98,4 +98,52 @@
         start();
     });
 
+    asyncTest("constructor uses jqm attributes correctly", function () {
+        $.testHelper.openPage('#listviewcontrols-test-attrs');
+        var $new_page = $('#listviewcontrols-test-attrs');
+        ok($new_page.hasClass('ui-page-active'));
+
+        // everything set through data-listviewcontrols-options
+        var target = $('#listviewcontrols-test-attrs-target-1');
+        var controlsSelector = '#listviewcontrols-test-attrs-controls-1';
+        var controls = $(controlsSelector);
+
+        deepEqual(target.listviewcontrols('option', 'modesAvailable'),
+              ['foo', 'bar'],
+              "Should set modesAvailable from data-listviewcontrols-options");
+
+        equal(target.listviewcontrols('option', 'mode'),
+              'bar',
+              "Should set mode from data-listviewcontrols-options");
+
+        equal(target.listviewcontrols('option', 'controlPanelShowIn'),
+              'foo',
+              "Should set controlPanelShowIn from data-listviewcontrols-options");
+
+        equal(target.hasClass('ui-listviewcontrols-listview'), true);
+        equal(controls.hasClass('ui-listviewcontrols-panel'), true);
+
+        // controlPanelShowIn set on the control panel
+        target = $('#listviewcontrols-test-attrs-target-2');
+        controlsSelector = '#listviewcontrols-test-attrs-controls-2';
+        controls = $(controlsSelector);
+
+        deepEqual(target.listviewcontrols('option', 'modesAvailable'),
+              ['fox', 'bat'],
+              "Should set modesAvailable from data-listviewcontrols-options");
+
+        equal(target.listviewcontrols('option', 'mode'),
+              'bat',
+              "Should set mode from data-listviewcontrols-options");
+
+        equal(target.listviewcontrols('option', 'controlPanelShowIn'),
+              'bat',
+              "Should set controlPanelShowIn from data-listviewcontrols-show-in on controls");
+
+        equal(target.hasClass('ui-listviewcontrols-listview'), true);
+        equal(controls.hasClass('ui-listviewcontrols-panel'), true);
+
+        start();
+    });
+
 })(jQuery);
