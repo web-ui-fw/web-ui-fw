@@ -17,8 +17,9 @@
         var check = function (testNumber, options) {
           console.log("***** test " + testNumber);
           target.listviewcontrols(options);
-          equal(target.hasClass('ui-listviewcontrols-listview'), false, 'test ' + testNumber);
+          var hasClass = target.hasClass('ui-listviewcontrols-listview');
           target.listviewcontrols('destroy');
+          equal(hasClass, false, 'test ' + testNumber);
         };
 
         ok($new_page.hasClass('ui-page-active'));
@@ -58,10 +59,8 @@
         check(24, {controlPanelSelector: 'noelement', modesAvailable: ['foo', 'bar'], mode: 'foo'});
 
         // controlPanelShowIn is bad
-        check(25, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: ''});
-        check(26, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: true});
-        check(27, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: false});
-        check(28, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: 'zoink'});
+        check(25, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: true});
+        check(26, {controlPanelSelector: controlsSelector, modesAvailable: ['foo', 'bar'], mode: 'foo', controlPanelShowIn: 'zoink'});
 
         // all options valid
         target.listviewcontrols({
