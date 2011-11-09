@@ -241,7 +241,7 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
     _setOption: function (varName, value) {
         var oldValue = this.options[varName];
 
-        if (oldValue !== value && this._validOption(varName, value)) {
+        if (oldValue !== value && this._validOption(varName, value, this.options)) {
             this.options[varName] = value;
             this.refresh();
         }
