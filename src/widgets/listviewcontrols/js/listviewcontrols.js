@@ -133,7 +133,6 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             page = this.element.closest('.ui-page'),
             controlPanelSelectorAttr = 'data-' + $.mobile.ns + 'listviewcontrols',
             controlPanelSelector = this.element.attr(controlPanelSelectorAttr),
-            controlPanelShowIn = null,
             dataOptions = this.element.jqmData('listviewcontrols-options');
 
         o.controlPanelSelector = o.controlPanelSelector || controlPanelSelector;
@@ -162,19 +161,16 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
 
         // once we have the controls element, we may need to override the
         // mode in which controls are shown
-        controlPanelShowIn = this.controlPanel.jqmData('listviewcontrols-show-in');
+        o.controlPanelShowIn = this.controlPanel.jqmData('listviewcontrols-show-in') || o.controlPanelShowIn;
 
-        if (controlPanelShowIn &&
-            !this._validOption('controlPanelShowIn', controlPanelShowIn, o)) {
+        if (!this._validOption('controlPanelShowIn', o.controlPanelShowIn, o)) {
             console.error('Could not create listviewcontrols widget due to ' +
                           'invalid show-in option on controls element');
             return;
         }
         else {
-            controlPanelShowIn = o.modesAvailable[0];
+            o.controlPanelShowIn = o.modesAvailable[0];
         }
-
-        o.controlPanelShowIn = controlPanelShowIn;
 
         // mark the controls and the list with a class to demonstrate
         this.element.removeClass(this._listviewCssClass).addClass(this._listviewCssClass);
@@ -190,20 +186,26 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
     },
 
     _validOption: function (varName, value, otherOptions) {
-        if (varName === 'mode')
-            if ($.type(value) !== 'string' ||
-                $.inArray(value, otherOptions.modesAvailable) === -1) {
-            console.error('Invalid mode for listviewcontrols widget ' +
-                          '(should be one of modesAvailable)');
-            return false;
+        var ok = false;
+
+        if (varName === 'mode') {
+            ok = ($.inArray(value, otherOptions.modesAvailable) >= 0);
+
+            if (!ok) {
+                console.error('Invalid mode for listviewcontrols widget ' +
+                              '(should be one of modesAvailable)');
+            }
         }
-        else if (varName === 'controlPanelSelector' && $.type(value) !== 'string') {
-            console.error('Invalid controlPanelSelector for ' +
-                          'listviewcontrols widget');
-            return false;
+        else if (varName === 'controlPanelSelector') {
+            ok = ($.type(value) === 'string');
+
+            if (!ok) {
+                console.error('Invalid controlPanelSelector for ' +
+                              'listviewcontrols widget');
+            }
         }
         else if (varName === 'modesAvailable') {
-            var ok = $.isArray(value) && value.length > 1;
+            ok = ($.isArray(value) && value.length > 1);
 
             if (ok) {
                 for (var i = 0; i < value.length; i++) {
@@ -217,20 +219,17 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
                 console.error('Invalid modesAvailable for listviewcontrols ' +
                               'widget (should be array of strings with at least ' +
                               '2 members)');
-                return false;
             }
         }
         else if (varName === 'controlPanelShowIn') {
-            var modesAvailable = otherOptions.modesAvailable;
-            var ok = ($.inArray(value, modesAvailable) >= 0);
+            ok = ($.inArray(value, otherOptions.modesAvailable) >= 0);
 
             if (!ok) {
                 console.error('Invalid controlPanelShowIn mode');
-                return false;
             }
         }
 
-        return true;
+        return ok;
     },
 
     _setOption: function (varName, value) {
