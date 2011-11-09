@@ -6,10 +6,7 @@
 
     module("listviewcontrols");
 
-    test("constructor validates options when applied programmatically", function () {
-        $.testHelper.openPage('#listviewcontrols-test-validates');
-
-        var $new_page = $('#listviewcontrols-test-validates');
+    asyncTest("constructor validates options when applied programmatically", function () {
         var target = $('#listviewcontrols-test-validates-target');
         var controlsSelector = '#listviewcontrols-test-validates-controls';
         var controls = $(controlsSelector);
@@ -21,8 +18,6 @@
           target.listviewcontrols('destroy');
           equal(hasClass, false, 'test ' + testNumber);
         };
-
-        ok($new_page.hasClass('ui-page-active'));
 
         // no options
         check(1);
@@ -71,6 +66,33 @@
         });
         equal(target.hasClass('ui-listviewcontrols-listview'), true);
         equal(controls.hasClass('ui-listviewcontrols-panel'), true);
+        target.listviewcontrols('destroy');
+
+        start();
+    });
+
+    asyncTest("constructor supplies defaults correctly", function () {
+        var target = $('#listviewcontrols-test-defaults-target');
+        var controlsSelector = '#listviewcontrols-test-defaults-controls';
+        var controls = $(controlsSelector);
+
+        target.listviewcontrols({controlPanelSelector: controlsSelector});
+
+        deepEqual(target.listviewcontrols('option', 'modesAvailable'),
+              ['edit', 'view'],
+              "Should default to 'edit' and 'view' as modesAvailable");
+
+        equal(target.listviewcontrols('option', 'mode'),
+              'view',
+              "Should default to 'view' as mode");
+
+        equal(target.listviewcontrols('option', 'controlPanelShowIn'),
+              'edit',
+              "Should default to showing control panel in 'edit' mode");
+
+        equal(target.hasClass('ui-listviewcontrols-listview'), true);
+        equal(controls.hasClass('ui-listviewcontrols-panel'), true);
+
         target.listviewcontrols('destroy');
 
         start();
