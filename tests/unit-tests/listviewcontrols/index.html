@@ -57,7 +57,7 @@
 
 <div data-nstest-role="page" id="listviewcontrols-test-attrs">
 	<div data-nstest-role="header" data-nstest-position="inline">
-		<h1>listviewcontrols test - defaults</h1>
+		<h1>listviewcontrols test - attributes</h1>
 	</div>
 	<div data-nstest-role="content">
 	  <div id="listviewcontrols-test-attrs-controls-1">
@@ -83,6 +83,73 @@
     <li>Summat</li>
     <li>Summat else</li>
   </ul>
+</div>
+
+<div data-nstest-role="page" id="listviewcontrols-test-show">
+	<div data-nstest-role="header" data-nstest-position="inline">
+		<h1>listviewcontrols test - show</h1>
+	</div>
+	<div data-nstest-role="content">
+	  <div id="listviewcontrols-test-show-controls">
+	    <p>I am bogus</p>
+	  </div>
+
+	  <ul data-nstest-role="listview"
+	      data-nstest-listviewcontrols="#listviewcontrols-test-show-controls"
+	      id="listviewcontrols-test-show-target">
+	    <li>
+	        <span class="listviewcontrols-test-show-always-visible">A_a1</span>
+	        <span class="listviewcontrols-test-show-visible-in-edit"
+	              data-nstest-listviewcontrols-show-in="edit">A_e1</span>
+	        <span class="listviewcontrols-test-show-visible-in-view"
+	              data-nstest-listviewcontrols-show-in="view">A_v1</span>
+	        <span class="listviewcontrols-test-show-visible-in-edit"
+	              data-nstest-listviewcontrols-show-in="edit">A_e2</span>
+	        <span class="listviewcontrols-test-show-visible-in-view"
+	              data-nstest-listviewcontrols-show-in="view">A_v2</span>
+	        <span class="listviewcontrols-test-show-visible-in-edit"
+	              data-nstest-listviewcontrols-show-in="edit">A_e3</span>
+	        <span class="listviewcontrols-test-show-visible-in-view"
+	              data-nstest-listviewcontrols-show-in="view">A_v3</span>
+	        <span class="listviewcontrols-test-show-always-visible">A_a2</span>
+	    </li>
+	    <li>
+	        <span class="listviewcontrols-test-show-always-visible">B_a1</span>
+	        <span class="listviewcontrols-test-show-visible-in-edit"
+	              data-nstest-listviewcontrols-show-in="edit">B_e1</span>
+	        <span class="listviewcontrols-test-show-visible-in-edit"
+	              data-nstest-listviewcontrols-show-in="edit">B_e2</span>
+	        <span class="listviewcontrols-test-show-visible-in-view"
+	              data-nstest-listviewcontrols-show-in="view">B_v1</span>
+	        <span class="listviewcontrols-test-show-visible-in-view"
+	              data-nstest-listviewcontrols-show-in="view">B_v2</span>
+	    </li>
+	  </ul>
+	</div>
+</div>
+
+<div data-nstest-role="page" id="listviewcontrols-test-methods">
+	<div data-nstest-role="header" data-nstest-position="inline">
+		<h1>listviewcontrols test - methods</h1>
+	</div>
+	<div data-nstest-role="content">
+	  <div id="listviewcontrols-test-methods-controls">
+	    <p>I am bogus</p>
+	  </div>
+	  <ul data-nstest-role="listview"
+	      data-nstest-filter="true"
+	      data-nstest-listviewcontrols="#listviewcontrols-test-methods-controls"
+	      id="listviewcontrols-test-methods-target">
+	    <li data-nstest-role="list-divider">A</li>
+	    <li>Abraham</li>
+	    <li>Andy</li>
+	    <li data-nstest-role="list-divider">B</li>
+	    <li>Barry</li>
+	    <li data-nstest-role="list-divider">C</li>
+	    <li>Carla</li>
+	    <li>Carrie</li>
+	  </ul>
+	</div>
 </div>
 
 </body>

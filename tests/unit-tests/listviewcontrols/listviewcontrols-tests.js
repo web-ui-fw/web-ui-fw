@@ -109,7 +109,7 @@
     asyncTest("constructor uses jqm attributes correctly", function () {
 
         $.testHelper.pageSequence([
-		        function () {
+            function () {
                 $.testHelper.openPage('#listviewcontrols-test-attrs');
             },
 
@@ -156,6 +156,120 @@
 
                 equal(target.hasClass('ui-listviewcontrols-listview'), true);
                 equal(controls.hasClass('ui-listviewcontrols-panel'), true);
+
+                start();
+            }
+        ]);
+    });
+
+    asyncTest("control panel and list item elements are shown in appropriate mode", function () {
+        $.testHelper.pageSequence([
+            function () {
+                $.testHelper.openPage('#listviewcontrols-test-show');
+            },
+
+            function () {
+                var $new_page = $('#listviewcontrols-test-show');
+                ok($new_page.hasClass('ui-page-active'));
+
+                var target = $('#listviewcontrols-test-show-target');
+                var controlsSelector = '#listviewcontrols-test-show-controls';
+                var controls = $(controlsSelector);
+
+                var alwaysVisibleA = 'li:first span.listviewcontrols-test-show-always-visible';
+                var alwaysVisibleB = 'li:nth-child(2) span.listviewcontrols-test-show-always-visible';
+                var shownInEditA = 'li:first span.listviewcontrols-test-show-visible-in-edit';
+                var shownInEditB = 'li:nth-child(2) span.listviewcontrols-test-show-visible-in-edit';
+                var shownInViewA = 'li:first span.listviewcontrols-test-show-visible-in-view';
+                var shownInViewB = 'li:nth-child(2) span.listviewcontrols-test-show-visible-in-view';
+
+                var allVisible = function (selector) {
+                    var all = target.find(selector);
+                    var visible = all.filter(':visible');
+                    equal(visible.length, all.length);
+                    ok(visible.length > 0);
+                    ok(all.length > 0);
+                };
+
+                var allHidden = function (selector) {
+                    var all = target.find(selector);
+                    var visible = target.find(selector).filter(':visible');
+                    equal(visible.length, 0);
+                    ok(all.length > 0);
+                };
+
+                // --- initial mode should be view
+                equal(target.listviewcontrols('option', 'mode'),
+                      'view',
+                      "Initial mode should be view");
+
+                // controls should be hidden
+                ok(!controls.is(':visible'));
+
+                // target should be always visible
+                ok(target.is(':visible'));
+
+                // show-in="edit" elements should be hidden
+                allHidden(shownInEditA);
+                allHidden(shownInEditB);
+
+                // show-in="view" elements should be visible
+                allVisible(shownInViewA);
+                allVisible(shownInViewB);
+
+                // other elements should always be visible
+                allVisible(alwaysVisibleA);
+                allVisible(alwaysVisibleB);
+
+                // --- switch mode to edit
+                target.listviewcontrols('option', 'mode', 'edit');
+
+                // controls should be visible
+                ok(controls.is(':visible'));
+
+                // target should be always visible
+                ok(target.is(':visible'));
+
+                // show-in="edit" elements should be visible
+                allVisible(shownInEditA);
+                allVisible(shownInEditB);
+
+                // show-in="view" elements should be hidden
+                allHidden(shownInViewA);
+                allHidden(shownInViewB);
+
+                // other elements should always be visible
+                allVisible(alwaysVisibleA);
+                allVisible(alwaysVisibleB);
+
+                start();
+            }
+        ]);
+    });
+
+    asyncTest("visibleListItems() returns correct counts", function () {
+        $.testHelper.pageSequence([
+            function () {
+                $.testHelper.openPage('#listviewcontrols-test-methods');
+            },
+
+            function () {
+                var $new_page = $('#listviewcontrols-test-methods');
+                ok($new_page.hasClass('ui-page-active'));
+
+                var target = $('#listviewcontrols-test-methods-target');
+
+                equal(target.listviewcontrols('visibleListItems').length,
+                      5,
+                      "Should be 5 visible list items (excluding dividers)");
+
+                // filter the list and count again
+                $new_page.find('input').val('ca');
+                $new_page.find('input').trigger('change');
+
+                equal(target.listviewcontrols('visibleListItems').length,
+                      2,
+                      "Should be 2 visible list items (excluding dividers) after filtering");
 
                 start();
             }
