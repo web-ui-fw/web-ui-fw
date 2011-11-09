@@ -103,7 +103,8 @@ docs: init
 		for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.js' | sort`; do \
 			docco $$f >-; \
 		done; \
-	done
+	done; \
+	cp docs/docco.custom.css docs/docco.css
 
 
 themes: widget_styling
