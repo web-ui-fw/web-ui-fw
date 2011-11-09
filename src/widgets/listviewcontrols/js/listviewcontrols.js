@@ -175,6 +175,9 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
             return;
         }
 
+        // done setting options
+        this.options = o;
+
         // mark the controls and the list with a class
         this.element.removeClass(this._listviewCssClass).addClass(this._listviewCssClass);
         this.controlPanel.removeClass(this._controlsCssClass).addClass(this._controlsCssClass);
