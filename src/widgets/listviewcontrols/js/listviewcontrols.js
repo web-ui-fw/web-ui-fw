@@ -26,15 +26,45 @@
 // the default, use a data-listviewcontrols-show-in="<mode>" attribute
 // on the control panel element.
 //
+// Example usage (using the default 'edit' and 'view' modes):
+//
+// <!-- this is the controls element, displayed in 'edit' mode by default -->
+// <form id="listviewcontrols-control-panel">
+//   <fieldset data-role="controlgroup">
+//     <input type="checkbox" id="listviewcontrols-demo-checkbox-uber" />
+//     <label for="listviewcontrols-demo-checkbox-uber">Select all</label>
+//   </fieldset>
+// </form>
+//
+// <!-- this is the list associated with the controls -->
+// <ul data-role="listview" data-listviewcontrols="#listviewcontrols-control-panel">
+//
+//   <li>
+//
+//     <!-- this element is only visible in 'edit' mode -->
+//     <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+//       <input type="checkbox" id="listviewcontrols-demo-checkbox-1" />
+//       <label for="listviewcontrols-demo-checkbox-1">Greg</label>
+//     </fieldset>
+//
+//     <!-- this element is only visible in 'view' mode -->
+//     <span data-listviewcontrols-show-in="view">Greg</span>
+//
+//   </li>
+//
+//   ... more li elements marked up the same way ...
+//
+// </ul>
+//
 // To associate the listview with the control panel, add
 // data-listviewcontrols="..selector.." to a listview, where
-// selector selects a single form element (the control panel
+// selector selects a single element (the control panel
 // you defined). If you then call
 // listviewcontrols('option', 'mode', 'edit') on the
 // listview, the controls are made visible (this is just a proxy for
 // calling show() on the associated form containing the controls).
 //
-// Inside the listview's items, you can add controls to each item
+// Inside the listview's items, add controls to each item
 // which are only visible when in one of the modes. To do this,
 // add form elements (e.g. checkboxes) to the items as you see fit. Then,
 // mark each form element with data-listviewcontrols-show-in="<mode>".
