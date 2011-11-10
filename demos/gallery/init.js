@@ -52,17 +52,16 @@ $(document).bind("pagecreate", function () {
     });
 
     $('#processingbar-demo').bind('pageshow', function () {
-        $(this).find(':jqmData(role="processingbar")').each(function (index, element) {
+        $(this).find(':jqmData(role="processingbar")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
+            var elt = $(this);
 
-            $(element).parent().text("")
-
-            $(element).bind('stopped', function () {
-                $(element).parent().text("I am done!");
+            elt.bind('stopped', function () {
+                elt.html("I am done!");
             });
 
             setTimeout(function () {
-                $(element).processingbar('destroy');
+                elt.processingbar('destroy');
             }, randomWait);
         });
     });
