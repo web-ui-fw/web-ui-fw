@@ -23,8 +23,8 @@
  *
  * Options:
  *
- *    src: String; path to the src for the image; initial value can
- *                 be set using data-src on the img element.
+ *    source: String; path to the src for the image; initial value can
+ *                    be set using data-src on the img element.
  *    noContent: String; path to an image to show when an error occurs
  *                while loading the image.
  *
