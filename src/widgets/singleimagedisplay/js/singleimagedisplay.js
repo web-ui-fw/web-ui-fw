@@ -47,14 +47,21 @@
 
         _setImgSrc: function () {
             if (!this.usingNoContents) {
+                var self = this;
                 // if there is a source image, show it
                 this.image.attr('src', this.options.source);
+                this.image.error( function() { self._imageErrorHandler() } );
                 this.cover.hide();
                 this.imageParent.append(this.image);
                 this.image.show();
             } else {
                 this._showNoContents();
             }
+        },
+
+        _imageErrorHandler: function () {
+            this.usingNoContents = true;
+            this._showNoContents();
         },
 
         _showNoContents: function () {
@@ -79,7 +86,6 @@
         },
 
         _create: function() {
-            console.log("MAXMAXMAX/_create");
             var self = this;
 
             // make a copy of image element
@@ -100,18 +106,13 @@
 
             // when the image is loaded, resize it
             this.image.load(function () {
-                console.log("MAXMAXMAX/load");
                 self.usingNoContents = false;
                 self.resize( self.image );
                 self.image.show();
             });
 
             // when the image fails to load, substitute noContent
-            this.image.error(function () {
-                console.log("MAXMAXMAX/error");
-                self.usingNoContents = true;
-                self._showNoContents();
-            });
+            this.image.error( function() { self._imageErrorHandler() } );
 
             // set the src for the image
             this._setImgSrc();
@@ -126,14 +127,15 @@
             // note that this widget is created on pagecreate
             var page = this.element.closest('.ui-page');
             if (page) {
-                //page.bind('pageshow', function() {
-                    //if (!self.usingNoContents) {
-                        //self.resize( self.image );
-                        //self.image.show();
-                    //} else {
-                        //self.resize( self.cover );
-                    //}
-                //});
+                page.bind('pageshow', function() {
+                    console.log("MAXMAXMAX/pageshow");
+                    if (!self.usingNoContents) {
+                        self.resize( self.image );
+                        self.image.show();
+                    } else {
+                        self.resize( self.cover );
+                    }
+                });
             }
 
             // when the window is resized, resize the image
@@ -148,11 +150,10 @@
         },
 
         resize: function(elementToResize) {
-            console.log('MAXMAXMAX/resize');
             var finalWidth  = 0;
             var finalHeight = 0;
 
-            var measuringImg = $('<img>')
+            var measuringImg = $('<img/>')
                 .css( 'width', '0px' )
                 .css( 'height', '0px' )
                 .css( 'opacity', '0' )
@@ -181,7 +182,6 @@
             measuringImg.remove();
 
             var insideContainer = (measuringImageWidth>0) || (measuringImageHeight>0);
-            console.log('MAXMAXMAX/insideContainer/'+insideContainer);
 
             if (insideContainer) {
                 finalWidth = measuringImageWidth;
@@ -204,7 +204,6 @@
         },
 
         _setOption: function(key, value) {
-            console.log("MAXMAXMAX/setoption/"+key+"/"+value);
             if (value == this.options[key]) {
                 return;
             }
@@ -225,59 +224,10 @@
             }
         },
 
-        reset: function() {
-            // put the original image element back
-        }
-
-//        beingDestroyed: false,
-//	    destroy: function() {
-//            if (!this.beingDestroyed) {
-//                console.log("MAXMAXMAX/destroy");
-//                this.beingDestroyed = true;
-//                // reset options back to defaults
-//		        $.extend( this.options, this.defaults );
-//
-//                // remove working elements
-//                if (this.image) {
-//                    this.image.remove();
-//                }
-//                if (this.cover) {
-//                    this.cover.remove();
-//                }
-//
-//                // restore original image
-//                this.imageParent.append( this.original.image );
-//                if (this.original.image) {
-//                    this.original.image.show();
-//                }
-//
-//                // reset variables back to null
-//                this.page = null;
-//                this.image = null;
-//                this.imageParent = null;
-//                this.cover = null;
-//
-//                // reset original to null
-//                this.original.image = null;
-//
-//		        // call the base destroy function
-//		        //$.Widget.prototype.destroy.call( this );
-//                this.beingDestroyed=false;
-//            }
-//	    }
-//
     });
 
     // initialise singleimagedisplays with our own singleimagedisplay
-//    $(document).bind("pagehide", function(e) {
-//        console.log("MAXMAXMAX/pagehide");
-//        $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
-//        .singleimagedisplay( 'reset' );
-//    });
-
-    // initialise singleimagedisplays with our own singleimagedisplay
     $(document).bind("pagecreate", function(e) {
-        console.log("MAXMAXMAX/pagecreate");
         $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
         .singleimagedisplay();
     });

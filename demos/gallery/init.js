@@ -304,8 +304,8 @@ $(document).bind("pageinit", function() {
         });
 
         // this sets the "broken" src image for #broken
-        //$(this).find('#broken:jqmData(role=singleimagedisplay)')
-        //.singleimagedisplay('option','noContent','images/noContent-2.png');
+        $(this).find('#custombroken:jqmData(role=singleimagedisplay)')
+        .singleimagedisplay('option','noContent','images/noContent-2.png');
     });
 });
 
