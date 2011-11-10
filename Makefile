@@ -96,12 +96,12 @@ widgets: init
 
 docs: init
 	# Building documentation...
-	@@hash docco 2>&- || (echo "docco not found. Please see README."; exit 1); \
+	@@hash docco 2>&1 /dev/null || (echo "docco not found. Please see README."; exit 1); \
 	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	while read REPLY; do \
 		echo "	# Building docs for widget $$REPLY"; \
 		for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.js' | sort`; do \
-			docco $$f >-; \
+			docco $$f > /dev/null; \
 		done; \
 	done; \
 	cp docs/docco.custom.css docs/docco.css
