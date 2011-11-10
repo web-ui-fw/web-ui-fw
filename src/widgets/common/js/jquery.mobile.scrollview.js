@@ -340,16 +340,17 @@ jQuery.widget( "mobile.scrollview", jQuery.mobile.widget, {
 		// XXX: It does affect links, and other input elements, if they
 		//      occur inside a scrollview; so make sure the event
 		//      occurred on something other than an input element or a link
-		//      before preventing its default and stopping its propagation
+		//      before preventing its default
 		if (this.options.eventType == "mouse" || this.options.delayedClickEnabled) {
-			var shouldBlockEvent = !($(e.target).is('a, :input') ||
-                               $(e.target).parents('a, :input').length > 0);
+			var isLinkOrInput = $(e.target).is('a, :input');
+			var isInsideLinkOrInput = $(e.target).parents('a, :input').length > 0;
+			var shouldBlockEvent = !(isLinkOrInput || isInsideLinkOrInput);
 
 			if (shouldBlockEvent) {
 				e.preventDefault();
-				e.stopPropagation();
 			}
 		}
+		e.stopPropagation();
 
 	},
 
