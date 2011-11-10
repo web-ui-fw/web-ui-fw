@@ -7,7 +7,7 @@ process_fname() # $1 = file name
 	FNAME="$1"
   cat ${FNAME} | \
     sed -rn '1h;1!H;${;g;s/(\$\.mobile\.todons\.loadPrototype[^"]*)("[^"]*")/\1'$'\1''\2'$'\1''/g;p;}' | \
-    sed -rn '1h;1!H;${;g;s!(/\*|\*/)!'$'\1''\1'$'\1''!g;p;}' | \
+    sed -rn '1h;1!H;${;g;s!(/\*|\*/|//)!'$'\1''\1'$'\1''!g;p;}' | \
 		awk '
 			{
 				n = split($0, ar, /\001/);
@@ -21,6 +21,11 @@ process_fname() # $1 = file name
 						if (ar[Nix] == "*/") {
 							inComment = 0;
 							printf("%s", ar[Nix]);
+						}
+						else
+						if (ar[Nix] == "//") {
+							for (; Nix <= n ; Nix++)
+								printf("%s", ar[Nix]);
 						}
 						else
 						if (1 == inComment || Nix % 2)
