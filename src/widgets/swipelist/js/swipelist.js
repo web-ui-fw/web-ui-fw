@@ -16,21 +16,21 @@
 // To create a swipelist, you need markup like this:
 //
 // <ul data-role="swipelist">
-       <li>
-           <div class="ui-grid-b">
-               <div class="ui-block-a">
-                   <a href="#" data-role="button" data-theme="a">Twitter</a>
-               </div>
-               <div class="ui-block-b">
-                   <a href="#" data-role="button" data-theme="b">FaceBook</a>
-               </div>
-               <div class="ui-block-c">
-                   <a href="#" data-role="button" data-theme="c">Google+</a>
-               </div>
-           </div>
-           <div data-role="swipelist-item-cover">Nigel</div>
-       </li>
-       ...
+//      <li>
+//          <div class="ui-grid-b">
+//              <div class="ui-block-a">
+//                  <a href="#" data-role="button" data-theme="a">Twitter</a>
+//              </div>
+//              <div class="ui-block-b">
+//                  <a href="#" data-role="button" data-theme="b">FaceBook</a>
+//              </div>
+//              <div class="ui-block-c">
+//                  <a href="#" data-role="button" data-theme="c">Google+</a>
+//              </div>
+//          </div>
+//          <div data-role="swipelist-item-cover">Nigel</div>
+//      </li>
+//      ...
 // </ul>
 //
 // In this case, the cover is over a grid of buttons;
