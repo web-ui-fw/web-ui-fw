@@ -1,5 +1,4 @@
 .ui-swipelist-item {
-    z-index: 99;
     -webkit-user-select: none;
     -user-select: none;
 }
@@ -10,6 +9,7 @@
 }
 
 .ui-swipelist-item-cover {
+    z-index: 99;
     position: absolute;
     border: none;
     top: 0%;
@@ -19,10 +19,8 @@
     z-index: 100;
 }
 
-.ui-swipelist-item-cover-text {
-    text-align: center;
-    position: relative;
-    top: 50%;
-    font-size: 1em;
-    margin-top: -0.5em;
+.ui-swipelist-item-cover-inner * {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -user-select: none;
 }
