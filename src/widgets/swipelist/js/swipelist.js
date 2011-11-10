@@ -39,13 +39,20 @@
 //
 // Note the use of a separate div, parented by the li element, marked
 // up with data-role="swipelist-item-cover". This div will usually
-// contain text (and has styling to cope with this). If you want
-// other elements in your swipelist covers, you may need to style
-// them yourself.
+// contain text. If you want other elements in your swipelist covers,
+// you may need to style them yourself. Because the covers aren't
+// technically list items, you may need to do some work to make them
+// look right.
+//
+// WARNING: This doesn't work well inside a scrollview widget, as
+// the touch events currently interfere with each other badly (e.g.
+// a swipe will work but cause a scroll as well).
 //
 // Theme: default is to use the parent theme (if set), or 'c' if not;
 // can be set explicitly with data-theme="X" or via
 // swipelist('option', 'theme', 'X') (though only at create time).
+// If list items are themed individually, the cover will pick up the
+// theme of the list item which is its parent.
 (function ($) {
 
 $.widget("todons.swipelist", $.mobile.widget, {
