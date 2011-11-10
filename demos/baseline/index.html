@@ -38,8 +38,8 @@
     <!-- here come the widgets... -->
     <script src="../../src/widgets/stupid/js/stupid.js"></script>
 
-    <script src="../../src/widgets/spinnerbar/js/spinnerbar.js"></script>
-    <link rel="stylesheet" href="../../src/widgets/spinnerbar/less/spinnerbar.less.css"/>
+    <script src="../../src/widgets/processingbar/js/processingbar.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/processingbar/less/processingbar.less.css"/>
 
     <script src="../../src/widgets/processingcircle/js/processingcircle.js"></script>
     <link rel="stylesheet" href="../../src/widgets/processingcircle/less/processingcircle.less.css"/>
@@ -87,9 +87,9 @@
         </div>
 
         <div>
-            <h2>spinnerbar</h2>
+            <h2>processingbar</h2>
             <p>Should disappear after 10 seconds.</p>
-            <div id="myspinnerbar" data-role="spinnerbar"></div>
+            <div id="myprocessingbar" data-role="processingbar"></div>
         </div>
 
         <div>
@@ -1169,7 +1169,7 @@ var progressbarInterval = null;
 $('#baseline').bind('pageshow', function () {
     var page = $(this);
 
-    var myspinnerbar = page.find('#myspinnerbar');
+    var myprocessingbar = page.find('#myprocessingbar');
 
     var myprocessingcircle = page.find('#myprocessingcircle');
 
@@ -1177,8 +1177,8 @@ $('#baseline').bind('pageshow', function () {
     var progress = myprogressbar.progressbar('value');
 
     setTimeout(function () {
-        myspinnerbar.spinnerbar('destroy');
         myprocessingcircle.processingcircle('destroy');
+        myprocessingbar.processingbar('destroy');
     }, 10000);
 
     if (!progressbarRunning) {

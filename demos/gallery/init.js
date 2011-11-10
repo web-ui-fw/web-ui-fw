@@ -51,20 +51,18 @@ $(document).bind("pagecreate", function () {
         });
     });
 
-    $('#spinnerbar-demo').bind('pageshow', function () {
-        $(this).find(':jqmData(processing="spinnerbar")').each(function (index, element) {
+    $('#processingbar-demo').bind('pageshow', function () {
+        $(this).find(':jqmData(role="processingbar")').each(function (index, element) {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
 
-            $(element).text("")
+            $(element).parent().text("")
 
             $(element).bind('stopped', function () {
-                $(element).text("I am done!");
+                $(element).parent().text("I am done!");
             });
 
-            $(element).spinnerbar('start');
-
             setTimeout(function () {
-                $(element).spinnerbar('stop');
+                $(element).processingbar('destroy');
             }, randomWait);
         });
     });

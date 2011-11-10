@@ -9,16 +9,16 @@
 // Converts a div into an indeterminate progressbar, displaying
 // as an animated "candy stripe" bar.
 //
-// Apply it by setting data-role="spinnerbar" on an element
-// (the "target" element) or with $(...).spinnerbar().
+// Apply it by setting data-role="processingbar" on an element
+// (the "target" element) or with $(...).processingbar().
 //
-// The spinnerbar overlays its own DOM elements on top of the target
+// The processingbar overlays its own DOM elements on top of the target
 // element. It will fill the horizontal and vertical space occupied by
 // the element, and position the animated bar in the center of its
 // vertical and horizontal space. This makes it easy to overlay list
 // items.
 //
-// Once you have a spinnerbar, stop the animation with stop().
+// Once you have a processingbar, stop the animation with stop().
 // Calling refresh() will start the animation again. destroy() will
 // remove the DOM elements for the bar (but leave behind the original
 // div).
@@ -33,14 +33,13 @@
 //
 // Events:
 //
-//     stopped: Fired when stop() is called on the spinnerbar and it has been
-//              detached from the DOM
+//     stopped: Fired when stop() is called on the processingbar
 
 (function($, undefined) {
 
-$.widget("todons.spinnerbar", $.mobile.widget, {
+$.widget("todons.processingbar", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(role='spinnerbar')",
+        initSelector: ":jqmData(role='processingbar')",
         animationMsPerPixel: 15,
         theme: 'b'
     },
@@ -54,21 +53,21 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
 
         var theme = this.element.jqmData('theme') || this.options.theme;
 
-        this.html = $('<div class="ui-spinnerbar-container">' +
-                      '<div class="ui-spinnerbar-clip">' +
-                      '<div class="ui-spinnerbar-bar" />' +
+        this.html = $('<div class="ui-processingbar-container">' +
+                      '<div class="ui-processingbar-clip">' +
+                      '<div class="ui-processingbar-bar" />' +
                       '</div>' +
                       '</div>' +
-                      '<span class="ui-spinnerbar-swatch"></span>');
+                      '<span class="ui-processingbar-swatch"></span>');
 
         this.element.append(this.html);
 
-        this.bar = this.element.find('.ui-spinnerbar-bar');
+        this.bar = this.element.find('.ui-processingbar-bar');
 
         // massive hack to get theme colours (we can't apply a theme
         // class direct to the bar, as we need to create the
         // barbershop pole effect)
-        var swatch = this.element.find('.ui-spinnerbar-swatch');
+        var swatch = this.element.find('.ui-processingbar-swatch');
         swatch.addClass('ui-bar-' + theme);
         var bgcolor = swatch.css('background-color');
         swatch.remove();
@@ -79,12 +78,12 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
                       "right bottom," +
                       "color-stop(0%,  rgba(255,255,255,1.0))," +
                       "color-stop(25%, rgba(255,255,255,1.0))," +
-                      "color-stop(25%, spinnerbarBarBgColor)," +
-                      "color-stop(50%, spinnerbarBarBgColor)," +
+                      "color-stop(25%, processingbarBarBgColor)," +
+                      "color-stop(50%, processingbarBarBgColor)," +
                       "color-stop(50%, rgba(255,255,255,1.0))," +
                       "color-stop(75%, rgba(255,255,255,1.0))," +
-                      "color-stop(75%, spinnerbarBarBgColor))";
-            css = css.replace(/spinnerbarBarBgColor/g, bgcolor);
+                      "color-stop(75%, processingbarBarBgColor))";
+            css = css.replace(/processingbarBarBgColor/g, bgcolor);
             this.bar.css('background', css);
         }
         // end massive hack
@@ -102,7 +101,7 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
         }
     },
 
-    // draw the spinnerbar
+    // draw the processingbar
     refresh: function () {
         this.stop();
 
@@ -157,9 +156,9 @@ $.widget("todons.spinnerbar", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate create", function (e) {
-    $($.todons.spinnerbar.prototype.options.initSelector, e.target)
+    $($.todons.processingbar.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
-    .spinnerbar();
+    .processingbar();
 });
 
 })(jQuery);
