@@ -15,23 +15,25 @@
 //
 // To create a swipelist, you need markup like this:
 //
-// <ul data-role="swipelist">
-//      <li>
-//          <div class="ui-grid-b">
-//              <div class="ui-block-a">
-//                  <a href="#" data-role="button" data-theme="a">Twitter</a>
-//              </div>
-//              <div class="ui-block-b">
-//                  <a href="#" data-role="button" data-theme="b">FaceBook</a>
-//              </div>
-//              <div class="ui-block-c">
-//                  <a href="#" data-role="button" data-theme="c">Google+</a>
-//              </div>
-//          </div>
-//          <div data-role="swipelist-item-cover">Nigel</div>
-//      </li>
-//      ...
-// </ul>
+// <pre>
+// &lt;ul data-role="swipelist"&gt;<br/>
+//     &lt;li&gt;<br/>
+//         &lt;div class="ui-grid-b"&gt;<br/>
+//             &lt;div class="ui-block-a"&gt;<br/>
+//                 &lt;a href="#" data-role="button" data-theme="a"&gt;Twitter&lt;/a&gt;<br/>
+//             &lt;/div&gt;<br/>
+//             &lt;div class="ui-block-b"&gt;<br/>
+//                 &lt;a href="#" data-role="button" data-theme="b"&gt;FaceBook&lt;/a&gt;<br/>
+//             &lt;/div&gt;<br/>
+//             &lt;div class="ui-block-c"&gt;<br/>
+//                 &lt;a href="#" data-role="button" data-theme="c"&gt;Google+&lt;/a&gt;<br/>
+//             &lt;/div&gt;<br/>
+//         &lt;/div&gt;<br/>
+//         &lt;div data-role="swipelist-item-cover"&gt;Nigel&lt;/div&gt;<br/>
+//     &lt;/li&gt;<br/>
+//     ...<br/>
+// &lt;/ul&gt;
+// </pre>
 //
 // In this case, the cover is over a grid of buttons;
 // but it is should also be possible to use other types of markup under the
