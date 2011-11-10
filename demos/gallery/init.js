@@ -273,6 +273,7 @@ $(document).bind("pagecreate", function () {
         listview.find('input[type="checkbox"]')
                 .unbind('change', clearUberCheck)
                 .bind('change', clearUberCheck);
+    });
 
     // this tests that refreshing a swipelist multiple times only
     // causes the event handlers to be bound once
