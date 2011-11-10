@@ -7,4 +7,5 @@ build
 *~
 *.orig
 tests/coverage/instrumented
-docs/*
+docs/*.html
+docs/docco.css
