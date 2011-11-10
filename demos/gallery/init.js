@@ -219,6 +219,61 @@ $(document).bind("pagecreate", function () {
             console.log('dividers were updated on refreshable list');
         });
     });
+
+    $("#listviewcontrols-demo").bind("pageshow", function () {
+        var listview = $(this).find('#listviewcontrols-demo-listview');
+        var toggler = $(this).find('#listviewcontrols-demo-toggler');
+        var uberCheck = $(this).find('#listviewcontrols-demo-checkbox-uber');
+        var searchFilter = $(this).find('input:jqmData(type=search)');
+        var clearUberCheck = null;
+
+        toggler.unbind("change").bind("change", function () {
+            var value = toggler.val();
+            listview.listviewcontrols('option', 'mode', value);
+        });
+
+        uberCheck.unbind("change").bind("change", function () {
+            var checked = uberCheck.is(':checked');
+
+            var listItems = listview.listviewcontrols('visibleListItems');
+
+            listItems.each(function () {
+                var checkbox = $(this).find('input[type="checkbox"]');
+
+                if (checked) {
+                    checkbox.attr('checked', 'checked');
+                }
+                else {
+                    checkbox.removeAttr('checked');
+                }
+
+                checkbox.checkboxradio('refresh');
+            });
+        });
+
+        // when a search filter is applied, uncheck the uberCheck
+        // if _any_ of the remaining items displayed are unchecked
+        clearUberCheck = function () {
+            var listItems = listview.listviewcontrols('visibleListItems');
+            var unchecked = listItems.has('input[type="checkbox"]:not(:checked)');
+            if (unchecked.length > 0) {
+                uberCheck.removeAttr('checked');
+                uberCheck.checkboxradio('refresh');
+            }
+            else if (listItems.length - unchecked.length === listItems.length) {
+                uberCheck.attr('checked', 'checked');
+                uberCheck.checkboxradio('refresh');
+            }
+        };
+
+        searchFilter.unbind("keyup change", clearUberCheck)
+                    .bind("keyup change", clearUberCheck);
+
+        // also bind all the list items to the same function
+        listview.find('input[type="checkbox"]')
+                .unbind('change', clearUberCheck)
+                .bind('change', clearUberCheck);
+    });
 });
 
 /* FIXME: Use pageinit as of jqm beta 3 */

@@ -64,6 +64,7 @@
                             <li><a href="#expandable-li-demo">Expandable list item</a></li>
                             <li><a href="#layouthbox-demo">Horizontal box layout</a></li>
                             <li><a href="#layoutvbox-demo">Vertical box layout</a></li>
+                            <li><a href="#listviewcontrols-demo">Listview controls</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -1112,6 +1113,81 @@ $scroller2List.scrollview('option','scrollDuration','10000');
 
                 <p>See <a rel="external" href="../../src/widgets/layout-box/test/test-layout-vbox.html">the
                 layoutvbox test page</a> for more examples and explanation.</p>
+            </div>
+        </div>
+
+        <div data-role="page" id="listviewcontrols-demo" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>Listview controls</h1>
+                <fieldset data-role="controlgroup">
+                    <label for="listviewcontrols-demo-toggler">listviewcontrols mode:</label>
+                    <select id="listviewcontrols-demo-toggler" data-role="slider">
+                        <option value="edit">edit</option>
+                        <option value="view">view</option>
+                    </select>
+                </fieldset>
+            </div>
+            <div data-role="content" data-theme="e">
+                <form id="listviewcontrols-demo-control-panel"
+                      style="padding-bottom: 14px;"
+                      data-listviewcontrols-show-in="edit">
+                    <p>These are the controls which can operate over all of
+                    the items in the listview. Note that if you filter the
+                    list, these controls will only affect the currently-visible
+                    items. Also note that we're using autodividers here too :)</p>
+
+                    <fieldset data-role="controlgroup">
+                        <input type="checkbox" id="listviewcontrols-demo-checkbox-uber" />
+                        <label for="listviewcontrols-demo-checkbox-uber">Select all</label>
+                    </fieldset>
+                </form>
+
+                <ul data-role="listview"
+                    data-listviewcontrols="#listviewcontrols-demo-control-panel"
+                    data-listviewcontrols-options='{"mode":"edit"}'
+                    id="listviewcontrols-demo-listview"
+                    data-filter="true"
+                    data-autodividers="alpha"
+                    data-autodividers-selector="span">
+                    <li>
+                        <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+                            <input type="checkbox" id="listviewcontrols-demo-checkbox-1" />
+                            <label for="listviewcontrols-demo-checkbox-1">Greg</label>
+                        </fieldset>
+                        <span data-listviewcontrols-show-in="view">Greg</span>
+                    </li>
+                    <li>
+                        <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+                            <input type="checkbox" id="listviewcontrols-demo-checkbox-2" />
+                            <label for="listviewcontrols-demo-checkbox-2">Greta</label>
+                        </fieldset>
+                        <span data-listviewcontrols-show-in="view">Greta</span>
+                    </li>
+                    <li>
+                        <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+                            <input type="checkbox" id="listviewcontrols-demo-checkbox-3" />
+                            <label for="listviewcontrols-demo-checkbox-3">Pete</label>
+                        </fieldset>
+                        <span data-listviewcontrols-show-in="view">Pete</span>
+                    </li>
+                    <li>
+                        <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+                            <input type="checkbox" id="listviewcontrols-demo-checkbox-4" />
+                            <label for="listviewcontrols-demo-checkbox-4">Phil</label>
+                        </fieldset>
+                        <span data-listviewcontrols-show-in="view">Phil</span>
+                    </li>
+                    <li>
+                        <fieldset data-role="controlgroup" data-listviewcontrols-show-in="edit">
+                            <input type="checkbox" id="listviewcontrols-demo-checkbox-5" />
+                            <label for="listviewcontrols-demo-checkbox-5">Sue</label>
+                        </fieldset>
+                        <span data-listviewcontrols-show-in="view">Sue</span>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
             </div>
         </div>
 

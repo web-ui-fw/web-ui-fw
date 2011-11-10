@@ -96,12 +96,12 @@ widgets: init
 
 docs: init
 	# Building documentation...
-	@@hash docco 2>&- || (echo "docco not found. Please see README."; exit 1); \
+	@@hash docco 2>&1 /dev/null || (echo "docco not found. Please see README."; exit 1); \
 	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	while read REPLY; do \
 		echo "	# Building docs for widget $$REPLY"; \
 		for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.js' | sort`; do \
-			docco $$f >-; \
+			docco $$f > /dev/null; \
 		done; \
 	done; \
 	cp docs/docco.custom.css docs/docco.css
@@ -141,6 +141,10 @@ install: all
 	mkdir -p ${INSTALL_DIR}/share/slp-web-fw ${INSTALL_DIR}/bin
 	cp -av ${OUTPUT_ROOT}/* src/template ${INSTALL_DIR}/share/slp-web-fw/
 	cp -av tools/* ${INSTALL_DIR}/bin
+
+coverage: all
+	# Checking unit test coverage
+	$(CURDIR)/tests/coverage/instrument.sh
 
 clean:
 	# Removing destination directory...
