@@ -34,10 +34,10 @@ jQuery.extend( jQuery.mobile.todons,
     // Examples:
     //
     // 1.
-    // $.mobile.todons.loadPrototype("mywidget") => Returns a <div> containing the structure from the file
+    // jQuery.mobile.todons.loadPrototype("mywidget") => Returns a <div> containing the structure from the file
     // mywidget.prototype.html located in the current theme folder of the current framework.
     //
-    // 2. $.mobile.todons.loadPrototype("mywidget", ui):
+    // 2. jQuery.mobile.todons.loadPrototype("mywidget", ui):
     // where ui is a hash that looks like this:
     // ui = {
     //   element1: "<css selector 1>",
