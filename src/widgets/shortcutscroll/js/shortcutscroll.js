@@ -6,25 +6,24 @@
  * Authors: Elliot Smith <elliot.smith@intel.com>
  */
 
-/**
- * shortcutscroll is a scrollview controller, which binds
- * a scrollview to a a list of short cuts; the shortcuts are built
- * from the text on dividers in the list. Clicking on a shortcut
- * instantaneously jumps the scrollview to the selected list divider;
- * mouse movements on the shortcut column move the scrollview to the
- * list divider matching the text currently under the touch; a popup
- * with the text currently under the touch is also displayed.
- *
- * To apply, add the attribute data-shortcutscroll="true" to a listview
- * (a <ul> or <ol> element inside a page). Alternatively, call
- * shortcutscroll() on an element.
- *
- * The closest element with class ui-scrollview-clip is used as the
- * scrollview to be controlled.
- *
- * If a listview has no dividers or a single divider, the widget won't
- * display.
- */
+// shortcutscroll is a scrollview controller, which binds
+// a scrollview to a a list of short cuts; the shortcuts are built
+// from the text on dividers in the list. Clicking on a shortcut
+// instantaneously jumps the scrollview to the selected list divider;
+// mouse movements on the shortcut column move the scrollview to the
+// list divider matching the text currently under the touch; a popup
+// with the text currently under the touch is also displayed.
+//
+// To apply, add the attribute data-shortcutscroll="true" to a listview
+// (a <ul> or <ol> element inside a page). Alternatively, call
+// shortcutscroll() on an element.
+//
+// The closest element with class ui-scrollview-clip is used as the
+// scrollview to be controlled.
+//
+// If a listview has no dividers or a single divider, the widget won't
+// display.
+
 (function( $, undefined ) {
 
 $.widget( "todons.shortcutscroll", $.mobile.widget, {

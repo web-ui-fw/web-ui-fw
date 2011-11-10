@@ -6,96 +6,94 @@
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>
  */
 
-/**
- * CalendarPicker can be created using the calendarpicker() method or by adding a
- * data-role="calendarpicker" attribute to an element.
- * The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
- *
- * CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true
- * during creation and close() to hide it. It appears as a popup window and disappears when closed.
- * CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks
- * outside its box.
- *
- * Options:
- *
- *     dateFormat: The format of date. The Default value is YYYY-MM-DD.
- *
- *     calShowDays: Default value is true. Should be set to false if name of the day should not be displayed.
- *     calShowOnlyMonth: Default Value is true. Should be set to false if previous or next month dates should be visible
- *                        along with the current month.
- *     highDays: An array of days to highlight, every week followed by the theme used to hightlight them.
- *               Sun = Sunday, Mon = Monday, ... Sat = Saturday (e.g. ["Sun","b", "Sat", "mycustomtheme"])
- *     disabledDayColor: Colour used to show disabled dates.
- *     calHighToday: Theme used to highlight current day. By default it is set to e.Setting the value to null will disable
- *                   highlighting todays date.
- *     highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
- *     calStartDay: Defines the start day of the week. By default it is 1(Monday).
- *
- *     FOllowing documentation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
- *
- *     afterToday: When set, only dates that are after or on "today" are selectable.
- *     beforeToday: When set, only dates that are before or on "today" are selectable.
- *     notToday: When set, "today" is not selectable.
- *     minDays: When set, only dates that are after *number* of days before today may be selected.
- *              Note that minDays can be a negative number.
- *     maxDays: When set, only dates that are before *number* of days after today may be selected.
- *              Note that maxDays can be a negative number.
- *     highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
- *     blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2]).
- *     blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"]).
- *     Using a calendar to select a specific day can be accomplished by setting option 'calWeekMode' to 'true'
- *     and 'calWeekModeFirstDay' to the day you wish to pick.
- *
- * Events:
- *
- *     appear: Fired after calendarpicker becomes visible and appear animation has ended.
- *     disappear: Fired after calendarpicker is closed and disappear animation has ended.
- *     selectedDate: Fired after user has selected a valid date. The formateddate(which user has selected)
- *                   is sent as additional parameter.
- *
- * Properties:
- *
- *     open: Shows the CalendarPicker with an animation.
- *     close: Hides the CalendarPicker with an animation.
- *     visible: Returns true if calendarpicker is visible.
- *     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change,
- *              changing options dynamically etc.
- *
- * Examples:
- *
- *     HTML markup for creating CalendarPicker:
- *         <div id = "calendarbutton" data-role = "calendarpicker">  </div>
- *
- *     How to Show CalendarPicker (for example when user presses a button):
- *         <div id = "calendarbutton" data-role = "calendarpicker">
- *             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false>
-                Launch CalendarPicker</a>
- *         </div>
- *        $(document).bind("pagecreate", function() {
- *            var button = $('#calendarbutton');
- *            button.bind('vclick', function (e) {
- *	          button.calendarpicker('open'); --> Shows the CalendarPicker.
- *                button.unbind('selectedDate').bind('selectedDate',function(e,val) {
- *                // val should contain the selected date in specified format.
- *                });
- *            });
- *        });
- *
- *    How to Show CalendarPicker by default:
- *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"show": "true"}'>  </div>
- *
- *    Passing custom options:
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": "false"}'>  </div>
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": ["Mon","e","Wed","a"]}'></div>
- *         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDates": ["2011-12-24", "2011-12-25"],
- *                                                                                "highDatesTheme":"c"}'>  </div>
- *
- *    To select by week using Wednesday:
- *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calWeekMode": true,
- *                                                                               "calWeekModeFirstDay": 3}'>  </div>
- *    To change startday of the week to be Sunday:
- *        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
- */
+// CalendarPicker can be created using the calendarpicker() method or by adding a
+// data-role="calendarpicker" attribute to an element.
+// The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
+//
+// CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true
+// during creation and close() to hide it. It appears as a popup window and disappears when closed.
+// CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks
+// outside its box.
+//
+// Options:
+//
+//     dateFormat: The format of date. The Default value is YYYY-MM-DD.
+//
+//     calShowDays: Default value is true. Should be set to false if name of the day should not be displayed.
+//     calShowOnlyMonth: Default Value is true. Should be set to false if previous or next month dates should be visible
+//                        along with the current month.
+//     highDays: An array of days to highlight, every week followed by the theme used to hightlight them.
+//               Sun = Sunday, Mon = Monday, ... Sat = Saturday (e.g. ["Sun","b", "Sat", "mycustomtheme"])
+//     disabledDayColor: Colour used to show disabled dates.
+//     calHighToday: Theme used to highlight current day. By default it is set to e.Setting the value to null will disable
+//                   highlighting todays date.
+//     highDatesTheme: The theme used to highlight dates specified by highDates option.By default it is theme e.
+//     calStartDay: Defines the start day of the week. By default it is 1(Monday).
+//
+//     FOllowing documentation taken from http://dev.jtsage.com/#/jQM-DateBox/demos/calendar/ :
+//
+//     afterToday: When set, only dates that are after or on "today" are selectable.
+//     beforeToday: When set, only dates that are before or on "today" are selectable.
+//     notToday: When set, "today" is not selectable.
+//     minDays: When set, only dates that are after *number* of days before today may be selected.
+//              Note that minDays can be a negative number.
+//     maxDays: When set, only dates that are before *number* of days after today may be selected.
+//              Note that maxDays can be a negative number.
+//     highDates: An array of ISO 8601 Dates to highlight. (e.g. ["2011-01-01", "2011-12-25"]).
+//     blackDays: An array of days to disable, every week. 0 = Sunday, 1 = Monday, ... 6 = Saturday (e.g. [2]).
+//     blackDates: An array of ISO 8601 Dates to disable. (e.g. ["2011-01-01", "2011-12-25"]).
+//     Using a calendar to select a specific day can be accomplished by setting option 'calWeekMode' to 'true'
+//     and 'calWeekModeFirstDay' to the day you wish to pick.
+//
+// Events:
+//
+//     appear: Fired after calendarpicker becomes visible and appear animation has ended.
+//     disappear: Fired after calendarpicker is closed and disappear animation has ended.
+//     selectedDate: Fired after user has selected a valid date. The formateddate(which user has selected)
+//                   is sent as additional parameter.
+//
+// Properties:
+//
+//     open: Shows the CalendarPicker with an animation.
+//     close: Hides the CalendarPicker with an animation.
+//     visible: Returns true if calendarpicker is visible.
+//     Refresh: Recalculates the needed buttons to display dates.It can be useful in cases like orientation change,
+//              changing options dynamically etc.
+//
+// Examples:
+//
+//     HTML markup for creating CalendarPicker:
+//         <div id = "calendarbutton" data-role = "calendarpicker">  </div>
+//
+//     How to Show CalendarPicker (for example when user presses a button):
+//         <div id = "calendarbutton" data-role = "calendarpicker">
+//             <a href="#" data-role="button" data-theme = "a" data-inline = true data-corners=false>
+//                Launch CalendarPicker</a>
+//         </div>
+//        $(document).bind("pagecreate", function() {
+//            var button = $('#calendarbutton');
+//            button.bind('vclick', function (e) {
+//	          button.calendarpicker('open'); --> Shows the CalendarPicker.
+//                button.unbind('selectedDate').bind('selectedDate',function(e,val) {
+//                // val should contain the selected date in specified format.
+//                });
+//            });
+//        });
+//
+//    How to Show CalendarPicker by default:
+//        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"show": "true"}'>  </div>
+//
+//    Passing custom options:
+//         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calShowOnlyMonth": "false"}'>  </div>
+//         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDays": ["Mon","e","Wed","a"]}'></div>
+//         <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"highDates": ["2011-12-24", "2011-12-25"],
+//                                                                                "highDatesTheme":"c"}'>  </div>
+//
+//    To select by week using Wednesday:
+//        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calWeekMode": true,
+//                                                                               "calWeekModeFirstDay": 3}'>  </div>
+//    To change startday of the week to be Sunday:
+//        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
 
 (function($, undefined ) {
     $.widget( "todons.calendarpicker", $.mobile.widget, {

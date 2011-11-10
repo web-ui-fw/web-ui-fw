@@ -1,9 +1,7 @@
-/**
- * Wrapper round the jLayout functions to enable it to be used
- * for creating jQuery Mobile layout extensions.
- *
- * See the layouthbox and layoutvbox widgets for usage examples.
- */
+// Wrapper round the jLayout functions to enable it to be used
+// for creating jQuery Mobile layout extensions.
+//
+// See the layouthbox and layoutvbox widgets for usage examples.
 (function ($, undefined) {
 
 $.widget("todons.jlayoutadaptor", $.mobile.widget, {

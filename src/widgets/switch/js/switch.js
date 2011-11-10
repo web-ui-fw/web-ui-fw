@@ -6,24 +6,22 @@
  * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
-/*
- * Displays a simple two-state switch.
- *
- * To apply, add the attribute data-role="switch" to a <div>
- * element inside a page. Alternatively, call switch() 
- * on an element, like this :
- *
- *     $("#myswitch").switch();
- * where the html might be :
- *     <div id="myswitch"></div>
- *
- * Options:
- *     checked: Boolean; the state of the switch
- *     Default: true (up)
- *
- * Events:
- *     changed: Emitted when the switch is changed
- */
+// Displays a simple two-state switch.
+//
+// To apply, add the attribute data-role="switch" to a <div>
+// element inside a page. Alternatively, call switch() 
+// on an element, like this :
+//
+//     $("#myswitch").switch();
+// where the html might be :
+//     <div id="myswitch"></div>
+//
+// Options:
+//     checked: Boolean; the state of the switch
+//     Default: true (up)
+//
+// Events:
+//     changed: Emitted when the switch is changed
 
 (function($, undefined) {
 

@@ -94,6 +94,19 @@ widgets: init
 		fi; \
 	done
 
+docs: init
+	# Building documentation...
+	@@hash docco 2>&1 /dev/null || (echo "docco not found. Please see README."; exit 1); \
+	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
+	while read REPLY; do \
+		echo "	# Building docs for widget $$REPLY"; \
+		for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.js' | sort`; do \
+			docco $$f > /dev/null; \
+		done; \
+	done; \
+	cp docs/docco.custom.css docs/docco.css
+
+
 themes: widget_styling
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \

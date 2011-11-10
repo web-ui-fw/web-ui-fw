@@ -6,33 +6,31 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
-/**
- * Displays a page that contains a PersonPicker, and buttons to
- * interact with it.
- *
- * To apply, add the attribute data-role="personpicker-page" to
- * a page.
- *
- * Theme: by default, gets a 'b' swatch; override with data-theme="X"
- * as per usual.
- *
- * Options:
- *     title:
- *         DOMString: the title of the page. Default: empty string.
- *     addressBook:
- *         AddressBook; the address book used to populate the picker.
- *     successCallback:
- *         Function; the function to call after the Done button has
- *         been clicked, and no errors occurred.
- *     errorCallback:
- *         Function; the function to call if there was an error while
- *         showing the widget.
- *     filter:
- *         Filter; a filter used when querying the address book.
- *     multipleSelection:
- *         Boolean; weather the widget allows picking more than one
- *         person. Default: true.
- */
+// Displays a page that contains a PersonPicker, and buttons to
+// interact with it.
+//
+// To apply, add the attribute data-role="personpicker-page" to
+// a page.
+//
+// Theme: by default, gets a 'b' swatch; override with data-theme="X"
+// as per usual.
+//
+// Options:
+//     title:
+//         DOMString: the title of the page. Default: empty string.
+//     addressBook:
+//         AddressBook; the address book used to populate the picker.
+//     successCallback:
+//         Function; the function to call after the Done button has
+//         been clicked, and no errors occurred.
+//     errorCallback:
+//         Function; the function to call if there was an error while
+//         showing the widget.
+//     filter:
+//         Filter; a filter used when querying the address book.
+//     multipleSelection:
+//         Boolean; weather the widget allows picking more than one
+//         person. Default: true.
 
 (function ($, window, undefined) {
     $.widget("todons.personpicker_page", $.mobile.dialog, {

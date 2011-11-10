@@ -182,10 +182,8 @@ jQuery.extend(jQuery.mobile.todons, {
         });
     },
 
-    /**
-     * Set the height of the content area to fill the space between a
-     * page's header and footer
-     */
+    // Set the height of the content area to fill the space between a
+    // page's header and footer
     fillPageWithContentArea: function (page) {
         var $page = $(page);
         var $content = $page.children(".ui-content:first");
@@ -198,10 +196,8 @@ jQuery.extend(jQuery.mobile.todons, {
         $content.height(height);
     },
 
-    /**
-     * Read data- options from the element and update a dictionary of
-     * options when possible.
-     */
+    // Read data- options from the element and update a dictionary of
+    // options when possible.
     parseOptions: function (widget, userData) {
         var optionKeys = _.keys(widget.options);
         for (key in optionKeys) {
@@ -227,11 +223,8 @@ jQuery.extend(jQuery.mobile.todons, {
         }
     },
 
-    /**
-     * Get document-relative mouse coordinates from a given event
-     *
-     * From: http://www.quirksmode.org/js/events_properties.html#position
-     */
+    // Get document-relative mouse coordinates from a given event
+    // From: http://www.quirksmode.org/js/events_properties.html#position
     documentRelativeCoordsFromEvent: function(ev) {
         var e = ev ? ev : window.event,
             client = { x: e.clientX, y: e.clientY },
@@ -239,7 +232,7 @@ jQuery.extend(jQuery.mobile.todons, {
             posx = 0,
             posy = 0;
 
-        /* Grab useful coordinates from touch events */
+        // Grab useful coordinates from touch events
         if (e.type.match(/^touch/)) {
             page = {
                 x: e.originalEvent.targetTouches[0].pageX,

@@ -8,17 +8,15 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
         return (((val - theFloor) > 0.5) ? (theFloor + 1) : theFloor);
     },
 
-    /*
-     * Converts html color string to rgb array.
-     *
-     * Input: string clr_str, where
-     * clr_str is of the form "#aabbcc"
-     *
-     * Returns: [ r, g, b ], where
-     * r is in [0, 1]
-     * g is in [0, 1]
-     * b is in [0, 1]
-     */
+    // Converts html color string to rgb array.
+    //
+    // Input: string clr_str, where
+    // clr_str is of the form "#aabbcc"
+    //
+    // Returns: [ r, g, b ], where
+    // r is in [0, 1]
+    // g is in [0, 1]
+    // b is in [0, 1]
     HTMLToRGB: function(clr_str) {
         clr_str = (('#' == clr_str.charAt(0)) ? clr_str.substring(1) : clr_str);
 
@@ -31,16 +29,14 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
             }));
     },
 
-    /*
-     * Converts rgb array to html color string.
-     *
-     * Input: [ r, g, b ], where
-     * r is in [0, 1]
-     * g is in [0, 1]
-     * b is in [0, 1]
-     *
-     * Returns: string of the form "#aabbcc"
-     */
+    // Converts rgb array to html color string.
+    //
+    // Input: [ r, g, b ], where
+    // r is in [0, 1]
+    // g is in [0, 1]
+    // b is in [0, 1]
+    //
+    // Returns: string of the form "#aabbcc"
     RGBToHTML: function(rgb) {
         return ("#" + 
             rgb.map(function(val) {
@@ -54,21 +50,19 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
                .join(""));
     },
 
-    /*
-     * Converts hsl to rgb.
-     *
-     * From http://130.113.54.154/~monger/hsl-rgb.html
-     *
-     * Input: [ h, s, l ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * l is in [0,   1]
-     *
-     * Returns: [ r, g, b ], where
-     * r is in [0, 1]
-     * g is in [0, 1]
-     * b is in [0, 1]
-     */
+    // Converts hsl to rgb.
+    //
+    // From http://130.113.54.154/~monger/hsl-rgb.html
+    //
+    // Input: [ h, s, l ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // l is in [0,   1]
+    //
+    // Returns: [ r, g, b ], where
+    // r is in [0, 1]
+    // g is in [0, 1]
+    // b is in [0, 1]
     HSLToRGB: function(hsl) {
         var h = hsl[0] / 360.0, s = hsl[1], l = hsl[2];
 
@@ -106,38 +100,34 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
         return ret;
     },
 
-    /*
-     * Converts hsv to rgb.
-     *
-     * Input: [ h, s, v ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * v is in [0,   1]
-     *
-     * Returns: [ r, g, b ], where
-     * r is in [0, 1]
-     * g is in [0, 1]
-     * b is in [0, 1]
-     */
+    // Converts hsv to rgb.
+    //
+    // Input: [ h, s, v ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // v is in [0,   1]
+    //
+    // Returns: [ r, g, b ], where
+    // r is in [0, 1]
+    // g is in [0, 1]
+    // b is in [0, 1]
     HSVToRGB: function(hsv) {
         return $.mobile.todons.clrlib.HSLToRGB($.mobile.todons.clrlib.HSVToHSL(hsv));
     },
 
-    /*
-     * Converts rgb to hsv.
-     *
-     * from http://coecsl.ece.illinois.edu/ge423/spring05/group8/FinalProject/HSV_writeup.pdf
-     *
-     * Input: [ r, g, b ], where
-     * r is in [0,   1]
-     * g is in [0,   1]
-     * b is in [0,   1]
-     *
-     * Returns: [ h, s, v ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * v is in [0,   1]
-     */
+    // Converts rgb to hsv.
+    //
+    // from http://coecsl.ece.illinois.edu/ge423/spring05/group8/FinalProject/HSV_writeup.pdf
+    //
+    // Input: [ r, g, b ], where
+    // r is in [0,   1]
+    // g is in [0,   1]
+    // b is in [0,   1]
+    //
+    // Returns: [ h, s, v ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // v is in [0,   1]
     RGBToHSV: function(rgb) {
         var min, max, delta, h, s, v, r = rgb[0], g = rgb[1], b = rgb[2];
 
@@ -169,19 +159,17 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
         return [h, s, v];
     },
 
-    /*
-     * Converts hsv to hsl.
-     *
-     * Input: [ h, s, v ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * v is in [0,   1]
-     *
-     * Returns: [ h, s, l ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * l is in [0,   1]
-     */
+    // Converts hsv to hsl.
+    //
+    // Input: [ h, s, v ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // v is in [0,   1]
+    //
+    // Returns: [ h, s, l ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // l is in [0,   1]
     HSVToHSL: function(hsv) {
         var max = hsv[2],
             delta = hsv[1] * max,
@@ -193,19 +181,17 @@ jQuery.extend( jQuery.mobile.todons.clrlib,
         return [ hsv[0], ((0 == s_divisor) ? 0 : (delta / s_divisor)), half_sum ];
     },
 
-    /*
-     * Converts rgb to hsl
-     *
-     * Input: [ r, g, b ], where
-     * r is in [0,   1]
-     * g is in [0,   1]
-     * b is in [0,   1]
-     *
-     * Returns: [ h, s, l ], where
-     * h is in [0, 360]
-     * s is in [0,   1]
-     * l is in [0,   1]
-     */
+    // Converts rgb to hsl
+    //
+    // Input: [ r, g, b ], where
+    // r is in [0,   1]
+    // g is in [0,   1]
+    // b is in [0,   1]
+    //
+    // Returns: [ h, s, l ], where
+    // h is in [0, 360]
+    // s is in [0,   1]
+    // l is in [0,   1]
     RGBToHSL: function(rgb) {
         return $.mobile.todons.clrlib.HSVToHSL($.mobile.todons.clrlib.RGBToHSV(rgb));
     }
