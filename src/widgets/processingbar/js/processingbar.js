@@ -60,6 +60,10 @@ $.widget("todons.processingbar", $.mobile.widget, {
                       '</div>' +
                       '<span class="ui-processingbar-swatch"></span>');
 
+        // clean up any old HTML
+        this.element.find('.ui-processingbar-container').remove();
+
+        // add the HTML elements
         this.element.append(this.html);
 
         this.bar = this.element.find('.ui-processingbar-bar');
