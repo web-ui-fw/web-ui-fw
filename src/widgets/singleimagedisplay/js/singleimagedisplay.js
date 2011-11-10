@@ -46,7 +46,9 @@
         usingNoContents: false,
 
         _setImgSrc: function () {
-            if (!this.usingNoContents) {
+            if (this.usingNoContents) {
+                this._showNoContents();
+            } else {
                 var self = this;
                 // if there is a source image, show it
                 this.image.attr('src', this.options.source);
@@ -54,8 +56,6 @@
                 this.cover.hide();
                 this.imageParent.append(this.image);
                 this.image.show();
-            } else {
-                this._showNoContents();
             }
         },
 
@@ -128,12 +128,11 @@
             var page = this.element.closest('.ui-page');
             if (page) {
                 page.bind('pageshow', function() {
-                    console.log("MAXMAXMAX/pageshow");
-                    if (!self.usingNoContents) {
+                    if (self.usingNoContents) {
+                        self.resize( self.cover );
+                    } else {
                         self.resize( self.image );
                         self.image.show();
-                    } else {
-                        self.resize( self.cover );
                     }
                 });
             }

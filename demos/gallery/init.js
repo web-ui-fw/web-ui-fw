@@ -303,7 +303,7 @@ $(document).bind("pageinit", function() {
             displayImage.singleimagedisplay('option', 'noContent', noContent);
         });
 
-        // this sets the "broken" src image for #broken
+        // this sets the "broken" src image for #custombroken
         $(this).find('#custombroken:jqmData(role=singleimagedisplay)')
         .singleimagedisplay('option','noContent','images/noContent-2.png');
     });
