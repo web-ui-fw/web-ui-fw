@@ -1,5 +1,6 @@
 var TESTS = {
     "testPages":[
-        "autodividers/index.html"
+        "autodividers/index.html",
+        "listviewcontrols/index.html"
     ]
 };
