@@ -76,7 +76,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
     },
 
     refresh: function () {
-        this.destroy();
+        this._cleanupDom();
 
         var self = this,
             defaultCoverTheme,
@@ -144,7 +144,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
         });
     },
 
-    destroy: function () {
+    _cleanupDom: function () {
         var self = this,
             defaultCoverTheme,
             covers;
