@@ -120,7 +120,6 @@
             // resize the image immediately if it is visible
             if (self.image.is(':visible')) {
                 self.resize( self.image );
-                self.image.show();
             }
 
             // when the page is shown, resize the image
@@ -132,18 +131,16 @@
                         self.resize( self.cover );
                     } else {
                         self.resize( self.image );
-                        self.image.show();
                     }
                 });
             }
 
             // when the window is resized, resize the image
             $(window).resize( function() {
-                if (self.image.is(':visible')) {
-                    self.resize( self.image );
-                    self.image.show();
-                } else {
+                if (self.usingNoContents) {
                     self.resize( self.cover );
+                } else {
+                    self.resize( self.image );
                 }
             });
         },
@@ -160,7 +157,7 @@
                 .css( 'height', 'inherit' )
                 .insertAfter(elementToResize);
 
-            var elementIsImage = elementToResize[0];
+            var elementIsImage = elementToResize[0].nodeName==="IMG";
             var realImageWidth  =
                 (elementIsImage?
                  elementToResize[0].naturalWidth
@@ -169,12 +166,14 @@
                 (elementIsImage?
                  elementToResize[0].naturalHeight
                  :elementToResize.height());
-            var realImageAspectRatio = realImageWidth/realImageHeight || 1.0;
+            var realImageArea = realImageWidth*realImageHeight;
+            var realImageAspectRatio =
+                (realImageArea==0)?1.0:
+                (realImageWidth/realImageHeight);
 
             var windowWidth  = window.innerWidth;
             var windowHeight = window.innerHeight;
 
-            // hide while we use the fiddle with the images dimensions
             var measuringImageWidth = measuringImg.width();
             var measuringImageHeight = measuringImg.height();
 
