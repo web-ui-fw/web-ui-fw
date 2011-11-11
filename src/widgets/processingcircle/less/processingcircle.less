@@ -1,0 +1,29 @@
+.ui-processingcircle-container {
+    @containerSide: 1.6em;
+    @borderColor: rgba(228, 228, 228, 0.62);
+    @borderWidth: @containerSide / 8;
+    @processingcircleWidth: @containerSide / 8;
+    @processingcircleHeight: @containerSide / 2 + @borderWidth;
+    @processingcircleColor: #000;
+
+    border-color: @borderColor;
+    border-width: @borderWidth;
+    border-style: solid;
+
+    width: @containerSide;
+    height: @containerSide;
+    -webkit-border-radius: (@containerSide / 2) + @borderWidth;
+
+    .ui-processingcircle {
+        position: relative;
+        -webkit-border-radius: @processingcircleWidth;
+        -webkit-box-shadow: inset 0px 0px (@processingcircleWidth / 2) (@processingcircleWidth / 3) @borderColor;
+        background-color: @processingcircleColor;
+        left: (@containerSide - @processingcircleWidth) / 2;
+        top: (@containerSide / 2) - (@processingcircleHeight);
+        width: @processingcircleWidth;
+        height: @processingcircleHeight;
+
+        -webkit-transform-origin: 50% 100%;
+    }
+}

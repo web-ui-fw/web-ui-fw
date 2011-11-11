@@ -41,8 +41,8 @@
     <script src="../../src/widgets/spinnerbar/js/spinnerbar.js"></script>
     <link rel="stylesheet" href="../../src/widgets/spinnerbar/less/spinnerbar.less.css"/>
 
-    <script src="../../src/widgets/spinner/js/spinner.js"></script>
-    <link rel="stylesheet" href="../../src/widgets/spinner/less/spinner.less.css"/>
+    <script src="../../src/widgets/processingcircle/js/processingcircle.js"></script>
+    <link rel="stylesheet" href="../../src/widgets/processingcircle/less/processingcircle.less.css"/>
 
     <script src="../../src/widgets/shortcutscroll/js/shortcutscroll.js"></script>
     <link rel="stylesheet" href="../../src/widgets/shortcutscroll/css/shortcutscroll.css"/>
@@ -93,9 +93,9 @@
         </div>
 
         <div>
-            <h2>spinner</h2>
+            <h2>processingcircle</h2>
             <p>Should disappear after 10 seconds.</p>
-            <div id="myspinner" data-role="spinner" />
+            <div id="myprocessingcircle" data-role="processingcircle" />
         </div>
 
         <div>
@@ -1172,14 +1172,14 @@ $('#baseline').bind('pageshow', function () {
     var myspinnerbar = page.find('#myspinnerbar');
     myspinnerbar.spinnerbar('start');
 
-    var myspinner = page.find('#myspinner');
+    var myprocessingcircle = page.find('#myprocessingcircle');
 
     var myprogressbar = page.find('#myprogressbar');
     var progress = myprogressbar.progressbar('value');
 
     setTimeout(function () {
         myspinnerbar.spinnerbar('stop');
-        myspinner.spinner('destroy');
+        myprocessingcircle.processingcircle('destroy');
     }, 10000);
 
     if (!progressbarRunning) {

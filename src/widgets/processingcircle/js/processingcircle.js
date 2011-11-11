@@ -6,31 +6,28 @@
  * Authors: Elliot Smith <elliot.smith@intel.com>
  */
 
-// Displays a spinner icon over the DOM element it is applied to
+// Displays a spinning circle in the DOM element it is applied to
 // (the "target").
 //
-// A spinner doesn't have a progress value, as it is used in situations
+// A processingcircle doesn't have a progress value, as it is used in situations
 // where the exact amount of time a process would take is not known.
 //
-// Apply a spinner using the spinner() method or by adding a
-// data-processing="spinner" attribute to an element.
+// Apply a processingcircle using the processingcircle() method or by adding a
+// data-role="processingcircle" attribute to an element.
 //
-// Once you have a spinner, call the start() method on it to display it
-// and start the animation.
-//
-// The spinner uses a div directly after the element. Calling stop()
-// on a spinner detaches this element from the DOM.
+// The processingcircle uses a div directly after the element. Calling stop()
+// on a processingcircle detaches this element from the DOM. Calling
+// refresh() on it restarts the animation.
 //
 // Events:
 //
-//     stopped: Fired when stop() is called on the spinner and it has been
-//              detached from the DOM
+//     stopped: Fired when stop() is called on the processingcircle
 
 (function($) {
 
-$.widget("todons.spinner", $.mobile.widget, {
+$.widget("todons.processingcircle", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(role='spinner')",
+        initSelector: ":jqmData(role='processingcircle')",
         isRunning: false
     },
 
@@ -38,8 +35,8 @@ $.widget("todons.spinner", $.mobile.widget, {
         var page = this.element.closest('.ui-page'),
             self = this;
 
-        this.html = $('<div class="ui-spinner-container">' +
-                      '<div class="ui-spinner">' +
+        this.html = $('<div class="ui-processingcircle-container">' +
+                      '<div class="ui-processingcircle">' +
                       '</div>' +
                       '</div>');
 
@@ -57,14 +54,14 @@ $.widget("todons.spinner", $.mobile.widget, {
 
     refresh: function () {
         if (!this.isRunning) {
-            this.element.find('.ui-spinner').addClass('spin');
+            this.element.find('.ui-processingcircle').addClass('spin');
             this.isRunning = true;
         }
     },
 
     stop: function () {
         if (this.isRunning) {
-            this.element.find('.ui-spinner').removeClass('spin');
+            this.element.find('.ui-processingcircle').removeClass('spin');
             this.element.trigger('stopped');
             this.isRunning = false;
         }
@@ -78,9 +75,9 @@ $.widget("todons.spinner", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate", function (e) {
-    $($.todons.spinner.prototype.options.initSelector, e.target)
+    $($.todons.processingcircle.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
-    .spinner();
+    .processingcircle();
 });
 
 })(jQuery);

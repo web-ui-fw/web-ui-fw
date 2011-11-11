@@ -38,14 +38,14 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
-    $('#spinner-demo').bind('pageshow', function (e) {
-        $(this).find(':jqmData(role="spinner")').each(function () {
+    $('#processingcircle-demo').bind('pageshow', function (e) {
+        $(this).find(':jqmData(role="processingcircle")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
             var elt = $(this);
             var li = elt.parent();
 
             setTimeout(function () {
-                elt.spinner('destroy');
+                elt.processingcircle('destroy');
                 li.html("I am done!");
             }, randomWait);
         });
