@@ -38,20 +38,15 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
-    $('#spinner-demo').bind('pageshow', function (e) {
-        $(this).find('li').each(function (index, element) {
+    $('#processingcircle-demo').bind('pageshow', function (e) {
+        $(this).find(':jqmData(role="processingcircle")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
-
-            $(element).text("I am processing");
-
-            $(element).bind('stopped', function () {
-                $(element).text("I am done!");
-            });
-
-            $(element).spinner('start');
+            var elt = $(this);
+            var li = elt.parent();
 
             setTimeout(function () {
-                $(element).spinner('stop');
+                elt.processingcircle('destroy');
+                li.html("I am done!");
             }, randomWait);
         });
     });

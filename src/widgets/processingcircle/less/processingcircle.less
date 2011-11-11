@@ -1,0 +1,31 @@
+.ui-processingcircle-container {
+    @containerSide: 1.6em;
+    @borderColor: rgba(228, 228, 228, 0.62);
+    @borderWidth: @containerSide / 8;
+    @processingcircleWidth: @containerSide / 8;
+    @processingcircleHeight: @containerSide / 2 + @borderWidth;
+    @processingcircleColor: #000;
+
+    border-width: @borderWidth;
+    border-style: solid;
+
+    width: @containerSide;
+    height: @containerSide;
+    -webkit-border-radius: (@containerSide / 2) + @borderWidth;
+
+    .ui-processingcircle {
+        position: relative;
+        -webkit-border-radius: @processingcircleWidth;
+        left: (@containerSide - @processingcircleWidth) / 2;
+        top: (@containerSide / 2) - (@processingcircleHeight);
+        width: @processingcircleWidth;
+        height: @processingcircleHeight;
+
+        -webkit-transform-origin: 50% 100%;
+
+        .ui-processingcircle-hand {
+            width: 99%;
+            height: 99%;
+        }
+    }
+}
