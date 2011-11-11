@@ -21,77 +21,58 @@
 // The spinner uses a div directly after the element. Calling stop()
 // on a spinner detaches this element from the DOM.
 //
-// Options:
-//
-//     position: Object; positioning specifier, allowing positioning of the
-//               spinner with respect to the target element; default
-//               is to align 'right center' of the spinner
-//               with 'right center' of the target element; change by passing
-//               an object with 'my' and 'at' properties, as per the jQuery UI
-//               position() options (see http://jqueryui.com/demos/position/);
-//               e.g. to position the center of the spinner over the center
-//               of the target element, use:
-//                   position: {my:'center center', at: 'center center'}
-//               where 'my' specifies the point on the spinner, and 'at'
-//               specifies the point on the target element
-//     duration: Integer; number of seconds the spinner should take to rotate
-//               the full 360 degrees
-//
 // Events:
 //
 //     stopped: Fired when stop() is called on the spinner and it has been
 //              detached from the DOM
 
-(function($, undefined) {
+(function($) {
 
 $.widget("todons.spinner", $.mobile.widget, {
     options: {
-        initSelector: ":jqmData(processing='spinner')",
-        position: {my: 'right center', at: 'right center'},
-        duration: 2,
+        initSelector: ":jqmData(role='spinner')",
         isRunning: false
     },
 
     _create: function() {
-        var zIndex, self;
+        var page = this.element.closest('.ui-page'),
+            self = this;
 
-        this.popup = $('<div class="ui-spinner-container">' +
-                       '<div class="ui-spinner">' +
-                       '</div>' +
-                       '</div>');
+        this.html = $('<div class="ui-spinner-container">' +
+                      '<div class="ui-spinner">' +
+                      '</div>' +
+                      '</div>');
 
-        zIndex = this.element.css('z-index');
-        zIndex = zIndex ? zIndex + 1 : 10;
-        this.popup.css('z-index', zIndex);
+        this.element.append(this.html);
 
-        this.options.position['of'] = this.element;
-
-        self = this;
-        $(window).bind('resize', function () {
-            self.start();
-        });
+        if (page && !page.is(':visible')) {
+            page.bind('pageshow', function () {
+                self.refresh();
+            });
+        }
+        else {
+            this.refresh();
+        }
     },
 
-    start: function () {
+    refresh: function () {
         if (!this.isRunning) {
-            var spinner = this.popup.find('.ui-spinner');
-            spinner.css('-webkit-animation-duration', this.options.duration + 's');
-
-            this.element.after(this.popup);
-            this.popup.position(this.options.position);
-
+            this.element.find('.ui-spinner').addClass('spin');
             this.isRunning = true;
         }
-
-        this.popup.position(this.options.position);
     },
 
     stop: function () {
         if (this.isRunning) {
-            this.popup.detach();
+            this.element.find('.ui-spinner').removeClass('spin');
             this.element.trigger('stopped');
             this.isRunning = false;
         }
+    },
+
+    destroy: function () {
+        this.stop();
+        this.html.detach();
     }
 });
 

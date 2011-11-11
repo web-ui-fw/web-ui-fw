@@ -95,7 +95,7 @@
         <div>
             <h2>spinner</h2>
             <p>Should disappear after 10 seconds.</p>
-            <div id="myspinner" data-processing="spinner">Spin, spin</div>
+            <div id="myspinner" data-role="spinner" />
         </div>
 
         <div>
@@ -1173,14 +1173,13 @@ $('#baseline').bind('pageshow', function () {
     myspinnerbar.spinnerbar('start');
 
     var myspinner = page.find('#myspinner');
-    myspinner.spinner('start');
 
     var myprogressbar = page.find('#myprogressbar');
     var progress = myprogressbar.progressbar('value');
 
     setTimeout(function () {
         myspinnerbar.spinnerbar('stop');
-        myspinner.spinner('stop');
+        myspinner.spinner('destroy');
     }, 10000);
 
     if (!progressbarRunning) {
