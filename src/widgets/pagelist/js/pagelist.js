@@ -56,14 +56,15 @@ $.widget("todons.pagelist", $.mobile.widget, {
                 ui.pageList.popupwindow("open", undefined, 0);
                 ui.pageList.find("a")
                     .each(function() {
-                        var dim = {
-                            cx: $(this).outerWidth(true),
-                            cy: $(this).outerHeight(true)
-                        };
+                        var btn = $(this),
+                            dim = {
+                                cx: btn.outerWidth(true),
+                                cy: btn.outerHeight(true)
+                            };
 
                         // Make sure things will be even later, because padding cannot have decimals - apparently :-S
-                        if (dim.cx % 2) $(this).css("padding-left",   parseInt($(this).css("padding-left"))   + 1);
-                        if (dim.cy % 2) $(this).css("padding-bottom", parseInt($(this).css("padding-bottom")) + 1);
+                        if (dim.cx % 2) btn.css("padding-left",   parseInt(btn.css("padding-left"))   + 1);
+                        if (dim.cy % 2) btn.css("padding-bottom", parseInt(btn.css("padding-bottom")) + 1);
 
                         maxDim.cx = Math.max(maxDim.cx, dim.cx);
                         maxDim.cy = Math.max(maxDim.cy, dim.cy);
@@ -82,7 +83,7 @@ $.widget("todons.pagelist", $.mobile.widget, {
                             "padding-right"  : parseInt(inner.css("padding-right"))  + padding.h,
                             "padding-bottom" : parseInt(inner.css("padding-bottom")) + padding.v,
                         });
-                    btn[((btn.attr("href") === "#" + $.mobile.activePage.attr("id")) ? "addClass" : "removeClass")]("ui-btn-active");
+                        btn[((btn.attr("href") === "#" + $.mobile.activePage.attr("id")) ? "addClass" : "removeClass")]("ui-btn-active");
                     });
                 e.stopPropagation();
                 e.preventDefault();
