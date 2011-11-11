@@ -347,6 +347,31 @@ $(document).bind("pagecreate", function () {
     });
 });
 
+$(document).bind("pageinit", function() {
+    $("#singleimagedisplay-demo").bind("pageinit", function(e) {
+        $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {
+            var displayImage = $("#singleimagedisplay-display-image");
+
+            var img = $(this).find('img:jqmData(role=singleimagedisplay)');
+            var src = null;
+            var noContent = null;
+            if (img.length>0) {
+                src = img.singleimagedisplay('option', 'source');
+                noContent = img.singleimagedisplay('option', 'noContent');
+            };
+
+            $.mobile.changePage("#singleimagedisplay-display");
+
+            displayImage.singleimagedisplay('option', 'source', src);
+            displayImage.singleimagedisplay('option', 'noContent', noContent);
+        });
+
+        // this sets the "broken" src image for #custombroken
+        $(this).find('#custombroken:jqmData(role=singleimagedisplay)')
+        .singleimagedisplay('option','noContent','images/noContent-2.png');
+    });
+});
+
 function launchPersonPicker() {
     $("#personpicker-page-demo").personpicker_page({
         title: "Choose contacts",
