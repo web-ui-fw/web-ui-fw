@@ -6,7 +6,6 @@
     @processingcircleHeight: @containerSide / 2 + @borderWidth;
     @processingcircleColor: #000;
 
-    border-color: @borderColor;
     border-width: @borderWidth;
     border-style: solid;
 
@@ -17,13 +16,16 @@
     .ui-processingcircle {
         position: relative;
         -webkit-border-radius: @processingcircleWidth;
-        -webkit-box-shadow: inset 0px 0px (@processingcircleWidth / 2) (@processingcircleWidth / 3) @borderColor;
-        background-color: @processingcircleColor;
         left: (@containerSide - @processingcircleWidth) / 2;
         top: (@containerSide / 2) - (@processingcircleHeight);
         width: @processingcircleWidth;
         height: @processingcircleHeight;
 
         -webkit-transform-origin: 50% 100%;
+
+        .ui-processingcircle-hand {
+            width: 99%;
+            height: 99%;
+        }
     }
 }

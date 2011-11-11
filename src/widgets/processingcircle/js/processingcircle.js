@@ -28,15 +28,20 @@
 $.widget("todons.processingcircle", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(role='processingcircle')",
-        isRunning: false
+        isRunning: false,
+        theme: 'b'
     },
 
     _create: function() {
         var page = this.element.closest('.ui-page'),
-            self = this;
+            self = this,
+            theme;
 
-        this.html = $('<div class="ui-processingcircle-container">' +
+        theme = this.element.jqmData('theme') || this.options.theme;
+
+        this.html = $('<div class="ui-processingcircle-container ui-body-' + theme + '">' +
                       '<div class="ui-processingcircle">' +
+                      '<div class="ui-processingcircle-hand ui-bar-' + theme + '" />' +
                       '</div>' +
                       '</div>');
 
