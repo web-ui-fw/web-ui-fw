@@ -27,7 +27,7 @@ Installing uglifyjs
 `uglifyjs` is a JavaScript parser/compressor/beautifier. It can be
 installed via NPM. On a Debian based distribution, this should work:
 
-npm install uglify-js.
+    npm install uglify-js
 
 After the installation, make sure that `uglifyjs` is in your PATH,
 then set DEBUG=no in the Makefile to compress the Javascript code.
@@ -41,7 +41,7 @@ is also used to produce the coverage reports (see below). So it's
 recommended that you install it if you intend to do any work on the
 project.
 
-Get it from http://www.google.com/chrome
+Get it from `http://www.google.com/chrome`
 
 
 Installing jscoverage
@@ -55,7 +55,7 @@ report" for more details.
 It's not essential to install this unless you want to get coverage
 reports for the web-ui-fw test suite.
 
-The source is available from: http://siliconforks.com/jscoverage/
+The source is available from: `http://siliconforks.com/jscoverage/`
 It has minimal dependencies and is easy to build.
 
 Once you've built it, put the jscoverage binary on your PATH.
@@ -67,16 +67,16 @@ Installing docco
 `docco` is used to generate API documentation. It needs Pygments for
 the syntax hilighting:
 
-sudo apt-get install python-setuptools
-sudo easy_install Pygments
-npm install docco
+    sudo apt-get install python-setuptools
+    sudo easy_install Pygments
+    npm install docco
 
 (Then add docco to your PATH).
 
 Installing on Ubuntu 11.10 
 --------------------------
 
- `sudo apt-get update && sudo apt-get install libnode-less`
+    sudo apt-get update && sudo apt-get install libnode-less
 
 
 OS X Lion with Homebrew
@@ -109,10 +109,10 @@ You'll also need make.
 
 Then, from a command line inside the project directory, do:
 
-  git submodule update
+    git submodule update
 
-  cd libs/js/submodules/jquery-mobile; make && cd -
-  make
+    cd libs/js/submodules/jquery-mobile; make && cd -
+    make
 
 This builds jquery-mobile, then compiles the stylesheets for all the
 widgets using lessc, finally concatenates all the library and widget
@@ -126,7 +126,7 @@ You'll need to build the project first (see above).
 
 In a browser, open:
 
-  `demos/gallery/index.html`
+    demos/gallery/index.html
 
 This shows the widgets currently available for the web UI framework.
 
@@ -135,7 +135,7 @@ widgets), you may want to bypass the framework loader's cache
 mechanism (so you get the latest version of every JS file). To
 do this, append a debug=true parameter to the URL, e.g.
 
- `file://<path>/demos/gallery/index.html?debug=true`
+    file://<path>/demos/gallery/index.html?debug=true
 
 where `<path>` is the full, absolute (with leading /) path to your
 checked out copy of the web-ui-fw repo.
@@ -152,26 +152,26 @@ like progressbar is a good starting point.
 
 Note that your widget JavaScript code should provide the following:
 
-* Programmatic access: $(selector).mywidget() should create an instance
+* Programmatic access: `$(selector).mywidget()` should create an instance
 of your widget.
 
-* Declarative access: <div data-role="mywidget">...</div> should also
+* Declarative access: `<div data-role="mywidget">...</div>` should also
 create an instance of your widget.
 
-* A _create() method which initialises your widget.
+* A `_create()` method which initialises your widget.
 
 * A set of options which can be set via a
-$(selector).mywidget('option', value) style method, or by attributes
-on the selected element, e.g. data-mywidget-myoption="value".
+`$(selector).mywidget('option', value)` style method, or by attributes
+on the selected element, e.g. `data-mywidget-myoption="value"`.
 Where there are multiple options, you should
-use a data-mywidget-options='{...json...}' style attribute (see
+use a `data-mywidget-options='{...json...}'` style attribute (see
 layout-hbox for an example).
 
-* Options should include an initSelector, specifying the
+* Options should include an `initSelector`, specifying the
 jQuery selector for finding elements to which your widget applies. Typically
-this will involve looking for data-role attributes, e.g.
+this will involve looking for `data-role` attributes, e.g.
 
-  ':jqmData(role=optionheader)'
+    ':jqmData(role=optionheader)'
 
 See optionheader for an example. Alternatively, if the widget applies
 to all instances of a particular HTML element, you may need a more
@@ -181,11 +181,11 @@ general selector: see the jQuery Mobile widgets for examples.
 elements when pages are created, using that initSelector to find
 them, e.g.
 
-  $(document).bind("pagecreate", function (e) {
-      $($.todons.mywidget.prototype.options.initSelector, e.target)
-      .not(":jqmData(role='none'), :jqmData(role='nojs')")
-      .mywidget();
-  });
+    $(document).bind("pagecreate", function (e) {
+        $($.todons.mywidget.prototype.options.initSelector, e.target)
+        .not(":jqmData(role='none'), :jqmData(role='nojs')")
+        .mywidget();
+    });
 
 * Theme-awareness. This means both setting a default theme swatch for
 the widget and capturing any data-theme attribute set on the target element
@@ -195,7 +195,7 @@ the target element. You should also consider whether a swatch should
 be inherited by your widget (c.f. how buttons inherit their parent's
 swatch).
 
-* A refresh() method which will draw/redraw the widget. If you are
+* A `refresh()` method which will draw/redraw the widget. If you are
 adding new markup, you should always test for the existence of the
 markup you intend to add first, and remove it if it is present.
 
@@ -203,19 +203,19 @@ markup you intend to add first, and remove it if it is present.
 other widgets, you should provide for situations both where it is
 being created on a visible page, and where it's being created on a page
 which isn't yet visible. Code like the following, typically in the widget's
-_create() method, should accomplish this:
+`_create()` method, should accomplish this:
 
-  var page = this.element.closest(':jqmData(role="page")');
-  var self = this;
+    var page = this.element.closest(':jqmData(role="page")');
+    var self = this;
 
-  if (page.is(":visible")) {
-      self.refresh();
-  }
-  else {
-      page.bind("pageshow", function () {
-          self.refresh();
-      });
-  }
+    if (page.is(":visible")) {
+        self.refresh();
+    }
+    else {
+        page.bind("pageshow", function () {
+            self.refresh();
+        });
+    }
 
 * Respond to and fire events appropriately. In particular, if your
 widget changes the page size (e.g. it expands/contracts) it should
@@ -240,28 +240,28 @@ Writing tests
 To add a new test for your widget:
 
 * Create a directory under tests/, named after your widget (e.g.
-tests/mywidget).
+`tests/mywidget`).
 
-* Add an index.html file to that directory, marked up for your test
-pages (see tests/autodividers/index.html for an example: you need
+* Add an `index.html` file to that directory, marked up for your test
+pages (see `tests/autodividers/index.html` for an example: you need
 all the JavaScript and CSS in the order shown there).
 
-* Add a JavaScript file called mywidget-tests.js to the same directory.
+* Add a JavaScript file called `mywidget-tests.js` to the same directory.
 This should contain your QUnit tests
-(see tests/autodividers/autodividers-tests.js for an example).
+(see `tests/autodividers/autodividers-tests.js` for an example).
 
-* Edit the tests/tests.js file and add the path to your test file
+* Edit the `tests/tests.js` file and add the path to your test file
 to it, e.g.
 
-  var TESTS = {
-      "testPages":[
-          "mywidget/index.html", // this is my new test file
-          "autodividers/index.html"
-      ]
-  };
+    var TESTS = {
+        "testPages":[
+            "mywidget/index.html", // this is my new test file
+            "autodividers/index.html"
+        ]
+    };
 
-* Run your tests by opening the tests/index.html file (to run the
-whole suite) or your individual index.html file to run just your tests.
+* Run your tests by opening the `tests/index.html` file (to run the
+whole suite) or your individual `index.html` file to run just your tests.
 
 NB you'll need to do a full build so the JS and CSS files are in
 the build/ directory before running tests.
@@ -273,7 +273,7 @@ Running the test coverage report
 To get a coverage report, run jscoverage from the top level directory
 with:
 
-  make coverage
+    make coverage
 
 This will open the unit tests in Google Chrome and run them. Once they're
 done, the coverage report is available from the "Summary" tab of the page.
