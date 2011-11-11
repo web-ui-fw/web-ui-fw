@@ -1,5 +1,8 @@
+Ubuntu 11.10 
+============
+
 Installing less
-================
+---------------
 
 `lessc` is a compiler that generates CSS code from the .less files that
 style the widgets. Here are some instruction to install it on Ubuntu
@@ -18,11 +21,8 @@ other distributions should find their way around too:
 
 You may want to add the final export to your .bashrc and source it.
 
-Ubuntu 11.10 
-------------
-
 Installing uglifyjs
-===================
+-------------------
 
 `uglifyjs` is a JavaScript parser/compressor/beautifier. It can be
 installed via NPM. On a Debian based distribution, this should work:
@@ -34,7 +34,7 @@ then set DEBUG=no in the Makefile to compress the Javascript code.
 
 
 Installing Google Chrome
-========================
+------------------------
 
 The main browser used for developing web-ui-fw is Google Chrome. This
 is also used to produce the coverage reports (see below). So it's
@@ -45,7 +45,7 @@ Get it from `http://www.google.com/chrome`
 
 
 Installing jscoverage
-=====================
+---------------------
 
 jscoverage produces code coverage reports from instrumented JavaScript
 code. It's used here to produce coverage reports from the QUnit test
@@ -62,7 +62,7 @@ Once you've built it, put the jscoverage binary on your PATH.
 
 
 Installing docco
-================
+----------------
 
 `docco` is used to generate API documentation. It needs Pygments for
 the syntax hilighting:
@@ -73,14 +73,9 @@ the syntax hilighting:
 
 (Then add docco to your PATH).
 
-Installing on Ubuntu 11.10 
---------------------------
-
-    sudo apt-get update && sudo apt-get install libnode-less
-
 
 OS X Lion with Homebrew
------------------------
+=======================
 
     brew update
     brew install node
