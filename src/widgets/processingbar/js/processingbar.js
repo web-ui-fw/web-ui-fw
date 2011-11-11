@@ -12,15 +12,13 @@
 // Apply it by setting data-role="processingbar" on an element
 // (the "target" element) or with $(...).processingbar().
 //
-// The processingbar overlays its own DOM elements on top of the target
-// element. It will fill the horizontal and vertical space occupied by
-// the element, and position the animated bar in the center of its
-// vertical and horizontal space. This makes it easy to overlay list
-// items.
+// The processingbar appends its own DOM elements to the target
+// element and fill the horizontal and vertical space occupied by
+// the element.
 //
 // Once you have a processingbar, stop the animation with stop().
 // Calling refresh() will start the animation again. destroy() will
-// remove the DOM elements for the bar (but leave behind the original
+// remove the bar's DOM elements (but leave behind the original
 // div).
 //
 // Options:
