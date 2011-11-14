@@ -6,7 +6,7 @@
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>
  */
 
-// DragandDropList is a ListView extension containing class="draganddroplist".The extension can be used to add drag and drop 
+// DragandDropList is a ListView extension containing class="draganddroplist".The extension can be used to add drag and drop
 // functionality to listview.LongPress on any item activates the draganddropmode.
 // Warning:The extension is in proto state.The behaviour,api and functionality can be changed without notice.
 //
@@ -16,12 +16,12 @@
 //     dragEnded: Fired on a list item after drag mode has ended on it.
 //
 // Examples:
-//         
+//
 //     HTML markup for creating DragandDropList:
 //     <ul data-role="listview" class="draganddroplist">
 //         <li><a href="#">Demo</a></li>
 //     </ul>
-         
+
 (function ($, undefined) {
     $(":jqmData(role='listview')").live("listviewcreate", function () {
         if ($(this).hasClass("draganddroplist")) {
@@ -173,11 +173,11 @@
                     $realObject.bind('vmousedown',_mouseDown);
                     listItems = null;
                     listItems = $this.children("li");
-                    _dragInit();   
+                    _dragInit();
                 });
-                $.enableSelection($this);
+                $.mobile.todons.enableSelection($this);
                 $realObject.trigger('dragEnded');
-                _reset();             
+                _reset();
             }
 
             var _evaluateDragDown = function (newPos) {
@@ -278,7 +278,7 @@
                 listItems.each(function (idx, li) {
                     $(li).bind('taphold', function (event) {
                         if (validActivation) {
-                            $.disableSelection($this);
+                            $.mobile.todons.disableSelection($this);
                             _reset();
                             $.each(listItems, function (idx, li) {
                                 $(li).unbind('taphold');
