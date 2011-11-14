@@ -32,19 +32,19 @@ $.widget("todons.pagelist", $.mobile.widget, {
                 $(this).popupwindow("close");
             });
 
-        this.element.find("a").each(function(elemIdx, elem) {
+        this.element.find("a[href]").each(function(elemIdx, elem) {
             if (idx > 0 && !(idx % 10))
                 ui.pageList.append(ui.rowBreak.clone());
-            if ($(elem).attr("href") != undefined)
-                ui.button
-                    .clone()
-                    .attr("href", $(elem).attr("href"))
-                    .text(++idx)
-                    .appendTo(ui.pageList)
-                    .buttonMarkup()
-                    .bind("vclick", function() { ui.pageList.popupwindow("close"); })
-                    .find(".ui-btn-inner")
-                        .css({padding: 2});
+
+            ui.button
+                .clone()
+                .attr("href", $(elem).attr("href"))
+                .text(++idx)
+                .appendTo(ui.pageList)
+                .buttonMarkup()
+                .bind("vclick", function() { ui.pageList.popupwindow("close"); })
+                .find(".ui-btn-inner")
+                    .css({padding: 2});
         });
 
         $(document).bind("keydown", function(e) {
