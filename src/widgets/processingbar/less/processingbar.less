@@ -1,0 +1,28 @@
+.ui-processingbar-container {
+    @processingbarHeight: 20px;
+    height: @processingbarHeight;
+    min-width: 400px;
+    width: 100%;
+
+    .ui-processingbar-clip {
+        @processingbarClipHeight: @processingbarHeight / 2;
+        @processingbarBarBgSide: @processingbarClipHeight * 2;
+        @processingbarBarHeight: @processingbarBarBgSide * 2;
+        @processingbarBarFgColor: rgb(255, 255, 255);
+        margin: (@processingbarHeight / 2) 0px 0px 0px;
+
+        overflow: hidden;
+        height: @processingbarClipHeight;
+
+        .ui-processingbar-bar {
+            background-color: @processingbarBarFgColor;
+            -webkit-background-size: @processingbarBarBgSide @processingbarBarBgSide;
+            height: @processingbarBarHeight;
+            position: relative;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
