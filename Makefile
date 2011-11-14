@@ -153,7 +153,7 @@ clean:
 	@@rm -f `find . -iname *.less.css`
 	@@rm -f `find . -iname *.js.compiled`
 
-init: clean
+init:
 	# Checking for JQM
 	@@[ -e ${LIBS_DIR}/js/${JQUERY_MOBILE} ] || (echo "You must compile jquery-mobile first. See README."; exit 1;)
 	# Initializing...

@@ -96,6 +96,19 @@ This builds jquery-mobile, then compiles the stylesheets for all the
 widgets using lessc, finally concatenates all the library and widget
 JavaScript into framework files.
 
+If you want to clean the source tree, just do:
+
+  make clean
+
+
+Building the documentation
+==========================
+
+If you have installed docco (see above), you can build the
+documentation by issuing the following command:
+
+  make docs
+
 
 The widget gallery demo
 =======================
