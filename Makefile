@@ -27,8 +27,7 @@ FW_THEME_CSS_FILE = ${PROJECT_NAME}-theme.css
 FW_WIDGET_CSS_FILE = ${WIDGET_CSS_OUTPUT_ROOT}/${PROJECT_NAME}-widget.css
 
 JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.js
-LIBS_JS_FILES = underscore.js \
-                jlayout/jquery.sizes.js \
+LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 jlayout/jlayout.border.js \
                 jlayout/jlayout.grid.js \
                 jlayout/jlayout.flexgrid.js \

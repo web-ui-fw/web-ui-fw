@@ -8,7 +8,18 @@
 
 ensureNS("jQuery.mobile.todons");
 
+(function () {
+
+var keyFunction = Object.keys || function(obj) {
+  if (obj !== Object(obj)) throw new TypeError('Invalid object');
+  var keys = [];
+  for (var key in obj) if (hasOwnProperty.call(obj, key)) keys[keys.length] = key;
+  return keys;
+};
+
 jQuery.extend(jQuery.mobile.todons, {
+    keys: keyFunction,
+
     Point: function (x, y) {
         var X = isNaN(x) ? 0 : x;
         var Y = isNaN(y) ? 0 : y;
@@ -199,7 +210,7 @@ jQuery.extend(jQuery.mobile.todons, {
     // Read data- options from the element and update a dictionary of
     // options when possible.
     parseOptions: function (widget, userData) {
-        var optionKeys = _.keys(widget.options);
+        var optionKeys = $.mobile.todons.keys(widget.options);
         for (key in optionKeys) {
             opt = optionKeys[key];
             dataValue = widget.element.attr("data-" + opt);
@@ -272,3 +283,5 @@ jQuery.extend(jQuery.mobile.todons, {
         return coords;
     }
 });
+
+})();
