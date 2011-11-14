@@ -1,15 +1,18 @@
 .ui-processingbar-container {
-    min-height: 20px;
+    @processingbarHeight: 20px;
+    height: @processingbarHeight;
+    min-width: 400px;
+    width: 100%;
 
     .ui-processingbar-clip {
-        @processingbarClipHeight: 10px;
+        @processingbarClipHeight: @processingbarHeight / 2;
         @processingbarBarBgSide: @processingbarClipHeight * 2;
         @processingbarBarHeight: @processingbarBarBgSide * 2;
         @processingbarBarFgColor: rgb(255, 255, 255);
+        margin: (@processingbarHeight / 2) 0px 0px 0px;
 
         overflow: hidden;
         height: @processingbarClipHeight;
-        min-width: 100px;
 
         .ui-processingbar-bar {
             background-color: @processingbarBarFgColor;
@@ -18,8 +21,6 @@
             position: relative;
             margin-top: 0;
             margin-bottom: 0;
-            margin-left: 10px;
-            margin-right: 10px;
             padding-top: 0;
             padding-bottom: 0;
         }
