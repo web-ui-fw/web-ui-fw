@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Run instrumented unit tests
 #
 # set CHROME_BIN to the path to/name of your Google Chrome binary

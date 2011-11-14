@@ -38,20 +38,15 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
-    $('#spinner-demo').bind('pageshow', function (e) {
-        $(this).find('li').each(function (index, element) {
+    $('#processingcircle-demo').bind('pageshow', function (e) {
+        $(this).find(':jqmData(role="processingcircle")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
-
-            $(element).text("I am processing");
-
-            $(element).bind('stopped', function () {
-                $(element).text("I am done!");
-            });
-
-            $(element).spinner('start');
+            var elt = $(this);
+            var li = elt.parent();
 
             setTimeout(function () {
-                $(element).spinner('stop');
+                elt.processingcircle('destroy');
+                li.html("I am done!");
             }, randomWait);
         });
     });
@@ -344,6 +339,31 @@ $(document).bind("pagecreate", function () {
         button.unbind('selectedDate').bind('selectedDate', function (e, val) {
             $('#selectedCalendarDate').attr('value', val);
         });
+    });
+});
+
+$(document).bind("pageinit", function() {
+    $("#singleimagedisplay-demo").bind("pageinit", function(e) {
+        $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {
+            var displayImage = $("#singleimagedisplay-display-image");
+
+            var img = $(this).find('img:jqmData(role=singleimagedisplay)');
+            var src = null;
+            var noContent = null;
+            if (img.length>0) {
+                src = img.singleimagedisplay('option', 'source');
+                noContent = img.singleimagedisplay('option', 'noContent');
+            };
+
+            $.mobile.changePage("#singleimagedisplay-display");
+
+            displayImage.singleimagedisplay('option', 'source', src);
+            displayImage.singleimagedisplay('option', 'noContent', noContent);
+        });
+
+        // this sets the "broken" src image for #custombroken
+        $(this).find('#custombroken:jqmData(role=singleimagedisplay)')
+        .singleimagedisplay('option','noContent','images/noContent-2.png');
     });
 });
 
