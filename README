@@ -31,7 +31,6 @@ After the installation, make sure that `uglifyjs` is in your PATH,
 then set DEBUG=no in the Makefile to compress the Javascript code.
 
 
-=======
 Installing Google Chrome
 ========================
 
