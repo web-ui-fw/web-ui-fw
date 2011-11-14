@@ -161,4 +161,4 @@ init: clean
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}
 	@@mkdir -p ${PROTOTYPE_HTML_OUTPUT_DIR}
 	@@mkdir -p ${WIDGET_CSS_OUTPUT_ROOT}
-	@@ln -s ${FRAMEWORK_ROOT} ${LATEST_ROOT}
+	@@test -h ${LATEST_ROOT} || ln -s ${FRAMEWORK_ROOT} ${LATEST_ROOT}
