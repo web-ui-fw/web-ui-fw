@@ -274,60 +274,60 @@ $(document).bind("pagecreate", function () {
             $(this).find(':jqmData(role=swipelist)').swipelist('refresh');
         }
     });
+
+    var clrWidgetsAreInit = false;
+
+    $("#colorwidgets-demo").bind("pageshow", function () {
+        if (clrWidgetsAreInit) return;
+
+        $("#colorpicker").bind("colorchanged", function (e, clr) {
+            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+            $("#hsvpicker").hsvpicker("option", "color", clr);
+            $("#colortitle").colortitle("option", "color", clr);
+            $("#colorpalette").colorpalette("option", "color", clr);
+        });
+        $("#colorpickerbutton").bind("colorchanged", function (e, clr) {
+            $("#colorpicker").colorpicker("option", "color", clr);
+            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+            $("#hsvpicker").hsvpicker("option", "color", clr);
+            $("#colortitle").colortitle("option", "color", clr);
+            $("#colorpalette").colorpalette("option", "color", clr);
+        });
+        $("#colorpickerbutton-noform").bind("colorchanged", function (e, clr) {
+            $("#colorpicker").colorpicker("option", "color", clr);
+            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+            $("#hsvpicker").hsvpicker("option", "color", clr);
+            $("#colortitle").colortitle("option", "color", clr);
+            $("#colorpalette").colorpalette("option", "color", clr);
+        });
+        $("#hsvpicker").bind("colorchanged", function (e, clr) {
+            $("#colorpicker").colorpicker("option", "color", clr);
+            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+            $("#colortitle").colortitle("option", "color", clr);
+            $("#colorpalette").colorpalette("option", "color", clr);
+        });
+        $("#colortitle").bind("colorchanged", function (e, clr) {
+            $("#colorpicker").colorpicker("option", "color", clr);
+            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+            $("#hsvpicker").hsvpicker("option", "color", clr);
+            $("#colorpalette").colorpalette("option", "color", clr);
+        });
+        $("#colorpalette").bind("colorchanged", function (e, clr) {
+            $("#colorpicker").colorpicker("option", "color", clr);
+            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
+            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
+            $("#hsvpicker").hsvpicker("option", "color", clr);
+            $("#colortitle").colortitle("option", "color", clr);
+        });
+        $("#colorpalette").colorpalette("option", "color", "#45cc98");
+
+        clrWidgetsAreInit = true;
+    });
 });
 
-/* FIXME: Use pageinit as of jqm beta 3 */
-var clrWidgetsAreInit = false;
-
-$("#colorwidgets-demo").bind("pagebeforeshow", function () {
-    if (clrWidgetsAreInit) return;
-
-    $("#colorpicker").bind("colorchanged", function (e, clr) {
-        $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-        $("#hsvpicker").hsvpicker("option", "color", clr);
-        $("#colortitle").colortitle("option", "color", clr);
-        $("#colorpalette").colorpalette("option", "color", clr);
-    });
-    $("#colorpickerbutton").bind("colorchanged", function (e, clr) {
-        $("#colorpicker").colorpicker("option", "color", clr);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-        $("#hsvpicker").hsvpicker("option", "color", clr);
-        $("#colortitle").colortitle("option", "color", clr);
-        $("#colorpalette").colorpalette("option", "color", clr);
-    });
-    $("#colorpickerbutton-noform").bind("colorchanged", function (e, clr) {
-        $("#colorpicker").colorpicker("option", "color", clr);
-        $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-        $("#hsvpicker").hsvpicker("option", "color", clr);
-        $("#colortitle").colortitle("option", "color", clr);
-        $("#colorpalette").colorpalette("option", "color", clr);
-    });
-    $("#hsvpicker").bind("colorchanged", function (e, clr) {
-        $("#colorpicker").colorpicker("option", "color", clr);
-        $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-        $("#colortitle").colortitle("option", "color", clr);
-        $("#colorpalette").colorpalette("option", "color", clr);
-    });
-    $("#colortitle").bind("colorchanged", function (e, clr) {
-        $("#colorpicker").colorpicker("option", "color", clr);
-        $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-        $("#hsvpicker").hsvpicker("option", "color", clr);
-        $("#colorpalette").colorpalette("option", "color", clr);
-    });
-    $("#colorpalette").bind("colorchanged", function (e, clr) {
-        $("#colorpicker").colorpicker("option", "color", clr);
-        $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-        $("#hsvpicker").hsvpicker("option", "color", clr);
-        $("#colortitle").colortitle("option", "color", clr);
-    });
-    $("#colorpalette").colorpalette("option", "color", "#45cc98");
-
-    clrWidgetsAreInit = true;
-});
 
 $(document).bind("pagecreate", function () {
     var button = $('#calendarbutton');
