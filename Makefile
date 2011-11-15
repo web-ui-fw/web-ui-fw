@@ -99,7 +99,6 @@ docs: init
 	done; \
 	cp docs/docco.custom.css docs/docco.css
 
-
 themes: widget_styling
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \
@@ -129,16 +128,9 @@ version_compat: third_party_widgets widgets
 		ln -sf ${VERSION} ${FRAMEWORK_ROOT}/../$$v_compat; \
 	done;
 
-demos: all
-  # Building demo...
-	mkdir -p ${OUTPUT_ROOT}/demos
-	cp -av demos/* ${OUTPUT_ROOT}/demos/
-	@@rm -f `find ${OUTPUT_ROOT}/demos/ -iname bootstrap.js`
-	cp -f src/template/bootstrap.js ${OUTPUT_ROOT}/demos/gallery/
-
 install: all
+	# Nothing to install, but left here to support Debian packaging
 	mkdir -p ${INSTALL_DIR}/share/slp-web-fw ${INSTALL_DIR}/bin
-	cp -av ${OUTPUT_ROOT}/* src/template ${INSTALL_DIR}/share/slp-web-fw/
 	cp -av tools/* ${INSTALL_DIR}/bin
 
 coverage: all
