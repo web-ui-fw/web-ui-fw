@@ -87,8 +87,8 @@ jQuery.extend( jQuery.mobile.todons,
             ret = $.mobile.todons._widgetPrototypes[widget];
             if (ret === undefined) {
                 // ... and if the proto was not found, try to load its definition ...
-                var protoPath = frameworkRootPath + "proto-html" + "/" +
-                                theScriptTag.attr("data-framework-theme");
+                var protoPath = frameworkRootPath + "themes" + "/" + theScriptTag.attr("data-framework-theme") + "/proto-html";
+
                 $.ajax({
                     url: protoPath + "/" + widget + ".prototype.html",
                     async: false,

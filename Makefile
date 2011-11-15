@@ -11,7 +11,7 @@ LATEST_ROOT = ${OUTPUT_ROOT}/${PROJECT_NAME}/latest
 JS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/js
 THEMES_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/themes
 WIDGET_CSS_OUTPUT_ROOT = ${FRAMEWORK_ROOT}/widget-css
-PROTOTYPE_HTML_OUTPUT_DIR = ${FRAMEWORK_ROOT}/proto-html
+PROTOTYPE_HTML_OUTPUT_DIR = proto-html
 
 WIDGETS_DIR = $(CURDIR)/src/widgets
 THEMES_DIR = $(CURDIR)/src/themes
@@ -81,15 +81,9 @@ widgets: init
 			./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
 			cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled | $${uglify} >> ${FW_JS}; \
 		else \
-			for f in `find ${WIDGETS_DIR}/$$REPLY -iname 'js/*.js' | sort`; do \
+			for f in `find ${WIDGETS_DIR}/$$REPLY/js -iname '*.js' | sort`; do \
 				echo "		$$f"; \
 				cat $$f | $${uglify} >> ${FW_JS}; \
-			done; \
-		fi; \
-		if test "x${INLINE_PROTO}x" != "x1x"; then \
-			for f in `find ${WIDGETS_DIR}/$$REPLY -iname '*.prototype.html' | sort`; do \
-				echo "		$$f"; \
-				cp $$f ${PROTOTYPE_HTML_OUTPUT_DIR}; \
 			done; \
 		fi; \
 	done
@@ -119,9 +113,15 @@ themes: widget_styling
 	        lessc $$l >> $$l.css; \
 	    done; \
 	    for c in `find $$f -iname *.css` ; do \
-          cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
+	        cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
 	    done; \
 	    cp -a ${FW_WIDGET_CSS_FILE} $$outdir/ ; \
+            if test "x${INLINE_PROTO}x" != "x1x"; then \
+	        mkdir -p $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
+	        for f in `find ${WIDGETS_DIR} -iname '*.prototype.html' | sort`; do \
+	            cp $$f $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
+	        done; \
+            fi; \
 	done
 
 version_compat: third_party_widgets widgets
