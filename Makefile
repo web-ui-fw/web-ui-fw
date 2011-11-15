@@ -36,7 +36,7 @@ LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 jquery.ui.position.git+dfe75e1.js \
                 ${JQUERY_MOBILE} \
                 $(NULL)
-JQUERY = jquery-1.6.4.js
+JQUERY = submodules/jquery-mobile/js/jquery.js
 
 all: third_party_widgets widgets widget_styling themes
 
