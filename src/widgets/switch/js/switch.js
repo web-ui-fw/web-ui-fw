@@ -25,49 +25,49 @@
 
 (function($, undefined) {
 
-$.widget("todons.switch", $.mobile.widget, {
-
+$.widget("todons.switch", $.todons.widgetex, {
     options: {
         checked: true,
         initSelector: ":jqmData(role='switch')"
     },
 
+    _htmlProto: {
+        ui: {
+            outer:            "#switch",
+            normalBackground: "#switch-inner-normal",
+            activeBackground: "#switch-inner-active",
+            tButton:          "#switch-button-t",
+            fButton:          "#switch-button-f",
+            realButton:       "#switch-button-outside-real",
+            refButton:        "#switch-button-outside-ref"
+        }
+    },
+
     _create: function() {
         var self = this,
-            dstAttr = this.element.is("input") ? "checked" : "data-checked",
-            ui = {
-                outer:            "#switch",
-                normalBackground: "#switch-inner-normal",
-                activeBackground: "#switch-inner-active",
-                tButton:          "#switch-button-t",
-                fButton:          "#switch-button-f",
-                realButton:       "#switch-button-outside-real",
-                refButton:        "#switch-button-outside-ref"
-            };
+            dstAttr = this.element.is("input") ? "checked" : "data-checked";
 
-        ui = $.mobile.todons.loadPrototype("switch", ui);
-        this.element.append(ui.outer);
-        ui.outer.find("a").buttonMarkup({inline: true, corners: true});
+        this.element.append(this._ui.outer);
+        this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
             realized: false,
-            ui: ui,
             dstAttr: dstAttr
         });
 
-        $.mobile.todons.parseOptions(self, true);
+        $.mobile.todons.parseOptions(this, true);
 
         if (this.element.closest(".ui-page").is(":visible"))
-            self._realize();
+            this._realize();
         else
             this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
-        ui.realButton.bind("vclick", function(e) {
+        this._ui.realButton.bind("vclick", function(e) {
             self._toggle();
             e.stopPropagation();
         });
 
-        ui.normalBackground.bind("vclick", function(e) {
+        this._ui.normalBackground.bind("vclick", function(e) {
             self._toggle();
             e.stopPropagation();
         });
@@ -85,17 +85,17 @@ $.widget("todons.switch", $.mobile.widget, {
     },
 
     _realize: function() {
-        this.ui.realButton
+        this._ui.realButton
             .position({
                 my: "center center",
                 at: "center center",
-                of: this.ui[(this.options.checked ? "t" : "f") + "Button"]
+                of: this._ui[(this.options.checked ? "t" : "f") + "Button"]
             })
             .removeClass("switch-button-transparent");
-        this.ui.activeBackground.find("a").addClass("switch-button-transparent");
-        this.ui.normalBackground.find("a").addClass("switch-button-transparent");
-        this.ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
-        this.ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
+        this._ui.activeBackground.find("a").addClass("switch-button-transparent");
+        this._ui.normalBackground.find("a").addClass("switch-button-transparent");
+        this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
+        this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
 
         this.rendered = true;
     },
@@ -103,16 +103,16 @@ $.widget("todons.switch", $.mobile.widget, {
     _setChecked: function(checked, unconditional) {
         if (this.options.checked != checked || unconditional) {
             if (this.rendered) {
-                this.ui.refButton.position({
+                this._ui.refButton.position({
                     my: "center center", 
                     at: "center center",
-                    of: this.ui[(checked ? "t" : "f") + "Button"]
+                    of: this._ui[(checked ? "t" : "f") + "Button"]
                 });
-                this.ui.realButton.animate({"top": this.ui.refButton.position().top});
+                this._ui.realButton.animate({"top": this._ui.refButton.position().top});
             }
 
-            this.ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
-            this.ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
+            this._ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
+            this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
 
             this.options.checked = checked;
             this.element.attr(this.dstAttr, checked ? "true" : "false");
