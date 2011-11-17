@@ -1,6 +1,6 @@
 (function($, undefined) {
 
-$.widget("todons.colorwidget", $.mobile.widget, {
+$.widget("todons.colorwidget", $.todons.widgetex, {
     options: {
         color: "#ff0972"
     },
