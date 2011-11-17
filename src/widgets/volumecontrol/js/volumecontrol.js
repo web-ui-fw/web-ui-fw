@@ -43,7 +43,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.volumecontrol", $.mobile.widget, {
+$.widget( "todons.volumecontrol", $.todons.widgetex, {
     options: {
         volume: 0,
         basicTone: false,
@@ -51,12 +51,15 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
         initSelector: ":jqmData(role='volumecontrol')"
     },
 
+    _htmlProto: {
+        ui: {
+            container: "#volumecontrol",
+            volumeImage: "#volumecontrol-indicator"
+        },
+    },
+
     _create: function() {
         var self = this,
-            ui = {
-                container: "#volumecontrol",
-                volumeImage: "#volumecontrol-indicator"
-            },
             yCoord = function(volumeImage, e) {
                 var target = $(e.target),
                     coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
@@ -67,14 +70,12 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
                 return coords.y;
             };
 
-          ui = $.mobile.todons.loadPrototype("volumecontrol", ui);
-          ui.container.insertBefore(this.element)
-                      .popupwindow({overlayTheme: "", fade: false, shadow: false});
+          this._ui.container.insertBefore(this.element)
+                            .popupwindow({overlayTheme: "", fade: false, shadow: false});
           this.element.css("display", "none");
 
           $.extend (self, {
               isOpen: false,
-              ui: ui,
               dragging: false,
               realized: false,
               volumeElemStack: []
@@ -87,19 +88,19 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
           else
               this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
 
-          ui.container.bind("closed", function(e) {
+          this._ui.container.bind("closed", function(e) {
               self.isOpen = false;
           });
 
-          ui.volumeImage.bind("vmousedown", function(e) {
+          this._ui.volumeImage.bind("vmousedown", function(e) {
               self.dragging = true;
-              self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
+              self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
               event.preventDefault();
           });
 
-          ui.volumeImage.bind("vmousemove", function(e) {
+          this._ui.volumeImage.bind("vmousemove", function(e) {
               if (self.dragging) {
-                  self._setVolume((1.0 - yCoord(self.ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
+                  self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
                   event.preventDefault();
               }
           });
@@ -164,7 +165,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
 
     _setTitle: function(value, unconditional) {
         this.options.title = value;
-        this.ui.container.find("#volumecontrol-title").text(value);
+        this._ui.container.find("#volumecontrol-title").text(value);
     },
 
     _setOption: function(key, value, unconditional) {
@@ -201,8 +202,8 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
     _setVolumeIcon: function() {
         if (this.volumeElemStack.length === 0) {
             var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
-                cx = this.ui.volumeImage.width(),
-                cy = this.ui.volumeImage.height(),
+                cx = this._ui.volumeImage.width(),
+                cy = this._ui.volumeImage.height(),
                 cxInc = (cx - cxStart) / this._maxVolume(),
                 nDivisions = 2 * this._maxVolume() + 1,
                 cyElem = cy / nDivisions,
@@ -218,7 +219,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
                         height: cyElem
                     });
                 this.volumeElemStack.push(elem);
-                this.ui.volumeImage.append(elem);
+                this._ui.volumeImage.append(elem);
             }
         }
         for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
@@ -230,7 +231,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
 
     open: function() {
         if (!this.isOpen) {
-            this.ui.container.popupwindow("open",
+            this._ui.container.popupwindow("open",
                 window.innerWidth  / 2,
                 window.innerHeight / 2);
 
@@ -240,7 +241,7 @@ $.widget( "todons.volumecontrol", $.mobile.widget, {
 
     close: function() {
         if (this.isOpen) {
-            this.ui.container.popupwindow("close");
+            this._ui.container.popupwindow("close");
             this.isOpen = false;
         }
     },
