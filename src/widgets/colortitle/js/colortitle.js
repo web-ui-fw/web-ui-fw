@@ -32,26 +32,21 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
         initSelector: ":jqmData(role='colortitle')"
     },
 
-    _create: function() {
-      var self = this,
-          ui = {
+    _htmlProto: {
+        ui: {
             clrtitle: "#colortitle",
-            header: "#colortitle-string"
-          };
+            header:   "#colortitle-string"
+        }
+    },
 
-        $.mobile.todons.loadPrototype("colortitle", ui);
-        this.element.append(ui.clrtitle);
-
-        $.extend( this, {
-            ui: ui
-        });
-
-      $.todons.colorwidget.prototype._create.call(this);
+    _create: function() {
+        this.element.append(this._ui.clrtitle);
+        $.todons.colorwidget.prototype._create.call(this);
     },
 
     _setColor: function(clr, unconditional) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional))
-            this.ui.header.text(clr);
+            this._ui.header.text(clr);
     }
 });
 
