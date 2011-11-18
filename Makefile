@@ -159,6 +159,7 @@ dist: all docs
 		${FW_WIDGET_CSS_FILE} \
 		docs \
 		README \
+		COPYING \
 		$${DESTDIR}; \
 	tar cfzps \
 		$${TARBALL} \
