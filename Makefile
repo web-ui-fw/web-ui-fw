@@ -97,7 +97,12 @@ docs: init
 			docco $$f > /dev/null; \
 		done; \
 	done; \
-	cp docs/docco.custom.css docs/docco.css
+	cp docs/docco.custom.css docs/docco.css; \
+	cat docs/index.header > docs/index.html; \
+	for f in `find docs -name '*.html' -not -name index.html | sort`; do \
+		echo "<li><a href=\"$$(basename $$f)\">$$(basename $$f .html)</a></li>" >> docs/index.html; \
+	done; \
+	cat docs/index.footer >> docs/index.html
 
 themes: widget_styling
 	# Building web-ui-fw themes...
@@ -171,6 +176,7 @@ clean:
 	# Remove generated files...
 	@@rm -f `find . -iname *.less.css`
 	@@rm -f `find . -iname *.js.compiled`
+	@@rm -f docs/*.html
 
 init:
 	# Checking for JQM
