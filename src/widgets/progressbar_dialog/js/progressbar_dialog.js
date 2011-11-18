@@ -21,36 +21,32 @@
  */
 
 (function ($, window, undefined) {
-    $.widget("todons.progressbar_dialog", $.mobile.widget, {
+    $.widget("todons.progressbar_dialog", $.todons.widgetex, {
         options: {
             value: 0,
             max: 100,
             duration: 10000,
         },
-		
-		dialogContainer: 0,
-		progressBar_in_dialog : 0,
+
+        _htmlProto: {
+            ui: {
+                dialogContainer:       "div.ui-progressbar-dialog", // Note: dash vs. underscore!
+                progressBar_in_dialog: "div.ui-progressbar_dialog"
+            }
+        },
 				
         _create: function () {
-            var self = this,
-	   		   	select = this.element;
-	        	
-	        dialogContainer = $.mobile.todons.loadPrototype("progressbar_dialog").find("div.ui-progressbar-dialog")
-	        		.insertBefore(select);
-	                	
-	        progressBar_in_dialog = dialogContainer.find("div.ui-progressbar_dialog");
-	        progressBar_in_dialog.progressbar();
-	        
-	        
+	    this._ui.dialogContainer.insertBefore(this.element);
+	    this._ui.progressBar_in_dialog.progressbar();
         },
         
         value: function( newValue ) {
-			progressBar_in_dialog.progressbar('value', newValue);
-		},
+	    this._ui.progressBar_in_dialog.progressbar('value', newValue);
+        },
 		
-		getValue: function () {
-			return progressBar_in_dialog.progressbar('value');
-		},
+        getValue: function () {
+	    return this._ui.progressBar_in_dialog.progressbar('value');
+        },
 		
     }); /* End of widget */
 
