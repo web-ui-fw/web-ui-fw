@@ -1,4 +1,4 @@
-DEBUG = yes
+DEBUG ?= yes
 PROJECT_NAME = web-ui-fw
 VERSION = 0.1
 VERSION_COMPAT =
