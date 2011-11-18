@@ -171,7 +171,7 @@ dist: all docs
 		--exclude='submodules/jquery-mobile' \
 		--exclude='${JQUERY}' \
 		-C $${TMPDIR} ${PROJECT_NAME}; \
-	rm -rf $${TMPDIR}}
+	rm -rf $${TMPDIR}
 
 clean:
 	# Removing destination directory...
