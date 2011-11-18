@@ -137,6 +137,34 @@ coverage: all
 	# Checking unit test coverage
 	$(CURDIR)/tests/coverage/instrument.sh
 
+dist: all docs
+	# Creating tarball...
+	@@ \
+	TMPDIR=$$(mktemp -d tarball.XXXXXXXX); \
+	DESTDIR=$${TMPDIR}/${PROJECT_NAME}; \
+	MIN=''; \
+	if test "x${DEBUG}x" = "xnox"; then \
+		MIN='.min'; \
+	fi; \
+	TARBALL=${PROJECT_NAME}-${VERSION}-`date +%Y%m%d`$${MIN}.tar.gz; \
+	mkdir -p $${DESTDIR}; \
+	cp -a ${FW_JS} \
+		${FW_LIBS_JS} \
+		${THEMES_OUTPUT_ROOT}/tizen/${FW_THEME_CSS_FILE} \
+		${FW_WIDGET_CSS_FILE} \
+		docs \
+		README \
+		$${DESTDIR}; \
+	tar cfzps \
+		$${TARBALL} \
+		--exclude='.git' \
+		--exclude='*.less.css' \
+		--exclude='*.js.compiled' \
+		--exclude='submodules/jquery-mobile' \
+		--exclude='${JQUERY}' \
+		-C $${TMPDIR} ${PROJECT_NAME}; \
+	rm -rf $${TMPDIR}
+
 clean:
 	# Removing destination directory...
 	@@rm -rf ${OUTPUT_ROOT}
