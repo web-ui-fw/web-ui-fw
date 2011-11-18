@@ -54,16 +54,17 @@ For example, if your project had a layout like this:
     css/
       app.css (your application's CSS)
 
-You could add the web-ui-fw files to your project like this:
+You could add the web-ui-fw directory to your project like this:
 
   /
     index.html
     js/
       app.js
-      web-ui-fw-libs.js (3rd party dependencies of web-ui-fw)
-      web-ui-fw.js (web UI components)
     css/
       app.css
+    web-ui-fw/
+      web-ui-fw-libs.js (3rd party dependencies of web-ui-fw)
+      web-ui-fw.js (web UI components)
       web-ui-fw-widget.css (web UI widget styling)
       web-ui-fw-theme.css (optional)
 
@@ -89,7 +90,7 @@ Boilerplate index.html
       <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 
       <!-- web-ui-fw widget styling -->
-      <link rel="stylesheet" href="css/web-ui-fw-widget.css" />
+      <link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" />
 
       <!-- your application stylesheet -->
       <link rel="stylesheet" href="css/app.css" />
@@ -99,8 +100,8 @@ Boilerplate index.html
       <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 
       <!-- web-ui-fw JS -->
-      <script src="js/web-ui-fw-libs.js"></script>
-      <script src="js/web-ui-fw.js"></script>
+      <script src="web-ui-fw/web-ui-fw-libs.js"></script>
+      <script src="web-ui-fw/web-ui-fw.js"></script>
 
       <!-- your application JS -->
       <script src="js/app.js"></script>
@@ -115,7 +116,7 @@ Boilerplate index.html
         </div>
 
         <div data-role="content">
-          <ul data-role="listview" data-autodividers="true">
+          <ul data-role="listview" data-autodividers="alpha">
             <li>Albert</li>
             <li>Aldo</li>
             <li>Betty</li>
@@ -143,7 +144,7 @@ Replace the standard jQuery Mobile theme file with the
 web-ui-fw-theme.css file. For example:
 
    <!-- load the custom theme instead of jquery.mobile-1.0.min.css -->
-   <link rel="stylesheet" href="css/web-ui-fw-theme.css" />
+   <link rel="stylesheet" href="web-ui-fw/web-ui-fw-theme.css" />
 
    <!-- load jQuery and jQuery Mobile JavaScript-->
    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
