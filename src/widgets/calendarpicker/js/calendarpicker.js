@@ -96,7 +96,7 @@
 //        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
 
 (function($, undefined ) {
-    $.widget( "todons.calendarpicker", $.mobile.widget, {
+    $.widget( "todons.calendarpicker", $.todons.widgetex, {
         options: {
             // All widget options, including some internal runtime details
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -214,8 +214,8 @@
                 interval = {'d': 60*60*24, 'h': 60*60, 'i': 60, 's':1},
                 calmode = {};
 
-            self.cpMonthGrid.text( o.monthsOfYear[self.theDate.getMonth()] + " " + self.theDate.getFullYear() );
-            self.cpweekDayGrid.html('');
+            self._ui.cpMonthGrid.text( o.monthsOfYear[self.theDate.getMonth()] + " " + self.theDate.getFullYear() );
+            self._ui.cpweekDayGrid.html('');
 
             calmode = {'today': -1, 'highlightDay': -1, 'presetDay': -1, 'nexttoday': 1,
                 'thisDate': new Date(), 'maxDate': new Date(), 'minDate': new Date(),
@@ -252,7 +252,7 @@
 
             if ( o.calShowDays ) {
                 if ( o.daysOfWeekShort.length < 8 ) { o.daysOfWeekShort = o.daysOfWeekShort.concat(o.daysOfWeekShort); }
-                calmode.weekDays = $("<div>", {'class':'ui-cp-row'}).appendTo(self.cpweekDayGrid);
+                calmode.weekDays = $("<div>", {'class':'ui-cp-row'}).appendTo(self._ui.cpweekDayGrid);
                 for ( i=0; i<=6;i++ ) {
                     $("<div>"+o.daysOfWeekShort[i+o.calStartDay]+"</div>").addClass('ui-cp-date ui-cp-date-disabled ui-cp-month').appendTo(calmode.weekDays);
                 }
@@ -260,7 +260,7 @@
 
             for ( gridWeek=0; gridWeek<=5; gridWeek++ ) {
                 if ( gridWeek === 0 || ( gridWeek > 0 && (calmode.today > 0 && calmode.today <= calmode.end) ) ) {
-                    thisRow = $("<div>", {'class': 'ui-cp-row'}).appendTo(self.cpweekDayGrid);
+                    thisRow = $("<div>", {'class': 'ui-cp-row'}).appendTo(self._ui.cpweekDayGrid);
                     for ( gridDay=0; gridDay<=6; gridDay++) {
                         if ( gridDay === 0 ) { calmode.weekMode = ( calmode.today < 1 ) ? (calmode.prevtoday - calmode.lastend + o.calWeekModeFirstDay) : (calmode.today + o.calWeekModeFirstDay); }
                         if ( gridDay === calmode.start && gridWeek === 0 ) { calmode.today = 1; }
@@ -371,15 +371,21 @@
             self._buildPage();
         },
 
+        _htmlProto: {
+            ui: {
+                cpContainer:    ".ui-cp-container",
+                cpHeader:       ".ui-cp-headercontainer",
+                cpweekDayGrid:  ".ui-cp-weekday",
+                cpMonthGrid:    ".ui-cp-month",
+                previousButton: ".ui-cp-previous",
+                nextButton:     ".ui-cp-next"
+            }
+        },
+
         _buildPage: function () {
             // Build the controls
             var self = this,
                 o = self.options,
-                container = $.mobile.todons.loadPrototype("calendarpicker"),
-                cpContainer = container.find('.ui-cp-container'),
-                cpHeader = container.find('.ui-cp-headercontainer'),
-                cpweekDayGrid = container.find('.ui-cp-weekday'),
-                cpMonthGrid = container.find('.ui-cp-month'),
                 isopen = false,
                 previousButtonMarkup = {inline: true,
                                         corners:true,
@@ -388,21 +394,19 @@
                 nextButtonMarkup = {inline: true,
                                     corners:true,
                                     icon:'arrow-r',
-                                    iconpos:'notext'},
-                previousButton = container.find('.ui-cp-previous'),
-                nextButton = container.find('.ui-cp-next');
+                                    iconpos:'notext'};
 
-            previousButton.buttonMarkup(previousButtonMarkup);
-            nextButton.buttonMarkup(nextButtonMarkup);
+            this._ui.previousButton.buttonMarkup(previousButtonMarkup);
+            this._ui.nextButton.buttonMarkup(nextButtonMarkup);
 
-            nextButton.bind('vclick',function(e) {
+            this._ui.nextButton.bind('vclick',function(e) {
                 e.preventDefault();
                 if (!self.calNoNext) {
                     if ( self.theDate.getDate() > 28 ) { self.theDate.setDate(1); }
                     self._offset('m',1);
                 }
             });
-            previousButton.bind('vclick', function(e) {
+            this._ui.previousButton.bind('vclick', function(e) {
                 e.preventDefault();
                 if (!self.calNoPrev) {
                     if ( self.theDate.getDate() > 28 ) { self.theDate.setDate(1); }
@@ -411,12 +415,9 @@
             });
 
             $.extend(self, {
-                cpMonthGrid: cpMonthGrid,
-                cpweekDayGrid: cpweekDayGrid,
-                cpContainer: cpContainer,
                 isopen:isopen
             });
-            cpContainer.appendTo(self.element)
+            this._ui.cpContainer.appendTo(self.element)
                        .popupwindow({transition: "slideup"})
                        .bind("closed", function(e) {
                           self.isopen = false;
@@ -435,21 +436,20 @@
 
         open: function() {
             // Open the picker
-            var self = this;
-            if (self.isopen === true ) { return false; } else { self.isopen = true; } // Ignore if already open
-            self._update();
+            if (this.isopen === true ) { return false; } else { this.isopen = true; } // Ignore if already open
+            this._update();
             /*
              * FIXME: Could pass some meaningful coordinates to "open" to make it show up in the right place, rather
              * than the center of the screen. The problem is that no widget from the page is associated with this
              * popup window, so we would have to start with this.element and work our way up the tree until we ran
              * into a widget whose coordinates we could actually pass to "open".
              */
-            self.cpContainer.popupwindow("open", 0, window.innerHeight);
+            this._ui.cpContainer.popupwindow("open", 0, window.innerHeight);
         },
 
         close: function() {
             // Close the picker
-            this.cpContainer.popupwindow("close");
+            this._ui.cpContainer.popupwindow("close");
         },
     });
     // Autoinit widget.
