@@ -58,7 +58,7 @@ third_party_widgets: init
 	@@uglify=cat; \
 	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
 		echo "	# uglifyjs enabled"; \
-		uglify=uglifyjs; \
+		uglify="uglifyjs -nc"; \
 	fi; \
 	cd ${LIBS_DIR}/js; \
 	for f in ${LIBS_JS_FILES}; do \
@@ -71,7 +71,7 @@ widgets: init
 	@@uglify=cat; \
 	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
 		echo "	# uglifyjs enabled"; \
-		uglify=uglifyjs; \
+		uglify="uglifyjs -nc"; \
 	fi; \
 	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	while read REPLY; do \
