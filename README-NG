@@ -27,12 +27,27 @@ What's in here?
 docs/                   basic API documentation
 COPYING                 licence file
 README                  this file
-web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on
+web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on (see below)
 web-ui-fw.js            the web UI widgets, components etc.
 web-ui-fw-widget.css    CSS styling for the web UI widgets
 
 The JavaScript files will be minified (via uglify-js) if you got the
 .min.tar.gz file and are less suitable for debugging.
+
+web-ui-fw-libs.js incorporates the following third party libraries
+either in full or in part:
+
+* jLayout (all of it)
+* jLayout jQuery plugin (all of it)
+* jSizes (all of it)
+* Underscore (a copy of the _.keys() method is in our namespace)
+* jQuery UI (only the position() method)
+* some experimental elements of jQuery Mobile, especially scrollview
+
+See COPYING for their individual licences and further information.
+
+If you have any of these libraries in your project, you may need to
+be careful of unwanted interactions.
 
 =================================================
 Using web-ui-fw
