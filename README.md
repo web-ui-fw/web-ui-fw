@@ -1,291 +1,203 @@
-Installing less
----------------
+web-ui-fw is a set of widgets and other components for jQuery Mobile.
+It also includes a (slightly deprecated, as it was built
+using the rc1 CSS approach) custom theme.
 
-`lessc` is a compiler that generates CSS code from the .less files that
-style the widgets. Here are some instruction to install it on Ubuntu
-11.04, and it should work on other Debian based distributions. Users of
-other distributions should find their way around too:
+The project is complementary to jQuery Mobile and the components
+should slot into existing projects. In almost all cases, the colours
+and styling of the widgets should broadly adhere to the jQuery Mobile
+styling approach.
 
-    cd /tmp
-    sudo apt-get install git-core curl build-essential openssl libssl-dev
-    git clone https://github.com/joyent/node.git && cd node
-    git checkout v0.4.9 # or whatever the latest stable is - last known to work v0.5.0
-    ./configure && make
-    sudo make install
-    curl http://npmjs.org/install.sh | sudo sh
-    npm install less
-    export PATH=$HOME/.npm/less/1.1.4/package/bin:$PATH
+This document is intended for end users. If you are interested in
+working on web-ui-fw itself, please see HACKING.md.
 
-You may want to add the final export to your .bashrc and source it.
+Requirements
+============
 
-
-Installing uglifyjs
--------------------
-
-`uglifyjs` is a JavaScript parser/compressor/beautifier. It can be
-installed via NPM. On a Debian based distribution, this should work:
-
-    npm install uglify-js
-
-After the installation, make sure that `uglifyjs` is in your PATH,
-then set DEBUG=no in the Makefile to compress the Javascript code.
-
-
-Installing Google Chrome
-------------------------
-
-The main browser used for developing web-ui-fw is Google Chrome. This
-is also used to produce the coverage reports (see below). So it's
-recommended that you install it if you intend to do any work on the
+You will need to pull jQuery and jQuery Mobile into your
 project.
 
-Get it from `http://www.google.com/chrome`
+web-ui-fw is written against 1.0-stable branch of jQuery Mobile. So you
+should use the 1.0 version of jQuery Mobile as explained at:
 
+  http://jquerymobile.com/download/
 
-Installing jscoverage
----------------------
+For an example of the HTML elements you'll need, see the "Using web-ui-fw"
+section.
 
-jscoverage produces code coverage reports from instrumented JavaScript
-code. It's used here to produce coverage reports from the QUnit test
-suite (in tests/unit-tests): see the section on "Running the test coverage
-report" for more details.
+Dependencies
+============
 
-It's not essential to install this unless you want to get coverage
-reports for the web-ui-fw test suite.
+web-ui-fw-libs.js incorporates the following third party libraries
+either in full or in part:
 
-The source is available from: `http://siliconforks.com/jscoverage/`
-It has minimal dependencies and is easy to build.
+* jLayout (all of it)
+* jLayout jQuery plugin (all of it)
+* jSizes (all of it)
+* Underscore (a copy of the _.keys() method is in our namespace)
+* jQuery UI (only the position() method)
+* some experimental elements of jQuery Mobile, especially scrollview
 
-Once you've built it, put the jscoverage binary on your PATH.
+There is no need to download these libraries, as they are included
+in the project and the built JavaScript.
 
+If you have any of these libraries in your project, you may need to
+be careful of unwanted interactions.
 
-Installing docco
-----------------
+See COPYING for their individual licences and further information.
 
-`docco` is used to generate API documentation. It needs Pygments for
-the syntax hilighting:
+Licence
+=======
 
-    sudo apt-get install python-setuptools
-    sudo easy_install Pygments
-    npm install docco
+The project is MIT licensed.
 
-(Then add docco to your PATH).
+Maintainers
+===========
 
-Installing gawk
----------------
+The project is maintained by Intel's Open Source Technology Centre.
 
-GNU awk (`gawk`) is used to place HTML prototypes into compiled source files.
-It is usually provided by a package named `gawk`.
+Using a web-ui-fw distribution
+==============================
 
-Building
-========
+This document explains how to use one of the web-ui-fw distribution
+files (available under **Downloads**).
 
-***
-NB: The development team working on web-ui-fw uses Linux,
-so no one has attempted to build this project on other
-platforms.
-***
+A distribution file contains the following:
 
-First install `less` (see above).
+<pre>
+docs/                   basic API documentation
+COPYING                 licence file
+README                  this file
+web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on (see below)
+web-ui-fw.js            the web UI widgets, components etc.
+web-ui-fw-widget.css    CSS styling for the web UI widgets
+</pre>
 
-You'll also need `make`.
+The JavaScript files will be minified (via uglify-js) if you got the
+.min.tar.gz file and are less suitable for debugging.
 
-Then, from a command line inside the project directory, do:
+To use the archive, follow the steps in the next section.
 
-    git submodule update
+Step by step
+------------
 
-    cd libs/js/submodules/jquery-mobile; make && cd -
-    make
+1. Download the tarball and unpack it somewhere. This should give you
+   a web-ui-fw directory.
+2. Copy the files from there to your project (it's up to you where they go).
+3. Add stylesheet and script elements to load the web-ui-fw files in the
+   correct order, _after_ the lines you added to load jQuery and jQuery Mobile.
 
-This builds jquery-mobile, then compiles the stylesheets for all the
-widgets using lessc, finally concatenates all the library and widget
-JavaScript into framework files.
+For example, if your project had a layout like this:
 
-If you want to clean the source tree, just do:
+<pre>
+/ (root directory)
+  index.html (the entry point to your application)
+  js/
+    app.js (your application's JavaScript)
+  css/
+    app.css (your application's CSS)
+</pre>
 
-  make clean
+You could add the web-ui-fw directory to your project like this:
 
+<pre>
+/
+  index.html
+  js/
+    app.js
+  css/
+    app.css
+  web-ui-fw/
+    web-ui-fw-libs.js (3rd party dependencies of web-ui-fw)
+    web-ui-fw.js (web UI components)
+    web-ui-fw-widget.css (web UI widget styling)
+    web-ui-fw-theme.css (optional)
+</pre>
 
-Building the documentation
-==========================
+Note that the web-ui-fw-theme.css file is optional. If you want to
+use it, see the "Using the custom theme" section.
 
-If you have installed docco (see above), you can build the
-documentation by issuing the following command:
+The boilerplate for a basic web-ui-fw project, pulling in all
+the required files in the right order, is shown in the next section.
 
-  make docs
+Boilerplate index.html
+----------------------
 
+(This assumes the directory layout from the previous section.)
 
-The widget gallery demo
-=======================
+<pre>
+<!DOCTYPE html>
+<html>
 
-You'll need to build the project first (see above).
+  <head>
 
-In a browser, open:
+    <title>My app</title>
 
-    demos/gallery/index.html
+    <!-- jQuery Mobile stylesheet -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 
-This shows the widgets currently available for the web UI framework.
+    <!-- web-ui-fw widget styling -->
+    <link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" />
 
-If you are developing on the widget gallery demo (e.g. writing
-widgets), you may want to bypass the framework loader's cache
-mechanism (so you get the latest version of every JS file). To
-do this, append a debug=true parameter to the URL, e.g.
+    <!-- your application stylesheet -->
+    <link rel="stylesheet" href="css/app.css" />
 
-    file://<path>/demos/gallery/index.html?debug=true
+    <!-- jQuery and jQuery Mobile JS -->
+    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 
-where `<path>` is the full, absolute (with leading /) path to your
-checked out copy of the web-ui-fw repo.
+    <!-- web-ui-fw JS -->
+    <script src="web-ui-fw/web-ui-fw-libs.js"></script>
+    <script src="web-ui-fw/web-ui-fw.js"></script>
 
-Also note that each time you change your widget code, you'll
-need to do `make clean && make` to rebuild the CSS and JS files.
+    <!-- your application JS -->
+    <script src="js/app.js"></script>
 
+  </head>
 
-Writing more widgets
-====================
+  <body>
 
-The best way to start is to copy an existing widget. A simple one
-like progressbar is a good starting point.
+    <div data-role="page" id="home">
+      <div data-role="header">
+        <h1>page header</h1>
+      </div>
 
-Note that your widget JavaScript code should provide the following:
+      <div data-role="content">
+        <ul data-role="listview" data-autodividers="alpha">
+          <li>Albert</li>
+          <li>Aldo</li>
+          <li>Betty</li>
+          <li>Brian</li>
+          <li>Carrie</li>
+          <li>Dave</li>
+          <li>Ethel</li>
+          <li>Grant</li>
+          <li>Greta</li>
+        </ul>
+      </div>
+    </div>
 
-* Programmatic access: `$(selector).mywidget()` should create an instance
-of your widget.
+  </body>
 
-* Declarative access: `<div data-role="mywidget">...</div>` should also
-create an instance of your widget.
+</html>
+</pre>
 
-* A `_create()` method which initialises your widget.
+If you can see list dividers with alphabetical letters in them, you
+can be fairly confident that web-ui-fw has loaded correctly.
 
-* A set of options which can be set via a
-`$(selector).mywidget('option', value)` style method, or by attributes
-on the selected element, e.g. `data-mywidget-myoption="value"`.
-Where there are multiple options, you should
-use a `data-mywidget-options='{...json...}'` style attribute (see
-layout-hbox for an example).
+Using the custom theme
+----------------------
 
-* Options should include an `initSelector`, specifying the
-jQuery selector for finding elements to which your widget applies. Typically
-this will involve looking for `data-role` attributes, e.g.
+Replace the standard jQuery Mobile theme file with the
+web-ui-fw-theme.css file. For example:
 
-        :jqmData(role=optionheader)
+<pre>
+<!-- load the custom theme instead of jquery.mobile-1.0.min.css -->
+<link rel="stylesheet" href="web-ui-fw/web-ui-fw-theme.css" />
 
-See optionheader for an example. Alternatively, if the widget applies
-to all instances of a particular HTML element, you may need a more
-general selector: see the jQuery Mobile widgets for examples.
+<!-- load jQuery and jQuery Mobile JavaScript-->
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 
-* An auto-init handler which will bind your widget to the appropriate
-elements when pages are created, using that initSelector to find
-them, e.g.
-
-        $(document).bind("pagecreate", function (e) {
-            $($.todons.mywidget.prototype.options.initSelector, e.target)
-                .not(":jqmData(role='none'), :jqmData(role='nojs')")
-                .mywidget();
-        });
-
-* Theme-awareness. This means both setting a default theme swatch for
-the widget and capturing any data-theme attribute set on the target element
-(the one your widget constructor is being applied to). See optionheader
-for an example of getting the data-theme and setting the swatch on
-the target element. You should also consider whether a swatch should
-be inherited by your widget (c.f. how buttons inherit their parent's
-swatch).
-
-* A `refresh()` method which will draw/redraw the widget. If you are
-adding new markup, you should always test for the existence of the
-markup you intend to add first, and remove it if it is present.
-
-* If your widget relies on measuring the dimensions or position of
-other widgets, you should provide for situations both where it is
-being created on a visible page, and where it's being created on a page
-which isn't yet visible. Code like the following, typically in the widget's
-`_create()` method, should accomplish this:
-
-        var page = this.element.closest(':jqmData(role="page")');
-        var self = this;
-
-        if (page.is(":visible")) {
-            self.refresh();
-        }
-        else {
-            page.bind("pageshow", function () {
-                self.refresh();
-            });
-        }
-
-* Respond to and fire events appropriately. In particular, if your
-widget changes the page size (e.g. it expands/contracts) it should
-fire an updatelayout event so widgets on the same page can respond
-appropriately. Similarly, your widget should bind to updatelayout
-events on any elements it is associated with (e.g. its parent container).
-
-You should also supply:
-
-* Basic API documentation about how to use the widget, at the top
-of the JS file.
-
-* A demo of how the widget can be used in demos/gallery.
-
-* Unit tests in a tests/mywidget directory. See below for instructions
-on writing new tests.
-
-
-Writing tests
-=============
-
-To add a new test for your widget:
-
-* Create a directory under tests/, named after your widget (e.g.
-`tests/mywidget`).
-
-* Add an `index.html` file to that directory, marked up for your test
-pages (see `tests/autodividers/index.html` for an example: you need
-all the JavaScript and CSS in the order shown there).
-
-* Add a JavaScript file called `mywidget-tests.js` to the same directory.
-This should contain your QUnit tests
-(see `tests/autodividers/autodividers-tests.js` for an example).
-
-* Edit the `tests/tests.js` file and add the path to your test file
-to it, e.g.
-
-        var TESTS = {
-            "testPages":[
-                "mywidget/index.html", // this is my new test file
-                "autodividers/index.html"
-            ]
-        };
-
-* Run your tests by opening the `tests/index.html` file (to run the
-whole suite) or your individual `index.html` file to run just your tests.
-
-NB you'll need to do a full build so the JS and CSS files are in
-the build/ directory before running tests.
-
-
-Running the test coverage report
-================================
-
-To get a coverage report, run jscoverage from the top level directory
-with:
-
-    make coverage
-
-This will open the unit tests in Google Chrome and run them. Once they're
-done, the coverage report is available from the "Summary" tab of the page.
-
-
-OS X Lion with Homebrew
-=======================
-
-    brew update
-    brew install node
-    brew install npm
-    npm install less -g
-
-Notice
-------
-if there is error on connecting npm server , try to set registry to http:
-
-    npm config set regsitry http://registry.npmjs.org/
-
+<!-- load the web-ui-fw as above -->
+...
+</pre>
