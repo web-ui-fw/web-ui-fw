@@ -59,7 +59,8 @@ Using a web-ui-fw distribution
 ==============================
 
 This document explains how to use one of the web-ui-fw distribution
-files (available under **Downloads**).
+files (available under
+<a href="https://github.com/otcshare/web-ui-fw/downloads">**Downloads**</a>).
 
 A distribution file contains the following:
 
@@ -114,7 +115,7 @@ You could add the web-ui-fw directory to your project like this:
 </pre>
 
 Note that the web-ui-fw-theme.css file is optional. If you want to
-use it, see the "Using the custom theme" section.
+use it, see the **Using the custom theme** section.
 
 The boilerplate for a basic web-ui-fw project, pulling in all
 the required files in the right order, is shown in the next section.
@@ -133,7 +134,8 @@ Boilerplate index.html
     &lt;title&gt;My app&lt;/title&gt;
 
     &lt;!-- jQuery Mobile stylesheet --&gt;
-    &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /&gt;
+    &lt;link rel="stylesheet"
+             href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /&gt;
 
     &lt;!-- web-ui-fw widget styling --&gt;
     &lt;link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" /&gt;
