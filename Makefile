@@ -37,6 +37,10 @@ LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 ${JQUERY_MOBILE} \
                 $(NULL)
 JQUERY = submodules/jquery-mobile/js/jquery.js
+JQUERY_MOBILE_CSS = submodules/jquery-mobile/compiled/jquery.mobile.structure-1.0rc2.css \
+                    submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.css \
+                    $(NULL)
+JQUERY_MOBILE_IMAGES = submodules/jquery-mobile/css/themes/default/images
 
 all: third_party_widgets widgets widget_styling themes
 
@@ -104,7 +108,7 @@ docs: init
 	done; \
 	cat docs/index.footer >> docs/index.html
 
-themes: widget_styling
+themes: widget_styling jqm_theme
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \
 	for f in `find ${THEMES_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
@@ -126,6 +130,15 @@ themes: widget_styling
 	        done; \
             fi; \
 	done
+
+jqm_theme: init
+	# Adding images to jqm theme...
+	@@mkdir -p ${THEMES_OUTPUT_ROOT}/default/images
+	@@cp -a ${LIBS_DIR}/js/${JQUERY_MOBILE_IMAGES}/* ${THEMES_OUTPUT_ROOT}/default/images
+	# Adding CSS to jqm theme...
+	@@for f in ${JQUERY_MOBILE_CSS}; do \
+		cat ${LIBS_DIR}/js/$$f >> ${THEMES_OUTPUT_ROOT}/default/${FW_THEME_CSS_FILE}; \
+	done;
 
 version_compat: third_party_widgets widgets
 	# Creating compatible version dirs...
@@ -157,6 +170,7 @@ dist: clean all docs
 		${FW_LIBS_JS} \
 		${THEMES_OUTPUT_ROOT}/tizen/${FW_THEME_CSS_FILE} \
 		${FW_WIDGET_CSS_FILE} \
+		${THEMES_OUTPUT_ROOT}/tizen/images \
 		docs \
 		README.md \
 		COPYING \
