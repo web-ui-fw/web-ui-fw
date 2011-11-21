@@ -36,8 +36,8 @@ LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 $(NULL)
 JQUERY = submodules/jquery-mobile/js/jquery.js
 JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile.js
-JQUERY_MOBILE_CSS = submodules/jquery-mobile/compiled/jquery.mobile.structure-1.0rc2.css \
-                    submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.css \
+JQUERY_MOBILE_CSS = submodules/jquery-mobile/compiled/jquery.mobile.structure.css \
+                    submodules/jquery-mobile/compiled/jquery.mobile.css \
                     $(NULL)
 JQUERY_MOBILE_IMAGES = submodules/jquery-mobile/css/themes/default/images
 
