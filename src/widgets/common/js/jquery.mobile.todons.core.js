@@ -275,7 +275,7 @@ jQuery.extend(jQuery.mobile.todons, {
             coords.y === undefined || isNaN(coords.y)) {
             var offset = $(e.target).offset();
 
-            coords = documentRelativeCoordsFromEvent(e);
+            coords = $.mobile.todons.documentRelativeCoordsFromEvent(e);
             coords.x -= offset.left;
             coords.y -= offset.top;
         }
