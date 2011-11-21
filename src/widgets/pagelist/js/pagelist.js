@@ -12,20 +12,22 @@
 
 ensureNS("jQuery.mobile.todons");
 
-$.widget("todons.pagelist", $.mobile.widget, {
+$.widget("todons.pagelist", $.todons.widgetex, {
+    _htmlProto: {
+        ui: {
+            pageList: "#pagelist",
+            button:   "#pagelist-button",
+            rowBreak: "#pagelist-rowbreak"
+        }
+    },
     _create: function() {
-        var popPageList = false,
-            ui = {
-                pageList: "#pagelist",
-                button:   "#pagelist-button",
-                rowBreak: "#pagelist-rowbreak"
-            },
+        var self = this,
+            popPageList = false,
             idx = 0;
 
-        ui = $.mobile.todons.loadPrototype("pagelist", ui);
-        ui.button.remove();
-        ui.rowBreak.remove();
-        ui.pageList
+        this._ui.button.remove();
+        this._ui.rowBreak.remove();
+        this._ui.pageList
             .appendTo($("body"))
             .popupwindow()
             .bind("vclick", function(e) {
@@ -34,15 +36,15 @@ $.widget("todons.pagelist", $.mobile.widget, {
 
         this.element.find("a[href]").each(function(elemIdx, elem) {
             if (idx > 0 && !(idx % 10))
-                ui.pageList.append(ui.rowBreak.clone());
+                self._ui.pageList.append(self._ui.rowBreak.clone());
 
-            ui.button
+            self._ui.button
                 .clone()
                 .attr("href", $(elem).attr("href"))
                 .text(++idx)
-                .appendTo(ui.pageList)
+                .appendTo(self._ui.pageList)
                 .buttonMarkup()
-                .bind("vclick", function() { ui.pageList.popupwindow("close"); })
+                .bind("vclick", function() { self._ui.pageList.popupwindow("close"); })
                 .find(".ui-btn-inner")
                     .css({padding: 2});
         });
@@ -53,8 +55,8 @@ $.widget("todons.pagelist", $.mobile.widget, {
         $(document).bind("keyup", function(e) {
             if (e.keyCode === $.mobile.keyCode.CONTROL && popPageList) {
                 var maxDim = {cx: 0, cy: 0};
-                ui.pageList.popupwindow("open", undefined, 0);
-                ui.pageList.find("a")
+                self._ui.pageList.popupwindow("open", undefined, 0);
+                self._ui.pageList.find("a")
                     .each(function() {
                         var btn = $(this),
                             dim = {

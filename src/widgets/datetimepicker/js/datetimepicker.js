@@ -36,7 +36,7 @@
 //    });
 
 (function($, window, undefined) {
-    $.widget("todons.datetimepicker", $.mobile.widget, {
+    $.widget("todons.datetimepicker", $.todons.widgetex, {
         options: {
             showDate: true,
             showTime: true,
@@ -213,7 +213,7 @@
                 // padding/borders/margins rather than adding left padding/borders/margins directly. Currently, this
                 // happens to work, because the @owner divs have no left border/margin/padding.
 
-                ui.triangle.triangle("option", "offset", owner.offset().left + owner.width() / 2 - this.ui.triangle.offset().left);
+                ui.triangle.triangle("option", "offset", owner.offset().left + owner.width() / 2 - ui.triangle.offset().left);
 
                 // Now that all the items have been added to the DOM, let's compute the size of the selector.
                 selectorWidth = selector.find(".container").outerWidth();
@@ -248,9 +248,9 @@
             if (this.state.selectorOut) {
                 selector.slideUp(this.options.animationDuration,
                     function() {
-                      if (self.ui.scrollview !== undefined) {
-                          self.ui.scrollview.remove();
-                          self.ui.scrollview = undefined;
+                      if (self._ui.scrollview !== undefined) {
+                          self._ui.scrollview.remove();
+                          self._ui.scrollview = undefined;
                       }
                     });
                 this.state.selectorOut = false;
@@ -299,7 +299,7 @@
 
                 if (newDay != this.data.day) {
                     this.data.day = newDay;
-                    this.ui.date.day.text(newDay);
+                    this._ui.date.day.text(newDay);
                 }
             }
             this.data[field] = value;
@@ -336,19 +336,18 @@
                 scrollable.view.append(item.container);
             }
 
-            if (this.ui.scrollview !== undefined)
-                this.ui.scrollview.remove();
+            if (this._ui.scrollview !== undefined)
+                this._ui.scrollview.remove();
 
             selector.append(scrollable.container);
 
-            this.ui.scrollview = scrollable.container;
+            this._ui.scrollview = scrollable.container;
 
             return {scrollable: scrollable, currentIndex: currentIndex};
         },
 
-        _create: function() {
-
-            var ui = {
+        _htmlProto: {
+            ui: {
                 container: "#datetimepicker",
                 selector: "#datetimepicker-selector",
                 triangle: "#datetimepicker-selector-triangle",
@@ -369,15 +368,16 @@
                     minutes: "#datetimepicker-time-minutes"
                 },
                 ampm: "#datetimepicker-ampm-span"
-            };
+            }
+        },
 
-            ui = $.mobile.todons.loadPrototype("datetimepicker", ui);
-            ui.selectorProto.remove();
-            ui.itemProto.remove();
+        _create: function() {
+            var self = this;
+            this._ui.selectorProto.remove();
+            this._ui.itemProto.remove();
 
             $.extend ( this, {
                 panning: false,
-                ui: ui,
                 data : {
                     now: new Date(),
                     parentInput: 0,
@@ -412,8 +412,8 @@
             $.mobile.todons.parseOptions(this);
 
             $(input).css("display", "none");
-            $(input).after(ui.container);
-            ui.triangle.triangle({"class" : "selector-triangle-color"});
+            $(input).after(this._ui.container);
+            this._ui.triangle.triangle({"class" : "selector-triangle-color"});
             this.data.parentInput = input;
 
             // We must display either time or date: if the user set both to
@@ -424,17 +424,17 @@
 
             this._initDateTime();
 
-            ui.header.text(this.options.header);
+            this._ui.header.text(this.options.header);
 
-            this._initDateTimeDivs(ui);
+            this._initDateTimeDivs(this._ui);
 
-            ui.container.bind("vclick", function () {
-                obj._hideDataSelector(ui.selector);
+            this._ui.container.bind("vclick", function () {
+                obj._hideDataSelector(self._ui.selector);
             });
 
-            ui.main.find(".data").each(function() {
+            this._ui.main.find(".data").each(function() {
                 $(this).bind("vclick", function(e) {
-                    obj._showDataSelector(ui.selector, $(this), ui);
+                    obj._showDataSelector(self._ui.selector, $(this), self._ui);
                     e.stopPropagation();
                 });
             });

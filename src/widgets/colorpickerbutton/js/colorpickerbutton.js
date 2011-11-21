@@ -52,35 +52,31 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
     },
 
-    _create: function() {
-        var self = this,
-            ui = {
-                button:          "#colorpickerbutton-button",
-                buttonContents:  "#colorpickerbutton-button-contents",
-                popup:           "#colorpickerbutton-popup-container",
-                hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
-                closeButton:     "#colorpickerbutton-popup-close-button",
-                closeButtonText: "#colorpickerbutton-popup-close-button-text",
-            };
+    _htmlProto: {
+        ui: {
+            button:          "#colorpickerbutton-button",
+            buttonContents:  "#colorpickerbutton-button-contents",
+            popup:           "#colorpickerbutton-popup-container",
+            hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
+            closeButton:     "#colorpickerbutton-popup-close-button",
+            closeButtonText: "#colorpickerbutton-popup-close-button-text",
+        }
+    },
 
-        ui = $.mobile.todons.loadPrototype("colorpickerbutton", ui);
-        ui.button.insertBefore(this.element);
+    _create: function() {
+        var self = this;
+
+        this._ui.button.insertBefore(this.element);
         this.element.css("display", "none");
 
         /* Tear apart the proto */
-        ui.popup.insertBefore(this.element)
-                .popupwindow();
-        ui.hsvpicker.hsvpicker();
-
-        // Expose to other methods
-        $.extend( self, {
-            ui: ui,
-        });
+        this._ui.popup.insertBefore(this.element).popupwindow();
+        this._ui.hsvpicker.hsvpicker();
 
         $.todons.colorwidget.prototype._create.call(this);
 
         // Button events
-        ui.button.bind("vclick keydown", function(event) {
+        this._ui.button.bind("vclick keydown", function(event) {
             if (event.type == "vclick" ||
                 event.keyCode &&
                   (event.keyCode === $.mobile.keyCode.ENTER ||
@@ -90,8 +86,8 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             }
         });
 
-        ui.closeButton.bind("vclick", function(event) {
-            self._setColor(self.ui.hsvpicker.attr("data-color"));
+        this._ui.closeButton.bind("vclick", function(event) {
+            self._setColor(self._ui.hsvpicker.attr("data-color"));
             self.close();
         });
       },
@@ -103,20 +99,20 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
               this._setColor(value, unconditional);
           else
           if (key === "buttonMarkup") {
-              this.ui.button.buttonMarkup(value);
-              value["theme"] = this.ui.popup.popupwindow("option", "overlayTheme").substring(8);
+              this._ui.button.buttonMarkup(value);
+              value["theme"] = this._ui.popup.popupwindow("option", "overlayTheme").substring(8);
               value["inline"] = false;
-              this.ui.closeButton.buttonMarkup(value);
+              this._ui.closeButton.buttonMarkup(value);
           }
           else
           if (key === "closeText")
-              this.ui.closeButtonText.text(value);
+              this._ui.closeButtonText.text(value);
       },
 
       _setColor: function(clr, unconditional) {
           if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
-              this.ui.hsvpicker.hsvpicker("option", "color", clr);
-              this.ui.buttonContents.css("color", clr);
+              this._ui.hsvpicker.hsvpicker("option", "color", clr);
+              this._ui.buttonContents.css("color", clr);
           }
       },
 
@@ -125,15 +121,15 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             return;
         }
 
-        this.ui.popup.popupwindow("open",
-            this.ui.button.offset().left + this.ui.button.outerWidth()  / 2,
-            this.ui.button.offset().top  + this.ui.button.outerHeight() / 2);
+        this._ui.popup.popupwindow("open",
+            this._ui.button.offset().left + this._ui.button.outerWidth()  / 2,
+            this._ui.button.offset().top  + this._ui.button.outerHeight() / 2);
       },
 
     _focusButton : function(){
         var self = this;
         setTimeout(function() {
-            self.ui.button.focus();
+            self._ui.button.focus();
         }, 40);
     },
 
@@ -145,7 +141,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         var self = this;
 
         self._focusButton();
-        self.ui.popup.popupwindow("close");
+        self._ui.popup.popupwindow("close");
     },
 });
 

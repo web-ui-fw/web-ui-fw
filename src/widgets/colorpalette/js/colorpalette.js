@@ -39,27 +39,25 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         initSelector: ":jqmData(role='colorpalette')"
     },
 
+    _htmlProto: {
+        ui: {
+            clrpalette: "#colorpalette",
+            preview: "#colorpalette-preview",
+            previewContainer: "#colorpalette-preview-container"
+        }
+    },
+
     _create: function() {
-        var self = this,
-            ui = {
-                clrpalette: "#colorpalette",
-                preview: "#colorpalette-preview",
-                previewContainer: "#colorpalette-preview-container"
-            };
+        var self = this;
 
-        ui = $.mobile.todons.loadPrototype("colorpalette", ui);
-        this.element.append(ui.clrpalette);
-
-        $.extend(this, {
-            ui: ui
-        });
+        this.element.append(this._ui.clrpalette);
 
         $.todons.colorwidget.prototype._create.call(this);
 
-        ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
+        this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
             var clr = $(e.target).css("background-color"),
                 Nix,
-                nChoices = self.ui.clrpalette.attr("data-n-choices"),
+                nChoices = self._ui.clrpalette.attr("data-n-choices"),
                 choiceId, rgbMatches;
 
             rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
@@ -71,29 +69,29 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
                     parseInt(rgbMatches[3]) / 255]);
 
             for (Nix = 0 ; Nix < nChoices ; Nix++)
-                ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
+                self._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
             $(e.target).addClass("colorpalette-choice-active");
             $.todons.colorwidget.prototype._setColor.call(self, clr);
-            self.ui.preview.css("background", clr);
+            self._ui.preview.css("background", clr);
         });
     },
 
     _showPreview: function(show, unconditional) {
-        var currentlyVisible = (this.ui.previewContainer.attr("style") != "");
+        var currentlyVisible = (this._ui.previewContainer.attr("style") != "");
 
         if (unconditional) {
             if (show)
-                this.ui.previewContainer.removeAttr("style");
+                this._ui.previewContainer.removeAttr("style");
             else
-                this.ui.previewContainer.css("display", "none");
+                this._ui.previewContainer.css("display", "none");
         }
         else {
             if (!show && currentlyVisible)
-                this.ui.previewContainer.removeAttr("style");
+                this._ui.previewContainer.removeAttr("style");
             else
             if (show && !currentlyVisible)
-                this.ui.previewContainer.css("display", "none");
+                this._ui.previewContainer.css("display", "none");
         }
     },
 
@@ -110,14 +108,14 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
             var Nix,
                 activeIdx = -1,
-                nChoices = this.ui.clrpalette.attr("data-n-choices"),
+                nChoices = this._ui.clrpalette.attr("data-n-choices"),
                 hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr)),
                 origHue = hsl[0],
                 offset = hsl[0] / 36,
                 theFloor = Math.floor(offset),
                 newClr;
 
-            this.ui.preview.css("background", clr);
+            this._ui.preview.css("background", clr);
 
             offset = (offset - theFloor < 0.5)
                 ? (offset - theFloor)
@@ -134,14 +132,14 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 
                 newClr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB(hsl));
 
-                this.ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
+                this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
             }
 
             if (activeIdx != -1) {
-                var currentlyActive = parseInt(this.ui.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
+                var currentlyActive = parseInt(this._ui.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
                 if (currentlyActive != activeIdx) {
-                    this.ui.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
-                    this.ui.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
+                    this._ui.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
+                    this._ui.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");
                 }
             }
         }

@@ -36,34 +36,35 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         initSelector: ":jqmData(role='hsvpicker')"
     },
 
+    _htmlProto: {
+        ui: {
+            container: "#hsvpicker",
+            hue: {
+                eventSource: "[data-event-source='hue']",
+                selector:    "#hsvpicker-hue-selector",
+                hue:         "#hsvpicker-hue-hue",
+                valMask:     "#hsvpicker-hue-mask-val"
+            },
+            sat: {
+                eventSource: "[data-event-source='sat']",
+                selector:    "#hsvpicker-sat-selector",
+                hue:         "#hsvpicker-sat-hue",
+                valMask:     "#hsvpicker-sat-mask-val"
+            },
+            val: {
+                eventSource: "[data-event-source='val']",
+                selector:    "#hsvpicker-val-selector",
+                hue:         "#hsvpicker-val-hue"
+            }
+        }
+    },
+
     _create: function() {
-        var self = this,
-            ui = {
-                container: "#hsvpicker",
-                hue: {
-                    eventSource: "[data-event-source='hue']",
-                    selector:    "#hsvpicker-hue-selector",
-                    hue:         "#hsvpicker-hue-hue",
-                    valMask:     "#hsvpicker-hue-mask-val"
-                },
-                sat: {
-                    eventSource: "[data-event-source='sat']",
-                    selector:    "#hsvpicker-sat-selector",
-                    hue:         "#hsvpicker-sat-hue",
-                    valMask:     "#hsvpicker-sat-mask-val"
-                },
-                val: {
-                    eventSource: "[data-event-source='val']",
-                    selector:    "#hsvpicker-val-selector",
-                    hue:         "#hsvpicker-val-hue"
-                }
-            };
+        var self = this;
 
-        $.mobile.todons.loadPrototype("hsvpicker", ui);
-        this.element.append(ui.container);
+        this.element.append(this._ui.container);
 
-        $.extend(self, {
-            ui: ui,
+        $.extend(this, {
             dragging_hsv: [ 0, 0, 0],
             selectorDraggingOffset: {
                 x : -1,
@@ -74,7 +75,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
         $.todons.colorwidget.prototype._create.call(this);
 
-        ui.container.find(".hsvpicker-arrow-btn")
+        this._ui.container.find(".hsvpicker-arrow-btn")
             .each(function(idx, el) {
                 $(el).buttonMarkup({
                     inline: true,
@@ -112,11 +113,11 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     _bindElements: function(chan, idx) {
         var self = this;
-        this.ui[chan].selector
+        this._ui[chan].selector
             .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan,  idx, e, true); })
             .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan,  idx, e, true); })
             .bind("vmouseup",             function(e) { self.dragging = -1; });
-        this.ui[chan].eventSource
+        this._ui[chan].eventSource
             .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan, idx, e, false); })
             .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan, idx, e, false); })
             .bind("vmouseup",             function(e) { self.dragging = -1; });
@@ -126,8 +127,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e),
             widgetStr = (isSelector ? "selector" : "eventSource");
 
-        if (coords.x >= 0 && coords.x <= this.ui[chan][widgetStr].outerWidth() &&
-            coords.y >= 0 && coords.y <= this.ui[chan][widgetStr].outerHeight()) {
+        if (coords.x >= 0 && coords.x <= this._ui[chan][widgetStr].outerWidth() &&
+            coords.y >= 0 && coords.y <= this._ui[chan][widgetStr].outerHeight()) {
 
             this.dragging = idx;
 
@@ -147,14 +148,14 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             var factor = ((0 === idx) ? 360 : 1),
                 potential = (isSelector
                   ? ((this.dragging_hsv[idx] / factor) +
-                     ((coords.x - this.selectorDraggingOffset.x) / this.ui[chan].eventSource.width()))
-                  : (coords.x / this.ui[chan].eventSource.width()));
+                     ((coords.x - this.selectorDraggingOffset.x) / this._ui[chan].eventSource.width()))
+                  : (coords.x / this._ui[chan].eventSource.width()));
 
             this.dragging_hsv[idx] = Math.min(1.0, Math.max(0.0, potential)) * factor;
 
             if (!isSelector) {
-                this.selectorDraggingOffset.x = Math.ceil(this.ui[chan].selector.outerWidth()  / 2.0);
-                this.selectorDraggingOffset.y = Math.ceil(this.ui[chan].selector.outerHeight() / 2.0);
+                this.selectorDraggingOffset.x = Math.ceil(this._ui[chan].selector.outerWidth()  / 2.0);
+                this.selectorDraggingOffset.y = Math.ceil(this._ui[chan].selector.outerHeight() / 2.0);
             }
 
             this._updateSelectors(this.dragging_hsv);
@@ -168,19 +169,19 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             hclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
             vclr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
-        this.ui.hue.selector.css("left", this.ui.hue.eventSource.width() * hsv[0] / 360);
-        this.ui.hue.selector.css("background", clr);
-        this.ui.hue.hue.css("opacity", hsv[1]);
-        this.ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
+        this._ui.hue.selector.css("left", this._ui.hue.eventSource.width() * hsv[0] / 360);
+        this._ui.hue.selector.css("background", clr);
+        this._ui.hue.hue.css("opacity", hsv[1]);
+        this._ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
-        this.ui.sat.selector.css("left", this.ui.sat.eventSource.width() * hsv[1]);
-        this.ui.sat.selector.css("background", clr);
-        this.ui.sat.hue.css("background", hclr);
-        this.ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
+        this._ui.sat.selector.css("left", this._ui.sat.eventSource.width() * hsv[1]);
+        this._ui.sat.selector.css("background", clr);
+        this._ui.sat.hue.css("background", hclr);
+        this._ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
-        this.ui.val.selector.css("left", this.ui.val.eventSource.width() * hsv[2]);
-        this.ui.val.selector.css("background", clr);
-        this.ui.val.hue.css("background", vclr);
+        this._ui.val.selector.css("left", this._ui.val.eventSource.width() * hsv[2]);
+        this._ui.val.selector.css("background", clr);
+        this._ui.val.hue.css("background", vclr);
 
         $.todons.colorwidget.prototype._setColor.call(this, clr);
     },
