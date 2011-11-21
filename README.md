@@ -165,6 +165,7 @@ Boilerplate index.html
       &lt;/div&gt;
 
       &lt;div data-role="content"&gt;
+        &lt;!-- APPLY ONE OF THE web-ui-fw COMPONENTS --&gt;
         &lt;ul data-role="listview" data-autodividers="alpha"&gt;
           &lt;li&gt;Albert&lt;/li&gt;
           &lt;li&gt;Aldo&lt;/li&gt;
@@ -184,8 +185,10 @@ Boilerplate index.html
 &lt;/html&gt;
 </pre>
 
-If you can see list dividers with alphabetical letters in them, you
-can be fairly confident that web-ui-fw has loaded correctly.
+The listview in the example above uses the autodividers component
+from web-ui-fw. If you can see list dividers containing alphabetical letters
+at the appropriate points in the listview, you can be fairly confident
+that web-ui-fw has loaded correctly.
 
 Using the custom theme
 ----------------------
