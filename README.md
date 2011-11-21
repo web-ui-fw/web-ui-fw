@@ -1,6 +1,31 @@
-web-ui-fw is a set of widgets and other components for jQuery Mobile.
-It also includes a (slightly deprecated, as it was built
-using the rc1 CSS approach) custom theme.
+web-ui-fw is a set of widgets and other components for jQuery Mobile,
+including:
+
+* color pickers
+* datetime picker
+* calendar picker (based on JQM-Datebox)
+* weekday picker
+* progressbar
+* "processing" bar (aka indeterminate progress bar)
+* "processing" spinner
+* swipe list (list items which can be swiped to the right to reveal
+  related buttons or other content)
+* shortcut scroll (links to list dividers within a listview)
+* expandable/collapsible list items
+* person picker
+* switch (replacement for the two value jQuery Mobile slider; also,
+  orientated vertically rather than horizontally)
+* slider improvements, including a togglable popup showing the current value
+* optionheader (collapsible form element container)
+* volume control
+* popup window (which can also be used for tooltips)
+* single image display widget (which handles maintaining aspect ratio
+  and providing an "image missing" replacement image)
+* simple horizontal and vertical box layout management (based on jLayout)
+* listview controls (declarative, modal control of the appearance of a listview)
+
+web-ui-fw also includes a custom theme (slightly deprecated, as it was built
+using the deprecated single CSS file approach).
 
 The project is complementary to jQuery Mobile and the components
 should slot into existing projects. In almost all cases, the colours
@@ -12,6 +37,11 @@ Instructions for using web-ui-fw in your own project are in the
 
 If you are interested in working on web-ui-fw itself, please see
 HACKING.md.
+
+**Note: This is the first release of the project, and there are
+many rough edges. But we felt it was important to release our work
+as soon as it was possible and practical. Please feel free to provide
+feedback, log bugs, provide patches etc.**
 
 Dependencies
 ============
@@ -30,6 +60,7 @@ either in full or in part:
 * <a href="http://www.bramstein.com/projects/jsizes/">jSizes</a> (all of it)
 * <a href="http://documentcloud.github.com/underscore/">Underscore</a>
   (a copy of the _.keys() method is in our namespace)
+* <a href="https://github.com/jtsage/jquery-mobile-datebox">JQM-DateBox</a>
 * <a href="http://jqueryui.com/">jQuery UI</a> (only the position() method)
 * some experimental elements of jQuery Mobile, especially scrollview
 
