@@ -18,6 +18,7 @@ other distributions should find their way around too:
 
 You may want to add the final export to your .bashrc and source it.
 
+
 Installing uglifyjs
 -------------------
 
@@ -70,20 +71,6 @@ the syntax hilighting:
 
 (Then add docco to your PATH).
 
-OS X Lion with Homebrew
-=======================
-
-    brew update
-    brew install node
-    brew install npm
-    npm install less -g
-
-Notice
-------
-if there is error on connecting npm server , try to set registry to http:
-
-    npm config set regsitry http://registry.npmjs.org/
-
 
 Building
 ========
@@ -108,6 +95,19 @@ Then, from a command line inside the project directory, do:
 This builds jquery-mobile, then compiles the stylesheets for all the
 widgets using lessc, finally concatenates all the library and widget
 JavaScript into framework files.
+
+If you want to clean the source tree, just do:
+
+  make clean
+
+
+Building the documentation
+==========================
+
+If you have installed docco (see above), you can build the
+documentation by issuing the following command:
+
+  make docs
 
 
 The widget gallery demo
@@ -268,3 +268,19 @@ with:
 
 This will open the unit tests in Google Chrome and run them. Once they're
 done, the coverage report is available from the "Summary" tab of the page.
+
+
+OS X Lion with Homebrew
+=======================
+
+    brew update
+    brew install node
+    brew install npm
+    npm install less -g
+
+Notice
+------
+if there is error on connecting npm server , try to set registry to http:
+
+    npm config set regsitry http://registry.npmjs.org/
+
