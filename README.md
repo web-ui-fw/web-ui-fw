@@ -48,7 +48,7 @@ See COPYING for their individual licences and further information.
 Licence
 =======
 
-The project is MIT licensed.
+The project is MIT licensed (see COPYING for details).
 
 Maintainers
 ===========
