@@ -158,7 +158,7 @@ dist: clean all docs
 		${THEMES_OUTPUT_ROOT}/tizen/${FW_THEME_CSS_FILE} \
 		${FW_WIDGET_CSS_FILE} \
 		docs \
-		README \
+		README.md \
 		COPYING \
 		$${DESTDIR}; \
 	tar cfzps \
