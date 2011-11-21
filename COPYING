@@ -37,6 +37,9 @@ widgets/jquery.mobile.maps/
 	svn checkout http://jquery-ui-map.googlecode.com/svn/trunk/ jquery-ui-map-read-only
 	Checked out revision 254.
 
+JQM-DateBox (https://github.com/jtsage/jquery-mobile-datebox) [CC 3.0 Attribution]
+developed by JTSage (http://dev.jtsage.com/blog/)
+
 jQuery UI (http://jqueryui.com/) [MIT licence]
 
 jQuery Mobile (http://jquerymobile.com/) [MIT licence]
