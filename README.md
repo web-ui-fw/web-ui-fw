@@ -7,27 +7,22 @@ should slot into existing projects. In almost all cases, the colours
 and styling of the widgets should broadly adhere to the jQuery Mobile
 styling approach.
 
-This document is intended for end users. If you are interested in
-working on web-ui-fw itself, please see HACKING.md.
+Instructions for using web-ui-fw in your own project are in the
+**Using a web-ui-fw distribution** section.
 
-Requirements
-============
-
-You will need to pull jQuery and jQuery Mobile into your
-project.
-
-web-ui-fw is written against 1.0-stable branch of jQuery Mobile. So you
-should use the 1.0 version of jQuery Mobile as explained at:
-
-  http://jquerymobile.com/download/
-
-For an example of the HTML elements you'll need, see the "Using web-ui-fw"
-section.
+If you are interested in working on web-ui-fw itself, please see
+HACKING.md.
 
 Dependencies
 ============
 
-web-ui-fw-libs.js incorporates the following third party libraries
+web-ui-fw depends on jQuery and jQuery Mobile. It is written against the
+1.0-stable branch of jQuery Mobile. So you should use the 1.0 version
+of jQuery Mobile as explained at:
+
+  http://jquerymobile.com/download/
+
+web-ui-fw incorporates the following third party libraries
 either in full or in part:
 
 * <a href="http://www.bramstein.com/projects/jlayout/">jLayout and
@@ -69,7 +64,7 @@ A distribution file contains the following:
 docs/                   basic API documentation
 COPYING                 licence file
 README                  this file
-web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on (see below)
+web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on (see Dependencies)
 web-ui-fw.js            the web UI widgets, components etc.
 web-ui-fw-widget.css    CSS styling for the web UI widgets
 </pre>
@@ -136,7 +131,7 @@ Boilerplate index.html
 
     &lt;!-- jQuery Mobile stylesheet --&gt;
     &lt;link rel="stylesheet"
-             href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /&gt;
+          href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /&gt;
 
     &lt;!-- web-ui-fw widget styling --&gt;
     &lt;link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" /&gt;
