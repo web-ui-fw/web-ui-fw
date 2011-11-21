@@ -30,11 +30,12 @@ Dependencies
 web-ui-fw-libs.js incorporates the following third party libraries
 either in full or in part:
 
-* jLayout (all of it)
-* jLayout jQuery plugin (all of it)
-* jSizes (all of it)
-* Underscore (a copy of the _.keys() method is in our namespace)
-* jQuery UI (only the position() method)
+* <a href="http://www.bramstein.com/projects/jlayout/">jLayout and
+  the jLayout jQuery plugin</a> (all of them)
+* <a href="http://www.bramstein.com/projects/jsizes/">jSizes</a> (all of it)
+* <a href="http://documentcloud.github.com/underscore/">Underscore</a>
+  (a copy of the _.keys() method is in our namespace)
+* <a href="http://jqueryui.com/">jQuery UI</a> (only the position() method)
 * some experimental elements of jQuery Mobile, especially scrollview
 
 There is no need to download these libraries, as they are included
