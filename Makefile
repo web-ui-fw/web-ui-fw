@@ -142,7 +142,7 @@ coverage: all
 	# Checking unit test coverage
 	$(CURDIR)/tests/coverage/instrument.sh
 
-dist: all docs
+dist: clean all docs
 	# Creating tarball...
 	@@ \
 	TMPDIR=$$(mktemp -d tarball.XXXXXXXX); \
