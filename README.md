@@ -93,6 +93,10 @@ A distribution file contains the following:
 
 <pre>
 docs/                   basic API documentation
+images/                 images used by web-ui-fw widgets and custom theme;
+                        note that this includes several jqm sprite
+                        pngs, for use in the custom theme; if you're using
+                        jqm from a CDN, some of these may be redundant
 COPYING                 licence file
 README                  this file
 web-ui-fw-libs.js       3rd party libraries web-ui-fw depends on (see Dependencies)
@@ -135,6 +139,8 @@ You could add the web-ui-fw directory to your project like this:
   css/
     app.css
   web-ui-fw/
+    images/
+      ... web-ui-fw images ...
     web-ui-fw-libs.js (3rd party dependencies of web-ui-fw)
     web-ui-fw.js (web UI components)
     web-ui-fw-widget.css (web UI widget styling)
