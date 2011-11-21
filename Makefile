@@ -157,6 +157,7 @@ dist: clean all docs
 		${FW_LIBS_JS} \
 		${THEMES_OUTPUT_ROOT}/tizen/${FW_THEME_CSS_FILE} \
 		${FW_WIDGET_CSS_FILE} \
+		${THEMES_OUTPUT_ROOT}/tizen/images \
 		docs \
 		README.md \
 		COPYING \
