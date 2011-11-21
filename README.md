@@ -125,60 +125,60 @@ Boilerplate index.html
 (This assumes the directory layout from the previous section.)
 
 <pre>
-<!DOCTYPE html>
-<html>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
 
-  <head>
+  &lt;head&gt;
 
-    <title>My app</title>
+    &lt;title&gt;My app&lt;/title&gt;
 
-    <!-- jQuery Mobile stylesheet -->
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+    &lt;!-- jQuery Mobile stylesheet --&gt;
+    &lt;link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" /&gt;
 
-    <!-- web-ui-fw widget styling -->
-    <link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" />
+    &lt;!-- web-ui-fw widget styling --&gt;
+    &lt;link rel="stylesheet" href="web-ui-fw/web-ui-fw-widget.css" /&gt;
 
-    <!-- your application stylesheet -->
-    <link rel="stylesheet" href="css/app.css" />
+    &lt;!-- your application stylesheet --&gt;
+    &lt;link rel="stylesheet" href="css/app.css" /&gt;
 
-    <!-- jQuery and jQuery Mobile JS -->
-    <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+    &lt;!-- jQuery and jQuery Mobile JS --&gt;
+    &lt;script src="http://code.jquery.com/jquery-1.6.4.min.js"&gt;&lt;/script&gt;
+    &lt;script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"&gt;&lt;/script&gt;
 
-    <!-- web-ui-fw JS -->
-    <script src="web-ui-fw/web-ui-fw-libs.js"></script>
-    <script src="web-ui-fw/web-ui-fw.js"></script>
+    &lt;!-- web-ui-fw JS --&gt;
+    &lt;script src="web-ui-fw/web-ui-fw-libs.js"&gt;&lt;/script&gt;
+    &lt;script src="web-ui-fw/web-ui-fw.js"&gt;&lt;/script&gt;
 
-    <!-- your application JS -->
-    <script src="js/app.js"></script>
+    &lt;!-- your application JS --&gt;
+    &lt;script src="js/app.js"&gt;&lt;/script&gt;
 
-  </head>
+  &lt;/head&gt;
 
-  <body>
+  &lt;body&gt;
 
-    <div data-role="page" id="home">
-      <div data-role="header">
-        <h1>page header</h1>
-      </div>
+    &lt;div data-role="page" id="home"&gt;
+      &lt;div data-role="header"&gt;
+        &lt;h1&gt;page header&lt;/h1&gt;
+      &lt;/div&gt;
 
-      <div data-role="content">
-        <ul data-role="listview" data-autodividers="alpha">
-          <li>Albert</li>
-          <li>Aldo</li>
-          <li>Betty</li>
-          <li>Brian</li>
-          <li>Carrie</li>
-          <li>Dave</li>
-          <li>Ethel</li>
-          <li>Grant</li>
-          <li>Greta</li>
-        </ul>
-      </div>
-    </div>
+      &lt;div data-role="content"&gt;
+        &lt;ul data-role="listview" data-autodividers="alpha"&gt;
+          &lt;li&gt;Albert&lt;/li&gt;
+          &lt;li&gt;Aldo&lt;/li&gt;
+          &lt;li&gt;Betty&lt;/li&gt;
+          &lt;li&gt;Brian&lt;/li&gt;
+          &lt;li&gt;Carrie&lt;/li&gt;
+          &lt;li&gt;Dave&lt;/li&gt;
+          &lt;li&gt;Ethel&lt;/li&gt;
+          &lt;li&gt;Grant&lt;/li&gt;
+          &lt;li&gt;Greta&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
 
-  </body>
+  &lt;/body&gt;
 
-</html>
+&lt;/html&gt;
 </pre>
 
 If you can see list dividers with alphabetical letters in them, you
@@ -191,13 +191,13 @@ Replace the standard jQuery Mobile theme file with the
 web-ui-fw-theme.css file. For example:
 
 <pre>
-<!-- load the custom theme instead of jquery.mobile-1.0.min.css -->
-<link rel="stylesheet" href="web-ui-fw/web-ui-fw-theme.css" />
+&lt;!-- load the custom theme instead of jquery.mobile-1.0.min.css --&gt;
+&lt;link rel="stylesheet" href="web-ui-fw/web-ui-fw-theme.css" /&gt;
 
-<!-- load jQuery and jQuery Mobile JavaScript-->
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+&lt;!-- load jQuery and jQuery Mobile JavaScript--&gt;
+&lt;script src="http://code.jquery.com/jquery-1.6.4.min.js"&gt;&lt;/script&gt;
+&lt;script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"&gt;&lt;/script&gt;
 
-<!-- load the web-ui-fw as above -->
+&lt;!-- load the web-ui-fw as above --&gt;
 ...
 </pre>
