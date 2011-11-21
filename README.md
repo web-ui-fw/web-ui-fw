@@ -1,6 +1,3 @@
-Ubuntu 11.10 
-============
-
 Installing less
 ---------------
 
@@ -73,7 +70,6 @@ the syntax hilighting:
 
 (Then add docco to your PATH).
 
-
 OS X Lion with Homebrew
 =======================
 
@@ -98,9 +94,9 @@ so no one has attempted to build this project on other
 platforms.
 ***
 
-First install `lessc` (see above).
+First install `less` (see above).
 
-You'll also need make.
+You'll also need `make`.
 
 Then, from a command line inside the project directory, do:
 
@@ -166,7 +162,7 @@ layout-hbox for an example).
 jQuery selector for finding elements to which your widget applies. Typically
 this will involve looking for `data-role` attributes, e.g.
 
-    ':jqmData(role=optionheader)'
+        :jqmData(role=optionheader)
 
 See optionheader for an example. Alternatively, if the widget applies
 to all instances of a particular HTML element, you may need a more
@@ -176,11 +172,11 @@ general selector: see the jQuery Mobile widgets for examples.
 elements when pages are created, using that initSelector to find
 them, e.g.
 
-    $(document).bind("pagecreate", function (e) {
-        $($.todons.mywidget.prototype.options.initSelector, e.target)
-        .not(":jqmData(role='none'), :jqmData(role='nojs')")
-        .mywidget();
-    });
+        $(document).bind("pagecreate", function (e) {
+            $($.todons.mywidget.prototype.options.initSelector, e.target)
+                .not(":jqmData(role='none'), :jqmData(role='nojs')")
+                .mywidget();
+        });
 
 * Theme-awareness. This means both setting a default theme swatch for
 the widget and capturing any data-theme attribute set on the target element
@@ -200,17 +196,17 @@ being created on a visible page, and where it's being created on a page
 which isn't yet visible. Code like the following, typically in the widget's
 `_create()` method, should accomplish this:
 
-    var page = this.element.closest(':jqmData(role="page")');
-    var self = this;
+        var page = this.element.closest(':jqmData(role="page")');
+        var self = this;
 
-    if (page.is(":visible")) {
-        self.refresh();
-    }
-    else {
-        page.bind("pageshow", function () {
+        if (page.is(":visible")) {
             self.refresh();
-        });
-    }
+        }
+        else {
+            page.bind("pageshow", function () {
+                self.refresh();
+            });
+        }
 
 * Respond to and fire events appropriately. In particular, if your
 widget changes the page size (e.g. it expands/contracts) it should
@@ -248,12 +244,12 @@ This should contain your QUnit tests
 * Edit the `tests/tests.js` file and add the path to your test file
 to it, e.g.
 
-    var TESTS = {
-        "testPages":[
-            "mywidget/index.html", // this is my new test file
-            "autodividers/index.html"
-        ]
-    };
+        var TESTS = {
+            "testPages":[
+                "mywidget/index.html", // this is my new test file
+                "autodividers/index.html"
+            ]
+        };
 
 * Run your tests by opening the `tests/index.html` file (to run the
 whole suite) or your individual `index.html` file to run just your tests.
