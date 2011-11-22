@@ -26,7 +26,7 @@
  * DEALINGS IN THE SOFTWARE.
  * ***************************************************************************
  *
- * Authors: Gabriel Schulhof
+ * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
 // Displays three sliders that allow the user to select the

@@ -26,7 +26,8 @@
  * DEALINGS IN THE SOFTWARE.
  * ***************************************************************************
  *
- * Authors: Gabriel Schulhof, Elliot Smith
+ * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>,
+ *          Elliot Smith <elliot.smith@intel.com>
  */
 
 // Shows other elements inside a popup window.
