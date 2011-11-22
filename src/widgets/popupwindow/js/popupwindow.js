@@ -1,4 +1,3 @@
->>>>>>> wip-si-license
 /*
  * jQuery Mobile Widget @VERSION
  *
