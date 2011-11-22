@@ -37,6 +37,9 @@ widgets/jquery.mobile.maps/
 	svn checkout http://jquery-ui-map.googlecode.com/svn/trunk/ jquery-ui-map-read-only
 	Checked out revision 254.
 
+JQM-DateBox (https://github.com/jtsage/jquery-mobile-datebox) [CC 3.0 Attribution]
+developed by JTSage (http://dev.jtsage.com/blog/)
+
 jQuery UI (http://jqueryui.com/) [MIT licence]
 
 jQuery Mobile (http://jquerymobile.com/) [MIT licence]
@@ -46,3 +49,5 @@ jQuery (http://jquery.com/) [MIT licence]
 (parts of) Underscore (http://documentcloud.github.com/underscore/) [MIT licence]
 
 jLayout (http://www.bramstein.com/projects/jlayout/) [BSD licence]
+
+jSizes (http://www.bramstein.com/projects/jsizes/) [BSD licence]

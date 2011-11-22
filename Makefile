@@ -26,7 +26,6 @@ FW_LIBS_JS = ${JS_OUTPUT_ROOT}/${PROJECT_NAME}-libs.js
 FW_THEME_CSS_FILE = ${PROJECT_NAME}-theme.css
 FW_WIDGET_CSS_FILE = ${WIDGET_CSS_OUTPUT_ROOT}/${PROJECT_NAME}-widget.css
 
-JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.js
 LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 jlayout/jlayout.border.js \
                 jlayout/jlayout.grid.js \
@@ -34,11 +33,11 @@ LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 jlayout/jlayout.flow.js \
                 jlayout/jquery.jlayout.js \
                 jquery.ui.position.git+dfe75e1.js \
-                ${JQUERY_MOBILE} \
                 $(NULL)
 JQUERY = submodules/jquery-mobile/js/jquery.js
-JQUERY_MOBILE_CSS = submodules/jquery-mobile/compiled/jquery.mobile.structure-1.0rc2.css \
-                    submodules/jquery-mobile/compiled/jquery.mobile-1.0rc2.css \
+JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile.js
+JQUERY_MOBILE_CSS = submodules/jquery-mobile/compiled/jquery.mobile.structure.css \
+                    submodules/jquery-mobile/compiled/jquery.mobile.css \
                     $(NULL)
 JQUERY_MOBILE_IMAGES = submodules/jquery-mobile/css/themes/default/images
 
@@ -68,7 +67,8 @@ third_party_widgets: init
 	for f in ${LIBS_JS_FILES}; do \
 		cat $$f | $${uglify} >> ${FW_LIBS_JS}; \
 	done; \
-	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery.js
+	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery.js ; \
+	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery-mobile.js
 
 widgets: init
 	# Building web-ui-fw widgets...
@@ -195,7 +195,7 @@ clean:
 
 init:
 	# Checking for JQM
-	@@[ -e ${LIBS_DIR}/js/${JQUERY_MOBILE} ] || (echo "You must compile jquery-mobile first. See README."; exit 1;)
+	@@[ -e ${LIBS_DIR}/js/${JQUERY_MOBILE} ] || (echo "You must compile jquery-mobile first. See HACKING."; exit 1;)
 	# Initializing...
 	@@mkdir -p ${JS_OUTPUT_ROOT}
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}
