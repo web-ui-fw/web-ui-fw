@@ -20,7 +20,7 @@ process_fname() # $1 = file name, n_pass
   cat ${FNAME} | \
     sed -rn '1h;1!H;${;g;s!((\$|jQuery)([\n \t]|/\*.*\*/)*\.([\n \t]|/\*.*\*/)*widget([\n \t]|/\*.*\*/)*\(([\n \t]|/\*.*\*/)*")([^"]*)("[^{]*\{)!\1'$'\1''\7'$'\1''\8!g;p;}' | \
     sed -rn '1h;1!H;${;g;s!(/\*|\*/|//|[{}])!'$'\1''\1'$'\1''!g;p;}' | \
-    awk \
+    gawk \
       -v 'nPass='"${N_PASS}" \
       -v 'inComment=0' \
       -v 'inWidgetBody=0' \

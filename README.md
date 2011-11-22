@@ -71,6 +71,11 @@ the syntax hilighting:
 
 (Then add docco to your PATH).
 
+Installing gawk
+---------------
+
+GNU awk (`gawk`) is used to place HTML prototypes into compiled source files.
+It is usually provided by a package named `gawk`.
 
 Building
 ========
