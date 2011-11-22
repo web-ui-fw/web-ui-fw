@@ -26,7 +26,7 @@
  * DEALINGS IN THE SOFTWARE.
  * ***************************************************************************
  *
- * Authors: Gabriel Schulhof
+ * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
 // It displays a grid two rows by five columns of colors.

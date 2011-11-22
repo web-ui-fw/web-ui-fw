@@ -26,23 +26,22 @@
  * DEALINGS IN THE SOFTWARE.
  * ***************************************************************************
  *
- * Authors: Gabriel Schulhof
+ * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
-/**
- * Displays a 2D hue/saturation spectrum and a lightness slider.
- *
- * To apply, add the attribute data-role="colorpicker" to a <div>
- * element inside a page. Alternatively, call colorpicker() 
- * on an element (see below).
- *
- * Options:
- *     color: String; can be specified in html using the
- *            data-color="#ff00ff" attribute or when constructed
- *                $("#mycolorpicker").colorpicker({ color: "#ff00ff" });
- *            where the html might be :
- *                <div id="mycolorpicker"/>
- */
+// Displays a 2D hue/saturation spectrum and a lightness slider.
+//
+// To apply, add the attribute data-role="colorpicker" to a <div>
+// element inside a page. Alternatively, call colorpicker() 
+// on an element (see below).
+//
+// Options:
+//     color: String; can be specified in html using the
+//            data-color="#ff00ff" attribute or when constructed
+//                $("#mycolorpicker").colorpicker({ color: "#ff00ff" });
+//            where the html might be :
+//                <div id="mycolorpicker"/>
+
 (function( $, undefined ) {
 
 $.widget( "todons.colorpicker", $.todons.colorwidget, {

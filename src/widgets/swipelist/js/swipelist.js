@@ -26,8 +26,6 @@
  * DEALINGS IN THE SOFTWARE.
  * ***************************************************************************
  *
- * Copyright (C) TODO
- * License: TODO
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>,
  *          Elliot Smith <elliot.smith@intel.com>
  */
