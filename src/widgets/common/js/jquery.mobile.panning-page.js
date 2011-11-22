@@ -26,9 +26,7 @@
  * ***************************************************************************
  */
 
-/*
- * Size pages to the window
- */
+// Size pages to the window
 
 (function($, undefined) {
 

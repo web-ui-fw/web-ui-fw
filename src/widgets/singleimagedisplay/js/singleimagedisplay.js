@@ -29,31 +29,29 @@
  * Authors: Max Waterman <max.waterman@intel.com>
  */
 
-/**
- * Displays the given image resizing it to fit its container or the browser
- * while maintaining the original aspect ratio.
- *
- * To make a singleimagedisplay element use the singleimagedisplay() method
- * on an img element or add data-role='singleimagedisplay' to an img tag.
- *
- *     <img data-role="singleimagedisplay" data-src="myimage.jpg" />
- *
- * Note that you should not set the src on the img directly.
- *
- * To set the source image, use a data-src attribute on the img. This
- * enables the widget to handle loading the image and displaying a
- * substitute if the image fails to load.
- *
- * Options:
- *
- *    source: String; path to the src for the image; initial value can
- *                    be set using data-src on the img element.
- *    noContent: String; path to an image to show when an error occurs
- *                while loading the image.
- *
- * Either option can be changed at runtime with the
- * singleimagedisplay('option', 'name', 'value') method
- */
+// Displays the given image resizing it to fit its container or the browser
+// while maintaining the original aspect ratio.
+//
+// To make a singleimagedisplay element use the singleimagedisplay() method
+// on an img element or add data-role='singleimagedisplay' to an img tag.
+//
+//     <img data-role="singleimagedisplay" data-src="myimage.jpg" />
+//
+// Note that you should not set the src on the img directly.
+//
+// To set the source image, use a data-src attribute on the img. This
+// enables the widget to handle loading the image and displaying a
+// substitute if the image fails to load.
+//
+// Options:
+//
+//    source: String; path to the src for the image; initial value can
+//                    be set using data-src on the img element.
+//    noContent: String; path to an image to show when an error occurs
+//                while loading the image.
+//
+// Either option can be changed at runtime with the
+// singleimagedisplay('option', 'name', 'value') method
 
 (function ($, undefined) {
     $.widget("todons.singleimagedisplay", $.mobile.widget, {

@@ -26,9 +26,7 @@
  * ***************************************************************************
  */
 
-/*
- * Add markup for labels
- */
+// Add markup for labels
 
 (function($, undefined) {
 

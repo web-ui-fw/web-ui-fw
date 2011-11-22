@@ -29,22 +29,20 @@
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
 
-/**
- * Displays a progressbar element
- *
- * A progressbar does have a progress value, and can be found from getValue()
- * You can set the value using value()
- * The external process is supposed to call the progressbar
- * e.g. $('#myprogressbar').progressbar('value', 19)
- *
- * Options:
- *
- *     value    : starting value, default is 0
- *     max      : maximum value, default is 100
- *     duration : Integer; number of milli seconds the progressbar takes to animate
- *                from 0 to max.
- *
- */
+// Displays a progressbar element
+//
+// A progressbar does have a progress value, and can be found from getValue()
+// You can set the value using value()
+// The external process is supposed to call the progressbar
+// e.g. $('#myprogressbar').progressbar('value', 19)
+//
+// Options:
+//
+//     value    : starting value, default is 0
+//     max      : maximum value, default is 100
+//     duration : Integer; number of milli seconds the progressbar takes to animate
+//                from 0 to max.
+
 (function ($, window, undefined) {
     $.widget("todons.progressbar", $.mobile.widget, {
         options: {

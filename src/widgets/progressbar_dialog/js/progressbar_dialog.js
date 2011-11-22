@@ -30,20 +30,17 @@
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
 
-/**
- * Displays a progressbar element in a dialog
- * For details refer to progressbar
- * The external process is supposed to call the progressbar_dialog 
- * e.g. $('#myprogressbar_dialog').progressbar_dialog('value', someValue);
- *
- * Options:
- *
- *     value	: starting value, default is 0
- *	   max		: maximum value, default is 100		
- *     duration : Integer; number of milli seconds the progressbar takes to animate
- *				 from 0 to max. 
- *
- */
+// Displays a progressbar element in a dialog
+// For details refer to progressbar
+// The external process is supposed to call the progressbar_dialog 
+// e.g. $('#myprogressbar_dialog').progressbar_dialog('value', someValue);
+//
+// Options:
+//
+//     value	: starting value, default is 0
+//	   max		: maximum value, default is 100		
+//     duration : Integer; number of milli seconds the progressbar takes to animate
+//				 from 0 to max. 
 
 (function ($, window, undefined) {
     $.widget("todons.progressbar_dialog", $.todons.widgetex, {
