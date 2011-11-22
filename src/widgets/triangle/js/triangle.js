@@ -28,7 +28,7 @@
 
 (function($, undefined) {
 
-$.widget( "todons.triangle", $.mobile.widget, {
+$.widget( "todons.triangle", $.todons.widgetex, {
     options: {
         class: "",
         offset: 50,
@@ -38,9 +38,7 @@ $.widget( "todons.triangle", $.mobile.widget, {
     },
 
     _create: function() {
-        var self = this,
-            triangle = $("<div></div>", {class: "ui-triangle"}),
-            thePage = this.element.closest(".ui-page");
+        var triangle = $("<div></div>", {class: "ui-triangle"});
 
         $.extend(this, {
             realized: false,
@@ -48,11 +46,6 @@ $.widget( "todons.triangle", $.mobile.widget, {
         });
 
         this.element.css("position", "relative").append(triangle);
-
-        if (thePage.is(":visible"))
-            this._realize();
-        else
-            thePage.bind("pageshow", function(e) { self._realize() ; });
 
         $.mobile.todons.parseOptions(this, true);
     },

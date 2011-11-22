@@ -26,9 +26,9 @@
  * ***************************************************************************
  */
 
-// Base class for widgets that need the following features
+// Base class for widgets that need the following features:
 //
-// - HTML prototype
+// I. HTML prototype loading
 //
 // This class provides HTML prototype loading for widgets. That is, the widget implementation specifies its HTML portions
 // in one continuous HTML snippet, and it optionally provides an object containing selectors into the various parts of the
@@ -92,6 +92,15 @@
 //
 // Thereafter, you may use the HTML prototype from your widget's prototype or, if you have specified a 'ui' key in your
 // _htmlProto key, you may use this._ui from your widget instance.
+//
+// II. realize method
+//
+// When a widget is created, some of its properties cannot be set immediately, because they depend on the widths/heights
+// of its constituent elements. They can only be calculated when the page containing the widget is made visible via the
+// "pageshow" event, because widths/heights always evaluate to 0 when retrieved from a widget that is not visible. When
+// you inherit from widgetex, you can add a "_realize" function to your prototype. This function will be called once right
+// after _create() if the element that anchors your widget is on a visible page. Otherwise, it will be called when the
+// page to which the widget belongs emits the "pageshow" event.
 
 (function($, undefined) {
 
@@ -110,6 +119,18 @@ $.widget("todons.widgetex", $.mobile.widget, {
         $.mobile.widget.prototype._createWidget.apply(this, arguments);
     },
 
+    _init: function() {
+        var page = this.element.closest(".ui-page"),
+            self = this;
+
+        if (page.is(":visible"))
+            this._realize();
+        else
+            page.bind("pageshow", function() { self._realize(); });
+    },
+
+    _realize: function() {},
+
     loadPrototype: function(widget, ui) {
         var ar = widget.split(".");
 
@@ -122,60 +143,59 @@ $.widget("todons.widgetex", $.mobile.widget, {
                     .css({background: "red", color: "blue", border: "1px solid black"})
                     .jqmData("todons.widgetex.ajax.fail", true);
 
-            // If no HTML prototype is defined at all, create a default one
-            if ($[namespace][widgetName].prototype._htmlProto === undefined)
-                $[namespace][widgetName].prototype._htmlProto = { };
+            // If htmlProto is defined
+            if ($[namespace][widgetName].prototype._htmlProto !== undefined) {
+                // If no source is defined, use the widget name
+                if ($[namespace][widgetName].prototype._htmlProto.source === undefined)
+                    $[namespace][widgetName].prototype._htmlProto.source = widgetName;
 
-            // If no source is defined, use the widget name
-            if ($[namespace][widgetName].prototype._htmlProto.source === undefined)
-                $[namespace][widgetName].prototype._htmlProto.source = widgetName;
+                // Load the HTML prototype via AJAX if not defined inline
+                if (typeof $[namespace][widgetName].prototype._htmlProto.source === "string") {
+                    // Establish the path for the proto file
+                        widget = $[namespace][widgetName].prototype._htmlProto.source,
+                        protoPath = getProtoPath();
 
-            // Load the HTML prototype via AJAX if not defined inline
-            if (typeof $[namespace][widgetName].prototype._htmlProto.source === "string") {
-                // Establish the path for the proto file
-                    widget = $[namespace][widgetName].prototype._htmlProto.source,
-                    protoPath = getProtoPath();
+                    // Make the AJAX call
+                    $.ajax({
+                        url: protoPath + "/" + widget + ".prototype.html",
+                        async: false,
+                        dataType: "html"
+                    }).success(function(data, textStatus, jqXHR) {
+                        htmlProto = $("<div></div>").html(data).jqmData("todons.widgetex.ajax.fail", false);
+                    });
 
-                // Make the AJAX call
-                $.ajax({
-                    url: protoPath + "/" + widget + ".prototype.html",
-                    async: false,
-                    dataType: "html"
-                }).success(function(data, textStatus, jqXHR) {
-                    htmlProto = $("<div></div>").html(data).jqmData("todons.widgetex.ajax.fail", false);
-                });
-
-                // Assign the HTML proto to the widget prototype
-                $[namespace][widgetName].prototype._htmlProto.source = htmlProto;
-            }
-            // Otherwise, use the inline definition
-            else {
-                // AJAX loading has trivially succeeded, since there was no AJAX loading at all
-                $[namespace][widgetName].prototype._htmlProto.source.jqmData("todons.widgetex.ajax.fail", false);
-                htmlProto = $[namespace][widgetName].prototype._htmlProto.source;
-            }
-
-            // If there's a "ui" portion in the HTML proto, copy it over to this instance, and
-            // replace the selectors with the selected elements from a copy of the HTML prototype
-            if ($[namespace][widgetName].prototype._htmlProto.ui !== undefined) {
-	        // Assign the relevant parts of the proto
-                function assignElements(proto, obj) {
-                    var ret = {};
-                    for (var key in obj)
-                        if ((typeof obj[key]) === "string") {
-                            ret[key] = proto.find(obj[key]);
-                            if (obj[key].match(/^#/))
-                                ret[key].removeAttr("id");
-                        }
-                        else
-                        if ((typeof obj[key]) === "object")
-                            ret[key] = assignElements(proto, obj[key]);
-                    return ret;
+                    // Assign the HTML proto to the widget prototype
+                    $[namespace][widgetName].prototype._htmlProto.source = htmlProto;
+                }
+                // Otherwise, use the inline definition
+                else {
+                    // AJAX loading has trivially succeeded, since there was no AJAX loading at all
+                    $[namespace][widgetName].prototype._htmlProto.source.jqmData("todons.widgetex.ajax.fail", false);
+                    htmlProto = $[namespace][widgetName].prototype._htmlProto.source;
                 }
 
-                $.extend(this, {
-                    _ui: assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
-                });
+                // If there's a "ui" portion in the HTML proto, copy it over to this instance, and
+                // replace the selectors with the selected elements from a copy of the HTML prototype
+                if ($[namespace][widgetName].prototype._htmlProto.ui !== undefined) {
+	            // Assign the relevant parts of the proto
+                    function assignElements(proto, obj) {
+                        var ret = {};
+                        for (var key in obj)
+                            if ((typeof obj[key]) === "string") {
+                                ret[key] = proto.find(obj[key]);
+                                if (obj[key].match(/^#/))
+                                    ret[key].removeAttr("id");
+                            }
+                            else
+                            if ((typeof obj[key]) === "object")
+                                ret[key] = assignElements(proto, obj[key]);
+                        return ret;
+                    }
+
+                    $.extend(this, {
+                        _ui: assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
+                    });
+                }
             }
         }
         else

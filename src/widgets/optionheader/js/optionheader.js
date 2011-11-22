@@ -115,7 +115,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.optionheader", $.mobile.widget, {
+$.widget("todons.optionheader", $.todons.widgetex, {
     options: {
         initSelector: ":jqmData(role='optionheader')",
         showIndicator: true,
@@ -155,17 +155,7 @@ $.widget("todons.optionheader", $.mobile.widget, {
         // or on pageshow
         page = this.element.closest(':jqmData(role="page")');
 
-        if (page.is(":visible")) {
-            self.refresh();
-            self._realize();
-        }
-        else {
-            self.refresh();
-
-            page.bind("pageshow", function () {
-                self._realize();
-            });
-        }
+        this.refresh();
     },
 
     _realize: function () {

@@ -106,11 +106,6 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
 
           $.mobile.todons.parseOptions(this, true);
 
-          if (this.element.closest(".ui-page").is(":visible"))
-              self._realize();
-          else
-              this.element.closest(".ui-page").bind("pageshow", function() { self._realize(); });
-
           this._ui.container.bind("closed", function(e) {
               self.isOpen = false;
           });

@@ -121,6 +121,7 @@ digraph G {
     "progressbar_dialog.js" -> "progressbar_dialog.css";
     "progressbar_dialog.js" -> "progressbar_dialog.prototype.html";
 
+    "optionheader.js" -> "widgetex.js";
     "optionheader.js" -> "triangle.js";
     "optionheader.js" -> "optionheader.css";
 
