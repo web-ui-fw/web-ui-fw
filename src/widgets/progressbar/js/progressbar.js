@@ -76,38 +76,44 @@
             }
         },
 
-        /**
-         * function : animates the progressBar
-         */
+         // function : animates the progressBar
+         
         _startProgress: function () {
             var percentage = 100 * this.currentValue / this.options.max;
             var width = percentage + '%';
             this.bar.width(width);
         },
-
-        /**
-         * function: loads the html divs from progressbar.prototype.html
-         * and sets the value to the initial value specified in options
-         */
+        
         _create: function () {
             var startValue, container;
             var html = $('<div class="ui-progressbar">' + '<div class="ui-boxImg " ></div>' + '<div class="ui-barImg " ></div>' + '</div>');
 
             $(this.element).append(html);
-
-            this.options.theme = this.options.theme || 
-            					 this.element.data('theme') || 
-            					 this.element.closest(':jqmData(theme)').attr('data-theme') || 
-            					 'b';
-
+            
             container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
-            this.bar.addClass("ui-bar-" + this.options.theme);
-
+            this._setOption("theme", this.options.theme);
             startValue = this.options.value ? this.options.value : 0;
             this.value(startValue);
         },
+        
+        _setOption: function(key, value) {
+        	if (key == "theme")
+        		this._setTheme(value);
+        },
+        
+        _setTheme: function(value) {
+        	value = value || 
+            		this.element.data('theme') || 
+            		this.element.closest(':jqmData(theme)').attr('data-theme') || 
+            		'b';
+			this.bar.addClass("ui-bar-" + value);
+        },
+        
+        destroy: function() {
+        	this.html.detach();
+        }      
     }); /* End of widget */
 
     // auto self-init widgets
