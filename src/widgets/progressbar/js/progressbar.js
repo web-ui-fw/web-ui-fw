@@ -40,8 +40,8 @@
 //
 //     value    : starting value, default is 0
 //     max      : maximum value, default is 100
-//     duration : Integer; number of milli seconds the progressbar takes to animate
-//                from 0 to max.
+//     theme    : data-theme, default is swatch 'b'
+//                
 
 (function ($, window, undefined) {
     $.widget("todons.progressbar", $.mobile.widget, {
@@ -76,8 +76,7 @@
             }
         },
 
-         // function : animates the progressBar
-         
+         // function : animates the progressBar  
         _startProgress: function () {
             var percentage = 100 * this.currentValue / this.options.max;
             var width = percentage + '%';

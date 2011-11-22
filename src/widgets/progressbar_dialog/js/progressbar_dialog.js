@@ -38,15 +38,12 @@
 //
 //     value	: starting value, default is 0
 //	   max		: maximum value, default is 100		
-//     duration : Integer; number of milli seconds the progressbar takes to animate
-//				 from 0 to max. 
 
 (function ($, window, undefined) {
     $.widget("todons.progressbar_dialog", $.todons.widgetex, {
         options: {
             value: 0,
             max: 100,
-            duration: 10000,
         },
 
         _htmlProto: {
