@@ -542,7 +542,8 @@
                 <h1>Popup window</h1>
             </div>
             <div class="content" data-role="content">
-
+              <p>Popup windows appear above the normal UI and contain a small number of UI elements.</p>
+              <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupList" data-role="popupwindow">
                   <div data-role="content">
                       <ul data-role="listview">
@@ -553,10 +554,14 @@
                   </div>
               </div>
 
-              <a href="#" id="popupListButton" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupList">Popup list</a>
+              <a href="#popupList" id="popupListButton" data-role="button" data-inline="true" data-rel="popupwindow">Popup list</a>
 
-              <a href="#" id="popupwindowDemoButton" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupContent">Show popup</a>
+              <p>Popup windows will follow the theme of the button to which they are associated, unless the theme is explicitly set.</p>               
+              <a href="#popupContent" id="popupwindowDemoButtonA" data-theme="a" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
+              <a href="#popupContent" id="popupwindowDemoButtonB" data-theme="b" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
+              <a href="#popupContent" id="popupwindowDemoButtonC" data-theme="e" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
+              <p></p>
               <div id="popupContent" data-role="popupwindow" style="display: table;">
                 <table>
                   <tr> <td>Eenie</td>   <td>Meenie</td>  <td>Mynie</td>   <td>Mo</td>  </tr>
@@ -566,7 +571,7 @@
                 </table>
               </div>
 
-              <a href="#" id="popupwindowDemoButton2" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="popupContent2">Choose transition</a>
+              <a href="#popupContent2" id="popupwindowDemoButton2" data-role="button" data-inline="true" data-rel="popupwindow">Choose transition</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupContent2" data-role="popupwindow">
                   <div>
@@ -615,19 +620,19 @@
             </div>
             <table style="width: 100%; height: 100%;">
               <tr>
-                <td align="left"   valign="top"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="center" valign="top"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="right"  valign="top"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
+                <td align="left"   valign="top"><a href="#arrowPopup" id="arrowPopupTL" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="center" valign="top"><a href="#arrowPopup" id="arrowPopupTC" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="right"  valign="top"><a href="#arrowPopup" id="arrowPopupTR" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
               </tr>
               <tr>
-                <td align="left"   valign="middle"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="center" valign="middle"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="right"  valign="middle"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
+                <td align="left"   valign="middle"><a href="#arrowPopup" id="arrowPopupML" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="center" valign="middle"><a href="#arrowPopup" id="arrowPopupMC" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="right"  valign="middle"><a href="#arrowPopup" id="arrowPopupMR" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
               </tr>
               <tr>
-                <td align="left"   valign="bottom"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="center" valign="bottom"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
-                <td align="right"  valign="bottom"><a href="#" data-role="button" data-inline="true" aria-haspopup="true" aria-owns="arrowPopup">Show</a></td>
+                <td align="left"   valign="bottom"><a href="#arrowPopup" id="arrowPopupBL" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="center" valign="bottom"><a href="#arrowPopup" id="arrowPopupBC" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
+                <td align="right"  valign="bottom"><a href="#arrowPopup" id="arrowPopupBR" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
               </tr>
             </table>
             </div> <!-- /content -->

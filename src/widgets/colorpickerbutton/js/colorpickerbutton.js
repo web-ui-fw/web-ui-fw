@@ -98,16 +98,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
         $.todons.colorwidget.prototype._create.call(this);
 
-        // Button events
-        this._ui.button.bind("vclick keydown", function(event) {
-            if (event.type == "vclick" ||
-                event.keyCode &&
-                  (event.keyCode === $.mobile.keyCode.ENTER ||
-                   event.keyCode === $.mobile.keyCode.SPACE)) {
-                self.open();
-                event.preventDefault();
-            }
-        });
+        $.todons.popupwindow.bindPopupToButton(this._ui.button, this._ui.popup);
 
         this._ui.closeButton.bind("vclick", function(event) {
             self._setColor(self._ui.hsvpicker.attr("data-color"));
