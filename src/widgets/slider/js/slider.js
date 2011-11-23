@@ -74,6 +74,7 @@
         options: {
             theme: 'c',
             popupEnabled: true,
+            initDeselector: 'select, .useJqmSlider'
         },
 
         popup: null,
@@ -223,7 +224,7 @@
     // initialise sliders with our own slider
     $(document).bind("pagecreate", function(e) {
         var jqmSliderInitSelector = $.data(window,"jqmSliderInitSelector");
-        $(e.target).find(jqmSliderInitSelector).not('select').todonsslider();
+        $(e.target).find(jqmSliderInitSelector).not($.todons.todonsslider.prototype.options.initDeselector).todonsslider();
         $(e.target).find(jqmSliderInitSelector).filter('select').slider();
     });
 
