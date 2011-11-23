@@ -341,7 +341,7 @@
                             if ( o.calHighToday !== null && calmode.today === calmode.highlightDay ) {
                                 calmode.thisTheme = o.calHighToday;
                             } else if ( $.isArray(o.highDates) && ($.inArray(self._isoDate(self.theDate.getFullYear(), self.theDate.getMonth()+1, calmode.today), o.highDates) > -1 ) ) {
-                                calmode.thisTheme = highDatesTheme;
+                                calmode.thisTheme = o.highDatesTheme;
                             } else if ( $.isArray(o.highDays) && $.inArray(o.daysOfWeekShort[gridDay+o.calStartDay], o.highDays) > -1 ) {
                                   var index = $.inArray(o.daysOfWeekShort[gridDay+o.calStartDay], o.highDays);
                                   var theme = "calendarbutton";
