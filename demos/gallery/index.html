@@ -556,10 +556,20 @@
 
               <a href="#popupList" id="popupListButton" data-role="button" data-inline="true" data-rel="popupwindow">Popup list</a>
 
+              <div id="themedPopupContent" data-corners="false" data-role="popupwindow" style="display: table;" data-theme="a" data-overlay-theme="e">
+                <table>
+                  <tr> <td>Mary</td>   <td>had-a</td>  <td>little</td>   <td>lamb</td>  </tr>
+                  <tr> <td>and-it</td> <td>was</td>   <td>white-as</td>  <td>snow</td> </tr>
+                  <tr> <td>and-everywhere</td>   <td>that</td> <td>Mary</td> <td>went</td>  </tr>
+                  <tr> <td>her-lamb</td>   <td>was-sure</td>  <td>to</td>   <td>go</td>  </tr>
+                </table>
+              </div>
+
               <p>Popup windows will follow the theme of the button to which they are associated, unless the theme is explicitly set.</p>               
               <a href="#popupContent" id="popupwindowDemoButtonA" data-theme="a" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
               <a href="#popupContent" id="popupwindowDemoButtonB" data-theme="b" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
               <a href="#popupContent" id="popupwindowDemoButtonC" data-theme="e" data-role="button" data-inline="true" data-rel="popupwindow">Show popup</a>
+              <a href="#themedPopupContent" id="themedButtonE" data-role="button" data-inline="true" data-rel="popupwindow">Explicitly themed</a>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <p></p>
               <div id="popupContent" data-role="popupwindow" style="display: table;">

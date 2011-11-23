@@ -131,37 +131,31 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                 .split(" ")
                 .filter(function(el, idx, ar) {
 	                return el.match(/^ui-body-[a-z]$/);
-                });
+                }),
+            alreadyAdded = true,
+            ret = false;
+
 
         currentTheme = ((currentTheme.length > 0) ? currentTheme[0].match(/^ui-body-([a-z])/)[1] : null);
 
         if (theme !== currentTheme || unconditional) {
             dst.removeClass("ui-body-" + currentTheme);
-            if (theme !== null)
+            if ((theme || "").match(/[a-z]/))
                 dst.addClass("ui-body-" + theme);
+            ret = true;
         }
+
+        return ret;
     },
 
     _setTheme: function(value, unconditional) {
-        if (value === null)
-            value = "";
-
-        if (value.match(/^[a-z]$/) || value === "")
-            this._realSetTheme(this.element, value, unconditional);
+        if (this._realSetTheme(this.element, value, unconditional))
+            this.options.theme = value;
     },
 
     _setOverlayTheme: function(value, unconditional) {
-        if (value === null)
-            value = "";
-        if (value.match(/^[a-z]$/) || value === "") {
-            this._realSetTheme(this._ui.container, value, unconditional);
-            // The screen must always have some kind of background for fade to work, so, if the theme is being unset,
-            // set the background to "a".
-            this._realSetTheme(this._ui.screen, (value === "" ? "a" : value), unconditional);
+        if (this._realSetTheme(this._ui.container, value, unconditional))
             this.options.overlayTheme = value;
-        }
-        else
-            console.log("Warning: " + value + " is not a valid overlay theme! Please specify a single letter a-z or an empty string!");
     },
 
     _setShadow: function(value, unconditional) {
@@ -196,10 +190,10 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     _setOption: function(key, value, unconditional) {
-        recognizedOptions = ["overlayTheme", "shadow", "fade", "transition", "showArrow"];
+        var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
 
-        if ($.inArray(key, recognizedOptions) !== -1)
-            this["_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();})](value, unconditional);
+        if (this[setter] !== undefined)
+            this[setter](value, unconditional);
     },
 
     _placementCoords: function(x, y) {

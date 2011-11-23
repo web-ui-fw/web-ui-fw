@@ -114,7 +114,6 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
           else
           if (key === "buttonMarkup") {
               this._ui.button.buttonMarkup(value);
-              value["theme"] = this._ui.popup.popupwindow("option", "overlayTheme").substring(8);
               value["inline"] = false;
               this._ui.closeButton.buttonMarkup(value);
           }
