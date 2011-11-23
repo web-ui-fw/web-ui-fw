@@ -441,7 +441,7 @@
                 isopen:isopen
             });
             this._ui.cpContainer.appendTo(self.element)
-                       .popupwindow({transition: "slideup"})
+                       .popupwindow({transition: "slideup", overlayTheme: "c"})
                        .bind("closed", function(e) {
                           self.isopen = false;
                        });
