@@ -157,14 +157,6 @@ $(document).bind("pagecreate", function () {
         }
     });
 
-    $("#myoptionheader").bind('collapse', function () {
-        console.log('option header was collapsed');
-    });
-
-    $("#myoptionheader").bind('expand', function () {
-        console.log('option header was expanded');
-    });
-
     $('#slider-demo').bind('pageshow', function () {
         var popupEnabled = false;
 
@@ -205,10 +197,6 @@ $(document).bind("pagecreate", function () {
 
         $('#remove-bertie-button').unbind('click').bind('click', function () {
             $('#refreshable-dividers').find('li:contains("Bertie")').remove();
-        });
-
-        $('#refreshable-dividers').unbind('updatelayout').bind('updatelayout', function () {
-            console.log('dividers were updated on refreshable list');
         });
     });
 

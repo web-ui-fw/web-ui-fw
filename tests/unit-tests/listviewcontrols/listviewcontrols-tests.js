@@ -14,7 +14,6 @@
                 var controls = $(controlsSelector);
 
                 var check = function (testNumber, options) {
-                  console.log("***** test " + testNumber);
                   target.listviewcontrols(options);
                   var hasClass = target.hasClass('ui-listviewcontrols-listview');
                   target.listviewcontrols('destroy');
