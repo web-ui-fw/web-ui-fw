@@ -202,7 +202,7 @@
             }
             else
             if (klass.search("separator") > 0) {
-                console.log("datetimepicker: no dropdown for time separator");
+                /* Do nothing. */
             }
             else
             if (klass.search("minutes") > 0) {

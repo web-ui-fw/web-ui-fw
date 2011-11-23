@@ -168,8 +168,6 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
                         this._validOption('mode', o.mode, o));
 
         if (!optionsValid) {
-            console.error('Could not create listviewcontrols widget due to ' +
-                          'invalid option(s)');
             return false;
         }
 
@@ -177,8 +175,6 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
         this.controlPanel = $(document).find(o.controlPanelSelector).first();
 
         if (this.controlPanel.length === 0) {
-            console.error('Could not create listviewcontrols widget: ' +
-                          'controlPanelSelector didn\'t select any elements');
             return false;
         }
 
@@ -193,8 +189,6 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
         }
 
         if (!this._validOption('controlPanelShowIn', o.controlPanelShowIn, o)) {
-            console.error('Could not create listviewcontrols widget due to ' +
-                          'invalid show-in option on controls element');
             return;
         }
 
@@ -219,19 +213,9 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
 
         if (varName === 'mode') {
             ok = ($.inArray(value, otherOptions.modesAvailable) >= 0);
-
-            if (!ok) {
-                console.error('Invalid mode for listviewcontrols widget ' +
-                              '(should be one of modesAvailable)');
-            }
         }
         else if (varName === 'controlPanelSelector') {
             ok = ($.type(value) === 'string');
-
-            if (!ok) {
-                console.error('Invalid controlPanelSelector for ' +
-                              'listviewcontrols widget');
-            }
         }
         else if (varName === 'modesAvailable') {
             ok = ($.isArray(value) && value.length > 1);
@@ -243,19 +227,9 @@ $.widget("todons.listviewcontrols", $.mobile.widget, {
                     }
                 }
             }
-
-            if (!ok) {
-                console.error('Invalid modesAvailable for listviewcontrols ' +
-                              'widget (should be array of strings with at least ' +
-                              '2 members)');
-            }
         }
         else if (varName === 'controlPanelShowIn') {
             ok = ($.inArray(value, otherOptions.modesAvailable) >= 0);
-
-            if (!ok) {
-                console.error('Invalid controlPanelShowIn mode');
-            }
         }
 
         return ok;

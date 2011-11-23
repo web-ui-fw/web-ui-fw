@@ -198,8 +198,6 @@ $.widget("todons.widgetex", $.mobile.widget, {
                 }
             }
         }
-        else
-            console.log("loadPrototype: error: @widget must be of the form 'namespace.widgetName'");
     }
 });
 
