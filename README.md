@@ -61,7 +61,6 @@ either in full or in part:
 * <a href="http://documentcloud.github.com/underscore/">Underscore</a>
   (a copy of the _.keys() method is in our namespace)
 * <a href="https://github.com/jtsage/jquery-mobile-datebox">JQM-DateBox</a>
-* <a href="http://jqueryui.com/">jQuery UI</a> (only the position() method)
 * some experimental elements of jQuery Mobile, especially scrollview
 
 There is no need to download these libraries, as they are included
