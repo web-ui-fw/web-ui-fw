@@ -80,19 +80,12 @@ $.widget("todons.switch", $.todons.widgetex, {
 
         $.mobile.todons.parseOptions(this, true);
 
-        this._ui.realButton.bind("vclick", function(e) {
-            self._toggle();
-            e.stopPropagation();
-        });
-
-        this._ui.normalBackground.bind("vclick", function(e) {
-            self._toggle();
-            e.stopPropagation();
-        });
-    },
-
-    _toggle: function() {
-        this._setChecked(!(this.options.checked));
+        this._ui.realButton
+            .add(this._ui.normalBackground)
+            .bind("vclick", function(e) {
+                self._setChecked(!(self.options.checked));
+                e.stopPropagation();
+            });
     },
 
     _setOption: function(key, value, unconditional) {
@@ -104,11 +97,7 @@ $.widget("todons.switch", $.todons.widgetex, {
 
     _realize: function() {
         this._ui.realButton
-            .position({
-                my: "center center",
-                at: "center center",
-                of: this._ui[(this.options.checked ? "t" : "f") + "Button"]
-            })
+            .offset(this._ui[(this.options.checked ? "t" : "f") + "Button"].offset())
             .removeClass("switch-button-transparent");
         this._ui.activeBackground.find("a").addClass("switch-button-transparent");
         this._ui.normalBackground.find("a").addClass("switch-button-transparent");
@@ -121,11 +110,7 @@ $.widget("todons.switch", $.todons.widgetex, {
     _setChecked: function(checked, unconditional) {
         if (this.options.checked != checked || unconditional) {
             if (this.rendered) {
-                this._ui.refButton.position({
-                    my: "center center", 
-                    at: "center center",
-                    of: this._ui[(checked ? "t" : "f") + "Button"]
-                });
+                this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
                 this._ui.realButton.animate({"top": this._ui.refButton.position().top});
             }
 
