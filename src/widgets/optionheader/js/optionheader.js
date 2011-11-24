@@ -218,7 +218,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
             arrow.unbind('vclick', this.clickHandler);
         }
 
-        // for each ui-grid-a element, add a class ui-option-header-row-M
+        // for each ui-grid-* element, add a class ui-option-header-row-M
         // to it, where M is the xpath position() of the div
         el.find(gridRowSelector).each(function (index) {
             var klass = 'ui-option-header-row-' + (index + 1);
@@ -228,10 +228,11 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         // redraw the buttons (now that the optionheader has the right
         // swatch)
         el.find('.ui-btn').each(function () {
-            $(this).attr('data-theme', theme);
+            $(this).attr('data-' + $.mobile.ns + 'theme', theme);
 
             // hack the class of the button to remove the old swatch
             var klass = $(this).attr('class');
+
             klass = klass.replace(/ui-btn-up-\w{1}\s*/, '');
             klass = klass + ' ui-btn-up-' + theme;
             $(this).attr('class', klass);
