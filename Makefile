@@ -32,7 +32,6 @@ LIBS_JS_FILES = jlayout/jquery.sizes.js \
                 jlayout/jlayout.flexgrid.js \
                 jlayout/jlayout.flow.js \
                 jlayout/jquery.jlayout.js \
-                jquery.ui.position.git+dfe75e1.js \
                 $(NULL)
 JQUERY = submodules/jquery-mobile/js/jquery.js
 JQUERY_MOBILE = submodules/jquery-mobile/compiled/jquery.mobile.js
@@ -175,6 +174,7 @@ dist: clean all docs
 		README.md \
 		COPYING \
 		$${DESTDIR}; \
+        hash git 2>&1 /dev/null && touch $${DESTDIR}/$$(git log | head -n 1 | awk '{print $$2;}'); \
 	tar cfzps \
 		$${TARBALL} \
 		--exclude='.git' \
