@@ -43,6 +43,9 @@
 //     popupEnabled: boolean; controls whether the popup is displayed or not
 //                   specify if the popup is enabled using the 'data-popupEnabled' attribute
 //                   set from javascript using .todonsslider('option','popupEnabled',newValue)
+//     initDeselector: string; the selector that is used to determine which elements should be
+//                     regular jQuery Mobile sliders
+//                     default: 'select, .useJqmSlider'
 //
 // Events:
 //     changed: triggers when the value is changed (rather than when the handle is moved)
@@ -68,6 +71,10 @@
 //     $('#popupDisabler').bind('vclick', function() {
 //         $('#mySlider').todonsslider('option','popupEnabled',false);
 //     });
+//     <div data-role="fieldcontain">
+//         <label for="myJqmSlider">Use jQuery Mobile slider</label>
+//         <input id="myJqmSlider" name="myJqmSlider" type="range" value="77" min="0" max="99" class="useJqmSlider"/>
+//     </div>
 
 (function ($, window, undefined) {
     $.widget("todons.todonsslider", $.mobile.widget, {
