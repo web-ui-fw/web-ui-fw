@@ -41,8 +41,8 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         var triangle = $("<div></div>", {class: "ui-triangle"});
 
         $.extend(this, {
-            realized: false,
-            triangle: triangle,
+            _realized: false,
+            _triangle: triangle,
         });
 
         this.element.css("position", "relative").append(triangle);
@@ -52,42 +52,45 @@ $.widget( "todons.triangle", $.todons.widgetex, {
 
     // The widget needs to be realized for this function/
     _setBorders: function() {
-        if (this.options.location === "top") {
-            this.triangle.css("border-left-width",   this.element.height());
-            this.triangle.css("border-top-width",    0);
-            this.triangle.css("border-right-width",  this.element.height());
-            this.triangle.css("border-bottom-width", this.element.height());
-            this.triangle.css("border-left-color",   "rgba(0, 0, 0, 0)");
-            this.triangle.css("border-right-color",  "rgba(0, 0, 0, 0)");
-        }
-        else
-        if (this.options.location === "bottom") {
-            this.triangle.css("border-left-width",   this.element.height());
-            this.triangle.css("border-top-width",    this.element.height());
-            this.triangle.css("border-right-width",  this.element.height());
-            this.triangle.css("border-bottom-width", 0);
-            this.triangle.css("border-left-color",   "rgba(0, 0, 0, 0)");
-            this.triangle.css("border-right-color",  "rgba(0, 0, 0, 0)");
-        }
+        this._triangle.css(
+            (this.options.location === "top")
+                ? {
+                    "border-left-width"   : this.element.height(),
+                    "border-top-width"    : 0,
+                    "border-right-width"  : this.element.height(),
+                    "border-bottom-width" : this.element.height(),
+                    "border-left-color"   : "rgba(0, 0, 0, 0)",
+                    "border-right-color"  : "rgba(0, 0, 0, 0)"
+                } : 
+            (this.options.location === "bottom")
+                ? {
+                    "border-left-width"   : this.element.height(),
+                    "border-top-width"    : this.element.height(),
+                    "border-right-width"  : this.element.height(),
+                    "border-bottom-width" : 0,
+                    "border-left-color"   : "rgba(0, 0, 0, 0)",
+                    "border-right-color"  : "rgba(0, 0, 0, 0)"
+                }
+                : {});
     },
 
     _realize: function() {
         this._setBorders();
-        this.triangle.css("margin-left", -this.element.height());
+        this._triangle.css("margin-left", -this.element.height());
         this._setOffset(this.options.offset, true);
-        this.realized = true;
+        this._realized = true;
     },
 
     _setOffset: function(value, unconditional) {
         if (value != this.options.offset || unconditional) {
-            this.triangle.css("left", value);
+            this._triangle.css("left", value);
             this.options.offset = value;
         }
     },
 
     _setClass: function(value, unconditional) {
         if (value != this.options.class || unconditional) {
-            this.triangle.addClass(value);
+            this._triangle.addClass(value);
             this.options.class = value;
         }
     },
@@ -95,31 +98,22 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     _setColor: function(value, unconditional) {
         if (value != this.options.color || unconditional)
             if (value != undefined)
-                this.triangle.css("border-bottom-color", value);
+                this._triangle.css("border-bottom-color", value);
     },
 
     _setLocation: function(value, unconditional) {
         if (value != this.options.location || unconditional) {
             this.options.location = value;
-            if (this.realized)
+            if (this._realized)
                 this._setBorders();
         }
     },
 
     _setOption: function(key, value, unconditional) {
-        if (undefined === unconditional)
-            unconditional = false;
-        if (key === "offset")
-            this._setOffset(value, unconditional);
-        else
-        if (key === "class")
-            this._setClass(value, unconditional);
-        else
-        if (key === "color")
-            this._setColor(value, unconditional);
-        else
-        if (key === "location")
-            this._setLocation(value, unconditional);
+        var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
+
+        if (this[setter] !== undefined)
+            this[setter](value, (unconditional || false));
     },
 });
 
