@@ -150,7 +150,7 @@ install: all
 	mkdir -p ${INSTALL_DIR}/share/slp-web-fw ${INSTALL_DIR}/bin
 	cp -av tools/* ${INSTALL_DIR}/bin
 
-coverage: all
+coverage: clean all
 	# Checking unit test coverage
 	$(CURDIR)/tests/coverage/instrument.sh
 
