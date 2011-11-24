@@ -46,5 +46,33 @@
   </div>
 </div>
 
+<div data-nstest-role="page" id="optionheader-test-markup">
+  <div data-nstest-role="header" data-nstest-position="inline">
+    <h1>Option Header Test - markup</h1>
+  </div>
+  <div data-nstest-role="content">
+      <!--
+      NB these first two are inside parent divs so they
+      aren't siblings, to make selecting easier
+      -->
+      <div>
+          <div id="optionheader-test-markup-indicator"
+               data-nstest-role="optionheader">
+          </div>
+      </div>
+      <div>
+          <div id="optionheader-test-markup-no-indicator"
+               data-nstest-role="optionheader"
+               data-nstest-options='{"showIndicator":false}'>
+          </div>
+      </div>
+
+      <div id="optionheader-test-markup-custom-theme"
+           data-nstest-role="optionheader"
+           data-nstest-theme="c">
+      </div>
+  </div>
+</div>
+
 </body>
 </html>
