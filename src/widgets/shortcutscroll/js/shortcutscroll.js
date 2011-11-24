@@ -101,10 +101,10 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
             // apply the scroll
             self.scrollview.scrollview('scrollTo', 0, -dividerY);
 
+            var dstOffset = self.scrollview.offset();
             $popup.text($(divider).text())
-                  .position({my: 'center center',
-                             at: 'center center',
-                             of: self.scrollview})
+                  .offset({left : dstOffset.left + (self.scrollview.width()  - $popup.width())  / 2,
+                           top  : dstOffset.top  + (self.scrollview.height() - $popup.height()) / 2})
                   .show();
         };
 
