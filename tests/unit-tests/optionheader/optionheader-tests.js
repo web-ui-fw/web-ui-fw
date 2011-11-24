@@ -69,6 +69,18 @@
         var themeSet = $($new_page.find('#optionheader-test-markup-custom-theme'));
         ok(themeSet.hasClass('ui-body-c'), 'should have class for theme c set in options');
 
+        // test for row markup on grids
+        var grid = $($new_page.find('#optionheader-test-markup-grid'));
+        ok(grid.hasClass('ui-option-header-3-row'), 'should have 3 rows');
+        ok(grid.find('div:nth-child(1)').hasClass('ui-option-header-row-1'));
+        ok(grid.find('div:nth-child(2)').hasClass('ui-option-header-row-2'));
+        ok(grid.find('div:nth-child(3)').hasClass('ui-option-header-row-3'));
+
+        // test for button markup inside the grid: all buttons should
+        // have ui-btn-up-d class, to match the theme of their parent
+        equal(grid.find('.ui-btn:not(.ui-btn-up-d)').length, 0);
+        equal(grid.find('.ui-btn.ui-btn-up-d').length, 9);
+
         start();
       }
     ]);
