@@ -126,14 +126,12 @@ $.widget("todons.optionheader", $.todons.widgetex, {
     },
 
     _create: function () {
-        var options,
-            theme,
+        var theme,
             self = this,
             parentPage;
 
         // parse data-options
-        options = this.element.data('options');
-        $.extend(this.options, options);
+        $.extend(this.options, this.element.data('options'));
 
         this.isCollapsed = this.options.collapseOnInit;
         this.expandedHeight = null;
@@ -268,7 +266,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         // combine commonCallback with any user-specified callback
         if (options.callback) {
             callback = function () {
-                options.callback();.bind('vclick', this.clickHandler)
+                options.callback();
                 commonCallback();
             };
         }
