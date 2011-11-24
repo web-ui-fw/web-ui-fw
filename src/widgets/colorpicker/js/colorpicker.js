@@ -65,12 +65,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _create: function() {
-        var self = this,
-            stopDragging = function(event) {
-              self.dragging = false;
-              event.stopPropagation();
-              event.preventDefault();
-            };
+        var self = this;
 
         this.element.append(this._ui.clrpicker);
 
@@ -98,24 +93,26 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
                     self.dragging = false;
             });
 
-        this._ui.hs.eventSource
-            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "hs", false); })
-            .bind( "vmousemove"          , function (event) { self._handleMouseMove(event, "hs", false); })
+        this._bindElements("hs");
+        this._bindElements("l");
+    },
+
+    _bindElements: function(which) {
+        var self = this,
+            stopDragging = function(event) {
+                self.dragging = false;
+                event.stopPropagation();
+                event.preventDefault();
+            };
+
+        this._ui[which].eventSource
+            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, which, false); })
+            .bind( "vmousemove"          , function (event) { self._handleMouseMove(event, which, false); })
             .bind( "vmouseup"            , stopDragging);
 
-        this._ui.l.eventSource
-            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "l",  false); })
-            .bind( "vmousemove"          , function (event) { self._handleMouseMove(event, "l",  false); })
-            .bind( "vmouseup"            , stopDragging);
-
-        this._ui.hs.selector
-            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "hs", true); })
-            .bind( "touchmove vmousemove", function (event) { self._handleMouseMove(event, "hs", true); })
-            .bind( "vmouseup"            , stopDragging);
-
-        this._ui.l.selector
-            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, "l",  true); })
-            .bind( "touchmove vmousemove", function (event) { self._handleMouseMove(event, "l",  true); })
+        this._ui[which].selector
+            .bind( "vmousedown mousedown", function (event) { self._handleMouseDown(event, which, true); })
+            .bind( "touchmove vmousemove", function (event) { self._handleMouseMove(event, which, true); })
             .bind( "vmouseup"            , stopDragging);
     },
 
@@ -138,8 +135,8 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
 
     _handleMouseMove: function(event, containerStr, isSelector, coords) {
         if (this.dragging) {
-            if (coords === undefined)
-                var coords = $.mobile.todons.targetRelativeCoordsFromEvent(event);
+            coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(event));
+
             if (this.draggingHS) {
                 var potential_h = isSelector
                       ? this.dragging_hsl[0] / 360 + (coords.x - this.selectorDraggingOffset.x) / this._ui[containerStr].eventSource.width()
@@ -174,22 +171,18 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         var clr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
             gray = $.mobile.todons.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
-        if (hsl[2] < 0.5) {
-            this._ui.hs.valMask.css("background", "#000000");
-            this._ui.hs.valMask.css("opacity", 1.0 - hsl[2] * 2.0);
-        }
-        else {
-            this._ui.hs.valMask.css("background", "#ffffff");
-            this._ui.hs.valMask.css("opacity", (hsl[2] - 0.5) * 2.0);
-        }
-
-        this._ui.hs.selector.css("left", hsl[0] / 360 * this._ui.hs.eventSource.width());
-        this._ui.hs.selector.css("top",  hsl[1] * this._ui.hs.eventSource.height());
-        this._ui.hs.selector.css("background", clr);
-
-        this._ui.l.selector.css("top",   hsl[2] * this._ui.l.eventSource.height());
-        this._ui.l.selector.css("background",  gray);
-
+        this._ui.hs.valMask.css((hsl[2] < 0.5)
+            ? { background : "#000000" , opacity : (1.0 - hsl[2] * 2.0)   }
+            : { background : "#ffffff" , opacity : ((hsl[2] - 0.5) * 2.0) });
+        this._ui.hs.selector.css({
+            left       : (hsl[0] / 360 * this._ui.hs.eventSource.width()),
+            top        : (hsl[1] * this._ui.hs.eventSource.height()),
+            background : clr
+        });
+        this._ui.l.selector.css({
+            top        : (hsl[2] * this._ui.l.eventSource.height()),
+            background : gray
+        });
         $.todons.colorwidget.prototype._setColor.call(this, clr);
     },
 
