@@ -193,7 +193,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
         var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
 
         if (this[setter] !== undefined)
-            this[setter](value, unconditional);
+            this[setter](value, (unconditional || false));
     },
 
     _placementCoords: function(x, y) {
