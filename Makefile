@@ -174,7 +174,7 @@ dist: clean all docs
 		README.md \
 		COPYING \
 		$${DESTDIR}; \
-        hash git 2>&1 /dev/null && touch $${DESTDIR}/$$(git log | head -n 1 | awk '{print $$2;}'); \
+	hash git 2>&1 /dev/null && touch $${DESTDIR}/$$(git log | head -n 1 | awk '{print $$2;}'); \
 	tar cfzps \
 		$${TARBALL} \
 		--exclude='.git' \
