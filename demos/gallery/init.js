@@ -314,8 +314,85 @@ $(document).bind("pagecreate", function () {
 
         clrWidgetsAreInit = true;
     });
-});
 
+    $('#layoutvbox-demo').bind('pageshow', function () {
+        var tinyDiv = $('<div class="layout-demo-onehundred">' +
+                        '<p>tiny tiny tiny tiny tiny tiny</p>' +
+                        '</div>');
+
+        var biggerDiv = $('<div class="layout-demo-twohundred">' +
+                          '<p>bigger bigger bigger bigger bigger!</p>' +
+                          '</div>');
+
+        $('#layoutvbox-demo-add-start').unbind('vclick').bind('vclick', function () {
+            var newDiv = tinyDiv.clone();
+            newDiv.addClass('layout-demo-red');
+            $('#layoutvbox-demo-add-container').prepend(newDiv);
+            $('#layoutvbox-demo-add-container').layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-end').unbind('vclick').bind('vclick', function () {
+            var newDiv = tinyDiv.clone();
+            newDiv.addClass('layout-demo-blue');
+            $('#layoutvbox-demo-add-container').append(newDiv);
+            $('#layoutvbox-demo-add-container').layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-reset').unbind('vclick').bind('vclick', function () {
+            $('#layoutvbox-demo-add-container').find('.layout-demo-blue,.layout-demo-red')
+                                               .remove();
+            $('#layoutvbox-demo-add-container').layoutvbox('refresh');
+        });
+
+        var container = $('#layoutvbox-demo-add-container-sv');
+
+        $('#layoutvbox-demo-add-start-sv').unbind('vclick').bind('vclick', function () {
+            var newDiv = biggerDiv.clone();
+            newDiv.addClass('layout-demo-red');
+            container.find('.ui-scrollview-view').prepend(newDiv);
+            container.layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-end-sv').unbind('vclick').bind('vclick', function () {
+            var newDiv = biggerDiv.clone();
+            newDiv.addClass('layout-demo-blue');
+            container.find('.ui-scrollview-view').append(newDiv);
+            container.layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-reset-sv').unbind('vclick').bind('vclick', function () {
+            container.find('.layout-demo-blue,.layout-demo-red')
+                     .remove();
+            container.layoutvbox('refresh');
+            container.scrollview('scrollTo', 0, 0);
+        });
+        $('#layoutvbox-demo-add-increase-sv').unbind('vclick').bind('vclick', function () {
+            var vgap = container.layoutvbox('option', 'vgap');
+            vgap += 5;
+            container.layoutvbox('option', 'vgap', vgap);
+            container.layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-decrease-sv').unbind('vclick').bind('vclick', function () {
+            var vgap = container.layoutvbox('option', 'vgap');
+            vgap -= 5;
+            vgap = Math.max(vgap, 0);
+            container.layoutvbox('option', 'vgap', vgap);
+            container.layoutvbox('refresh');
+        });
+        $('#layoutvbox-demo-add-toggle-sv').unbind('vclick').bind('vclick', function () {
+            var val = $(this).attr('value');
+            var newVal, newText;
+            if (val === 'on') {
+                newVal = 'off';
+                container.layoutvbox('option', 'showScrollBars', false);
+            }
+            else {
+                newVal = 'on';
+                container.layoutvbox('option', 'showScrollBars', true);
+            }
+            newText = 'Scrollbars ' + val;
+            $(this).find('.ui-btn-text').text(newText);
+            $(this).attr('value', newVal);
+            container.layoutvbox('refresh');
+        });
+    });
+});
 
 $(document).bind("pagecreate", function () {
     var button = $('#calendarbutton');

@@ -1119,103 +1119,207 @@ $scroller2List.scrollview('option','scrollDuration','10000');
             </div>
 
             <div data-role="content">
-                <p><strong>Note that in these demos, the height of each div
-                with vbox layout has been constrained to 600px.</strong></p>
+                <div>
+                    <a href="#layoutvbox-demo-content-area" data-role="button" data-inline="true">vbox
+                    applied directly to a div with <code>data-role="content"</code></a>
+                </div>
 
-                <p>An example with 5px vertical gap and scrollable on
-                (the default is for scrollable to be on). Configured with
-                <code>data-layout-options='{"vgap":5}'</code>.</p>
+                <p>Here's an example with 10px vgap, scrolling on, but scrollbars off (set
+                with <code>data-layout-options='{"vgap":10, "scrollable":true,
+                "showScrollBars":false}'</code>).</p>
 
                 <div class="layout-demo-short-div"
                      data-layout="vbox"
-                     data-layout-options='{"vgap":5}'>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                     data-layout-options='{"vgap":10, "scrollable":true, "showScrollBars":false}'>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
-                </div>
-
-                <p>An example with 15px vertical gap, scrollable on
-                but scrollbars off. Configured with
-                <code>data-layout-options='{"vgap":15,
-                "showScrollBars":false}'</code>.</p>
-
-                <div class="layout-demo-short-div"
-                     data-layout="vbox"
-                     data-layout-options='{"vgap":15, "showScrollBars":false}'>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
-                    </div>
-                    <div class="layout-demo-big">
-                        <p>bigger bigger bigger bigger bigger</p>
+                    <div class="layout-demo-fourhundred">
+                        <p>Each of the divs laid out by this vbox has a
+                        size 400px x 400px, set via CSS.</p>
                     </div>
                 </div>
 
-                <p>An example with 2px vgap and scrollable off (configured
+                <p>Here's an example with 2px vgap and scrollable off (set
                 with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
-                Note that (unlike hbox layout) the outer div is extended
-                to accommodate its children where scrollable=false.</p>
+                Note that even though the outer div has its height set to 600px,
+                because it doesn't have a scrollview, the div is sized so
+                its children fit vertically (this is a jLayout "feature").</p>
 
                 <div class="layout-demo-short-div"
                      data-layout="vbox"
                      data-layout-options='{"vgap":2, "scrollable":false}'>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
-                    <div class="layout-demo-tiny">
+                    <div class="layout-demo-onehundred">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                    <div class="layout-demo-onehundred">
                         <p>tiny tiny tiny tiny tiny tiny</p>
                     </div>
                 </div>
 
-                <p>See <a rel="external" href="../../src/widgets/layout-box/test/test-layout-vbox.html">the
-                layoutvbox test page</a> for more examples and explanation.</p>
+                <p>Here's an example with 2px vgap and scrollable off (set
+                with <code>data-layout-options='{"vgap":2, "scrollable":false}'</code>).
+                Notice that layouting can be dynamically applied as children are
+                added by calling <code>$(&lt;container&gt;).layoutvbox('refresh')</code>.
+                Note that children are <em>not clipped</em>, as the container
+                will grow to accommodate them (unlike the horizontal layout
+                box, which is constrained by jqm to only ever be as wide as the
+                page).</p>
+
+                <p>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-start">Add element at start</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-end">Add element at end</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-reset">Reset</a>
+                </p>
+
+                <div class="layout-demo-short-div"
+                     data-layout="vbox"
+                     data-layout-options='{"vgap":2, "scrollable":false}'
+                     id="layoutvbox-demo-add-container">
+                    <div class="layout-demo-onehundred">
+                        <p>tiny tiny tiny tiny tiny tiny</p>
+                    </div>
+                </div>
+
+                <p>Here is an example similar to the above, but with a scrollview.</p>
+
+                <p>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-start-sv">Add element at start</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-end-sv">Add element at end</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-reset-sv">Reset</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-increase-sv">Increase vgap</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-decrease-sv">Decrease vgap</a>
+                    <a data-role="button" data-inline="true" id="layoutvbox-demo-add-toggle-sv" value="on">Scrollbars off</a>
+                </p>
+
+                <div class="layout-demo-short-div"
+                     data-layout="vbox"
+                     data-layout-options='{"vgap":2}'
+                     id="layoutvbox-demo-add-container-sv">
+                    <div>
+                        <div class="layout-demo-twohundred">
+                            <p>bigger bigger bigger bigger bigger</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="layoutvbox-demo-content-area" data-add-back-btn="true">
+            <div data-role="header">
+                <h1>layout-vbox: applied direct to content</h1>
+            </div>
+
+            <div class="layout-demo-short-div"
+                 data-role="content"
+                 data-layout="vbox"
+                 data-layout-options='{"vgap":10}'>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
+                <div class="layout-demo-threehundred">
+                    <p>Each of the divs laid out by this vbox has a
+                    size 300px x 300px, set via CSS. Vertical gap is
+                    configured using <code>data-layout-options='{"vgap":10}'</code>. Note
+                    that the content area loses its padding, so you might want to
+                    use a div inside the content area.</p>
+                </div>
             </div>
         </div>
 
