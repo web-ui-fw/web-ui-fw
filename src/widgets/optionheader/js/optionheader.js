@@ -128,16 +128,17 @@ $.widget("todons.optionheader", $.todons.widgetex, {
     _create: function () {
         var theme,
             self = this,
-            parentPage;
+            parentPage,
+            dataOptions = this.element.jqmData('options');
 
         // parse data-options
-        $.extend(this.options, this.element.data('options'));
+        $.extend(this.options, dataOptions);
 
         this.isCollapsed = this.options.collapseOnInit;
         this.expandedHeight = null;
 
         // parse data-theme and reset options.theme if it's present
-        theme = this.element.data('theme') || this.options.theme;
+        theme = this.element.jqmData('theme') || this.options.theme;
         this.options.theme = theme;
 
         // set up the click handler; it's done here so it can
