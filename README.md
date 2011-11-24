@@ -25,7 +25,7 @@ including:
 * listview controls (declarative, modal control of the appearance of a listview)
 
 web-ui-fw also includes a custom theme (slightly deprecated, as it was built
-using the deprecated single CSS file approach).
+using the outdated single CSS file approach).
 
 The project is complementary to jQuery Mobile and the components
 should slot into existing projects. In almost all cases, the colours
