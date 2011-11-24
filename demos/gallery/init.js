@@ -392,6 +392,84 @@ $(document).bind("pagecreate", function () {
             container.layoutvbox('refresh');
         });
     });
+
+    $('#layouthbox-demo').bind('pageshow', function () {
+        var tinyDiv = $('<div class="layout-demo-onehundred">' +
+                        '<p>tiny tiny tiny tiny tiny tiny</p>' +
+                        '</div>');
+
+        var biggerDiv = $('<div class="layout-demo-twohundred">' +
+                          '<p>bigger bigger bigger bigger bigger!</p>' +
+                          '</div>');
+
+        $('#layouthbox-demo-add-start').unbind('vclick').bind('vclick', function () {
+            var newDiv = tinyDiv.clone();
+            newDiv.addClass('layout-demo-red');
+            $('#layouthbox-demo-add-container').prepend(newDiv);
+            $('#layouthbox-demo-add-container').layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-end').unbind('vclick').bind('vclick', function () {
+            var newDiv = tinyDiv.clone();
+            newDiv.addClass('layout-demo-blue');
+            $('#layouthbox-demo-add-container').append(newDiv);
+            $('#layouthbox-demo-add-container').layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-reset').unbind('vclick').bind('vclick', function () {
+            $('#layouthbox-demo-add-container').find('.layout-demo-blue,.layout-demo-red')
+                                               .remove();
+            $('#layouthbox-demo-add-container').layouthbox('refresh');
+        });
+
+        var container = $('#layouthbox-demo-add-container-sv');
+
+        $('#layouthbox-demo-add-start-sv').unbind('vclick').bind('vclick', function () {
+            var newDiv = biggerDiv.clone();
+            newDiv.addClass('layout-demo-red');
+            container.find('.ui-scrollview-view').prepend(newDiv);
+            container.layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-end-sv').unbind('vclick').bind('vclick', function () {
+            var newDiv = biggerDiv.clone();
+            newDiv.addClass('layout-demo-blue');
+            container.find('.ui-scrollview-view').append(newDiv);
+            container.layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-reset-sv').unbind('vclick').bind('vclick', function () {
+            container.find('.layout-demo-blue,.layout-demo-red')
+                     .remove();
+            container.layouthbox('refresh');
+            container.scrollview('scrollTo', 0, 0);
+        });
+        $('#layouthbox-demo-add-increase-sv').unbind('vclick').bind('vclick', function () {
+            var hgap = container.layouthbox('option', 'hgap');
+            hgap += 5;
+            container.layouthbox('option', 'hgap', hgap);
+            container.layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-decrease-sv').unbind('vclick').bind('vclick', function () {
+            var hgap = container.layouthbox('option', 'hgap');
+            hgap -= 5;
+            hgap = Math.max(hgap, 0);
+            container.layouthbox('option', 'hgap', hgap);
+            container.layouthbox('refresh');
+        });
+        $('#layouthbox-demo-add-toggle-sv').unbind('vclick').bind('vclick', function () {
+            var val = $(this).attr('value');
+            var newVal, newText;
+            if (val === 'on') {
+                newVal = 'off';
+                container.layouthbox('option', 'showScrollBars', false);
+            }
+            else {
+                newVal = 'on';
+                container.layouthbox('option', 'showScrollBars', true);
+            }
+            newText = 'Scrollbars ' + val;
+            $(this).find('.ui-btn-text').text(newText);
+            $(this).attr('value', newVal);
+            container.layouthbox('refresh');
+        });
+    });
 });
 
 $(document).bind("pagecreate", function () {
