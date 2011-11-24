@@ -154,12 +154,12 @@
             });
         },
 
-        // position the popup
+        // position the popup centered 5px above the handle
         positionPopup: function () {
-            this.popup.position({my: 'center bottom',
-                                 at: 'center top',
-                                 offset: '0 -5px',
-                                 of: this.handle});
+            var dstOffset = this.handle.offset();
+            this.popup.offset({
+                left: dstOffset.left + (this.handle.width() - this.popup.width()) / 2,
+                top:  dstOffset.top  - this.popup.outerHeight() - 5});
         },
 
         // show value on the handle and in popup
