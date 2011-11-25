@@ -20,7 +20,6 @@ digraph G {
     "ensurens.js" [style=filled,color="#F4A37B"];
     "jquery.easing.1.3.js" [style=filled,color="#F4A37B"];
     "jquery.mobile.scrollview.js" [style=filled,color="#F4A37B"];
-    "jquery.mobile.todons.clrlib.js" [style=filled,color="#F4A37B"];
     "colorpicker.js" [style=filled,color="#F4A37B"];
     "swipelist.js" [style=filled,color="#F4A37B"];
     "listviewcontrols.js" [style=filled,color="#F4A37B"];
@@ -69,7 +68,7 @@ digraph G {
     "pagelist.css" [style=filled,color="#A3F448"];
     "calendarpicker.less.css" [style=filled,color="#A3F448"];
     "jquery.mobile.scrollview.css" [style=filled,color="#A3F448"];
-    "jquery.mobile.clrlib.css" [style=filled,color="#A3F448"];
+    "colorwidget.css" [style=filled,color="#A3F448"];
     "jquery.mobile.widget.less.css" [style=filled,color="#A3F448"];
     "jquery.mobile.todons.defines.less.css" [style=filled,color="#A3F448"];
     "colorpicker.less.css" [style=filled,color="#A3F448"];
@@ -100,11 +99,10 @@ digraph G {
     "slider.js" -> "slider.css";
 
     "hsvpicker.js" -> "colorwidget.js";
+    "hsvpicker.js" -> "colorwidget.css";
     "hsvpicker.js" -> "jquery.mobile.todons.core.js";
-    "hsvpicker.js" -> "jquery.mobile.todons.clrlib.js";
     "hsvpicker.js" -> "hsvpicker.less.css";
     "hsvpicker.js" -> "hsvpicker.prototype.html";
-    "hsvpicker.js" -> "jquery.mobile.clrlib.css";
 
     "triangle.js" -> "widgetex.js";
     "triangle.js" -> "triangle.less.css";
@@ -145,14 +143,11 @@ digraph G {
 
     "jquery.mobile.scrollview.js" -> "jquery.mobile.scrollview.css";
 
-    "jquery.mobile.todons.clrlib.js" -> "ensurens.js";
-
     "colorpicker.js" -> "colorwidget.js";
+    "colorpicker.js" -> "colorwidget.css";
     "colorpicker.js" -> "colorpicker.prototype.html";
     "colorpicker.js" -> "colorpicker.less.css";
-    "colorpicker.js" -> "jquery.mobile.clrlib.css";
     "colorpicker.js" -> "jquery.mobile.todons.core.js";
-    "colorpicker.js" -> "jquery.mobile.todons.clrlib.js";
 
     "swipelist.js" -> "swipelist.css";
 
@@ -175,7 +170,6 @@ digraph G {
     "colorpalette.js" -> "widgetex.js";
     "colorpalette.js" -> "colorpalette.less.css";
     "colorpalette.js" -> "colorpalette.prototype.html";
-    "colorpalette.js" -> "jquery.mobile.todons.clrlib.js";
 
     "colorpickerbutton.js" -> "colorwidget.js";
     "colorpickerbutton.js" -> "hsvpicker.js";

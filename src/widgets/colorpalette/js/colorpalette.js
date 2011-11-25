@@ -86,7 +86,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
 
             if (rgbMatches.length > 3)
-                clr = $.mobile.todons.clrlib.RGBToHTML([
+                clr = $.todons.colorwidget.clrlib.RGBToHTML([
                     parseInt(rgbMatches[1]) / 255,
                     parseInt(rgbMatches[2]) / 255,
                     parseInt(rgbMatches[3]) / 255]);
@@ -112,7 +112,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             var Nix,
                 activeIdx = -1,
                 nChoices = this._ui.clrpalette.attr("data-n-choices"),
-                hsl = $.mobile.todons.clrlib.RGBToHSL($.mobile.todons.clrlib.HTMLToRGB(clr)),
+                hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)),
                 origHue = hsl[0],
                 offset = hsl[0] / 36,
                 theFloor = Math.floor(offset),
@@ -133,7 +133,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
                 if (hsl[0] === origHue)
                     activeIdx = Nix;
 
-                newClr = $.mobile.todons.clrlib.RGBToHTML($.mobile.todons.clrlib.HSLToRGB(hsl));
+                newClr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSLToRGB(hsl));
 
                 this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
             }
