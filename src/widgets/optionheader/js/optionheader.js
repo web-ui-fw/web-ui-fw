@@ -136,7 +136,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         // parse data-options
         $.extend(this.options, dataOptions);
 
-        this.isCollapsed = this.options.startCollapsed;
+        this.isCollapsed = false;
         this.expandedHeight = null;
 
         // parse data-theme and reset options.theme if it's present
@@ -164,7 +164,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
             this.expandedHeight = this.element.height();
         }
 
-        if (this.isCollapsed) {
+        if (this.options.startCollapsed) {
             this.collapse({duration: 0});
         }
     },

@@ -86,7 +86,7 @@
     ]);
   });
 
-  asyncTest("Should fire events correctly", function () {
+  asyncTest("Should respond to expand/collapse and fire events correctly", function () {
     $.testHelper.pageSequence([
       function () {
         $.testHelper.openPage('#optionheader-test-events');
@@ -104,16 +104,25 @@
 
         var startsExpandedOh = $($new_page.find('#optionheader-test-events-expanded'));
 
+        startsExpandedOh.bind('expand', function () {
+          // SHOULDN'T RUN
+          equal(true, true, '(startsExpanded) option header which is expanded shouldn\'t fire expand event!!!');
+          startsExpandedOh.unbind('expand');
+        });
+
         startsExpandedOh.bind('collapse', function () {
           // 2
           equal(true, true, '(startsExpanded) option header which is expanded should fire collapse event');
 
           // 3
-          equal(startsExpandedOh.height() + 'px', $.todons.optionheader.prototype.collapsedHeight);
+          equal(startsExpandedOh.height() + 'px',
+                $.todons.optionheader.prototype.collapsedHeight,
+                'should have collapsed to the height specified in the prototype');
 
           startsExpandedOh.unbind('collapse');
         });
 
+        startsExpandedOh.optionheader('expand');
         startsExpandedOh.optionheader('collapse');
       },
 
@@ -122,6 +131,10 @@
 
         var startsCollapsedOh = $($new_page.find('#optionheader-test-events-collapsed'));
 
+        // NB the optionheader will have fired a collapse event when it
+        // was created, as it would have had collapse() called to set
+        // its initial appearance; but calling collapse() after init
+        // shouldn't have an effect at this point
         startsCollapsedOh.bind('collapse', function () {
           // SHOULDN'T RUN
           equal(true, true, '(startsCollapsed) option header which is collapsed shouldn\'t fire collapse event!!!');
