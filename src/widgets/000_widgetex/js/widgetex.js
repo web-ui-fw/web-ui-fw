@@ -154,6 +154,8 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
         if (this[setter] !== undefined)
             this[setter](value);
+        else
+            $.mobile.widget.prototype._setOption.apply(this, arguments);
     },
 
     _realize: function() {}
