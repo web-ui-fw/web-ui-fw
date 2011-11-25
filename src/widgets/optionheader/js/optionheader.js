@@ -284,10 +284,12 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         if (duration > 0 && $.support.cssTransitions) {
             // add a handler to invoke a callback when the animation is done
             var elt = this.element.get(0);
+            var self = this;
 
             var handler = {
                 handleEvent: function (e) {
                     elt.removeEventListener('webkitTransitionEnd', this);
+                    self.element.css('-webkit-transition', null);
                     callback();
                 }
             };
