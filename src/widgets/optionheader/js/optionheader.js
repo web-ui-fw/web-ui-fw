@@ -325,12 +325,16 @@ $.widget("todons.optionheader", $.todons.widgetex, {
 
     // Takes the same options as toggle()
     collapse: function (options) {
-        this._setHeight(this.collapsedHeight, true, options);
+        if (!this.isCollapsed) {
+            this._setHeight(this.collapsedHeight, true, options);
+        }
     },
 
     // Takes the same options as toggle()
     expand: function (options) {
-        this._setHeight(this.expandedHeight, false, options);
+        if (this.isCollapsed) {
+            this._setHeight(this.expandedHeight, false, options);
+        }
     }
 });
 
