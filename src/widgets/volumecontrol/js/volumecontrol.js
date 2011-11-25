@@ -98,38 +98,36 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
           this.element.css("display", "none");
 
           $.extend (self, {
-              isOpen: false,
-              dragging: false,
-              realized: false,
-              volumeElemStack: []
+              _isOpen: false,
+              _dragging: false,
+              _realized: false,
+              _volumeElemStack: []
           });
 
-          $.mobile.todons.parseOptions(this, true);
-
           this._ui.container.bind("closed", function(e) {
-              self.isOpen = false;
+              self._isOpen = false;
           });
 
           this._ui.volumeImage.bind("vmousedown", function(e) {
-              self.dragging = true;
+              self._dragging = true;
               self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
               event.preventDefault();
           });
 
           this._ui.volumeImage.bind("vmousemove", function(e) {
-              if (self.dragging) {
+              if (self._dragging) {
                   self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
                   event.preventDefault();
               }
           });
 
           $( document ).bind( "vmouseup", function( event ) {
-              if ( self.dragging )
-                  self.dragging = false;
+              if ( self._dragging )
+                  self._dragging = false;
           });
 
           $(document).bind("keydown", function(e) {
-              if (self.isOpen) {
+              if (self._isOpen) {
                   var maxVolume = self._maxVolume(),
                       newVolume = -1;
 
@@ -167,50 +165,37 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
     },
 
     _realize: function() {
-        if (!this.realized)
+        if (!this._realized)
             this._setVolume(this.options.volume, true);
-        this.realized = true;
+        this._realized = true;
     },
 
-    _setBasicTone: function(value, unconditional) {
-        if (this.options.basicTone != value || unconditional) {
-            while (this.volumeElemStack.length > 0)
-                this.volumeElemStack.pop().remove();
-            this.options.basicTone = value;
-            this._setVolume(this.options.volume, true);
-        }
+    _setBasicTone: function(value) {
+        while (this._volumeElemStack.length > 0)
+            this._volumeElemStack.pop().remove();
+        this.options.basicTone = value;
+        this._setVolume(this.options.volume);
     },
 
-    _setTitle: function(value, unconditional) {
+    _setTitle: function(value) {
         this.options.title = value;
         this._ui.container.find("#volumecontrol-title").text(value);
     },
 
-    _setOption: function(key, value, unconditional) {
-        if (undefined === unconditional)
-            unconditional = false;
-        if (key === "volume")
-            this._setVolume(value, unconditional);
-        else
-        if (key === "basicTone")
-            this._setBasicTone(value, unconditional);
-        else
-        if (key === "title")
-            this._setTitle(value, unconditional)
-    },
-
-    _setVolume: function(vol, unconditional) {
+    _setVolume: function(vol) {
         var newVolume = Math.max(0, Math.min(vol, this._maxVolume())),
-            theFloor = Math.floor(newVolume);
+            theFloor = Math.floor(newVolume),
+            emitSignal;
 
         newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
 
-        if (newVolume != this.options.volume || unconditional) {
-            this.options.volume = newVolume;
-            this._setVolumeIcon();
-            this.element.attr("data-volume", this.options.volume);
+        emitSignal = (newVolume != this.options.volume);
+
+        this.options.volume = newVolume;
+        this._setVolumeIcon();
+        this.element.attr("data-volume", this.options.volume);
+        if (emitSignal)
             this.element.triggerHandler("volumechanged");
-        }
     },
 
     _maxVolume: function() {
@@ -218,7 +203,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
     },
 
     _setVolumeIcon: function() {
-        if (this.volumeElemStack.length === 0) {
+        if (this._volumeElemStack.length === 0) {
             var cxStart = 63, /* FIXME: Do we need a parameter for this (i.e., is this themeable) or is it OK hard-coded? */
                 cx = this._ui.volumeImage.width(),
                 cy = this._ui.volumeImage.height(),
@@ -228,7 +213,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 yStart = cy - 2 * cyElem,
                 elem;
 
-            for (var Nix = this.volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
+            for (var Nix = this._volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
                 elem = $("<div>", { class: "ui-volumecontrol-level"})
                     .css({
                         left: (cx - (cxStart + Nix * cxInc)) / 2,
@@ -236,31 +221,31 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                         width: cxStart + Nix * cxInc,
                         height: cyElem
                     });
-                this.volumeElemStack.push(elem);
+                this._volumeElemStack.push(elem);
                 this._ui.volumeImage.append(elem);
             }
         }
         for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
             if (Nix < this.options.volume)
-                this.volumeElemStack[Nix].addClass("ui-volumecontrol-level-set");
+                this._volumeElemStack[Nix].addClass("ui-volumecontrol-level-set");
             else
-                this.volumeElemStack[Nix].removeClass("ui-volumecontrol-level-set");
+                this._volumeElemStack[Nix].removeClass("ui-volumecontrol-level-set");
     },
 
     open: function() {
-        if (!this.isOpen) {
+        if (!this._isOpen) {
             this._ui.container.popupwindow("open",
                 window.innerWidth  / 2,
                 window.innerHeight / 2);
 
-            this.isOpen = true;
+            this._isOpen = true;
         }
     },
 
     close: function() {
-        if (this.isOpen) {
+        if (this._isOpen) {
             this._ui.container.popupwindow("close");
-            this.isOpen = false;
+            this._isOpen = false;
         }
     },
 });

@@ -149,8 +149,6 @@
         _create: function () {
             var self = this;
 
-            $.mobile.todons.parseOptions(self, true);
-
             this.element.append(self._ui.ui.personpicker);
             self._ui.ui.list.listview({theme: self.options.theme});
 
