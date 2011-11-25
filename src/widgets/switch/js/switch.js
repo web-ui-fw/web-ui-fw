@@ -74,11 +74,9 @@ $.widget("todons.switch", $.todons.widgetex, {
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
-            realized: false,
-            dstAttr: dstAttr
+            _realized: false,
+            _dstAttr: dstAttr
         });
-
-        $.mobile.todons.parseOptions(this, true);
 
         this._ui.realButton
             .add(this._ui.normalBackground)
@@ -86,13 +84,6 @@ $.widget("todons.switch", $.todons.widgetex, {
                 self._setChecked(!(self.options.checked));
                 e.stopPropagation();
             });
-    },
-
-    _setOption: function(key, value, unconditional) {
-        if (undefined === unconditional)
-            unconditional = false;
-        if (key === "checked")
-            this._setChecked(value, unconditional);
     },
 
     _realize: function() {
@@ -104,12 +95,13 @@ $.widget("todons.switch", $.todons.widgetex, {
         this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
         this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
 
-        this.rendered = true;
+        this._realized = true;
     },
 
-    _setChecked: function(checked, unconditional) {
-        if (this.options.checked != checked || unconditional) {
-            if (this.rendered) {
+    _setChecked: function(checked) {
+        if (this.options.checked != checked) {
+
+            if (this._realized) {
                 this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
                 this._ui.realButton.animate({"top": this._ui.refButton.position().top});
             }
@@ -118,7 +110,7 @@ $.widget("todons.switch", $.todons.widgetex, {
             this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
 
             this.options.checked = checked;
-            this.element.attr(this.dstAttr, checked ? "true" : "false");
+            this.element.attr(this._dstAttr, checked ? "true" : "false");
             this.element.triggerHandler("changed", checked);
         }
     },

@@ -88,8 +88,7 @@
         _create: function () {
             var self = this;
 
-            $.todons.widgetex.prototype.loadPrototype.call(this, "todons.personpicker_page");
-            $.mobile.todons.parseOptions(self, true);
+            $.todons.widgetex.loadPrototype.call(this, "todons.personpicker_page");
 
             // Prepare.
             self._ui.title.text(self.options.title);

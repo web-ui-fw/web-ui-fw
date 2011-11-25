@@ -101,32 +101,28 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         $.todons.popupwindow.bindPopupToButton(this._ui.button, this._ui.popup);
 
         this._ui.closeButton.bind("vclick", function(event) {
-            self._setColor(self._ui.hsvpicker.attr("data-color"));
+            self._setColor(self._ui.hsvpicker.hsvpicker("option", "color"));
             self.close();
         });
       },
 
-      _setOption: function(key, value, unconditional) {
-          if (undefined === unconditional)
-              unconditional = false;
-          if (key === "color")
-              this._setColor(value, unconditional);
-          else
-          if (key === "buttonMarkup") {
-              this._ui.button.buttonMarkup(value);
-              value["inline"] = false;
-              this._ui.closeButton.buttonMarkup(value);
-          }
-          else
-          if (key === "closeText")
-              this._ui.closeButtonText.text(value);
-      },
-
-      _setColor: function(clr, unconditional) {
-          if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+      _setColor: function(clr) {
+          if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
               this._ui.hsvpicker.hsvpicker("option", "color", clr);
               this._ui.buttonContents.css("color", clr);
           }
+      },
+
+      _setButtonMarkup: function(value) {
+          this._ui.button.buttonMarkup(value);
+          this.options.buttonMarkup = value;
+          value["inline"] = false;
+          this._ui.closeButton.buttonMarkup(value);
+      },
+
+      _setCloseText: function(value) {
+        this._ui.closeButtonText.text(value);
+        this.options.closeText = value;
       },
 
     open: function() {

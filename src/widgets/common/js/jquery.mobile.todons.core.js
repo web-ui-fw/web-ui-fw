@@ -33,16 +33,7 @@ ensureNS("jQuery.mobile.todons");
 
 (function () {
 
-var keyFunction = Object.keys || function(obj) {
-  if (obj !== Object(obj)) throw new TypeError('Invalid object');
-  var keys = [];
-  for (var key in obj) if (hasOwnProperty.call(obj, key)) keys[keys.length] = key;
-  return keys;
-};
-
 jQuery.extend(jQuery.mobile.todons, {
-    keys: keyFunction,
-
     Point: function (x, y) {
         var X = isNaN(x) ? 0 : x;
         var Y = isNaN(y) ? 0 : y;
@@ -228,33 +219,6 @@ jQuery.extend(jQuery.mobile.todons, {
         var wh = window.innerHeight;
         var height = wh - (hh + fh) - (pt + pb);
         $content.height(height);
-    },
-
-    // Read data- options from the element and update a dictionary of
-    // options when possible.
-    parseOptions: function (widget, userData) {
-        var optionKeys = $.mobile.todons.keys(widget.options);
-        for (key in optionKeys) {
-            opt = optionKeys[key];
-            dataValue = widget.element.attr("data-" + opt);
-            defaultValue = widget.options[opt];
-
-            if (dataValue !== undefined)
-                if (dataValue == "true" ||
-                    dataValue == "yes"  ||
-                    dataValue == "on")
-                    dataValue = true;
-                else
-                if (dataValue == "false" ||
-                    dataValue == "no"    ||
-                    dataValue == "off")
-                    dataValue = false;
-                else
-                if (!isNaN(parseInt(dataValue)))
-                    dataValue = parseInt(dataValue);
-
-            widget._setOption(opt, dataValue === undefined ? defaultValue : dataValue, userData);
-        }
     },
 
     // Get document-relative mouse coordinates from a given event

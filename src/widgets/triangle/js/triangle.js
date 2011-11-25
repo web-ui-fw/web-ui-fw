@@ -46,8 +46,6 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         });
 
         this.element.css("position", "relative").append(triangle);
-
-        $.mobile.todons.parseOptions(this, true);
     },
 
     // The widget needs to be realized for this function/
@@ -81,40 +79,26 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         this._realized = true;
     },
 
-    _setOffset: function(value, unconditional) {
-        if (value != this.options.offset || unconditional) {
-            this._triangle.css("left", value);
-            this.options.offset = value;
-        }
+    _setOffset: function(value) {
+        this._triangle.css("left", value);
+        this.options.offset = value;
     },
 
-    _setClass: function(value, unconditional) {
-        if (value != this.options.class || unconditional) {
-            this._triangle.addClass(value);
-            this.options.class = value;
-        }
+    _setClass: function(value) {
+        this._triangle.addClass(value);
+        this.options.class = value;
     },
 
-    _setColor: function(value, unconditional) {
-        if (value != this.options.color || unconditional)
-            if (value != undefined)
-                this._triangle.css("border-bottom-color", value);
+    _setColor: function(value) {
+        this._triangle.css("border-bottom-color", value);
+        this.options.color = value;
     },
 
-    _setLocation: function(value, unconditional) {
-        if (value != this.options.location || unconditional) {
-            this.options.location = value;
-            if (this._realized)
-                this._setBorders();
-        }
-    },
-
-    _setOption: function(key, value, unconditional) {
-        var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
-
-        if (this[setter] !== undefined)
-            this[setter](value, (unconditional || false));
-    },
+    _setLocation: function(value) {
+        this.options.location = value;
+        if (this._realized)
+            this._setBorders();
+    }
 });
 
 $(document).bind("pagecreate create", function(e) {

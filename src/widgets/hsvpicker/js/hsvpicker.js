@@ -131,8 +131,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     _bindElements: function(chan, idx) {
         var self = this;
         this._ui[chan].selector
-            .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan,  idx, e, true); })
-            .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan,  idx, e, true); })
+            .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan, idx, e, true); })
+            .bind("vmousemove touchmove", function(e) { self._handleMouseMove(chan, idx, e, true); })
             .bind("vmouseup",             function(e) { self.dragging = -1; });
         this._ui[chan].eventSource
             .bind("mousedown vmousedown", function(e) { self._handleMouseDown(chan, idx, e, false); })
@@ -200,8 +200,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         $.todons.colorwidget.prototype._setColor.call(this, clr);
     },
 
-    _setColor: function(clr, unconditional) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    _setColor: function(clr) {
+        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
             this.dragging_hsv = $.mobile.todons.clrlib.RGBToHSV($.mobile.todons.clrlib.HTMLToRGB(clr));
             this._updateSelectors(this.dragging_hsv);
         }

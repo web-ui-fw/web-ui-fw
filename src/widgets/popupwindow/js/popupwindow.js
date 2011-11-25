@@ -118,15 +118,13 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
           _isOpen: false,
       });
 
-      $.mobile.todons.parseOptions(this, true);
-
       // Events on "screen" overlay
       this._ui.screen.bind( "vclick", function( event ) {
           self.close();
       });
     },
 
-    _realSetTheme: function(dst, theme, unconditional) {
+    _realSetTheme: function(dst, theme) {
         var currentTheme = (dst.attr("class") || "")
                 .split(" ")
                 .filter(function(el, idx, ar) {
@@ -138,62 +136,47 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
         currentTheme = ((currentTheme.length > 0) ? currentTheme[0].match(/^ui-body-([a-z])/)[1] : null);
 
-        if (theme !== currentTheme || unconditional) {
-            dst.removeClass("ui-body-" + currentTheme);
-            if ((theme || "").match(/[a-z]/))
-                dst.addClass("ui-body-" + theme);
-            ret = true;
-        }
+        dst.removeClass("ui-body-" + currentTheme);
+        if ((theme || "").match(/[a-z]/))
+            dst.addClass("ui-body-" + theme);
+        ret = true;
 
         return ret;
     },
 
-    _setTheme: function(value, unconditional) {
-        if (this._realSetTheme(this.element, value, unconditional))
+    _setTheme: function(value) {
+        if (this._realSetTheme(this.element, value))
             this.options.theme = value;
     },
 
-    _setOverlayTheme: function(value, unconditional) {
-        if (this._realSetTheme(this._ui.container, value, unconditional))
+    _setOverlayTheme: function(value) {
+        if (this._realSetTheme(this._ui.container, value))
             this.options.overlayTheme = value;
     },
 
-    _setShadow: function(value, unconditional) {
-        if (this._ui.container.hasClass("ui-overlay-shadow") != value || unconditional) {
-            this.options.shadow = value;
-            this._ui.container[value ? "addClass" : "removeClass"]("ui-overlay-shadow");
-        }
+    _setShadow: function(value) {
+        this.options.shadow = value;
+        this._ui.container[value ? "addClass" : "removeClass"]("ui-overlay-shadow");
     },
 
-    _setCorners: function(value, unconditional) {
-        if (this._ui.container.hasClass("ui-corner-all") != value || unconditional) {
-            this.options.corners = value;
-            this._ui.container[value ? "addClass" : "removeClass"]("ui-corner-all");
-        }
+    _setCorners: function(value) {
+        this.options.corners = value;
+        this._ui.container[value ? "addClass" : "removeClass"]("ui-corner-all");
     },
 
-    _setFade: function(value, unconditional) {
+    _setFade: function(value) {
         this.options.fade = value;
     },
 
-    _setTransition: function(value, unconditional) {
-        if (this.options.transition != value || unconditional) {
-            this._ui.container
-                    .removeClass(this.options.transition)
-                    .addClass(value);
-            this.options.transition = value;
-        }
+    _setTransition: function(value) {
+        this._ui.container
+                .removeClass(this.options.transition)
+                .addClass(value);
+        this.options.transition = value;
     },
 
-    _setShowArrow: function(value, unconditional) {
+    _setShowArrow: function(value) {
         this.options.showArrow = value;
-    },
-
-    _setOption: function(key, value, unconditional) {
-        var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
-
-        if (this[setter] !== undefined)
-            this[setter](value, (unconditional || false));
     },
 
     _placementCoords: function(x, y) {

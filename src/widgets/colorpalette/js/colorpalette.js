@@ -100,35 +100,15 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         });
     },
 
-    _showPreview: function(show, unconditional) {
-        var currentlyVisible = (this._ui.previewContainer.attr("style") != "");
-
-        if (unconditional) {
-            if (show)
-                this._ui.previewContainer.removeAttr("style");
-            else
-                this._ui.previewContainer.css("display", "none");
-        }
-        else {
-            if (!show && currentlyVisible)
-                this._ui.previewContainer.removeAttr("style");
-            else
-            if (show && !currentlyVisible)
-                this._ui.previewContainer.css("display", "none");
-        }
-    },
-
-    _setOption: function(key, value, unconditional) {
-        if (undefined === unconditional)
-            unconditional = false;
-        if ("showPreview" === key)
-            this._showPreview(value, unconditional);
+    _setShowPreview: function(show) {
+        if (show)
+            this._ui.previewContainer.removeAttr("style");
         else
-            $.todons.colorwidget.prototype._setOption.call(this, key, value, unconditional);
+            this._ui.previewContainer.css("display", "none");
     },
 
-    _setColor: function(clr, unconditional) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr, unconditional)) {
+    _setColor: function(clr) {
+        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
             var Nix,
                 activeIdx = -1,
                 nChoices = this._ui.clrpalette.attr("data-n-choices"),

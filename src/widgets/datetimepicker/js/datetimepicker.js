@@ -432,8 +432,6 @@
             var obj = this;
             var input = this.element;
 
-            $.mobile.todons.parseOptions(this);
-
             $(input).css("display", "none");
             $(input).after(this._ui.container);
             this._ui.triangle.triangle({"class" : "selector-triangle-color"});
