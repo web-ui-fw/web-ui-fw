@@ -60,6 +60,35 @@ h1, h4 {
     height: 600px;
 }
 
+.layout-demo-onehundred {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+}
+.layout-demo-twohundred {
+    height: 200px;
+    width: 200px;
+    background-color: white;
+}
+.layout-demo-threehundred {
+    height: 300px;
+    width: 300px;
+    background-color: white;
+}
+.layout-demo-fourhundred {
+    height: 400px;
+    width: 400px;
+    background-color: white;
+}
+.layout-demo-red {
+    background-color: #700;
+    color: white;
+}
+.layout-demo-blue {
+    background-color: #007;
+    color: white;
+}
+
 /* for swipelist demo */
 #swipelist-demo .ui-swipelist-item-cover-inner {
     text-align: center;
