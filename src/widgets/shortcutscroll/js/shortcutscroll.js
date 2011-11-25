@@ -196,7 +196,8 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 
         // make the scrollview clip tall enough to show the whole of
         // the shortcutslist
-        this.scrollview.height(shortcutsTop + this.shortcutsContainer.outerHeight());
+        minClipHeight = shortcutsTop + this.shortcutsContainer.outerHeight() + 'px';
+        this.scrollview.css('min-height', minClipHeight);
     }
 });
 
