@@ -263,8 +263,21 @@ $(document).bind("pagecreate", function () {
         }
     });
 
-    var clrWidgetsAreInit = false;
+    var coordSwitchesAreInit = false;
+    $("#switch-demo").bind("pageshow", function(e) {
+        if (coordSwitchesAreInit) return;
 
+        $("#switch-1-coord").bind("changed", function(e) {
+            $("#switch-2-coord").switch("option", "checked", $("#switch-1-coord").switch("option", "checked"));
+        });
+        $("#switch-2-coord").bind("changed", function(e) {
+            $("#switch-1-coord").switch("option", "checked", $("#switch-2-coord").switch("option", "checked"));
+        });
+
+        coordSwitchesAreInit = true;
+    });
+
+    var clrWidgetsAreInit = false;
     $("#colorwidgets-demo").bind("pageshow", function () {
         if (clrWidgetsAreInit) return;
 
