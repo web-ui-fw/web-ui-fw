@@ -87,7 +87,6 @@ digraph G {
     "dayselector.css" [style=filled,color="#A3F448"];
 
     "personpicker_page.js" -> "widgetex.js";
-    "personpicker_page.js" -> "jquery.mobile.todons.core.js";
     "personpicker_page.js" -> "personpicker_page.less.css";
     "personpicker_page.js" -> "personpicker_page.prototype.html";
     "personpicker_page.js" -> "personpicker.js";
@@ -107,11 +106,10 @@ digraph G {
     "hsvpicker.js" -> "hsvpicker.prototype.html";
     "hsvpicker.js" -> "jquery.mobile.clrlib.css";
 
-    "triangle.js" -> "jquery.mobile.todons.core.js";
+    "triangle.js" -> "widgetex.js";
     "triangle.js" -> "triangle.less.css";
 
     "popupwindow.js" -> "widgetex.js";
-    "popupwindow.js" -> "jquery.mobile.todons.core.js";
     "popupwindow.js" -> "triangle.js";
     "popupwindow.js" -> "popupwindow.less.css";
     "popupwindow.js" -> "popupwindow.prototype.html";
@@ -126,7 +124,6 @@ digraph G {
     "optionheader.js" -> "optionheader.css";
 
     "colorwidget.js" -> "widgetex.js";
-    "colorwidget.js" -> "jquery.mobile.todons.core.js";
 
     "pagelist.js" -> "widgetex.js";
     "pagelist.js" -> "popupwindow.js";
@@ -174,7 +171,6 @@ digraph G {
     "switch.js" -> "widgetex.js";
     "switch.js" -> "switch.prototype.html";
     "switch.js" -> "switch.less.css";
-    "switch.js" -> "jquery.mobile.todons.core.js";
 
     "colorpalette.js" -> "widgetex.js";
     "colorpalette.js" -> "colorpalette.less.css";
@@ -190,7 +186,6 @@ digraph G {
     "personpicker.js" -> "jquery.mobile.scrollview.js";
     "personpicker.js" -> "shortcutscroll.js";
     "personpicker.js" -> "autodividers.js";
-    "personpicker.js" -> "jquery.mobile.todons.core.js";
     "personpicker.js" -> "personpicker.less.css";
     "personpicker.js" -> "personpicker.prototype.html";
 
@@ -202,7 +197,6 @@ digraph G {
     "datetimepicker.js" -> "jquery.mobile.scrollview.js";
     "datetimepicker.js" -> "datetimepicker.less.css";
     "datetimepicker.js" -> "datetimepicker.prototype.html";
-    "datetimepicker.js" -> "jquery.mobile.todons.core.js";
 
     "singleimagedisplay.js" -> "singleimagedisplay.css";
 
