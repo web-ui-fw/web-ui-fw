@@ -125,6 +125,8 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         duration: 0.25
     },
 
+    collapsedHeight: '5px',
+
     _create: function () {
         var theme,
             self = this,
@@ -321,7 +323,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
 
     // Takes the same options as toggle()
     collapse: function (options) {
-        this._setHeight('5px', true, options);
+        this._setHeight(this.collapsedHeight, true, options);
     },
 
     // Takes the same options as toggle()
