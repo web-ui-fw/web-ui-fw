@@ -85,4 +85,60 @@
       }
     ]);
   });
+
+  asyncTest("Should fire events correctly", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-events');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-events');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-events');
+
+        var startsExpandedOh = $($new_page.find('#optionheader-test-events-expanded'));
+
+        startsExpandedOh.bind('collapse', function () {
+          // 2
+          equal(true, true, '(startsExpanded) option header which is expanded should fire collapse event');
+
+          // 3
+          equal(startsExpandedOh.height() + 'px', $.todons.optionheader.prototype.collapsedHeight);
+
+          startsExpandedOh.unbind('collapse');
+        });
+
+        startsExpandedOh.optionheader('collapse');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-events');
+
+        var startsCollapsedOh = $($new_page.find('#optionheader-test-events-collapsed'));
+
+        startsCollapsedOh.bind('collapse', function () {
+          // SHOULDN'T RUN
+          equal(true, true, '(startsCollapsed) option header which is collapsed shouldn\'t fire collapse event!!!');
+          startsCollapsedOh.unbind('collapse');
+        });
+
+        startsCollapsedOh.bind('expand', function () {
+          // 4
+          equal(true, true, '(startsCollapsed) option header which is collapsed should fire expand event');
+          startsCollapsedOh.unbind('expand');
+        });
+
+        startsCollapsedOh.optionheader('collapse');
+        startsCollapsedOh.optionheader('expand');
+      },
+
+      function () { expect(4); start(); }
+    ]);
+  });
 })(jQuery);
