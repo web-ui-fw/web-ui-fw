@@ -314,6 +314,11 @@ $(document).bind("pagecreate", function () {
 
         clrWidgetsAreInit = true;
     });
+
+    $('#optionheader-demo-programmatic-example').bind('pageshow', function () {
+        $(this).find('#optionheader-demo-to-be-1').optionheader({collapseOnInit:true});
+        $(this).find('#optionheader-demo-to-be-2').optionheader({collapseOnInit:false});
+    });
 });
 
 
@@ -349,6 +354,11 @@ $(document).bind("pageinit", function() {
         // this sets the "broken" src image for #custombroken
         $(this).find('#custombroken:jqmData(role=singleimagedisplay)')
         .singleimagedisplay('option','noContent','images/noContent-2.png');
+    });
+
+    $('#optionheader-programmatic-example').bind('pageshow', function () {
+        $(this).find('#optionheader-to-be-1').optionheader({collapseOnInit:true});
+        $(this).find('#optionheader-to-be-2').optionheader({collapseOnInit:false});
     });
 });
 
