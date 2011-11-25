@@ -92,7 +92,7 @@
 //
 //   {Boolean} [showIndicator=true] Set to true (the default) to show
 //   the upward-pointing arrow indicator on top of the title bar.
-//   {Boolean} [collapseOnInit=false] Sets the appearance when the option
+//   {Boolean} [startCollapsed=false] Sets the appearance when the option
 //   header is first displayed; defaults to false (i.e. show the header
 //   expanded on first draw). NB setting this option later has no
 //   effect: use collapse() to collapse a widget which is already
@@ -136,7 +136,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         // parse data-options
         $.extend(this.options, dataOptions);
 
-        this.isCollapsed = this.options.collapseOnInit;
+        this.isCollapsed = this.options.startCollapsed;
         this.expandedHeight = null;
 
         // parse data-theme and reset options.theme if it's present
