@@ -3,20 +3,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,7 +33,7 @@
 // Shows other elements inside a popup window.
 //
 // To apply, add the attribute data-role="popupwindow" to a <div> element inside
-// a page. Alternatively, call popupwindow() 
+// a page. Alternatively, call popupwindow()
 // on an element, eg :
 //
 //     $("#mypopupwindowContent").popupwindow();
@@ -103,25 +103,25 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     _create: function() {
-      var self = this,
-          thisPage = this.element.closest(".ui-page");
+        var self = this,
+            thisPage = this.element.closest(".ui-page");
 
-      if (thisPage[0] === undefined)
-          thisPage = $("body");
+        if (thisPage[0] === undefined)
+            thisPage = $("body");
 
-      thisPage.append(this._ui.screen);
-      this._ui.container.insertAfter(this._ui.screen);
-      this._ui.container.append(this.element);
-      this._ui.arrow.remove();
+        thisPage.append(this._ui.screen);
+        this._ui.container.insertAfter(this._ui.screen);
+        this._ui.container.append(this.element);
+        this._ui.arrow.remove();
 
-      $.extend( self, {
-          _isOpen: false,
-      });
+        $.extend( self, {
+            _isOpen: false
+        });
 
-      // Events on "screen" overlay
-      this._ui.screen.bind( "vclick", function( event ) {
-          self.close();
-      });
+        // Events on "screen" overlay
+        this._ui.screen.bind( "vclick", function( event ) {
+            self.close();
+        });
     },
 
     _realSetTheme: function(dst, theme) {
@@ -190,89 +190,89 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
             halfheight = menuHeight / 2,
             maxwidth = parseFloat( this._ui.container.css( "max-width" ) ),
             calcCoords = function(coords) {
-              var roomtop = coords.y - scrollTop,
-                  roombot = scrollTop + screenHeight - coords.y,
-                  newtop, newleft;
+                var roomtop = coords.y - scrollTop,
+                roombot = scrollTop + screenHeight - coords.y,
+                newtop, newleft;
 
-              if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
-                  newtop = coords.y - halfheight;
-              }
-              else {
-                  // 30px tolerance off the edges
-                  newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
-              }
+                if ( roomtop > menuHeight / 2 && roombot > menuHeight / 2 ) {
+                    newtop = coords.y - halfheight;
+                }
+                else {
+                    // 30px tolerance off the edges
+                    newtop = roomtop > roombot ? scrollTop + screenHeight - menuHeight - 30 : scrollTop + 30;
+                }
 
-              // If the menuwidth is smaller than the screen center is
-              if ( menuWidth < maxwidth ) {
-                  newleft = ( screenWidth - menuWidth ) / 2;
-              }
-              else {
-                  //otherwise insure a >= 30px offset from the left
-                  newleft = coords.x - menuWidth / 2;
+                // If the menuwidth is smaller than the screen center is
+                if ( menuWidth < maxwidth ) {
+                    newleft = ( screenWidth - menuWidth ) / 2;
+                }
+                else {
+                    //otherwise insure a >= 30px offset from the left
+                    newleft = coords.x - menuWidth / 2;
 
-                  // 30px tolerance off the edges
-                  if ( newleft < 30 ) {
-                      newleft = 30;
-                  }
-                  else if ( ( newleft + menuWidth ) > screenWidth ) {
-                      newleft = screenWidth - menuWidth - 30;
-                  }
-              }
+                    // 30px tolerance off the edges
+                    if ( newleft < 30 ) {
+                        newleft = 30;
+                    }
+                    else if ( ( newleft + menuWidth ) > screenWidth ) {
+                        newleft = screenWidth - menuWidth - 30;
+                    }
+                }
 
-              return { x : newleft, y : newtop };
+                return { x : newleft, y : newtop };
             };
 
-      if (this.options.showArrow) {
-        this._ui.arrow.appendTo(this._ui.container);
-        var possibleLocations = {}, coords, desired, minDiff, minDiffIdx,
-            arrowHeight = this._ui.arrow.height();
-        this._ui.arrow.remove();
+        if (this.options.showArrow) {
+            this._ui.arrow.appendTo(this._ui.container);
+            var possibleLocations = {}, coords, desired, minDiff, minDiffIdx,
+                arrowHeight = this._ui.arrow.height();
+            this._ui.arrow.remove();
 
-        /* Check above */
-        desired = {x : x, y : y - halfheight - arrowHeight};
-        coords = calcCoords(desired);
-        possibleLocations.above = {
-            coords: coords,
-            diff: {
-                x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
-                y: Math.abs(desired.y - (coords.y + halfheight)),
+            /* Check above */
+            desired = {x : x, y : y - halfheight - arrowHeight};
+            coords = calcCoords(desired);
+            possibleLocations.above = {
+                coords: coords,
+                diff: {
+                    x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+                    y: Math.abs(desired.y - (coords.y + halfheight))
+                }
+            };
+            minDiff = possibleLocations.above.diff;
+            minDiffIdx = "above";
+
+            /* Check below */
+            desired = {x : x, y : y + halfheight + arrowHeight};
+            coords = calcCoords(desired);
+            possibleLocations.below = {
+                coords: coords,
+                diff: {
+                    x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
+                    y: Math.abs(desired.y - (coords.y + halfheight))
+                }
+            };
+
+            /*
+             * Compute minimum deviation from desired distance.
+             * Not sure if Euclidean distance is best here, especially since it is expensive to compute.
+             */
+            for (var Nix in possibleLocations) {
+                if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
+                    minDiff = possibleLocations[Nix].diff;
+                    minDiffIdx = Nix;
+                }
+
+                if (0 === minDiff.x + minDiff.y)
+                    break;
             }
-        };
-        minDiff = possibleLocations.above.diff;
-        minDiffIdx = "above";
 
-        /* Check below */
-        desired = {x : x, y : y + halfheight + arrowHeight};
-        coords = calcCoords(desired);
-        possibleLocations.below = {
-            coords: coords,
-            diff: {
-                x: Math.abs(desired.x - (coords.x + menuWidth / 2)),
-                y: Math.abs(desired.y - (coords.y + halfheight)),
-            }
-        };
-
-        /*
-         * Compute minimum deviation from desired distance.
-         * Not sure if Euclidean distance is best here, especially since it is expensive to compute.
-         */
-        for (var Nix in possibleLocations) {
-            if (possibleLocations[Nix].diff.x + possibleLocations[Nix].diff.y < minDiff.x + minDiff.y) {
-                minDiff = possibleLocations[Nix].diff;
-                minDiffIdx = Nix;
-            }
-
-            if (0 === minDiff.x + minDiff.y)
-                break;
+            ret = possibleLocations[minDiffIdx].coords;
+            ret.arrowLocation = (("above" === minDiffIdx) ? "bottom" : "top");
         }
+        else
+            ret = calcCoords({x : x, y : y});
 
-        ret = possibleLocations[minDiffIdx].coords;
-        ret.arrowLocation = (("above" === minDiffIdx) ? "bottom" : "top");
-      }
-      else
-          ret = calcCoords({x : x, y : y});
-
-      return ret;
+        return ret;
     },
 
     open: function(x_where, y_where) {
@@ -316,7 +316,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                 .removeClass("ui-selectmenu-hidden")
                 .css({
                     left: coords.x,
-                    top: coords.y,
+                    top: coords.y
                 })
                 .addClass("in")
                 .animationComplete(function() {

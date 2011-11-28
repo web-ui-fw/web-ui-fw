@@ -3,20 +3,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -69,7 +69,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             theme: null,
             inline: true,
             corners: true,
-            shadow: true,
+            shadow: true
         },
         closeText: "Close",
         initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
@@ -82,7 +82,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             popup:           "#colorpickerbutton-popup-container",
             hsvpicker:       "#colorpickerbutton-popup-hsvpicker",
             closeButton:     "#colorpickerbutton-popup-close-button",
-            closeButtonText: "#colorpickerbutton-popup-close-button-text",
+            closeButtonText: "#colorpickerbutton-popup-close-button-text"
         }
     },
 
@@ -104,26 +104,26 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             self._setColor(self._ui.hsvpicker.hsvpicker("option", "color"));
             self.close();
         });
-      },
+    },
 
-      _setColor: function(clr) {
-          if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-              this._ui.hsvpicker.hsvpicker("option", "color", clr);
-              this._ui.buttonContents.css("color", clr);
-          }
-      },
+    _setColor: function(clr) {
+        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
+            this._ui.hsvpicker.hsvpicker("option", "color", clr);
+            this._ui.buttonContents.css("color", clr);
+        }
+    },
 
-      _setButtonMarkup: function(value) {
-          this._ui.button.buttonMarkup(value);
-          this.options.buttonMarkup = value;
-          value["inline"] = false;
-          this._ui.closeButton.buttonMarkup(value);
-      },
+    _setButtonMarkup: function(value) {
+        this._ui.button.buttonMarkup(value);
+        this.options.buttonMarkup = value;
+        value["inline"] = false;
+        this._ui.closeButton.buttonMarkup(value);
+    },
 
-      _setCloseText: function(value) {
+    _setCloseText: function(value) {
         this._ui.closeButtonText.text(value);
         this.options.closeText = value;
-      },
+    },
 
     open: function() {
         if ( this.options.disabled ) {
@@ -133,7 +133,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         this._ui.popup.popupwindow("open",
             this._ui.button.offset().left + this._ui.button.outerWidth()  / 2,
             this._ui.button.offset().top  + this._ui.button.outerHeight() / 2);
-      },
+    },
 
     _focusButton : function(){
         var self = this;
@@ -151,7 +151,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
         self._focusButton();
         self._ui.popup.popupwindow("close");
-    },
+    }
 });
 
 //auto self-init widgets

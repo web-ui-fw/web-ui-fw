@@ -2,20 +2,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -74,7 +74,7 @@ $.widget("todons.pagelist", $.todons.widgetex, {
                 .buttonMarkup()
                 .bind("vclick", function() { self._ui.pageList.popupwindow("close"); })
                 .find(".ui-btn-inner")
-                    .css({padding: 2});
+                .css({padding: 2});
         });
 
         $(document).bind("keydown", function(e) {
@@ -102,7 +102,7 @@ $.widget("todons.pagelist", $.todons.widgetex, {
                     .each(function() {
                         var padding = {
                                 h: Math.max(0, (maxDim.cx - $(this).outerWidth(true))  / 2),
-                                v: Math.max(0, (maxDim.cy - $(this).outerHeight(true)) / 2),
+                                v: Math.max(0, (maxDim.cy - $(this).outerHeight(true)) / 2)
                             },
                             btn = $(this),
                             inner = btn.find(".ui-btn-inner");
@@ -111,7 +111,7 @@ $.widget("todons.pagelist", $.todons.widgetex, {
                             "padding-left"   : parseInt(inner.css("padding-left"))   + padding.h,
                             "padding-top"    : parseInt(inner.css("padding-top"))    + padding.v,
                             "padding-right"  : parseInt(inner.css("padding-right"))  + padding.h,
-                            "padding-bottom" : parseInt(inner.css("padding-bottom")) + padding.v,
+                            "padding-bottom" : parseInt(inner.css("padding-bottom")) + padding.v
                         });
                         btn[((btn.attr("href") === "#" + $.mobile.activePage.attr("id")) ? "addClass" : "removeClass")]("ui-btn-active");
                     });

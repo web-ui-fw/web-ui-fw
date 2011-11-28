@@ -473,7 +473,7 @@
         close: function() {
             // Close the picker
             this._ui.cpContainer.popupwindow("close");
-        },
+        }
     });
     // Autoinit widget.
     $( document ).bind( "pagecreate", function( e ){
