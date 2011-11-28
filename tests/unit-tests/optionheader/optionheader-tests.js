@@ -13,7 +13,7 @@
         $.testHelper.openPage('#optionheader-test-options');
       },
 
-      function() {
+      function () {
         var $new_page = $('#optionheader-test-options');
 
         ok($new_page.hasClass('ui-page-active'));
@@ -49,7 +49,7 @@
         $.testHelper.openPage('#optionheader-test-markup');
       },
 
-      function() {
+      function () {
         var $new_page = $('#optionheader-test-markup');
 
         ok($new_page.hasClass('ui-page-active'));
@@ -161,7 +161,7 @@
         $.testHelper.openPage('#optionheader-test-toggle');
       },
 
-      function() {
+      function () {
         var $new_page = $('#optionheader-test-toggle');
 
         // 1
@@ -194,6 +194,41 @@
       },
 
       function () { expect(4); start(); }
+    ]);
+  });
+
+  asyncTest("Should accept custom options passed to toggle()", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-toggle-options');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-toggle-options');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+
+        var oh = $($new_page.find('#optionheader-test-toggle-options-1'));
+
+        // test callback when animation is available
+        var animationCb = function () {
+          // 2
+          equal(true, true, 'callback should be invoked after animation');
+        };
+
+        oh.optionheader('toggle', {callback: animationCb});
+
+        // test callback when animation is off (duration = 0)
+        var noAnimationCb = function () {
+          // 3
+          equal(true, true, 'callback should be invoked when animation is off (duration == 0)');
+        };
+
+        oh.optionheader('toggle', {duration: 0, callback: noAnimationCb});
+      },
+
+      function () { expect(3); start(); }
     ]);
   });
 
