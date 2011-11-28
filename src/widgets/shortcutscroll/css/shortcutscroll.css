@@ -19,6 +19,7 @@
   cursor: pointer;
   color:rgba(0,0,0,0.6);
   padding: 2px 2px 2px 5px;
+  text-shadow: none !important;
 }
 
 .ui-shortcutscroll-popup {
@@ -33,4 +34,5 @@
   font-weight: bold;
   display:none;
   box-sizing:border-box;
+  color: black;
 }

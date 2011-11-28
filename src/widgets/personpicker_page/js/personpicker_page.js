@@ -4,20 +4,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -72,17 +72,28 @@
             ui: {
                 container: ".ui-personpicker-page-container",
                 title: ".ui-personpicker-page-container h1",
-                optionheader: ".ui-personpicker-page-container .optionheader",
-                cancel: ".ui-personpicker-page-container .optionheader .cancel-btn",
-                done: ".ui-personpicker-page-container .optionheader .done-btn",
-                personpicker: ".ui-personpicker-page-container > .personpicker"
+                optionheader: ".ui-personpicker-page-container .ui-optionheader-anchor",
+                cancel: ".ui-personpicker-page-container .ui-optionheader-anchor .cancel-btn",
+                done: ".ui-personpicker-page-container .ui-optionheader-anchor .done-btn",
+                personpicker: ".ui-personpicker-page-container > .ui-personpicker-anchor"
             }
         },
 
         _resizePersonpicker: function() {
-            this._ui.personpicker.personpicker(
-                "resizeScrollview",
-                $(window).height() - this._ui.container.find('.page-header').outerHeight(true));
+            var header = this._ui.container.find(':jqmData(role=header)');
+
+            // get the height of the container
+            var containerHeight = this._ui.container.innerHeight();
+
+            // get the height of the header
+            var headerHeight = header.outerHeight(true);
+
+            // figure out how big to make the personpicker, so it fills the container
+            var personpickerHeight = containerHeight - headerHeight;
+
+            this._ui.personpicker.personpicker("resizeScrollview", personpickerHeight);
+
+            this.element.trigger('updatelayout');
         },
 
         _create: function () {
@@ -117,7 +128,7 @@
 
             // Hack: the JQM Dialog is unconfigurable in its will to
             // place a Close button there.
-            self._ui.container.find(".page-header > a:first-child").remove();
+            self._ui.container.find(":jqmData(role=header) > a:first-child").remove();
 
             // Resize on window resize.
             $(window).bind('resize', function() {
