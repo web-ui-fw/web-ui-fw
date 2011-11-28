@@ -3,20 +3,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -57,47 +57,55 @@
 // Options:
 //
 //     theme : Override the data-theme of the widget; note that the
-//             order of preference is: 1) set from option; 2) set from
-//             data-theme attribute; 3) set from closest parent data-theme;
+//             order of preference is: 1) set from data-theme attribute;
+//             2) set from option; 3) set from closest parent data-theme;
 //             4) default to 'c'
 //
 //     type: 'horizontal' (default) or 'vertical'; specifies the type
 //           of controlgroup to create around the day check boxes.
+//
+//     days: array of day names, Sunday first; defaults to English day
+//           names; the first letters are used as text for the checkboxes
 
 (function ($, window, undefined) {
     $.widget("todons.dayselector", $.mobile.widget, {
         options: {
+            initSelector: 'fieldset:jqmData(role="dayselector")',
             theme: null,
-            type: 'horizontal'
+            type: 'horizontal',
+            days: ['Sunday',
+                   'Monday',
+                   'Tuesday',
+                   'Wednesday',
+                   'Thursday',
+                   'Friday',
+                   'Saturday']
         },
 
+        defaultTheme: 'c',
+
         _create: function () {
-            var days = ['Sunday',
-                        'Monday',
-                        'Tuesday',
-                        'Wednesday',
-                        'Thursday',
-                        'Friday',
-                        'Saturday'];
-
-            this.options.type = this.element.attr('data-type') || this.options.type;
-            this.element.attr('data-type', this.options.type);
-
             this.element.addClass('ui-dayselector');
 
-            this.options.theme = this.options.theme ||
-                                 this.element.data('theme') ||
-                                 this.element.closest(':jqmData(theme)').attr('data-theme') ||
-                                 'c';
+            this.options.type = this.element.jqmData('type') || this.options.type;
+
+            this.options.theme = this.element.jqmData('theme') ||
+                                 this.options.theme ||
+                                 this.element.closest(':jqmData(theme)').jqmData('theme')
+                                 this.defaultTheme;
+
+            var days = this.options.days;
+
+            this.element.attr('data-' + $.mobile.ns + 'type', this.options.type);
 
             var parentId = this.element.attr('id') ||
                            'dayselector' + (new Date()).getTime();
 
             for (var i = 0; i < days.length; i++) {
-                var day = days[i];
+                var day = days[i].toUpperCase();
                 var letter = day.slice(0, 1);
                 var id = parentId + '_' + i;
-                var labelClass = 'ui-dayselector-label-' + day.toLowerCase();
+                var labelClass = 'ui-dayselector-label-' + i;
 
                 var checkbox = $('<input type="checkbox"/>')
                                .attr('id', id)
@@ -112,7 +120,7 @@
             }
 
             this.checkboxes = this.element.find(':checkbox')
-                                  .checkboxradio({theme: this.options.theme});
+                                          .checkboxradio({theme: this.options.theme});
 
             this.element.controlgroup({excludeInvisible: false});
         },
@@ -134,8 +142,9 @@
 
     // auto self-init widgets
     $(document).bind("pagebeforecreate", function (e) {
-        $(e.target).find("fieldset:jqmData(role='dayselector')")
-                   .dayselector();
+        $($.todons.dayselector.prototype.options.initSelector, e.target)
+        .not(":jqmData(role='none'), :jqmData(role='nojs')")
+        .dayselector();
     });
 
 })(jQuery, this);
