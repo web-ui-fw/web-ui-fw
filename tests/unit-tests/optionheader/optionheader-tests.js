@@ -180,7 +180,7 @@
 
           oh.unbind('collapse');
 
-          // trigger the second toggle oncce the collapse has finished
+          // trigger the second toggle once the collapse has finished
           oh.optionheader('toggle');
         });
 
@@ -229,6 +229,92 @@
       },
 
       function () { expect(3); start(); }
+    ]);
+  });
+
+  asyncTest("Should respond to clicks on the optionheader", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-click');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-click');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+
+        var oh = $($new_page.find('#optionheader-test-click-1'));
+
+        oh.bind('collapse', function () {
+          // 2
+          equal(true, true, 'should collapse when clicked first time');
+
+          // 3
+          equal(oh.height() + 'px',
+                $.todons.optionheader.prototype.collapsedHeight,
+                'should have collapsed to the height specified in the prototype');
+
+          oh.unbind('collapse');
+
+          // click again once the collapse has finished
+          oh.trigger('click');
+        });
+
+        oh.bind('expand', function () {
+          // 4
+          equal(true, true, 'should expand when toggled second time');
+          oh.unbind('expand');
+        });
+
+        oh.trigger('click');
+      },
+
+      function () { expect(4); start(); }
+    ]);
+  });
+
+  asyncTest("Should respond to clicks on the optionheader 'triangle'", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-click');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-click');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+
+        var oh = $($new_page.find('#optionheader-test-click-2'));
+
+        var triangle = oh.siblings('.ui-option-header-triangle-arrow');
+
+        oh.bind('collapse', function () {
+          // 2
+          equal(true, true, 'should collapse when clicked first time');
+
+          // 3
+          equal(oh.height() + 'px',
+                $.todons.optionheader.prototype.collapsedHeight,
+                'should have collapsed to the height specified in the prototype');
+
+          oh.unbind('collapse');
+
+          // click again once the collapse has finished
+          triangle.trigger('click');
+        });
+
+        oh.bind('expand', function () {
+          // 4
+          equal(true, true, 'should expand when toggled second time');
+          oh.unbind('expand');
+        });
+
+        triangle.trigger('click');
+      },
+
+      function () { expect(4); start(); }
     ]);
   });
 
