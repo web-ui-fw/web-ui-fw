@@ -154,4 +154,47 @@
       function () { expect(4); start(); }
     ]);
   });
+
+  asyncTest("Should respond correctly to toggle()", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-toggle');
+      },
+
+      function() {
+        var $new_page = $('#optionheader-test-toggle');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+
+        var oh = $($new_page.find('#optionheader-test-toggle-1'));
+
+        oh.bind('collapse', function () {
+          // 2
+          equal(true, true, 'should collapse when toggled first time');
+
+          // 3
+          equal(oh.height() + 'px',
+                $.todons.optionheader.prototype.collapsedHeight,
+                'should have collapsed to the height specified in the prototype');
+
+          oh.unbind('collapse');
+
+          // trigger the second toggle oncce the collapse has finished
+          oh.optionheader('toggle');
+        });
+
+        oh.bind('expand', function () {
+          // 4
+          equal(true, true, 'should expand when toggled second time');
+          oh.unbind('expand');
+        });
+
+        oh.optionheader('toggle');
+      },
+
+      function () { expect(4); start(); }
+    ]);
+  });
+
 })(jQuery);
