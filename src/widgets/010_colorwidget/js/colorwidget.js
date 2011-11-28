@@ -41,12 +41,12 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         /* "value", if present, takes precedence over "data-color" */
         if (this.isInput)
             if (this.element.attr("value").match(/#[0-9A-Fa-f]{6}/))
-                this.element.attr("data-color", this.element.attr("value"));
+                this.element.attr("data-" + ($.mobile.ns || "") + "color", this.element.attr("value"));
     },
 
     _setColor: function(value) {
         if (value.match(/#[0-9A-Fa-f]{6}/) && (this.options.color != value)) {
-            this.element.attr("data-color", value);
+            this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
             if (this.isInput)
                 this.element.attr("value", value);
             this.options.color = value;

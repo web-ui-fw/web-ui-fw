@@ -193,7 +193,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
 
         this.options.volume = newVolume;
         this._setVolumeIcon();
-        this.element.attr("data-volume", this.options.volume);
+        this.element.attr("data-" + ($.mobile.ns || "") + "volume", this.options.volume);
         if (emitSignal)
             this.element.triggerHandler("volumechanged");
     },

@@ -80,7 +80,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
             var clr = $(e.target).css("background-color"),
                 Nix,
-                nChoices = self._ui.clrpalette.attr("data-n-choices"),
+                nChoices = self._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),
                 choiceId, rgbMatches;
 
             rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
@@ -111,7 +111,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
             var Nix,
                 activeIdx = -1,
-                nChoices = this._ui.clrpalette.attr("data-n-choices"),
+                nChoices = this._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),
                 hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)),
                 origHue = hsl[0],
                 offset = hsl[0] / 36,
@@ -139,7 +139,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             }
 
             if (activeIdx != -1) {
-                var currentlyActive = parseInt(this._ui.clrpalette.find(".colorpalette-choice-active").attr("data-colorpalette-choice"));
+                var currentlyActive = parseInt(this._ui.clrpalette.find(".colorpalette-choice-active").attr("data-" + ($.mobile.ns || "") + "colorpalette-choice"));
                 if (currentlyActive != activeIdx) {
                     this._ui.clrpalette.find("[data-colorpalette-choice=" + currentlyActive + "]").removeClass("colorpalette-choice-active");
                     this._ui.clrpalette.find("[data-colorpalette-choice=" + activeIdx + "]").addClass("colorpalette-choice-active");

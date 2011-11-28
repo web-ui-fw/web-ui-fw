@@ -67,15 +67,13 @@ $.widget("todons.switch", $.todons.widgetex, {
     },
 
     _create: function() {
-        var self = this,
-            dstAttr = this.element.is("input") ? "checked" : "data-checked";
+        var self = this;
 
         this.element.append(this._ui.outer);
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
             _realized: false,
-            _dstAttr: dstAttr
         });
 
         this._ui.realButton
@@ -110,7 +108,7 @@ $.widget("todons.switch", $.todons.widgetex, {
             this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
 
             this.options.checked = checked;
-            this.element.attr(this._dstAttr, checked ? "true" : "false");
+            this.element.attr((this.element.is("input") ? "" : "data-" + ($.mobile.ns || "")) + "checked", checked);
             this.element.triggerHandler("changed", checked);
         }
     }

@@ -304,10 +304,10 @@
         },
 
         _createSelectorItem: function(itemProto, klass) {
-            var selector = itemProto.attr("data-selector");
+            var selector = itemProto.attr("data-" + ($.mobile.ns || "") + "selector");
 
             itemProto
-                .removeAttr("data-selector")
+                .removeAttr("data-" + ($.mobile.ns || "") + "selector")
                 .removeAttr("id")
                 .addClass(klass);
 

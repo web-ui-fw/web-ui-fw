@@ -101,13 +101,13 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         this._ui.container.find(".hsvpicker-arrow-btn")
             .buttonMarkup()
             .bind("vclick", function(e) {
-                var chan = $(this).attr("data-target"),
+                var chan = $(this).attr("data-" + ($.mobile.ns || "") + "target"),
                     hsvIdx = ("hue" === chan) ? 0 :
                              ("sat" === chan) ? 1 : 2,
                     max = (0 == hsvIdx ? 360 : 1),
                     step = 0.05 * max;
 
-                self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-location") ? -1 : 1);
+                self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-" + ($.mobile.ns || "") + "location") ? -1 : 1);
                 self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
                 self._updateSelectors(self.dragging_hsv);
             });
