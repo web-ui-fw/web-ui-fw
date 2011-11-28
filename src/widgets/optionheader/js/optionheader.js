@@ -313,7 +313,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
     // {Object} [options] Configuration for the expand/collapse
     // {Integer} [options.duration] Duration of the expand/collapse;
     // defaults to this.options.duration
-    // {Function} options.callback Function to call after toggle completes
+    // {Function} [options.callback] Function to call after toggle completes
     toggle: function (options) {
         if (this.isCollapsed) {
             this.expand(options);
