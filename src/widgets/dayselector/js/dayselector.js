@@ -102,7 +102,7 @@
                            'dayselector' + (new Date()).getTime();
 
             for (var i = 0; i < days.length; i++) {
-                var day = days[i].toUpperCase();
+                var day = days[i];
                 var letter = day.slice(0, 1);
                 var id = parentId + '_' + i;
                 var labelClass = 'ui-dayselector-label-' + i;
