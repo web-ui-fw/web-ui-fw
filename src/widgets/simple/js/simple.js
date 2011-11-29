@@ -142,6 +142,15 @@ $.widget("mobile.simple", $.mobile.widget, {
                                 ':jqmData(theme)').attr('data-theme') ||
                              'c';
 
+        // We can allow the user of this widget to specify an update interval
+        // for our counter when they create the widget from HTML, simply by
+        // setting the `data-interval` attribute. E.g.:
+        // data-interval="250"
+        updateInterval = this.element.jqmData('interval');
+        if (updateInterval) {
+            self.options.updateInterval = updateInterval;
+        }
+
         // `this.element` is the element to which our `opions.initSelector`
         // is applied in the HTML code. Here we're starting to add some more
         // HTML to is.
