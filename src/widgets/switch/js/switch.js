@@ -66,6 +66,11 @@ $.widget("todons.switch", $.todons.widgetex, {
         }
     },
 
+    _value: {
+        attr: "data-" + ($.mobile.ns || "") + "checked",
+        signal: "changed"
+    },
+
     _create: function() {
         var self = this;
 
@@ -109,8 +114,8 @@ $.widget("todons.switch", $.todons.widgetex, {
             this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
 
             this.options.checked = checked;
-            this.element.attr((this.element.is("input") ? "" : "data-" + ($.mobile.ns || "")) + "checked", checked);
-            this.element.triggerHandler("changed", checked);
+
+            this._setValue(checked);
         }
     }
 });

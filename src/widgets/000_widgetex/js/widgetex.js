@@ -119,6 +119,29 @@
 // 2. Call this._setOptions(this.options) from your widget's _create() function.
 // 3. As with widgetex-derived widgets, implement a corresponding _setMyOptionName function for each option myOptionName
 // you wish to handle.
+//
+// IV. systematic value handling for input elements
+//
+// If your widget happens to be constructed from an <input> element, you have to handle the "value" attribute specially,
+// and you have to emit the "change" signal whenever it changes, in addition to your widget's normal signals and option
+// changes. With widgetex, you can assign one of your widget's "data-*" properties to be synchronized to the "value"
+// property whenever your widget is constructed onto an <input> element. To do this, define, in your prototype:
+//
+// _value: {
+//      attr: "data-my-attribute",
+//      signal: "signal-to-emit"
+// }
+//
+// Then, call this._setValue(newValue) whenever you wish to set the value for your widget. This will set the data-*
+// attribute, emit the custom signal (if set) with the new value as its parameter, and, if the widget is based on an
+// <input> element, it will also set the "value" attribute and emit the "change" signal.
+//
+// "attr" is required if you choose to define "_value", and identifies the data-attribute to set in addition to "value",
+// if your widget's element is an input.
+// "signal" is optional, and will be emitted when setting the data-attribute via this._setValue(newValue).
+//
+// If your widget does not derive from widgetex, you can still define "_value" as described above and call
+// $.todons.widgetex.setValue(widget, newValue).
 
 (function($, undefined) {
 
@@ -149,6 +172,26 @@ $.widget("todons.widgetex", $.mobile.widget, {
         this._setOptions(this.options);
     },
 
+    _getCreateOptions: function() {
+        // if we're dealing with an <input> element, value takes precedence over corresponding data-* attribute, if a
+        // mapping has been established via this._value. So, assign the value to the data-* attribute, so that it may
+        // then be assigned to this.options in the superclass' _getCreateOptions
+
+        if (this.element.is("input") && this._value !== undefined) {
+            var theValue =
+                ((this.element.attr("type") === "checkbox" || this.element.attr("type") === "radio")
+                    ? this.element.is(":checked")
+                    : this.element.is("[value]")
+                        ? this.element.attr("value")
+                        : undefined);
+
+            if (theValue != undefined)
+                this.element.attr(this._value.attr, theValue);
+        }
+
+        return $.mobile.widget.prototype._getCreateOptions.apply(this, arguments);
+    },
+
     _setOption: function(key, value) {
         var setter = "_set" + key.replace(/^[a-z]/, function(c) {return c.toUpperCase();});
 
@@ -158,8 +201,35 @@ $.widget("todons.widgetex", $.mobile.widget, {
             $.mobile.widget.prototype._setOption.apply(this, arguments);
     },
 
+    _setValue: function(newValue) {
+        $.todons.widgetex.setValue(this, newValue);
+    },
+
     _realize: function() {}
 });
+
+$.todons.widgetex.setValue = function(widget, newValue) {
+    if (widget._value !== undefined) {
+        widget.element.attr(widget._value.attr, newValue);
+        if (widget._value.signal !== undefined)
+            widget.element.triggerHandler(widget._value.signal, newValue);
+        if (widget.element.is("input")) {
+            var inputType = widget.element.attr("type");
+
+            // Special handling for checkboxes and radio buttons, where the presence of the "checked" attribute is really
+            // the value
+            if (inputType === "checkbox" || inputType === "radio") {
+                if (newValue)
+                    widget.element.attr("checked", true);
+                else
+                    widget.element.removeAttr("checked");
+            }
+            else
+                widget.element.attr("value", newValue);
+            widget.element.trigger("change");
+        }
+    }
+};
 
 $.todons.widgetex.loadPrototype = function(widget, ui) {
     var ar = widget.split(".");

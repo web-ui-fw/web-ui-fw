@@ -33,24 +33,26 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         color: "#ff0972"
     },
 
+    _value: {
+        attr: "data-" + ($.mobile.ns || "") + "color",
+        signal: "colorchanged"
+    },
+
     _create: function() {
         $.extend (this, {
-            isInput: this.element.is("input")
+            _isInput: this.element.is("input")
         });
 
         /* "value", if present, takes precedence over "data-color" */
-        if (this.isInput)
+        if (this._isInput)
             if (this.element.attr("value").match(/#[0-9A-Fa-f]{6}/))
                 this.element.attr("data-" + ($.mobile.ns || "") + "color", this.element.attr("value"));
     },
 
     _setColor: function(value) {
         if (value.match(/#[0-9A-Fa-f]{6}/) && (this.options.color != value)) {
-            this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
-            if (this.isInput)
-                this.element.attr("value", value);
             this.options.color = value;
-            this.element.triggerHandler("colorchanged", value);
+            this._setValue(value);
             return true;
         }
         return false;
