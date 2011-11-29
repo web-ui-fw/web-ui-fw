@@ -45,7 +45,7 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test defaults are applied correctly
-        var defaultDs = $($new_page.find('#dayselector-test-configuration-default'));
+        var defaultDs = $new_page.find('#dayselector-test-configuration-default');
 
         // test the checkboxes are OK
         var expectedType = 'horizontal';
@@ -73,7 +73,7 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test theme is applied correctly
-        var themeDs = $($new_page.find('#dayselector-test-configuration-theme'));
+        var themeDs = $new_page.find('#dayselector-test-configuration-theme');
 
         // test the checkboxes are OK
         var expectedType = 'horizontal';
@@ -101,7 +101,7 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test custom config is applied correctly
-        var customDs = $($new_page.find('#dayselector-test-configuration-custom'));
+        var customDs = $new_page.find('#dayselector-test-configuration-custom');
 
         // what we expect
         var expectedType = 'vertical';
@@ -138,7 +138,7 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test defaults are applied correctly
-        var selectDs = $($new_page.find('#dayselector-test-select-1'));
+        var selectDs = $new_page.find('#dayselector-test-select-1');
 
         // nothing should be selected yet
         deepEqual(selectDs.dayselector('value'), []);
