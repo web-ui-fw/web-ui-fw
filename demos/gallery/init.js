@@ -500,6 +500,10 @@ $(document).bind("pagecreate", function () {
     });
 });
 
+$(document).bind("pagecreate", function() {
+    $("#input-switch").switch();
+});
+
 $(document).bind("pageinit", function() {
     $("#singleimagedisplay-demo").bind("pageinit", function(e) {
         $(this).find('.singleimagedisplay-container').bind("vclick", function (e) {

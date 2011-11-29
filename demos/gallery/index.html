@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="../../build/web-ui-fw/latest/themes/default/web-ui-fw-theme.css"/>
         <link rel="stylesheet" type="text/css" media="screen" href="../../build/web-ui-fw/latest/themes/default/web-ui-fw-widget.css"/>
         <script src="../../build/web-ui-fw/latest/js/jquery.js"></script>
+        <script src="before-jqm.js"></script>
         <script src="../../build/web-ui-fw/latest/js/jquery-mobile.js"></script>
         <script src="../../build/web-ui-fw/latest/js/web-ui-fw-libs.js"></script>
         <script src="../../build/web-ui-fw/latest/js/web-ui-fw.js"></script>
@@ -373,6 +374,14 @@
                 <p>Coordinated switches:</p>
                 <div id="switch-1-coord" data-role="switch"></div>
                 <div id="switch-2-coord" data-role="switch"></div>
+                <p>As an input element:</p>
+                <form action="#" method="get">
+                    <div role="fieldcontain">
+                        <label for="input-switch">Input switch:</label>
+                        <!-- Turn off jqm handling of this checkbox - we will turn it into a switch manually (from init.js) -->
+                        <input id="input-switch" type="checkbox" value="isItChecked" checked></input>
+                    </div>
+                </form>
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
