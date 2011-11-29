@@ -55,7 +55,7 @@
 //
 // Events:
 //
-//     stopped: Fired when stop() is called on the processingbar
+//     stop: Fired when stop() is called on the processingbar
 
 (function($, undefined) {
 
@@ -169,7 +169,7 @@ $.widget("todons.processingbar", $.mobile.widget, {
         this.bar.clearQueue();
 
         // trigger event
-        this.element.trigger('stopped');
+        this.element.trigger('stop');
 
         this._isRunning = false;
     },
