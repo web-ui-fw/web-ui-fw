@@ -142,9 +142,8 @@
 
     // auto self-init widgets
     $(document).bind("pagebeforecreate", function (e) {
-        $($.todons.dayselector.prototype.options.initSelector, e.target)
-        .not(":jqmData(role='none'), :jqmData(role='nojs')")
-        .dayselector();
+        var elts = $($.todons.dayselector.prototype.options.initSelector, e.target);
+        elts.not(":jqmData(role='none'), :jqmData(role='nojs')").dayselector();
     });
 
 })(jQuery, this);
