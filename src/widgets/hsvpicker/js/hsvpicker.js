@@ -96,8 +96,6 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             dragging: -1
         });
 
-        $.todons.colorwidget.prototype._create.call(this);
-
         this._ui.container.find(".hsvpicker-arrow-btn")
             .buttonMarkup()
             .bind("vclick", function(e) {

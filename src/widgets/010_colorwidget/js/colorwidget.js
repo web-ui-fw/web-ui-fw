@@ -38,17 +38,6 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         signal: "colorchanged"
     },
 
-    _create: function() {
-        $.extend (this, {
-            _isInput: this.element.is("input")
-        });
-
-        /* "value", if present, takes precedence over "data-color" */
-        if (this._isInput)
-            if (this.element.attr("value").match(/#[0-9A-Fa-f]{6}/))
-                this.element.attr("data-" + ($.mobile.ns || "") + "color", this.element.attr("value"));
-    },
-
     _setColor: function(value) {
         if (value.match(/#[0-9A-Fa-f]{6}/) && (this.options.color != value)) {
             this.options.color = value;

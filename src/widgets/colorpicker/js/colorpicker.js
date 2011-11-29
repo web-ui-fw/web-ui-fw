@@ -79,8 +79,6 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             dragging_hsl: undefined
         });
 
-        $.todons.colorwidget.prototype._create.call(this);
-
         $( document )
             .bind( "vmousemove", function( event ) {
                 if ( self.dragging ) {

@@ -64,7 +64,6 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
 
     _create: function() {
         this.element.append(this._ui.clrtitle);
-        $.todons.colorwidget.prototype._create.call(this);
     },
 
     _setColor: function(clr) {
