@@ -3,20 +3,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -92,7 +92,7 @@
 //
 //   {Boolean} [showIndicator=true] Set to true (the default) to show
 //   the upward-pointing arrow indicator on top of the title bar.
-//   {Boolean} [collapseOnInit=false] Sets the appearance when the option
+//   {Boolean} [startCollapsed=false] Sets the appearance when the option
 //   header is first displayed; defaults to false (i.e. show the header
 //   expanded on first draw). NB setting this option later has no
 //   effect: use collapse() to collapse a widget which is already
@@ -125,21 +125,22 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         duration: 0.25
     },
 
+    collapsedHeight: '5px',
+
     _create: function () {
-        var options,
-            theme,
+        var theme,
             self = this,
-            parentPage;
+            parentPage,
+            dataOptions = this.element.jqmData('options');
 
         // parse data-options
-        options = this.element.data('options');
-        $.extend(this.options, options);
+        $.extend(this.options, dataOptions);
 
-        this.isCollapsed = this.options.collapseOnInit;
+        this.isCollapsed = false;
         this.expandedHeight = null;
 
         // parse data-theme and reset options.theme if it's present
-        theme = this.element.data('theme') || this.options.theme;
+        theme = this.element.jqmData('theme') || this.options.theme;
         this.options.theme = theme;
 
         // set up the click handler; it's done here so it can
@@ -163,7 +164,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
             this.expandedHeight = this.element.height();
         }
 
-        if (this.isCollapsed) {
+        if (this.options.startCollapsed) {
             this.collapse({duration: 0});
         }
     },
@@ -211,15 +212,15 @@ $.widget("todons.optionheader", $.todons.widgetex, {
 
         // if expandable, bind clicks to the toggle() method
         if (this.options.expandable) {
-            el.bind('vclick', this.clickHandler);
-            arrow.bind('vclick', this.clickHandler);
+            el.unbind('vclick', this.clickHandler).bind('vclick', this.clickHandler);
+            arrow.unbind('vclick', this.clickHandler).bind('vclick', this.clickHandler);
         }
         else {
             el.unbind('vclick', this.clickHandler);
             arrow.unbind('vclick', this.clickHandler);
         }
 
-        // for each ui-grid-a element, add a class ui-option-header-row-M
+        // for each ui-grid-* element, add a class ui-option-header-row-M
         // to it, where M is the xpath position() of the div
         el.find(gridRowSelector).each(function (index) {
             var klass = 'ui-option-header-row-' + (index + 1);
@@ -229,10 +230,11 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         // redraw the buttons (now that the optionheader has the right
         // swatch)
         el.find('.ui-btn').each(function () {
-            $(this).attr('data-theme', theme);
+            $(this).attr('data-' + $.mobile.ns + 'theme', theme);
 
             // hack the class of the button to remove the old swatch
             var klass = $(this).attr('class');
+
             klass = klass.replace(/ui-btn-up-\w{1}\s*/, '');
             klass = klass + ' ui-btn-up-' + theme;
             $(this).attr('class', klass);
@@ -286,6 +288,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
             var handler = {
                 handleEvent: function (e) {
                     elt.removeEventListener('webkitTransitionEnd', this);
+                    self.element.css('-webkit-transition', null);
                     callback();
                 }
             };
@@ -309,7 +312,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
     // {Object} [options] Configuration for the expand/collapse
     // {Integer} [options.duration] Duration of the expand/collapse;
     // defaults to this.options.duration
-    // {Function} options.callback Function to call after toggle completes
+    // {Function} [options.callback] Function to call after toggle completes
     toggle: function (options) {
         if (this.isCollapsed) {
             this.expand(options);
@@ -321,12 +324,16 @@ $.widget("todons.optionheader", $.todons.widgetex, {
 
     // Takes the same options as toggle()
     collapse: function (options) {
-        this._setHeight('5px', true, options);
+        if (!this.isCollapsed) {
+            this._setHeight(this.collapsedHeight, true, options);
+        }
     },
 
     // Takes the same options as toggle()
     expand: function (options) {
-        this._setHeight(this.expandedHeight, false, options);
+        if (this.isCollapsed) {
+            this._setHeight(this.expandedHeight, false, options);
+        }
     }
 });
 
