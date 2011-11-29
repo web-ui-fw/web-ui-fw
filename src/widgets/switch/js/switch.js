@@ -69,7 +69,8 @@ $.widget("todons.switch", $.todons.widgetex, {
     _create: function() {
         var self = this;
 
-        this.element.append(this._ui.outer);
+        this.element.after(this._ui.outer);
+        this.element.css("display", "none");
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
