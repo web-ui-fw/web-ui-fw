@@ -19,7 +19,7 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test default options set
-        var defaultOh = $($new_page.find('#optionheader-test-options-default'));
+        var defaultOh = $new_page.find('#optionheader-test-options-default');
         equal(defaultOh.optionheader('option', 'showIndicator'), true);
         equal(defaultOh.optionheader('option', 'theme'), 'b');
         equal(defaultOh.optionheader('option', 'startCollapsed'), false);
@@ -27,7 +27,7 @@
         equal(defaultOh.optionheader('option', 'duration'), 0.25);
 
         // test custom options set
-        var customOh  = $($new_page.find('#optionheader-test-options-custom'));
+        var customOh  = $new_page.find('#optionheader-test-options-custom');
         equal(customOh.optionheader('option', 'showIndicator'), false);
         equal(customOh.optionheader('option', 'theme'), 'a');
         equal(customOh.optionheader('option', 'startCollapsed'), true);
@@ -35,7 +35,7 @@
         equal(customOh.optionheader('option', 'duration'), 0.5);
 
         // test data-theme attribute - should override data-options
-        var themedOh = $($new_page.find('#optionheader-test-theme-attr'));
+        var themedOh = $new_page.find('#optionheader-test-theme-attr');
         equal(themedOh.optionheader('option', 'theme'), 'c');
 
         start();
@@ -55,9 +55,9 @@
         ok($new_page.hasClass('ui-page-active'));
 
         // test indicator markup
-        var withIndicator = $($new_page.find('#optionheader-test-markup-indicator'));
+        var withIndicator = $new_page.find('#optionheader-test-markup-indicator');
         equal(withIndicator.siblings('.ui-option-header-triangle-arrow').length, 1);
-        var withoutIndicator = $($new_page.find('#optionheader-test-markup-no-indicator'));
+        var withoutIndicator = $new_page.find('#optionheader-test-markup-no-indicator');
         equal(withoutIndicator.siblings('.ui-option-header-triangle-arrow').length, 0);
 
         // test for classes
@@ -66,11 +66,11 @@
         ok(withIndicator.hasClass('ui-body-b'), 'should have class for default b theme');
 
         // test for custom theme class
-        var themeSet = $($new_page.find('#optionheader-test-markup-custom-theme'));
+        var themeSet = $new_page.find('#optionheader-test-markup-custom-theme');
         ok(themeSet.hasClass('ui-body-c'), 'should have class for theme c set in options');
 
         // test for row markup on grids
-        var grid = $($new_page.find('#optionheader-test-markup-grid'));
+        var grid = $new_page.find('#optionheader-test-markup-grid');
         ok(grid.hasClass('ui-option-header-3-row'), 'should have 3 rows');
         ok(grid.find('div:nth-child(1)').hasClass('ui-option-header-row-1'));
         ok(grid.find('div:nth-child(2)').hasClass('ui-option-header-row-2'));
@@ -102,7 +102,7 @@
       function () {
         var $new_page = $('#optionheader-test-events');
 
-        var startsExpandedOh = $($new_page.find('#optionheader-test-events-expanded'));
+        var startsExpandedOh = $new_page.find('#optionheader-test-events-expanded');
 
         startsExpandedOh.bind('expand', function () {
           // SHOULDN'T RUN
@@ -129,7 +129,7 @@
       function () {
         var $new_page = $('#optionheader-test-events');
 
-        var startsCollapsedOh = $($new_page.find('#optionheader-test-events-collapsed'));
+        var startsCollapsedOh = $new_page.find('#optionheader-test-events-collapsed');
 
         // NB the optionheader will have fired a collapse event when it
         // was created, as it would have had collapse() called to set
@@ -167,7 +167,7 @@
         // 1
         ok($new_page.hasClass('ui-page-active'));
 
-        var oh = $($new_page.find('#optionheader-test-toggle-1'));
+        var oh = $new_page.find('#optionheader-test-toggle-1');
 
         oh.bind('collapse', function () {
           // 2
@@ -209,7 +209,7 @@
         // 1
         ok($new_page.hasClass('ui-page-active'));
 
-        var oh = $($new_page.find('#optionheader-test-toggle-options-1'));
+        var oh = $new_page.find('#optionheader-test-toggle-options-1');
 
         // test callback when animation is available
         var animationCb = function () {
@@ -244,7 +244,7 @@
         // 1
         ok($new_page.hasClass('ui-page-active'));
 
-        var oh = $($new_page.find('#optionheader-test-click-1'));
+        var oh = $new_page.find('#optionheader-test-click-1');
 
         oh.bind('collapse', function () {
           // 2
@@ -286,7 +286,7 @@
         // 1
         ok($new_page.hasClass('ui-page-active'));
 
-        var oh = $($new_page.find('#optionheader-test-click-2'));
+        var oh = $new_page.find('#optionheader-test-click-2');
 
         var triangle = oh.siblings('.ui-option-header-triangle-arrow');
 
