@@ -69,6 +69,8 @@ $.widget("todons.processingcircle", $.mobile.widget, {
                       '</div>' +
                       '</div>');
 
+        this.element.find('.ui-processingcircle-container').remove();
+
         this.element.append(this.html);
         this.circle = this.element.find('.ui-processingcircle');
 
