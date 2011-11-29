@@ -40,10 +40,21 @@ $.widget("mobile.simple", $.mobile.widget, {
         // `data-role="simple"` to this widget.
         initSelector: ":jqmData(role='simple')",
 
+        // We want to let the user specify a theme for this widget. See:
+        // http://jquerymobile.com/demos/1.0/docs/api/themes.html
+        theme: null,
+
         // To demostrate some methods implemented when writing a JQM widget,
         // we're adding a number that increases by one reguarly. The
         // following setting is the interval of time used between updates.
         updateInterval: 1000
+    },
+
+    // Let's store here some constants for aid.
+    _constants: {
+        status_stopped: 0,
+        status_running: 1,
+        startstop_class: 'startstopbtn'
     },
 
     // Sometimes there are variables that you will need all over your widget,
@@ -52,7 +63,19 @@ $.widget("mobile.simple", $.mobile.widget, {
     // It really is nothing but a big global container, but we don't want to
     // pollute `options` with things that are not settings.
     _data: {
-        timer: 0
+        // We store our timer here, because we will need to clear it later.
+        timer: 0,
+
+        // We store the status of our timer here (stopped or running).
+        status: 0
+    },
+
+    // We use this function to change the text on the Start/Stop counter
+    // button when the status changes.
+    _setButtonText: function(self, text) {
+        $span = self.element.find(
+            'a.' + self._constants.startstop_class + ' span.ui-btn-text')
+        $span.text(text);
     },
 
     // This will reset the number to its initial value.
@@ -80,11 +103,15 @@ $.widget("mobile.simple", $.mobile.widget, {
                 return self._increaseNumber(self);
             },
             self.options.updateInterval);
+        self._data.status = self._constants.status_running;
+        self._setButtonText(self, "Stop counter");
     },
 
     // This will stop our timer.
     _stop: function(self) {
         clearTimeout(self._data.timer);
+        self._data.status = self._constants.status_stopped;
+        self._setButtonText(self, "Start counter");
     },
 
     // The `_create` method is called when the widget is created. This is the
@@ -102,6 +129,19 @@ $.widget("mobile.simple", $.mobile.widget, {
         // shown or closed.
             page = self.element.closest('.ui-page');
 
+        // Let's initialize the theme of the widget. We're looking at our
+        // own setting, then at the `data`attribute, then at the closest
+        // `:sqmData(theme)` element with a `data-theme` attribute. Should
+        // all fail, let's default to 'c'.
+        // The reason why we need to know what theme we're using is that
+        // we need to pass this property along to other widgets that we
+        // are embedding.
+        this.options.theme = this.options.theme ||
+                             this.element.data('theme') ||
+                             this.element.closest(
+                                ':jqmData(theme)').attr('data-theme') ||
+                             'c';
+
         // `this.element` is the element to which our `opions.initSelector`
         // is applied in the HTML code. Here we're starting to add some more
         // HTML to is.
@@ -114,8 +154,35 @@ $.widget("mobile.simple", $.mobile.widget, {
         // We will use the `updateInterval` setting defined in `options`.
         $number = $('<span class="number">');
 
+        // Here we style our number a little.
+        $number.css({
+            'text-align' : 'center',
+            'font-size'  : '2em',
+            'font-weight': 'bold',
+            'display'    : 'block',
+            'line-height': '2em'
+        });
+
         // Let's also add it to the DOM.
         self.element.append($number);
+
+        // Let's add a button that starts the timer, and theme it correctly.
+        $button = $('<a href="#">Start counter</a>');
+        $button.buttonMarkup({theme: self.options.theme});
+        $button.addClass(self._constants.startstop_class);
+        self.element.append($button);
+
+        $button.bind('vclick', function(event) {
+            if (self._data.status == 0) {
+                // Timer is not running, let's start it.
+                self._start(self);
+            } else {
+                // Timer is running, let's stop it.
+                self._stop(self);
+            }
+
+            event.stopPropagation(); 
+        });
 
         if (page) {
             // Before the animation for hiding the page starts, let's stop
@@ -135,7 +202,6 @@ $.widget("mobile.simple", $.mobile.widget, {
             // Each time the page is shown, we start over.
             page.bind('pageshow', function() {
                 self._reset(self);
-                self._start(self);
             });
         }
     },
