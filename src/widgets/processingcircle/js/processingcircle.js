@@ -51,9 +51,10 @@
 $.widget("todons.processingcircle", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(role='processingcircle')",
-        isRunning: false,
         theme: 'b'
     },
+
+    _isRunning: false,
 
     _create: function() {
         var page = this.element.closest('.ui-page'),
@@ -82,18 +83,22 @@ $.widget("todons.processingcircle", $.mobile.widget, {
     },
 
     refresh: function () {
-        if (!this.isRunning) {
+        if (!this._isRunning) {
             this.circle.addClass('spin');
-            this.isRunning = true;
+            this._isRunning = true;
         }
     },
 
     stop: function () {
-        if (this.isRunning) {
+        if (this._isRunning) {
             this.circle.removeClass('spin');
             this.element.trigger('stop');
-            this.isRunning = false;
+            this._isRunning = false;
         }
+    },
+
+    isRunning: function () {
+      return this._isRunning;
     },
 
     destroy: function () {
