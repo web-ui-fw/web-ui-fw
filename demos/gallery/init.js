@@ -42,11 +42,13 @@ $(document).bind("pagecreate", function () {
         $(this).find(':jqmData(role="processingcircle")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
             var elt = $(this);
-            var li = elt.parent();
+
+            elt.bind('stop', function () {
+                elt.parent().find('p').text("I am done!");
+            });
 
             setTimeout(function () {
                 elt.processingcircle('destroy');
-                li.html("I am done!");
             }, randomWait);
         });
     });
