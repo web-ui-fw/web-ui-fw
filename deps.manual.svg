@@ -2,7 +2,6 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   onload="init()"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -10,25 +9,28 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   onload="init()"
    width="2350.9094"
    height="1411.2996"
    id="svg8212"
    version="1.1"
    inkscape:version="0.48.1 r9760"
    sodipodi:docname="deps.manual.svg">
-<script type="text/javascript"><![CDATA[
+  <script
+     type="text/javascript"
+     id="script3">
     function getCnxDirection(cnx) {
         var begIdx = -1, endIdx = -1, ret = undefined;
 
-        for (var Nix = 0 ; Nix < cnx.attributes.length ; Nix++)
-            if (cnx.attributes[Nix].nodeName === "inkscape:connection-start")
+        for (var Nix = 0 ; Nix &lt; cnx.attributes.length ; Nix++)
+            if (cnx.attributes[Nix].nodeName === &quot;inkscape:connection-start&quot;)
                 begIdx = Nix;
             else
-            if (cnx.attributes[Nix].nodeName === "inkscape:connection-end")
+            if (cnx.attributes[Nix].nodeName === &quot;inkscape:connection-end&quot;)
                 endIdx = Nix;
 
         // Do not return a connection whose two endpoints are the same!
-        if (!(begIdx === -1 || endIdx === -1) &&
+        if (!(begIdx === -1 || endIdx === -1) &amp;&amp;
              (cnx.attributes[begIdx].nodeValue != cnx.attributes[endIdx].nodeValue))
             ret = { 
                 beg : cnx.attributes[begIdx].nodeValue.substring(1),
@@ -39,14 +41,14 @@
     }
 
     function className(g) {
-        return (g.constructor.toString().match(/function ([^(]*)/)[1] || "");
+        return (g.constructor.toString().match(/function ([^(]*)/)[1] || &quot;&quot;);
     }
 
     function findChildByType(node, type) {
         if (className(node) === type)
             return node;
         else
-        for (Nix = 0 ; Nix < node.childNodes.length ; Nix++)
+        for (Nix = 0 ; Nix &lt; node.childNodes.length ; Nix++)
             if (className(node.childNodes[Nix]) === type)
                 return node.childNodes[Nix];
 
@@ -56,9 +58,9 @@
     function getText(g) {
         var obj = g, ret = undefined;
 
-        if (obj) obj = findChildByType(obj, "SVGTextElement");
-        if (obj) obj = findChildByType(obj, "SVGTSpanElement");
-        if (obj) obj = findChildByType(obj, "Text");
+        if (obj) obj = findChildByType(obj, &quot;SVGTextElement&quot;);
+        if (obj) obj = findChildByType(obj, &quot;SVGTSpanElement&quot;);
+        if (obj) obj = findChildByType(obj, &quot;Text&quot;);
         if (obj) ret = obj.nodeValue;
 
         return ret;
@@ -66,12 +68,12 @@
 
     function visitedNodes(g) {
         var nodeArray = [ g.id ],
-            connectors = document.getElementsByTagName("path"),
+            connectors = document.getElementsByTagName(&quot;path&quot;),
             cnxDirection = undefined;
 
-        for (var idxCnx = 0 ; idxCnx < connectors.length ; idxCnx++) {
+        for (var idxCnx = 0 ; idxCnx &lt; connectors.length ; idxCnx++) {
             cnxDirection = getCnxDirection(connectors[idxCnx]);
-            if (undefined !== cnxDirection && cnxDirection.beg === g.id) {
+            if (undefined !== cnxDirection &amp;&amp; cnxDirection.beg === g.id) {
                 nodeArray.push(connectors[idxCnx].id);
                 nodeArray = nodeArray.concat(visitedNodes(document.getElementById(cnxDirection.end)));
             }
@@ -81,33 +83,33 @@
     }
 
     function setNodeOpacity(root, opacity) {
-        var str = "", matches, newMatches, ar;
+        var str = &quot;&quot;, matches, newMatches, ar;
 
-        if ((root.style !== undefined) && (root.style.cssText !== undefined)) {
-            matches = root.style.cssText.split(";");
+        if ((root.style !== undefined) &amp;&amp; (root.style.cssText !== undefined)) {
+            matches = root.style.cssText.split(&quot;;&quot;);
 
             // Remove whitespace
             newMatches = [];
-            for (var Nix = 0 ; Nix < matches.length ; Nix++) {
-                newMatches.push(matches[Nix].replace(/: */, ":").replace(/^ */, ""));
+            for (var Nix = 0 ; Nix &lt; matches.length ; Nix++) {
+                newMatches.push(matches[Nix].replace(/: */, &quot;:&quot;).replace(/^ */, &quot;&quot;));
             }
             matches = newMatches;
 
             newMatches = {};
-            for (var Nix = 0 ; Nix < matches.length ; Nix++) {
-                ar = matches[Nix].split(":");
-                if (ar.length > 1)
-                    newMatches[ar[0]] = ar.slice(1).join("");
+            for (var Nix = 0 ; Nix &lt; matches.length ; Nix++) {
+                ar = matches[Nix].split(&quot;:&quot;);
+                if (ar.length &gt; 1)
+                    newMatches[ar[0]] = ar.slice(1).join(&quot;&quot;);
             }
             matches = newMatches;
 
             if (matches.stroke !== undefined)
-                matches["stroke-opacity"] = opacity;
+                matches[&quot;stroke-opacity&quot;] = opacity;
             if (matches.fill !== undefined)
-                matches["fill-opacity"] = opacity;
+                matches[&quot;fill-opacity&quot;] = opacity;
 
             for (var Nix in matches)
-                str = str + Nix + ": " + matches[Nix] + "; ";
+                str = str + Nix + &quot;: &quot; + matches[Nix] + &quot;; &quot;;
             root.style.cssText = str;
         }
     }
@@ -115,22 +117,22 @@
     function highlightInverse(root, idArray) {
         if (root.id !== undefined) {
 
-            for (var Nix = 0 ; Nix < idArray.length ; Nix++)
+            for (var Nix = 0 ; Nix &lt; idArray.length ; Nix++)
                 if (root.id === idArray[Nix]) {
-                    setNodeOpacity(root, "1.0");
+                    setNodeOpacity(root, &quot;1.0&quot;);
                     return;
                 }
 
-            setNodeOpacity(root, "0.3");
+            setNodeOpacity(root, &quot;0.3&quot;);
         }
-        for (var Nix = 0 ; Nix < root.childNodes.length ; Nix++)
+        for (var Nix = 0 ; Nix &lt; root.childNodes.length ; Nix++)
             highlightInverse(root.childNodes[Nix], idArray);
     }
 
     function unhighlight(root) {
         if (root.id !== undefined)
-            setNodeOpacity(root, "1.0");
-        for (var Nix = 0 ; Nix < root.childNodes.length ; Nix++)
+            setNodeOpacity(root, &quot;1.0&quot;);
+        for (var Nix = 0 ; Nix &lt; root.childNodes.length ; Nix++)
             unhighlight(root.childNodes[Nix]);
     }
 
@@ -141,15 +143,15 @@
 
     function init() {
         document.onclick = function(e) {
-            // Find the nearest "g" node
-            for (src = e.target ; src.nodeName !== "g" && src.nodeName !== "svg" ; src = src.parentNode);
-            if (src.nodeName === "g")
+            // Find the nearest &quot;g&quot; node
+            for (src = e.target ; src.nodeName !== &quot;g&quot; &amp;&amp; src.nodeName !== &quot;svg&quot; ; src = src.parentNode);
+            if (src.nodeName === &quot;g&quot;)
                 showDeps(src);
             else
                 unhighlight(document);
         };
     }
-]]></script>
+</script>
   <defs
      id="defs8214">
     <marker
@@ -204,7 +206,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.48400081"
      inkscape:cx="1339.8281"
-     inkscape:cy="597.21514"
+     inkscape:cy="106.9938"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -2977,14 +2979,14 @@
     </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend-5)"
-       d="m 2476.0257,1246.698 -57.4674,-147.4994"
-       id="path5644"
+       d="m 2187.8126,1099.1986 57.4675,147.4994"
+       id="path3432"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
-       inkscape:connection-start="#g4682"
+       inkscape:connection-start="#g9939"
        inkscape:connection-start-point="d4"
-       inkscape:connection-end="#g9939"
+       inkscape:connection-end="#g4682"
        inkscape:connection-end-point="d4"
-       transform="translate(-857.67031,-246.5315)" />
+       transform="translate(-626.92465,-246.5315)" />
   </g>
 </svg>
