@@ -57,7 +57,7 @@ $(document).bind("pagecreate", function () {
             var elt = $(this);
 
             elt.bind('stop', function () {
-                elt.parent().find('p').html("I am done!");
+                elt.parent().append('<p>I am done!</p>');
             });
 
             setTimeout(function () {
