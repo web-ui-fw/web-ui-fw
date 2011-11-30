@@ -2,6 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   onload="init()"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -15,6 +16,138 @@
    version="1.1"
    inkscape:version="0.48.1 r9760"
    sodipodi:docname="deps.manual.svg">
+<script type="text/javascript"><![CDATA[
+    function getCnxDirection(cnx) {
+        var begIdx = -1, endIdx = -1, ret = undefined;
+
+        for (var Nix = 0 ; Nix < cnx.attributes.length ; Nix++)
+            if (cnx.attributes[Nix].nodeName === "inkscape:connection-start")
+                begIdx = Nix;
+            else
+            if (cnx.attributes[Nix].nodeName === "inkscape:connection-end")
+                endIdx = Nix;
+
+        // Do not return a connection whose two endpoints are the same!
+        if (!(begIdx === -1 || endIdx === -1) &&
+             (cnx.attributes[begIdx].nodeValue != cnx.attributes[endIdx].nodeValue))
+            ret = { 
+                beg : cnx.attributes[begIdx].nodeValue.substring(1),
+                end : cnx.attributes[endIdx].nodeValue.substring(1)
+            };
+
+        return ret;
+    }
+
+    function className(g) {
+        return (g.constructor.toString().match(/function ([^(]*)/)[1] || "");
+    }
+
+    function findChildByType(node, type) {
+        if (className(node) === type)
+            return node;
+        else
+        for (Nix = 0 ; Nix < node.childNodes.length ; Nix++)
+            if (className(node.childNodes[Nix]) === type)
+                return node.childNodes[Nix];
+
+        return undefined;
+    }
+
+    function getText(g) {
+        var obj = g, ret = undefined;
+
+        if (obj) obj = findChildByType(obj, "SVGTextElement");
+        if (obj) obj = findChildByType(obj, "SVGTSpanElement");
+        if (obj) obj = findChildByType(obj, "Text");
+        if (obj) ret = obj.nodeValue;
+
+        return ret;
+    }
+
+    function visitedNodes(g) {
+        var nodeArray = [ g.id ],
+            connectors = document.getElementsByTagName("path"),
+            cnxDirection = undefined;
+
+        for (var idxCnx = 0 ; idxCnx < connectors.length ; idxCnx++) {
+            cnxDirection = getCnxDirection(connectors[idxCnx]);
+            if (undefined !== cnxDirection && cnxDirection.beg === g.id) {
+                nodeArray.push(connectors[idxCnx].id);
+                nodeArray = nodeArray.concat(visitedNodes(document.getElementById(cnxDirection.end)));
+            }
+        }
+
+        return nodeArray;
+    }
+
+    function setNodeOpacity(root, opacity) {
+        var str = "", matches, newMatches, ar;
+
+        matches = root.style.cssText.split(";");
+
+        // Remove whitespace
+        newMatches = [];
+        for (var Nix = 0 ; Nix < matches.length ; Nix++) {
+            newMatches.push(matches[Nix].replace(/: */, ":").replace(/^ */, ""));
+        }
+        matches = newMatches;
+
+        newMatches = {};
+        for (var Nix = 0 ; Nix < matches.length ; Nix++) {
+            ar = matches[Nix].split(":");
+            if (ar.length > 1)
+                newMatches[ar[0]] = ar.slice(1).join("");
+        }
+        matches = newMatches;
+
+        if (matches.stroke !== undefined)
+            matches["stroke-opacity"] = opacity;
+        if (matches.fill !== undefined)
+            matches["fill-opacity"] = opacity;
+
+        for (var Nix in matches)
+            str = str + Nix + ": " + matches[Nix] + "; ";
+        root.style.cssText = str;
+    }
+
+    function highlightInverse(root, idArray) {
+        if (root.id !== undefined) {
+
+            for (var Nix = 0 ; Nix < idArray.length ; Nix++)
+                if (root.id === idArray[Nix]) {
+                    setNodeOpacity(root, "1.0");
+                    return;
+                }
+
+            setNodeOpacity(root, "0.3");
+        }
+        for (var Nix = 0 ; Nix < root.childNodes.length ; Nix++)
+            highlightInverse(root.childNodes[Nix], idArray);
+    }
+
+    function unhighlight(root) {
+        if (root.id !== undefined)
+            setNodeOpacity(root, "1.0");
+        for (var Nix = 0 ; Nix < root.childNodes.length ; Nix++)
+            unhighlight(root.childNodes[Nix]);
+    }
+
+    function showDeps(g) {
+        unhighlight(document);
+        highlightInverse(document, visitedNodes(g, 0));
+    }
+
+    function init() {
+        document.onclick = function(e) {
+            // Find the nearest "g" node
+            for (src = e.target ; src.nodeName !== "g" && src.nodeName !== "svg" ; src = src.parentNode);
+            if (src.nodeName === "g")
+                showDeps(src);
+            else
+                unhighlight(document);
+        };
+    }
+]]></script>
   <defs
      id="defs8214">
     <marker
@@ -1327,16 +1460,6 @@
        inkscape:connection-end="#g7278"
        inkscape:connection-start-point="d4"
        inkscape:connection-start="#g9654" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1156.6217,733.9174 0,0"
-       id="path8232"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#g10266"
-       inkscape:connection-start-point="d4"
-       inkscape:connection-end="#g10266"
-       inkscape:connection-end-point="d4" />
     <g
        id="g8944"
        transform="translate(-1008.5181,-417.5516)"
@@ -2817,17 +2940,6 @@
        d="m 561.74877,923.03276 206.6112,0 0,241.73524 -206.6112,0 z"
        id="rect3411"
        inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1709.7924,980.4489 0,0"
-       id="path3412"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="0"
-       inkscape:connection-start="#g10345"
-       inkscape:connection-start-point="d4"
-       inkscape:connection-end="#g10345"
-       inkscape:connection-end-point="d4"
-       transform="translate(-857.67031,-246.5315)" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend-5)"
        d="M 1643.5424,960.45639 1625.292,954.9489 1122.218,810.4495"
