@@ -59,4 +59,4 @@ for file in `find $DIR/instrumented/ -name index.html` ; do
 done
 
 # run the top-level test file through jscoverage
-$CHROME_BIN file://$DIR/instrumented/jscoverage.html?index.html
+$CHROME_BIN --allow-file-access-from-files file://$DIR/instrumented/jscoverage.html?index.html

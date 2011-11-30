@@ -275,6 +275,10 @@ with:
 This will open the unit tests in Google Chrome and run them. Once they're
 done, the coverage report is available from the "Summary" tab of the page.
 
+NB: The instrument.sh script uses $CHROME_BIN --allow-file-access-from-files. 
+If you have Chrome open already without this switch on, the tests run inside the wrong context.
+
+
 
 OS X Lion with Homebrew
 =======================
