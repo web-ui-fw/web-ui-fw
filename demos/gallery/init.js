@@ -157,6 +157,11 @@ $(document).bind("pagecreate", function () {
         }
     });
 
+    $("#checkHideInput").bind("change", function (e) {
+        $("#colorpickerbutton").colorpickerbutton("option", "hideInput",
+            !($("#checkHideInput").next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on")));
+    });
+
     $('#slider-demo').bind('pageshow', function () {
         var popupEnabled = false;
 
