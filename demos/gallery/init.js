@@ -43,7 +43,7 @@ $(document).bind("pagecreate", function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
             var elt = $(this);
 
-            elt.bind('stop', function () {
+            elt.unbind('stop').bind('stop', function () {
                 elt.parent().find('p').text("I am done!");
             });
 
