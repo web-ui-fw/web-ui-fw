@@ -58,8 +58,8 @@ $(document).bind("pagecreate", function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
             var elt = $(this);
 
-            elt.bind('stopped', function () {
-                elt.html("I am done!");
+            elt.unbind('stop').bind('stop', function () {
+                elt.parent().append('<p>I am done!</p>');
             });
 
             setTimeout(function () {
