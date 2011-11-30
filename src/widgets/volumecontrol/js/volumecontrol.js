@@ -81,6 +81,11 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
         }
     },
 
+    _value: {
+        attr: "data-" + ($.mobile.ns || "") + "volume",
+        signal: "volumechanged"
+    },
+
     _create: function() {
         var self = this,
             yCoord = function(volumeImage, e) {
@@ -189,13 +194,9 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
 
         newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
 
-        emitSignal = (newVolume != this.options.volume);
-
         this.options.volume = newVolume;
         this._setVolumeIcon();
-        this.element.attr("data-" + ($.mobile.ns || "") + "volume", this.options.volume);
-        if (emitSignal)
-            this.element.triggerHandler("volumechanged");
+        this._setValue(newVolume);
     },
 
     _maxVolume: function() {

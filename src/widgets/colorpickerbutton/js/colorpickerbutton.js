@@ -96,8 +96,6 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         this._ui.popup.insertBefore(this.element).popupwindow();
         this._ui.hsvpicker.hsvpicker();
 
-        $.todons.colorwidget.prototype._create.call(this);
-
         $.todons.popupwindow.bindPopupToButton(this._ui.button, this._ui.popup);
 
         this._ui.closeButton.bind("vclick", function(event) {

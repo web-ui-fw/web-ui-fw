@@ -61,6 +61,7 @@
 (function($, window, undefined) {
     $.widget("todons.datetimepicker", $.todons.widgetex, {
         options: {
+            date: null,
             showDate: true,
             showTime: true,
             header: "Set time",
@@ -76,23 +77,20 @@
         },
 
         _initDateTime: function() {
-            this.data.initial.year = this.data.now.getFullYear();
-            this.data.initial.month = this.data.now.getMonth();
-            this.data.initial.day = this.data.now.getDate();
-            this.data.initial.hours = this.data.now.getHours();
-            this.data.initial.minutes = this.data.now.getMinutes();
-            this.data.initial.pm = this.data.initial.hours > 11;
+            var now = (null === this.options.date)
+                    ? new Date()
+                    : new Date(Date.parse(this.options.date));
 
-            if (this.data.initial.hours == 0 && this.options.twentyfourHours == false) {
-                this.data.initial.hours = 12;
+            this.data.year    = now.getFullYear();
+            this.data.month   = now.getMonth();
+            this.data.day     = now.getDate();
+            this.data.hours   = now.getHours();
+            this.data.minutes = now.getMinutes();
+            this.data.pm      = this.data.hours > 11;
+
+            if (this.data.hours == 0 && this.options.twentyfourHours == false) {
+                this.data.hours = 12;
             }
-
-            this.data.year = this.data.initial.year;
-            this.data.month = this.data.initial.month;
-            this.data.day = this.data.initial.day;
-            this.data.hours = this.data.initial.hours;
-            this.data.minutes = this.data.initial.minutes;
-            this.data.pm = this.data.initial.pm;
         },
 
         _initDate: function(ui) {
@@ -102,9 +100,9 @@
                 /* TODO: the order should depend on locale and
                  * configurable in the options. */
                 var dataItems = {
-                    0: ["year", this.data.initial.year],
-                    1: ["month", this.options.months[this.data.initial.month]],
-                    2: ["day", this.data.initial.day]
+                    0: ["year", this.data.year],
+                    1: ["month", this.options.months[this.data.month]],
+                    2: ["day", this.data.day],
                 };
 
                 for (var data in dataItems)
@@ -116,9 +114,9 @@
             /* TODO: the order should depend on locale and
              * configurable in the options. */
             var dataItems = {
-                0: ["hours", this._makeTwoDigitValue(this._clampHours(this.data.initial.hours))],
+                0: ["hours", this._makeTwoDigitValue(this._clampHours(this.data.hours))],
                 1: ["separator", this.options.timeSeparator],
-                2: ["minutes", this._makeTwoDigitValue(this.data.initial.minutes)]
+                2: ["minutes", this._makeTwoDigitValue(this.data.minutes)],
             };
 
             for (var data in dataItems)
@@ -135,7 +133,7 @@
 
             this._initDate(ui);
             this._initTime(ui);
-            ui.ampm.text(this._parseAmPmValue(this.data.initial.pm));
+            ui.ampm.text(this._parseAmPmValue(this.data.pm));
         },
 
         _makeTwoDigitValue: function(val) {
@@ -349,7 +347,7 @@
                         scrollable.view.find(item.selector).removeClass("current");
                         $(this).toggleClass("current");
                         obj._hideDataSelector(selector);
-                        $(obj.data.parentInput).trigger("date-changed", obj.getValue());
+                        self._setValue(obj.getValue());
                     }
                 }).text(values[i]);
                 if (values[i] === destValue) {
@@ -394,6 +392,11 @@
             }
         },
 
+        _value: {
+            attr: "data-" + ($.mobile.ns || "") + "date",
+            signal: "date-changed"
+        },
+
         _create: function() {
             var self = this;
             this._ui.selectorProto.remove();
@@ -402,18 +405,7 @@
             $.extend ( this, {
                 panning: false,
                 data : {
-                    now: new Date(),
                     parentInput: 0,
-
-                    initial: {
-                        year: 0,
-                        month: 0,
-                        day: 0,
-
-                        hours: 0,
-                        minutes: 0,
-                        pm: false
-                    },
 
                     year: 0,
                     month: 0,
