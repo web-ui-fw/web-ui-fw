@@ -84,6 +84,7 @@ digraph G {
     "datetimepicker.less.css" [style=filled,color="#A3F448"];
     "singleimagedisplay.css" [style=filled,color="#A3F448"];
     "dayselector.css" [style=filled,color="#A3F448"];
+    "colorpickerbutton.css" [style=filled,color="#A3F448"];
 
     "personpicker_page.js" -> "widgetex.js";
     "personpicker_page.js" -> "personpicker_page.less.css";
@@ -175,6 +176,7 @@ digraph G {
     "colorpickerbutton.js" -> "hsvpicker.js";
     "colorpickerbutton.js" -> "popupwindow.js";
     "colorpickerbutton.js" -> "colorpickerbutton.prototype.html";
+    "colorpickerbutton.js" -> "colorpickerbutton.css";
 
     "personpicker.js" -> "widgetex.js";
     "personpicker.js" -> "jquery.mobile.scrollview.js";
