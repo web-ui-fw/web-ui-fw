@@ -83,31 +83,33 @@
     function setNodeOpacity(root, opacity) {
         var str = "", matches, newMatches, ar;
 
-        matches = root.style.cssText.split(";");
+        if ((root.style !== undefined) && (root.style.cssText !== undefined)) {
+            matches = root.style.cssText.split(";");
 
-        // Remove whitespace
-        newMatches = [];
-        for (var Nix = 0 ; Nix < matches.length ; Nix++) {
-            newMatches.push(matches[Nix].replace(/: */, ":").replace(/^ */, ""));
+            // Remove whitespace
+            newMatches = [];
+            for (var Nix = 0 ; Nix < matches.length ; Nix++) {
+                newMatches.push(matches[Nix].replace(/: */, ":").replace(/^ */, ""));
+            }
+            matches = newMatches;
+
+            newMatches = {};
+            for (var Nix = 0 ; Nix < matches.length ; Nix++) {
+                ar = matches[Nix].split(":");
+                if (ar.length > 1)
+                    newMatches[ar[0]] = ar.slice(1).join("");
+            }
+            matches = newMatches;
+
+            if (matches.stroke !== undefined)
+                matches["stroke-opacity"] = opacity;
+            if (matches.fill !== undefined)
+                matches["fill-opacity"] = opacity;
+
+            for (var Nix in matches)
+                str = str + Nix + ": " + matches[Nix] + "; ";
+            root.style.cssText = str;
         }
-        matches = newMatches;
-
-        newMatches = {};
-        for (var Nix = 0 ; Nix < matches.length ; Nix++) {
-            ar = matches[Nix].split(":");
-            if (ar.length > 1)
-                newMatches[ar[0]] = ar.slice(1).join("");
-        }
-        matches = newMatches;
-
-        if (matches.stroke !== undefined)
-            matches["stroke-opacity"] = opacity;
-        if (matches.fill !== undefined)
-            matches["fill-opacity"] = opacity;
-
-        for (var Nix in matches)
-            str = str + Nix + ": " + matches[Nix] + "; ";
-        root.style.cssText = str;
     }
 
     function highlightInverse(root, idArray) {
