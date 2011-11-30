@@ -71,6 +71,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             corners: true,
             shadow: true
         },
+        hideInput: true,
         closeText: "Close",
         initSelector: "input[type='color'], :jqmData(type='color'), :jqmData(role='colorpickerbutton')"
     },
@@ -89,8 +90,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this._ui.button.insertBefore(this.element);
-        this.element.css("display", "none");
+        this._ui.button.insertAfter(this.element);
 
         /* Tear apart the proto */
         this._ui.popup.insertBefore(this.element).popupwindow();
@@ -104,6 +104,15 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
             self._setColor(self._ui.hsvpicker.hsvpicker("option", "color"));
             self.close();
         });
+
+        this.element.bind("change keyup blur", function() {
+            self._setColor(self.element.val());
+        });
+    },
+
+    _setHideInput: function(value) {
+        this.element[value ? "addClass" : "removeClass"]("ui-colorpickerbutton-input-hidden");
+        this.element[value ? "removeClass" : "addClass"]("ui-colorpickerbutton-input");
     },
 
     _setColor: function(clr) {
