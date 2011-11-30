@@ -129,28 +129,6 @@ $.widget("mobile.simple", $.mobile.widget, {
         // shown or closed.
             page = self.element.closest('.ui-page');
 
-        // Let's initialize the theme of the widget. We're looking at our
-        // own setting, then at the `data`attribute, then at the closest
-        // `:sqmData(theme)` element with a `data-theme` attribute. Should
-        // all fail, let's default to 'c'.
-        // The reason why we need to know what theme we're using is that
-        // we need to pass this property along to other widgets that we
-        // are embedding.
-        this.options.theme = this.options.theme ||
-                             this.element.data('theme') ||
-                             this.element.closest(
-                                ':jqmData(theme)').attr('data-theme') ||
-                             'c';
-
-        // We can allow the user of this widget to specify an update interval
-        // for our counter when they create the widget from HTML, simply by
-        // setting the `data-interval` attribute. E.g.:
-        // data-interval="250"
-        updateInterval = this.element.jqmData('interval');
-        if (updateInterval) {
-            self.options.updateInterval = updateInterval;
-        }
-
         // `this.element` is the element to which our `opions.initSelector`
         // is applied in the HTML code. Here we're starting to add some more
         // HTML to is.
@@ -228,9 +206,9 @@ $.widget("mobile.simple", $.mobile.widget, {
             switch (key) {
             case 'updateInterval':
                 this.options.updateInterval = value;
-                this.refresh();
                 break;
             }
+            this.refresh();
         }
     },
 
@@ -239,8 +217,10 @@ $.widget("mobile.simple", $.mobile.widget, {
     // that a user changed our `updateInterval`. If that happens, we can
     // reset our timer.
     refresh: function() {
-        this._stop();
-        this._start();
+        if (this._data.status == this._constants.status_running) {
+            this._stop();
+            this._start();
+        }
     }
 });
 
