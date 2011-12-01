@@ -157,6 +157,7 @@ $.widget("mobile.simple", $.mobile.widget, {
         $button = $('<a href="#">Start counter</a>');
         $button.buttonMarkup({theme: self.options.theme});
         $button.addClass(self._constants.startstop_class);
+        $button.attr('data-' + ($.mobile.ns || "") + 'role', 'button');
         self.element.append($button);
 
         $button.bind('vclick', function(event) {
