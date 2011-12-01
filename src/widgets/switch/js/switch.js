@@ -114,6 +114,7 @@ $.widget("todons.switch", $.todons.widgetex, {
             this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
 
             this.options.checked = checked;
+            this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
 
             this._setValue(checked);
         }

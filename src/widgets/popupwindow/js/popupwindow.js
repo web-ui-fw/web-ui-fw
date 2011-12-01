@@ -145,27 +145,34 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     _setTheme: function(value) {
-        if (this._realSetTheme(this.element, value))
+        if (this._realSetTheme(this.element, value)) {
             this.options.theme = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "theme", value);
+        }
     },
 
     _setOverlayTheme: function(value) {
-        if (this._realSetTheme(this._ui.container, value))
+        if (this._realSetTheme(this._ui.container, value)) {
             this.options.overlayTheme = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "overlay-theme", value);
+        }
     },
 
     _setShadow: function(value) {
         this.options.shadow = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "shadow", value);
         this._ui.container[value ? "addClass" : "removeClass"]("ui-overlay-shadow");
     },
 
     _setCorners: function(value) {
         this.options.corners = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "corners", value);
         this._ui.container[value ? "addClass" : "removeClass"]("ui-corner-all");
     },
 
     _setFade: function(value) {
         this.options.fade = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "fade", value);
     },
 
     _setTransition: function(value) {
@@ -173,10 +180,12 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                 .removeClass(this.options.transition)
                 .addClass(value);
         this.options.transition = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "transition", value);
     },
 
     _setShowArrow: function(value) {
         this.options.showArrow = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "show-arrow", value);
     },
 
     _placementCoords: function(x, y) {

@@ -82,22 +82,26 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     _setOffset: function(value) {
         this._triangle.css("left", value);
         this.options.offset = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
     },
 
     _setClass: function(value) {
         this._triangle.addClass(value);
         this.options.class = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "class", value);
     },
 
     _setColor: function(value) {
         this._triangle.css("border-bottom-color", value);
         this.options.color = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
     },
 
     _setLocation: function(value) {
         this.options.location = value;
         if (this._realized)
             this._setBorders();
+        this.element.attr("data-" + ($.mobile.ns || "") + "location", value);
     }
 });
 

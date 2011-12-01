@@ -179,11 +179,13 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
         while (this._volumeElemStack.length > 0)
             this._volumeElemStack.pop().remove();
         this.options.basicTone = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "basic-tone", value);
         this._setVolume(this.options.volume);
     },
 
     _setTitle: function(value) {
         this.options.title = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "title", value);
         this._ui.container.find("#volumecontrol-title").text(value);
     },
 
@@ -195,6 +197,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
         newVolume = theFloor + (((newVolume - theFloor) > 0.5) ? 1 : 0);
 
         this.options.volume = newVolume;
+        this.element.attr("data-" + ($.mobile.ns || "") + "volume", newVolume);
         this._setVolumeIcon();
         this._setValue(newVolume);
     },

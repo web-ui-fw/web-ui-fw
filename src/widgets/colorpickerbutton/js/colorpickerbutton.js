@@ -111,6 +111,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     _setHideInput: function(value) {
         this.element[value ? "addClass" : "removeClass"]("ui-colorpickerbutton-input-hidden");
         this.element[value ? "removeClass" : "addClass"]("ui-colorpickerbutton-input");
+        this.element.attr("data-" + ($.mobile.ns || "") + "hide-input", value);
     },
 
     _setColor: function(clr) {
@@ -130,6 +131,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     _setCloseText: function(value) {
         this._ui.closeButtonText.text(value);
         this.options.closeText = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "close-text", value);
     },
 
     open: function() {

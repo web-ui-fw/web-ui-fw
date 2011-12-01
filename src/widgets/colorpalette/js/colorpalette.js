@@ -103,6 +103,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             this._ui.previewContainer.removeAttr("style");
         else
             this._ui.previewContainer.css("display", "none");
+        this.element.attr("data-" + ($.mobile.ns || "") + "show-preview", show);
     },
 
     _setColor: function(clr) {
