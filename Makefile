@@ -45,14 +45,14 @@ all: third_party_widgets widgets widget_styling themes
 widget_styling: init
 	# Building non-theme-specific styling for web-ui-fw widgets...
 	@@for w in `find ${WIDGETS_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
-	    for l in `find $$w -iname *.less`; do \
-					echo "	# Compiling CSS from "`basename $$l`; \
-	        lessc $$l >> $$l.css; \
-	    done; \
-	    touch ${FW_WIDGET_CSS_FILE}; \
-	    for c in `find $$w -iname *.css`; do \
-	        cat $$c >> ${FW_WIDGET_CSS_FILE}; \
-	    done; \
+		for l in `find $$w -iname *.less`; do \
+			echo "	# Compiling CSS from "`basename $$l`; \
+			lessc $$l >> $$l.css; \
+		done; \
+		touch ${FW_WIDGET_CSS_FILE}; \
+		for c in `find $$w -iname *.css`; do \
+			cat $$c >> ${FW_WIDGET_CSS_FILE}; \
+		done; \
 	done
 
 third_party_widgets: init
@@ -111,23 +111,23 @@ themes: widget_styling jqm_theme
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \
 	for f in `find ${THEMES_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
-	    outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
-	    mkdir -p $$outdir/images; \
-	    cp -a $$f/images/* $$outdir/images/; \
-	    touch $$outdir/${FW_THEME_CSS_FILE}; \
-	    for l in `find $$f -iname *.less` ; do \
-	        lessc $$l >> $$l.css; \
-	    done; \
-	    for c in `find $$f -iname *.css` ; do \
-	        cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
-	    done; \
-	    cp -a ${FW_WIDGET_CSS_FILE} $$outdir/ ; \
-            if test "x${INLINE_PROTO}x" != "x1x"; then \
-	        mkdir -p $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
-	        for f in `find ${WIDGETS_DIR} -iname '*.prototype.html' | sort`; do \
-	            cp $$f $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
-	        done; \
-            fi; \
+		outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
+		mkdir -p $$outdir/images; \
+		cp -a $$f/images/* $$outdir/images/; \
+		touch $$outdir/${FW_THEME_CSS_FILE}; \
+		for l in `find $$f -iname *.less` ; do \
+			lessc $$l >> $$l.css; \
+		done; \
+		for c in `find $$f -iname *.css` ; do \
+			cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
+		done; \
+		cp -a ${FW_WIDGET_CSS_FILE} $$outdir/ ; \
+		if test "x${INLINE_PROTO}x" != "x1x"; then \
+			mkdir -p $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
+			for f in `find ${WIDGETS_DIR} -iname '*.prototype.html' | sort`; do \
+				cp $$f $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
+			done; \
+		fi; \
 	done
 
 jqm_theme: init
