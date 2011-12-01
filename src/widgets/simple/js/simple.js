@@ -45,7 +45,7 @@ $.widget("mobile.simple", $.mobile.widget, {
         theme: null,
 
         // To demostrate some methods implemented when writing a JQM widget,
-        // we're adding a number that increases by one reguarly. The
+        // we're adding a number that increases by one regularly. The
         // following setting is the interval of time between updates.
         updateInterval: 1000
     },
@@ -129,7 +129,7 @@ $.widget("mobile.simple", $.mobile.widget, {
         // shown or closed.
         page = self.element.closest('.ui-page');
 
-        // `this.element` is the element to which our `opions.initSelector`
+        // `this.element` is the element to which our `options.initSelector`
         // is applied in the HTML code. Here we're starting to add some more
         // HTML to it.
         self.element.append(
@@ -180,7 +180,7 @@ $.widget("mobile.simple", $.mobile.widget, {
             });
 
             // After the animation for hiding the page ends, we can reset the
-            // nunmber to 0. We didn't do it in `pagebeforehide` because we
+            // number to 0. We didn't do it in `pagebeforehide` because we
             // didn't want the user to see the number change to zero before
             // their eyes.
             page.bind('pagehide', function() {
