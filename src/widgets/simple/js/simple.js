@@ -199,7 +199,7 @@ $.widget("mobile.simple", $.mobile.widget, {
     _destroy: function() {
         // Let's remove the HTML we have created, so everything is created
         // from scratch when we start again.
-        this.html.detach();
+        this.html.remove();
     },
 
     _setOption: function(key, value) {
