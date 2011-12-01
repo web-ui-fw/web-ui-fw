@@ -32,7 +32,7 @@
 
 $.widget("mobile.simple", $.mobile.widget, {
     // The `options` are a way to store widget specific settings.
-    // Technically, this is nothing more than a dictionary can be accesseded
+    // Technically, this is nothing more than a dictionary can be accessed
     // globally throughout the widget's scope.
     options: {
         // The `initSelector` is used at the bottom of this file, when we
@@ -46,7 +46,7 @@ $.widget("mobile.simple", $.mobile.widget, {
 
         // To demostrate some methods implemented when writing a JQM widget,
         // we're adding a number that increases by one reguarly. The
-        // following setting is the interval of time used between updates.
+        // following setting is the interval of time between updates.
         updateInterval: 1000
     },
 
@@ -127,11 +127,11 @@ $.widget("mobile.simple", $.mobile.widget, {
 
         // We need the page so that we can bind actions to the page being
         // shown or closed.
-            page = self.element.closest('.ui-page');
+        page = self.element.closest('.ui-page');
 
         // `this.element` is the element to which our `opions.initSelector`
         // is applied in the HTML code. Here we're starting to add some more
-        // HTML to is.
+        // HTML to it.
         self.element.append(
             '<p>This is the Simple Widget. It can be used as a starting ' +
             'point or learning aid for building new JQM widgets.</p>');
