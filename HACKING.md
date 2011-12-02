@@ -95,7 +95,7 @@ After first cloning the repository, you need to do:
 
     git submodule init
 
-Subsequently, you need to do:
+Subsequently, if the submodule has changed, you need to do:
 
     git submodule update
 
