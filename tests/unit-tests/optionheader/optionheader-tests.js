@@ -318,4 +318,35 @@
     ]);
   });
 
+  asyncTest("Should collapse when interior buttons are clicked", function () {
+    $.testHelper.pageSequence([
+      function () {
+        $.testHelper.openPage('#optionheader-test-click-inside');
+      },
+
+      function () {
+        var $new_page = $('#optionheader-test-click-inside');
+
+        // 1
+        ok($new_page.hasClass('ui-page-active'));
+
+        var oh = $new_page.find('#optionheader-test-click-inside-oh');
+
+        oh.bind('collapse', function () {
+          // 2
+          equal(true, true, 'should collapse when interior button clicked');
+
+          // 3
+          equal(oh.height() + 'px',
+                $.todons.optionheader.prototype.collapsedHeight,
+                'should have collapsed to the height specified in the prototype');
+        });
+
+        oh.find('#optionheader-test-click-inside-btn').trigger('click');
+      },
+
+      function () { expect(3); start(); }
+    ]);
+  });
+
 })(jQuery);
