@@ -91,9 +91,15 @@ First install `less` (see above).
 
 You'll also need `make`.
 
-Then, from a command line inside the project directory, do:
+After first cloning the repository, you need to do:
+
+    git submodule init
+
+Subsequently, if the submodule has changed, you need to do:
 
     git submodule update
+
+followed by:
 
     cd libs/js/submodules/jquery-mobile; make && cd -
     make
