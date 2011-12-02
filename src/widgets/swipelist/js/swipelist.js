@@ -73,9 +73,8 @@
 // the touch events currently interfere with each other badly (e.g.
 // a swipe will work but cause a scroll as well).
 //
-// Theme: default is to use the parent theme (if set), or 'c' if not;
-// can be set explicitly with data-theme="X" or via
-// swipelist('option', 'theme', 'X') (though only at create time).
+// Theme: default is to use the theme on the target element,
+// theme passed in options, parent theme, or 'c' if none of the above.
 // If list items are themed individually, the cover will pick up the
 // theme of the list item which is its parent.
 (function ($) {
