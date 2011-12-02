@@ -44,12 +44,12 @@ all: third_party_widgets widgets widget_styling themes
 
 widget_styling: init
 	# Building non-theme-specific styling for web-ui-fw widgets...
-	@@for w in `find ${WIDGETS_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
+	@@rm -f ${FW_WIDGET_CSS_FILE}; \
+	for w in `find ${WIDGETS_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
 		for l in `find $$w -iname *.less`; do \
 			echo "	# Compiling CSS from "`basename $$l`; \
-			lessc $$l >> $$l.css; \
+			lessc $$l > $$l.css; \
 		done; \
-		touch ${FW_WIDGET_CSS_FILE}; \
 		for c in `find $$w -iname *.css`; do \
 			cat $$c >> ${FW_WIDGET_CSS_FILE}; \
 		done; \
@@ -58,29 +58,31 @@ widget_styling: init
 third_party_widgets: init
 	# Building third party components...
 	@@uglify=cat; \
-	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
+	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>/dev/null; then \
 		echo "	# uglifyjs enabled"; \
 		uglify="uglifyjs -nc"; \
 	fi; \
 	cd ${LIBS_DIR}/js; \
+	rm -f ${FW_LIBS_JS}; \
 	for f in ${LIBS_JS_FILES}; do \
 		cat $$f | $${uglify} >> ${FW_LIBS_JS}; \
 	done; \
-	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery.js ; \
-	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} >> ${JS_OUTPUT_ROOT}/jquery-mobile.js
+	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
+	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js
 
 widgets: init
 	# Building web-ui-fw widgets...
 	@@uglify=cat; \
-	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>&-; then \
+	if test "x${DEBUG}x" = "xnox" && hash uglifyjs 2>/dev/null; then \
 		echo "	# uglifyjs enabled"; \
 		uglify="uglifyjs -nc"; \
 	fi; \
+	rm -f ${FW_JS}; \
 	ls -l ${WIDGETS_DIR} | grep '^d' | awk '{print $$NF;}' | \
 	while read REPLY; do \
 		echo "	# Building widget $$REPLY"; \
 		if test "x${INLINE_PROTO}x" = "x1x"; then \
-			./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY >> ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
+			./tools/inline-protos.sh ${WIDGETS_DIR}/$$REPLY > ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled; \
 			cat ${WIDGETS_DIR}/$$REPLY/js/$$REPLY.js.compiled | $${uglify} >> ${FW_JS}; \
 		else \
 			for f in `find ${WIDGETS_DIR}/$$REPLY/js -iname '*.js' | sort`; do \
@@ -111,13 +113,16 @@ themes: widget_styling jqm_theme
 	# Building web-ui-fw themes...
 	@@cd ${THEMES_DIR}; \
 	for f in `find ${THEMES_DIR} -maxdepth 1 -mindepth 1 -type d`; do \
-		outdir=${THEMES_OUTPUT_ROOT}/`basename $$f`; \
+		outbasename=`basename $$f`; \
+		outdir=${THEMES_OUTPUT_ROOT}/$$outbasename; \
 		mkdir -p $$outdir/images; \
 		cp -a $$f/images/* $$outdir/images/; \
-		touch $$outdir/${FW_THEME_CSS_FILE}; \
 		for l in `find $$f -iname *.less` ; do \
-			lessc $$l >> $$l.css; \
+			lessc $$l > $$l.css; \
 		done; \
+		if test "x$${outbasename}x" != "xdefaultx"; then \
+			rm -f $$outdir/${FW_THEME_CSS_FILE}; \
+		fi; \
 		for c in `find $$f -iname *.css` ; do \
 			cat $$c >> $$outdir/${FW_THEME_CSS_FILE}; \
 		done; \
@@ -135,7 +140,8 @@ jqm_theme: init
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}/default/images
 	@@cp -a ${LIBS_DIR}/js/${JQUERY_MOBILE_IMAGES}/* ${THEMES_OUTPUT_ROOT}/default/images
 	# Adding CSS to jqm theme...
-	@@for f in ${JQUERY_MOBILE_CSS}; do \
+	@@rm -f ${THEMES_OUTPUT_ROOT}/default/${FW_THEME_CSS_FILE}; \
+	for f in ${JQUERY_MOBILE_CSS}; do \
 		cat ${LIBS_DIR}/js/$$f >> ${THEMES_OUTPUT_ROOT}/default/${FW_THEME_CSS_FILE}; \
 	done;
 
