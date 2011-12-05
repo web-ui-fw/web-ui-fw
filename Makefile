@@ -68,7 +68,11 @@ third_party_widgets: init
 		cat $$f | $${uglify} >> ${FW_LIBS_JS}; \
 	done; \
 	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
-	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js
+	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js; \
+	if test "x${DEBUG}x" = "xyesx"; then \
+		cp -a ${FW_LIBS_JS} $(CURDIR)/dist/; \
+	fi
+
 
 widgets: init
 	# Building web-ui-fw widgets...
@@ -90,7 +94,10 @@ widgets: init
 				cat $$f | $${uglify} >> ${FW_JS}; \
 			done; \
 		fi; \
-	done
+	done; \
+	if test "x${DEBUG}x" = "xyesx"; then \
+		cp -a ${FW_JS} $(CURDIR)/dist/; \
+	fi
 
 docs: init
 	# Building documentation...
@@ -133,7 +140,8 @@ themes: widget_styling jqm_theme
 				cp $$f $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
 			done; \
 		fi; \
-	done
+	done; \
+	cp -a ${FW_WIDGET_CSS_FILE} $(CURDIR)/dist/
 
 jqm_theme: init
 	# Adding images to jqm theme...
