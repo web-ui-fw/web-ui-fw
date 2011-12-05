@@ -70,7 +70,7 @@ third_party_widgets: init
 	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
 	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js; \
 	if test "x${DEBUG}x" = "xyesx"; then \
-		cp ${FW_LIBS_JS} $(CURDIR)/dist/; \
+		cp -a ${FW_LIBS_JS} $(CURDIR)/dist/; \
 	fi
 
 
@@ -96,7 +96,7 @@ widgets: init
 		fi; \
 	done; \
 	if test "x${DEBUG}x" = "xyesx"; then \
-		cp ${FW_JS} $(CURDIR)/dist/; \
+		cp -a ${FW_JS} $(CURDIR)/dist/; \
 	fi
 
 docs: init
