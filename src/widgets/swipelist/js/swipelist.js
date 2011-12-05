@@ -77,6 +77,11 @@
 // theme passed in options, parent theme, or 'c' if none of the above.
 // If list items are themed individually, the cover will pick up the
 // theme of the list item which is its parent.
+//
+// Events:
+//
+//   animationComplete: Triggered by a cover when it finishes sliding
+//                      (to either the right or left).
 (function ($) {
 
 $.widget("todons.swipelist", $.mobile.widget, {
@@ -156,9 +161,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
                 });
             }
 
-            cover.bind('swiperight', cover.data('animateRight'));
-
+            // bind to synthetic events
             item.bind('swipeleft', cover.data('animateLeft'));
+            cover.bind('swiperight', cover.data('animateRight'));
 
             // any clicks on buttons inside the item also trigger
             // the cover to slide back to the left
@@ -222,10 +227,24 @@ $.widget("todons.swipelist", $.mobile.widget, {
     // NB I tried to use CSS animations for this, but the performance
     // and appearance was terrible on Android 2.2 browser;
     // so I reverted to jQuery animations
+    //
+    // once the cover animation is done, the cover emits an
+    // animationComplete event
     _animateCover: function (cover, leftPercentage) {
+        var self = this;
+
+        var animationOptions = {
+          easing: 'linear',
+          duration: 'fast',
+          queue: true,
+          complete: function () {
+              cover.trigger('animationComplete');
+          }
+        };
+
         cover.stop();
         cover.clearQueue();
-        cover.animate({left: '' + leftPercentage + '%'}, 'fast', 'linear');
+        cover.animate({left: '' + leftPercentage + '%'}, animationOptions);
     },
 
     destroy: function () {
