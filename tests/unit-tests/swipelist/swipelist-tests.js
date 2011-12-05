@@ -128,4 +128,37 @@
 
   });
 
+  asyncTest("Can be destroyed", function () {
+
+    $.testHelper.pageSequence([
+
+      function () {
+        $.testHelper.openPage('#swipelist-test-destroy');
+      },
+
+      function () {
+        var $new_page = $('#swipelist-test-destroy');
+        ok($new_page.hasClass('ui-page-active'));
+
+        var swipelist = $new_page.find('ul:jqmData(role=swipelist)');
+        swipelist.swipelist('destroy');
+        var covers = $new_page.find(':jqmData(role=swipelist-item-cover)');
+
+
+        equal($new_page.has('.ui-swipelist').length, 0);
+        equal($new_page.has('.ui-swipelist-item').length, 0);
+        equal($new_page.has('.ui-swipelist-item-cover').length, 0);
+        equal($new_page.has('.ui-swipelist-item-cover-inner').length, 0);
+
+        covers.each(function () {
+          ok(!$(this).data('animateRight'));
+          ok(!$(this).data('animateLeft'));
+        });
+      },
+
+      function () { expect(7); start(); }
+    ]);
+
+  });
+
 })(jQuery);
