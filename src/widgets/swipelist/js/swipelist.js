@@ -231,8 +231,6 @@ $.widget("todons.swipelist", $.mobile.widget, {
     // once the cover animation is done, the cover emits an
     // animationComplete event
     _animateCover: function (cover, leftPercentage) {
-        var self = this;
-
         var animationOptions = {
           easing: 'linear',
           duration: 'fast',
