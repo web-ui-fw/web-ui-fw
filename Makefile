@@ -68,7 +68,11 @@ third_party_widgets: init
 		cat $$f | $${uglify} >> ${FW_LIBS_JS}; \
 	done; \
 	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
-	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js
+	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js; \
+	if test "x${DEBUG}x" = "xyesx"; then \
+		cp ${FW_LIBS_JS} $(CURDIR)/dist/; \
+	fi
+
 
 widgets: init
 	# Building web-ui-fw widgets...
@@ -90,7 +94,10 @@ widgets: init
 				cat $$f | $${uglify} >> ${FW_JS}; \
 			done; \
 		fi; \
-	done
+	done; \
+	if test "x${DEBUG}x" = "xyesx"; then \
+		cp ${FW_JS} $(CURDIR)/dist/; \
+	fi
 
 docs: init
 	# Building documentation...
