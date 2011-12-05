@@ -186,6 +186,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
         covers.each(function () {
             var cover = $(this);
             var coverTheme = defaultCoverTheme;
+            var text, wrapper;
 
             // get the parent li element and add classes
             var item = cover.closest('li');
@@ -208,7 +209,14 @@ $.widget("todons.swipelist", $.mobile.widget, {
             cover.removeClass(coverTheme);
 
             // remove wrapper HTML
-            cover.find('.ui-swipelist-item-cover-inner').children().unwrap();
+            wrapper = cover.find('.ui-swipelist-item-cover-inner');
+
+            wrapper.children().unwrap();
+
+            if (text = wrapper.text()) {
+              cover.append(text);
+              wrapper.remove();
+            }
 
             // unbind swipe events
             if (cover.data('animateRight') && cover.data('animateLeft')) {
