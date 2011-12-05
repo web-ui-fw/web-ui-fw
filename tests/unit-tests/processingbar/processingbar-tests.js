@@ -8,7 +8,7 @@
 
   module("Processing bar");
 
-  asyncTest("foo", function () {
+  asyncTest("Markup and methods are present and work correctly", function () {
 
     $.testHelper.pageSequence([
 
