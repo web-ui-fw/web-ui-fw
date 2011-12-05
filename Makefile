@@ -140,7 +140,8 @@ themes: widget_styling jqm_theme
 				cp $$f $$outdir/${PROTOTYPE_HTML_OUTPUT_DIR}; \
 			done; \
 		fi; \
-	done
+	done; \
+	cp -a ${FW_WIDGET_CSS_FILE} $(CURDIR)/dist/
 
 jqm_theme: init
 	# Adding images to jqm theme...
