@@ -3,20 +3,20 @@
  *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
- * 
+ *
  * ***************************************************************************
  * Copyright (C) 2011 by Intel Corporation Ltd.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
  * to deal in the Software without restriction, including without limitation
  * the rights to use, copy, modify, merge, publish, distribute, sublicense,
  * and/or sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -73,11 +73,15 @@
 // the touch events currently interfere with each other badly (e.g.
 // a swipe will work but cause a scroll as well).
 //
-// Theme: default is to use the parent theme (if set), or 'c' if not;
-// can be set explicitly with data-theme="X" or via
-// swipelist('option', 'theme', 'X') (though only at create time).
+// Theme: default is to use the theme on the target element,
+// theme passed in options, parent theme, or 'c' if none of the above.
 // If list items are themed individually, the cover will pick up the
 // theme of the list item which is its parent.
+//
+// Events:
+//
+//   animationComplete: Triggered by a cover when it finishes sliding
+//                      (to either the right or left).
 (function ($) {
 
 $.widget("todons.swipelist", $.mobile.widget, {
@@ -157,9 +161,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
                 });
             }
 
-            cover.bind('swiperight', cover.data('animateRight'));
-
+            // bind to synthetic events
             item.bind('swipeleft', cover.data('animateLeft'));
+            cover.bind('swiperight', cover.data('animateRight'));
 
             // any clicks on buttons inside the item also trigger
             // the cover to slide back to the left
@@ -182,6 +186,7 @@ $.widget("todons.swipelist", $.mobile.widget, {
         covers.each(function () {
             var cover = $(this);
             var coverTheme = defaultCoverTheme;
+            var text, wrapper;
 
             // get the parent li element and add classes
             var item = cover.closest('li');
@@ -204,7 +209,16 @@ $.widget("todons.swipelist", $.mobile.widget, {
             cover.removeClass(coverTheme);
 
             // remove wrapper HTML
-            cover.find('.ui-swipelist-item-cover-inner').children().unwrap();
+            wrapper = cover.find('.ui-swipelist-item-cover-inner');
+
+            wrapper.children().unwrap();
+
+            text = wrapper.text()
+
+            if (text) {
+              cover.append(text);
+              wrapper.remove();
+            }
 
             // unbind swipe events
             if (cover.data('animateRight') && cover.data('animateLeft')) {
@@ -223,10 +237,26 @@ $.widget("todons.swipelist", $.mobile.widget, {
     // NB I tried to use CSS animations for this, but the performance
     // and appearance was terrible on Android 2.2 browser;
     // so I reverted to jQuery animations
+    //
+    // once the cover animation is done, the cover emits an
+    // animationComplete event
     _animateCover: function (cover, leftPercentage) {
+        var animationOptions = {
+          easing: 'linear',
+          duration: 'fast',
+          queue: true,
+          complete: function () {
+              cover.trigger('animationComplete');
+          }
+        };
+
         cover.stop();
         cover.clearQueue();
-        cover.animate({left: '' + leftPercentage + '%'}, 'fast', 'linear');
+        cover.animate({left: '' + leftPercentage + '%'}, animationOptions);
+    },
+
+    destroy: function () {
+      this._cleanupDom();
     }
 
 });
