@@ -275,10 +275,10 @@ $(document).bind("pagecreate", function () {
         if (coordSwitchesAreInit) return;
 
         $("#switch-1-coord").bind("changed", function(e) {
-            $("#switch-2-coord").switch("option", "checked", $("#switch-1-coord").switch("option", "checked"));
+            $("#switch-2-coord").toggleswitch("option", "checked", $("#switch-1-coord").toggleswitch("option", "checked"));
         });
         $("#switch-2-coord").bind("changed", function(e) {
-            $("#switch-1-coord").switch("option", "checked", $("#switch-2-coord").switch("option", "checked"));
+            $("#switch-1-coord").toggleswitch("option", "checked", $("#switch-2-coord").toggleswitch("option", "checked"));
         });
 
         coordSwitchesAreInit = true;
@@ -508,7 +508,7 @@ $(document).bind("pagecreate", function () {
 });
 
 $(document).bind("pagecreate", function() {
-    $("#input-switch").switch();
+    $("#input-switch").toggleswitch();
 });
 
 $(document).bind("pageinit", function() {
