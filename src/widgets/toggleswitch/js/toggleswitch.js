@@ -35,7 +35,7 @@
 // element inside a page. Alternatively, call switch()
 // on an element, like this :
 //
-//     $("#myswitch").switch();
+//     $("#myswitch").toggleswitch();
 // where the html might be :
 //     <div id="myswitch"></div>
 //
