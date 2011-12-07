@@ -38,6 +38,26 @@
        }
     ]);
   });
+	
+  asyncTest("Test value", function () {
 
-   
+    $.testHelper.pageSequence([
+
+      function () {
+        $.testHelper.openPage('#progressbar-test-value');
+      },
+		
+	  function () {
+      	var $new_page = $('#progressbar-test-value');
+       	
+       	var valuePb = $new_page.find('#progressbar-test-value-div');
+       	equal(valuePb.progressbar('value'), 0);
+       	valuePb.progressbar('value', 15);
+       	equal(valuePb.progressbar('value'), 15);
+       	start();
+       }
+   ]);
+  });
+  
+  
 })(jQuery);
