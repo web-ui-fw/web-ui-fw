@@ -213,7 +213,9 @@ $.widget("todons.swipelist", $.mobile.widget, {
 
             wrapper.children().unwrap();
 
-            if (text = wrapper.text()) {
+            text = wrapper.text()
+
+            if (text) {
               cover.append(text);
               wrapper.remove();
             }
