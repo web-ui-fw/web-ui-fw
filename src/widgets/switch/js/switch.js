@@ -79,7 +79,7 @@ $.widget("todons.switch", $.todons.widgetex, {
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
-            _realized: false,
+            _realized: false
         });
 
         this._ui.realButton

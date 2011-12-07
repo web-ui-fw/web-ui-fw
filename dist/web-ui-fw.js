@@ -3676,7 +3676,7 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
                 var dataItems = {
                     0: ["year", this.data.year],
                     1: ["month", this.options.months[this.data.month]],
-                    2: ["day", this.data.day],
+                    2: ["day", this.data.day]
                 };
 
                 for (var data in dataItems)
@@ -3690,7 +3690,7 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
             var dataItems = {
                 0: ["hours", this._makeTwoDigitValue(this._clampHours(this.data.hours))],
                 1: ["separator", this.options.timeSeparator],
-                2: ["minutes", this._makeTwoDigitValue(this.data.minutes)],
+                2: ["minutes", this._makeTwoDigitValue(this.data.minutes)]
             };
 
             for (var data in dataItems)
@@ -8203,7 +8203,7 @@ $("<div><div id='switch' class='ui-switch'>" +
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         $.extend(this, {
-            _realized: false,
+            _realized: false
         });
 
         this._ui.realButton
