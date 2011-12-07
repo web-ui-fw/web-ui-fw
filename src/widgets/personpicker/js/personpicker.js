@@ -93,14 +93,14 @@
                 list.append(currentListItem);
 
                 currentCheckbox
-                    .switch({"checked": false, theme: self.options.theme})
+                    .toggleswitch({"checked": false, theme: self.options.theme})
                     .data("Person", p)
                     .bind("changed", function(e, checked) {
                         var p = $(this).data("Person");
                         if (checked) {
                             if (!self.options.multipleSelection) {
                                 self._data.checked.forEach(function(item) {
-                                    item.switch("option", "checked", false);
+                                    item.toggleswitch("option", "checked", false);
                                 });
                                 self._data.checked.length = 0;
                             }
