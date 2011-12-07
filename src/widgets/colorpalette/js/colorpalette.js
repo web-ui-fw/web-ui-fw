@@ -83,7 +83,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 
             rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
 
-            if (rgbMatches.length > 3)
+            if (rgbMatches && rgbMatches.length > 3)
                 clr = $.todons.colorwidget.clrlib.RGBToHTML([
                     parseInt(rgbMatches[1]) / 255,
                     parseInt(rgbMatches[2]) / 255,
