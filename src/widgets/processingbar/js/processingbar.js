@@ -99,18 +99,27 @@ $.widget("todons.processingbar", $.mobile.widget, {
         swatch.remove();
 
         if (bgcolor) {
-            var css = "-webkit-gradient(linear," +
-                      "left top," +
-                      "right bottom," +
-                      "color-stop(0%,  rgba(255,255,255,1.0))," +
-                      "color-stop(25%, rgba(255,255,255,1.0))," +
-                      "color-stop(25%, processingbarBarBgColor)," +
-                      "color-stop(50%, processingbarBarBgColor)," +
-                      "color-stop(50%, rgba(255,255,255,1.0))," +
-                      "color-stop(75%, rgba(255,255,255,1.0))," +
-                      "color-stop(75%, processingbarBarBgColor))";
-            css = css.replace(/processingbarBarBgColor/g, bgcolor);
-            this.bar.css('background', css);
+            var webkitCss = "-webkit-gradient(linear, left top, right bottom, " +
+                            "color-stop(0%,  rgba(255,255,255,1.0))," +
+                            "color-stop(25%, rgba(255,255,255,1.0))," +
+                            "color-stop(25%, processingbarBarBgColor)," +
+                            "color-stop(50%, processingbarBarBgColor)," +
+                            "color-stop(50%, rgba(255,255,255,1.0))," +
+                            "color-stop(75%, rgba(255,255,255,1.0))," +
+                            "color-stop(75%, processingbarBarBgColor))";
+            webkitCss = webkitCss.replace(/processingbarBarBgColor/g, bgcolor);
+            this.bar.css('background-image', webkitCss);
+
+            var step = this.bar.height() / 8;
+            var mozCss = "-moz-repeating-linear-gradient(top left -45deg, " +
+                         "rgba(255,255,255,1.0)," +
+                         "rgba(255,255,255,1.0) " + step + "px," +
+                         "processingbarBarBgColor " + step + "px," +
+                         "processingbarBarBgColor " + (step * 3) + "px," +
+                         "rgba(255,255,255,1.0) " + (step * 3) + "px," +
+                         "rgba(255,255,255,1.0) " + (step * 4) + "px)";
+            mozCss = mozCss.replace(/processingbarBarBgColor/g, bgcolor);
+            this.bar.css('background', mozCss);
         }
         // end massive hack
 
