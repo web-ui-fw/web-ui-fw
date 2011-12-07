@@ -92,7 +92,12 @@
             container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
+            
+            // set Options
+            var dataOptions = this.element.jqmData('options');
+            $.extend(this.options, dataOptions);
             this._setOption("theme", this.options.theme);
+            
             startValue = this.options.value ? this.options.value : 0;
             this.value(startValue);
         },

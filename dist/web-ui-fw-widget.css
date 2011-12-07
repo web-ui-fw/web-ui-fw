@@ -1,5 +1,151 @@
+.ui-processingbar-container {
+  height: 20px;
+  min-width: 400px;
+  width: 100%;
+}
+.ui-processingbar-container .ui-processingbar-clip {
+  margin: 10px 0px 0px 0px;
+  overflow: hidden;
+  height: 10px;
+}
+.ui-processingbar-container .ui-processingbar-clip .ui-processingbar-bar {
+  background-color: #ffffff;
+  -webkit-background-size: 20px 20px;
+  height: 40px;
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ui-shortcutscroll {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: rgba(225, 221, 215,0.5);
+  max-width: 20px;
+  min-width: 12px;
+  -webkit-user-select: none;
+  margin:0;
+  padding:0;
+  opacity: 1;
+}
+.ui-shortcutscroll ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.ui-shortcutscroll li {
+  cursor: pointer;
+  color:rgba(0,0,0,0.6);
+  padding: 2px 2px 2px 5px;
+  text-shadow: none !important;
+}
+
+.ui-shortcutscroll-popup {
+  position: absolute;
+  background: rgba(255,255,255,1);
+  padding:10px 30px;
+  -moz-box-shadow: 8px 10px 0px rgb(199, 199, 199);
+	-webkit-box-shadow: 8px 10px 0px rgb(199, 199, 199);
+	box-shadow: 8px 10px 0px rgb(199, 199, 199);
+	text-align: center;
+  font-size: 75px;
+  font-weight: bold;
+  display:none;
+  box-sizing:border-box;
+  color: black;
+}
+.ui-switch {
+  position: relative;
+  display: table;
+}
+.ui-switch .switch-button-outside {
+  position: absolute;
+}
+.ui-switch .switch-button-inside {
+  display: block;
+}
+.ui-switch .switch-button-transparent {
+  opacity: 0;
+}
+.ui-switch .switch-inner-active {
+  position: absolute;
+}
+/* Need to add !important below, because these classes are added before jqm enhancement */
+.ui-colorpickerbutton-input {
+    max-width: 70px;
+    display: inline-block !important;
+}
+
+.ui-colorpickerbutton-input-hidden {
+    display: none !important;
+}
 .personpicker {
   margin: 0 15px;
+}
+/*
+ * Defines one can include in one's own .less file for a common look-and-feel
+ */
+/* From page 60 */
+.ui-colorpalette {
+  display: table;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.ui-colorpalette .colorpalette-preview-container {
+  padding-top: 48px;
+  padding-bottom: 39px;
+  display: table;
+  margin: auto;
+}
+.ui-colorpalette .colorpalette-preview-container .colorpalette-preview {
+  display: table;
+  margin: auto;
+  width: 296px;
+  height: 101px;
+  border: #c0c0c0 4px solid;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-bottom-row {
+  display: table-row;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-normal-row {
+  display: table-row;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-choice-container-left {
+  display: table-cell;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-choice-container-rest {
+  display: table-cell;
+  padding-left: 38px;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-normal-row .colorpalette-choice-container-left {
+  padding-bottom: 16px;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-choice {
+  width: 46px;
+  height: 46px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: #c0c0c0;
+}
+.ui-colorpalette .colorpalette-table .colorpalette-choice-active {
+  border-color: #d9931a;
+}
+/* dayselector CSS */
+.ui-dayselector label {
+    height: 56px;
+    width: 64px;
+}
+
+.ui-dayselector-label-6 {
+    color: blue;
+}
+
+.ui-dayselector-label-0 {
+    color: red;
 }
 .ui-processingcircle-container {
   border-width: 0.2em;
@@ -20,224 +166,6 @@
 .ui-processingcircle-container .ui-processingcircle .ui-processingcircle-hand {
   width: 99%;
   height: 99%;
-}
-.ui-colortitle {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.ui-colortitle h1 {
-  display: table;
-  margin: auto;
-  color: #54a12d;
-}
-.ui-slider .ui-btn-inner {
-    padding: 4px 0 0 0 !important;
-}
-
-.ui-slider-popup {
-    position: absolute !important;
-    width: 64px;
-    height: 64px;
-    text-align: center;
-    font-size: 40px;
-    padding-top: 12px;
-    z-index: 100;
-    opacity: 0.8;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container {
-  display: table;
-  padding-left: 27px;
-  padding-right: 27px;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-arrow-btn-container {
-  display: table-cell;
-  vertical-align: middle;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-arrow-btn {
-  float: left;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container {
-  float: left;
-  position: relative;
-  width: 300px;
-  height: 38px;
-  margin-left: 2px;
-  margin-right: 2px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .hsvpicker-clrchannel-mask {
-  position: absolute;
-  width: 300px;
-  height: 38px;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .hsvpicker-clrchannel-selector {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 10px;
-  height: 40px;
-  border: 5px solid black;
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .sat-gradient {
-  background: #ff0000;
-  /* Old browsers */
-
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, rgba(255, 255, 255, 0)));
-  /* Chrome,Safari4+ */
-
-  background: -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
-  background: -webkit-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
-  background: -o-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
-  background: -ms-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
-  background: linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
-}
-.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .val-gradient {
-  background: #ff0000;
-  /* Old browsers */
-
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #000000), color-stop(100%, rgba(0, 0, 0, 0)));
-  /* Chrome,Safari4+ */
-
-  background: -moz-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
-  background: -webkit-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
-  background: -o-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
-  background: -ms-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
-  background: linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
-}
-.ui-triangle {
-  position: absolute;
-  bottom: 0px;
-  border-style: solid;
-}
-.ui-popupwindow {
-  display: inline-block;
-  position: absolute;
-  padding: 6px;
-}
-.ui-popupwindow .ui-popupwindow-arrow {
-  position: relative;
-  width: 100%;
-  height: 10px;
-}
-.ui-popupwindow .ui-popupwindow-arrow-top {
-  top: -16px;
-  margin-bottom: -10px;
-}
-.ui-popupwindow .ui-popupwindow-arrow-bottom {
-  bottom: -16px;
-  margin-top: -10px;
-}
-.ui-popupwindow-screen {
-  background: #000000;
-  opacity: 0;
-}
-/* Own CSS */
-
-.ui-upper-progressbar-container {
-  height: 100px;
-  background: white;
-}
-
-.ui-cancel-container{
-  position: relative;
-  bottom: 0px;
-  height: 60px;
-  background: gray;
-  text-align: center;
-}
-
-.ui-cancel-button {
-  display: inline-block;	
-  background-color: white;
-  color: black;
-  width: 50%;
-  height: 80%;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  text-align: center;  
-}
-
-.ui-text1 {
-	position: relative;
-	text-align: center;
-	margin-top: 14px;			
-}
-
-.ui-text2 {
-	float: left;
-	text-align: left;
-	margin-left: 10px;
-	margin-bottom: 14px;			
-}
-
-.ui-text3 {
-	float: right;
-	text-align: right;
-	margin-right: 20px;
-	margin-bottom: 14px;			
-}
-.ui-option-header {
-    overflow: hidden;
-}
-
-.ui-option-header-1-row {
-    height: 65px;
-    border: none;
-}
-.ui-option-header-2-row {
-    height: 124px;
-    border: none;
-}
-
-.ui-option-header-row-1 {
-    padding: 5px 5px 5px 5px;
-}
-.ui-option-header-row-2 {
-    margin-top: -2px;
-    padding: 0px 5px 6px 5px;
-}
-
-/* for standard buttons */
-.ui-option-header .ui-btn {
-    display: block;
-    margin: 3px 5px 5px 5px;
-}
-.ui-option-header .ui-btn-text {
-    line-height: 34px;
-}
-.ui-option-header .ui-btn-inner {
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-
-/* for segmented control */
-.ui-option-header .ui-controlgroup-horizontal .ui-btn {
-    display: inline-block !important;
-    margin: -3px !important;
-}
-.ui-option-header .ui-controlgroup,
-.ui-option-header fieldset.ui-controlgroup {
-    margin-bottom: 0px !important;
-}
-.ui-option-header .ui-controlgroup-horizontal .ui-corner-left {
-    margin-left: 5px !important;
-}
-.ui-option-header .ui-controlgroup-horizontal .ui-corner-right {
-    margin-right: 5px !important;
-}
-
-/* for the triangle */
-.ui-option-header-triangle-arrow {
-  top:-10px;
-  height:10px;
-  width:100%;
-  position:relative;
-  margin-bottom: -10px;
 }
 .jquery-todons-colorwidget-clrlib-hue-gradient {
     background: rgb(255,0,0); /* Old browsers */
@@ -365,460 +293,116 @@
 .ui-btn-up-firstdaybutton {
   color: #FF0000;
 }
-@charset "utf-8";
-
-.ui-scrollview-clip {
-	position: relative;
-}
-
-.ui-scrollview-view {
-}
-
-.ui-scrolllistview .ui-li-divider {
-	z-index: 10;
-}
-
-.ui-scrollbar {
-	position: absolute;
-	overflow: hidden;
-
-	opacity: 0;
-	-webkit-transition: opacity 500ms;
-	-moz-transition: opacity 500ms;
-	transition: opacity 500ms;
-}
-
-.ui-scrollbar-visible {
-	opacity: 1;
-}
-
-.ui-scrollbar-y {
-	top: 2px;
-	right: 2px;
-	bottom: 8px;
-	width: 5px;
-}
-
-.ui-scrollbar-x {
-	right: 8px;
-	bottom: 2px;
-	left: 2px;
-	height: 5px;
-}
-
-.ui-scrollbar-track {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-.ui-scrollbar-thumb {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.3);
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-}
-
-.ui-scrollbar-y .ui-scrollbar-thumb {
-	width: 5px;
-	height: 100%;
-}
-
-.ui-scrollbar-x .ui-scrollbar-thumb {
-	width: 100%;
-	height: 5px;
-}
-
-/*
- * the values below are for the group index
- */
-
-/*
- * padding here set to zero - otherwise the list scrolls underneith the top heading and can be seen above it
- */
-.ui-content.ui-scrollview-clip {
-    padding: 0;
-}
-
-/*
- * this seems to effect how far the top divider is place wrt to the scrollview
- * without this, it is placed too high, so it is clipped in half
- */
-.ui-content.ui-scrollview-clip > .ui-listview.ui-scrollview-view {
-    margin: 0;
-}
-.jquery-mobile-ui-widget {
-  border-left: 10px solid #c7c7c7;
-  border-bottom: 1px solid #c7c7c7;
-  background: #fafafa;
-}
-.jquery-mobile-ui-widget-top {
-  border-top: 1px solid #c7c7c7;
-}
-.jquery-mobile-ui-label {
-  position: relative;
-  border-bottom: 1px solid #c7c7c7;
-  height: 40px;
-}
-.jquery-mobile-ui-label .jquery-mobile-ui-label-text {
-  font-family: sans-serif;
-  font-size: 120%;
-  position: absolute;
-  text-align: left;
-  vertical-align: bottom;
-  color: #9d9d9d;
-  bottom: 0px;
-  left: 10px;
-}
-.reset-rounded-corners {
-  border-radius: 0px;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-}
-.reset-border {
-  border: 0;
-}
-/*
- * Defines one can include in one's own .less file for a common look-and-feel
- */
-/* From page 60 */
 /* Own CSS */
-/* @selector-size should be an odd number, in order to pixel-perfectly center on a given colour */
-.ui-colorpicker {
-  display: table;
-}
-.ui-colorpicker .colorpicker-hs-container {
-  position: relative;
-  display: table-cell;
-  float: left;
-  width: 256px;
-  height: 256px;
-  padding: 35.5px;
-}
-.ui-colorpicker .colorpicker-hs-container .colorpicker-hs-mask {
-  position: absolute;
-  width: 256px;
-  height: 256px;
-}
-.ui-colorpicker .colorpicker-hs-container .colorpicker-hs-selector {
-  position: absolute;
-  width: 61px;
-  height: 61px;
-  border: 5px solid black;
-}
-.ui-colorpicker .colorpicker-hs-container .sat-gradient {
-  background: #808080;
-  /* Old browsers */
 
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(128, 128, 128, 0)), color-stop(100%, #808080));
-  /* Chrome,Safari4+ */
-
-  background: -moz-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
-  /* FF3.6+ */
-
-  background: -webkit-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
-  /* Chrome10+,Safari5.1+ */
-
-  background: -o-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
-  /* Opera11.10+ */
-
-  background: -ms-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
-  /* IE10+ */
-
-  background: linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
-  /* W3C */
-
-}
-.ui-colorpicker .colorpicker-l-container {
-  position: relative;
-  float: left;
-  width: 16px;
-  height: 256px;
-  padding-left: 27.5px;
-  padding-right: 27.5px;
-  padding-top: 35.5px;
-  padding-bottom: 35.5px;
-}
-.ui-colorpicker .colorpicker-l-container .colorpicker-l-mask {
-  position: absolute;
-  width: 16px;
-  height: 256px;
-}
-.ui-colorpicker .colorpicker-l-container .colorpicker-l-selector {
-  left: 0px;
-  position: absolute;
-  width: 61px;
-  height: 61px;
-  border: 5px solid black;
-}
-.ui-colorpicker .colorpicker-l-container .l-gradient {
-  background: #000000;
-  /* Old browsers */
-
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff));
-  /* Chrome,Safari4+ */
-
-  background: -moz-linear-gradient(top, #000000 0%, #ffffff 100%);
-  /* FF3.6+ */
-
-  background: -webkit-linear-gradient(top, #000000 0%, #ffffff 100%);
-  /* Chrome10+,Safari5.1+ */
-
-  background: -o-linear-gradient(top, #000000 0%, #ffffff 100%);
-  /* Opera11.10+ */
-
-  background: -ms-linear-gradient(top, #000000 0%, #ffffff 100%);
-  /* IE10+ */
-
-  background: linear-gradient(top, #000000 0%, #ffffff 100%);
-  /* W3C */
-
-}
-.ui-swipelist-item {
-    -webkit-user-select: none;
-    -user-select: none;
-}
-
-.ui-swipelist-item * {
-    -webkit-user-select: none;
-    -user-select: none;
-}
-
-.ui-swipelist-item-cover {
-    z-index: 99;
-    position: absolute;
-    border: none;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-}
-
-.ui-swipelist-item-cover-inner * {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -user-select: none;
-}
-.ui-shortcutscroll {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  background-color: rgba(225, 221, 215,0.5);
-  max-width: 20px;
-  min-width: 12px;
-  -webkit-user-select: none;
-  margin:0;
-  padding:0;
-  opacity: 1;
-}
-.ui-shortcutscroll ul{
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-.ui-shortcutscroll li {
-  cursor: pointer;
-  color:rgba(0,0,0,0.6);
-  padding: 2px 2px 2px 5px;
-  text-shadow: none !important;
-}
-
-.ui-shortcutscroll-popup {
-  position: absolute;
-  background: rgba(255,255,255,1);
-  padding:10px 30px;
-  -moz-box-shadow: 8px 10px 0px rgb(199, 199, 199);
-	-webkit-box-shadow: 8px 10px 0px rgb(199, 199, 199);
-	box-shadow: 8px 10px 0px rgb(199, 199, 199);
-	text-align: center;
-  font-size: 75px;
-  font-weight: bold;
-  display:none;
-  box-sizing:border-box;
-  color: black;
-}
-.ui-processingbar-container {
-  height: 20px;
-  min-width: 400px;
-  width: 100%;
-}
-.ui-processingbar-container .ui-processingbar-clip {
-  margin: 10px 0px 0px 0px;
-  overflow: hidden;
-  height: 10px;
-}
-.ui-processingbar-container .ui-processingbar-clip .ui-processingbar-bar {
-  background-color: #ffffff;
-  -webkit-background-size: 20px 20px;
-  height: 40px;
-  position: relative;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.ui-volumecontrol {
-  display: table;
-  margin: auto;
-  background: rgba(0, 0, 0, 0.666667);
-}
-.ui-volumecontrol h1 {
-  display: table;
-  margin: auto;
-  color: #c0c0c0;
-}
-.ui-volumecontrol .ui-volumecontrol-icon {
-  display: table;
-  margin: auto;
-  background-image: url('images/web-ui-fw_volume_icon.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  width: 54px;
-  height: 54px;
-  padding-top: 13px;
-  padding-bottom: 13px;
-  padding-left: 104px;
-  padding-right: 104px;
-}
-.ui-volumecontrol .ui-volumecontrol-indicator {
-  position: relative;
-  display: table;
-  margin: auto;
-  width: 175px;
-  height: 263px;
-}
-.ui-volumecontrol .ui-volumecontrol-indicator .ui-volumecontrol-level {
-  position: absolute;
-  background: rgba(1, 1, 1, 0.25);
-}
-.ui-volumecontrol .ui-volumecontrol-indicator .ui-volumecontrol-level-set {
-  background: #ffffff;
-}
-.ui-switch {
-  position: relative;
-  display: table;
-}
-.ui-switch .switch-button-outside {
-  position: absolute;
-}
-.ui-switch .switch-button-inside {
-  display: block;
-}
-.ui-switch .switch-button-transparent {
-  opacity: 0;
-}
-.ui-switch .switch-inner-active {
-  position: absolute;
-}
-/*
- * Defines one can include in one's own .less file for a common look-and-feel
- */
-/* From page 60 */
-.ui-colorpalette {
-  display: table;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.ui-colorpalette .colorpalette-preview-container {
-  padding-top: 48px;
-  padding-bottom: 39px;
-  display: table;
-  margin: auto;
-}
-.ui-colorpalette .colorpalette-preview-container .colorpalette-preview {
-  display: table;
-  margin: auto;
-  width: 296px;
-  height: 101px;
-  border: #c0c0c0 4px solid;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-bottom-row {
-  display: table-row;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-normal-row {
-  display: table-row;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-choice-container-left {
-  display: table-cell;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-choice-container-rest {
-  display: table-cell;
-  padding-left: 38px;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-normal-row .colorpalette-choice-container-left {
-  padding-bottom: 16px;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-choice {
-  width: 46px;
-  height: 46px;
-  border-width: 4px;
-  border-style: solid;
-  border-color: #c0c0c0;
-}
-.ui-colorpalette .colorpalette-table .colorpalette-choice-active {
-  border-color: #d9931a;
-}
-/* Need to add !important below, because these classes are added before jqm enhancement */
-.ui-colorpickerbutton-input {
-    max-width: 70px;
-    display: inline-block !important;
-}
-
-.ui-colorpickerbutton-input-hidden {
-    display: none !important;
-}
-.ui-personpicker .ui-listview, .ui-personpicker .ui-listview-filter {
-  margin: 0;
-}
-.ui-personpicker li.ui-personpicker-row .content {
-  width: 100%;
-  display: inline-block;
-}
-.ui-personpicker li.ui-personpicker-row .content .switch {
-  float: left;
-}
-.ui-personpicker li.ui-personpicker-row .content h3 {
-  float: left;
-  margin-left: 20px;
-}
-.ui-personpicker li.ui-personpicker-row .content .avatar {
-  float: right;
-  width: 59px;
-  height: 59px;
-  margin: 7px 14px 7px 4px;
-  border: 1px solid #a3a3a3;
-}
-/* Own CSS */
-.ui-progressbar {
-  position: relative;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  height: 10px;
+.ui-upper-progressbar-container {
+  height: 100px;
   background: white;
 }
 
-.ui-boxImg {	
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 10px;
+.ui-cancel-container{
+  position: relative;
+  bottom: 0px;
+  height: 60px;
+  background: gray;
+  text-align: center;
 }
 
-.ui-barImg {
-	position: absolute;
-	top: 0px;
-	height: 10px;
-	width: 0;	
+.ui-cancel-button {
+  display: inline-block;	
+  background-color: white;
+  color: black;
+  width: 50%;
+  height: 80%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;  
 }
 
+.ui-text1 {
+	position: relative;
+	text-align: center;
+	margin-top: 14px;			
+}
+
+.ui-text2 {
+	float: left;
+	text-align: left;
+	margin-left: 10px;
+	margin-bottom: 14px;			
+}
+
+.ui-text3 {
+	float: right;
+	text-align: right;
+	margin-right: 20px;
+	margin-bottom: 14px;			
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container {
+  display: table;
+  padding-left: 27px;
+  padding-right: 27px;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-arrow-btn-container {
+  display: table-cell;
+  vertical-align: middle;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-arrow-btn {
+  float: left;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container {
+  float: left;
+  position: relative;
+  width: 300px;
+  height: 38px;
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .hsvpicker-clrchannel-mask {
+  position: absolute;
+  width: 300px;
+  height: 38px;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .hsvpicker-clrchannel-selector {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 10px;
+  height: 40px;
+  border: 5px solid black;
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .sat-gradient {
+  background: #ff0000;
+  /* Old browsers */
+
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ffffff), color-stop(100%, rgba(255, 255, 255, 0)));
+  /* Chrome,Safari4+ */
+
+  background: -moz-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background: -o-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background: -ms-linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(left, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+}
+.ui-hsvpicker .hsvpicker-clrchannel-container .hsvpicker-clrchannel-masks-container .val-gradient {
+  background: #ff0000;
+  /* Old browsers */
+
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #000000), color-stop(100%, rgba(0, 0, 0, 0)));
+  /* Chrome,Safari4+ */
+
+  background: -moz-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  background: -webkit-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  background: -o-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  background: -ms-linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(left, #000000 0%, rgba(0, 0, 0, 0) 100%);
+}
 /*
  * Defines one can include in one's own .less file for a common look-and-feel
  */
@@ -959,20 +543,436 @@
   border: 0;
   background-color: transparent;
 }
+/* Own CSS */
+/* @selector-size should be an odd number, in order to pixel-perfectly center on a given colour */
+.ui-colorpicker {
+  display: table;
+}
+.ui-colorpicker .colorpicker-hs-container {
+  position: relative;
+  display: table-cell;
+  float: left;
+  width: 256px;
+  height: 256px;
+  padding: 35.5px;
+}
+.ui-colorpicker .colorpicker-hs-container .colorpicker-hs-mask {
+  position: absolute;
+  width: 256px;
+  height: 256px;
+}
+.ui-colorpicker .colorpicker-hs-container .colorpicker-hs-selector {
+  position: absolute;
+  width: 61px;
+  height: 61px;
+  border: 5px solid black;
+}
+.ui-colorpicker .colorpicker-hs-container .sat-gradient {
+  background: #808080;
+  /* Old browsers */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(128, 128, 128, 0)), color-stop(100%, #808080));
+  /* Chrome,Safari4+ */
+
+  background: -moz-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
+  /* FF3.6+ */
+
+  background: -webkit-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
+  /* IE10+ */
+
+  background: linear-gradient(top, rgba(128, 128, 128, 0) 0%, #808080 100%);
+  /* W3C */
+
+}
+.ui-colorpicker .colorpicker-l-container {
+  position: relative;
+  float: left;
+  width: 16px;
+  height: 256px;
+  padding-left: 27.5px;
+  padding-right: 27.5px;
+  padding-top: 35.5px;
+  padding-bottom: 35.5px;
+}
+.ui-colorpicker .colorpicker-l-container .colorpicker-l-mask {
+  position: absolute;
+  width: 16px;
+  height: 256px;
+}
+.ui-colorpicker .colorpicker-l-container .colorpicker-l-selector {
+  left: 0px;
+  position: absolute;
+  width: 61px;
+  height: 61px;
+  border: 5px solid black;
+}
+.ui-colorpicker .colorpicker-l-container .l-gradient {
+  background: #000000;
+  /* Old browsers */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #000000), color-stop(100%, #ffffff));
+  /* Chrome,Safari4+ */
+
+  background: -moz-linear-gradient(top, #000000 0%, #ffffff 100%);
+  /* FF3.6+ */
+
+  background: -webkit-linear-gradient(top, #000000 0%, #ffffff 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #000000 0%, #ffffff 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, #000000 0%, #ffffff 100%);
+  /* IE10+ */
+
+  background: linear-gradient(top, #000000 0%, #ffffff 100%);
+  /* W3C */
+
+}
+.ui-personpicker .ui-listview, .ui-personpicker .ui-listview-filter {
+  margin: 0;
+}
+.ui-personpicker li.ui-personpicker-row .content {
+  width: 100%;
+  display: inline-block;
+}
+.ui-personpicker li.ui-personpicker-row .content .switch {
+  float: left;
+}
+.ui-personpicker li.ui-personpicker-row .content h3 {
+  float: left;
+  margin-left: 20px;
+}
+.ui-personpicker li.ui-personpicker-row .content .avatar {
+  float: right;
+  width: 59px;
+  height: 59px;
+  margin: 7px 14px 7px 4px;
+  border: 1px solid #a3a3a3;
+}
+/* Own CSS */
+.ui-progressbar {
+  position: relative;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  height: 10px;
+  background: white;
+}
+
+.ui-boxImg {	
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 10px;
+}
+
+.ui-barImg {
+	position: absolute;
+	top: 0px;
+	height: 10px;
+	width: 0;	
+}
+
+.ui-volumecontrol {
+  display: table;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.666667);
+}
+.ui-volumecontrol h1 {
+  display: table;
+  margin: auto;
+  color: #c0c0c0;
+}
+.ui-volumecontrol .ui-volumecontrol-icon {
+  display: table;
+  margin: auto;
+  background-image: url('images/web-ui-fw_volume_icon.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 54px;
+  height: 54px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  padding-left: 104px;
+  padding-right: 104px;
+}
+.ui-volumecontrol .ui-volumecontrol-indicator {
+  position: relative;
+  display: table;
+  margin: auto;
+  width: 175px;
+  height: 263px;
+}
+.ui-volumecontrol .ui-volumecontrol-indicator .ui-volumecontrol-level {
+  position: absolute;
+  background: rgba(1, 1, 1, 0.25);
+}
+.ui-volumecontrol .ui-volumecontrol-indicator .ui-volumecontrol-level-set {
+  background: #ffffff;
+}
+.ui-swipelist-item {
+    -webkit-user-select: none;
+    -user-select: none;
+}
+
+.ui-swipelist-item * {
+    -webkit-user-select: none;
+    -user-select: none;
+}
+
+.ui-swipelist-item-cover {
+    z-index: 99;
+    position: absolute;
+    border: none;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.ui-swipelist-item-cover-inner * {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -user-select: none;
+}
+.ui-slider .ui-btn-inner {
+    padding: 4px 0 0 0 !important;
+}
+
+.ui-slider-popup {
+    position: absolute !important;
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    font-size: 40px;
+    padding-top: 12px;
+    z-index: 100;
+    opacity: 0.8;
+}
+.ui-popupwindow {
+  display: inline-block;
+  position: absolute;
+  padding: 6px;
+}
+.ui-popupwindow .ui-popupwindow-arrow {
+  position: relative;
+  width: 100%;
+  height: 10px;
+}
+.ui-popupwindow .ui-popupwindow-arrow-top {
+  top: -16px;
+  margin-bottom: -10px;
+}
+.ui-popupwindow .ui-popupwindow-arrow-bottom {
+  bottom: -16px;
+  margin-top: -10px;
+}
+.ui-popupwindow-screen {
+  background: #000000;
+  opacity: 0;
+}
+.ui-triangle {
+  position: absolute;
+  bottom: 0px;
+  border-style: solid;
+}
+/*
+ * Defines one can include in one's own .less file for a common look-and-feel
+ */
+/* From page 60 */
+.jquery-mobile-ui-widget {
+  border-left: 10px solid #c7c7c7;
+  border-bottom: 1px solid #c7c7c7;
+  background: #fafafa;
+}
+.jquery-mobile-ui-widget-top {
+  border-top: 1px solid #c7c7c7;
+}
+.jquery-mobile-ui-label {
+  position: relative;
+  border-bottom: 1px solid #c7c7c7;
+  height: 40px;
+}
+.jquery-mobile-ui-label .jquery-mobile-ui-label-text {
+  font-family: sans-serif;
+  font-size: 120%;
+  position: absolute;
+  text-align: left;
+  vertical-align: bottom;
+  color: #9d9d9d;
+  bottom: 0px;
+  left: 10px;
+}
+.reset-rounded-corners {
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+}
+.reset-border {
+  border: 0;
+}
+@charset "utf-8";
+
+.ui-scrollview-clip {
+	position: relative;
+}
+
+.ui-scrollview-view {
+}
+
+.ui-scrolllistview .ui-li-divider {
+	z-index: 10;
+}
+
+.ui-scrollbar {
+	position: absolute;
+	overflow: hidden;
+
+	opacity: 0;
+	-webkit-transition: opacity 500ms;
+	-moz-transition: opacity 500ms;
+	transition: opacity 500ms;
+}
+
+.ui-scrollbar-visible {
+	opacity: 1;
+}
+
+.ui-scrollbar-y {
+	top: 2px;
+	right: 2px;
+	bottom: 8px;
+	width: 5px;
+}
+
+.ui-scrollbar-x {
+	right: 8px;
+	bottom: 2px;
+	left: 2px;
+	height: 5px;
+}
+
+.ui-scrollbar-track {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-scrollbar-thumb {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.ui-scrollbar-y .ui-scrollbar-thumb {
+	width: 5px;
+	height: 100%;
+}
+
+.ui-scrollbar-x .ui-scrollbar-thumb {
+	width: 100%;
+	height: 5px;
+}
+
+/*
+ * the values below are for the group index
+ */
+
+/*
+ * padding here set to zero - otherwise the list scrolls underneith the top heading and can be seen above it
+ */
+.ui-content.ui-scrollview-clip {
+    padding: 0;
+}
+
+/*
+ * this seems to effect how far the top divider is place wrt to the scrollview
+ * without this, it is placed too high, so it is clipped in half
+ */
+.ui-content.ui-scrollview-clip > .ui-listview.ui-scrollview-view {
+    margin: 0;
+}
+.ui-option-header {
+    overflow: hidden;
+}
+
+.ui-option-header-1-row {
+    height: 65px;
+    border: none;
+}
+.ui-option-header-2-row {
+    height: 124px;
+    border: none;
+}
+
+.ui-option-header-row-1 {
+    padding: 5px 5px 5px 5px;
+}
+.ui-option-header-row-2 {
+    margin-top: -2px;
+    padding: 0px 5px 6px 5px;
+}
+
+/* for standard buttons */
+.ui-option-header .ui-btn {
+    display: block;
+    margin: 3px 5px 5px 5px;
+}
+.ui-option-header .ui-btn-text {
+    line-height: 34px;
+}
+.ui-option-header .ui-btn-inner {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+/* for segmented control */
+.ui-option-header .ui-controlgroup-horizontal .ui-btn {
+    display: inline-block !important;
+    margin: -3px !important;
+}
+.ui-option-header .ui-controlgroup,
+.ui-option-header fieldset.ui-controlgroup {
+    margin-bottom: 0px !important;
+}
+.ui-option-header .ui-controlgroup-horizontal .ui-corner-left {
+    margin-left: 5px !important;
+}
+.ui-option-header .ui-controlgroup-horizontal .ui-corner-right {
+    margin-right: 5px !important;
+}
+
+/* for the triangle */
+.ui-option-header-triangle-arrow {
+  top:-10px;
+  height:10px;
+  width:100%;
+  position:relative;
+  margin-bottom: -10px;
+}
+.ui-colortitle {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.ui-colortitle h1 {
+  display: table;
+  margin: auto;
+  color: #54a12d;
+}
 .ui-singleimagedisplay-nocontent {
     background-image: url('images/web-ui-fw_noContent.png');
     background-size: cover;
-}
-/* dayselector CSS */
-.ui-dayselector label {
-    height: 56px;
-    width: 64px;
-}
-
-.ui-dayselector-label-6 {
-    color: blue;
-}
-
-.ui-dayselector-label-0 {
-    color: red;
 }
