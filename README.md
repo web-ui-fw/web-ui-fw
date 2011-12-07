@@ -79,6 +79,11 @@ Maintainers
 
 The project is maintained by Intel's Open Source Technology Centre.
 
+Contact
+===========
+
+Contact us on FreeNode: irc.freenode.net channel #web-ui-fw
+
 Using a web-ui-fw distribution
 ==============================
 
