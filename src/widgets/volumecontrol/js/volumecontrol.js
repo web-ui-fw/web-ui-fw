@@ -218,7 +218,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 elem;
 
             for (var Nix = this._volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
-                elem = $("<div>", { class: "ui-volumecontrol-level"})
+                elem = $("<div>", { "class": "ui-volumecontrol-level"})
                     .css({
                         left: (cx - (cxStart + Nix * cxInc)) / 2,
                         top:  yStart - Nix * 2 * cyElem,
