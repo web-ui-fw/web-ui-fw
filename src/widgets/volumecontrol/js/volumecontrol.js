@@ -77,7 +77,8 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
     _htmlProto: {
         ui: {
             container: "#volumecontrol",
-            volumeImage: "#volumecontrol-indicator"
+            volumeImage: "#volumecontrol-indicator",
+            bar: "#volumecontrol-bar"
         }
     },
 
@@ -98,6 +99,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 return coords.y;
             };
 
+          this._ui.bar.remove();
           this._ui.container.insertBefore(this.element)
                             .popupwindow({overlayTheme: "", fade: false, shadow: false});
           this.element.css("display", "none");
@@ -218,15 +220,16 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 elem;
 
             for (var Nix = this._volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
-                elem = $("<div>", { "class": "ui-volumecontrol-level"})
+                elem = this._ui.bar
+                    .clone()
                     .css({
                         left: (cx - (cxStart + Nix * cxInc)) / 2,
                         top:  yStart - Nix * 2 * cyElem,
                         width: cxStart + Nix * cxInc,
                         height: cyElem
-                    });
+                    })
+                    .appendTo(this._ui.volumeImage);
                 this._volumeElemStack.push(elem);
-                this._ui.volumeImage.append(elem);
             }
         }
         for (var Nix = 0 ; Nix < this._maxVolume() ; Nix++)
