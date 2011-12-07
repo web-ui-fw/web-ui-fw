@@ -58,8 +58,6 @@ either in full or in part:
 * <a href="http://www.bramstein.com/projects/jlayout/">jLayout and
   the jLayout jQuery plugin</a> (all of them)
 * <a href="http://www.bramstein.com/projects/jsizes/">jSizes</a> (all of it)
-* <a href="http://documentcloud.github.com/underscore/">Underscore</a>
-  (a copy of the _.keys() method is in our namespace)
 * <a href="https://github.com/jtsage/jquery-mobile-datebox">JQM-DateBox</a>
 * some experimental elements of jQuery Mobile, especially scrollview
 
