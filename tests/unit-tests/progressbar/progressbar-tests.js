@@ -54,6 +54,14 @@
        	equal(valuePb.progressbar('value'), 0);
        	valuePb.progressbar('value', 15);
        	equal(valuePb.progressbar('value'), 15);
+        // testing markup
+       	//console.log(valuePb);
+       	ok(valuePb.hasClass('ui-progressbar'));
+       	ok(valuePb.hasClass('ui-barImg'));
+       	ok(valuePb.hasClass('ui-boxImg'));
+       	var maxValue = valuePb.progressbar('option', 'max');
+       	equal(valuePb.find('ui-barImg').css('width'), 25/maxValue);
+       	
        	start();
        }
    ]);
