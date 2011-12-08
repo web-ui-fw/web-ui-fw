@@ -56,22 +56,6 @@
   box-sizing:border-box;
   color: black;
 }
-.ui-switch {
-  position: relative;
-  display: table;
-}
-.ui-switch .switch-button-outside {
-  position: absolute;
-}
-.ui-switch .switch-button-inside {
-  display: block;
-}
-.ui-switch .switch-button-transparent {
-  opacity: 0;
-}
-.ui-switch .switch-inner-active {
-  position: absolute;
-}
 /* Need to add !important below, because these classes are added before jqm enhancement */
 .ui-colorpickerbutton-input {
     max-width: 70px;
@@ -153,19 +137,53 @@
   width: 1.6em;
   height: 1.6em;
   -webkit-border-radius: 1em;
+  -moz-border-radius: 1em;
+  border-radius: 1em;
 }
 .ui-processingcircle-container .ui-processingcircle {
   position: relative;
   -webkit-border-radius: 0.2em;
+  -moz-border-radius: 0.2em;
+  border-radius: 0.2em;
   left: 0.7000000000000001em;
   top: -0.19999999999999996em;
   width: 0.2em;
   height: 1em;
   -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
 }
 .ui-processingcircle-container .ui-processingcircle .ui-processingcircle-hand {
   width: 99%;
   height: 99%;
+}
+.ui-processingcircle-spin {
+  -webkit-transform: rotate(360deg);
+  -webkit-animation-name: processingcircle-spin-webkit;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-transform: rotate(360deg);
+  -moz-animation-name: processingcircle-spin-moz;
+  -moz-animation-duration: 1s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+}
+@-webkit-keyframes processingcircle-spin-webkit {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes processingcircle-spin-moz {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
 }
 .jquery-todons-colorwidget-clrlib-hue-gradient {
     background: rgb(255,0,0); /* Old browsers */
@@ -655,6 +673,22 @@
   height: 59px;
   margin: 7px 14px 7px 4px;
   border: 1px solid #a3a3a3;
+}
+.ui-toggleswitch {
+  position: relative;
+  display: table;
+}
+.ui-toggleswitch .toggleswitch-button-outside {
+  position: absolute;
+}
+.ui-toggleswitch .toggleswitch-button-inside {
+  display: block;
+}
+.ui-toggleswitch .toggleswitch-button-transparent {
+  opacity: 0;
+}
+.ui-toggleswitch .toggleswitch-inner-active {
+  position: absolute;
 }
 /* Own CSS */
 .ui-progressbar {

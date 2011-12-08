@@ -56,11 +56,12 @@
        	equal(valuePb.progressbar('value'), 15);
         // testing markup
        	//console.log(valuePb);
-       	ok(valuePb.hasClass('ui-progressbar'));
-       	ok(valuePb.hasClass('ui-barImg'));
-       	ok(valuePb.hasClass('ui-boxImg'));
+       	ok(valuePb.find('.ui-progressbar'));
+       	ok(valuePb.find('.ui-barImg'));
+       	ok(valuePb.find('.ui-boxImg'));
        	var maxValue = valuePb.progressbar('option', 'max');
-       	equal(valuePb.find('ui-barImg').css('width'), 25/maxValue);
+     
+       	equal( parseInt(valuePb.find('.ui-barImg').css('width')) / parseInt(valuePb.find('.ui-boxImg').css('width')) , 15/maxValue);
        	
        	start();
        }
