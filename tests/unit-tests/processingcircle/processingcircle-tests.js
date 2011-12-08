@@ -40,7 +40,8 @@
         ok(pc.processingcircle('isRunning'), "should be running after create");
 
         // 6: check spin class on circle
-        ok(pc.find('.ui-processingcircle').hasClass('spin'));
+        ok(pc.find('.ui-processingcircle').hasClass('ui-processingcircle-spin'),
+           'should have spin class after create');
 
         // (+1 stop event): test stop
         pc.processingcircle('stop');
@@ -49,7 +50,8 @@
         ok(!pc.processingcircle('isRunning'), "should not be running after stop()");
 
         // 8: check spin class is gone
-        ok(!pc.find('.ui-processingcircle').hasClass('spin'));
+        ok(!pc.find('.ui-processingcircle').hasClass('ui-processingcircle-spin'),
+           'should not have spin class after stop()');
 
         // test refresh
         pc.processingcircle('refresh');
@@ -58,7 +60,8 @@
         ok(pc.processingcircle('isRunning'), "should be running after refresh()");
 
         // 10: check spin class on circle
-        ok(pc.find('.ui-processingcircle').hasClass('spin'));
+        ok(pc.find('.ui-processingcircle').hasClass('ui-processingcircle-spin'),
+           'should have spin class after refresh()');
 
         // (+1 stop event) test destroy
         pc.processingcircle('destroy');
