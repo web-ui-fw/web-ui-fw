@@ -35,7 +35,7 @@
 // element inside a page. Alternatively, call switch()
 // on an element, like this :
 //
-//     $("#myswitch").switch();
+//     $("#myswitch").toggleswitch();
 // where the html might be :
 //     <div id="myswitch"></div>
 //
@@ -48,21 +48,21 @@
 
 (function($, undefined) {
 
-$.widget("todons.switch", $.todons.widgetex, {
+$.widget("todons.toggleswitch", $.todons.widgetex, {
     options: {
         checked: true,
-        initSelector: ":jqmData(role='switch')"
+        initSelector: ":jqmData(role='toggleswitch')"
     },
 
     _htmlProto: {
         ui: {
-            outer:            "#switch",
-            normalBackground: "#switch-inner-normal",
-            activeBackground: "#switch-inner-active",
-            tButton:          "#switch-button-t",
-            fButton:          "#switch-button-f",
-            realButton:       "#switch-button-outside-real",
-            refButton:        "#switch-button-outside-ref"
+            outer:            "#toggleswitch",
+            normalBackground: "#toggleswitch-inner-normal",
+            activeBackground: "#toggleswitch-inner-active",
+            tButton:          "#toggleswitch-button-t",
+            fButton:          "#toggleswitch-button-f",
+            realButton:       "#toggleswitch-button-outside-real",
+            refButton:        "#toggleswitch-button-outside-ref"
         }
     },
 
@@ -93,9 +93,9 @@ $.widget("todons.switch", $.todons.widgetex, {
     _realize: function() {
         this._ui.realButton
             .offset(this._ui[(this.options.checked ? "t" : "f") + "Button"].offset())
-            .removeClass("switch-button-transparent");
-        this._ui.activeBackground.find("a").addClass("switch-button-transparent");
-        this._ui.normalBackground.find("a").addClass("switch-button-transparent");
+            .removeClass("toggleswitch-button-transparent");
+        this._ui.activeBackground.find("a").addClass("toggleswitch-button-transparent");
+        this._ui.normalBackground.find("a").addClass("toggleswitch-button-transparent");
         this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
         this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
 
@@ -122,9 +122,9 @@ $.widget("todons.switch", $.todons.widgetex, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.switch.prototype.options.initSelector, e.target)
+    $($.todons.toggleswitch.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
-        .switch();
+        .toggleswitch();
 });
 
 })(jQuery);

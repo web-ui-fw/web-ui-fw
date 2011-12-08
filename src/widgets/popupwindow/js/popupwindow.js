@@ -125,37 +125,33 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     _realSetTheme: function(dst, theme) {
-        var currentTheme = (dst.attr("class") || "")
-                .split(" ")
-                .filter(function(el, idx, ar) {
-	                return el.match(/^ui-body-[a-z]$/);
-                }),
+        var classes = (dst.attr("class") || "").split(" "),
             alreadyAdded = true,
-            ret = false;
+            currentTheme = null;
 
-
-        currentTheme = ((currentTheme.length > 0) ? currentTheme[0].match(/^ui-body-([a-z])/)[1] : null);
+        while (classes.length > 0) {
+            currentTheme = classes.pop();
+            if (currentTheme.match(/^ui-body-[a-z]$/))
+                break;
+            else
+                currentTheme = null;
+        }
 
         dst.removeClass("ui-body-" + currentTheme);
         if ((theme || "").match(/[a-z]/))
             dst.addClass("ui-body-" + theme);
-        ret = true;
-
-        return ret;
     },
 
     _setTheme: function(value) {
-        if (this._realSetTheme(this.element, value)) {
-            this.options.theme = value;
-            this.element.attr("data-" + ($.mobile.ns || "") + "theme", value);
-        }
+        this._realSetTheme(this.element, value);
+        this.options.theme = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "theme", value);
     },
 
     _setOverlayTheme: function(value) {
-        if (this._realSetTheme(this._ui.container, value)) {
-            this.options.overlayTheme = value;
-            this.element.attr("data-" + ($.mobile.ns || "") + "overlay-theme", value);
-        }
+        this._realSetTheme(this._ui.container, value);
+        this.options.overlayTheme = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "overlay-theme", value);
     },
 
     _setShadow: function(value) {

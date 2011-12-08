@@ -30,7 +30,7 @@
 
 $.widget( "todons.triangle", $.todons.widgetex, {
     options: {
-        class: "",
+        extraClass: "",
         offset: 50,
         color: undefined,
         location: "top",
@@ -38,7 +38,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     },
 
     _create: function() {
-        var triangle = $("<div></div>", {class: "ui-triangle"});
+        var triangle = $("<div></div>", {"class" : "ui-triangle"});
 
         $.extend(this, {
             _realized: false,
@@ -85,10 +85,10 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
     },
 
-    _setClass: function(value) {
+    _setExtraClass: function(value) {
         this._triangle.addClass(value);
-        this.options.class = value;
-        this.element.attr("data-" + ($.mobile.ns || "") + "class", value);
+        this.options.extraClass = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "extra-class", value);
     },
 
     _setColor: function(value) {

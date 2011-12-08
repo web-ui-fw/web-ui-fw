@@ -67,13 +67,9 @@ $.todons.colorwidget.clrlib = {
     HTMLToRGB: function(clr_str) {
         clr_str = (('#' == clr_str.charAt(0)) ? clr_str.substring(1) : clr_str);
 
-        return ([
-            clr_str.substring(0, 2),
-            clr_str.substring(2, 4),
-            clr_str.substring(4, 6)
-            ].map(function(val) {
-                return parseInt(val, 16) / 255.0;
-            }));
+        return [ parseInt(clr_str.substring(0, 2), 16) / 255.0,
+                 parseInt(clr_str.substring(2, 4), 16) / 255.0,
+                 parseInt(clr_str.substring(4, 6), 16) / 255.0 ];
     },
 
     // Converts rgb array to html color string.
@@ -85,16 +81,15 @@ $.todons.colorwidget.clrlib = {
     //
     // Returns: string of the form "#aabbcc"
     RGBToHTML: function(rgb) {
-        return ("#" +
-            rgb.map(function(val) {
-                      var ret = val * 255,
-                          theFloor = Math.floor(ret);
+        var ret = "#", val, theFloor;
+        for (var Nix in rgb) {
+            val = rgb[Nix] * 255;
+            theFloor = Math.floor(val);
+            val = ((val - theFloor > 0.5) ? (theFloor + 1) : theFloor);
+            ret = ret + (((val < 16) ? "0" : "") + (val & 0xff).toString(16));
+        }
 
-                      ret = ((ret - theFloor > 0.5) ? (theFloor + 1) : theFloor);
-                      ret = (((ret < 16) ? "0" : "") + (ret & 0xff).toString(16));
-                      return ret;
-                  })
-               .join(""));
+        return ret;
     },
 
     // Converts hsl to rgb.

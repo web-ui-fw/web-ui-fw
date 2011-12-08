@@ -156,7 +156,7 @@ function getProtoPath() {
 
 $.widget("todons.widgetex", $.mobile.widget, {
     _createWidget: function() {
-        $.todons.widgetex.loadPrototype.call(this, this.__proto__.namespace + "." + this.__proto__.widgetName);
+        $.todons.widgetex.loadPrototype.call(this, this.namespace + "." + this.widgetName);
         $.mobile.widget.prototype._createWidget.apply(this, arguments);
     },
 

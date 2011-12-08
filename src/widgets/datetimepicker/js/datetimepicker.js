@@ -426,7 +426,7 @@
 
             $(input).css("display", "none");
             $(input).after(this._ui.container);
-            this._ui.triangle.triangle({"class" : "selector-triangle-color"});
+            this._ui.triangle.triangle({extraClass : "selector-triangle-color"});
             this.data.parentInput = input;
 
             // We must display either time or date: if the user set both to
