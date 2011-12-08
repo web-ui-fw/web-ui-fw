@@ -173,7 +173,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
     _setTransition: function(value) {
         this._ui.container
-                .removeClass(this.options.transition)
+                .removeClass((this.options.transition || ""))
                 .addClass(value);
         this.options.transition = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "transition", value);
