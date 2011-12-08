@@ -53,11 +53,13 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         ui: {
             clrpicker: "#colorpicker",
             hs: {
+                gradient: "#colorpicker-hs-sat-gradient",
                 eventSource: "[data-event-source='hs']",
                 valMask:   "#colorpicker-hs-val-mask",
                 selector:  "#colorpicker-hs-selector"
             },
             l: {
+                gradient: "#colorpicker-l-gradient",
                 eventSource: "[data-event-source='l']",
                 selector:  "#colorpicker-l-selector"
             }
@@ -67,6 +69,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
+        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
+        if ($.mobile.browser.ie) {
+            this._ui.hs.gradient.css("background", "none");
+            this._ui.l.gradient.css("background", "none");
+        }
         this.element.append(this._ui.clrpicker);
 
         $.extend( self, {
