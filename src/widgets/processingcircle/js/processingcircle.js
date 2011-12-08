@@ -86,14 +86,14 @@ $.widget("todons.processingcircle", $.mobile.widget, {
 
     refresh: function () {
         if (!this._isRunning) {
-            this.circle.addClass('spin');
+            this.circle.addClass('ui-processingcircle-spin');
             this._isRunning = true;
         }
     },
 
     stop: function () {
         if (this._isRunning) {
-            this.circle.removeClass('spin');
+            this.circle.removeClass('ui-processingcircle-spin');
             this.element.trigger('stop');
             this._isRunning = false;
         }
