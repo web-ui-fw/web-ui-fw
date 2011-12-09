@@ -63,8 +63,12 @@
             if (newValue === undefined) {
                 return this.currentValue;
             }
-
-            this.currentValue = parseInt(newValue);
+			
+			// normalize invalid value
+			if (typeof newValue !== "number" || parseInt(newValue) < 0 )
+				newValue = 0;
+			newValue = ( newValue > this.options.max) ? this.options.max : newValue ;	
+            this.currentValue = newValue;
 
             if (this.oldValue !== this.currentValue) {
                 this.delta = this.currentValue - this.oldValue;
