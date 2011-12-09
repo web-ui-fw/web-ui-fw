@@ -122,17 +122,17 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
           this._ui.volumeImage.bind("vmousedown", function(e) {
               self._dragging = true;
               self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-              event.preventDefault();
+              e.preventDefault();
           });
 
           this._ui.volumeImage.bind("vmousemove", function(e) {
               if (self._dragging) {
                   self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-                  event.preventDefault();
+                  e.preventDefault();
               }
           });
 
-          $( document ).bind( "vmouseup", function( event ) {
+          $( document ).bind( "vmouseup", function( e ) {
               if ( self._dragging )
                   self._dragging = false;
           });
@@ -142,16 +142,16 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                   var maxVolume = self._maxVolume(),
                       newVolume = -1;
 
-                  switch(event.keyCode) {
+                  switch(e.keyCode) {
                       case $.mobile.keyCode.UP:
                       case $.mobile.keyCode.DOWN:
                       case $.mobile.keyCode.HOME:
                       case $.mobile.keyCode.END:
-                          event.preventDefault();
+                          e.preventDefault();
                           break;
                   }
 
-                  switch(event.keyCode) {
+                  switch(e.keyCode) {
                       case $.mobile.keyCode.UP:
                           newVolume = Math.min(self.options.volume + 1, maxVolume);
                           break;
