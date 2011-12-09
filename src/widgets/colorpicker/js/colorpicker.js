@@ -53,6 +53,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         ui: {
             clrpicker: "#colorpicker",
             hs: {
+                hueGradient: "#colorpicker-hs-hue-gradient",
                 gradient: "#colorpicker-hs-sat-gradient",
                 eventSource: "[data-event-source='hs']",
                 valMask:   "#colorpicker-hs-val-mask",
@@ -73,6 +74,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         if ($.mobile.browser.ie) {
             this._ui.hs.gradient.css("background", "none");
             this._ui.l.gradient.css("background", "none");
+            $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
         }
         this.element.append(this._ui.clrpicker);
 
