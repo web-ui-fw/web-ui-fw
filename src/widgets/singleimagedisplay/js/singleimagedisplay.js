@@ -78,6 +78,8 @@
                 this.imageParent.append(this.image);
                 this.image.show();
             }
+            console.log("MAXMAXMAX/ready");
+            this.element.trigger( "ready" );
         },
 
         _imageErrorHandler: function () {
@@ -130,10 +132,16 @@
                 self.usingNoContents = false;
                 self.resize( self.image );
                 self.image.show();
+            console.log("MAXMAXMAX/ready");
+                self.element.trigger( "ready" );
             });
 
             // when the image fails to load, substitute noContent
-            this.image.error( function() { self._imageErrorHandler() } );
+            this.image.error( function() {
+                self._imageErrorHandler();
+            console.log("MAXMAXMAX/ready");
+                self.element.trigger( "ready" );
+            } );
 
             // set the src for the image
             this._setImgSrc();
@@ -153,6 +161,8 @@
                     } else {
                         self.resize( self.image );
                     }
+            console.log("MAXMAXMAX/ready");
+                self.element.trigger( "ready" );
                 });
             }
 
@@ -163,6 +173,8 @@
                 } else {
                     self.resize( self.image );
                 }
+            console.log("MAXMAXMAX/ready");
+                self.element.trigger( "ready" );
             });
         },
 
