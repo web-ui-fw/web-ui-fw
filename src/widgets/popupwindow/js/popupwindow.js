@@ -306,7 +306,10 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                     .clone()
                     .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
                     [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this._ui.container)
-                    .triangle({location: coords.arrowLocation, offset: "50%"});
+                    .triangle({
+                        location: coords.arrowLocation, offset: "50%",
+                        color: this._ui.container.css("background-color")
+                    });
 
             this._ui.screen
                 .height($(document).height())
