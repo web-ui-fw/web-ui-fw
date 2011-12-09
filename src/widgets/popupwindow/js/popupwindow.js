@@ -314,6 +314,8 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
             if (this.options.fade)
                 this._ui.screen.animate({opacity: 0.5}, "fast");
+            else
+                this._ui.screen.css({opacity: 0.0});
 
             var origOverflow = { x: $("body").css("overflow-x"), y: $("body").css("overflow-y") };
             $("body").css({"overflow-x" : "hidden", "overflow-y" : "hidden" });
