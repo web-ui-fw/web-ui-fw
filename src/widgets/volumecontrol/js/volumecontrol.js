@@ -99,6 +99,10 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 return coords.y;
             };
 
+          // Crutches for IE: It doesn't understand the background, so it uses the filter to set the background, but if
+          // the backgorund is also set, it breaks the filter, so set it to "none"
+          if ($.mobile.browser.ie)
+            this._ui.container.css("background", "none");
           this._ui.bar.remove();
           this._ui.container.insertBefore(this.element)
                             .popupwindow({overlayTheme: "", fade: false, shadow: false});
