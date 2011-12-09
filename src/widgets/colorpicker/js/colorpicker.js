@@ -54,15 +54,15 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             clrpicker: "#colorpicker",
             hs: {
                 hueGradient: "#colorpicker-hs-hue-gradient",
-                gradient: "#colorpicker-hs-sat-gradient",
+                gradient:    "#colorpicker-hs-sat-gradient",
                 eventSource: "[data-event-source='hs']",
-                valMask:   "#colorpicker-hs-val-mask",
-                selector:  "#colorpicker-hs-selector"
+                valMask:     "#colorpicker-hs-val-mask",
+                selector:    "#colorpicker-hs-selector"
             },
             l: {
-                gradient: "#colorpicker-l-gradient",
+                gradient:    "#colorpicker-l-gradient",
                 eventSource: "[data-event-source='l']",
-                selector:  "#colorpicker-l-selector"
+                selector:    "#colorpicker-l-selector"
             }
         }
     },
@@ -141,7 +141,9 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _handleMouseMove: function(event, containerStr, isSelector, coords) {
-        if (this.dragging) {
+        if (this.dragging &&
+            !(( this.draggingHS && containerStr === "l") || 
+              (!this.draggingHS && containerStr === "hs"))) {
             coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(event));
 
             if (this.draggingHS) {
