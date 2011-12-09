@@ -84,7 +84,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         // pixel values
         if ($.mobile.browser.ie)
             if (this._realized && typeof value === "string" && value.substring(value.length - 1) === "%")
-                value = this.element.width() / 2 - this.element.height();
+                value = (this.element.width() * parseInt(value)) / 100;
         this._triangle.css("left", value);
         this.options.offset = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
