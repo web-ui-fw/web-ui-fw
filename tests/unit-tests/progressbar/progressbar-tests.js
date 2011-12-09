@@ -62,11 +62,11 @@
             var boxWidth = parseInt(valuePb.find('.ui-boxImg').css('width'));
             equal(Math.round(barWidth / boxWidth * 100), 15 / maxValue * 100);
 
-			valuePb.progressbar('value', -5);
-			equal(valuePb.progressbar('value'), 0);
-			valuePb.progressbar('value', 110);
-			equal(valuePb.progressbar('value'), 100);
-			
+            valuePb.progressbar('value', -5);
+            equal(valuePb.progressbar('value'), 0);
+            valuePb.progressbar('value', 110);
+            equal(valuePb.progressbar('value'), 100);
+
             start();
         }]);
     });
