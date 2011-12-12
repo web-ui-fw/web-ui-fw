@@ -25,8 +25,6 @@
         function makeSetter() {
             switch(typeof $.todons[widgetType].prototype.options[key]) {
                 case "boolean":
-                    console.log("theWidget[" + widgetType + "]('option', " + key + "): ");
-                    console.log(theWidget[widgetType]("option", key));
                     return {
                         html: $("<input/>", {type: "checkbox"}),
                         widget: {
@@ -59,7 +57,7 @@
     }
 
     function createWidget(widgetType, inputType) {
-        var theWidget;
+        var theWidget, elems;
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
             $("#widget-container").html(
@@ -72,8 +70,25 @@
         else
             theWidget = $("<div></div>").appendTo("#widget-container")[widgetType]();
         $("#widget-container").removeAttr("style").css("border", "1px dashed black");
-        $("#widget-src").html($("<pre><code>").text(formatHTML($("#widget-container").html())));
-        $("#options-list");
+
+        elems = $.todons.widgetex.assignElements(
+            $("<div>" +
+                "<div id='widget-src-inner' class='widget-src'>" +
+                    "<table>" +
+                        "<tr><td><pre><code id='widget-src-dst'></code></pre></td></tr>" +
+                    "</table>" +
+                "</div>" +
+            "</div>"),
+            {
+                toplevel: "#widget-src-inner",
+                dst: "#widget-src-dst"
+            }
+        );
+
+        $("#widget-src").append(elems.toplevel);
+        elems.dst.text(formatHTML($("#widget-container").html()));
+        elems.toplevel.scrollview({direction: null});
+
         $.each($.todons[widgetType].prototype.options, function(key) {
             createOption(widgetType, theWidget, key);
         });
