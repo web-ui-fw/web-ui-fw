@@ -236,6 +236,20 @@ $.todons.widgetex.setValue = function(widget, newValue) {
     }
 };
 
+$.todons.widgetex.assignElements = function(proto, obj) {
+    var ret = {};
+    for (var key in obj)
+        if ((typeof obj[key]) === "string") {
+            ret[key] = proto.find(obj[key]);
+            if (obj[key].match(/^#/))
+                ret[key].removeAttr("id");
+        }
+        else
+        if ((typeof obj[key]) === "object")
+            ret[key] = $.todons.widgetex.assignElements(proto, obj[key]);
+    return ret;
+}
+
 $.todons.widgetex.loadPrototype = function(widget, ui) {
     var ar = widget.split(".");
 
@@ -283,22 +297,8 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
             // replace the selectors with the selected elements from a copy of the HTML prototype
             if ($[namespace][widgetName].prototype._htmlProto.ui !== undefined) {
 	        // Assign the relevant parts of the proto
-                function assignElements(proto, obj) {
-                    var ret = {};
-                    for (var key in obj)
-                        if ((typeof obj[key]) === "string") {
-                            ret[key] = proto.find(obj[key]);
-                            if (obj[key].match(/^#/))
-                                ret[key].removeAttr("id");
-                        }
-                        else
-                        if ((typeof obj[key]) === "object")
-                            ret[key] = assignElements(proto, obj[key]);
-                    return ret;
-                }
-
                 $.extend(this, {
-                    _ui: assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
+                    _ui: $.todons.widgetex.assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
                 });
             }
         }
