@@ -16,8 +16,11 @@ and that means:
     http://web-ui-fw.github.com/web-ui-fw/web-ui-fw-libs.js
     http://web-ui-fw.github.com/web-ui-fw/web-ui-fw-widget.css
 
-Of course you will need JQuery Mobile (currenly, version 1.0) and JQuery
+Of course you will need JQuery Mobile (currently, version 1.0) and JQuery
 (currently, version 1.6.4).
+
+Please see the README file for some boilerplate on how to use web-ui-fw
+within a jQuery Mobile project.
 
 
 Installing less
