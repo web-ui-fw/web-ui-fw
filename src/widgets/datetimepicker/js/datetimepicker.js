@@ -61,7 +61,6 @@
 (function($, window, undefined) {
     $.widget("todons.datetimepicker", $.todons.widgetex, {
         options: {
-            date: null,
             showDate: true,
             showTime: true,
             header: "Set time",
@@ -72,15 +71,16 @@
             am: "AM",
             pm: "PM",
             twentyfourHours: false,
+            date: null,
             animationDuration: 500,
             initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
 
-        _initDateTime: function() {
-            var now = (null === this.options.date)
+        _initDateTime: function(value) {
+            var parsedDate = Date.parse(value),
+                now = (isNaN(parsedDate))
                     ? new Date()
-                    : new Date(Date.parse(this.options.date));
-
+                    : new Date(parsedDate);
             this.data.year    = now.getFullYear();
             this.data.month   = now.getMonth();
             this.data.day     = now.getDate();
@@ -124,6 +124,12 @@
         },
 
         _initDateTimeDivs: function(ui) {
+            // We must display either time or date: if the user set both to
+            // false, we override that.
+            if (!this.options.showDate && !this.options.showTime) {
+                this.options.showDate = true;
+            }
+
             if (this.options.showDate && this.options.showTime) {
                 ui.main.attr("class", "ui-grid-a");
                 if (!this.options.twentyfourHours) {
@@ -332,6 +338,13 @@
             owner.text(text);
         },
 
+        _setDate: function(value) {
+            this._initDateTime(value);
+            this._initDateTimeDivs(this._ui);
+            this.options.date = this.getValue();
+            this._setValue(this.options.date);
+        },
+
         _populateSelector: function(selector, owner, klass, values,
                                     parseFromFunc, parseToFunc,
                                     dest, prop, ui) {
@@ -400,7 +413,14 @@
 
         _value: {
             attr: "data-" + ($.mobile.ns || "") + "date",
-            signal: "date-changed"
+            signal: "date-changed",
+            toString: function(val) {return val.toString();}
+        },
+
+        _setHeader: function(value) {
+            this._ui.header.text(value);
+            this.options.header = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "header", value);
         },
 
         _create: function() {
@@ -434,18 +454,6 @@
             $(input).after(this._ui.container);
             this._ui.triangle.triangle({extraClass : "selector-triangle-color"});
             this.data.parentInput = input;
-
-            // We must display either time or date: if the user set both to
-            // false, we override that.
-            if (!this.options.showDate && !this.options.showTime) {
-                this.options.showDate = true;
-            }
-
-            this._initDateTime();
-
-            this._ui.header.text(this.options.header);
-
-            this._initDateTimeDivs(this._ui);
 
             this._ui.container.bind("vclick", function () {
                 obj._hideDataSelector(self._ui.selector);
