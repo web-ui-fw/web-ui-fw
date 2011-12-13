@@ -70,6 +70,7 @@ third_party_widgets: init
 	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
 	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js; \
 	if test "x${DEBUG}x" = "xyesx"; then \
+		mkdir -p $(CURDIR)/dist; \
 		cp -a ${FW_LIBS_JS} $(CURDIR)/dist/; \
 	fi
 
