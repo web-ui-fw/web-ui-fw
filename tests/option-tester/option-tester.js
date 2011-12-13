@@ -92,6 +92,9 @@
                 "</form>"
             );
             theWidget = $("#testInput")[widgetType]();
+            theWidget.bind("change", function() {
+                updateWidgetSrc();
+            });
         }
         else
             theWidget = $("<div></div>").appendTo("#widget-container")[widgetType]();
