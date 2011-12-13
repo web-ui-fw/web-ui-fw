@@ -140,6 +140,7 @@
             this._initDate(ui);
             this._initTime(ui);
             ui.ampm.text(this._parseAmPmValue(this.data.pm));
+            ui.ampm[this.options.twentyfourHours ? "hide" : "show"]();
         },
 
         _makeTwoDigitValue: function(val) {
@@ -334,8 +335,21 @@
                     this._ui.date.day.text(newDay);
                 }
             }
+            else
+            if (field === "hours") {
+                if (this.options.twentyfourHours) {
+                    this.data.pm = (value > 11);
+                    this._ui.ampm.text(this._parseAmPmValue(this.data.pm));
+                }
+            }
             this.data[field] = value;
             owner.text(text);
+        },
+
+        _setTwentyfourHours: function(value) {
+            this.options.twentyfourHours = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "twentyfour-hours", value);
+            this._setDate(this.options.date);
         },
 
         _setDate: function(value) {
@@ -366,7 +380,8 @@
                         scrollable.view.find(item.selector).removeClass("current");
                         $(this).toggleClass("current");
                         obj._hideDataSelector(selector);
-                        self._setValue(obj.getValue());
+                        obj.options.date = obj.getValue();
+                        self._setValue(obj.options.date);
                     }
                 }).text(values[i]);
                 if (values[i] === destValue) {
