@@ -39,7 +39,7 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     },
 
     _setColor: function(value) {
-        if (value.match(/#[0-9A-Fa-f]{6}/) && (this.options.color != value)) {
+        if ((value + "").match(/#[0-9A-Fa-f]{6}/) && (this.options.color != value)) {
             this.options.color = value;
             this._setValue(value);
             return true;
