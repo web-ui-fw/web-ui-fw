@@ -5,15 +5,14 @@
         var ret = "", nIndent = -4, startIdx = 0, snip = "";
         for (var idx = str.indexOf(">", 0); idx != -1 ; idx = str.indexOf(">", ++idx)) {
             snip = (str.substring(startIdx, idx) + ">" + "\n").replace(/^[ \t]*/, "");
-            if (snip.substring(0, 2) === "</")
-                nIndent -= 4;
-            else
-            if (snip.substring(0, 1) === "<")
+            if (snip.substring(0, 1) === "<" && snip.substring(0, 2) !== "</")
                 nIndent += 4;
             for (var Nix = 0 ; Nix < nIndent ; Nix++)
                 ret = ret + " ";
             ret = ret + snip;
             startIdx = idx + 1;
+            if (snip.substring(0, 2) === "</")
+                nIndent -= 4;
         }
 
         return ret;
@@ -32,17 +31,20 @@
                             options: {
                                 checked: theWidget[widgetType]("option", key)
                             }
-                        }
+                        },
+                        getValue: function(elem) {return elem.toggleswitch("option", "checked");}
                     };
 
                 case "integer":
                     return {
-                        html: $("<input/>", {type: "number"})
+                        html: $("<input/>", {type: "number"}),
+                        getValue: function(elem) {return elem.val();}
                     };
 
                 default:
                     return { 
-                        html: $("<input/>", {type: "text", value: typeof $.todons[widgetType].prototype.options[key], id: key + "-option"}),
+                        html: $("<input/>", {type: "text", value: $.todons[widgetType].prototype.options[key], id: key + "-option"}),
+                        getValue: function(elem) {return elem.val();}
                     };
             }
         }
@@ -54,24 +56,14 @@
             .appendTo(optionsList);
         if (entry.widget !== undefined)
             entry.html[entry.widget.type](entry.widget.options);
+        entry.html.bind("change", function(e) {
+            theWidget[widgetType]("option", key, entry.getValue(entry.html));
+            updateWidgetSrc();
+        });
     }
 
-    function createWidget(widgetType, inputType) {
-        var theWidget, elems;
-        $("#widget-container").empty().css("display", "none");
-        if (inputType !== null) {
-            $("#widget-container").html(
-                "<form action='#' method='get'>" +
-                "   <input type='" + inputType + "' name='testInput' id='testInput'></input>" +
-                "</form>"
-            );
-            theWidget = $("#testInput")[widgetType]();
-        }
-        else
-            theWidget = $("<div></div>").appendTo("#widget-container")[widgetType]();
-        $("#widget-container").removeAttr("style").css("border", "1px dashed black");
-
-        elems = $.todons.widgetex.assignElements(
+    function updateWidgetSrc() {
+        var elems = $.todons.widgetex.assignElements(
             $("<div>" +
                 "<div id='widget-src-inner' class='widget-src'>" +
                     "<table>" +
@@ -85,13 +77,33 @@
             }
         );
 
-        $("#widget-src").append(elems.toplevel);
+        $("#widget-src").empty().append(elems.toplevel);
         elems.dst.text(formatHTML($("#widget-container").html()));
         elems.toplevel.scrollview({direction: null});
+    }
 
+    function createWidget(widgetType, inputType) {
+        var theWidget;
+        $("#widget-container").empty().css("display", "none");
+        if (inputType !== null) {
+            $("#widget-container").html(
+                "<form action='#' method='get'>" +
+                "   <input type='" + inputType + "' name='testInput' id='testInput'></input>" +
+                "</form>"
+            );
+            theWidget = $("#testInput")[widgetType]();
+        }
+        else
+            theWidget = $("<div></div>").appendTo("#widget-container")[widgetType]();
+        $("#widget-container").removeAttr("style");
+        $("#widget-container-cell").addClass("widget-container-cell");
+
+        updateWidgetSrc();
+        $("#options-list").empty();
         $.each($.todons[widgetType].prototype.options, function(key) {
             createOption(widgetType, theWidget, key);
         });
+        $("#option-list-scroller").scrollview("scrollTo", 0, 0);
     }
 
     $(document).bind("pageshow", function() {

@@ -2,3 +2,7 @@
     width: 600px;
     height: 300px;
 }
+
+.widget-container-cell {
+    border: 1px dashed black;
+}
