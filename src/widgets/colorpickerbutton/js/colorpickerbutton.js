@@ -90,7 +90,9 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this._ui.button.insertAfter(this.element);
+        this.element
+            .css("display", "none")
+            .after(this._ui.button);
 
         /* Tear apart the proto */
         this._ui.popup.insertBefore(this.element).popupwindow();

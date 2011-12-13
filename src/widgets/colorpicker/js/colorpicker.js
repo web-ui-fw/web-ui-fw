@@ -76,7 +76,10 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             this._ui.l.gradient.css("background", "none");
             $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
         }
-        this.element.append(this._ui.clrpicker);
+
+        this.element
+            .css("display", "none")
+            .after(this._ui.clrpicker);
 
         $.extend( self, {
             dragging: false,

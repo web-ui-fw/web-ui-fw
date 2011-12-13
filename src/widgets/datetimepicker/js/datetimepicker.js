@@ -466,8 +466,10 @@
             var obj = this;
             var input = this.element;
 
-            $(input).css("display", "none");
-            $(input).after(this._ui.container);
+            $(input)
+                .css("display", "none")
+                .after(this._ui.container);
+
             this._ui.triangle.triangle({extraClass : "selector-triangle-color"});
             this.data.parentInput = input;
 

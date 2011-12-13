@@ -73,8 +73,9 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this._ui.clrpalette.insertAfter(this.element);
-        this.element.css("display", "none");
+        this.element
+            .css("display", "none")
+            .after(this._ui.clrpalette);
 
         this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
             var clr = $(e.target).css("background-color"),
