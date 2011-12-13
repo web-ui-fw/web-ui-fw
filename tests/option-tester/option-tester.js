@@ -18,11 +18,11 @@
         return ret;
     }
 
-    function createOption(widgetType, theWidget, key) {
+    function createOption(ns, widgetType, theWidget, key) {
         var optionsList = $("#options-list"), entry;
 
         function makeSetter() {
-            switch(typeof $.todons[widgetType].prototype.options[key]) {
+            switch(typeof $[ns][widgetType].prototype.options[key]) {
                 case "boolean":
                     return {
                         html: $("<input/>", {type: "checkbox"}),
@@ -43,7 +43,7 @@
 
                 default:
                     return { 
-                        html: $("<input/>", {type: "text", value: $.todons[widgetType].prototype.options[key], id: key + "-option"}),
+                        html: $("<input/>", {type: "text", value: $[ns][widgetType].prototype.options[key], id: key + "-option"}),
                         getValue: function(elem) {return elem.val();}
                     };
             }
@@ -82,7 +82,7 @@
         elems.toplevel.scrollview({direction: null});
     }
 
-    function createWidget(widgetType, inputType) {
+    function createWidget(ns, widgetType, inputType) {
         var theWidget;
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
@@ -100,8 +100,8 @@
 
         updateWidgetSrc();
         $("#options-list").empty();
-        $.each($.todons[widgetType].prototype.options, function(key) {
-            createOption(widgetType, theWidget, key);
+        $.each($[ns][widgetType].prototype.options, function(key) {
+            createOption(ns, widgetType, theWidget, key);
         });
         $("#option-list-scroller").scrollview("scrollTo", 0, 0);
     }
@@ -117,19 +117,33 @@
             chkBoxVal = function(chk) { return chk.next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on") ; },
             mkWidget = function() {
                 var wsVal = widgetSelect.val(),
-                    isVal = inputTypeSelect.val();
+                    isVal = inputTypeSelect.val(),
+                    ar = wsVal.split(".");
 
-                if (isVal === "Choose input type")
-                    isVal = null;
+                if (ar.length === 2) {
 
-                createWidget(wsVal, isVal);
+                    if (isVal === "Choose input type")
+                        isVal = null;
+
+                    createWidget(ar[0], ar[1], isVal);
+                }
             }
 
         $.each($.todons, function(key) {
             var value = $.todons[key];
             if (value.prototype && value.prototype.widgetName) {
                 $("<option/>")
-                    .attr("value", value.prototype.widgetName)
+                    .attr("value", "todons." + value.prototype.widgetName)
+                    .text(value.prototype.widgetName)
+                    .appendTo(widgetSelect);
+            }
+        });
+
+        $.each($.mobile, function(key) {
+            var value = $.mobile[key];
+            if (value.prototype && value.prototype.widgetName) {
+                $("<option/>")
+                    .attr("value", "mobile." + value.prototype.widgetName)
                     .text(value.prototype.widgetName)
                     .appendTo(widgetSelect);
             }
