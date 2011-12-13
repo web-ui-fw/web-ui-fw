@@ -215,7 +215,7 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
 $.todons.widgetex.setValue = function(widget, newValue) {
     if (widget._value !== undefined) {
-        var valueString = widget._value.toString ? widget._value.toString(newValue) : newValue;
+        var valueString = widget._value.makeString ? widget._value.makeString(newValue) : newValue;
 
         widget.element.attr(widget._value.attr, valueString);
         if (widget._value.signal !== undefined)

@@ -430,7 +430,7 @@
         _value: {
             attr: "data-" + ($.mobile.ns || "") + "date",
             signal: "date-changed",
-            toString: function(val) {return val.toString();}
+            makeString: function(val) {return val.toString();}
         },
 
         _setHeader: function(value) {
