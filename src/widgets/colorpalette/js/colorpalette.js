@@ -111,6 +111,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
+            clr = this.options.color;
             var Nix,
                 activeIdx = -1,
                 nChoices = this._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),

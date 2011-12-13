@@ -118,8 +118,8 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this._ui.hsvpicker.hsvpicker("option", "color", clr);
-            this._ui.buttonContents.css("color", clr);
+            this._ui.hsvpicker.hsvpicker("option", "color", this.options.color);
+            this._ui.buttonContents.css("color", this.options.color);
         }
     },
 

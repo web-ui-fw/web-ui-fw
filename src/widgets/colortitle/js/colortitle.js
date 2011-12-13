@@ -71,7 +71,7 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr))
-            this._ui.header.text(clr);
+            this._ui.header.text(this.options.color);
     }
 });
 

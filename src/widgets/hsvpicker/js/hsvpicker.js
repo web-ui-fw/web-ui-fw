@@ -215,7 +215,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsv = $.todons.colorwidget.clrlib.RGBToHSV($.todons.colorwidget.clrlib.HTMLToRGB(clr));
+            this.dragging_hsv = $.todons.colorwidget.clrlib.RGBToHSV($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this._updateSelectors(this.dragging_hsv);
         }
     }

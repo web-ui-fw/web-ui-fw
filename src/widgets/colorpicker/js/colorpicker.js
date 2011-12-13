@@ -200,7 +200,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr));
+            this.dragging_hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
             this._updateSelectors(this.dragging_hsl);
         }
