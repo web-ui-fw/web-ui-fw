@@ -215,7 +215,9 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
 $.todons.widgetex.setValue = function(widget, newValue) {
     if (widget._value !== undefined) {
-        widget.element.attr(widget._value.attr, newValue);
+        var valueString = widget._value.toString ? widget._value.toString(newValue) : newValue;
+
+        widget.element.attr(widget._value.attr, valueString);
         if (widget._value.signal !== undefined)
             widget.element.triggerHandler(widget._value.signal, newValue);
         if (widget.element.is("input")) {
@@ -230,7 +232,7 @@ $.todons.widgetex.setValue = function(widget, newValue) {
                     widget.element.removeAttr("checked");
             }
             else
-                widget.element.attr("value", newValue);
+                widget.element.attr("value", valueString);
             widget.element.trigger("change");
         }
     }
