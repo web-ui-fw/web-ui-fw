@@ -140,7 +140,7 @@
             this._initDate(ui);
             this._initTime(ui);
             ui.ampm.text(this._parseAmPmValue(this.data.pm));
-            ui.ampm[this.options.twentyfourHours ? "hide" : "show"]();
+            ui.ampmContainer[this.options.twentyfourHours ? "hide" : "show"]();
         },
 
         _makeTwoDigitValue: function(val) {
@@ -422,6 +422,7 @@
                     separator: "#datetimepicker-time-separator",
                     minutes: "#datetimepicker-time-minutes"
                 },
+                ampmContainer: "#datetimepicker-ampm",
                 ampm: "#datetimepicker-ampm-span"
             }
         },
