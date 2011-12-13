@@ -83,6 +83,7 @@
     }
 
     function createWidget(ns, widgetType, inputType) {
+        console.log("createWidget(" + ns + ", " + widgetType + ", " + inputType + ")");
         var theWidget;
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
@@ -118,14 +119,14 @@
             inputTypeSelect = $("#inputTypeSelect"),
             optionsForm = $("#options"),
             chkBoxVal = function(chk) { return chk.next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on") ; },
-            mkWidget = function() {
+            mkWidget = function(isInput) {
                 var wsVal = widgetSelect.val(),
                     isVal = inputTypeSelect.val(),
                     ar = wsVal.split(".");
 
                 if (ar.length === 2) {
 
-                    if (isVal === "Choose input type")
+                    if (isVal === "Choose input type" || !isInput)
                         isVal = null;
 
                     createWidget(ar[0], ar[1], isVal);
@@ -156,17 +157,26 @@
         widgetSelect
             .selectmenu("refresh", true)
             .bind("change", function() {
-                mkWidget();
+                mkWidget(chkBoxVal(makeInput));
                 makeInput.checkboxradio("enable");
             });
 
         inputTypeSelect.selectmenu(chkBoxVal(makeInput) ? "enable" : "disable");
         makeInput.bind("change", function() {
-            inputTypeSelect.selectmenu(chkBoxVal(makeInput) ? "disable" : "enable");
-            inputTypeSelect.selectmenu("open");
+            if (chkBoxVal(makeInput)) {
+                inputTypeSelect.selectmenu("disable");
+                mkWidget(false);
+            }
+            else {
+                inputTypeSelect.selectmenu("enable");
+                if (inputTypeSelect.val() === "Choose input type")
+                    inputTypeSelect.selectmenu("open");
+                else
+                    mkWidget(true);
+            }
         });
         inputTypeSelect.bind("change", function() {
-            mkWidget();
+            mkWidget(chkBoxVal(makeInput));
         });
     });
 })(jQuery);
