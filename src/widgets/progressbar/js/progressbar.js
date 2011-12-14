@@ -63,7 +63,8 @@
             }
 
             // normalize invalid value
-            if (typeof newValue !== "number" || parseInt(newValue) < 0) newValue = 0;
+            if (typeof newValue !== "number" || parseInt(newValue) < 0) 
+                newValue = 0;
             newValue = (newValue > this.options.max) ? this.options.max : newValue;
             this.currentValue = newValue;
 
