@@ -7,13 +7,11 @@
     module("Progressbar");
 
     asyncTest("Should set options from data-options", function () {
-
         $.testHelper.pageSequence([
 
         function () {
             $.testHelper.openPage('#progressbar-test-options');
-        },
-
+        }, 
         function () {
             var $new_page = $('#progressbar-test-options');
 
@@ -38,16 +36,13 @@
     });
 
     asyncTest("Test value", function () {
-
         $.testHelper.pageSequence([
 
         function () {
             $.testHelper.openPage('#progressbar-test-value');
-        },
-
+        }, 
         function () {
             var $new_page = $('#progressbar-test-value');
-
             var valuePb = $new_page.find('#progressbar-test-value-div');
             equal(valuePb.progressbar('value'), 0);
             valuePb.progressbar('value', 15);
@@ -60,7 +55,7 @@
             var maxValue = valuePb.progressbar('option', 'max');
             var barWidth = parseInt(valuePb.find('.ui-barImg').css('width'));
             var boxWidth = parseInt(valuePb.find('.ui-boxImg').css('width'));
-            equal(Math.round(barWidth / boxWidth * 100), 15 / maxValue * 100);
+            equal(Math.round(barWidth / boxWidth * 100), Math.round(15 / maxValue * 100));
 
             valuePb.progressbar('value', -5);
             equal(valuePb.progressbar('value'), 0);
@@ -70,6 +65,4 @@
             start();
         }]);
     });
-
-
 })(jQuery);

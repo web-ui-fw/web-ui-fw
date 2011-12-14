@@ -162,14 +162,19 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
     _init: function() {
         var page = this.element.closest(".ui-page"),
-            self = this;
+            self = this,
+            myOptions = {};
 
         if (page.is(":visible"))
             this._realize();
         else
             page.bind("pageshow", function() { self._realize(); });
 
-        this._setOptions(this.options);
+        $.extend(myOptions, this.options);
+
+        this.options = {};
+
+        this._setOptions(myOptions);
     },
 
     _getCreateOptions: function() {
@@ -350,6 +355,25 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         return false;
     }
 });
+
+// Crutches for IE: it is incapable of multi-stop gradients, so add multiple divs inside the given div, each with a two-
+// point gradient
+if ($.mobile.browser.ie)
+    $.todons.colorwidget.hueGradient = function(div) {
+        var rainbow = ["#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ff0000"];
+        for (var Nix = 0 ; Nix < 6 ; Nix++) {
+            $("<div></div>")
+                .css({
+                    position: "absolute",
+                    width: (100 / 6) + "%",
+                    height: "100%",
+                    left: (Nix * 100 / 6) + "%",
+                    top: "0px",
+                    filter: "progid:DXImageTransform.Microsoft.gradient (startColorstr='" + rainbow[Nix] + "', endColorstr='" + rainbow[Nix + 1] + "', GradientType = 1)"
+                })
+                .appendTo(div);
+        }
+    };
 
 $.todons.colorwidget.clrlib = {
     nearestInt: function(val) {
@@ -1215,7 +1239,7 @@ $("<div><div class='ui-cp-container'>" +
   "      <div class='ui-cp-next ui-calendarbtncommon'><a href='#'></a></div>" +
   "      <div class='ui-cp-month'><h4>Uninitialized</h4></div>" +
   "  </div>" +
-  "  <div class='ui-cp-weekday'> </div>" +
+  "  <div class='ui-cp-weekday'></div>" +
   "</div>" +
   "</div>")
 ,            ui: {
@@ -1561,13 +1585,13 @@ source:
 
 $("<div><div id='colorpicker' class='ui-colorpicker'>" +
   "    <div class='colorpicker-hs-container'>" +
-  "        <div class='colorpicker-hs-mask jquery-todons-colorwidget-clrlib-hue-gradient'></div>" +
-  "        <div class='colorpicker-hs-mask sat-gradient'></div>" +
+  "        <div id='colorpicker-hs-hue-gradient' class='colorpicker-hs-mask jquery-todons-colorwidget-clrlib-hue-gradient'></div>" +
+  "        <div id='colorpicker-hs-sat-gradient' class='colorpicker-hs-mask sat-gradient'></div>" +
   "        <div id='colorpicker-hs-val-mask' class='colorpicker-hs-mask' data-event-source='hs'></div>" +
   "        <div id='colorpicker-hs-selector' class='colorpicker-hs-selector ui-corner-all'></div>" +
   "    </div>" +
   "    <div class='colorpicker-l-container'>" +
-  "        <div class='colorpicker-l-mask l-gradient' data-event-source='l'></div>" +
+  "        <div id='colorpicker-l-gradient' class='colorpicker-l-mask l-gradient' data-event-source='l'></div>" +
   "        <div id='colorpicker-l-selector' class='colorpicker-l-selector ui-corner-all'></div>" +
   "    </div>" +
   "    <div style='clear: both;'></div>" +
@@ -1576,13 +1600,16 @@ $("<div><div id='colorpicker' class='ui-colorpicker'>" +
 ,        ui: {
             clrpicker: "#colorpicker",
             hs: {
+                hueGradient: "#colorpicker-hs-hue-gradient",
+                gradient:    "#colorpicker-hs-sat-gradient",
                 eventSource: "[data-event-source='hs']",
-                valMask:   "#colorpicker-hs-val-mask",
-                selector:  "#colorpicker-hs-selector"
+                valMask:     "#colorpicker-hs-val-mask",
+                selector:    "#colorpicker-hs-selector"
             },
             l: {
+                gradient:    "#colorpicker-l-gradient",
                 eventSource: "[data-event-source='l']",
-                selector:  "#colorpicker-l-selector"
+                selector:    "#colorpicker-l-selector"
             }
         }
     },
@@ -1590,6 +1617,12 @@ $("<div><div id='colorpicker' class='ui-colorpicker'>" +
     _create: function() {
         var self = this;
 
+        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
+        if ($.mobile.browser.ie) {
+            this._ui.hs.gradient.css("background", "none");
+            this._ui.l.gradient.css("background", "none");
+            $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
+        }
         this.element.append(this._ui.clrpicker);
 
         $.extend( self, {
@@ -1655,7 +1688,9 @@ $("<div><div id='colorpicker' class='ui-colorpicker'>" +
     },
 
     _handleMouseMove: function(event, containerStr, isSelector, coords) {
-        if (this.dragging) {
+        if (this.dragging &&
+            !(( this.draggingHS && containerStr === "l") || 
+              (!this.draggingHS && containerStr === "hs"))) {
             coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(event));
 
             if (this.draggingHS) {
@@ -3759,8 +3794,10 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
             if (klass.search("hours") > 0) {
                 var values =
                     range(this.options.twentyfourHours ? 0 : 1,
-                          this.options.twentyfourHours ? 24 : 12)
-                        .map(this._makeTwoDigitValue);
+                          this.options.twentyfourHours ? 24 : 12);
+
+                for (var Nix in values)
+                    values[Nix] = this._makeTwoDigitValue(values[Nix]);
                 /* TODO: 12/24 settings should come from the locale */
                 selectorResult = obj._populateSelector(selector, owner,
                     "hours", values, this._parseDayHoursMinutes,
@@ -3773,7 +3810,10 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
             }
             else
             if (klass.search("minutes") > 0) {
-                var values = range(0, 59).map(this._makeTwoDigitValue);
+                var values = range(0, 59);
+
+                for (var Nix in values)
+                    values[Nix] = this._makeTwoDigitValue(values[Nix]);
                 selectorResult = obj._populateSelector(selector, owner,
                     "minutes", values, this._parseDayHoursMinutes, this._makeTwoDigitValue, obj.data,
                     "minutes", ui);
@@ -3912,7 +3952,8 @@ $.widget("todons.jlayoutadaptor", $.mobile.widget, {
                 var item = obj._createSelectorItem(ui.itemProto.clone(), klass);
                 item.link.bind("vclick", function(e) {
                     if (!self.panning) {
-                        self._updateDate(owner, prop, parseFromFunc(this.text), this.text);
+                        var str = $(this).text();
+                        self._updateDate(owner, prop, parseFromFunc(str), str);
                         scrollable.view.find(item.selector).removeClass("current");
                         $(this).toggleClass("current");
                         obj._hideDataSelector(selector);
@@ -4454,9 +4495,9 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
   "            <a href='#' class='hsvpicker-arrow-btn' data-target='hue' data-location='left' data-inline='true' data-iconpos='notext' data-icon='arrow-l'></a>" +
   "        </div>" +
   "        <div class='hsvpicker-clrchannel-masks-container'>" +
-  "            <div class='hsvpicker-clrchannel-mask' style='background: #ffffff;'></div>" +
+  "            <div class='hsvpicker-clrchannel-mask hsvpicker-clrchannel-mask-white'></div>" +
   "            <div id='hsvpicker-hue-hue' class='hsvpicker-clrchannel-mask jquery-todons-colorwidget-clrlib-hue-gradient'></div>" +
-  "            <div id='hsvpicker-hue-mask-val' class='hsvpicker-clrchannel-mask' style='background: #000000;' data-event-source='hue'></div>" +
+  "            <div id='hsvpicker-hue-mask-val' class='hsvpicker-clrchannel-mask hsvpicker-clrchannel-mask-black' data-event-source='hue'></div>" +
   "            <div id='hsvpicker-hue-selector' class='hsvpicker-clrchannel-selector ui-corner-all'></div>" +
   "        </div>" +
   "        <div class='hsvpicker-arrow-btn-container'>" +
@@ -4469,8 +4510,8 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
   "        </div>" +
   "        <div class='hsvpicker-clrchannel-masks-container'>" +
   "            <div id='hsvpicker-sat-hue' class='hsvpicker-clrchannel-mask'></div>" +
-  "            <div class='hsvpicker-clrchannel-mask  sat-gradient'></div>" +
-  "            <div id='hsvpicker-sat-mask-val' class='hsvpicker-clrchannel-mask' style='background: #000000;' data-event-source='sat'></div>" +
+  "            <div id='hsvpicker-sat-gradient' class='hsvpicker-clrchannel-mask  sat-gradient'></div>" +
+  "            <div id='hsvpicker-sat-mask-val' class='hsvpicker-clrchannel-mask hsvpicker-clrchannel-mask-black' data-event-source='sat'></div>" +
   "            <div id='hsvpicker-sat-selector' class='hsvpicker-clrchannel-selector ui-corner-all'></div>" +
   "        </div>" +
   "        <div class='hsvpicker-arrow-btn-container'>" +
@@ -4482,9 +4523,9 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
   "            <a href='#' class='hsvpicker-arrow-btn' data-target='val' data-location='left' data-inline='true' data-iconpos='notext' data-icon='arrow-l'></a>" +
   "        </div>" +
   "        <div class='hsvpicker-clrchannel-masks-container'>" +
-  "            <div class='hsvpicker-clrchannel-mask' style='background: #ffffff;'></div>" +
+  "            <div class='hsvpicker-clrchannel-mask hsvpicker-clrchannel-mask-white'></div>" +
   "            <div id='hsvpicker-val-hue' class='hsvpicker-clrchannel-mask'></div>" +
-  "            <div class='hsvpicker-clrchannel-mask val-gradient' data-event-source='val'></div>" +
+  "            <div id='hsvpicker-val-gradient' class='hsvpicker-clrchannel-mask val-gradient' data-event-source='val'></div>" +
   "            <div id='hsvpicker-val-selector' class='hsvpicker-clrchannel-selector ui-corner-all'></div>" +
   "        </div>" +
   "        <div class='hsvpicker-arrow-btn-container'>" +
@@ -4502,12 +4543,14 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
                 valMask:     "#hsvpicker-hue-mask-val"
             },
             sat: {
+                gradient:    "#hsvpicker-sat-gradient",
                 eventSource: "[data-event-source='sat']",
                 selector:    "#hsvpicker-sat-selector",
                 hue:         "#hsvpicker-sat-hue",
                 valMask:     "#hsvpicker-sat-mask-val"
             },
             val: {
+                gradient:    "#hsvpicker-val-gradient",
                 eventSource: "[data-event-source='val']",
                 selector:    "#hsvpicker-val-selector",
                 hue:         "#hsvpicker-val-hue"
@@ -4519,6 +4562,13 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
         var self = this;
 
         this.element.append(this._ui.container);
+        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
+        if ($.mobile.browser.ie) {
+            this._ui.sat.gradient.css("background", "none");
+            this._ui.val.gradient.css("background", "none");
+            this._ui.hue.hue.css("background", "none");
+            $.todons.colorwidget.hueGradient(this._ui.hue.hue);
+        }
 
         $.extend(this, {
             dragging_hsv: [ 0, 0, 0],
@@ -4618,7 +4668,10 @@ $("<div><div id='hsvpicker' class='ui-hsvpicker'>" +
             vclr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
         this._ui.hue.selector.css({ left : this._ui.hue.eventSource.width() * hsv[0] / 360, background : clr });
-        this._ui.hue.hue.css("opacity", hsv[1]);
+        if ($.mobile.browser.ie)
+            this._ui.hue.hue.find("*").css("opacity", hsv[1]);
+        else
+            this._ui.hue.hue.css("opacity", hsv[1]);
         this._ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
         this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1],       background : clr });
@@ -6170,7 +6223,7 @@ $("<div><div>" +
 
     _setTransition: function(value) {
         this._ui.container
-                .removeClass(this.options.transition)
+                .removeClass((this.options.transition || ""))
                 .addClass(value);
         this.options.transition = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "transition", value);
@@ -6303,7 +6356,10 @@ $("<div><div>" +
                     .clone()
                     .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
                     [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this._ui.container)
-                    .triangle({location: coords.arrowLocation, offset: "50%"});
+                    .triangle({
+                        location: coords.arrowLocation, offset: "50%",
+                        color: this._ui.container.css("background-color")
+                    });
 
             this._ui.screen
                 .height($(document).height())
@@ -6311,6 +6367,8 @@ $("<div><div>" +
 
             if (this.options.fade)
                 this._ui.screen.animate({opacity: 0.5}, "fast");
+            else
+                this._ui.screen.css({opacity: 0.0});
 
             var origOverflow = { x: $("body").css("overflow-x"), y: $("body").css("overflow-y") };
             $("body").css({"overflow-x" : "hidden", "overflow-y" : "hidden" });
@@ -8207,7 +8265,7 @@ source:
 
 $("<div><div id='toggleswitch' class='ui-toggleswitch'>" +
   "    <div id='toggleswitch-inner-active' class='toggleswitch-inner-active ui-btn ui-btn-corner-all ui-shadow ui-btn-down-c ui-btn-active'>" +
-  "        <a href='#' class='toggleswitch-button-inside'></a>" +
+  "        <a id='toggleswitch-button-t-active' href='#' class='toggleswitch-button-inside'></a>" +
   "        <a href='#' class='toggleswitch-button-inside toggleswitch-button-transparent'></a>" +
   "    </div>" +
   "    <div id='toggleswitch-inner-normal' class='ui-btn ui-btn-corner-all ui-shadow ui-btn-down-c'>" +
@@ -8222,6 +8280,7 @@ $("<div><div id='toggleswitch' class='ui-toggleswitch'>" +
             outer:            "#toggleswitch",
             normalBackground: "#toggleswitch-inner-normal",
             activeBackground: "#toggleswitch-inner-active",
+            initButtons:      "#toggleswitch-button-t-active",
             tButton:          "#toggleswitch-button-t",
             fButton:          "#toggleswitch-button-f",
             realButton:       "#toggleswitch-button-outside-real",
@@ -8241,6 +8300,17 @@ $("<div><div id='toggleswitch' class='ui-toggleswitch'>" +
         this.element.css("display", "none");
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
+        // After adding the button markup, make everything transparent
+        this._ui.normalBackground.find("*").css("opacity", 0.0);
+        this._ui.activeBackground.find("*").css("opacity", 0.0);
+        this._ui.refButton.add(this._ui.refButton.find("*")).css("opacity", 0.0);
+        // ... except the buttons that display the inital position of the switch
+        this._ui.initButtons = this._ui.initButtons
+                .add(this._ui.initButtons.find("*"))
+                .add(this._ui.fButton.find("*"))
+                .add(this._ui.fButton)
+                .css("opacity", 1.0);
+
         $.extend(this, {
             _realized: false
         });
@@ -8254,14 +8324,16 @@ $("<div><div id='toggleswitch' class='ui-toggleswitch'>" +
     },
 
     _realize: function() {
+        var dstOffset = this._ui[(this.options.checked ? "t" : "f") + "Button"].offset()
+        this._ui.refButton.offset(dstOffset);
         this._ui.realButton
-            .offset(this._ui[(this.options.checked ? "t" : "f") + "Button"].offset())
+            .offset(dstOffset)
             .removeClass("toggleswitch-button-transparent");
         this._ui.activeBackground.find("a").addClass("toggleswitch-button-transparent");
         this._ui.normalBackground.find("a").addClass("toggleswitch-button-transparent");
         this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
         this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
-
+        this._ui.initButtons.css("opacity", 0.0);
         this._realized = true;
     },
 
@@ -8368,11 +8440,16 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     _realize: function() {
         this._setBorders();
         this._triangle.css("margin-left", -this.element.height());
-        this._setOffset(this.options.offset, true);
+        this._setOffset(this.options.offset);
         this._realized = true;
     },
 
     _setOffset: function(value) {
+        // Crutches for IE: It does not seem to understand the concept of percentages. Make an effort to convert to
+        // pixel values
+        if ($.mobile.browser.ie)
+            if (this._realized && typeof value === "string" && value.substring(value.length - 1) === "%")
+                value = (this.element.width() * parseInt(value)) / 100;
         this._triangle.css("left", value);
         this.options.offset = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
@@ -8386,6 +8463,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
 
     _setColor: function(value) {
         this._triangle.css("border-bottom-color", value);
+        this._triangle.css("border-top-color", value);
         this.options.color = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
     },
@@ -8484,7 +8562,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
     _htmlProto: {
 source:
 
-$("<div><div class='ui-volumecontrol ui-corner-all' id='volumecontrol'>" +
+$("<div><div class='ui-volumecontrol ui-volumecontrol-background ui-corner-all' id='volumecontrol'>" +
   "    <h1 id='volumecontrol-title'></h1>" +
   "    <div class='ui-volumecontrol-icon'></div>" +
   "    <div id='volumecontrol-indicator' class='ui-volumecontrol-indicator'>" +
@@ -8516,6 +8594,10 @@ $("<div><div class='ui-volumecontrol ui-corner-all' id='volumecontrol'>" +
                 return coords.y;
             };
 
+          // Crutches for IE: It doesn't understand the background, so it uses the filter to set the background, but if
+          // the backgorund is also set, it breaks the filter, so set it to "none"
+          if ($.mobile.browser.ie)
+            this._ui.container.css("background", "none");
           this._ui.bar.remove();
           this._ui.container.insertBefore(this.element)
                             .popupwindow({overlayTheme: "", fade: false, shadow: false});
@@ -8535,17 +8617,17 @@ $("<div><div class='ui-volumecontrol ui-corner-all' id='volumecontrol'>" +
           this._ui.volumeImage.bind("vmousedown", function(e) {
               self._dragging = true;
               self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-              event.preventDefault();
+              e.preventDefault();
           });
 
           this._ui.volumeImage.bind("vmousemove", function(e) {
               if (self._dragging) {
                   self._setVolume((1.0 - yCoord(self._ui.volumeImage, e) / $(this).outerHeight()) * self._maxVolume());
-                  event.preventDefault();
+                  e.preventDefault();
               }
           });
 
-          $( document ).bind( "vmouseup", function( event ) {
+          $( document ).bind( "vmouseup", function( e ) {
               if ( self._dragging )
                   self._dragging = false;
           });
@@ -8555,16 +8637,16 @@ $("<div><div class='ui-volumecontrol ui-corner-all' id='volumecontrol'>" +
                   var maxVolume = self._maxVolume(),
                       newVolume = -1;
 
-                  switch(event.keyCode) {
+                  switch(e.keyCode) {
                       case $.mobile.keyCode.UP:
                       case $.mobile.keyCode.DOWN:
                       case $.mobile.keyCode.HOME:
                       case $.mobile.keyCode.END:
-                          event.preventDefault();
+                          e.preventDefault();
                           break;
                   }
 
-                  switch(event.keyCode) {
+                  switch(e.keyCode) {
                       case $.mobile.keyCode.UP:
                           newVolume = Math.min(self.options.volume + 1, maxVolume);
                           break;
