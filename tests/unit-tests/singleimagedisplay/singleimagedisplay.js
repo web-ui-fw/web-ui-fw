@@ -8,41 +8,73 @@
 
     module("Single Image Display");
 
-    asyncTest("", function () {
+    asyncTest("Should create correct markup", function () {
 
         $.testHelper.pageSequence([
 
             function () {
-                $.testHelper.openPage('#singleimagedisplay-test-0');
+                $.testHelper.openPage('#singleimagedisplay-test-markup');
             },
 
             function () {
-                var $new_page = $('#singleimagedisplay-test-0');
+                var $new_page = $('#singleimagedisplay-test-markup');
+                var $image = $new_page.find('#image0');
+
+                var $div = $image.siblings("div");
 
                 // 1
-                ok($new_page.hasClass('ui-page-active'));
+                ok($div.hasClass('ui-singleimagedisplay-nocontent'), "nocontent div created and classes ok");
+                // 2
+                ok($div.css('display')=="none", "nocontent div hidden ok");
 
-                var image = $new_page.find('#image0');
-                image.bind( "ready", function() {
-                    var width = image.width();
-                    var height = image.height();
+                start();
+            }
+        ]);
+    });
+
+    asyncTest("Should resize images correctly", function () {
+
+        $.testHelper.pageSequence([
+
+            function () {
+                $.testHelper.openPage('#singleimagedisplay-test-resize');
+            },
+
+            function () {
+                var $new_page = $('#singleimagedisplay-test-resize');
+
+                // 3
+                ok($new_page.hasClass('ui-page-active'), "page active");
+            },
+
+            function () {
+                var $new_page = $('#singleimagedisplay-test-resize');
+
+                var $image = $new_page.find('#image1');
+                $image.bind( "init", function() {
+                    var $realImage = $image.siblings("img.ui-singleimagedisplay");
+                    var width = $realImage.width();
+                    var height = $realImage.height();
                     var imageArea = width*height;
                     var aspectRatio = (imageArea==0)?1.0:(width/height);
                     var imageIsPortrait = aspectRatio>1.0;
-                    console.log( "MAXMAXMAX/"+height );
-                    console.log( "MAXMAXMAX/"+width );
-                    console.log( "MAXMAXMAX/"+aspectRatio );
-                    console.log( "MAXMAXMAX/"+imageIsPortrait );
 
-                    // 2: test width/height is same as container
+                    var parentWidth = $image.parent().width();
+                    var parentHeight = $image.parent().height();
+
+                    // 4: test width/height is same as container
                     if ( imageIsPortrait ) {
                         // height is the limit
-                        equal(height, 100);
+                        equal(height, parentHeight, "portrait image height correct");
                     } else {
                         // width is the limit
-                        equal(width, 100);
+                        equal(width, parentWidth, "landscape image width correct");
                     }
+
+                    $image.unbind( "init" );
                 });
+
+                $image.singleimagedisplay();
             },
 
             function () { expect(2); start(); }

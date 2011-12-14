@@ -78,8 +78,6 @@
                 this.imageParent.append(this.image);
                 this.image.show();
             }
-            console.log("MAXMAXMAX/ready");
-            this.element.trigger( "ready" );
         },
 
         _imageErrorHandler: function () {
@@ -122,7 +120,7 @@
             this.element.css('float','left'); // so the cover overlays the other elements
 
             this.cover = ($('<div class="ui-singleimagedisplay-nocontent"/>'));
-            this.cover.hide(); //this.cover.css('visibility','hidden');
+            this.cover.hide();
             this.imageParent.append(this.cover);
 
             this.options.source = this.element.jqmData('src');
@@ -132,15 +130,13 @@
                 self.usingNoContents = false;
                 self.resize( self.image );
                 self.image.show();
-            console.log("MAXMAXMAX/ready");
-                self.element.trigger( "ready" );
+                self.element.trigger( "init" );
             });
 
             // when the image fails to load, substitute noContent
             this.image.error( function() {
                 self._imageErrorHandler();
-            console.log("MAXMAXMAX/ready");
-                self.element.trigger( "ready" );
+                self.element.trigger( "init" );
             } );
 
             // set the src for the image
@@ -149,6 +145,8 @@
             // resize the image immediately if it is visible
             if (self.image.is(':visible')) {
                 self.resize( self.image );
+
+                this.element.trigger( "init" );
             }
 
             // when the page is shown, resize the image
@@ -161,8 +159,7 @@
                     } else {
                         self.resize( self.image );
                     }
-            console.log("MAXMAXMAX/ready");
-                self.element.trigger( "ready" );
+                    self.element.trigger( "init" );
                 });
             }
 
@@ -173,8 +170,7 @@
                 } else {
                     self.resize( self.image );
                 }
-            console.log("MAXMAXMAX/ready");
-                self.element.trigger( "ready" );
+                self.element.trigger( "init" );
             });
         },
 

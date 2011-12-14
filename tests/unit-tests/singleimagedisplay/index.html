@@ -26,13 +26,22 @@
         <ol id="qunit-tests">
         </ol>
 
-        <div data-nstest-role="page" id="singleimagedisplay-test-0">
+        <div data-nstest-role="page" id="singleimagedisplay-test-markup">
 	        <div data-nstest-role="header" data-nstest-position="inline">
 		        <h1>Single Image Display Tests</h1>
 	        </div>
 	        <div data-nstest-role="content">
-                <div id="container0" style="border:10px ridge; width: 100px; height 100px;">
-                    <img id="image0" data-src="images/singleimage_sm_s.jpg" data-role="singleimagedisplay" />
+                <img id="image0" data-nstest-src="images/singleimage_sm_s.jpg" data-nstest-role="singleimagedisplay" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div id="container0" style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image1" data-nstest-src="images/singleimage_sm_s.jpg" />
                 </div>
 	        </div>
         </div>
