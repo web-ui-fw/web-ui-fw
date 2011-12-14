@@ -111,7 +111,6 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
           $.extend (self, {
               _isOpen: false,
               _dragging: false,
-              _realized: false,
               _volumeElemStack: []
           });
 
@@ -173,12 +172,6 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                       self._setVolume(newVolume);
               }
           });
-    },
-
-    _realize: function() {
-        if (!this._realized)
-            this._setVolume(this.options.volume, true);
-        this._realized = true;
     },
 
     _setBasicTone: function(value) {
