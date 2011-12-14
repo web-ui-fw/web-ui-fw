@@ -79,12 +79,13 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
             .css("display", "none")
             .after(this._ui.outer);
 
-        this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
+        this._ui.outer.find("a").buttonMarkup();
 
         // After adding the button markup, make everything transparent
         this._ui.normalBackground.find("*").css("opacity", 0.0);
         this._ui.activeBackground.find("*").css("opacity", 0.0);
         this._ui.refButton.add(this._ui.refButton.find("*")).css("opacity", 0.0);
+        this._ui.realButton.add(this._ui.realButton.find("*")).css("opacity", 0.0);
         // ... except the buttons that display the inital position of the switch
         this._ui.initButtons = this._ui.initButtons
                 .add(this._ui.initButtons.find("*"))
@@ -93,7 +94,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
                 .css("opacity", 1.0);
 
         $.extend(this, {
-            _realized: false
+            _initial: true
         });
 
         this._ui.realButton
@@ -104,34 +105,37 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
             });
     },
 
-    _realize: function() {
-        var dstOffset = this._ui[(this.options.checked ? "t" : "f") + "Button"].offset()
-        this._ui.refButton.offset(dstOffset);
-        this._ui.realButton
-            .offset(dstOffset)
-            .removeClass("toggleswitch-button-transparent");
-        this._ui.activeBackground.find("a").addClass("toggleswitch-button-transparent");
-        this._ui.normalBackground.find("a").addClass("toggleswitch-button-transparent");
-        this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
-        this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
-        this._ui.initButtons.css("opacity", 0.0);
-        this._realized = true;
+    _makeTransparent: function(obj, b) {
+        if ($.mobile.browser.ie)
+            obj.add(obj.find("*")).css("opacity", b ? 0.0 : 1.0);
+        else
+            obj[b ? "addClass" : "removeClass"]("toggleswitch-button-transparent");
     },
 
     _setChecked: function(checked) {
         if (this.options.checked != checked) {
-
-            if (this._realized) {
-                this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
-                this._ui.realButton.animate({"top": this._ui.refButton.position().top});
+            if (this.options.checked === undefined) {
+                this._makeTransparent(this._ui[(checked ? "normal" : "active") + "Background"], true);
             }
+            else {
+                this._ui.initButtons.css("opacity", 0.0);
+                this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
+                this._ui.realButton.offset(this._ui[(checked ? "f" : "t") + "Button"].offset());
 
-            this._ui.normalBackground.animate({"opacity": checked ? 0.0 : 1.0});
-            this._ui.activeBackground.animate({"opacity": checked ? 1.0 : 0.0});
+                if (this._initial) {
+                    this._makeTransparent(this._ui.outer.find("a"), true);
+                    this._makeTransparent(this._ui.realButton, false);
+                    this._ui.realButton.add(this._ui.realButton.find("*")).css("opacity", 1.0);
+                    this._initial = false;
+                }
+
+                this._ui.realButton.animate({top: this._ui.refButton.position().top});
+                this._ui.normalBackground.animate({opacity: checked ? 0.0 : 1.0});
+                this._ui.activeBackground.animate({opacity: checked ? 1.0 : 0.0});
+            }
 
             this.options.checked = checked;
             this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
-
             this._setValue(checked);
         }
     }
