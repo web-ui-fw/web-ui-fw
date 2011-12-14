@@ -3,9 +3,6 @@
 
 @selector-height: 66px;
 @container-height: 68px;
-@selector-triangle-height: 10px;
-
-@selector-actual-height: @selector-height + @selector-triangle-height;
 
 .ui-datetimepicker {
     width: 480px;
@@ -68,14 +65,14 @@
         display: none;
         z-index: 9999;
         color: white;
-        height: @selector-actual-height;
         font-size: 24px;
         padding: 0;
         margin: 14px 0 0 0;
         text-align: center;
 
+        /* Keep the triangle inside the parent container */
         .selector-triangle {
-            height: @selector-triangle-height;
+            margin: 0px !important;
             .selector-triangle-color {
                 border-bottom-color: @todons-selected-color;
             }
@@ -120,4 +117,3 @@
         }
     }
 }
-

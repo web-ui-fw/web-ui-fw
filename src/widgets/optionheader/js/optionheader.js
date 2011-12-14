@@ -172,7 +172,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
     // Draw the option header, according to current options
     refresh: function () {
         var el = this.element,
-            arrow = $('<div class="ui-option-header-triangle-arrow"></div>'),
+            arrow = $('<div></div>'),
             optionHeaderClass = 'ui-option-header',
             self = this,
             gridRowSelector = '.ui-grid-a,.ui-grid-b,.ui-grid-c,.ui-grid-d,.ui-grid-e',
@@ -199,7 +199,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         el.removeClass(optionHeaderClass).addClass(optionHeaderClass);
 
         // remove any arrow currently visible
-        el.prev('.ui-option-header-triangle-arrow').remove();
+        el.prev('.ui-triangle-container').remove();
 
         // if there are elements inside the option header
         // and this.options.showIndicator,

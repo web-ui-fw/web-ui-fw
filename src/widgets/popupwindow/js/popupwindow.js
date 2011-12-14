@@ -98,6 +98,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
         ui: {
             screen:    "#popupwindow-screen",
             container: "#popupwindow-container",
+            inner:     "#popupwindow-container-inner",
             arrow:     "#popupwindow-arrow"
         }
     },
@@ -111,7 +112,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
         thisPage.append(this._ui.screen);
         this._ui.container.insertAfter(this._ui.screen);
-        this._ui.container.append(this.element);
+        this._ui.inner.append(this.element);
         this._ui.arrow.remove();
 
         $.extend( self, {
@@ -304,7 +305,6 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
             if (this.options.showArrow)
                 this._ui.currentArrow = this._ui.arrow
                     .clone()
-                    .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
                     [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this._ui.container)
                     .triangle({
                         location: coords.arrowLocation, offset: "50%",

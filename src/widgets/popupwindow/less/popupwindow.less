@@ -1,25 +1,9 @@
-@popupwindow-padding: 6px;
-@popupwindow-arrow-size: 10px;
-
 .ui-popupwindow {
     display: inline-block;
     position: absolute;
-    padding: @popupwindow-padding;
 
-    .ui-popupwindow-arrow {
-        position: relative;
-        width: 100%;
-        height:  @popupwindow-arrow-size;
-    }
-
-    .ui-popupwindow-arrow-top {
-        top:    -@popupwindow-arrow-size - @popupwindow-padding;
-        margin-bottom: -@popupwindow-arrow-size;
-    }
-
-    .ui-popupwindow-arrow-bottom {
-        bottom: -@popupwindow-arrow-size - @popupwindow-padding;
-        margin-top:    -@popupwindow-arrow-size;
+    .ui-popupwindow-container-inner {
+        padding: 6px;
     }
 }
 

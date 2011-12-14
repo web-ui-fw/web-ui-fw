@@ -47,12 +47,3 @@
 .ui-option-header .ui-controlgroup-horizontal .ui-corner-right {
     margin-right: 5px !important;
 }
-
-/* for the triangle */
-.ui-option-header-triangle-arrow {
-  top:-10px;
-  height:10px;
-  width:100%;
-  position:relative;
-  margin-bottom: -10px;
-}

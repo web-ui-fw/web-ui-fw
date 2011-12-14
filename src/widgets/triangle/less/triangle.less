@@ -1,6 +1,37 @@
+@triangle-size: 10px;
+
 .ui-triangle {
     position: absolute;
     bottom: 0px;
     border-style: solid;
     border-color: transparent;
+    border-width: @triangle-size;
+    margin-left: -@triangle-size;
+}
+
+.ui-triangle-container {
+    height: @triangle-size;
+    position: relative;
+
+    .ui-triangle-top {
+        border-top-width: 0px;
+        border-left-color: transparent;
+        border-right-color: transparent;
+    }
+
+    .ui-triangle-bottom {
+        border-bottom-width: 0px;
+        border-left-color: transparent;
+        border-right-color: transparent;
+    }
+}
+
+.ui-triangle-container-top {
+    top: 0px;
+    margin-top: -@triangle-size;
+}
+
+.ui-triangle-container-bottom {
+    bottom: 0px;
+    margin-bottom: -@triangle-size;
 }

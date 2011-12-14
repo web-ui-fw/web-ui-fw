@@ -31,7 +31,7 @@
 $.widget( "todons.triangle", $.todons.widgetex, {
     options: {
         extraClass: "",
-        offset: 50,
+        offset: null,
         color: undefined,
         location: "top",
         initSelector: ":jqmData(role='triangle')"
@@ -41,53 +41,18 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         var triangle = $("<div></div>", {"class" : "ui-triangle"});
 
         $.extend(this, {
-            _realized: false,
             _triangle: triangle
         });
 
-        this.element.css("position", "relative").append(triangle);
-    },
-
-    // The widget needs to be realized for this function/
-    _setBorders: function() {
-        this._triangle.css(
-            (this.options.location === "top")
-                ? {
-                    "border-left-width"   : this.element.height(),
-                    "border-top-width"    : 0,
-                    "border-right-width"  : this.element.height(),
-                    "border-bottom-width" : this.element.height(),
-                    "border-left-color"   : "rgba(0, 0, 0, 0)",
-                    "border-right-color"  : "rgba(0, 0, 0, 0)"
-                } :
-            (this.options.location === "bottom")
-                ? {
-                    "border-left-width"   : this.element.height(),
-                    "border-top-width"    : this.element.height(),
-                    "border-right-width"  : this.element.height(),
-                    "border-bottom-width" : 0,
-                    "border-left-color"   : "rgba(0, 0, 0, 0)",
-                    "border-right-color"  : "rgba(0, 0, 0, 0)"
-                }
-                : {});
-    },
-
-    _realize: function() {
-        this._setBorders();
-        this._triangle.css("margin-left", -this.element.height());
-        this._setOffset(this.options.offset);
-        this._realized = true;
+        this.element.addClass("ui-triangle-container").append(triangle);
     },
 
     _setOffset: function(value) {
-        // Crutches for IE: It does not seem to understand the concept of percentages. Make an effort to convert to
-        // pixel values
-        if ($.mobile.browser.ie)
-            if (this._realized && typeof value === "string" && value.substring(value.length - 1) === "%")
-                value = (this.element.width() * parseInt(value)) / 100;
-        this._triangle.css("left", value);
-        this.options.offset = value;
-        this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
+        if (null !== value) {
+            this._triangle.css("left", value);
+            this.options.offset = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
+        }
     },
 
     _setExtraClass: function(value) {
@@ -104,9 +69,13 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     },
 
     _setLocation: function(value) {
+        this.element
+            .removeClass("ui-triangle-container-" + this.options.location)
+            .addClass("ui-triangle-container-" + value);
+        this._triangle
+            .removeClass("ui-triangle-" + this.options.location)
+            .addClass("ui-triangle-" + value);
         this.options.location = value;
-        if (this._realized)
-            this._setBorders();
         this.element.attr("data-" + ($.mobile.ns || "") + "location", value);
     }
 });
