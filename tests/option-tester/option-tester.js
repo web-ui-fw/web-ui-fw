@@ -83,30 +83,34 @@
     }
 
     function createWidget(ns, widgetType, inputType) {
-        console.log("createWidget(" + ns + ", " + widgetType + ", " + inputType + ")");
         var theWidget;
+
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
             $("#widget-container").html(
                 "<form action='#' method='get'>" +
-                "   <input type='" + inputType + "' name='testInput' id='testInput'></input>" +
+                "   <input type='" + inputType + "' name='testWidget' id='testWidget'></input>" +
                 "</form>"
             );
-            theWidget = $("#testInput")[widgetType]();
+            theWidget = $("#testWidget");
             theWidget.bind("change", function() {
                 updateWidgetSrc();
             });
         }
         else
-            theWidget = $("<div></div>").appendTo("#widget-container")[widgetType]();
+            theWidget = $("<div></div>").attr("id", "testWidget").appendTo("#widget-container");
+
         $("#widget-container").removeAttr("style");
+        theWidget[widgetType]();
         $("#widget-container-cell").addClass("widget-container-cell");
 
         updateWidgetSrc();
         $("#options-list").empty();
+
         $.each($[ns][widgetType].prototype.options, function(key) {
             createOption(ns, widgetType, theWidget, key);
         });
+
         $("#option-list-scroller").scrollview("scrollTo", 0, 0);
     }
 
