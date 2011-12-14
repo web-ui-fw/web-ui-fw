@@ -59,6 +59,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
             outer:            "#toggleswitch",
             normalBackground: "#toggleswitch-inner-normal",
             activeBackground: "#toggleswitch-inner-active",
+            initButtons:      "#toggleswitch-button-t-active",
             tButton:          "#toggleswitch-button-t",
             fButton:          "#toggleswitch-button-f",
             realButton:       "#toggleswitch-button-outside-real",
@@ -78,6 +79,17 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         this.element.css("display", "none");
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
+        // After adding the button markup, make everything transparent
+        this._ui.normalBackground.find("*").css("opacity", 0.0);
+        this._ui.activeBackground.find("*").css("opacity", 0.0);
+        this._ui.refButton.add(this._ui.refButton.find("*")).css("opacity", 0.0);
+        // ... except the buttons that display the inital position of the switch
+        this._ui.initButtons = this._ui.initButtons
+                .add(this._ui.initButtons.find("*"))
+                .add(this._ui.fButton.find("*"))
+                .add(this._ui.fButton)
+                .css("opacity", 1.0);
+
         $.extend(this, {
             _realized: false
         });
@@ -91,14 +103,16 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     },
 
     _realize: function() {
+        var dstOffset = this._ui[(this.options.checked ? "t" : "f") + "Button"].offset()
+        this._ui.refButton.offset(dstOffset);
         this._ui.realButton
-            .offset(this._ui[(this.options.checked ? "t" : "f") + "Button"].offset())
+            .offset(dstOffset)
             .removeClass("toggleswitch-button-transparent");
         this._ui.activeBackground.find("a").addClass("toggleswitch-button-transparent");
         this._ui.normalBackground.find("a").addClass("toggleswitch-button-transparent");
         this._ui.normalBackground.css({"opacity": this.options.checked ? 0.0 : 1.0});
         this._ui.activeBackground.css({"opacity": this.options.checked ? 1.0 : 0.0});
-
+        this._ui.initButtons.css("opacity", 0.0);
         this._realized = true;
     },
 

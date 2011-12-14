@@ -75,11 +75,16 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     _realize: function() {
         this._setBorders();
         this._triangle.css("margin-left", -this.element.height());
-        this._setOffset(this.options.offset, true);
+        this._setOffset(this.options.offset);
         this._realized = true;
     },
 
     _setOffset: function(value) {
+        // Crutches for IE: It does not seem to understand the concept of percentages. Make an effort to convert to
+        // pixel values
+        if ($.mobile.browser.ie)
+            if (this._realized && typeof value === "string" && value.substring(value.length - 1) === "%")
+                value = (this.element.width() * parseInt(value)) / 100;
         this._triangle.css("left", value);
         this.options.offset = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
@@ -93,6 +98,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
 
     _setColor: function(value) {
         this._triangle.css("border-bottom-color", value);
+        this._triangle.css("border-top-color", value);
         this.options.color = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
     },

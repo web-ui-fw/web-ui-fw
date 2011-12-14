@@ -53,13 +53,16 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         ui: {
             clrpicker: "#colorpicker",
             hs: {
+                hueGradient: "#colorpicker-hs-hue-gradient",
+                gradient:    "#colorpicker-hs-sat-gradient",
                 eventSource: "[data-event-source='hs']",
-                valMask:   "#colorpicker-hs-val-mask",
-                selector:  "#colorpicker-hs-selector"
+                valMask:     "#colorpicker-hs-val-mask",
+                selector:    "#colorpicker-hs-selector"
             },
             l: {
+                gradient:    "#colorpicker-l-gradient",
                 eventSource: "[data-event-source='l']",
-                selector:  "#colorpicker-l-selector"
+                selector:    "#colorpicker-l-selector"
             }
         }
     },
@@ -67,6 +70,12 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
+        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
+        if ($.mobile.browser.ie) {
+            this._ui.hs.gradient.css("background", "none");
+            this._ui.l.gradient.css("background", "none");
+            $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
+        }
         this.element.append(this._ui.clrpicker);
 
         $.extend( self, {
@@ -132,7 +141,9 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _handleMouseMove: function(event, containerStr, isSelector, coords) {
-        if (this.dragging) {
+        if (this.dragging &&
+            !(( this.draggingHS && containerStr === "l") || 
+              (!this.draggingHS && containerStr === "hs"))) {
             coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(event));
 
             if (this.draggingHS) {

@@ -162,14 +162,19 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
     _init: function() {
         var page = this.element.closest(".ui-page"),
-            self = this;
+            self = this,
+            myOptions = {};
 
         if (page.is(":visible"))
             this._realize();
         else
             page.bind("pageshow", function() { self._realize(); });
 
-        this._setOptions(this.options);
+        $.extend(myOptions, this.options);
+
+        this.options = {};
+
+        this._setOptions(myOptions);
     },
 
     _getCreateOptions: function() {

@@ -173,7 +173,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
     _setTransition: function(value) {
         this._ui.container
-                .removeClass(this.options.transition)
+                .removeClass((this.options.transition || ""))
                 .addClass(value);
         this.options.transition = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "transition", value);
@@ -306,7 +306,10 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                     .clone()
                     .addClass("ui-popupwindow-arrow-" + coords.arrowLocation)
                     [(("bottom" === coords.arrowLocation) ? "appendTo" : "prependTo")](this._ui.container)
-                    .triangle({location: coords.arrowLocation, offset: "50%"});
+                    .triangle({
+                        location: coords.arrowLocation, offset: "50%",
+                        color: this._ui.container.css("background-color")
+                    });
 
             this._ui.screen
                 .height($(document).height())
@@ -314,6 +317,8 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 
             if (this.options.fade)
                 this._ui.screen.animate({opacity: 0.5}, "fast");
+            else
+                this._ui.screen.css({opacity: 0.0});
 
             var origOverflow = { x: $("body").css("overflow-x"), y: $("body").css("overflow-y") };
             $("body").css({"overflow-x" : "hidden", "overflow-y" : "hidden" });

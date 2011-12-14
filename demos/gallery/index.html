@@ -5,13 +5,13 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" media="screen" href="demo.css"/>
-        <link rel="stylesheet" type="text/css" media="screen" href="../../build/web-ui-fw/latest/themes/default/web-ui-fw-theme.css"/>
-        <link rel="stylesheet" type="text/css" media="screen" href="../../build/web-ui-fw/latest/themes/default/web-ui-fw-widget.css"/>
-        <script src="../../build/web-ui-fw/latest/js/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="web-ui-fw/themes/default/web-ui-fw-theme.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="web-ui-fw/themes/default/web-ui-fw-widget.css"/>
+        <script src="web-ui-fw/js/jquery.js"></script>
         <script src="before-jqm.js"></script>
-        <script src="../../build/web-ui-fw/latest/js/jquery-mobile.js"></script>
-        <script src="../../build/web-ui-fw/latest/js/web-ui-fw-libs.js"></script>
-        <script src="../../build/web-ui-fw/latest/js/web-ui-fw.js"></script>
+        <script src="web-ui-fw/js/jquery-mobile.js"></script>
+        <script src="web-ui-fw/js/web-ui-fw-libs.js"></script>
+        <script src="web-ui-fw/js/web-ui-fw.js"></script>
         <script src="stubs.js"></script>
         <script src="init.js"></script>
     </head>
@@ -220,7 +220,6 @@
                 <h1>Color widgets</h1>
             </div>
             <div data-role="content" data-scroll="y">
-<!--
               <div style="float: left; padding-right: 20px;">
                 <div data-role="label">Color title widget</div>
                 <div data-role="colortitle" id="colortitle"></div>
@@ -246,10 +245,6 @@
                 <div data-role="label">Hue-Saturation-Lightness picker widget</div>
                 <div data-role="colorpicker" id="colorpicker"></div>
               </div>
--->
-                <ul data-role="listview">
-                    <li><a href="colorpicker/index.html">Color picker</a></li>
-                </ul>
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>
@@ -667,6 +662,11 @@
                   <td align="right"  valign="bottom"><a href="#arrowPopup" id="arrowPopupBR" data-role="button" data-inline="true" data-rel="popupwindow">Show</a></td>
                 </tr>
               </table>
+              <h1>This is a paragraph containing a ton of text the sole purpose of which is to fill the screen with text,
+                  so that the grid of buttons appearing below will only be reachable via scrolling. Some less-than-capable
+                  browsers render this grid without taking into account that it's supposed to fill the entire page and,
+                  as such, should introduce sufficient scrolling to be able to test both the top and the bottom arrow
+                  versions of the popup window.</h1>
             </div> <!-- /content -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>

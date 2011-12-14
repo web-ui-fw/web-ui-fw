@@ -69,12 +69,14 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
                 valMask:     "#hsvpicker-hue-mask-val"
             },
             sat: {
+                gradient:    "#hsvpicker-sat-gradient",
                 eventSource: "[data-event-source='sat']",
                 selector:    "#hsvpicker-sat-selector",
                 hue:         "#hsvpicker-sat-hue",
                 valMask:     "#hsvpicker-sat-mask-val"
             },
             val: {
+                gradient:    "#hsvpicker-val-gradient",
                 eventSource: "[data-event-source='val']",
                 selector:    "#hsvpicker-val-selector",
                 hue:         "#hsvpicker-val-hue"
@@ -86,6 +88,13 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         var self = this;
 
         this.element.append(this._ui.container);
+        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
+        if ($.mobile.browser.ie) {
+            this._ui.sat.gradient.css("background", "none");
+            this._ui.val.gradient.css("background", "none");
+            this._ui.hue.hue.css("background", "none");
+            $.todons.colorwidget.hueGradient(this._ui.hue.hue);
+        }
 
         $.extend(this, {
             dragging_hsv: [ 0, 0, 0],
@@ -185,7 +194,10 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             vclr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
 
         this._ui.hue.selector.css({ left : this._ui.hue.eventSource.width() * hsv[0] / 360, background : clr });
-        this._ui.hue.hue.css("opacity", hsv[1]);
+        if ($.mobile.browser.ie)
+            this._ui.hue.hue.find("*").css("opacity", hsv[1]);
+        else
+            this._ui.hue.hue.css("opacity", hsv[1]);
         this._ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
         this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1],       background : clr });
