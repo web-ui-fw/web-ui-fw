@@ -1,3 +1,28 @@
+Quick start
+===========
+
+There are two ways to quickly use this project if you don't want to build it.
+First: you could download the latest official release at:
+
+    https://github.com/web-ui-fw/web-ui-fw/downloads
+
+Second: you could use the files from the online demo at:
+
+    http://web-ui-fw.github.com/
+
+and that means:
+
+    http://web-ui-fw.github.com/web-ui-fw/web-ui-fw.js
+    http://web-ui-fw.github.com/web-ui-fw/web-ui-fw-libs.js
+    http://web-ui-fw.github.com/web-ui-fw/web-ui-fw-widget.css
+
+Of course you will need JQuery Mobile (currently, version 1.0) and JQuery
+(currently, version 1.6.4).
+
+Please see the README file for some boilerplate on how to use web-ui-fw
+within a jQuery Mobile project.
+
+
 Installing less
 ---------------
 

@@ -87,7 +87,10 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this.element.append(this._ui.container);
+        this.element
+            .css("display", "none")
+            .after(this._ui.container);
+
         // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
         if ($.mobile.browser.ie) {
             this._ui.sat.gradient.css("background", "none");
@@ -212,7 +215,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsv = $.todons.colorwidget.clrlib.RGBToHSV($.todons.colorwidget.clrlib.HTMLToRGB(clr));
+            this.dragging_hsv = $.todons.colorwidget.clrlib.RGBToHSV($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this._updateSelectors(this.dragging_hsv);
         }
     }

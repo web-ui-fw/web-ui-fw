@@ -61,7 +61,6 @@
 (function($, window, undefined) {
     $.widget("todons.datetimepicker", $.todons.widgetex, {
         options: {
-            date: null,
             showDate: true,
             showTime: true,
             header: "Set time",
@@ -72,15 +71,16 @@
             am: "AM",
             pm: "PM",
             twentyfourHours: false,
+            date: null,
             animationDuration: 500,
             initSelector: "input[type='date'], :jqmData(type='date'), :jqmData(role='datetimepicker')"
         },
 
-        _initDateTime: function() {
-            var now = (null === this.options.date)
+        _initDateTime: function(value) {
+            var parsedDate = Date.parse(value),
+                now = (isNaN(parsedDate))
                     ? new Date()
-                    : new Date(Date.parse(this.options.date));
-
+                    : new Date(parsedDate);
             this.data.year    = now.getFullYear();
             this.data.month   = now.getMonth();
             this.data.day     = now.getDate();
@@ -124,6 +124,12 @@
         },
 
         _initDateTimeDivs: function(ui) {
+            // We must display either time or date: if the user set both to
+            // false, we override that.
+            if (!this.options.showDate && !this.options.showTime) {
+                this.options.showDate = true;
+            }
+
             if (this.options.showDate && this.options.showTime) {
                 ui.main.attr("class", "ui-grid-a");
                 if (!this.options.twentyfourHours) {
@@ -134,6 +140,7 @@
             this._initDate(ui);
             this._initTime(ui);
             ui.ampm.text(this._parseAmPmValue(this.data.pm));
+            ui.ampmContainer[this.options.twentyfourHours ? "hide" : "show"]();
         },
 
         _makeTwoDigitValue: function(val) {
@@ -328,8 +335,28 @@
                     this._ui.date.day.text(newDay);
                 }
             }
+            else
+            if (field === "hours") {
+                if (this.options.twentyfourHours) {
+                    this.data.pm = (value > 11);
+                    this._ui.ampm.text(this._parseAmPmValue(this.data.pm));
+                }
+            }
             this.data[field] = value;
             owner.text(text);
+        },
+
+        _setTwentyfourHours: function(value) {
+            this.options.twentyfourHours = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "twentyfour-hours", value);
+            this._setDate(this.options.date);
+        },
+
+        _setDate: function(value) {
+            this._initDateTime(value);
+            this._initDateTimeDivs(this._ui);
+            this.options.date = this.getValue();
+            this._setValue(this.options.date);
         },
 
         _populateSelector: function(selector, owner, klass, values,
@@ -353,7 +380,8 @@
                         scrollable.view.find(item.selector).removeClass("current");
                         $(this).toggleClass("current");
                         obj._hideDataSelector(selector);
-                        self._setValue(obj.getValue());
+                        obj.options.date = obj.getValue();
+                        self._setValue(obj.options.date);
                     }
                 }).text(values[i]);
                 if (values[i] === destValue) {
@@ -394,13 +422,21 @@
                     separator: "#datetimepicker-time-separator",
                     minutes: "#datetimepicker-time-minutes"
                 },
+                ampmContainer: "#datetimepicker-ampm",
                 ampm: "#datetimepicker-ampm-span"
             }
         },
 
         _value: {
             attr: "data-" + ($.mobile.ns || "") + "date",
-            signal: "date-changed"
+            signal: "date-changed",
+            makeString: function(val) {return val.toString();}
+        },
+
+        _setHeader: function(value) {
+            this._ui.header.text(value);
+            this.options.header = value;
+            this.element.attr("data-" + ($.mobile.ns || "") + "header", value);
         },
 
         _create: function() {
@@ -430,22 +466,12 @@
             var obj = this;
             var input = this.element;
 
-            $(input).css("display", "none");
-            $(input).after(this._ui.container);
+            $(input)
+                .css("display", "none")
+                .after(this._ui.container);
+
             this._ui.triangle.triangle({extraClass : "selector-triangle-color"});
             this.data.parentInput = input;
-
-            // We must display either time or date: if the user set both to
-            // false, we override that.
-            if (!this.options.showDate && !this.options.showTime) {
-                this.options.showDate = true;
-            }
-
-            this._initDateTime();
-
-            this._ui.header.text(this.options.header);
-
-            this._initDateTimeDivs(this._ui);
 
             this._ui.container.bind("vclick", function () {
                 obj._hideDataSelector(self._ui.selector);

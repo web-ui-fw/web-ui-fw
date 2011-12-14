@@ -76,7 +76,10 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             this._ui.l.gradient.css("background", "none");
             $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
         }
-        this.element.append(this._ui.clrpicker);
+
+        this.element
+            .css("display", "none")
+            .after(this._ui.clrpicker);
 
         $.extend( self, {
             dragging: false,
@@ -197,7 +200,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr));
+            this.dragging_hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
             this._updateSelectors(this.dragging_hsl);
         }

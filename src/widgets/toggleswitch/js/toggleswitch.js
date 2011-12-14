@@ -75,8 +75,10 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     _create: function() {
         var self = this;
 
-        this.element.after(this._ui.outer);
-        this.element.css("display", "none");
+        this.element
+            .css("display", "none")
+            .after(this._ui.outer);
+
         this._ui.outer.find("a").buttonMarkup({inline: true, corners: true});
 
         // After adding the button markup, make everything transparent

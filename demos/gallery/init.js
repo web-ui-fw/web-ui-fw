@@ -53,7 +53,7 @@ $(document).bind("pagecreate", function () {
         });
     });
 
-    $('#processingbar-demo').bind('pageshow', function () {
+    $('#processingbar-demo').bind('pagecreate', function () {
         $(this).find(':jqmData(role="processingbar")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
             var elt = $(this);

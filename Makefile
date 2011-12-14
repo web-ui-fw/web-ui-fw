@@ -70,6 +70,7 @@ third_party_widgets: init
 	cat ${LIBS_DIR}/js/${JQUERY} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery.js ; \
 	cat ${LIBS_DIR}/js/${JQUERY_MOBILE} | $${uglify} > ${JS_OUTPUT_ROOT}/jquery-mobile.js; \
 	if test "x${DEBUG}x" = "xyesx"; then \
+		mkdir -p $(CURDIR)/dist; \
 		cp -a ${FW_LIBS_JS} $(CURDIR)/dist/; \
 	fi
 
@@ -210,6 +211,8 @@ clean:
 init:
 	# Checking for JQM
 	@@[ -e ${LIBS_DIR}/js/${JQUERY_MOBILE} ] || (echo "You must compile jquery-mobile first. See HACKING."; exit 1;)
+	# Checking for lessc
+	@@hash lessc 2>/dev/null || (echo "lessc not found. Please see HACKING."; exit 1); \
 	# Initializing...
 	@@mkdir -p ${JS_OUTPUT_ROOT}
 	@@mkdir -p ${THEMES_OUTPUT_ROOT}

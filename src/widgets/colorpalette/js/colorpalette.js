@@ -73,7 +73,9 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this.element.append(this._ui.clrpalette);
+        this.element
+            .css("display", "none")
+            .after(this._ui.clrpalette);
 
         this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
             var clr = $(e.target).css("background-color"),
@@ -104,10 +106,12 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
         else
             this._ui.previewContainer.css("display", "none");
         this.element.attr("data-" + ($.mobile.ns || "") + "show-preview", show);
+        this.options.showPreview = show;
     },
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
+            clr = this.options.color;
             var Nix,
                 activeIdx = -1,
                 nChoices = this._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),

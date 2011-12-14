@@ -215,7 +215,9 @@ $.widget("todons.widgetex", $.mobile.widget, {
 
 $.todons.widgetex.setValue = function(widget, newValue) {
     if (widget._value !== undefined) {
-        widget.element.attr(widget._value.attr, newValue);
+        var valueString = widget._value.makeString ? widget._value.makeString(newValue) : newValue;
+
+        widget.element.attr(widget._value.attr, valueString);
         if (widget._value.signal !== undefined)
             widget.element.triggerHandler(widget._value.signal, newValue);
         if (widget.element.is("input")) {
@@ -230,11 +232,25 @@ $.todons.widgetex.setValue = function(widget, newValue) {
                     widget.element.removeAttr("checked");
             }
             else
-                widget.element.attr("value", newValue);
+                widget.element.attr("value", valueString);
             widget.element.trigger("change");
         }
     }
 };
+
+$.todons.widgetex.assignElements = function(proto, obj) {
+    var ret = {};
+    for (var key in obj)
+        if ((typeof obj[key]) === "string") {
+            ret[key] = proto.find(obj[key]);
+            if (obj[key].match(/^#/))
+                ret[key].removeAttr("id");
+        }
+        else
+        if ((typeof obj[key]) === "object")
+            ret[key] = $.todons.widgetex.assignElements(proto, obj[key]);
+    return ret;
+}
 
 $.todons.widgetex.loadPrototype = function(widget, ui) {
     var ar = widget.split(".");
@@ -283,22 +299,8 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
             // replace the selectors with the selected elements from a copy of the HTML prototype
             if ($[namespace][widgetName].prototype._htmlProto.ui !== undefined) {
 	        // Assign the relevant parts of the proto
-                function assignElements(proto, obj) {
-                    var ret = {};
-                    for (var key in obj)
-                        if ((typeof obj[key]) === "string") {
-                            ret[key] = proto.find(obj[key]);
-                            if (obj[key].match(/^#/))
-                                ret[key].removeAttr("id");
-                        }
-                        else
-                        if ((typeof obj[key]) === "object")
-                            ret[key] = assignElements(proto, obj[key]);
-                    return ret;
-                }
-
                 $.extend(this, {
-                    _ui: assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
+                    _ui: $.todons.widgetex.assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
                 });
             }
         }

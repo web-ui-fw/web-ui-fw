@@ -90,7 +90,9 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        this._ui.button.insertAfter(this.element);
+        this.element
+            .css("display", "none")
+            .after(this._ui.button);
 
         /* Tear apart the proto */
         this._ui.popup.insertBefore(this.element).popupwindow();
@@ -116,8 +118,8 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this._ui.hsvpicker.hsvpicker("option", "color", clr);
-            this._ui.buttonContents.css("color", clr);
+            this._ui.hsvpicker.hsvpicker("option", "color", this.options.color);
+            this._ui.buttonContents.css("color", this.options.color);
         }
     },
 

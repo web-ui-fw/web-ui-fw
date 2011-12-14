@@ -63,12 +63,15 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
     },
 
     _create: function() {
-        this.element.append(this._ui.clrtitle);
+        this.element
+            .css("display", "none")
+            .after(this._ui.clrtitle);
+
     },
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr))
-            this._ui.header.text(clr);
+            this._ui.header.text(this.options.color);
     }
 });
 
