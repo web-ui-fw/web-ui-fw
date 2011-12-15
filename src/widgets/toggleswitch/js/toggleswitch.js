@@ -81,17 +81,23 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
 
         this._ui.outer.find("a").buttonMarkup();
 
-        // After adding the button markup, make everything transparent
-        this._ui.normalBackground.find("*").css("opacity", 0.0);
-        this._ui.activeBackground.find("*").css("opacity", 0.0);
-        this._ui.refButton.add(this._ui.refButton.find("*")).css("opacity", 0.0);
-        this._ui.realButton.add(this._ui.realButton.find("*")).css("opacity", 0.0);
-        // ... except the buttons that display the inital position of the switch
-        this._ui.initButtons = this._ui.initButtons
+        // Crutches for IE: It does not seem to understand opacity specified in a class, nor that opacity of an element
+        // affects all its children
+        if ($.mobile.browser.ie) {
+            // Remove this class, because it has no effect in IE :-S
+            this._ui.outer.find("*").removeClass("toggleswitch-button-transparent");
+            // After adding the button markup, make everything transparent
+            this._ui.normalBackground.find("*").css("opacity", 0.0);
+            this._ui.activeBackground.find("*").css("opacity", 0.0);
+            this._ui.refButton.add(this._ui.refButton.find("*")).css("opacity", 0.0);
+            this._ui.realButton.add(this._ui.realButton.find("*")).css("opacity", 0.0);
+            // ... except the buttons that display the inital position of the switch
+            this._ui.initButtons
                 .add(this._ui.initButtons.find("*"))
                 .add(this._ui.fButton.find("*"))
                 .add(this._ui.fButton)
                 .css("opacity", 1.0);
+        }
 
         $.extend(this, {
             _initial: true
@@ -118,14 +124,12 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
                 this._makeTransparent(this._ui[(checked ? "normal" : "active") + "Background"], true);
             }
             else {
-                this._ui.initButtons.css("opacity", 0.0);
                 this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
                 this._ui.realButton.offset(this._ui[(checked ? "f" : "t") + "Button"].offset());
 
                 if (this._initial) {
                     this._makeTransparent(this._ui.outer.find("a"), true);
                     this._makeTransparent(this._ui.realButton, false);
-                    this._ui.realButton.add(this._ui.realButton.find("*")).css("opacity", 1.0);
                     this._initial = false;
                 }
 
