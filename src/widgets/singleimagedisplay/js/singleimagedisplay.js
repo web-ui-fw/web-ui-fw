@@ -83,10 +83,12 @@
         _imageErrorHandler: function () {
             this.usingNoContents = true;
             this._showNoContents();
+            this.element.trigger( "init" );
         },
 
         _showNoContents: function () {
-            if (!this.options.noContent) {
+            var noContentSrcIsEmpty = (this.options.noContent==null);
+            if (noContentSrcIsEmpty) {
                 this.resize( this.cover );
 
                 this.image.detach();
