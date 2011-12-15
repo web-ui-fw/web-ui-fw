@@ -150,12 +150,6 @@ $.widget("todons.optionheader", $.todons.widgetex, {
             self.toggle();
         };
 
-        // get the element's dimensions
-        // and to set its initial collapse state;
-        // either do it now (if the page is visible already)
-        // or on pageshow
-        page = this.element.closest(':jqmData(role="page")');
-
         this.refresh();
     },
 
