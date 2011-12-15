@@ -214,18 +214,21 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
                 nDivisions = 2 * this._maxVolume() + 1,
                 cyElem = cy / nDivisions,
                 yStart = cy - 2 * cyElem,
+                dstOffset = this._ui.volumeImage.offset(),
                 elem;
 
             for (var Nix = this._volumeElemStack.length; Nix < this._maxVolume() ; Nix++) {
                 elem = this._ui.bar
                     .clone()
                     .css({
-                        left: (cx - (cxStart + Nix * cxInc)) / 2,
-                        top:  yStart - Nix * 2 * cyElem,
                         width: cxStart + Nix * cxInc,
                         height: cyElem
                     })
-                    .appendTo(this._ui.volumeImage);
+                    .appendTo(this._ui.volumeImage)
+                    .offset({
+                        left: dstOffset.left + (cx - (cxStart + Nix * cxInc)) / 2,
+                        top:  dstOffset.top + yStart - Nix * 2 * cyElem,
+                    });
                 this._volumeElemStack.push(elem);
             }
         }
@@ -238,6 +241,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
 
     open: function() {
         if (!this._isOpen) {
+            this._setBasicTone(this.options.basicTone);
             this._ui.container.popupwindow("open",
                 window.innerWidth  / 2,
                 window.innerHeight / 2);
