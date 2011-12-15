@@ -50,10 +50,12 @@
         }
 
         entry = makeSetter();
-        $("<div/>").fieldcontain()
+        $("<div/>")
             .append($("<label/>", {"for": key + "-option"}).text(key))
             .append(entry.html)
-            .appendTo(optionsList);
+            .appendTo(optionsList)
+            .fieldcontain();
+
         if (entry.widget !== undefined)
             entry.html[entry.widget.type](entry.widget.options);
         entry.html.bind("change", function(e) {
