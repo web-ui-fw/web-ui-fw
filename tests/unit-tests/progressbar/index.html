@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            jQuery Mobile Progressbar Tests
+        </title>
+        <link rel="stylesheet" href="../../../build/web-ui-fw/latest/themes/default/web-ui-fw-theme.css"/>
+        <link rel="stylesheet" href="../../../libs/js/submodules/jquery-mobile/external/qunit.css"/>
+        <script src="../../../build/web-ui-fw/latest/js/jquery.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/tests/unit/jquery.setNameSpace.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/jquery-mobile.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/web-ui-fw-libs.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/web-ui-fw.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/tests/jquery.testHelper.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/external/qunit.js"></script>
+        <script src="progressbar-tests.js"></script>
+    </head>
+        
+    <body>
+        <h1 id="qunit-header">
+            jQuery Mobile Progressbar Tests
+        </h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div data-nstest-role="page" id="progressbar-test-options">
+            <div data-nstest-role="header" data-nstest-position="inline">
+                <h1>
+                    Progressbar Test - options
+                </h1>
+            </div>
+            <div data-nstest-role="content">
+                <div id="progressbar-test-options-default" data-nstest-role="progressbar">
+                </div>
+                <div id="progressbar-test-options-custom" data-nstest-role="progressbar"
+                data-nstest-options='{"value":5, "max":80, "theme": "a"}'>
+                </div>
+                <div id="progressbar-test-theme-attr" data-nstest-role="progressbar" data-nstest-theme="c">
+                </div>
+            </div>
+        </div>
+        <div data-nstest-role="page" id="progressbar-test-value">
+            <div data-nstest-role="header" data-nstest-position="inline">
+                <h1>
+                    Progressbar Test - value
+                </h1>
+            </div>
+            <div data-nstest-role="content">
+                <div id="progressbar-test-value-div" data-nstest-role="progressbar" data-nstest-options='{"max":100}'>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
