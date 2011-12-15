@@ -80,6 +80,8 @@
             var li = self._ui.row.li;
             var container = self._ui.ui.personpicker.find('.ui-personpicker-container');
 
+            container.find('.loader').remove();
+            container.find('.ui-listview-filter').show();
             list.find('li').remove();
 
             persons.forEach(function(p) {
