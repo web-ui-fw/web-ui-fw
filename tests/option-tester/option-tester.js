@@ -87,15 +87,26 @@
 
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
-            $("#widget-container").html(
-                "<form action='#' method='get'>" +
-                "   <input type='" + inputType + "' name='testWidget' id='testWidget'></input>" +
-                "</form>"
-            );
-            theWidget = $("#testWidget");
+            var theForm = $.todons.widgetex.assignElements(
+                $("<div>" +
+                "    <form id='theForm' action='#' method='get'>" +
+                "        <div id='fieldcontain' data-role='fieldcontain'>" +
+                "            <label for='testWidget'>Test:</label>" +
+                "            <input type='" + inputType + "' name='testWidget' id='testWidget'></input>" +
+                "        </div>" +
+                "</div>"),
+                {
+                    theForm: "#theForm",
+                    theField: "#fieldcontain",
+                    theWidget: "#testWidget"
+                });
+
+            $("#widget-container").empty().append(theForm.theForm);
+            theWidget = theForm.theWidget;
             theWidget.bind("change", function() {
                 updateWidgetSrc();
             });
+            theForm.theField.fieldcontain();
         }
         else
             theWidget = $("<div></div>").attr("id", "testWidget").appendTo("#widget-container");
