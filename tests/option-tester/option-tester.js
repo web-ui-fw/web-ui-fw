@@ -2,14 +2,30 @@
     var init = false;
 
     function formatHTML(str) {
-        var ret = "", nIndent = -4, startIdx = 0, snip = "";
+        var ret = "", nIndent = -4, startIdx = 0, snip = "", subIdx, ar = [], isDeTag = false;
         for (var idx = str.indexOf(">", 0); idx != -1 ; idx = str.indexOf(">", ++idx)) {
             snip = (str.substring(startIdx, idx) + ">" + "\n").replace(/^[ \t]*/, "");
-            if (snip.substring(0, 1) === "<" && snip.substring(0, 2) !== "</")
+            if (snip.substring(0, 2) !== "</")
                 nIndent += 4;
+            subIdx = snip.indexOf("<");
+            if (subIdx > 0)
+                ar = [ snip.substring(0, subIdx), snip.substring(subIdx) ];
             for (var Nix = 0 ; Nix < nIndent ; Nix++)
                 ret = ret + " ";
-            ret = ret + snip;
+            if (ar.length > 0) {
+                ret = ret + ar[0] + "\n";
+                isDeTag = (ar[1].substring(0, 2) === "</");
+                if (isDeTag)
+                    nIndent -= 4;
+                for (var Nix = 0 ; Nix < nIndent ; Nix++)
+                    ret = ret + " ";
+                ret = ret + ar[1];
+                if (isDeTag)
+                    nIndent -= 4;
+                ar = [];
+            }
+            else
+                ret = ret + snip;
             startIdx = idx + 1;
             if (snip.substring(0, 2) === "</")
                 nIndent -= 4;
