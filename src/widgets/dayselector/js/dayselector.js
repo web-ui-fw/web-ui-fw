@@ -91,7 +91,7 @@
 
             this.options.theme = this.element.jqmData('theme') ||
                                  this.options.theme ||
-                                 this.element.closest(':jqmData(theme)').jqmData('theme')
+                                 this.element.closest(':jqmData(theme)').jqmData('theme') ||
                                  this.defaultTheme;
 
             var days = this.options.days;

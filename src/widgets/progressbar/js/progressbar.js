@@ -28,7 +28,6 @@
  *
  * Authors: Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
  */
-
 // Displays a progressbar element
 //
 // A progressbar does have a progress value, and can be found from getValue()
@@ -42,7 +41,6 @@
 //     max      : maximum value, default is 100
 //     theme    : data-theme, default is swatch 'b'
 //                
-
 (function ($, window, undefined) {
     $.widget("todons.progressbar", $.mobile.widget, {
         options: {
@@ -64,7 +62,11 @@
                 return this.currentValue;
             }
 
-            this.currentValue = parseInt(newValue);
+            // normalize invalid value
+            if (typeof newValue !== "number" || parseInt(newValue) < 0) 
+                newValue = 0;
+            newValue = (newValue > this.options.max) ? this.options.max : newValue;
+            this.currentValue = newValue;
 
             if (this.oldValue !== this.currentValue) {
                 this.delta = this.currentValue - this.oldValue;
@@ -76,43 +78,44 @@
             }
         },
 
-         // function : animates the progressBar  
+        // function : animates the progressBar  
         _startProgress: function () {
             var percentage = 100 * this.currentValue / this.options.max;
             var width = percentage + '%';
             this.bar.width(width);
         },
-        
+
         _create: function () {
             var startValue, container;
             var html = $('<div class="ui-progressbar">' + '<div class="ui-boxImg " ></div>' + '<div class="ui-barImg " ></div>' + '</div>');
 
             $(this.element).append(html);
-            
+
             container = $(this.element).find(".ui-progressbar");
             this.box = container.find("div.ui-boxImg");
             this.bar = container.find("div.ui-barImg");
+
+            // set Options
+            var dataOptions = this.element.jqmData('options');
+            $.extend(this.options, dataOptions);
             this._setOption("theme", this.options.theme);
+
             startValue = this.options.value ? this.options.value : 0;
             this.value(startValue);
         },
-        
-        _setOption: function(key, value) {
-        	if (key == "theme")
-        		this._setTheme(value);
+
+        _setOption: function (key, value) {
+            if (key == "theme") this._setTheme(value);
         },
-        
-        _setTheme: function(value) {
-        	value = value || 
-            		this.element.data('theme') || 
-            		this.element.closest(':jqmData(theme)').attr('data-theme') || 
-            		'b';
-			this.bar.addClass("ui-bar-" + value);
+
+        _setTheme: function (value) {
+            value = value || this.element.data('theme') || this.element.closest(':jqmData(theme)').attr('data-theme') || 'b';
+            this.bar.addClass("ui-bar-" + value);
         },
-        
-        destroy: function() {
-        	this.html.detach();
-        }      
+
+        destroy: function () {
+            this.html.detach();
+        }
     }); /* End of widget */
 
     // auto self-init widgets
