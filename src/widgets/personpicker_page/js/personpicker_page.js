@@ -82,14 +82,14 @@
         _resizePersonpicker: function() {
             var header = this._ui.container.find(':jqmData(role=header)');
 
-            // get the height of the container
-            var containerHeight = this._ui.container.innerHeight();
+            // get the height of the window
+            var windowHeight = $(window).height();
 
             // get the height of the header
             var headerHeight = header.outerHeight(true);
 
             // figure out how big to make the personpicker, so it fills the container
-            var personpickerHeight = containerHeight - headerHeight;
+            var personpickerHeight = windowHeight - headerHeight - 2;
 
             this._ui.personpicker.personpicker("resizeScrollview", personpickerHeight);
 
@@ -148,6 +148,7 @@
                 this.element.closest(".ui-page").bind("pageshow", function() {
                     self._ui.optionheader.optionheader('expand', {duration:0});
                     self._ui.optionheader.optionheader('refresh');
+                    self._resizePersonpicker();
                 });
             }
         }
