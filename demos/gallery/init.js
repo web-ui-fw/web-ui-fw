@@ -498,12 +498,8 @@ $(document).bind("pagecreate", function () {
 });
 
 $(document).bind("pagecreate", function () {
-    var button = $('#calendarbutton');
-    button.bind('vclick', function (e) {
-        button.calendarpicker('open');
-        button.unbind('selectedDate').bind('selectedDate', function (e, val) {
-            $('#selectedCalendarDate').attr('value', val);
-        });
+    $('#calendarbutton').bind('selectedDate', function(e, val) {
+        $('#selectedCalendarDate').attr('value', val);
     });
 });
 

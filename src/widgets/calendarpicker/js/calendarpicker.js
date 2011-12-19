@@ -30,10 +30,12 @@
  */
 
 // CalendarPicker can be created using the calendarpicker() method or by adding a
-// data-role="calendarpicker" attribute to an element.
+// data-role="calendarpicker" attribute to an element. The element is converted to a button, which, when clicked, pops up
+// the calendarpicker widget. Thus, you can use any button styles you wish (such as data-corners="true/false",
+// data-inline="true/false", etc.).
 // The core logic of the widget has been taken from https://github.com/jtsage/jquery-mobile-datebox
 //
-// CalendarPicker is hidden by default.It can be displayed by calling open() or setting option "show" to true
+// CalendarPicker is hidden by default. It can be displayed by calling open() or setting option "show" to true
 // during creation and close() to hide it. It appears as a popup window and disappears when closed.
 // CalendarPicker closes automatically when a valid date selection has been made, or when the user clicks
 // outside its box.
@@ -389,7 +391,9 @@
                      theDate: theDate
             });
 
-            $(this.element).buttonMarkup();
+            $(this.element).buttonMarkup().bind("vclick", function() {
+                self.open();
+            });
 
             self._buildPage();
         },
