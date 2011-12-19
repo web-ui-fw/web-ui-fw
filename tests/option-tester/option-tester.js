@@ -53,13 +53,21 @@
 
                 case "integer":
                     return {
-                        html: $("<input/>", {type: "number"}),
+                        html: $("<input/>", {
+                            type: "number", 
+                            value: theWidget[widgetType]("option", key),
+                            id: key + "-option"
+                        }),
                         getValue: function(elem) {return elem.val();}
                     };
 
                 default:
                     return { 
-                        html: $("<input/>", {type: "text", value: $[ns][widgetType].prototype.options[key], id: key + "-option"}),
+                        html: $("<input/>", {
+                            type: "text", 
+                            value: theWidget[widgetType]("option", key),
+                            id: key + "-option"
+                        }),
                         getValue: function(elem) {return elem.val();}
                     };
             }
@@ -100,7 +108,7 @@
         elems.toplevel.scrollview({direction: null});
     }
 
-    function createWidget(ns, widgetType, inputType) {
+    function createWidget(ns, widgetType, inputType, options) {
         var theWidget;
 
         $("#widget-container").empty().css("display", "none");
@@ -130,7 +138,7 @@
             theWidget = $("<div></div>").attr("id", "testWidget").appendTo("#widget-container");
 
         $("#widget-container").removeAttr("style");
-        theWidget[widgetType]();
+        theWidget[widgetType](options);
         $("#widget-container-cell").addClass("widget-container-cell");
 
         updateWidgetSrc();
@@ -151,20 +159,28 @@
             makeInput = $("#makeInput"),
             inputTypeSelect = $("#inputTypeSelect"),
             optionsForm = $("#options"),
+            reCreate = $("#reCreate"),
             chkBoxVal = function(chk) { return chk.next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on") ; },
-            mkWidget = function(isInput) {
-                var wsVal = widgetSelect.val(),
-                    isVal = inputTypeSelect.val(),
-                    ar = wsVal.split(".");
+            widgetName = function() {
+                var ar = widgetSelect.val().split("."),
+                    ret = false;
 
-                if (ar.length === 2) {
+                if (ar.length === 2)
+                    ret = { namespace: ar[0], widgetName: ar[1] };
 
+                return ret;
+            },
+            mkWidget = function(isInput, options) {
+                var widget = widgetName(),
+                    isVal = inputTypeSelect.val();
+
+
+                if (widget) {
                     if (isVal === "Choose input type" || !isInput)
                         isVal = null;
-
-                    createWidget(ar[0], ar[1], isVal);
+                    createWidget(widget.namespace, widget.widgetName, isVal, options);
                 }
-            }
+            };
 
         $.each($.todons, function(key) {
             var value = $.todons[key];
@@ -187,11 +203,13 @@
         });
 
         makeInput.checkboxradio("disable");
+        reCreate.button("disable");
         widgetSelect
             .selectmenu("refresh", true)
             .bind("change", function() {
                 mkWidget(chkBoxVal(makeInput));
                 makeInput.checkboxradio("enable");
+                reCreate.button("enable");
             });
 
         inputTypeSelect.selectmenu(chkBoxVal(makeInput) ? "enable" : "disable");
@@ -208,6 +226,11 @@
                     mkWidget(true);
             }
         });
+
+        reCreate.bind("vclick", function() {
+            mkWidget(chkBoxVal(makeInput), $.extend({}, $("#testWidget").data(widgetName().widgetName).options));
+        });
+
         inputTypeSelect.bind("change", function() {
             mkWidget(chkBoxVal(makeInput));
         });
