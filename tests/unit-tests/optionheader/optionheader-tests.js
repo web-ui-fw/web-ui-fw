@@ -56,9 +56,9 @@
 
         // test indicator markup
         var withIndicator = $new_page.find('#optionheader-test-markup-indicator');
-        equal(withIndicator.siblings('.ui-option-header-triangle-arrow').length, 1);
+        equal(withIndicator.siblings('.ui-triangle-container').length, 1);
         var withoutIndicator = $new_page.find('#optionheader-test-markup-no-indicator');
-        equal(withoutIndicator.siblings('.ui-option-header-triangle-arrow').length, 0);
+        equal(withoutIndicator.siblings('.ui-triangle-container').length, 0);
 
         // test for classes
         ok(withIndicator.hasClass('ui-option-header'), 'should have base class');
@@ -288,7 +288,7 @@
 
         var oh = $new_page.find('#optionheader-test-click-2');
 
-        var triangle = oh.siblings('.ui-option-header-triangle-arrow');
+        var triangle = oh.siblings('.ui-triangle-container');
 
         oh.bind('collapse', function () {
           // 2
