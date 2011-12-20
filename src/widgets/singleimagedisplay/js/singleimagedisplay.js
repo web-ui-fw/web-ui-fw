@@ -83,10 +83,12 @@
         _imageErrorHandler: function () {
             this.usingNoContents = true;
             this._showNoContents();
+            this.element.trigger( "init" );
         },
 
         _showNoContents: function () {
-            if (!this.options.noContent) {
+            var noContentSrcIsEmpty = (this.options.noContent==null);
+            if (noContentSrcIsEmpty) {
                 this.resize( this.cover );
 
                 this.image.detach();
@@ -120,7 +122,7 @@
             this.element.css('float','left'); // so the cover overlays the other elements
 
             this.cover = ($('<div class="ui-singleimagedisplay-nocontent"/>'));
-            this.cover.hide(); //this.cover.css('visibility','hidden');
+            this.cover.hide();
             this.imageParent.append(this.cover);
 
             this.options.source = this.element.jqmData('src');
@@ -130,10 +132,14 @@
                 self.usingNoContents = false;
                 self.resize( self.image );
                 self.image.show();
+                self.element.trigger( "init" );
             });
 
             // when the image fails to load, substitute noContent
-            this.image.error( function() { self._imageErrorHandler() } );
+            this.image.error( function() {
+                self._imageErrorHandler();
+                self.element.trigger( "init" );
+            } );
 
             // set the src for the image
             this._setImgSrc();
@@ -141,6 +147,8 @@
             // resize the image immediately if it is visible
             if (self.image.is(':visible')) {
                 self.resize( self.image );
+
+                this.element.trigger( "init" );
             }
 
             // when the page is shown, resize the image
@@ -153,6 +161,7 @@
                     } else {
                         self.resize( self.image );
                     }
+                    self.element.trigger( "init" );
                 });
             }
 
@@ -163,6 +172,7 @@
                 } else {
                     self.resize( self.image );
                 }
+                self.element.trigger( "init" );
             });
         },
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>jQuery Mobile Single Image Display Tests</title>
+
+        <link rel="stylesheet" href="../../../build/web-ui-fw/latest/themes/default/web-ui-fw-theme.css"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="../../../build/web-ui-fw/latest/themes/default/web-ui-fw-widget.css"/>
+	    <link rel="stylesheet" href="../../../libs/js/submodules/jquery-mobile/external/qunit.css"/>
+
+        <script src="../../../build/web-ui-fw/latest/js/jquery.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/tests/unit/jquery.setNameSpace.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/jquery-mobile.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/web-ui-fw-libs.js"></script>
+        <script src="../../../build/web-ui-fw/latest/js/web-ui-fw.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/tests/jquery.testHelper.js"></script>
+        <script src="../../../libs/js/submodules/jquery-mobile/external/qunit.js"></script>
+
+        <script src="singleimagedisplay.js"></script>
+    </head>
+    <body>
+
+        <h1 id="qunit-header">jQuery Mobile Single Image Display Tests</h1>
+        <h2 id="qunit-banner"></h2>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests">
+        </ol>
+
+        <div data-nstest-role="page" id="singleimagedisplay-test-markup">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <img id="image0" data-nstest-src="images/singleimage_sm_s.jpg" data-nstest-role="singleimagedisplay" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-smallersquare-to-largersquare">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image1" data-nstest-src="images/singleimage_sm_s.jpg" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largersquare-to-smallersquare">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image2" data-nstest-src="images/singleimage_s.jpg" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largelandscape-to-smallersquare">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image3" data-nstest-src="images/singleimage_l.jpg" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largerportrait-to-smallersquare">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image4" data-nstest-src="images/singleimage_p.jpg" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-smallerlandscape-to-largersquare">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image5" data-nstest-src="images/singleimage_sm_l.jpg" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-default-broken">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image6" data-nstest-src="broken" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-custom-broken">
+	        <div data-nstest-role="header" data-nstest-position="inline">
+		        <h1>Single Image Display Tests</h1>
+	        </div>
+	        <div data-nstest-role="content">
+                <div style="border:10px ridge; width: 100px; height: 100px;">
+                    <img id="image7" data-nstest-src="broken" />
+                </div>
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-smallersquare-to-window">
+	        <div data-nstest-role="content">
+                <img id="image8" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largersquare-to-window">
+	        <div data-nstest-role="content">
+                <img id="image9" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largelandscape-to-window">
+	        <div data-nstest-role="content">
+                <img id="image10" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-largerportrait-to-window">
+	        <div data-nstest-role="content">
+                <img id="image11" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-resize-smallerlandscape-to-window">
+	        <div data-nstest-role="content">
+                <img id="image12" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-default-broken-window">
+	        <div data-nstest-role="content">
+                <img id="image13" data-nstest-src="broken" />
+	        </div>
+        </div>
+
+        <div data-role="page" data-nstest-role="page" id="singleimagedisplay-test-custom-broken-window">
+	        <div data-nstest-role="content">
+                <img id="image14" data-nstest-src="broken" />
+	        </div>
+        </div>
+
+    </body>
+</html>
