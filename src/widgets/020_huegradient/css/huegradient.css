@@ -1,0 +1,104 @@
+.todons-huegradient {
+    background: none; /* Old browsers */
+    background: -webkit-gradient(linear, left top, right top,
+        color-stop(  0%          ,rgba(255,  0,  0,1)),
+        color-stop( 16.666666667%,rgba(255,255,  0,1)),
+        color-stop( 33.333333333%,rgba(0  ,255,  0,1)),
+        color-stop( 50%          ,rgba(0  ,255,255,1)),
+        color-stop( 66.666666667%,rgba(0  ,  0,255,1)),
+        color-stop( 83.333333333%,rgba(255,  0,255,1)),
+        color-stop(100%          ,rgba(255,  0,  0,1))); /* Chrome,Safari4+ */
+    background: -moz-linear-gradient(left, 
+        rgba(255,  0,  0,1)   0%, 
+        rgba(255,255,  0,1)  16.666666667%,
+        rgba(  0,255,  0,1)  33.333333333%,
+        rgba(  0,255,255,1)  50%,
+        rgba(  0,  0,255,1)  66.666666667%,
+        rgba(255,  0,255,1)  83.333333333%,
+        rgba(255,  0,  0,1) 100%);
+    background: -webkit-linear-gradient(left,
+        rgba(255,  0,  0,1)   0%, 
+        rgba(255,255,  0,1)  16.666666667%,
+        rgba(  0,255,  0,1)  33.333333333%,
+        rgba(  0,255,255,1)  50%,
+        rgba(  0,  0,255,1)  66.666666667%,
+        rgba(255,  0,255,1)  83.333333333%,
+        rgba(255,  0,  0,1) 100%);
+    background: -o-linear-gradient(left,
+        rgba(255,  0,  0,1)   0%, 
+        rgba(255,255,  0,1)  16.666666667%,
+        rgba(  0,255,  0,1)  33.333333333%,
+        rgba(  0,255,255,1)  50%,
+        rgba(  0,  0,255,1)  66.666666667%,
+        rgba(255,  0,255,1)  83.333333333%,
+        rgba(255,  0,  0,1) 100%);
+    background: -ms-linear-gradient(left,
+        rgba(255,  0,  0,1)   0%, 
+        rgba(255,255,  0,1)  16.666666667%,
+        rgba(  0,255,  0,1)  33.333333333%,
+        rgba(  0,255,255,1)  50%,
+        rgba(  0,  0,255,1)  66.666666667%,
+        rgba(255,  0,255,1)  83.333333333%,
+        rgba(255,  0,  0,1) 100%);
+    background: linear-gradient(left,
+        rgba(255,  0,  0,1)   0%, 
+        rgba(255,255,  0,1)  16.666666667%,
+        rgba(  0,255,  0,1)  33.333333333%,
+        rgba(  0,255,255,1)  50%,
+        rgba(  0,  0,255,1)  66.666666667%,
+        rgba(255,  0,255,1)  83.333333333%,
+        rgba(255,  0,  0,1) 100%);
+}
+
+/* Full-saturation magic grayscale values were taken from the Gimp */
+.todons-huegradient-disabled {
+    background: none; /* Old browsers */
+    background: -webkit-gradient(linear, left top, right top,
+        color-stop(  0%          ,rgba( 54, 54, 54,1)),
+        color-stop( 16.666666667%,rgba(237,237,237,1)),
+        color-stop( 33.333333333%,rgba(182,182,182,1)),
+        color-stop( 50%          ,rgba(201,201,201,1)),
+        color-stop( 66.666666667%,rgba( 18, 18, 18,1)),
+        color-stop( 83.333333333%,rgba( 73, 73, 73,1)),
+        color-stop(100%          ,rgba( 54, 54, 54,1))); /* Chrome,Safari4+ */
+    background: -moz-linear-gradient(left, 
+        rgba( 54, 54, 54,1)   0%, 
+        rgba(237,237,237,1)  16.666666667%,
+        rgba(182,182,182,1)  33.333333333%,
+        rgba(201,201,201,1)  50%,
+        rgba( 18, 18, 18,1)  66.666666667%,
+        rgba( 73, 73, 73,1)  83.333333333%,
+        rgba( 54, 54, 54,1) 100%);
+    background: -webkit-linear-gradient(left,
+        rgba( 54, 54, 54,1)   0%, 
+        rgba(237,237,237,1)  16.666666667%,
+        rgba(182,182,182,1)  33.333333333%,
+        rgba(201,201,201,1)  50%,
+        rgba( 18, 18, 18,1)  66.666666667%,
+        rgba( 73, 73, 73,1)  83.333333333%,
+        rgba( 54, 54, 54,1) 100%);
+    background: -o-linear-gradient(left,
+        rgba( 54, 54, 54,1)   0%, 
+        rgba(237,237,237,1)  16.666666667%,
+        rgba(182,182,182,1)  33.333333333%,
+        rgba(201,201,201,1)  50%,
+        rgba( 18, 18, 18,1)  66.666666667%,
+        rgba( 73, 73, 73,1)  83.333333333%,
+        rgba( 54, 54, 54,1) 100%);
+    background: -ms-linear-gradient(left,
+        rgba( 54, 54, 54,1)   0%, 
+        rgba(237,237,237,1)  16.666666667%,
+        rgba(182,182,182,1)  33.333333333%,
+        rgba(201,201,201,1)  50%,
+        rgba( 18, 18, 18,1)  66.666666667%,
+        rgba( 73, 73, 73,1)  83.333333333%,
+        rgba( 54, 54, 54,1) 100%);
+    background: linear-gradient(left,
+        rgba( 54, 54, 54,1)   0%, 
+        rgba(237,237,237,1)  16.666666667%,
+        rgba(182,182,182,1)  33.333333333%,
+        rgba(201,201,201,1)  50%,
+        rgba( 18, 18, 18,1)  66.666666667%,
+        rgba( 73, 73, 73,1)  83.333333333%,
+        rgba( 54, 54, 54,1) 100%);
+}
