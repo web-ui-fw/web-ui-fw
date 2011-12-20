@@ -513,16 +513,16 @@ $(document).bind("pageinit", function() {
             var displayImage = $("#singleimagedisplay-display-image");
 
             var img = $(this).find('img:jqmData(role=singleimagedisplay)');
-            var src = null;
+            var source = null;
             var noContent = null;
             if (img.length>0) {
-                src = img.singleimagedisplay('option', 'source');
+                source = img.singleimagedisplay('option', 'source');
                 noContent = img.singleimagedisplay('option', 'noContent');
             };
 
             $.mobile.changePage("#singleimagedisplay-display");
 
-            displayImage.singleimagedisplay('option', 'source', src);
+            displayImage.singleimagedisplay('option', 'source', source);
             displayImage.singleimagedisplay('option', 'noContent', noContent);
         });
 

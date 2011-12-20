@@ -1,6 +1,7 @@
 var TESTS = {
     "testPages":[
-    	"progressbar/index.html",
+        "progressbar/index.html",
+        "singleimagedisplay/index.html",
         "swipelist/index.html",
         "processingcircle/index.html",
         "autodividers/index.html",
