@@ -57,25 +57,6 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     }
 });
 
-// Crutches for IE: it is incapable of multi-stop gradients, so add multiple divs inside the given div, each with a two-
-// point gradient
-if ($.mobile.browser.ie)
-    $.todons.colorwidget.hueGradient = function(div) {
-        var rainbow = ["#ff0000", "#ffff00", "#00ff00", "#00ffff", "#0000ff", "#ff00ff", "#ff0000"];
-        for (var Nix = 0 ; Nix < 6 ; Nix++) {
-            $("<div></div>")
-                .css({
-                    position: "absolute",
-                    width: (100 / 6) + "%",
-                    height: "100%",
-                    left: (Nix * 100 / 6) + "%",
-                    top: "0px",
-                    filter: "progid:DXImageTransform.Microsoft.gradient (startColorstr='" + rainbow[Nix] + "', endColorstr='" + rainbow[Nix + 1] + "', GradientType = 1)"
-                })
-                .appendTo(div);
-        }
-    };
-
 $.todons.colorwidget.clrlib = {
     nearestInt: function(val) {
         var theFloor = Math.floor(val);
