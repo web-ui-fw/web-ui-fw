@@ -103,6 +103,9 @@ $(document).bind("pagecreate", function () {
             $("#datetimepicker-demo .selected-date").text(newDate.toString());
         };
     $("#demo-date").bind("date-changed", updateDate);
+    $("#disable-datetimepicker").bind("change", function() {
+        $("#demo-date").datetimepicker("option", "disabled", $("#disable-datetimepicker").is(":checked"));
+    });
 
     $('#progressbar-demo').bind('pageshow', function (e) {
         progressbarAnimator.updateProgressBar($(this).find('#progressbar1'), 200);
