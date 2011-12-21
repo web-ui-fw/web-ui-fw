@@ -102,6 +102,10 @@
 // after _create() if the element that anchors your widget is on a visible page. Otherwise, it will be called when the
 // page to which the widget belongs emits the "pageshow" event.
 //
+// NB: If your widget is inside a container which is itself not visible, such as an expandable or a collapsible, your
+// widget will remain hidden even though "pageshow" is fired and therefore _realize is called. In this case, widths and
+// heights will be unreliable even during _realize.
+//
 // III. systematic option handling
 //
 // If a widget has lots of options, the _setOption function can become a long switch for setting each recognized option.
