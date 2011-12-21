@@ -148,7 +148,7 @@ $(document).bind("pagecreate", function () {
         $("#myVolumeControl").volumecontrol("open");
     });
     $("#volumecontrol_setBasicTone").bind("change", function (e) {
-        var basicTone = !($("#volumecontrol_setBasicTone").next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on"));
+        var basicTone = $("#volumecontrol_setBasicTone").is(":checked");
 
         if (basicTone) {
             $("#myVolumeControl").volumecontrol("option", "basicTone", true);
@@ -160,8 +160,7 @@ $(document).bind("pagecreate", function () {
     });
 
     $("#checkHideInput").bind("change", function (e) {
-        $("#colorpickerbutton").colorpickerbutton("option", "hideInput",
-            !($("#checkHideInput").next('label').find(".ui-icon").hasClass("ui-icon-checkbox-on")));
+        $("#colorpickerbutton").colorpickerbutton("option", "hideInput", $("#checkHideInput").is(":checked"));
     });
 
     $('#slider-demo').bind('pageshow', function () {
