@@ -128,12 +128,16 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     _realSetTheme: function(dst, theme) {
         var classes = (dst.attr("class") || "").split(" "),
             alreadyAdded = true,
-            currentTheme = null;
+            currentTheme = null,
+            matches;
 
         while (classes.length > 0) {
             currentTheme = classes.pop();
-            if (currentTheme.match(/^ui-body-[a-z]$/))
+            matches = currentTheme.match(/^ui-body-([a-z])$/);
+            if (matches && matches.length > 1) {
+                currentTheme = matches[1];
                 break;
+            }
             else
                 currentTheme = null;
         }
