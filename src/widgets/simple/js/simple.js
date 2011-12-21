@@ -219,8 +219,8 @@ $.widget("mobile.simple", $.mobile.widget, {
     // reset our timer.
     refresh: function() {
         if (this._data.status == this._constants.status_running) {
-            this._stop();
-            this._start();
+            this._stop(this);
+            this._start(this);
         }
     }
 });
