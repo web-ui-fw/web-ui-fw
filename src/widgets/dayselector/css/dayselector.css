@@ -1,4 +1,8 @@
 /* dayselector CSS */
+.ui-dayselector {
+    display: inline-block;
+}
+
 .ui-dayselector label {
     height: 56px;
     width: 64px;
@@ -10,4 +14,12 @@
 
 .ui-dayselector-label-0 {
     color: red;
+}
+
+.todons-dayselector-disabled .ui-dayselector-label-6 {
+    color: #121212;
+}
+
+.todons-dayselector-disabled .ui-dayselector-label-0 {
+    color: #363636;
 }
