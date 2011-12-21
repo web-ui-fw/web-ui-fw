@@ -166,6 +166,17 @@ $(document).bind("pagecreate", function () {
         $("#colorpickerbutton").colorpickerbutton("option", "hideInput", $("#checkHideInput").is(":checked"));
     });
 
+
+    $("#disable-colorwidgets").bind("change", function(e) {
+        var disabled = $("#disable-colorwidgets").is(":checked");
+        $("#colortitle").colortitle("option", "disabled", disabled);
+        $("#colorpalette").colorpalette("option", "disabled", disabled);
+        $("#colorpickerbutton-noform").colorpickerbutton("option", "disabled", disabled);
+        $("#colorpickerbutton").colorpickerbutton("option", "disabled", disabled);
+        $("#hsvpicker").hsvpicker("option", "disabled", disabled);
+        $("#colorpicker").colorpicker("option", "disabled", disabled);
+    });
+
     $('#slider-demo').bind('pageshow', function () {
         var popupEnabled = false;
 
