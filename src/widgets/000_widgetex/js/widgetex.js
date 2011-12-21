@@ -146,6 +146,12 @@
 //
 // If your widget does not derive from widgetex, you can still define "_value" as described above and call
 // $.todons.widgetex.setValue(widget, newValue).
+//
+// V. Systematic enabled/disabled handling for input elements
+//
+// widgetex implements _setDisabled which will disable the input associated with this widget, if any. Thus, if you derive
+// from widgetex and you plan on implementing the disabled state, you should chain up to
+// $.todons.widgetex.prototype._setDisabled(value), rather than $.Widget.prototype._setOption("disabled", value).
 
 (function($, undefined) {
 
@@ -208,6 +214,12 @@ $.widget("todons.widgetex", $.mobile.widget, {
             this[setter](value);
         else
             $.mobile.widget.prototype._setOption.apply(this, arguments);
+    },
+
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        if (this.element.is("input"))
+            this.element.attr("disabled", value);
     },
 
     _setValue: function(newValue) {
