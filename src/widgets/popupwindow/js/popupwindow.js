@@ -189,6 +189,12 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
         this.element.attr("data-" + ($.mobile.ns || "") + "show-arrow", value);
     },
 
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        if (value)
+            this.close();
+    },
+
     _placementCoords: function(x, y) {
         // Try and center the overlay over the given coordinates
         var ret,
@@ -286,7 +292,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     open: function(x_where, y_where) {
-        if (!this._isOpen) {
+        if (!(this._isOpen || this.options.disabled)) {
             var self = this,
                 x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
                 y = (undefined === y_where ? window.innerHeight / 2 : y_where),
