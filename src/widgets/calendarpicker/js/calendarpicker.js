@@ -461,6 +461,13 @@
             return this.isopen;
         },
 
+        _setDisabled: function(value) {
+            $.Widget.prototype._setOption.call(this, "disabled", value);
+            if (this.isopen && value)
+                this.close();
+            this.element[value ? "addClass" : "removeClass"]("ui-disabled");
+        },
+
         open: function() {
             // Open the picker
             if (this.isopen === true ) { return false; } else { this.isopen = true; } // Ignore if already open
