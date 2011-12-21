@@ -485,6 +485,14 @@
             });
         },
 
+        widget: function() { return this._ui.container; },
+
+        _setDisabled: function(value) {
+            $.Widget.prototype._setOption.call(this, "disabled", value);
+            this._hideDataSelector(this._ui.selector);
+            this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
+        },
+
         getValue: function() {
             var actualHours = this._clampHours(this.data.hours);
             if (actualHours === 12 && !this.data.pm)
