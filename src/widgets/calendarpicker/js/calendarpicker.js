@@ -366,9 +366,15 @@
                                 .appendTo(thisRow)
                                 .addClass('ui-btn-up-'+calmode.thisTheme)
                                 .unbind().bind((!skipThis)?'vclick':'error', function(e) {
+                                        var theDate = self._formatDate(self.theDate);
+
                                         e.preventDefault();
                                         self.theDate.setDate($(this).attr('data-date'));
-                                        self.element.trigger('selectedDate',[self._formatDate(self.theDate)]);
+                                        self.element.trigger('selectedDate',[theDate]);
+                                        if (self.element.is("input"))
+                                            self.element
+                                                .attr("value", theDate)
+                                                .trigger("change");
                                         self.close();
                                 })
                                 .css((skipThis)?'color':'nocolor', o.disabledDayColor);
