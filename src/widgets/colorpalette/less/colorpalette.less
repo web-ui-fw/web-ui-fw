@@ -11,6 +11,14 @@
 @colorpalette-preview-actual-width:  @colorpalette-preview-total-width  - 2 * @colorpalette-item-border-width;
 @colorpalette-preview-actual-height: @colorpalette-preview-total-height - 2 * @colorpalette-item-border-width;
 
+.todons-colorpalette-disabled {
+    .colorpalette-table {
+        .colorpalette-choice-active {
+            border-color: @todons-selected-color-disabled !important;
+        }
+    }
+}
+
 .ui-colorpalette {
     display: table;
     padding-left:   24px;

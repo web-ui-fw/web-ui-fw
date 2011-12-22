@@ -78,7 +78,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             .after(this._ui.clrpalette);
 
         this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
-            var clr = $(e.target).css("background-color"),
+            var clr = $.todons.colorwidget.prototype._getElementColor.call(this, $(e.target)),
                 Nix,
                 nChoices = self._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),
                 choiceId, rgbMatches;
@@ -96,7 +96,8 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 
             $(e.target).addClass("colorpalette-choice-active");
             $.todons.colorwidget.prototype._setColor.call(self, clr);
-            self._ui.preview.css("background", clr);
+            $.todons.colorwidget.prototype._setElementColor.call(self, self._ui.preview,
+                $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)), "background");
         });
     },
 
@@ -107,6 +108,16 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             this._ui.previewContainer.css("display", "none");
         this.element.attr("data-" + ($.mobile.ns || "") + "show-preview", show);
         this.options.showPreview = show;
+    },
+
+    widget: function(value) {
+        return this._ui.clrpalette;
+    },
+
+    _setDisabled: function(value) {
+        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        this._ui.clrpalette[value ? "addClass" : "removeClass"]("ui-disabled");
+        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpalette);
     },
 
     _setColor: function(clr) {
@@ -121,7 +132,8 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
                 theFloor = Math.floor(offset),
                 newClr;
 
-            this._ui.preview.css("background", clr);
+            $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.preview,
+                $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)), "background");
 
             offset = (offset - theFloor < 0.5)
                 ? (offset - theFloor)
@@ -138,7 +150,8 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 
                 newClr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSLToRGB(hsl));
 
-                this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").css("background-color", newClr);
+                $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]"),
+                    $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(newClr)), "background");
             }
 
             if (activeIdx != -1) {
