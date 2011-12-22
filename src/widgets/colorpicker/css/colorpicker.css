@@ -1,5 +1,5 @@
 .ui-colorpicker .colorpicker-hs-container .sat-gradient {
-    background: rgb(128,128,128); /* Old browsers */
+    background: none; /* Old browsers */
     background: -webkit-gradient(linear, left top, left bottom,
         color-stop(0%,rgba(128,128,128,0)), 
         color-stop(100%,rgba(128,128,128,1))); /* Chrome,Safari4+ */
@@ -22,7 +22,7 @@
 }
 
 .ui-colorpicker .colorpicker-l-container .l-gradient {
-    background: rgb(0,0,0); /* Old browsers */
+    background: none; /* Old browsers */
     background: -webkit-gradient(linear, left top, left bottom,
         color-stop(0%,rgba(0,0,0,1)),
         color-stop(100%,rgba(255,255,255,1))); /* Chrome,Safari4+ */

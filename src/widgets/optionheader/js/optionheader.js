@@ -316,6 +316,11 @@ $.widget("todons.optionheader", $.todons.widgetex, {
         }
     },
 
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this.element.add(this.element.prev(".ui-triangle-container"))[value ? "addClass" : "removeClass"]("ui-disabled");
+    },
+
     // Takes the same options as toggle()
     collapse: function (options) {
         if (!this.isCollapsed) {

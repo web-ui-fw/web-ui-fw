@@ -208,6 +208,11 @@ $.widget("mobile.simple", $.mobile.widget, {
             case 'updateInterval':
                 this.options.updateInterval = value;
                 break;
+            case 'disabled':
+                console.log(value);
+                this.element[value ? "addClass" : "removeClass"]("ui-disabled");
+                this.options.disabled = value;
+                break;
             }
             this.refresh();
         }

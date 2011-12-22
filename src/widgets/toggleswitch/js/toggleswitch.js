@@ -118,6 +118,11 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
             obj[b ? "addClass" : "removeClass"]("toggleswitch-button-transparent");
     },
 
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this._ui.outer[value ? "addClass" : "removeClass"]("ui-disabled");
+    },
+
     _setChecked: function(checked) {
         if (this.options.checked != checked) {
             if (this.options.checked === undefined) {
