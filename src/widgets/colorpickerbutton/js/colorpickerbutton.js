@@ -118,8 +118,11 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
+            var clrlib = $.todons.colorwidget.clrlib;
+
             this._ui.hsvpicker.hsvpicker("option", "color", this.options.color);
-            this._ui.buttonContents.css("color", this.options.color);
+            $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.buttonContents, 
+                clrlib.RGBToHSL(clrlib.HTMLToRGB(this.options.color)), "color");
         }
     },
 
@@ -140,14 +143,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.popup.popupwindow("option", "disabled", value);
         this._ui.button[value ? "addClass" : "removeClass"]("ui-disabled");
-        if (this.options.color !== undefined)
-            this._ui.buttonContents.css("color",
-                value 
-                    ? $.todons.colorwidget.clrlib.RGBToHTML(
-                        $.todons.colorwidget.clrlib.HSLToGray(
-                            $.todons.colorwidget.clrlib.RGBToHSL(
-                                $.todons.colorwidget.clrlib.HTMLToRGB(this.options.color))))
-                    : this.options.color);
+        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.button);
     },
 
     open: function() {
