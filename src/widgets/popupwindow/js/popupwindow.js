@@ -200,9 +200,9 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
         var ret,
             menuHeight = this._ui.container.outerHeight(true),
             menuWidth = this._ui.container.outerWidth(true),
-            scrollTop = $( window ).scrollTop(),
-            screenHeight = window.innerHeight,
-            screenWidth = window.innerWidth,
+            scrollTop = $(window).scrollTop(),
+            screenHeight = $(window).height(),
+            screenWidth = $(window).width(),
             halfheight = menuHeight / 2,
             maxwidth = parseFloat( this._ui.container.css( "max-width" ) ),
             calcCoords = function(coords) {
