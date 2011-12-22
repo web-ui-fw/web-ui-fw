@@ -175,7 +175,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _updateSelectors: function(hsl) {
-        var clr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSLToRGB([hsl[0], 1.0 - hsl[1], hsl[2]])),
+        var clr = $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.hs.selector, [hsl[0], 1.0 - hsl[1], hsl[2]], "background").clr,
             gray = $.todons.colorwidget.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
         this._ui.hs.valMask.css((hsl[2] < 0.5)
@@ -184,7 +184,6 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         this._ui.hs.selector.css({
             left       : (hsl[0] / 360 * this._ui.hs.eventSource.width()),
             top        : (hsl[1] * this._ui.hs.eventSource.height()),
-            background : clr
         });
         this._ui.l.selector.css({
             top        : (hsl[2] * this._ui.l.eventSource.height()),
@@ -199,17 +198,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.hs.hueGradient.huegradient("option", "disabled", value);
         this._ui.clrpicker[value ? "addClass" : "removeClass"]("ui-disabled");
-        if (this.dragging_hsl !== undefined)
-            if (value) {
-                this._ui.hs.selector.css("background",
-                    $.todons.colorwidget.clrlib.RGBToHTML(
-                        $.todons.colorwidget.clrlib.HSLToGray(
-                            [ this.dragging_hsl[0],
-                              1.0 - this.dragging_hsl[1],
-                              this.dragging_hsl[2] ])));
-            }
-            else
-                this._updateSelectors(this.dragging_hsl);
+        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpicker);
     },
 
     _setColor: function(clr) {
