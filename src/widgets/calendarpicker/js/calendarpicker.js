@@ -468,7 +468,7 @@
         },
 
         _setDisabled: function(value) {
-            $.Widget.prototype._setOption.call(this, "disabled", value);
+            $.todons.widgetex.prototype._setDisabled.call(this, value);
             if (this.isopen && value)
                 this.close();
             this.element[value ? "addClass" : "removeClass"]("ui-disabled");

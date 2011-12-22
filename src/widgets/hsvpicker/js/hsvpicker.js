@@ -208,7 +208,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     },
 
     _setDisabled: function(value) {
-        $.Widget.prototype._setOption.call(this, "disabled", value);
+        $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
         this._ui.hue.hue.huegradient("option", "disabled", value);
 

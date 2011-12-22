@@ -488,7 +488,7 @@
         widget: function() { return this._ui.container; },
 
         _setDisabled: function(value) {
-            $.Widget.prototype._setOption.call(this, "disabled", value);
+            $.todons.widgetex.prototype._setDisabled.call(this, value);
             this._hideDataSelector(this._ui.selector);
             this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
         },

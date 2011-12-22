@@ -119,7 +119,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     },
 
     _setDisabled: function(value) {
-        $.Widget.prototype._setOption.call(this, "disabled", value);
+        $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.outer[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 

@@ -137,7 +137,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     },
 
     _setDisabled: function(value) {
-        $.Widget.prototype._setOption.call(this, "disabled", value);
+        $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.popup.popupwindow("option", "disabled", value);
         this._ui.button[value ? "addClass" : "removeClass"]("ui-disabled");
         if (this.options.color !== undefined)

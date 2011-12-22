@@ -72,7 +72,7 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
     widget: function() { return this._ui.clrtitle; },
 
     _setDisabled: function(value) {
-        $.Widget.prototype._setOption.call(this, "disabled", value);
+        $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.clrtitle[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 
