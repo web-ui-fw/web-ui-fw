@@ -38,6 +38,37 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         signal: "colorchanged"
     },
 
+    _getElementColor: function(el, cssProp) {
+        return el.jqmData("clr");
+    },
+
+    _setElementColor: function(el, hsl, cssProp) {
+        var clrlib = $.todons.colorwidget.clrlib,
+            clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
+            dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
+
+        el.jqmData("clr", clr);
+        el.jqmData("dclr", dclr);
+        el.jqmData("cssProp", cssProp);
+        el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
+        el.css(cssProp, this.options.disabled ? dclr : clr);
+
+        return { clr: clr, dclr: dclr };
+    },
+
+    _displayDisabledState: function(toplevel) {
+        var self = this,
+            sel = ":jqmData(has-dclr='true')",
+            dst = toplevel.is(sel) ? toplevel : $([]);
+        dst
+            .add(toplevel.find(sel))
+            .each(function() {
+                el = $(this);
+
+                el.css(el.jqmData("cssProp"), el.jqmData(self.options.disabled ? "dclr" : "clr"));
+            });
+    },
+
     _setColor: function(value) {
         var currentValue = (this.options.color + "");
 
