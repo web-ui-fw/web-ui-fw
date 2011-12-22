@@ -186,54 +186,36 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     },
 
     _updateSelectors: function(hsv) {
-        var  clr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSVToRGB(hsv)),
-            hclr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSVToRGB([hsv[0], 1.0, 1.0])),
-            vclr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSVToRGB([hsv[0], hsv[1], 1.0]));
+        var clrlib = $.todons.colorwidget.clrlib,
+            clrwidget = $.todons.colorwidget.prototype,
+             clr = clrlib.HSVToHSL(hsv),
+            hclr = clrlib.HSVToHSL([hsv[0], 1.0, 1.0]),
+            vclr = clrlib.HSVToHSL([hsv[0], hsv[1], 1.0]);
 
-        this._ui.hue.selector.css({ left : this._ui.hue.eventSource.width() * hsv[0] / 360, background : clr });
+        this._ui.hue.selector.css({ left : this._ui.hue.eventSource.width() * hsv[0] / 360});
+        clrwidget._setElementColor.call(this, this._ui.hue.selector,  clr, "background");
         if ($.mobile.browser.ie)
             this._ui.hue.hue.find("*").css("opacity", hsv[1]);
         else
             this._ui.hue.hue.css("opacity", hsv[1]);
         this._ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
 
-        this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1],       background : clr });
-        this._ui.sat.hue.css("background", hclr);
+        this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1]});
+        clrwidget._setElementColor.call(this, this._ui.sat.selector,  clr, "background");
+        clrwidget._setElementColor.call(this, this._ui.sat.hue,      hclr, "background");
         this._ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
-        this._ui.val.selector.css({ left : this._ui.val.eventSource.width() * hsv[2],       background : clr });
-        this._ui.val.hue.css("background", vclr);
-
-        $.todons.colorwidget.prototype._setColor.call(this, clr);
+        this._ui.val.selector.css({ left : this._ui.val.eventSource.width() * hsv[2]});
+        clrwidget._setElementColor.call(this, this._ui.val.selector,  clr, "background");
+        clrwidget._setElementColor.call(this, this._ui.val.hue,      vclr, "background");
+        clrwidget._setColor.call(this, clrlib.RGBToHTML(clrlib.HSLToRGB(clr)));
     },
 
     _setDisabled: function(value) {
         $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
         this._ui.hue.hue.huegradient("option", "disabled", value);
-
-        if (this.dragging_hsv !== undefined) {
-            if (value) {
-                var clr = $.todons.colorwidget.clrlib.RGBToHTML(
-                            $.todons.colorwidget.clrlib.HSLToGray(
-                                $.todons.colorwidget.clrlib.HSVToHSL(this.dragging_hsv))),
-                    hclr = $.todons.colorwidget.clrlib.RGBToHTML(
-                            $.todons.colorwidget.clrlib.HSLToGray(
-                                $.todons.colorwidget.clrlib.HSVToHSL([this.dragging_hsv[0], 1.0, 1.0]))),
-                    vclr = $.todons.colorwidget.clrlib.RGBToHTML(
-                            $.todons.colorwidget.clrlib.HSLToGray(
-                                $.todons.colorwidget.clrlib.HSVToHSL([this.dragging_hsv[0], this.dragging_hsv[1], 1.0])));
-
-                this._ui.hue.selector.css("background", clr);
-                this._ui.sat.selector.css("background", clr);
-                this._ui.val.selector.css("background", clr);
-
-                this._ui.sat.hue.css("background", hclr);
-                this._ui.val.hue.css("background", vclr);
-            }
-            else
-                this._updateSelectors(this.dragging_hsv);
-        }
+        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.container);
     },
 
     _setColor: function(clr) {
