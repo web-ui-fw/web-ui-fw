@@ -91,13 +91,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             .css("display", "none")
             .after(this._ui.container);
 
-        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
-        if ($.mobile.browser.ie) {
-            this._ui.sat.gradient.css("background", "none");
-            this._ui.val.gradient.css("background", "none");
-            this._ui.hue.hue.css("background", "none");
-            $.todons.colorwidget.hueGradient(this._ui.hue.hue);
-        }
+        this._ui.hue.hue.huegradient();
 
         $.extend(this, {
             dragging_hsv: [ 0, 0, 0],
@@ -211,6 +205,35 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         this._ui.val.hue.css("background", vclr);
 
         $.todons.colorwidget.prototype._setColor.call(this, clr);
+    },
+
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
+        this._ui.hue.hue.huegradient("option", "disabled", value);
+
+        if (this.dragging_hsv !== undefined) {
+            if (value) {
+                var clr = $.todons.colorwidget.clrlib.RGBToHTML(
+                            $.todons.colorwidget.clrlib.HSLToGray(
+                                $.todons.colorwidget.clrlib.HSVToHSL(this.dragging_hsv))),
+                    hclr = $.todons.colorwidget.clrlib.RGBToHTML(
+                            $.todons.colorwidget.clrlib.HSLToGray(
+                                $.todons.colorwidget.clrlib.HSVToHSL([this.dragging_hsv[0], 1.0, 1.0]))),
+                    vclr = $.todons.colorwidget.clrlib.RGBToHTML(
+                            $.todons.colorwidget.clrlib.HSLToGray(
+                                $.todons.colorwidget.clrlib.HSVToHSL([this.dragging_hsv[0], this.dragging_hsv[1], 1.0])));
+
+                this._ui.hue.selector.css("background", clr);
+                this._ui.sat.selector.css("background", clr);
+                this._ui.val.selector.css("background", clr);
+
+                this._ui.sat.hue.css("background", hclr);
+                this._ui.val.hue.css("background", vclr);
+            }
+            else
+                this._updateSelectors(this.dragging_hsv);
+        }
     },
 
     _setColor: function(clr) {

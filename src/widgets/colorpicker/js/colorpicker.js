@@ -70,16 +70,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     _create: function() {
         var self = this;
 
-        // Crutches for IE: it uses the filter css property, and if the background is also set, the transparency goes bye-bye
-        if ($.mobile.browser.ie) {
-            this._ui.hs.gradient.css("background", "none");
-            this._ui.l.gradient.css("background", "none");
-            $.todons.colorwidget.hueGradient(this._ui.hs.hueGradient);
-        }
-
         this.element
             .css("display", "none")
             .after(this._ui.clrpicker);
+
+        this._ui.hs.hueGradient.huegradient();
 
         $.extend( self, {
             dragging: false,
@@ -196,6 +191,25 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             background : gray
         });
         $.todons.colorwidget.prototype._setColor.call(this, clr);
+    },
+
+    widget: function() { return this._ui.clrpicker; },
+
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this._ui.hs.hueGradient.huegradient("option", "disabled", value);
+        this._ui.clrpicker[value ? "addClass" : "removeClass"]("ui-disabled");
+        if (this.dragging_hsl !== undefined)
+            if (value) {
+                this._ui.hs.selector.css("background",
+                    $.todons.colorwidget.clrlib.RGBToHTML(
+                        $.todons.colorwidget.clrlib.HSLToGray(
+                            [ this.dragging_hsl[0],
+                              1.0 - this.dragging_hsl[1],
+                              this.dragging_hsl[2] ])));
+            }
+            else
+                this._updateSelectors(this.dragging_hsl);
     },
 
     _setColor: function(clr) {

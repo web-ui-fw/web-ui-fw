@@ -125,6 +125,16 @@
             this.element.controlgroup({excludeInvisible: false});
         },
 
+        _setOption: function(key, value) {
+            if (key === "disabled")
+                this._setDisabled(value);
+        },
+
+        _setDisabled: function(value) {
+            $.Widget.prototype._setOption.call(this, "disabled", value);
+            this.element[value ? "addClass" : "removeClass"]("ui-disabled");
+        },
+
         value: function () {
             var values = this.checkboxes.filter(':checked').map(function () {
                 return this.value;

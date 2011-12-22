@@ -136,11 +136,21 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         this.element.attr("data-" + ($.mobile.ns || "") + "close-text", value);
     },
 
-    open: function() {
-        if ( this.options.disabled ) {
-            return;
-        }
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this._ui.popup.popupwindow("option", "disabled", value);
+        this._ui.button[value ? "addClass" : "removeClass"]("ui-disabled");
+        if (this.options.color !== undefined)
+            this._ui.buttonContents.css("color",
+                value 
+                    ? $.todons.colorwidget.clrlib.RGBToHTML(
+                        $.todons.colorwidget.clrlib.HSLToGray(
+                            $.todons.colorwidget.clrlib.RGBToHSL(
+                                $.todons.colorwidget.clrlib.HTMLToRGB(this.options.color))))
+                    : this.options.color);
+    },
 
+    open: function() {
         this._ui.popup.popupwindow("open",
             this._ui.button.offset().left + this._ui.button.outerWidth()  / 2,
             this._ui.button.offset().top  + this._ui.button.outerHeight() / 2);
@@ -154,14 +164,8 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     },
 
     close: function() {
-        if ( this.options.disabled ) {
-            return;
-        }
-
-        var self = this;
-
-        self._focusButton();
-        self._ui.popup.popupwindow("close");
+        this._focusButton();
+        this._ui.popup.popupwindow("close");
     }
 });
 

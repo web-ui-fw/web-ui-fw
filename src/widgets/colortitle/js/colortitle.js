@@ -69,6 +69,13 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
 
     },
 
+    widget: function() { return this._ui.clrtitle; },
+
+    _setDisabled: function(value) {
+        $.Widget.prototype._setOption.call(this, "disabled", value);
+        this._ui.clrtitle[value ? "addClass" : "removeClass"]("ui-disabled");
+    },
+
     _setColor: function(clr) {
         if ($.todons.colorwidget.prototype._setColor.call(this, clr))
             this._ui.header.text(this.options.color);
