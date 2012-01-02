@@ -289,6 +289,11 @@ $(document).bind("pagecreate", function () {
         }
     });
 
+    $("#disable-switches").bind("change", function() {
+        $("#switch-demo").find(":todons-toggleswitch").toggleswitch("option", "disabled",
+            $("#disable-switches").is(":checked"));
+    });
+
     var coordSwitchesAreInit = false;
     $("#switch-demo").bind("pageshow", function(e) {
         if (coordSwitchesAreInit) return;
