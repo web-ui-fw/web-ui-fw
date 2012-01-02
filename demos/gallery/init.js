@@ -136,6 +136,12 @@ $(document).bind("pagecreate", function () {
         });
     });
 
+    $("#disable-dayselectors").bind("change", function() {
+        var disabled = $("#disable-dayselectors").is(":checked");
+
+        $(":jqmData(role='dayselector')").dayselector("option", "disabled", disabled);
+    });
+
     $('#groupindex-demo').bind('pageshow', function () {
         $('#groupindex').scrolllistview();
     });
