@@ -38,6 +38,19 @@ var progressbarAnimator = {
 };
 
 $(document).bind("pagecreate", function () {
+    $("input[type='checkbox'][data-widget-type-list]").bind("change", function() {
+        var ls = $(this).attr("data-widget-type-list").split(","),
+            page = $(this).closest(":jqmData(role='page')"),
+            disabled = $(this).is(":checked");
+
+        $.each(ls, function(idx, widgetType) {
+            var ar = widgetType.split("-");
+
+            if (ar.length === 2)
+                page.find(":" + widgetType)[ar[1]]("option", "disabled", disabled);
+        });
+    });
+
     $('#processingcircle-demo').bind('pageshow', function (e) {
         $(this).find(':jqmData(role="processingcircle")').each(function () {
             var randomWait = 500 * (Math.floor(Math.random() * 6) + 4);
@@ -103,9 +116,6 @@ $(document).bind("pagecreate", function () {
             $("#datetimepicker-demo .selected-date").text(newDate.toString());
         };
     $("#demo-date").bind("date-changed", updateDate);
-    $("#disable-datetimepicker").bind("change", function() {
-        $("#demo-date").datetimepicker("option", "disabled", $("#disable-datetimepicker").is(":checked"));
-    });
 
     $('#progressbar-demo').bind('pageshow', function (e) {
         progressbarAnimator.updateProgressBar($(this).find('#progressbar1'), 200);
@@ -134,12 +144,6 @@ $(document).bind("pagecreate", function () {
             var valuesStr = $("#dayselector1").dayselector('value').join(', ');
             $(".selectedDay").text(valuesStr);
         });
-    });
-
-    $("#disable-dayselectors").bind("change", function() {
-        var disabled = $("#disable-dayselectors").is(":checked");
-
-        $(":jqmData(role='dayselector')").dayselector("option", "disabled", disabled);
     });
 
     $('#groupindex-demo').bind('pageshow', function () {
@@ -172,16 +176,6 @@ $(document).bind("pagecreate", function () {
         $("#colorpickerbutton").colorpickerbutton("option", "hideInput", $("#checkHideInput").is(":checked"));
     });
 
-
-    $("#disable-colorwidgets").bind("change", function(e) {
-        var disabled = $("#disable-colorwidgets").is(":checked");
-        $("#colortitle").colortitle("option", "disabled", disabled);
-        $("#colorpalette").colorpalette("option", "disabled", disabled);
-        $("#colorpickerbutton-noform").colorpickerbutton("option", "disabled", disabled);
-        $("#colorpickerbutton").colorpickerbutton("option", "disabled", disabled);
-        $("#hsvpicker").hsvpicker("option", "disabled", disabled);
-        $("#colorpicker").colorpicker("option", "disabled", disabled);
-    });
 
     $('#slider-demo').bind('pageshow', function () {
         var popupEnabled = false;
@@ -287,11 +281,6 @@ $(document).bind("pagecreate", function () {
         for (var i = 0 ; i < 4 ; i++) {
             $(this).find(':jqmData(role=swipelist)').swipelist('refresh');
         }
-    });
-
-    $("#disable-switches").bind("change", function() {
-        $("#switch-demo").find(":todons-toggleswitch").toggleswitch("option", "disabled",
-            $("#disable-switches").is(":checked"));
     });
 
     var coordSwitchesAreInit = false;
