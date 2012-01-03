@@ -109,7 +109,8 @@
     }
 
     function createWidget(ns, widgetType, inputType, options) {
-        var theWidget;
+        var theWidget,
+            optionsList = $("#options-list");
 
         $("#widget-container").empty().css("display", "none");
         if (inputType !== null) {
@@ -142,11 +143,11 @@
         $("#widget-container-cell").addClass("widget-container-cell");
 
         updateWidgetSrc();
-        $("#options-list").empty();
-
-        $.each($[ns][widgetType].prototype.options, function(key) {
-            createOption(ns, widgetType, theWidget, key);
-        });
+        if (optionsList.data("optionlist"))
+            optionsList.optionlist("destroy");
+        optionsList.optionlist();
+        optionsList.optionlist("option", "widget", theWidget[0])
+        optionsList.bind("optionChanged", updateWidgetSrc);
 
         $("#option-list-scroller").scrollview("scrollTo", 0, 0);
     }
