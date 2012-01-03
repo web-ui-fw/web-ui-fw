@@ -8,9 +8,18 @@
 // widget: a HTML element that has been used as the basis for a widget
 
 (function($, undefined) {
-    $.widget("todons.optionlist", $.todons.widgetex, {
+    $.widget("todons.optionlist", $.mobile.widget, {
         options: {
             widget: null
+        },
+
+        _setOption: function(key, value) {
+            switch (key) {
+                case "widget":
+                    return this._setWidget(value);
+                default:
+                    return $.Widget.prototype._setOption.call(this, key, value);
+            }
         },
 
         _setWidget: function(value) {
@@ -35,20 +44,22 @@
 
         _createOption: function(ns, widgetType, theWidget, key) {
             var optionsList = this.element, entry,
-                self = this;
+                self = this,
+                id = "todons-optionlist-option-" + ($.todons.optionlist.optionId++) + "-" + key;
 
             function makeSetter() {
                 switch(typeof $[ns][widgetType].prototype.options[key]) {
                     case "boolean":
                         return {
-                            html: $("<input/>", {type: "checkbox"}),
+                            html: $("<input/>", {
+                                type: "checkbox",
+                                checked: $(theWidget)[widgetType]("option", key),
+                                id: id
+                            }),
                             widget: {
-                                type: "toggleswitch",
-                                options: {
-                                    checked: $(theWidget)[widgetType]("option", key)
-                                }
+                                type: "checkboxradio",
                             },
-                            getValue: function(elem) {return elem.toggleswitch("option", "checked");}
+                            getValue: function(elem) {return elem.is(":checked");}
                         };
 
                     case "integer":
@@ -56,7 +67,7 @@
                             html: $("<input/>", {
                                 type: "number", 
                                 value: $(theWidget)[widgetType]("option", key),
-                                id: key + "-option"
+                                id: id
                             }),
                             getValue: function(elem) {return elem.val();}
                         };
@@ -66,7 +77,7 @@
                             html: $("<input/>", {
                                 type: "text", 
                                 value: $(theWidget)[widgetType]("option", key),
-                                id: key + "-option"
+                                id: id
                             }),
                             getValue: function(elem) {return elem.val();}
                         };
@@ -75,7 +86,7 @@
 
             entry = makeSetter();
             $("<div/>")
-                .append($("<label/>", {"for": key + "-option"}).text(key))
+                .append($("<label/>", {"for": id}).text(key))
                 .append(entry.html)
                 .appendTo(optionsList)
                 .fieldcontain();
@@ -94,7 +105,7 @@
     // Basically, check if an element has a data-item which is an object and contains a function under the key "widget"
     // and a string under the key "widgetName"
     //
-    // Returns either false or the widget 
+    // Returns either false or the widget
     $.todons.optionlist.widgetFromElement = function(elem) {
         var ret = false;
 
@@ -122,5 +133,8 @@
 
         return ret;
     };
+
+    // monotonically increasing counter for option labels
+    $.todons.optionlist.optionId = 0;
 
 })(jQuery);
