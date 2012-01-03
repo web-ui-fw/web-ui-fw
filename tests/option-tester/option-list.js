@@ -33,6 +33,7 @@
                     $.each($[widget.namespace][widget.widgetName].prototype.options, function(key) {
                         self._createOption(widget.namespace, widget.widgetName, value, key);
                     });
+                    this.element.trigger("create");
                 }
             }
         },
@@ -56,9 +57,6 @@
                                 checked: $(theWidget)[widgetType]("option", key),
                                 id: id
                             }),
-                            widget: {
-                                type: "checkboxradio",
-                            },
                             getValue: function(elem) {return elem.is(":checked");}
                         };
 
@@ -91,8 +89,6 @@
                 .appendTo(optionsList)
                 .fieldcontain();
 
-            if (entry.widget !== undefined)
-                entry.html[entry.widget.type](entry.widget.options);
             entry.html.bind("change", function(e) {
                 $(theWidget)[widgetType]("option", key, entry.getValue(entry.html));
                 self.element.triggerHandler("optionChanged");
