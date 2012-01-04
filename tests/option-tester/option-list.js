@@ -117,10 +117,9 @@
                             ret = [ value ];
                         else
                             ret.push(value);
-                    }
 
-                    // break when a widget is found
-                    return (ret === false);
+                        return false;
+                    }
                 });
             }
         });
