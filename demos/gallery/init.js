@@ -153,6 +153,29 @@ $(document).bind("pagecreate", function () {
     $("#popupwindow-demo").bind("pageshow", function () {
         $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition")).attr("checked", "true").checkboxradio("refresh");
     });
+
+    $("#convertToPopup").bind("vclick", function() {
+        var btn = $(this),
+            popup = $("#runtimePopup"),
+            txt = $("#convertToPopupText");
+
+        if (!popup.data("popupwindow")) {
+            var restoreBtn = $("<a></a>").text("Restore");
+
+            txt.text("Show popup");
+            restoreBtn
+                .appendTo(popup)
+                .buttonMarkup()
+                .bind("vclick", function() {
+                    popup.popupwindow("destroy");
+                    restoreBtn.remove();
+                    txt.text("Convert to popup");
+                });
+            $.todons.popupwindow.bindPopupToButton(btn, popup.popupwindow());
+            btn.trigger("vclick");
+        }
+    });
+
     $('input[name=popupwindow-demo-transition-choice]').bind("change", function (e) {
         $("#popupContent2").popupwindow("option", "transition", $(this).attr("id").split("-").pop());
     });

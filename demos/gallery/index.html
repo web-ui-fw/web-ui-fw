@@ -622,7 +622,28 @@
                 </table>
               </div>
 
+              <p>Normal page elements (such as the login form below) can be converted to popups and can then be restored.
+                <a id="convertToPopup" data-role="button" data-inline="true"><span id="convertToPopupText">Convert to popup</span></a>
+              </p>
+              <div id="runtimePopup" style="display: table;">
+                <form action="#" method="get" class="ui-corner-all" style="border: 3px solid black; padding: 3px;">
+                    <div data-role="fieldcontain">
+                        <label for="#username">User name:</label>
+                        <input type="text" id="username" name="username"></input>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="#password">Password:</label>
+                        <input type="password" id="password" name="password"></input>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <input type="submit" value="Log in"></input>
+                    </div>
+                </form>
+              </div>
+
+              <p>Popup windows can have various transitions:
               <a href="#popupContent2" id="popupwindowDemoButton2" data-role="button" data-inline="true" data-rel="popupwindow">Choose transition</a>
+              </p>
               <!-- The following div will be ripped out of here and placed into a popup -->
               <div id="popupContent2" data-role="popupwindow">
                   <div>
