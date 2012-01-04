@@ -30,6 +30,7 @@
                     var self = this;
 
                     this.options.widget = value;
+                    this.element.append($("<h2>" + widget.namespace + "." + widget.widgetName + "</h2>"));
                     $.each($[widget.namespace][widget.widgetName].prototype.options, function(key) {
                         self._createOption(widget.namespace, widget.widgetName, value, key);
                     });
