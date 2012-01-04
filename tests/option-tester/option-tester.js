@@ -146,7 +146,7 @@
         if (optionsList.data("optionlist"))
             optionsList.optionlist("destroy");
         optionsList.optionlist();
-        optionsList.optionlist("option", "widget", theWidget[0])
+        optionsList.optionlist("option", "widget", $.todons.optionlist.widgetsFromElement(theWidget[0])[0])
         optionsList.bind("optionChanged", updateWidgetSrc);
 
         $("#option-list-scroller").scrollview("scrollTo", 0, 0);
