@@ -350,8 +350,6 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
             else
                 this._ui.screen.css({opacity: 0.0});
 
-            var origOverflow = { x: $("body").css("overflow-x"), y: $("body").css("overflow-y") };
-            $("body").css({"overflow-x" : "hidden", "overflow-y" : "hidden" });
             this._ui.container
                 .removeClass("ui-selectmenu-hidden")
                 .css({
@@ -361,7 +359,6 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                 .addClass("in")
                 .animationComplete(function() {
                     self._ui.screen.height($(document).height());
-                    $("body").css({"overflow-x" : origOverflow.x, "overflow-y" : origOverflow.y});
                 });
 
             this._isOpen = true;
@@ -377,8 +374,6 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                     self.element.trigger("closed");
                 };
 
-            var origOverflow = { x: $("body").css("overflow-x"), y: $("body").css("overflow-y") };
-            $("body").css({"overflow-x" : "hidden", "overflow-y" : "hidden" });
             this._ui.container
                 .removeClass("in")
                 .addClass("reverse out")
@@ -391,7 +386,6 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
                         self._ui.currentArrow.remove();
                         self._ui.currentArrow = undefined;
                     }
-                    $("body").css({"overflow-x" : origOverflow.x, "overflow-y" : origOverflow.y});
                 });
 
             if (this.options.fade)
