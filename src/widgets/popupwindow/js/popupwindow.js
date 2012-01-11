@@ -403,6 +403,8 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 });
 
 $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
+    if (btn.length === 0 || popup.length === 0) return;
+
     var btnVClickHandler = function() {
             // When /this/ button causes a popup, align the popup's theme with that of the button, unless the popup has a theme pre-set
             if (!popup.jqmData("overlay-theme-set"))
@@ -413,7 +415,7 @@ $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
         };
 
     // If the popup has a theme set, prevent it from being clobbered by the associated button
-    if (((popup.popupwindow("option", "overlayTheme") || "") + "").match(/[a-z]/))
+    if ((popup.popupwindow("option", "overlayTheme") || "").match(/[a-z]/))
         popup.jqmData("overlay-theme-set", true);
 
     btn
