@@ -413,7 +413,7 @@ $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
         };
 
     // If the popup has a theme set, prevent it from being clobbered by the associated button
-    if ((popup.popupwindow("option", "overlayTheme") || "").match(/[a-z]/))
+    if (((popup.popupwindow("option", "overlayTheme") || "") + "").match(/[a-z]/))
         popup.jqmData("overlay-theme-set", true);
 
     btn
