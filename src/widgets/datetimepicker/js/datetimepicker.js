@@ -166,6 +166,8 @@
             var klass = owner.attr("class");
             var selectorResult = undefined;
 
+            this._ui.triangle.show();
+
             if (klass.search("year") > 0) {
                 var values = range(1900, 2100);
                 selectorResult = obj._populateSelector(selector, owner,
@@ -236,6 +238,9 @@
                     widthAtItem = 0,
                     x = 0;
 
+                this._ui.scrollview = selectorResult.scrollable.container;
+                this._ui.selectorOwner = owner;
+
                 // slideDown() seems to synchronously make things visible (albeit at height = 0px), so we can actually
                 // compute widths/heights below
                 selector.slideDown(obj.options.animationDuration);
@@ -279,13 +284,21 @@
         _hideDataSelector: function(selector) {
             var self = this;
             if (this.state.selectorOut) {
-                selector.slideUp(this.options.animationDuration,
-                    function() {
-                      if (self._ui.scrollview !== undefined) {
-                          self._ui.scrollview.remove();
-                          self._ui.scrollview = undefined;
-                      }
-                    });
+                var removeScrollview = function() {
+                        if (self._ui.scrollview !== undefined) {
+                            self._ui.scrollview.remove();
+                            self._ui.scrollview = undefined;
+                            self._ui.selectorOwner = undefined;
+                        }
+                    };
+
+                if (selector.is(":visible"))
+                    selector.slideUp(this.options.animationDuration, removeScrollview);
+                else {
+                    selector.hide();
+                    self._ui.triangle.hide();
+                    removeScrollview();
+                }
                 this.state.selectorOut = false;
             }
         },
@@ -357,6 +370,12 @@
             this._initDateTimeDivs(this._ui);
             this.options.date = this.getValue();
             this._setValue(this.options.date);
+            if (this._ui.selectorOwner) {
+                if (this._ui.selectorOwner.is(":visible"))
+                    this._ui.selectorOwner.trigger("vclick");
+                else
+                    this._hideDataSelector(this._ui.selector);
+            }
         },
 
         _populateSelector: function(selector, owner, klass, values,
@@ -395,8 +414,6 @@
                 this._ui.scrollview.remove();
 
             selector.append(scrollable.container);
-
-            this._ui.scrollview = scrollable.container;
 
             return {scrollable: scrollable, currentIndex: currentIndex};
         },
