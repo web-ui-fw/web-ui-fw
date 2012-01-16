@@ -406,6 +406,9 @@ $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
             popup.popupwindow("open",
                 btn.offset().left + btn.outerWidth()  / 2,
                 btn.offset().top  + btn.outerHeight() / 2);
+
+            // Swallow event, because it might end up getting picked up by the popup window's screen handler, which
+            // will in turn cause the popup window to close - Thanks Sasha!
             if (e.stopPropagation)
                 e.stopPropagation();
             if (e.preventDefault)
