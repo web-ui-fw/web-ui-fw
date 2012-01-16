@@ -399,13 +399,17 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
 $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
     if (btn.length === 0 || popup.length === 0) return;
 
-    var btnVClickHandler = function() {
+    var btnVClickHandler = function(e) {
             // When /this/ button causes a popup, align the popup's theme with that of the button, unless the popup has a theme pre-set
             if (!popup.jqmData("overlay-theme-set"))
                 popup.popupwindow("option", "overlayTheme", btn.jqmData("theme"));
             popup.popupwindow("open",
                 btn.offset().left + btn.outerWidth()  / 2,
                 btn.offset().top  + btn.outerHeight() / 2);
+            if (e.stopPropagation)
+                e.stopPropagation();
+            if (e.preventDefault)
+                e.preventDefault();
         };
 
     // If the popup has a theme set, prevent it from being clobbered by the associated button
