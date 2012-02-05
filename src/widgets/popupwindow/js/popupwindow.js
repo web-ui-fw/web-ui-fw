@@ -104,10 +104,10 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     },
 
     _create: function() {
-        var self = this,
-            thisPage = this.element.closest(".ui-page");
+        var thisPage = this.element.closest(":jqmData(role='page')"),
+            self = this;
 
-        if (thisPage[0] === undefined)
+        if (thisPage.length === 0)
             thisPage = $("body");
 
         // Drop a placeholder into the location from which we shall rip out the popup window contents
