@@ -1,3 +1,9 @@
+/*
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL licenses
+ * http://phpjs.org/functions/range
+ * original by: Waldo Malqui Silva
+ * version: 1107.2516
+ */
 function range (low, high, step) {
     // Create an array containing the range of integers or characters
     // from low to high (inclusive)  
