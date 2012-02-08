@@ -155,17 +155,11 @@ $.todons.popupwindow.prototype._placementCoords = function(x, y, cx, cy) {
         });
 
         // Side-effect: show the appropriate arrow and move it to the right offset
-        ctxpopup._ui.arrow[minDiffIdx].show();
-
-        var offset = ctxpopup._ui.arrow[minDiffIdx][("b" === minDiffIdx || "t" === minDiffIdx) ? "width" : "height"]() / 2;
-
-        console.log(offset);
-
-        offset += coords[minDiffIdx].diff[("b" === minDiffIdx || "t" === minDiffIdx) ? "x" : "y"];
-
-        console.log(offset);
-
-        ctxpopup._ui.arrow[minDiffIdx].triangle("option", "offset", offset);
+        ctxpopup._ui.arrow[minDiffIdx]
+            .show()
+            .triangle("option", "offset",
+                ctxpopup._ui.arrow[minDiffIdx][("b" === minDiffIdx || "t" === minDiffIdx) ? "width" : "height"]() / 2 +
+                coords[minDiffIdx].diff[("b" === minDiffIdx || "t" === minDiffIdx) ? "x" : "y"]);
         return coords[minDiffIdx].actual;
     }
     else
