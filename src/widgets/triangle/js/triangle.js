@@ -32,7 +32,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     options: {
         extraClass: "",
         offset: null,
-        color: undefined,
+        color: null,
         location: "top",
         initSelector: ":jqmData(role='triangle')"
     },
@@ -47,12 +47,25 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         this.element.addClass("ui-triangle-container").append(triangle);
     },
 
+    _doCSS: function() {
+        var location = (this.options.location || "top"),
+            offsetCoord = (($.inArray(location, ["top", "bottom"]) === -1) ? "top" : "left"),
+            cssArg = {
+                "border-bottom-color" : "top"    === location ? this.options.color : "transparent",
+                "border-top-color"    : "bottom" === location ? this.options.color : "transparent",
+                "border-left-color"   : "right"  === location ? this.options.color : "transparent",
+                "border-right-color"  : "left"   === location ? this.options.color : "transparent"
+            };
+
+        cssArg[offsetCoord] = this.options.offset;
+
+        this._triangle.removeAttr("style").css(cssArg);
+    },
+
     _setOffset: function(value) {
-        if (null !== value) {
-            this._triangle.css("left", value);
-            this.options.offset = value;
-            this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
-        }
+        this.options.offset = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "offset", value);
+        this._doCSS();
     },
 
     _setExtraClass: function(value) {
@@ -62,10 +75,9 @@ $.widget( "todons.triangle", $.todons.widgetex, {
     },
 
     _setColor: function(value) {
-        this._triangle.css("border-bottom-color", value);
-        this._triangle.css("border-top-color", value);
         this.options.color = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "color", value);
+        this._doCSS();
     },
 
     _setLocation: function(value) {
@@ -75,8 +87,11 @@ $.widget( "todons.triangle", $.todons.widgetex, {
         this._triangle
             .removeClass("ui-triangle-" + this.options.location)
             .addClass("ui-triangle-" + value);
+
         this.options.location = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "location", value);
+
+        this._doCSS();
     }
 });
 
