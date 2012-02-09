@@ -9,11 +9,11 @@
 }
 
 .ui-ctxpopup-row .ui-triangle-left {
-    right: -1px;
+    left: 1px;
 }
 
 .ui-ctxpopup-row .ui-triangle-right {
-    left: -1px;
+    right: 1px;
 }
 
 .ui-ctxpopup-row .ui-triangle-bottom {
