@@ -258,10 +258,18 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
             var self = this,
                 x = (undefined === x_where ? window.innerWidth  / 2 : x_where),
                 y = (undefined === y_where ? window.innerHeight / 2 : y_where),
-                coords = this._placementCoords(x, y,
-                    this._ui.container.outerWidth(true),
-                    this._ui.container.outerHeight(true)),
+                coords,
                 zIndexMax = 0;
+
+            // If the width of the popup exceeds the width of the window, we need to limit the width here,
+            // otherwise outer{Width,Height}(true) below will happily report the unrestricted values, causing
+            // the popup to get placed wrong.
+            if (this._ui.container.outerWidth(true) > $(window).width())
+                this._ui.container.css({"max-width" : $(window).width() - 30});
+
+            coords = this._placementCoords(x, y,
+                this._ui.container.outerWidth(true),
+                this._ui.container.outerHeight(true));
 
             $(document)
                 .find("*")
