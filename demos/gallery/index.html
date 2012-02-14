@@ -691,7 +691,7 @@
 
         <div data-role="page" id="ctxpopup-demo" data-add-back-btn="true">
             <div data-role="header">
-                <h1>Popup window with arrows</h1>
+                <h1><span id="windowSize"></span> Popup window with arrows - click anywhere to view arrowed popup</h1>
             </div>
             <div data-role="contents">
               <div id="arrowPopup" data-show-arrow="true" data-role="popupwindow">
@@ -707,138 +707,10 @@
 	            <a href="#popupwindow-demo" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
                     </td></tr></table>
                 </div>
-<!--
-                <ul data-role="listview">
-                  <li>Some Item</li>
-                  <li>Some Other Item</li>
-                  <li>Yet Another Item</li>
-                  <li>This Item Is Ugly!</li>
-                  <li>This Item Is Pretty!</li>
-                </ul>
--->
               </div>
-              <p>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-                <a href="#arrowPopup" data-role="button" data-inline="true" data-rel="popupwindow">Show</a>
-            </p>
-              <h1>This is a paragraph containing a ton of text the sole purpose of which is to fill the screen with text,
-                  so that the grid of buttons appearing below will only be reachable via scrolling. Some less-than-capable
-                  browsers render this grid without taking into account that it's supposed to fill the entire page and,
-                  as such, should introduce sufficient scrolling to be able to test both the top and the bottom arrow
-                  versions of the popup window.</h1>
+              <div class="ctxpopup-demo-clicker">
+                <div class="ctxpopup-demo-indicator"></div>
+              </div>
             </div><!-- contents -->
             <div data-role="footer">
                 <h4>Web UI Framework - Widgets gallery</h4>

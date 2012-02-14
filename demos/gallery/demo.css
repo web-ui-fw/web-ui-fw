@@ -197,3 +197,21 @@ h1, h4 {
 }
 
 /* end of singleimagedisplay style */
+
+/* ctxpopup style */
+
+.ctxpopup-demo-clicker {
+    position: relative;
+    display: block;
+    height: 1201px;
+}
+
+.ctxpopup-demo-clicker .ctxpopup-demo-indicator {
+    position: absolute;
+    background: red;
+    width: 6px;
+    height: 6px;
+    pointer-events: none;
+}
+
+/* end of ctxpopup style */

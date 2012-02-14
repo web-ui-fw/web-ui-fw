@@ -154,6 +154,24 @@ $(document).bind("pagecreate", function () {
         $('#popupwindow-demo-transition-' + $("#popupContent2").popupwindow("option", "transition")).attr("checked", "true").checkboxradio("refresh");
     });
 
+    $(window).resize(function() {
+        $("#windowSize").text("[" + $(window).width() + "x" + $(window).height() + "]");
+    });
+
+    $(".ctxpopup-demo-clicker").bind("vclick", function(e) {
+        var indicator = $(".ctxpopup-demo-indicator"),
+            popup = $("#arrowPopup");
+
+        if (null === popup.popupwindow("option", "overlayTheme"))
+            popup.popupwindow("option", "overlayTheme", $.mobile.getInheritedTheme(this, "c"));
+
+        popup.popupwindow("open", e.pageX, e.pageY);
+        indicator.offset({
+            left : e.pageX - indicator.width()  / 2,
+            top  : e.pageY - indicator.height() / 2
+        });
+    });
+
     $("#convertToPopup").bind("vclick", function() {
         var btn = $(this),
             popup = $("#runtimePopup"),
