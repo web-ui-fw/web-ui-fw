@@ -50,20 +50,26 @@
 
 $.widget("todons.toggleswitch", $.todons.widgetex, {
     options: {
-        checked: true,
-        initSelector: ":jqmData(role='toggleswitch')"
+        onText       : null,
+        offText      : null,
+        checked      : true,
+        initSelector : ":jqmData(role='toggleswitch')"
     },
 
     _htmlProto: {
         ui: {
-            outer:            "#toggleswitch",
-            normalBackground: "#toggleswitch-inner-normal",
-            activeBackground: "#toggleswitch-inner-active",
-            initButtons:      "#toggleswitch-button-t-active",
-            tButton:          "#toggleswitch-button-t",
-            fButton:          "#toggleswitch-button-f",
-            realButton:       "#toggleswitch-button-outside-real",
-            refButton:        "#toggleswitch-button-outside-ref"
+            outer     : "#outer",
+            bg        : "#bg",
+            txtMovers : {
+                normal : "#normal",
+                active : "#active"
+            },
+            btn       : "#button",
+            btnSpan   : "#btn-span",
+            txt       : {
+                normal : "[data-normal-text]",
+                active : "[data-active-text]",
+            },
         }
     },
 
@@ -80,7 +86,12 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
             .after(this._ui.outer);
 
         this._ui.outer.find("a").buttonMarkup();
-
+        this._ui.txtMovers.normal
+            .add(this._ui.txtMovers.active)
+            .find("*")
+            .css({"border-color": "transparent"});
+        this._ui.btn.addClass("toggleswitch-button");
+/*
         // Crutches for IE: It does not seem to understand opacity specified in a class, nor that opacity of an element
         // affects all its children
         if ($.mobile.browser.ie) {
@@ -98,50 +109,65 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
                 .add(this._ui.fButton)
                 .css("opacity", 1.0);
         }
-
+*/
         $.extend(this, {
             _initial: true
         });
 
-        this._ui.realButton
-            .add(this._ui.normalBackground)
+        this._ui.btn
+            .add(this._ui.outer)
             .bind("vclick", function(e) {
                 self._setChecked(!(self.options.checked));
                 e.stopPropagation();
             });
     },
-
+/*
     _makeTransparent: function(obj, b) {
         if ($.mobile.browser.ie)
             obj.add(obj.find("*")).css("opacity", b ? 0.0 : 1.0);
         else
             obj[b ? "addClass" : "removeClass"]("toggleswitch-button-transparent");
     },
-
+*/
     _setDisabled: function(value) {
         $.todons.widgetex.prototype._setDisabled.call(this, value);
         this._ui.outer[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 
+
+    _updateBtnText: function() {
+        var noText = (((this.options.offText || "") === "" &&
+                       (this.options.onText  || "") === ""));
+        this._ui.btnSpan.html((noText ? "" : "&nbsp;"));
+        this._ui.outer.find("a")[(noText ? "addClass" : "removeClass")]("ui-btn-icon-notext");
+    },
+
+    _setOnText: function(value) {
+        this._ui.txt.active.text(value);
+        this.options.onText = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "on-text", value);
+        this._updateBtnText();
+    },
+
+    _setOffText: function(value) {
+        this._ui.txt.normal.text(value);
+        this.options.offText = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "off-text", value);
+        this._updateBtnText();
+    },
+
     _setChecked: function(checked) {
         if (this.options.checked != checked) {
-            if (this.options.checked === undefined) {
-                this._makeTransparent(this._ui[(checked ? "normal" : "active") + "Background"], true);
-            }
-            else {
-                this._ui.refButton.offset(this._ui[(checked ? "t" : "f") + "Button"].offset());
-                this._ui.realButton.offset(this._ui[(checked ? "f" : "t") + "Button"].offset());
+            var dst = checked
+                    ? {bg:  "0%", normalTop: "-50%", activeBot:   "0%"}
+                    : {bg: "50%", normalTop:   "0%", activeBot: "-50%"},
+                method = (this._initial ? "css" : "animate")
 
-                if (this._initial) {
-                    this._makeTransparent(this._ui.outer.find("a"), true);
-                    this._makeTransparent(this._ui.realButton, false);
-                    this._initial = false;
-                }
+            this._ui.btn.add(this._ui.bg)[method]({top: dst.bg});
+            this._ui.txtMovers.normal[method]({top: dst.normalTop});
+            this._ui.txtMovers.active[method]({bottom: dst.activeBot});
 
-                this._ui.realButton.animate({top: this._ui.refButton.position().top});
-                this._ui.normalBackground.animate({opacity: checked ? 0.0 : 1.0});
-                this._ui.activeBackground.animate({opacity: checked ? 1.0 : 0.0});
-            }
+            this._initial = false;
 
             this.options.checked = checked;
             this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
