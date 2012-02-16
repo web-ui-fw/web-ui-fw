@@ -1,26 +1,34 @@
 .ui-toggleswitch {
     position: relative;
-    display: inline-block;
+    overflow: hidden;
 
-    .toggleswitch-button-outside {
-        left: 0px;
-        top: 0px;
+    .toggleswitch-background {
         position: absolute;
-    }
-
-    .toggleswitch-button-inside {
-        display: block;
-    }
-
-    .toggleswitch-button-transparent {
-        opacity: 0;
-    }
-
-    .toggleswitch-inner-active {
-        position: absolute;
+        margin: 0px;
+        border: 0px;
         left: 0px;
-        top: 0px;
         right: 0px;
+        top: 0px;
         bottom: 0px;
+        pointer-events: none;
+    }
+
+    .toggleswitch-sizer {
+        margin: 0px;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .toggleswitch-floating-button {
+        position: absolute;
+        margin: 0px;
+        left: 0px;
+        right: 0px;
+    }
+
+    .toggleswitch-mover {
+        border-color: transparent;
+        background: none; 
+        pointer-events: none;
     }
 }
