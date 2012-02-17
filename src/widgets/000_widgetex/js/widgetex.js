@@ -57,7 +57,7 @@
 //
 // If neither 'source' nor 'ui' are defined, you must still include an empty _htmlProto key (_htmlProto: {}) to indicate
 // that you wish to make use of this feature. This will cause a prototype HTML file named after your widget to be loaded.
-// The loaded prototype will be placed into your widget's prototype's _protoHtml.source key.
+// The loaded prototype will be placed into your widget's prototype's _htmlProto.source key.
 //
 // If 'source' is defined as a string, it is the name of the widget (including namespace). This is the default. If your
 // widget's HTML prototype is loaded via AJAX and the name of the AJAX file is different from the name of your widget
