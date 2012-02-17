@@ -1,6 +1,17 @@
+.ui-toggleswitch-hidden {
+    display: none;
+}
+
 .ui-toggleswitch {
     position: relative;
     overflow: hidden;
+
+    .toggleswitch-mover {
+        margin: 0px;
+        border-color: transparent;
+        background: none; 
+        pointer-events: none;
+    }
 
     .toggleswitch-background {
         position: absolute;
@@ -18,17 +29,30 @@
         opacity: 0;
         pointer-events: none;
     }
+}
 
+.ui-toggleswitch.toggleswitch-v {
     .toggleswitch-floating-button {
         position: absolute;
         margin: 0px;
         left: 0px;
         right: 0px;
     }
+}
 
-    .toggleswitch-mover {
-        border-color: transparent;
-        background: none; 
-        pointer-events: none;
+.ui-toggleswitch.toggleswitch-h {
+    .toggleswitch-sizer-container {
+        display: table;
+        width: 100%;
+        .toggleswitch-sizer {
+            display: table-cell;
+            width: 50%;
+        }
+    }
+
+    .toggleswitch-floating-button {
+        position: absolute;
+        margin: 0px;
+        top: 0px;
     }
 }

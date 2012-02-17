@@ -53,6 +53,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         onText       : null,
         offText      : null,
         checked      : true,
+        horizontal   : false,
         initSelector : ":jqmData(role='toggleswitch')"
     },
 
@@ -78,19 +79,51 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         signal: "changed"
     },
 
+    _dst      : {
+        vertical   : {
+            btn    : {on  : {top :  "0%", bottom : "50%"},
+                      off : {top : "50%", bottom :  "0%"}},
+            bg     : {on  : {top :  "0%"},
+                      off : {top : "50%"}},
+            movers : {
+                normal : {on  : {top    : "-50%"},
+                          off : {top    :   "0%"}},
+                active : {on  : {bottom :   "0%"},
+                          off : {bottom : "-50%"}}
+            }
+        },
+
+        horizontal : {
+            btn    : {on  : {left :  "0%", right : "50%"},
+                      off : {left : "50%", right :  "0%"}},
+            bg     : {on  : {left :  "0%"},
+                      off : {left : "50%"}},
+            movers : {
+                normal : {on  : {left : "-50%", right : "100%"},
+                          off : {left :   "0%", right :  "50%"}},
+                active : {on  : {left :  "50%", right :   "0%"},
+                          off : {left : "100%", right : "-50%"}}
+            }
+        }
+    },
+
     _create: function() {
         var self = this;
 
         this.element
-            .css("display", "none")
+            .addClass("ui-toggleswitch-hidden")
             .after(this._ui.outer);
 
+        this._ui.clearCss =
+            this._ui.btn
+                .add(this._ui.bg)
+                .add(this._ui.txtMovers.normal)
+                .add(this._ui.txtMovers.active);
         this._ui.outer.find("a").buttonMarkup();
         this._ui.txtMovers.normal
             .add(this._ui.txtMovers.active)
             .find("*")
             .css({"border-color": "transparent"});
-        this._ui.btn.addClass("toggleswitch-button");
 /*
         // Crutches for IE: It does not seem to understand opacity specified in a class, nor that opacity of an element
         // affects all its children
@@ -134,7 +167,6 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         this._ui.outer[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 
-
     _updateBtnText: function() {
         var noText = (((this.options.offText || "") === "" &&
                        (this.options.onText  || "") === ""));
@@ -156,23 +188,41 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         this._updateBtnText();
     },
 
+    _setHorizontal: function(value) {
+        this._ui.outer
+            .removeClass("toggleswitch-h toggleswitch-v")
+            .addClass("toggleswitch-" + (value ? "h" : "v"));
+        this.options.horizontal = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "horizontal", value);
+        this._initial = true;
+        this._ui.clearCss.removeAttr("style");
+        this.refresh();
+    },
+
     _setChecked: function(checked) {
         if (this.options.checked != checked) {
-            var dst = checked
-                    ? {bg:  "0%", normalTop: "-50%", activeBot:   "0%"}
-                    : {bg: "50%", normalTop:   "0%", activeBot: "-50%"},
-                method = (this._initial ? "css" : "animate")
-
-            this._ui.btn.add(this._ui.bg)[method]({top: dst.bg});
-            this._ui.txtMovers.normal[method]({top: dst.normalTop});
-            this._ui.txtMovers.active[method]({bottom: dst.activeBot});
-
-            this._initial = false;
-
             this.options.checked = checked;
             this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
             this._setValue(checked);
+            this.refresh();
         }
+    },
+
+    refresh: function() {
+        var state = (this.options.checked ? "on" : "off"),
+            orientation = (this.options.horizontal ? "horizontal" : "vertical"),
+            method = (this._initial ? "css" : "animate");
+
+        this._ui.bg[method](this._dst[orientation].bg[state]);
+        this._ui.btn[method](this._dst[orientation].btn[state]);
+        this._ui.txtMovers.normal[method](this._dst[orientation].movers.normal[state]);
+        this._ui.txtMovers.active[method](this._dst[orientation].movers.active[state]);
+        this._initial = false;
+    },
+
+    destroy: function() {
+        this._ui.outer.remove();
+        this.element.removeClass("ui-toggleswitch-hidden");
     }
 });
 
