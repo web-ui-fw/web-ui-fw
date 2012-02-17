@@ -97,6 +97,7 @@ widgets: init
 		fi; \
 	done; \
 	if test "x${DEBUG}x" = "xyesx"; then \
+		mkdir -p $(CURDIR)/dist; \
 		cp -a ${FW_JS} $(CURDIR)/dist/; \
 	fi
 
@@ -142,7 +143,10 @@ themes: widget_styling jqm_theme
 			done; \
 		fi; \
 	done; \
-	cp -a ${FW_WIDGET_CSS_FILE} $(CURDIR)/dist/
+	if test "x${DEBUG}x" = "xyesx"; then \
+		mkdir -p $(CURDIR)/dist; \
+		cp -a ${FW_WIDGET_CSS_FILE} $(CURDIR)/dist/; \
+	fi
 
 jqm_theme: init
 	# Adding images to jqm theme...
