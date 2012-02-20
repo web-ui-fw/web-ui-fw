@@ -54,13 +54,19 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         offText      : null,
         checked      : true,
         horizontal   : false,
+        // button options
+        theme        : null,
+        shadow       : true,
+        corners      : true,
+        inline       : false,
         initSelector : ":jqmData(role='toggleswitch')"
     },
 
     _htmlProto: {
         ui: {
             outer     : "#outer",
-            bg        : "#bg",
+            bg        : "#bgA",
+            normalBG  : "#bgN",
             txtMovers : {
                 normal : "#normal",
                 active : "#active"
@@ -71,6 +77,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
                 normal : "[data-normal-text]",
                 active : "[data-active-text]",
             },
+            links     : "a"
         }
     },
 
@@ -113,17 +120,32 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         this.element
             .addClass("ui-toggleswitch-hidden")
             .after(this._ui.outer);
+        this._ui.links.buttonMarkup();
 
+        // Group some UI elements for easier modification later
         this._ui.clearCss =
             this._ui.btn
                 .add(this._ui.bg)
                 .add(this._ui.txtMovers.normal)
                 .add(this._ui.txtMovers.active);
-        this._ui.outer.find("a").buttonMarkup();
+        this._ui.themedElements = 
+            this._ui.outer
+                .add(this._ui.bg)
+                .add(this._ui.normalBG)
+                .add(this._ui.links);
+        this._ui.cornerElements = 
+            this._ui.outer
+                .add(this._ui.btn)
+                .add(this._ui.bg)
+                .add(this._ui.normalBG)
+                .add(this._ui.links)
+                .add(this._ui.links.find(".ui-btn-inner"));
+
         this._ui.txtMovers.normal
             .add(this._ui.txtMovers.active)
             .find("*")
             .css({"border-color": "transparent"});
+
 /*
         // Crutches for IE: It does not seem to understand opacity specified in a class, nor that opacity of an element
         // affects all its children
@@ -171,7 +193,19 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         var noText = (((this.options.offText || "") === "" &&
                        (this.options.onText  || "") === ""));
         this._ui.btnSpan.html((noText ? "" : "&nbsp;"));
-        this._ui.outer.find("a")[(noText ? "addClass" : "removeClass")]("ui-btn-icon-notext");
+        this._ui.links[(noText ? "addClass" : "removeClass")]("ui-btn-icon-notext");
+        // FIXME: Necessary because of jqm issue #3613
+        if (noText)
+            this._ui.btn.children(":first").css("border-color", "transparent");
+        else
+            this._ui.btn.children(":first").removeAttr("style");
+        this._ui.outer[(this.options.inline || noText) ? "addClass" : "removeClass"]("ui-btn-inline");
+    },
+
+    _setInline: function(value) {
+        this.options.inline = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "inline", value);
+        this._updateBtnText();
     },
 
     _setOnText: function(value) {
@@ -179,6 +213,45 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         this.options.onText = value;
         this.element.attr("data-" + ($.mobile.ns || "") + "on-text", value);
         this._updateBtnText();
+    },
+
+    _setShadow: function(value) {
+        this.options.shadow = value;
+        this._ui.outer[value ? "addClass" : "removeClass"]("ui-shadow");
+        this.element.attr("data-" + ($.mobile.ns || "") + "shadow", value);
+    },
+
+    _setCorners: function(value) {
+        var method = (value ? "addClass" : "removeClass");
+
+        this.options.corners = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "corners", value);
+        this._ui.links.attr("data-" + ($.mobile.ns || "") + "corners", value)
+
+        this._ui.cornerElements[method]("ui-btn-corner-all");
+    },
+
+    _setTheme: function(value) {
+        value = ((null === value || "" === value || undefined === value) ? $.mobile.getInheritedTheme(this.element, "c") : value);
+        this._ui.themedElements.each(function() {
+            var el = $(this),
+                classAttr = (el.attr("class") || "") ,
+                Nix, result = "";
+
+            if (classAttr !== "") {
+                var classes = el.attr("class").split(" ");
+
+                for (Nix = 0 ; Nix < classes.length ; Nix++)
+                    if (classes[Nix].match(/ui-btn-up-[a-z]/))
+                        result = result + " " + classes[Nix];
+                el.removeClass(result);
+            }
+        });
+        this._ui.themedElements.addClass("ui-btn-up-" + value);
+
+        this.options.theme = value;
+        this._ui.links.attr("data-" + ($.mobile.ns || "") + "theme", value);
+        this.element.attr("data-" + ($.mobile.ns || "") + "theme", value);
     },
 
     _setOffText: function(value) {
