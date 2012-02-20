@@ -55,13 +55,13 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             hs: {
                 hueGradient: "#colorpicker-hs-hue-gradient",
                 gradient:    "#colorpicker-hs-sat-gradient",
-                eventSource: "[data-event-source='hs']",
+                eventSource: "[data-event-source-hs]",
                 valMask:     "#colorpicker-hs-val-mask",
                 selector:    "#colorpicker-hs-selector"
             },
             l: {
                 gradient:    "#colorpicker-l-gradient",
-                eventSource: "[data-event-source='l']",
+                eventSource: "[data-event-source-l]",
                 selector:    "#colorpicker-l-selector"
             }
         }
