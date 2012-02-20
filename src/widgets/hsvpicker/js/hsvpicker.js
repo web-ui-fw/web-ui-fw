@@ -63,21 +63,21 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         ui: {
             container: "#hsvpicker",
             hue: {
-                eventSource: "[data-event-source='hue']",
+                eventSource: "[data-event-source-hue]",
                 selector:    "#hsvpicker-hue-selector",
                 hue:         "#hsvpicker-hue-hue",
                 valMask:     "#hsvpicker-hue-mask-val"
             },
             sat: {
                 gradient:    "#hsvpicker-sat-gradient",
-                eventSource: "[data-event-source='sat']",
+                eventSource: "[data-event-source-sat]",
                 selector:    "#hsvpicker-sat-selector",
                 hue:         "#hsvpicker-sat-hue",
                 valMask:     "#hsvpicker-sat-mask-val"
             },
             val: {
                 gradient:    "#hsvpicker-val-gradient",
-                eventSource: "[data-event-source='val']",
+                eventSource: "[data-event-source-val]",
                 selector:    "#hsvpicker-val-selector",
                 hue:         "#hsvpicker-val-hue"
             }
