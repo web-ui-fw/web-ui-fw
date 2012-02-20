@@ -80,9 +80,15 @@
 // When a widget is instantiated, the HTML prototype is loaded if not already present in the prototype. If 'ui' is present
 // inside _htmlProto, the prototype is cloned. Then, a new structure is created based on 'ui' with each selector replaced
 // by a jQuery object containing the results of performing .find() on the prototype's clone with the filter set to the
-// value of the string. In the special case where the selector starts with a '#', the ID is removed from the element after
-// it is assigned into the structure being created. This structure is then made accessible from the widget instance via
-// the '_ui' key (i.e., this._ui).
+// value of the string. The elements inside this jQuery object are modified as follows:
+//
+//   1. If the selector starts with '#' it is assumed to select by ID, and the ID is removed from the elements in the jQuery
+// object.
+//
+//   2. If the selector is of the form '[text]' it is assumed to select by the presence of an attribute named 'text'. This
+// attribute is removed from the elements in the jQuery object.
+// 
+// This structure is then made accessible from the widget instance via the '_ui' key (i.e., this._ui).
 //
 // 2. Use the loadPrototype method when your widget does not derive from $.todons.widgetex:
 // Add _htmlProto to your widget's prototype as described above. Then, in your widget's _create() method, call
@@ -258,9 +264,15 @@ $.todons.widgetex.assignElements = function(proto, obj) {
     var ret = {};
     for (var key in obj)
         if ((typeof obj[key]) === "string") {
+            var theMatch = obj[key].match(/^(#(.*)|\[([^\]=]*)])$/);
             ret[key] = proto.find(obj[key]);
-            if (obj[key].match(/^#/))
-                ret[key].removeAttr("id");
+            if (theMatch) {
+                if (theMatch[2] !== undefined)
+                    ret[key].removeAttr("id");
+                else
+                if (theMatch[3] !== undefined)
+                    ret[key].removeAttr(theMatch[3]);
+            }
         }
         else
         if ((typeof obj[key]) === "object")
