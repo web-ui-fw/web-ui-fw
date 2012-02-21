@@ -192,13 +192,8 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     _updateBtnText: function() {
         var noText = (((this.options.offText || "") === "" &&
                        (this.options.onText  || "") === ""));
-        this._ui.btnSpan.html((noText ? "" : "&nbsp;"));
+        //this._ui.btnSpan.html((noText ? "" : "&nbsp;"));
         this._ui.links[(noText ? "addClass" : "removeClass")]("ui-btn-icon-notext");
-        // FIXME: Necessary because of jqm issue #3613
-        if (noText)
-            this._ui.btn.children(":first").css("border-color", "transparent");
-        else
-            this._ui.btn.children(":first").removeAttr("style");
         this._ui.outer[(this.options.inline || noText) ? "addClass" : "removeClass"]("ui-btn-inline");
     },
 

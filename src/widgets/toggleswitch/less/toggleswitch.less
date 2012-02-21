@@ -5,12 +5,19 @@
 .ui-toggleswitch {
     position: relative;
     overflow: hidden;
+    padding: 0px;
 
     .toggleswitch-mover {
         margin: 0px;
         border-color: transparent;
         background: none; 
+        box-shadow: none;
         pointer-events: none;
+        .ui-btn-inner {
+            border-color: transparent;
+            background: none;
+            box-shadow: none;
+        }
     }
 
     .toggleswitch-background {
@@ -28,6 +35,14 @@
         margin: 0px;
         opacity: 0;
         pointer-events: none;
+    }
+
+    .toggleswitch-floating-button {
+        .ui-btn-inner {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
     }
 }
 
@@ -54,5 +69,6 @@
         position: absolute;
         margin: 0px;
         top: 0px;
+        bottom: 0px;
     }
 }
