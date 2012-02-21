@@ -5,22 +5,30 @@
 .ui-toggleswitch {
     background: none;
     position: relative;
-    overflow: hidden;
     border: none;
 
-    .toggleswitch-mover {
-        margin: 0px;
-        background: none; 
-        box-shadow: none;
-        pointer-events: none;
-        border-color: transparent;
-        .ui-btn-inner {
-            border-color: transparent;
-            background: none;
+    .toggleswitch-mover-container {
+        overflow: hidden;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+
+        .toggleswitch-mover {
+            margin: 0px;
+            background: none; 
             box-shadow: none;
-        }
-        span {
-            text-overflow: clip;
+            pointer-events: none;
+            border-color: transparent;
+            .ui-btn-inner {
+                border-color: transparent;
+                background: none;
+                box-shadow: none;
+            }
+            span {
+                text-overflow: clip;
+            }
         }
     }
 
