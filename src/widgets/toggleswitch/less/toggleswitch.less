@@ -3,9 +3,18 @@
 }
 
 .ui-toggleswitch {
-    background: none;
     position: relative;
     border: none;
+
+    a {
+        margin: 0px;
+        .ui-btn-inner {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            height: 100%;
+        }
+    }
 
     .toggleswitch-mover-container {
         overflow: hidden;
@@ -16,7 +25,6 @@
         bottom: 0px;
 
         .toggleswitch-mover {
-            margin: 0px;
             background: none; 
             box-shadow: none;
             pointer-events: none;
@@ -43,13 +51,11 @@
     }
 
     .toggleswitch-sizer {
-        margin: 0px;
         opacity: 0;
         pointer-events: none;
     }
 
     .toggleswitch-floating-button {
-        margin: 0px;
         box-shadow: none;
         position: absolute;
     }
