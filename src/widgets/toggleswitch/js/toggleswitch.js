@@ -101,15 +101,15 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
         },
 
         horizontal : {
-            btn    : {on  : {left :  "0%", right : "50%"},
-                      off : {left : "50%", right :  "0%"}},
-            bg     : {on  : {left :  "0%"},
-                      off : {left : "50%"}},
+            btn    : {on  : {left  : "50%", right :  "0%"},
+                      off : {left  :  "0%", right : "50%"}},
+            bg     : {on  : {right :  "0%"},
+                      off : {right : "50%"}},
             movers : {
-                normal : {on  : {left : "-50%", right : "100%"},
-                          off : {left :   "0%", right :  "50%"}},
-                active : {on  : {left :  "50%", right :   "0%"},
-                          off : {left : "100%", right : "-50%"}}
+                normal : {on  : {left : "100%", right : "-50%"},
+                          off : {left :  "50%", right :   "0%"}},
+                active : {on  : {left :   "0%", right :  "50%"},
+                          off : {left : "-50%", right : "100%"}}
             }
         }
     },
