@@ -130,7 +130,6 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
                 .add(this._ui.txtMovers.active);
         this._ui.themedElements = 
             this._ui.outer
-                .add(this._ui.bg)
                 .add(this._ui.normalBG)
                 .add(this._ui.links);
         this._ui.cornerElements = 
