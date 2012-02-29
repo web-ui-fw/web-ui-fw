@@ -39,7 +39,6 @@
                     e.preventDefault();
                 })
                 .bind("vmousecancel vmouseup vmouseout vmouseover focus blur", function(e) {
-                    console.log(e.type);
                     e.preventDefault();
                     e.stopPropagation();
                 })
@@ -57,7 +56,6 @@
                 .bind("vmouseover focus", function(e) {
                     var side = $(e.target).jqmData("togglepair-value"),
                         theme = $.mobile.getInheritedTheme(self.element, "c");
-                    console.log("Adding ui-btn-hover-" + theme + " to " + side);
                     self._ui[side].btn.addClass("ui-btn-hover-" + theme);
                 })
                 .bind("vmouseout blur", function(e) {
