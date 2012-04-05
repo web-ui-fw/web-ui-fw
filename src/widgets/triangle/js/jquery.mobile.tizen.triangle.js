@@ -28,7 +28,7 @@
 
 (function($, undefined) {
 
-$.widget( "todons.triangle", $.todons.widgetex, {
+$.widget( "tizen.triangle", $.tizen.widgetex, {
     options: {
         extraClass: "",
         offset: null,
@@ -96,7 +96,7 @@ $.widget( "todons.triangle", $.todons.widgetex, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.triangle.prototype.options.initSelector, e.target)
+    $($.tizen.triangle.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .triangle();
 });

@@ -1,8 +1,8 @@
 (function($, undefined) {
 
-$.widget("todons.huegradient", $.todons.widgetex, {
+$.widget("tizen.huegradient", $.tizen.widgetex, {
     _create: function() {
-        this.element.addClass("todons-huegradient");
+        this.element.addClass("tizen-huegradient");
     },
 
     // Crutches for IE: it is incapable of multi-stop gradients, so add multiple divs inside the given div, each with a

@@ -49,7 +49,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.shortcutscroll", $.mobile.widget, {
+$.widget( "tizen.shortcutscroll", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(shortcutscroll)"
     },
@@ -112,7 +112,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
         // bind mouse over so it moves the scroller to the divider
         .bind('touchstart mousedown vmousedown touchmove vmousemove vmouseover', function (e) {
             // Get coords relative to the element
-            var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
+            var coords = $.mobile.tizen.targetRelativeCoordsFromEvent(e);
             var shortcutsListOffset = self.shortcutsList.offset();
 
             // If the element is a list item, get coordinates relative to the shortcuts list
@@ -202,7 +202,7 @@ $.widget( "todons.shortcutscroll", $.mobile.widget, {
 });
 
 $(document).bind( "pagecreate create", function (e) {
-    $($.todons.shortcutscroll.prototype.options.initSelector, e.target)
+    $($.tizen.shortcutscroll.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .shortcutscroll();
 });

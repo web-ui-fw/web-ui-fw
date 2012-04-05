@@ -28,7 +28,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.colorwidget", $.todons.widgetex, {
+$.widget("tizen.colorwidget", $.tizen.widgetex, {
     options: {
         color: "#ff0972"
     },
@@ -43,7 +43,7 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     },
 
     _setElementColor: function(el, hsl, cssProp) {
-        var clrlib = $.todons.colorwidget.clrlib,
+        var clrlib = $.tizen.colorwidget.clrlib,
             clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
             dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
 
@@ -77,7 +77,7 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
             ? value
             : currentValue.match(/#[0-9A-Fa-f]{6}/)
                 ? currentValue
-                : $.todons.colorwidget.prototype.options.color;
+                : $.tizen.colorwidget.prototype.options.color;
 
         if (this.options.color !== value) {
             this.options.color = value;
@@ -88,7 +88,7 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     }
 });
 
-$.todons.colorwidget.clrlib = {
+$.tizen.colorwidget.clrlib = {
     nearestInt: function(val) {
         var theFloor = Math.floor(val);
 
@@ -194,7 +194,7 @@ $.todons.colorwidget.clrlib = {
     // g is in [0, 1]
     // b is in [0, 1]
     HSVToRGB: function(hsv) {
-        return $.todons.colorwidget.clrlib.HSLToRGB($.todons.colorwidget.clrlib.HSVToHSL(hsv));
+        return $.tizen.colorwidget.clrlib.HSLToRGB($.tizen.colorwidget.clrlib.HSVToHSL(hsv));
     },
 
     // Converts rgb to hsv.
@@ -275,7 +275,7 @@ $.todons.colorwidget.clrlib = {
     // s is in [0,   1]
     // l is in [0,   1]
     RGBToHSL: function(rgb) {
-        return $.todons.colorwidget.clrlib.HSVToHSL($.todons.colorwidget.clrlib.RGBToHSV(rgb));
+        return $.tizen.colorwidget.clrlib.HSVToHSL($.tizen.colorwidget.clrlib.RGBToHSV(rgb));
     },
 
     // Converts hsl to grayscale

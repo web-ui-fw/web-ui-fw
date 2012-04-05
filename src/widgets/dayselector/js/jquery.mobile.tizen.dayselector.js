@@ -68,7 +68,7 @@
 //           names; the first letters are used as text for the checkboxes
 
 (function ($, window, undefined) {
-    $.widget("todons.dayselector", $.mobile.widget, {
+    $.widget("tizen.dayselector", $.mobile.widget, {
         options: {
             initSelector: 'fieldset:jqmData(role="dayselector")',
             theme: null,
@@ -152,7 +152,7 @@
 
     // auto self-init widgets
     $(document).bind("pagebeforecreate", function (e) {
-        var elts = $($.todons.dayselector.prototype.options.initSelector, e.target);
+        var elts = $($.tizen.dayselector.prototype.options.initSelector, e.target);
         elts.not(":jqmData(role='none'), :jqmData(role='nojs')").dayselector();
     });
 

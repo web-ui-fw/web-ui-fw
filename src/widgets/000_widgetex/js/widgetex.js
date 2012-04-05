@@ -69,7 +69,7 @@
 // source: "alternateWidgetName"
 //
 // If AJAX loading fails, source is set to a jQuery object containing a div with an error message. You can check whether
-// loading failed via the jQuery object's jqmData("todons.widgetex.ajax.fail") data item. If false, then the jQuery object
+// loading failed via the jQuery object's jqmData("tizen.widgetex.ajax.fail") data item. If false, then the jQuery object
 // is the actual prototype loaded via AJAX or present inline. Otherwise, the jQuery object is the error message div.
 //
 // If 'source' is defined as a jQuery object, it is considered already loaded.
@@ -90,11 +90,11 @@
 // 
 // This structure is then made accessible from the widget instance via the '_ui' key (i.e., this._ui).
 //
-// 2. Use the loadPrototype method when your widget does not derive from $.todons.widgetex:
+// 2. Use the loadPrototype method when your widget does not derive from $.tizen.widgetex:
 // Add _htmlProto to your widget's prototype as described above. Then, in your widget's _create() method, call
 // loadPrototype in the following manner:
 //
-// $.todons.widgetex.loadPrototype.call(this, "namespace.widgetName");
+// $.tizen.widgetex.loadPrototype.call(this, "namespace.widgetName");
 //
 // Thereafter, you may use the HTML prototype from your widget's prototype or, if you have specified a 'ui' key in your
 // _htmlProto key, you may use this._ui from your widget instance.
@@ -125,7 +125,7 @@
 //
 // If your widget does not inherit from widgetex, you can still use widgetex' systematic option handling:
 // 1. define the _setOption method for your widget as follows:
-//      _setOption: $.todons.widgetex.prototype._setOption
+//      _setOption: $.tizen.widgetex.prototype._setOption
 // 2. Call this._setOptions(this.options) from your widget's _create() function.
 // 3. As with widgetex-derived widgets, implement a corresponding _setMyOptionName function for each option myOptionName
 // you wish to handle.
@@ -151,13 +151,13 @@
 // "signal" is optional, and will be emitted when setting the data-attribute via this._setValue(newValue).
 //
 // If your widget does not derive from widgetex, you can still define "_value" as described above and call
-// $.todons.widgetex.setValue(widget, newValue).
+// $.tizen.widgetex.setValue(widget, newValue).
 //
 // V. Systematic enabled/disabled handling for input elements
 //
 // widgetex implements _setDisabled which will disable the input associated with this widget, if any. Thus, if you derive
 // from widgetex and you plan on implementing the disabled state, you should chain up to
-// $.todons.widgetex.prototype._setDisabled(value), rather than $.Widget.prototype._setOption("disabled", value).
+// $.tizen.widgetex.prototype._setDisabled(value), rather than $.Widget.prototype._setOption("disabled", value).
 
 (function($, undefined) {
 
@@ -170,9 +170,9 @@ function getProtoPath() {
             theScriptTag.attr("data-framework-theme")   + "/proto-html");
 }
 
-$.widget("todons.widgetex", $.mobile.widget, {
+$.widget("tizen.widgetex", $.mobile.widget, {
     _createWidget: function() {
-        $.todons.widgetex.loadPrototype.call(this, this.namespace + "." + this.widgetName);
+        $.tizen.widgetex.loadPrototype.call(this, this.namespace + "." + this.widgetName);
         $.mobile.widget.prototype._createWidget.apply(this, arguments);
     },
 
@@ -229,13 +229,13 @@ $.widget("todons.widgetex", $.mobile.widget, {
     },
 
     _setValue: function(newValue) {
-        $.todons.widgetex.setValue(this, newValue);
+        $.tizen.widgetex.setValue(this, newValue);
     },
 
     _realize: function() {}
 });
 
-$.todons.widgetex.setValue = function(widget, newValue) {
+$.tizen.widgetex.setValue = function(widget, newValue) {
     if (widget._value !== undefined) {
         var valueString = widget._value.makeString ? widget._value.makeString(newValue) : newValue;
 
@@ -260,7 +260,7 @@ $.todons.widgetex.setValue = function(widget, newValue) {
     }
 };
 
-$.todons.widgetex.assignElements = function(proto, obj) {
+$.tizen.widgetex.assignElements = function(proto, obj) {
     var ret = {};
     for (var key in obj)
         if ((typeof obj[key]) === "string") {
@@ -276,11 +276,11 @@ $.todons.widgetex.assignElements = function(proto, obj) {
         }
         else
         if ((typeof obj[key]) === "object")
-            ret[key] = $.todons.widgetex.assignElements(proto, obj[key]);
+            ret[key] = $.tizen.widgetex.assignElements(proto, obj[key]);
     return ret;
 }
 
-$.todons.widgetex.loadPrototype = function(widget, ui) {
+$.tizen.widgetex.loadPrototype = function(widget, ui) {
     var ar = widget.split(".");
 
     if (ar.length == 2) {
@@ -290,7 +290,7 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
         var htmlProto = $("<div></div>")
                 .text("Failed to load proto for widget " + namespace + "." + widgetName + "!")
                 .css({background: "red", color: "blue", border: "1px solid black"})
-                .jqmData("todons.widgetex.ajax.fail", true);
+                .jqmData("tizen.widgetex.ajax.fail", true);
 
         // If htmlProto is defined
         if ($[namespace][widgetName].prototype._htmlProto !== undefined) {
@@ -310,7 +310,7 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
                     async: false,
                     dataType: "html"
                 }).success(function(data, textStatus, jqXHR) {
-                    htmlProto = $("<div></div>").html(data).jqmData("todons.widgetex.ajax.fail", false);
+                    htmlProto = $("<div></div>").html(data).jqmData("tizen.widgetex.ajax.fail", false);
                 });
 
                 // Assign the HTML proto to the widget prototype
@@ -319,7 +319,7 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
             // Otherwise, use the inline definition
             else {
                 // AJAX loading has trivially succeeded, since there was no AJAX loading at all
-                $[namespace][widgetName].prototype._htmlProto.source.jqmData("todons.widgetex.ajax.fail", false);
+                $[namespace][widgetName].prototype._htmlProto.source.jqmData("tizen.widgetex.ajax.fail", false);
                 htmlProto = $[namespace][widgetName].prototype._htmlProto.source;
             }
 
@@ -328,7 +328,7 @@ $.todons.widgetex.loadPrototype = function(widget, ui) {
             if ($[namespace][widgetName].prototype._htmlProto.ui !== undefined) {
 	        // Assign the relevant parts of the proto
                 $.extend(this, {
-                    _ui: $.todons.widgetex.assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
+                    _ui: $.tizen.widgetex.assignElements(htmlProto.clone(), $[namespace][widgetName].prototype._htmlProto.ui)
                 });
             }
         }

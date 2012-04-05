@@ -29,7 +29,7 @@
  * Authors: Max Waterman <max.waterman@intel.com>
  */
 
-// Todonsslider modifies the JQuery Mobile slider and is created in the same way.
+// tizenslider modifies the JQuery Mobile slider and is created in the same way.
 //
 // See the JQuery Mobile slider widget for more information :
 //     http://jquerymobile.com/demos/1.0a4.1/docs/forms/forms-slider.html
@@ -42,7 +42,7 @@
 //            default: 'c'
 //     popupEnabled: boolean; controls whether the popup is displayed or not
 //                   specify if the popup is enabled using the 'data-popupEnabled' attribute
-//                   set from javascript using .todonsslider('option','popupEnabled',newValue)
+//                   set from javascript using .tizenslider('option','popupEnabled',newValue)
 //     initDeselector: string; the selector that is used to determine which elements should be
 //                     regular jQuery Mobile sliders
 //                     default: 'select, .useJqmSlider'
@@ -62,14 +62,14 @@
 //     </div>
 //
 //     // disable popup from javascript
-//     $('#mySlider').todonsslider('option','popupEnabled',false);
+//     $('#mySlider').tizenslider('option','popupEnabled',false);
 //
 //     // from buttons
 //     $('#popupEnabler').bind('vclick', function() {
-//         $('#mySlider').todonsslider('option','popupEnabled',true);
+//         $('#mySlider').tizenslider('option','popupEnabled',true);
 //     });
 //     $('#popupDisabler').bind('vclick', function() {
-//         $('#mySlider').todonsslider('option','popupEnabled',false);
+//         $('#mySlider').tizenslider('option','popupEnabled',false);
 //     });
 //     <div data-role="fieldcontain">
 //         <label for="myJqmSlider">Use jQuery Mobile slider</label>
@@ -77,7 +77,7 @@
 //     </div>
 
 (function ($, window, undefined) {
-    $.widget("todons.todonsslider", $.mobile.widget, {
+    $.widget("tizen.tizenslider", $.mobile.widget, {
         options: {
             theme: 'c',
             popupEnabled: true,
@@ -231,7 +231,7 @@
     // initialise sliders with our own slider
     $(document).bind("pagecreate", function(e) {
         var jqmSliderInitSelector = $.data(window,"jqmSliderInitSelector");
-        $(e.target).find(jqmSliderInitSelector).not($.todons.todonsslider.prototype.options.initDeselector).todonsslider();
+        $(e.target).find(jqmSliderInitSelector).not($.tizen.tizenslider.prototype.options.initDeselector).tizenslider();
         $(e.target).find(jqmSliderInitSelector).filter('select').slider();
     });
 

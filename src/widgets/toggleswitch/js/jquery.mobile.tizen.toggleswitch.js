@@ -48,7 +48,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.toggleswitch", $.todons.widgetex, {
+$.widget("tizen.toggleswitch", $.tizen.widgetex, {
     options: {
         onText       : null,
         offText      : null,
@@ -184,7 +184,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     },
 */
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.outer[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 
@@ -294,7 +294,7 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.toggleswitch.prototype.options.initSelector, e.target)
+    $($.tizen.toggleswitch.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .toggleswitch();
 });

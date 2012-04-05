@@ -99,7 +99,7 @@
 (function ($, undefined) {
 
 // hbox
-$.widget("todons.layouthbox", $.todons.jlayoutadaptor, {
+$.widget("tizen.layouthbox", $.tizen.jlayoutadaptor, {
     fixed: {
         type: 'flexGrid',
         rows: 1,
@@ -112,18 +112,18 @@ $.widget("todons.layouthbox", $.todons.jlayoutadaptor, {
             this.options.hgap = 0;
         }
 
-        $.todons.jlayoutadaptor.prototype._create.apply(this, arguments);
+        $.tizen.jlayoutadaptor.prototype._create.apply(this, arguments);
     }
 });
 
 $(document).bind("pagecreate", function (e) {
-    $($.todons.layouthbox.prototype.fixed.initSelector, e.target)
+    $($.tizen.layouthbox.prototype.fixed.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .layouthbox();
 });
 
 // vbox
-$.widget("todons.layoutvbox", $.todons.jlayoutadaptor, {
+$.widget("tizen.layoutvbox", $.tizen.jlayoutadaptor, {
     fixed: {
         type: 'flexGrid',
         columns: 1,
@@ -136,12 +136,12 @@ $.widget("todons.layoutvbox", $.todons.jlayoutadaptor, {
             this.options.vgap = 0;
         }
 
-        $.todons.jlayoutadaptor.prototype._create.apply(this, arguments);
+        $.tizen.jlayoutadaptor.prototype._create.apply(this, arguments);
     }
 });
 
 $(document).bind("pagecreate", function (e) {
-    $($.todons.layoutvbox.prototype.fixed.initSelector, e.target)
+    $($.tizen.layoutvbox.prototype.fixed.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .layoutvbox();
 });

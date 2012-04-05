@@ -54,7 +54,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.hsvpicker", $.todons.colorwidget, {
+$.widget( "tizen.hsvpicker", $.tizen.colorwidget, {
     options: {
         initSelector: ":jqmData(role='hsvpicker')"
     },
@@ -145,7 +145,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     },
 
     _handleMouseDown: function(chan, idx, e, isSelector) {
-        var coords = $.mobile.todons.targetRelativeCoordsFromEvent(e),
+        var coords = $.mobile.tizen.targetRelativeCoordsFromEvent(e),
             widgetStr = (isSelector ? "selector" : "eventSource");
 
         if (coords.x >= 0 && coords.x <= this._ui[chan][widgetStr].outerWidth() &&
@@ -164,7 +164,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
     _handleMouseMove: function(chan, idx, e, isSelector, coords) {
         if (this.dragging === idx) {
-            coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(e));
+            coords = (coords || $.mobile.tizen.targetRelativeCoordsFromEvent(e));
 
             var factor = ((0 === idx) ? 360 : 1),
                 potential = (isSelector
@@ -186,8 +186,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     },
 
     _updateSelectors: function(hsv) {
-        var clrlib = $.todons.colorwidget.clrlib,
-            clrwidget = $.todons.colorwidget.prototype,
+        var clrlib = $.tizen.colorwidget.clrlib,
+            clrwidget = $.tizen.colorwidget.prototype,
              clr = clrlib.HSVToHSL(hsv),
             hclr = clrlib.HSVToHSL([hsv[0], 1.0, 1.0]),
             vclr = clrlib.HSVToHSL([hsv[0], hsv[1], 1.0]);
@@ -212,22 +212,22 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
     },
 
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
         this._ui.hue.hue.huegradient("option", "disabled", value);
-        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.container);
+        $.tizen.colorwidget.prototype._displayDisabledState.call(this, this._ui.container);
     },
 
     _setColor: function(clr) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsv = $.todons.colorwidget.clrlib.RGBToHSV($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr)) {
+            this.dragging_hsv = $.tizen.colorwidget.clrlib.RGBToHSV($.tizen.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this._updateSelectors(this.dragging_hsv);
         }
     }
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.hsvpicker.prototype.options.initSelector, e.target)
+    $($.tizen.hsvpicker.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .hsvpicker();
 });

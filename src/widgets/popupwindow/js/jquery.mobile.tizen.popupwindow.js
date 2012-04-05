@@ -82,7 +82,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.popupwindow", $.todons.widgetex, {
+$.widget( "tizen.popupwindow", $.tizen.widgetex, {
     options: {
         theme: null,
         overlayTheme: null,
@@ -335,7 +335,7 @@ $.widget( "todons.popupwindow", $.todons.widgetex, {
     }
 });
 
-$.todons.popupwindow.bindPopupToButton = function(btn, popup) {
+$.tizen.popupwindow.bindPopupToButton = function(btn, popup) {
     if (btn.length === 0 || popup.length === 0) return;
 
     var btnVClickHandler = function(e) {
@@ -372,12 +372,12 @@ $.todons.popupwindow.bindPopupToButton = function(btn, popup) {
 };
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.popupwindow.prototype.options.initSelector, e.target)
+    $($.tizen.popupwindow.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .popupwindow();
 
     $("a[href^='#']:jqmData(rel='popupwindow')", e.target).each(function() {
-        $.todons.popupwindow.bindPopupToButton($(this), $($(this).attr("href")));
+        $.tizen.popupwindow.bindPopupToButton($(this), $($(this).attr("href")));
     });
 });
 

@@ -38,9 +38,9 @@
 
 (function($, undefined) {
 
-ensureNS("jQuery.mobile.todons");
+ensureNS("jQuery.mobile.tizen");
 
-$.widget("todons.pagelist", $.todons.widgetex, {
+$.widget("tizen.pagelist", $.tizen.widgetex, {
     _htmlProto: {
         ui: {
             pageList: "#pagelist",
@@ -123,14 +123,14 @@ $.widget("todons.pagelist", $.todons.widgetex, {
     }
 });
 
-// Look for an element marked as a pagelist and assign $.mobile.todons.pagelist with a newly created pagelist.
-// If $.mobile.todons.pagelist is already assigned, ignore any new "data-pagelist='true'" designations.
+// Look for an element marked as a pagelist and assign $.mobile.tizen.pagelist with a newly created pagelist.
+// If $.mobile.tizen.pagelist is already assigned, ignore any new "data-pagelist='true'" designations.
 $(document).bind("pagecreate create", function(e) {
     $(":jqmData(pagelist='true')", e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .each(function() {
-            if ($.mobile.todons.pagelist === undefined) {
-                $.extend($.mobile.todons, {
+            if ($.mobile.tizen.pagelist === undefined) {
+                $.extend($.mobile.tizen, {
                     pagelist: $(this).pagelist()
                 });
             }

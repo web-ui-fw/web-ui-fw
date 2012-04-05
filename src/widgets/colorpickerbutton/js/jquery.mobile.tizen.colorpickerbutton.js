@@ -63,7 +63,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.colorpickerbutton", $.todons.colorwidget, {
+$.widget("tizen.colorpickerbutton", $.tizen.colorwidget, {
     options: {
         buttonMarkup: {
             theme: null,
@@ -98,7 +98,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
         this._ui.popup.insertBefore(this.element).popupwindow();
         this._ui.hsvpicker.hsvpicker();
 
-        $.todons.popupwindow.bindPopupToButton(this._ui.button, this._ui.popup);
+        $.tizen.popupwindow.bindPopupToButton(this._ui.button, this._ui.popup);
 
         this._ui.closeButton.bind("vclick", function(event) {
             self._setColor(self._ui.hsvpicker.hsvpicker("option", "color"));
@@ -117,11 +117,11 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     },
 
     _setColor: function(clr) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            var clrlib = $.todons.colorwidget.clrlib;
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr)) {
+            var clrlib = $.tizen.colorwidget.clrlib;
 
             this._ui.hsvpicker.hsvpicker("option", "color", this.options.color);
-            $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.buttonContents, 
+            $.tizen.colorwidget.prototype._setElementColor.call(this, this._ui.buttonContents, 
                 clrlib.RGBToHSL(clrlib.HTMLToRGB(this.options.color)), "color");
         }
     },
@@ -140,10 +140,10 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
     },
 
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.popup.popupwindow("option", "disabled", value);
         this._ui.button[value ? "addClass" : "removeClass"]("ui-disabled");
-        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.button);
+        $.tizen.colorwidget.prototype._displayDisabledState.call(this, this._ui.button);
     },
 
     open: function() {
@@ -167,7 +167,7 @@ $.widget("todons.colorpickerbutton", $.todons.colorwidget, {
 
 //auto self-init widgets
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.colorpickerbutton.prototype.options.initSelector, e.target)
+    $($.tizen.colorpickerbutton.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .colorpickerbutton();
 });

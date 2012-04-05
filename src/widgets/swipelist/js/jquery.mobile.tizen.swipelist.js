@@ -84,7 +84,7 @@
 //                      (to either the right or left).
 (function ($) {
 
-$.widget("todons.swipelist", $.mobile.widget, {
+$.widget("tizen.swipelist", $.mobile.widget, {
     options: {
         theme: null
     },

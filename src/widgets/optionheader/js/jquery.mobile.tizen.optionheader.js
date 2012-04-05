@@ -115,7 +115,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.optionheader", $.todons.widgetex, {
+$.widget("tizen.optionheader", $.tizen.widgetex, {
     options: {
         initSelector: ":jqmData(role='optionheader')",
         showIndicator: true,
@@ -338,7 +338,7 @@ $.widget("todons.optionheader", $.todons.widgetex, {
 
 // auto self-init widgets
 $(document).bind("pagecreate", function (e) {
-    $($.todons.optionheader.prototype.options.initSelector, e.target)
+    $($.tizen.optionheader.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .optionheader();
 });

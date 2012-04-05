@@ -44,7 +44,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.colorpicker", $.todons.colorwidget, {
+$.widget( "tizen.colorpicker", $.tizen.colorwidget, {
     options: {
         initSelector: ":jqmData(role='colorpicker')"
     },
@@ -122,7 +122,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _handleMouseDown: function(event, containerStr, isSelector) {
-        var coords = $.mobile.todons.targetRelativeCoordsFromEvent(event),
+        var coords = $.mobile.tizen.targetRelativeCoordsFromEvent(event),
             widgetStr = isSelector ? "selector" : "eventSource";
         if ((coords.x >= 0 && coords.x <= this._ui[containerStr][widgetStr].width() &&
              coords.y >= 0 && coords.y <= this._ui[containerStr][widgetStr].height()) || isSelector) {
@@ -142,7 +142,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
         if (this.dragging &&
             !(( this.draggingHS && containerStr === "l") || 
               (!this.draggingHS && containerStr === "hs"))) {
-            coords = (coords || $.mobile.todons.targetRelativeCoordsFromEvent(event));
+            coords = (coords || $.mobile.tizen.targetRelativeCoordsFromEvent(event));
 
             if (this.draggingHS) {
                 var potential_h = isSelector
@@ -175,8 +175,8 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _updateSelectors: function(hsl) {
-        var clr = $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.hs.selector, [hsl[0], 1.0 - hsl[1], hsl[2]], "background").clr,
-            gray = $.todons.colorwidget.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
+        var clr = $.tizen.colorwidget.prototype._setElementColor.call(this, this._ui.hs.selector, [hsl[0], 1.0 - hsl[1], hsl[2]], "background").clr,
+            gray = $.tizen.colorwidget.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
 
         this._ui.hs.valMask.css((hsl[2] < 0.5)
             ? { background : "#000000" , opacity : (1.0 - hsl[2] * 2.0)   }
@@ -189,21 +189,21 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
             top        : (hsl[2] * this._ui.l.eventSource.height()),
             background : gray
         });
-        $.todons.colorwidget.prototype._setColor.call(this, clr);
+        $.tizen.colorwidget.prototype._setColor.call(this, clr);
     },
 
     widget: function() { return this._ui.clrpicker; },
 
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.hs.hueGradient.huegradient("option", "disabled", value);
         this._ui.clrpicker[value ? "addClass" : "removeClass"]("ui-disabled");
-        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpicker);
+        $.tizen.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpicker);
     },
 
     _setColor: function(clr) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
-            this.dragging_hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(this.options.color));
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr)) {
+            this.dragging_hsl = $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(this.options.color));
             this.dragging_hsl[1] = 1.0 - this.dragging_hsl[1];
             this._updateSelectors(this.dragging_hsl);
         }
@@ -211,7 +211,7 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.colorpicker.prototype.options.initSelector, e.target)
+    $($.tizen.colorpicker.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .colorpicker();
 });

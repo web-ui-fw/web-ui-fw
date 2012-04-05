@@ -29,7 +29,7 @@
  * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
-// This widget is implemented in an extremely ugly way. It should derive from $.todons.popupwindow, but it doesn't
+// This widget is implemented in an extremely ugly way. It should derive from $.tizen.popupwindow, but it doesn't
 // because there's a bug in jquery.ui.widget.js which was fixed in jquery-ui commit
 // b9153258b0f0edbff49496ed16d2aa93bec07d95. Once a version of jquery-ui containing that commit is released
 // (probably >= 1.9m5), and jQuery Mobile picks up the widget from there, this widget needs to be rewritten properly.
@@ -38,9 +38,9 @@
 // the prototype of the subclass. The prototype of the superclass should remain unchanged.
 
 (function($, undefined) {
-    $.widget("todons.ctxpopup", $.todons.widgetex, {
-        options: $.extend({}, $.todons.popupwindow.prototype.options, {
-            initSelector: ":not(:not(" + $.todons.popupwindow.prototype.options.initSelector + ")):not(:not(:jqmData(show-arrow='true'), :jqmData(show-arrow)))"
+    $.widget("tizen.ctxpopup", $.tizen.widgetex, {
+        options: $.extend({}, $.tizen.popupwindow.prototype.options, {
+            initSelector: ":not(:not(" + $.tizen.popupwindow.prototype.options.initSelector + ")):not(:not(:jqmData(show-arrow='true'), :jqmData(show-arrow)))"
         }),
 
         _htmlProto: {
@@ -71,16 +71,16 @@
         },
 
         _setOption: function(key, value) {
-            $.todons.popupwindow.prototype._setOption.apply(this.element.data("popupwindow"), arguments);
+            $.tizen.popupwindow.prototype._setOption.apply(this.element.data("popupwindow"), arguments);
             this.options[key] = value;
         },
     });
 
-var origOpen = $.todons.popupwindow.prototype.open,
-    orig_setOption = $.todons.popupwindow.prototype._setOption,
-    orig_placementCoords = $.todons.popupwindow.prototype._placementCoords;
+var origOpen = $.tizen.popupwindow.prototype.open,
+    orig_setOption = $.tizen.popupwindow.prototype._setOption,
+    orig_placementCoords = $.tizen.popupwindow.prototype._placementCoords;
 
-$.todons.popupwindow.prototype._setOption = function(key, value) {
+$.tizen.popupwindow.prototype._setOption = function(key, value) {
     var ctxpopup = this.element.data("ctxpopup"),
         needsApplying = true;
     if (ctxpopup) {
@@ -99,7 +99,7 @@ $.todons.popupwindow.prototype._setOption = function(key, value) {
         orig_setOption.apply(this, arguments);
 };
 
-$.todons.popupwindow.prototype._placementCoords = function(x, y, cx, cy) {
+$.tizen.popupwindow.prototype._placementCoords = function(x, y, cx, cy) {
     var ctxpopup = this.element.data("ctxpopup"),
         self = this;
 
@@ -225,7 +225,7 @@ $.todons.popupwindow.prototype._placementCoords = function(x, y, cx, cy) {
         return orig_placementCoords.call(this, x, y, cx, cy);
 };
 
-$.todons.popupwindow.prototype.open = function(x, y) {
+$.tizen.popupwindow.prototype.open = function(x, y) {
     var ctxpopup = this.element.data("ctxpopup");
 
     if (ctxpopup) {
@@ -241,8 +241,8 @@ $.todons.popupwindow.prototype.open = function(x, y) {
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-    var ctxpopups = $($.todons.ctxpopup.prototype.options.initSelector, e.target);
-    $.todons.ctxpopup.prototype.enhanceWithin( e.target );
+    var ctxpopups = $($.tizen.ctxpopup.prototype.options.initSelector, e.target);
+    $.tizen.ctxpopup.prototype.enhanceWithin( e.target );
 
 });
 

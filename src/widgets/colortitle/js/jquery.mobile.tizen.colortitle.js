@@ -50,7 +50,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.colortitle", $.todons.colorwidget, {
+$.widget( "tizen.colortitle", $.tizen.colorwidget, {
     options: {
         initSelector: ":jqmData(role='colortitle')"
     },
@@ -72,18 +72,20 @@ $.widget( "todons.colortitle", $.todons.colorwidget, {
     widget: function() { return this._ui.clrtitle; },
 
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.clrtitle[value ? "addClass" : "removeClass"]("ui-disabled");
     },
 
     _setColor: function(clr) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr))
-            this._ui.header.text(this.options.color);
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr))
+            this._ui.header
+                .text(this.options.color)
+                .css({color: this.options.color});
     }
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.colortitle.prototype.options.initSelector, e.target)
+    $($.tizen.colortitle.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .colortitle();
 });

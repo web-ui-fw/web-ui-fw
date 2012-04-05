@@ -53,10 +53,24 @@
 //            The color can be changed post-construction like this :
 //                $("#mycolorpalette").colorpalette("option", "color", "#ABCDEF");
 //            Default: "#1a8039"
+//
+// APIs:
+//     $('obj').colorpalette() : Make an object to a colorpalette widget.
+// Events:
+// 		None.
+//
+// Examples:
+// 		<div data-role="colorpalette" data-color: "#ffffff"></div>
+//
+// 		<div id="toBeColorpalette"></div>
+// 		<script>
+// 			$("#toBeColorpalette").colorpalette({ color: "#ffffff" });
+// 		</script>
+//
 
 (function( $, undefined ) {
 
-$.widget( "todons.colorpalette", $.todons.colorwidget, {
+$.widget( "tizen.colorpalette", $.tizen.colorwidget, {
     options: {
         showPreview: false,
         initSelector: ":jqmData(role='colorpalette')"
@@ -78,7 +92,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             .after(this._ui.clrpalette);
 
         this._ui.clrpalette.find("[data-colorpalette-choice]").bind("vclick", function(e) {
-            var clr = $.todons.colorwidget.prototype._getElementColor.call(this, $(e.target)),
+            var clr = $.tizen.colorwidget.prototype._getElementColor.call(this, $(e.target)),
                 Nix,
                 nChoices = self._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),
                 choiceId, rgbMatches;
@@ -86,7 +100,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
             rgbMatches = clr.match(/rgb\(([0-9]*), *([0-9]*), *([0-9]*)\)/);
 
             if (rgbMatches && rgbMatches.length > 3)
-                clr = $.todons.colorwidget.clrlib.RGBToHTML([
+                clr = $.tizen.colorwidget.clrlib.RGBToHTML([
                     parseInt(rgbMatches[1]) / 255,
                     parseInt(rgbMatches[2]) / 255,
                     parseInt(rgbMatches[3]) / 255]);
@@ -95,9 +109,9 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
                 self._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]").removeClass("colorpalette-choice-active");
 
             $(e.target).addClass("colorpalette-choice-active");
-            $.todons.colorwidget.prototype._setColor.call(self, clr);
-            $.todons.colorwidget.prototype._setElementColor.call(self, self._ui.preview,
-                $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)), "background");
+            $.tizen.colorwidget.prototype._setColor.call(self, clr);
+            $.tizen.colorwidget.prototype._setElementColor.call(self, self._ui.preview,
+                $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(clr)), "background");
         });
     },
 
@@ -115,25 +129,25 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
     },
 
     _setDisabled: function(value) {
-        $.todons.widgetex.prototype._setDisabled.call(this, value);
+        $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.clrpalette[value ? "addClass" : "removeClass"]("ui-disabled");
-        $.todons.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpalette);
+        $.tizen.colorwidget.prototype._displayDisabledState.call(this, this._ui.clrpalette);
     },
 
     _setColor: function(clr) {
-        if ($.todons.colorwidget.prototype._setColor.call(this, clr)) {
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr)) {
             clr = this.options.color;
             var Nix,
                 activeIdx = -1,
                 nChoices = this._ui.clrpalette.attr("data-" + ($.mobile.ns || "") + "n-choices"),
-                hsl = $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)),
+                hsl = $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(clr)),
                 origHue = hsl[0],
                 offset = hsl[0] / 36,
                 theFloor = Math.floor(offset),
                 newClr;
 
-            $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.preview,
-                $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(clr)), "background");
+            $.tizen.colorwidget.prototype._setElementColor.call(this, this._ui.preview,
+                $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(clr)), "background");
 
             offset = (offset - theFloor < 0.5)
                 ? (offset - theFloor)
@@ -148,10 +162,10 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
                 if (hsl[0] === origHue)
                     activeIdx = Nix;
 
-                newClr = $.todons.colorwidget.clrlib.RGBToHTML($.todons.colorwidget.clrlib.HSLToRGB(hsl));
+                newClr = $.tizen.colorwidget.clrlib.RGBToHTML($.tizen.colorwidget.clrlib.HSLToRGB(hsl));
 
-                $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]"),
-                    $.todons.colorwidget.clrlib.RGBToHSL($.todons.colorwidget.clrlib.HTMLToRGB(newClr)), "background");
+                $.tizen.colorwidget.prototype._setElementColor.call(this, this._ui.clrpalette.find("[data-colorpalette-choice=" + Nix + "]"),
+                    $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(newClr)), "background");
             }
 
             if (activeIdx != -1) {
@@ -166,7 +180,7 @@ $.widget( "todons.colorpalette", $.todons.colorwidget, {
 });
 
 $(document).bind("pagecreate create", function(e) {
-    $($.todons.colorpalette.prototype.options.initSelector, e.target)
+    $($.tizen.colorpalette.prototype.options.initSelector, e.target)
         .not(":jqmData(role='none'), :jqmData(role='nojs')")
         .colorpalette();
 });
