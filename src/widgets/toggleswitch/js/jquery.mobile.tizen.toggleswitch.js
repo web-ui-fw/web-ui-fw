@@ -248,13 +248,6 @@ $.widget("tizen.toggleswitch", $.tizen.widgetex, {
         this.element.attr("data-" + ($.mobile.ns || "") + "theme", value);
     },
 
-    _setOffText: function(value) {
-        this._ui.txt.normal.text(value);
-        this.options.offText = value;
-        this.element.attr("data-" + ($.mobile.ns || "") + "off-text", value);
-        this._updateBtnText();
-    },
-
     _setHorizontal: function(value) {
         this._ui.outer
             .removeClass("toggleswitch-h toggleswitch-v")
@@ -266,14 +259,6 @@ $.widget("tizen.toggleswitch", $.tizen.widgetex, {
         this.refresh();
     },
 
-    _setChecked: function(checked) {
-        if (this.options.checked != checked) {
-            this.options.checked = checked;
-            this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
-            this._setValue(checked);
-            this.refresh();
-        }
-    },
 
     refresh: function() {
         var state = (this.options.checked ? "on" : "off"),
@@ -290,6 +275,22 @@ $.widget("tizen.toggleswitch", $.tizen.widgetex, {
     destroy: function() {
         this._ui.outer.remove();
         this.element.removeClass("ui-toggleswitch-hidden");
+    },
+
+    _setOffText: function(value) {
+        this._ui.txt.normal.text(value);
+        this.options.offText = value;
+        this.element.attr("data-" + ($.mobile.ns || "") + "off-text", value);
+        this._updateBtnText();
+    },
+
+    _setChecked: function(checked) {
+        if (this.options.checked != checked) {
+            this.options.checked = checked;
+            this.element.attr("data-" + ($.mobile.ns || "") + "checked", checked);
+            this._setValue(checked);
+            this.refresh();
+        }
     }
 });
 
