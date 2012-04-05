@@ -1,0 +1,19 @@
+For upstream:
+0002 - maybe
+0008 - maybe
+
+tizen
+- get rid of a_colorwidget
+- hsvpicker: icon can be done with standard jqm icons and overriding style via .class1.class2 { background: some-other-icon; } - no need for special icons "reveal" and "reveal-left"
+- optionheader/css: WTF?! a merge conflict was left in place?
+- ctxpopup: Why does tizen unset the background during open? Let's solve it with CSS.
+- progressbar: Replaced with the one from jquery UI
+- slider: Seemingly extensive changes - check with Max
+- toggleswitch: They're using an older version
+
+web-ui-fw
+- colorpickerbutton html proto has inline style - why?
+- dayselector - they have Globalize
+- optionheader: Needs a closer look, because there are extensive modifications in tizen.
+- popupwindow: Mostly OK, but widthRatio and style need a closer look
+- swipelist: Changed click to vclick, because that's what tizen had
