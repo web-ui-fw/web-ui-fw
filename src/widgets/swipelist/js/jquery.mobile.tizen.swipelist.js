@@ -167,7 +167,7 @@ $.widget("tizen.swipelist", $.mobile.widget, {
 
             // any clicks on buttons inside the item also trigger
             // the cover to slide back to the left
-            item.find('.ui-btn').bind('click', cover.data('animateLeft'));
+            item.find('.ui-btn').bind('vclick', cover.data('animateLeft'));
         });
     },
 
@@ -226,7 +226,7 @@ $.widget("tizen.swipelist", $.mobile.widget, {
                 item.unbind('swipeleft', cover.data('animateLeft'));
 
                 // unbind clicks on buttons inside the item
-                item.find('.ui-btn').unbind('click', cover.data('animateLeft'));
+                item.find('.ui-btn').unbind('vclick', cover.data('animateLeft'));
 
                 cover.data('animateRight', null);
                 cover.data('animateLeft', null);
