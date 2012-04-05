@@ -74,13 +74,16 @@ $.widget( "tizen.colortitle", $.tizen.colorwidget, {
     _setDisabled: function(value) {
         $.tizen.widgetex.prototype._setDisabled.call(this, value);
         this._ui.clrtitle[value ? "addClass" : "removeClass"]("ui-disabled");
+        $.tizen.colorwidget.prototype._displayDisabledState.call(this, this._ui.header);
     },
 
     _setColor: function(clr) {
-        if ($.tizen.colorwidget.prototype._setColor.call(this, clr))
+        if ($.tizen.colorwidget.prototype._setColor.call(this, clr)) {
             this._ui.header
-                .text(this.options.color)
-                .css({color: this.options.color});
+                .text(this.options.color);
+            $.tizen.colorwidget.prototype._setElementColor.call(this, this._ui.header,
+                $.tizen.colorwidget.clrlib.RGBToHSL($.tizen.colorwidget.clrlib.HTMLToRGB(clr)), "color");
+				}
     }
 });
 
