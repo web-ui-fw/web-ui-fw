@@ -29,7 +29,7 @@
  * Authors: Gabriel Schulhof <gabriel.schulhof@intel.com>
  */
 
-// It displays a grid two rows by five columns of colors.
+// Colorpalette displays a grid two rows by five columns of colors.
 //
 // The colors are automatically computed based on the hue
 // of the color set by the color attribute (see below).

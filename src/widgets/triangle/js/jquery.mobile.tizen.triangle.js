@@ -1,5 +1,4 @@
 /*
- *
  * This software is licensed under the MIT licence (as defined by the OSI at
  * http://www.opensource.org/licenses/mit-license.php)
  *
