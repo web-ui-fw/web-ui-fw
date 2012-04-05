@@ -189,7 +189,7 @@ $(document).bind("pagecreate", function () {
                     restoreBtn.remove();
                     txt.text("Convert to popup");
                 });
-            $.todons.popupwindow.bindPopupToButton(btn, popup.popupwindow());
+            $.tizen.popupwindow.bindPopupToButton(btn, popup.popupwindow());
             btn.trigger("vclick");
         }
     });
@@ -222,7 +222,7 @@ $(document).bind("pagecreate", function () {
         var popupEnabled = false;
 
         var setPopupEnabled = function (newState) {
-                $('#mySlider').todonsslider('option', 'popupEnabled', newState);
+                $('#mySlider').tizenslider('option', 'popupEnabled', newState);
                 $("#togglePopup .ui-btn-text").text((newState ? "Dis" : "En") + "able popup");
             };
 
@@ -237,7 +237,7 @@ $(document).bind("pagecreate", function () {
 
     $("#personpicker-demo").bind('pageshow', function () {
         var personpicker = $(":jqmData(role='personpicker')");
-        personpicker.personpicker('option', 'addressBook', new $.mobile.todons.AddressBook());
+        personpicker.personpicker('option', 'addressBook', new $.mobile.tizen.AddressBook());
 
         personpicker.personpicker('option', 'successCallback', function (persons) {
             s = "PersonPicker succedeed! These are the selected persons:\n";
@@ -589,7 +589,7 @@ $(document).bind("pageinit", function() {
 function launchPersonPicker() {
     $("#personpicker-page-demo").personpicker_page({
         title: "Choose contacts",
-        addressBook: new $.mobile.todons.AddressBook(),
+        addressBook: new $.mobile.tizen.AddressBook(),
         successCallback: function (persons) {
             s = "The following contacts were chosen:\n";
             persons.forEach(function (p) {

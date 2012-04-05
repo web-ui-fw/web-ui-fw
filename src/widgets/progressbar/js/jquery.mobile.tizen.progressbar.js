@@ -42,7 +42,7 @@
 //     theme    : data-theme, default is swatch 'b'
 //                
 (function ($, window, undefined) {
-    $.widget("todons.progressbar", $.mobile.widget, {
+    $.widget("tizen.progressbar", $.mobile.widget, {
         options: {
             value: 0,
             max: 100,

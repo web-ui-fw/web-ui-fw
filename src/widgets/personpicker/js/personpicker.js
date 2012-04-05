@@ -60,7 +60,7 @@
 //         person. Default: true.
 
 (function ($, window, undefined) {
-    $.widget("todons.personpicker", $.todons.widgetex, {
+    $.widget("tizen.personpicker", $.tizen.widgetex, {
         options: {
             addressBook: null,
             successCallback: null,

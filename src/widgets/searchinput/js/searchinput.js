@@ -1,5 +1,5 @@
 (function($, undefined) {
-    $.widget("todons.searchinput", $.mobile.textinput, {
+    $.widget("tizen.searchinput", $.mobile.textinput, {
         options: {
             initSelector: "input[type='search'], input:jqmData(type='search')"
         },
@@ -53,7 +53,7 @@
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-    $.todons.searchinput.prototype.enhanceWithin( e.target );
+    $.tizen.searchinput.prototype.enhanceWithin( e.target );
 });
 
 })(jQuery);

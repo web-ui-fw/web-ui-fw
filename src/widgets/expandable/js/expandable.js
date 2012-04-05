@@ -43,7 +43,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.expandable", $.mobile.widget, {
+$.widget( "tizen.expandable", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(expandable)",
         contentSelector: ':jqmData(role="expandable-content")'
@@ -74,7 +74,7 @@ $.widget( "todons.expandable", $.mobile.widget, {
 });
 
 $(document).bind( "pagecreate create", function (e) {
-    $($.todons.expandable.prototype.options.initSelector, e.target)
+    $($.tizen.expandable.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .expandable();
 });

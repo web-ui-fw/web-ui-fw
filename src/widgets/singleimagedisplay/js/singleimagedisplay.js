@@ -54,7 +54,7 @@
 // singleimagedisplay('option', 'name', 'value') method
 
 (function ($, undefined) {
-    $.widget("todons.singleimagedisplay", $.mobile.widget, {
+    $.widget("tizen.singleimagedisplay", $.mobile.widget, {
         options: {
             initSelector: 'img:jqmData(role=singleimagedisplay)',
             noContent: null,
@@ -257,7 +257,7 @@
 
     // initialise singleimagedisplays with our own singleimagedisplay
     $(document).bind("pagecreate", function(e) {
-        $($.todons.singleimagedisplay.prototype.options.initSelector, e.target)
+        $($.tizen.singleimagedisplay.prototype.options.initSelector, e.target)
         .singleimagedisplay();
     });
 

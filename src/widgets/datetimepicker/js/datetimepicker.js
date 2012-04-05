@@ -59,7 +59,7 @@
 //    });
 
 (function($, window, undefined) {
-    $.widget("todons.datetimepicker", $.todons.widgetex, {
+    $.widget("tizen.datetimepicker", $.tizen.widgetex, {
         options: {
             showDate: true,
             showTime: true,
@@ -505,7 +505,7 @@
         widget: function() { return this._ui.container; },
 
         _setDisabled: function(value) {
-            $.todons.widgetex.prototype._setDisabled.call(this, value);
+            $.tizen.widgetex.prototype._setDisabled.call(this, value);
             this._hideDataSelector(this._ui.selector);
             this._ui.container[value ? "addClass" : "removeClass"]("ui-disabled");
         },
@@ -526,7 +526,7 @@
     }); /* End of widget */
 
     $(document).bind("pagecreate create", function(e) {
-        $($.todons.datetimepicker.prototype.options.initSelector, e.target)
+        $($.tizen.datetimepicker.prototype.options.initSelector, e.target)
             .not(":jqmData(role='none'), :jqmData(role='nojs')")
             .datetimepicker();
     });

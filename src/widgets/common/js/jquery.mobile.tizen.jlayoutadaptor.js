@@ -32,7 +32,7 @@
 // See the layouthbox and layoutvbox widgets for usage examples.
 (function ($, undefined) {
 
-$.widget("todons.jlayoutadaptor", $.mobile.widget, {
+$.widget("tizen.jlayoutadaptor", $.mobile.widget, {
     options: {
         hgap: null,
         vgap: null,

@@ -6,13 +6,13 @@
  * Authors: Salvatore Iovene <salvatore.iovene@intel.com>
  */
 
-ensureNS("jQuery.mobile.todons");
+ensureNS("jQuery.mobile.tizen");
 
 /**
  * This file contains stubs for the Web APIs.
  * The stub can be used for testing purposes.
  */
-jQuery.extend(jQuery.mobile.todons, {
+jQuery.extend(jQuery.mobile.tizen, {
     /*
      * Functions for the Addressbook module.
      */
@@ -41,18 +41,18 @@ jQuery.extend(jQuery.mobile.todons, {
             attributesOfInterest)
         {
             persons = new Array(
-                new $.mobile.todons.Person("Amy"),
-                new $.mobile.todons.Person("Betty"),
-                new $.mobile.todons.Person("Carl"),
-                new $.mobile.todons.Person("Felicia"),
-                new $.mobile.todons.Person("John"),
-                new $.mobile.todons.Person("Matts"),
-                new $.mobile.todons.Person("Rebecca"),
-                new $.mobile.todons.Person("Zoe"));
+                new $.mobile.tizen.Person("Amy"),
+                new $.mobile.tizen.Person("Betty"),
+                new $.mobile.tizen.Person("Carl"),
+                new $.mobile.tizen.Person("Felicia"),
+                new $.mobile.tizen.Person("John"),
+                new $.mobile.tizen.Person("Matts"),
+                new $.mobile.tizen.Person("Rebecca"),
+                new $.mobile.tizen.Person("Zoe"));
 
             // Simulate some time to complete the operation.
             setTimeout(function() { successCallback(persons); }, 1000);
-            return new $.mobile.todons.PendingOperation();
+            return new $.mobile.tizen.PendingOperation();
         }
     }
 });

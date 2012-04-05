@@ -59,7 +59,7 @@
 
 (function($, undefined) {
 
-$.widget("todons.processingbar", $.mobile.widget, {
+$.widget("tizen.processingbar", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(role='processingbar')",
         animationMsPerPixel: 15,
@@ -195,7 +195,7 @@ $.widget("todons.processingbar", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate create", function (e) {
-    $($.todons.processingbar.prototype.options.initSelector, e.target)
+    $($.tizen.processingbar.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .processingbar();
 });

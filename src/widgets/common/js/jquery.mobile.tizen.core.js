@@ -29,11 +29,11 @@
  * Authors: Kalyan Kondapally <kalyan.kondapally@intel.com>
  */
 
-ensureNS("jQuery.mobile.todons");
+ensureNS("jQuery.mobile.tizen");
 
 (function () {
 
-jQuery.extend(jQuery.mobile.todons, {
+jQuery.extend(jQuery.mobile.tizen, {
     Point: function (x, y) {
         var X = isNaN(x) ? 0 : x;
         var Y = isNaN(y) ? 0 : y;
@@ -262,7 +262,7 @@ jQuery.extend(jQuery.mobile.todons, {
             coords.y === undefined || isNaN(coords.y)) {
             var offset = $(e.target).offset();
 
-            coords = $.mobile.todons.documentRelativeCoordsFromEvent(e);
+            coords = $.mobile.tizen.documentRelativeCoordsFromEvent(e);
             coords.x -= offset.left;
             coords.y -= offset.top;
         }

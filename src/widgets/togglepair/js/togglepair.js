@@ -1,5 +1,5 @@
 (function($, undefined) {
-    $.widget("todons.togglepair", $.todons.widgetex, {
+    $.widget("tizen.togglepair", $.tizen.widgetex, {
         options: {
             checked: false,
         },

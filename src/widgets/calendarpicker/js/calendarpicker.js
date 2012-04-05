@@ -121,7 +121,7 @@
 //        <div id = "calendarbutton" data-role = "calendarpicker" data-options='{"calStartDay": 0}'>  </div>
 
 (function($, undefined ) {
-    $.widget( "todons.calendarpicker", $.todons.widgetex, {
+    $.widget( "tizen.calendarpicker", $.tizen.widgetex, {
         options: {
             // All widget options, including some internal runtime details
             daysOfWeekShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -468,7 +468,7 @@
         },
 
         _setDisabled: function(value) {
-            $.todons.widgetex.prototype._setDisabled.call(this, value);
+            $.tizen.widgetex.prototype._setDisabled.call(this, value);
             if (this.isopen && value)
                 this.close();
             this.element[value ? "addClass" : "removeClass"]("ui-disabled");

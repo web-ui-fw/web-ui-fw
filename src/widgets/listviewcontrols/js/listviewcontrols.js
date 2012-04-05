@@ -137,7 +137,7 @@
 
 (function ($) {
 
-$.widget("todons.listviewcontrols", $.mobile.widget, {
+$.widget("tizen.listviewcontrols", $.mobile.widget, {
     _defaults: {
         controlPanelSelector: null,
         modesAvailable: ['edit', 'view'],

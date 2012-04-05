@@ -66,7 +66,7 @@
 
 (function( $, undefined ) {
 
-$.widget( "todons.volumecontrol", $.todons.widgetex, {
+$.widget( "tizen.volumecontrol", $.tizen.widgetex, {
     options: {
         volume: 0,
         basicTone: false,
@@ -91,7 +91,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
         var self = this,
             yCoord = function(volumeImage, e) {
                 var target = $(e.target),
-                    coords = $.mobile.todons.targetRelativeCoordsFromEvent(e);
+                    coords = $.mobile.tizen.targetRelativeCoordsFromEvent(e);
 
                 if (target.hasClass("ui-volumecontrol-level"))
                     coords.y += target.offset().top  - volumeImage.offset().top;
@@ -260,7 +260,7 @@ $.widget( "todons.volumecontrol", $.todons.widgetex, {
 
 //auto self-init widgets
 $( document ).bind( "pagecreate create", function( e ){
-    $( $.todons.volumecontrol.prototype.options.initSelector, e.target )
+    $( $.tizen.volumecontrol.prototype.options.initSelector, e.target )
         .not( ":jqmData(role='none'), :jqmData(role='nojs')" )
         .volumecontrol();
 });

@@ -48,7 +48,7 @@
 
 (function($) {
 
-$.widget("todons.processingcircle", $.mobile.widget, {
+$.widget("tizen.processingcircle", $.mobile.widget, {
     options: {
         initSelector: ":jqmData(role='processingcircle')",
         theme: 'b'
@@ -111,7 +111,7 @@ $.widget("todons.processingcircle", $.mobile.widget, {
 
 // auto self-init widgets
 $(document).bind("pagecreate", function (e) {
-    $($.todons.processingcircle.prototype.options.initSelector, e.target)
+    $($.tizen.processingcircle.prototype.options.initSelector, e.target)
     .not(":jqmData(role='none'), :jqmData(role='nojs')")
     .processingcircle();
 });

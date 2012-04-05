@@ -57,7 +57,7 @@
 //         person. Default: true.
 
 (function ($, window, undefined) {
-    $.widget("todons.personpicker_page", $.mobile.dialog, {
+    $.widget("tizen.personpicker_page", $.mobile.dialog, {
         options: {
             title: "",
             addressBook: null,
@@ -99,7 +99,7 @@
         _create: function () {
             var self = this;
 
-            $.todons.widgetex.loadPrototype.call(this, "todons.personpicker_page");
+            $.tizen.widgetex.loadPrototype.call(this, "tizentizen.personpicker_page");
 
             // Prepare.
             self._ui.title.text(self.options.title);

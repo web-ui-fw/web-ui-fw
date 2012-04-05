@@ -116,7 +116,7 @@
 
           // 3
           equal(startsExpandedOh.height() + 'px',
-                $.todons.optionheader.prototype.collapsedHeight,
+                $.tizen.optionheader.prototype.collapsedHeight,
                 'should have collapsed to the height specified in the prototype');
 
           startsExpandedOh.unbind('collapse');
@@ -175,7 +175,7 @@
 
           // 3
           equal(oh.height() + 'px',
-                $.todons.optionheader.prototype.collapsedHeight,
+                $.tizen.optionheader.prototype.collapsedHeight,
                 'should have collapsed to the height specified in the prototype');
 
           oh.unbind('collapse');
@@ -252,7 +252,7 @@
 
           // 3
           equal(oh.height() + 'px',
-                $.todons.optionheader.prototype.collapsedHeight,
+                $.tizen.optionheader.prototype.collapsedHeight,
                 'should have collapsed to the height specified in the prototype');
 
           oh.unbind('collapse');
@@ -296,7 +296,7 @@
 
           // 3
           equal(oh.height() + 'px',
-                $.todons.optionheader.prototype.collapsedHeight,
+                $.tizen.optionheader.prototype.collapsedHeight,
                 'should have collapsed to the height specified in the prototype');
 
           oh.unbind('collapse');
@@ -338,7 +338,7 @@
 
           // 3
           equal(oh.height() + 'px',
-                $.todons.optionheader.prototype.collapsedHeight,
+                $.tizen.optionheader.prototype.collapsedHeight,
                 'should have collapsed to the height specified in the prototype');
         });
 

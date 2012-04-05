@@ -40,7 +40,7 @@
 //	   max		: maximum value, default is 100
 
 (function ($, window, undefined) {
-    $.widget("todons.progressbar_dialog", $.todons.widgetex, {
+    $.widget("tizen.progressbar_dialog", $.tizen.widgetex, {
         options: {
             value: 0,
             max: 100
