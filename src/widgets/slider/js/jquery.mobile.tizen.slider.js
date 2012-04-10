@@ -81,7 +81,8 @@
         options: {
             theme: 'c',
             popupEnabled: true,
-            initDeselector: 'select, .useJqmSlider'
+            // Take over jqm's sliders, but not select-based ones or those explicitly marked hands-off
+            initSelector: ":not(:not(" + $.mobile.slider.prototype.options.initSelector + ")):not(select, .useJqmSlider')"
         },
 
         popup: null,
@@ -101,8 +102,10 @@
                 positionPopup,
                 updateSlider;
 
-            // apply jqm slider
-            inputElement.slider();
+            // apply jqm slider, if not already applied
+            if (!inputElement.data("slider")) {
+                inputElement.slider();
+            }
 
             // hide the slider input element proper
             inputElement.hide();
@@ -220,19 +223,9 @@
 
     });
 
-    // stop jqm from initialising sliders
-    $(document).bind("pagebeforecreate", function (e) {
-        if ($.data(window, "jqmSliderInitSelector") === undefined ) {
-            $.data(window,"jqmSliderInitSelector", $.mobile.slider.prototype.options.initSelector);
-            $.mobile.slider.prototype.options.initSelector = null;
-        }
-    });
-
     // initialise sliders with our own slider
     $(document).bind("pagecreate", function(e) {
-        var jqmSliderInitSelector = $.data(window,"jqmSliderInitSelector");
-        $(e.target).find(jqmSliderInitSelector).not($.tizen.tizenslider.prototype.options.initDeselector).tizenslider();
-        $(e.target).find(jqmSliderInitSelector).filter('select').slider();
+        $.tizen.tizensslider.prototype.enhanceWithin(e.target);
     });
 
 })(jQuery, this);
