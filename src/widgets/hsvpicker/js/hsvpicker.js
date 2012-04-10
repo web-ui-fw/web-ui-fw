@@ -113,7 +113,7 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
 
                 self.dragging_hsv[hsvIdx] = self.dragging_hsv[hsvIdx] + step * ("left" === $(this).attr("data-" + ($.mobile.ns || "") + "location") ? -1 : 1);
                 self.dragging_hsv[hsvIdx] = Math.min(max, Math.max(0.0, self.dragging_hsv[hsvIdx]));
-                self._updateSelectors(self.dragging_hsv);
+                self._updateSelectors(self.dragging_hsv, chan, hsvIdx);
             });
 
         $( document )
@@ -158,6 +158,10 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
                 this.selectorDraggingOffset.y = coords.y;
             }
 
+						// precompute this for the coming drag operation
+						this._ui[chan].selector._halfOuterWidth  = this._ui[chan].selector.outerWidth()  / 2.0;
+						this._ui[chan].selector._halfOuterHeight = this._ui[chan].selector.outerHeight() / 2.0;
+
             this._handleMouseMove(chan, idx, e, isSelector, coords);
         }
     },
@@ -169,45 +173,51 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
             var factor = ((0 === idx) ? 360 : 1),
                 potential = (isSelector
                   ? ((this.dragging_hsv[idx] / factor) +
-                     ((coords.x - this.selectorDraggingOffset.x) / this._ui[chan].eventSource.width()))
-                  : (coords.x / this._ui[chan].eventSource.width()));
+                     ((coords.x - this.selectorDraggingOffset.x) / this._ui[chan].eventSource[0].clientWidth))
+                  : (coords.x / this._ui[chan].eventSource[0].clientWidth));
 
             this.dragging_hsv[idx] = Math.min(1.0, Math.max(0.0, potential)) * factor;
 
             if (!isSelector) {
-                this.selectorDraggingOffset.x = Math.ceil(this._ui[chan].selector.outerWidth()  / 2.0);
-                this.selectorDraggingOffset.y = Math.ceil(this._ui[chan].selector.outerHeight() / 2.0);
+                this.selectorDraggingOffset.x = Math.ceil(this._ui[chan].selector._halfOuterWidth);
+                this.selectorDraggingOffset.y = Math.ceil(this._ui[chan].selector._halfOuterHeight);
             }
 
-            this._updateSelectors(this.dragging_hsv);
+            this._updateSelectors(this.dragging_hsv, chan, idx);
             e.stopPropagation();
             e.preventDefault();
         }
     },
 
-    _updateSelectors: function(hsv) {
+    _updateSelectors: function(hsv, chan, idx) {
         var clrlib = $.todons.colorwidget.clrlib,
             clrwidget = $.todons.colorwidget.prototype,
              clr = clrlib.HSVToHSL(hsv),
             hclr = clrlib.HSVToHSL([hsv[0], 1.0, 1.0]),
             vclr = clrlib.HSVToHSL([hsv[0], hsv[1], 1.0]);
 
-        this._ui.hue.selector.css({ left : this._ui.hue.eventSource.width() * hsv[0] / 360});
-        clrwidget._setElementColor.call(this, this._ui.hue.selector,  clr, "background");
+        if (chan) {
+            this._ui[chan].selector[0].style.left = (this._ui[chan].eventSource[0].clientWidth * hsv[idx] / (0 === idx ? 360 : 1)) + "px";
+        }
+        else {
+            this._ui.hue.selector.css({left : this._ui.hue.eventSource.width() * hsv[0] / 360});
+            this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1]});
+            this._ui.val.selector.css({ left : this._ui.val.eventSource.width() * hsv[2]});
+        }
+
+	      clrwidget._setElementColor.call(this, this._ui.hue.selector,  clr, "background");
+        clrwidget._setElementColor.call(this, this._ui.sat.selector,  clr, "background");
+        clrwidget._setElementColor.call(this, this._ui.sat.hue,      hclr, "background");
+        clrwidget._setElementColor.call(this, this._ui.val.selector,  clr, "background");
+        clrwidget._setElementColor.call(this, this._ui.val.hue,      vclr, "background");
+
         if ($.mobile.browser.ie)
             this._ui.hue.hue.find("*").css("opacity", hsv[1]);
         else
             this._ui.hue.hue.css("opacity", hsv[1]);
         this._ui.hue.valMask.css("opacity", 1.0 - hsv[2]);
-
-        this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1]});
-        clrwidget._setElementColor.call(this, this._ui.sat.selector,  clr, "background");
-        clrwidget._setElementColor.call(this, this._ui.sat.hue,      hclr, "background");
         this._ui.sat.valMask.css("opacity", 1.0 - hsv[2]);
 
-        this._ui.val.selector.css({ left : this._ui.val.eventSource.width() * hsv[2]});
-        clrwidget._setElementColor.call(this, this._ui.val.selector,  clr, "background");
-        clrwidget._setElementColor.call(this, this._ui.val.hue,      vclr, "background");
         clrwidget._setColor.call(this, clrlib.RGBToHTML(clrlib.HSLToRGB(clr)));
     },
 
