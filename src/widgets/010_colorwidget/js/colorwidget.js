@@ -43,17 +43,19 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     },
 
     _setElementColor: function(el, hsl, cssProp) {
-        var clrlib = $.todons.colorwidget.clrlib,
+        var old = el.jqmData("hsl") || [-1, -1, -1];
+				if (!(old[0] === hsl[0] && old[1] === hsl[1] && old[2] === hsl[2])) {
+				    var clrlib = $.todons.colorwidget.clrlib,
             clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
             dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
 
-        el.jqmData("clr", clr);
-        el.jqmData("dclr", dclr);
-        el.jqmData("cssProp", cssProp);
-        el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
-        el.css(cssProp, this.options.disabled ? dclr : clr);
-
-        return { clr: clr, dclr: dclr };
+					el.jqmData("hsl", hsl);
+        	el.jqmData("clr", clr);
+        	el.jqmData("dclr", dclr);
+        	el.jqmData("cssProp", cssProp);
+        	el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
+        	el.css(cssProp, this.options.disabled ? dclr : clr);
+				}
     },
 
     _displayDisabledState: function(toplevel) {
