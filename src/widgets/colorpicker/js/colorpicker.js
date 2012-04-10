@@ -175,9 +175,11 @@ $.widget( "todons.colorpicker", $.todons.colorwidget, {
     },
 
     _updateSelectors: function(hsl) {
-        var clr = $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.hs.selector, [hsl[0], 1.0 - hsl[1], hsl[2]], "background").clr,
-            gray = $.todons.colorwidget.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]);
+        var gray = $.todons.colorwidget.clrlib.RGBToHTML([hsl[2], hsl[2], hsl[2]]),
+            clr;
 
+        $.todons.colorwidget.prototype._setElementColor.call(this, this._ui.hs.selector, [hsl[0], 1.0 - hsl[1], hsl[2]], "background");
+        clr = this._ui.hs.selector.jqmData("clr");
         this._ui.hs.valMask.css((hsl[2] < 0.5)
             ? { background : "#000000" , opacity : (1.0 - hsl[2] * 2.0)   }
             : { background : "#ffffff" , opacity : ((hsl[2] - 0.5) * 2.0) });
