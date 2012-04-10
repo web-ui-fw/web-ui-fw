@@ -338,55 +338,41 @@ $(document).bind("pagecreate", function () {
         coordSwitchesAreInit = true;
     });
 
-    var clrWidgetsAreInit = false;
-    $("#colorwidgets-demo").bind("pageshow", function () {
-        if (clrWidgetsAreInit) return;
+    $("#colorwidgets-demo").bind("pagecreate", function () {
+        var widgets = {
+                colorpicker:       $("#colorpicker"),
+                colorpickerbutton: $("#colorpickerbutton,#colorpickerbutton-noform"),
+                hsvpicker:         $("#hsvpicker"),
+                colortitle:        $("#colortitle"),
+                colorpalette:      $("#colorpalette")
+            };
 
-        $("#colorpicker").bind("colorchanged", function (e, clr) {
-            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-            $("#hsvpicker").hsvpicker("option", "color", clr);
-            $("#colortitle").colortitle("option", "color", clr);
-            $("#colorpalette").colorpalette("option", "color", clr);
-        });
-        $("#colorpickerbutton").bind("colorchanged", function (e, clr) {
-            $("#colorpicker").colorpicker("option", "color", clr);
-            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-            $("#hsvpicker").hsvpicker("option", "color", clr);
-            $("#colortitle").colortitle("option", "color", clr);
-            $("#colorpalette").colorpalette("option", "color", clr);
-        });
-        $("#colorpickerbutton-noform").bind("colorchanged", function (e, clr) {
-            $("#colorpicker").colorpicker("option", "color", clr);
-            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-            $("#hsvpicker").hsvpicker("option", "color", clr);
-            $("#colortitle").colortitle("option", "color", clr);
-            $("#colorpalette").colorpalette("option", "color", clr);
-        });
-        $("#hsvpicker").bind("colorchanged", function (e, clr) {
-            $("#colorpicker").colorpicker("option", "color", clr);
-            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-            $("#colortitle").colortitle("option", "color", clr);
-            $("#colorpalette").colorpalette("option", "color", clr);
-        });
-        $("#colortitle").bind("colorchanged", function (e, clr) {
-            $("#colorpicker").colorpicker("option", "color", clr);
-            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-            $("#hsvpicker").hsvpicker("option", "color", clr);
-            $("#colorpalette").colorpalette("option", "color", clr);
-        });
-        $("#colorpalette").bind("colorchanged", function (e, clr) {
-            $("#colorpicker").colorpicker("option", "color", clr);
-            $("#colorpickerbutton").colorpickerbutton("option", "color", clr);
-            $("#colorpickerbutton-noform").colorpickerbutton("option", "color", clr);
-            $("#hsvpicker").hsvpicker("option", "color", clr);
-            $("#colortitle").colortitle("option", "color", clr);
-        });
-        $("#colorpalette").colorpalette("option", "color", "#45cc98");
+        function handleClrChanged(e, clr) {
+            $.each(widgets, function(key, value) {
+                value.unbind("colorchanged", handleClrChanged);
+            });
+            $.each(widgets, function(key, value) {
+                if (value.length > 1) {
+                    value.each(function(index, element) {
+                        var $e = $(element);
+                        if ($e.data(key)) {
+                            $e[key]("option", "color", clr);
+                        }
+                    });
+                }
+                else
+                if (value.data(key)) {
+                    value[key]("option", "color", clr);
+                }
+            });
+            $.each(widgets, function(key, value) {
+                value.bind("colorchanged", handleClrChanged);
+            });
+        }
 
-        clrWidgetsAreInit = true;
+        $.each(widgets, function(key, value) {
+            value.bind("colorchanged", handleClrChanged);
+        });
     });
 
     $('#optionheader-demo-programmatic-example').bind('pageshow', function () {
