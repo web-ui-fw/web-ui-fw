@@ -51,18 +51,22 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
                 clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
                 dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
 
-            el.jqmData("_setElementColor_data", {
+            if (!oldData) {
+                el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
+            }
+
+            oldData = {
                 hsl    : hsl,
                 clr    : clr,
                 dclr   : dclr,
                 cssProp: cssProp
-            });
-            if (!oldData) {
-                el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
-            }
+            };
+
+            el.jqmData("_setElementColor_data", oldData);
             el[0].style[cssProp] = (this.options.disabled ? dclr : clr);
-            //el.css(cssProp, this.options.disabled ? dclr : clr);
         }
+
+        return oldData.clr;
     },
 
     _displayDisabledState: function(toplevel) {
