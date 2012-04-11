@@ -39,23 +39,30 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
     },
 
     _getElementColor: function(el, cssProp) {
-        return el.jqmData("clr");
+        return el.jqmData("_setElementColor_data").clr;
     },
 
     _setElementColor: function(el, hsl, cssProp) {
-        var old = el.jqmData("hsl") || [-1, -1, -1];
-				if (!(old[0] === hsl[0] && old[1] === hsl[1] && old[2] === hsl[2])) {
-				    var clrlib = $.todons.colorwidget.clrlib,
-            clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
-            dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
+        var oldData = el.jqmData("_setElementColor_data"),
+            oldHSL = (oldData ? oldData.hsl : [-1, -1, -1]);
 
-					el.jqmData("hsl", hsl);
-        	el.jqmData("clr", clr);
-        	el.jqmData("dclr", dclr);
-        	el.jqmData("cssProp", cssProp);
-        	el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
-        	el.css(cssProp, this.options.disabled ? dclr : clr);
-				}
+        if (!(oldHSL[0] === hsl[0] && oldHSL[1] === hsl[1] && oldHSL[2] === hsl[2])) {
+            var clrlib = $.todons.colorwidget.clrlib,
+                clr = clrlib.RGBToHTML(clrlib.HSLToRGB(hsl)),
+                dclr = clrlib.RGBToHTML(clrlib.HSLToGray(hsl));
+
+            el.jqmData("_setElementColor_data", {
+                hsl    : hsl,
+                clr    : clr,
+                dclr   : dclr,
+                cssProp: cssProp
+            });
+            if (!oldData) {
+                el.attr("data-" + ($.mobile.ns || "") + "has-dclr", true);
+            }
+            el[0].style[cssProp] = (this.options.disabled ? dclr : clr);
+            //el.css(cssProp, this.options.disabled ? dclr : clr);
+        }
     },
 
     _displayDisabledState: function(toplevel) {
@@ -65,9 +72,10 @@ $.widget("todons.colorwidget", $.todons.widgetex, {
         dst
             .add(toplevel.find(sel))
             .each(function() {
-                el = $(this);
+                var el = $(this),
+                    data = el.jqmData("_setElementColor_data");
 
-                el.css(el.jqmData("cssProp"), el.jqmData(self.options.disabled ? "dclr" : "clr"));
+                el.css(data.cssProp, data[(self.options.disabled ? "dclr" : "clr")]);
             });
     },
 
