@@ -222,29 +222,75 @@
             </div>
         </div> <!-- /page -->
 
-        <div data-role="page" id="colorwidgets-demo" data-add-back-btn="true" data-fit-page-to-window="true">
+        <div data-role="page" id="colorwidgets-demo" data-add-back-btn="true">
             <div data-role="header">
                 <h1>Color widgets</h1>
             </div>
             <div data-role="content">
+                <div class="content-primary">
+                    <nav>
+                        <ul data-role="listview" data-inset="true">
+                            <li data-role="list-divider">Color widgets</li>
+                            <li><a href="#colorpicker-demo">Color picker</a></li>
+                            <li><a href="#colortitle-demo">Color title</a></li>
+                            <li><a href="#colorpickerbutton-demo">Color picker button</a></li>
+                            <li><a href="#hsvpicker-demo">Hue/Saturation/Value picker</a></li>
+                            <li><a href="#colorpalette-demo">Color palette</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div> <!-- /content -->
+            <div data-role="footer">
+                <h4>Web UI Framework - Widgets gallery</h4>
+            </div>
+        </div> <!-- /page -->
+
+        <div data-role="page" id="colorpicker-demo" data-add-back-btn="true">
+            <div data-role="header"><h1>Color picker demo</h1></div>
+            <div data-role="content">
               <form action="#" method="get" style="display: table;">
                 <div data-role="fieldcontain">
                     <input type="checkbox" name="disable-colorwidgets" id="disable-colorwidgets"
-                        data-widget-type-list="todons-colortitle,todons-colorpalette,todons-colorpickerbutton,todons-hsvpicker,todons-colorpicker"/>
+                        data-widget-type-list="todons-colorpicker"/>
                     <label for="disable-colorwidgets">Disable</label>
                 </div>
               </form>
-              <div style="float: left; padding-right: 20px;">
-                <div data-role="label">Color title widget</div>
-                <div data-role="colortitle" id="colortitle" data-color="#ff0972"></div>
-                <div data-role="label">Color palette widget</div>
-                <div data-role="colorpalette" id="colorpalette" data-show-preview="true" data-color="#ff0972"></div>
-                <div data-role="label">Color picker button</div>
-                <div data-role="colorpickerbutton" data-inline="true" id="colorpickerbutton-noform" data-color="#ff0972"></div>
-                <div data-role="label">Color picker button (form element)</div>
+                <div data-role="colorpicker"></div>
+            </div>
+            <div data-role="footer"><h4>Web UI Framework - Widgets gallery</div>
+        </div>
+
+        <div data-role="page" id="colortitle-demo" data-add-back-btn="true">
+            <div data-role="header"><h1>Color title demo</h1></div>
+            <div data-role="content">
+              <form action="#" method="get" style="display: table;">
+                <div data-role="fieldcontain">
+                    <input type="checkbox" name="disable-colorwidgets" id="disable-colorwidgets"
+                        data-widget-type-list="todons-colortitle"/>
+                    <label for="disable-colorwidgets">Disable</label>
+                </div>
+              </form>
+                <div data-role="label">Color</div>
+                <div data-role="colortitle"></div>
+            </div>
+            <div data-role="footer"><h4>Web UI Framework - Widgets gallery</div>
+        </div>
+
+        <div data-role="page" id="colorpickerbutton-demo" data-add-back-btn="true">
+            <div data-role="header"><h1>Color picker button demo</h1></div>
+            <div data-role="content">
+              <form action="#" method="get" style="display: inline-block;">
+                <div data-role="fieldcontain">
+                    <input type="checkbox" name="disable-colorwidgets" id="disable-colorwidgets"
+                        data-widget-type-list="todons-colorpickerbutton"/>
+                    <label for="disable-colorwidgets">Disable</label>
+                </div>
+              </form>
+                <p/>
+                <div data-role="colorpickerbutton"></div>
                 <form action="#" method="get">
                   <div role="fieldcontain">
-                    <label for="colorpickerbutton">Pick Colour:</label>
+                    <label for="colorpickerbutton">As a form element:</label>
                     <input type="color" data-inline="true" id="colorpickerbutton" value="#ff0972"></input>
                   </div>
                   <div role="fieldcontain">
@@ -252,47 +298,49 @@
                     <label for="checkHideInput">Hide Input</label>
                   </div>
                 </form>
-              </div>
-              <div style="float: left; padding-right: 20px;">
-                <div data-role="label">Hue-Saturation-Value picker widget</div>
-                <div data-role="hsvpicker" id="hsvpicker" data-color="#ff0972"></div>
-                <div data-role="label">Hue-Saturation-Lightness picker widget</div>
-                <div data-role="colorpicker" id="colorpicker" data-color="#ff0972"></div>
-              </div>
-            </div> <!-- /content -->
-            <div data-role="footer">
-                <h4>Web UI Framework - Widgets gallery</h4>
             </div>
-        </div> <!-- /page -->
-
-        <div data-role="page" id="colorpickerbutton-demo" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Color picker button</h1>
-            </div>
-            <div data-role="content">
-                <form action='#' method="get">
-                    <div data-role="fieldcontain">
-                        <label for="desired_colour">Choose color:</label>
-                        <input type="color" name="background_colour" id="background_colour" value="#ff8000"/>
-                    </div>
-                </form>
-            </div> <!-- /content -->
-            <div data-role="footer">
-                <h4>Web UI Framework - Widgets gallery</h4>
-            </div>
-        </div> <!-- /page -->
+            <div data-role="footer"><h4>Web UI Framework - Widgets gallery</div>
+        </div>
 
         <div data-role="page" id="hsvpicker-demo" data-add-back-btn="true">
-            <div data-role="header">
-                <h1>Hue-Sat-Val picker</h1>
-            </div>
+            <div data-role="header"><h1>Hue/Saturation/Value picker demo</h1></div>
             <div data-role="content">
-              <div data-role="hsvpicker"></div>
-            </div> <!-- /content -->
-            <div data-role="footer">
-                <h4>Web UI Framework - Widgets gallery</h4>
+              <form action="#" method="get" style="display: table;">
+                <div data-role="fieldcontain">
+                    <input type="checkbox" name="disable-colorwidgets" id="disable-colorwidgets"
+                        data-widget-type-list="todons-hsvpicker"/>
+                    <label for="disable-colorwidgets">Disable</label>
+                </div>
+              </form>
+                <div style="display: inline-block;">
+                    <div data-role="label">Color</div>
+                    <div data-role="hsvpicker"></div>
+                </div>
             </div>
-        </div> <!-- /page -->
+            <div data-role="footer"><h4>Web UI Framework - Widgets gallery</div>
+        </div>
+
+        <div data-role="page" id="colorpalette-demo" data-add-back-btn="true">
+            <div data-role="header"><h1>Color palette demo</h1></div>
+            <div data-role="content">
+                <form>
+                  <div role="fieldcontain">
+                    <input type="checkbox" id="checkShowPreview"></input>
+                    <label for="checkShowPreview" style="display: inline-block;">Show preview</label>
+                  </div>
+                    <div data-role="fieldcontain">
+                        <input type="checkbox" name="disable-colorwidgets" id="disable-colorwidgets"
+                            data-widget-type-list="todons-colorpalette"/>
+                        <label for="disable-colorwidgets">Disable</label>
+                    </div>
+                </form>
+                <div style="display: inline-block;">
+                    <div data-role="label">Color</div>
+                    <div data-role="colorpalette" id="colorpalette"></div>
+                </div>
+            </div>
+            <div data-role="footer"><h4>Web UI Framework - Widgets gallery</div>
+        </div>
 
         <div data-role="page" id="progressbar-demo" data-add-back-btn="true">
             <div data-role="header">

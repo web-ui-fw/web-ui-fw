@@ -217,6 +217,10 @@ $(document).bind("pagecreate", function () {
         $("#colorpickerbutton").colorpickerbutton("option", "hideInput", $("#checkHideInput").is(":checked"));
     });
 
+    $("#checkShowPreview").bind("change", function (e) {
+        console.log();
+        $("#colorpalette").colorpalette("option", "showPreview", $("#checkShowPreview").is(":checked"));
+    });
 
     $('#slider-demo').bind('pageshow', function () {
         var popupEnabled = false;
