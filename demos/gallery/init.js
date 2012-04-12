@@ -342,43 +342,6 @@ $(document).bind("pagecreate", function () {
         coordSwitchesAreInit = true;
     });
 
-    $("#colorwidgets-demo").bind("pagecreate", function () {
-        var widgets = {
-                colorpicker:       $("#colorpicker"),
-                colorpickerbutton: $("#colorpickerbutton,#colorpickerbutton-noform"),
-                hsvpicker:         $("#hsvpicker"),
-                colortitle:        $("#colortitle"),
-                colorpalette:      $("#colorpalette")
-            };
-
-        function handleClrChanged(e, clr) {
-            $.each(widgets, function(key, value) {
-                value.unbind("colorchanged", handleClrChanged);
-            });
-            $.each(widgets, function(key, value) {
-                if (value.length > 1) {
-                    value.each(function(index, element) {
-                        var $e = $(element);
-                        if ($e.data(key)) {
-                            $e[key]("option", "color", clr);
-                        }
-                    });
-                }
-                else
-                if (value.data(key)) {
-                    value[key]("option", "color", clr);
-                }
-            });
-            $.each(widgets, function(key, value) {
-                value.bind("colorchanged", handleClrChanged);
-            });
-        }
-
-        $.each(widgets, function(key, value) {
-            value.bind("colorchanged", handleClrChanged);
-        });
-    });
-
     $('#optionheader-demo-programmatic-example').bind('pageshow', function () {
         $(this).find('#optionheader-demo-to-be-1').optionheader({startCollapsed:true});
         $(this).find('#optionheader-demo-to-be-2').optionheader({startCollapsed:false});
