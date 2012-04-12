@@ -201,8 +201,8 @@ $.widget( "todons.hsvpicker", $.todons.colorwidget, {
         }
         else {
             this._ui.hue.selector.css({left : this._ui.hue.eventSource.width() * hsv[0] / 360});
-            this._ui.sat.selector.css({ left : this._ui.sat.eventSource.width() * hsv[1]});
-            this._ui.val.selector.css({ left : this._ui.val.eventSource.width() * hsv[2]});
+            this._ui.sat.selector.css({left : this._ui.sat.eventSource.width() * hsv[1]});
+            this._ui.val.selector.css({left : this._ui.val.eventSource.width() * hsv[2]});
         }
 
 	      clrwidget._setElementColor.call(this, this._ui.hue.selector,  clr, "background");
