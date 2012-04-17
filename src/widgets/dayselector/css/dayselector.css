@@ -3,6 +3,10 @@
     display: inline-block;
 }
 
+.ui-dayselector .ui-btn-text {
+	text-overflow: clip;
+}
+
 .ui-dayselector label {
     height: 56px;
     width: 64px;
