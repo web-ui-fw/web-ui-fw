@@ -290,6 +290,10 @@ $.widget("todons.toggleswitch", $.todons.widgetex, {
     destroy: function() {
         this._ui.outer.remove();
         this.element.removeClass("ui-toggleswitch-hidden");
+    },
+
+    widget: function() {
+        return this._ui.outer;
     }
 });
 
