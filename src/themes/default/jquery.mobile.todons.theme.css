@@ -1,7 +1,0 @@
-.ui-icon-status-circle { background-image: url('images/web-ui-fw_icon-status-18-white.png'); background-repeat: no-repeat; background-position: 0px 0px;}
-.ui-icon-status-diamond { background-image: url('images/web-ui-fw_icon-status-18-white.png'); background-repeat: no-repeat; background-position: -18px 0px;}
-.ui-icon-status-square { background-image: url('images/web-ui-fw_icon-status-18-white.png'); background-repeat: no-repeat; background-position: -36px 0px;}
-.ui-btn-icon-right .ui-icon-status { left: 10px; right: initial; }
-.ui-btn-icon-right.ui-btn-status .ui-btn-inner { padding-left: 33px; }
-.ui-btn-icon-left .ui-icon-status { right: 10px; left: initial; }
-.ui-btn-icon-left.ui-btn-status .ui-btn-inner { padding-right: 33px; }

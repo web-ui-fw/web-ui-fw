@@ -1,3 +1,0 @@
-[submodule "libs/js/submodules/jquery-mobile"]
-	path = libs/js/submodules/jquery-mobile
-	url = https://github.com/jquery/jquery-mobile.git

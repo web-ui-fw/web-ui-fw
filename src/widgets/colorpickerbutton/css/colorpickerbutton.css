@@ -1,9 +1,0 @@
-/* Need to add !important below, because these classes are added before jqm enhancement */
-.ui-colorpickerbutton-input {
-    max-width: 70px;
-    display: inline-block !important;
-}
-
-.ui-colorpickerbutton-input-hidden {
-    display: none !important;
-}
