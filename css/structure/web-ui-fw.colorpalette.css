@@ -1,0 +1,32 @@
+.ui-colorpalette {
+	display: table;
+}
+
+.ui-colorpalette .ui-colorpalette-preview-container {
+  display: table;
+  margin: auto;
+}
+
+.ui-colorpalette .ui-colorpalette-preview-container .ui-colorpalette-preview {
+	display: table;
+	margin: auto;
+}
+
+.ui-colorpalette .ui-colorpalette-preview {
+	display: block;
+	width: 100%;
+}
+
+.ui-colorpalette .ui-colorpalette-table {
+	display: table;
+	width: 100%;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row {
+	display: table-row;
+	width: 100%;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-entry {
+	display: table-cell;
+}

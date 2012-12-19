@@ -1,0 +1,54 @@
+.ui-colorpalette {
+	padding-left:   24px;
+	padding-right:  24px;
+	padding-top:    15px;
+	padding-bottom: 15px;
+}
+
+.ui-colorpalette .ui-colorpalette-preview-container {
+	padding-top: 48px;
+	padding-bottom: 39px;
+}
+
+.ui-colorpalette .ui-colorpalette-preview-container .ui-colorpalette-preview {
+	width:  296px;
+	height: 101px;
+	border: #c0c0c0 4px solid;
+	border-radius: inherit;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row {
+	display: table-row;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-choice-container {
+	display: table-cell;
+	padding-left: 38px;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-choice-container:first-child {
+	display: table-cell;
+	padding-left: 0px;
+	padding-bottom: 16px;
+}
+
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-choice-container .ui-colorpalette-choice {
+	width: 46px;
+	height: 46px;
+	border: 4px solid #c0c0c0;
+	border-radius: inherit;
+}
+
+.ui-colorpalette-row {
+	padding-top: 10px;
+}
+
+.ui-colorpalette-row:first {
+	padding-top: 0px;
+}
+
+.ui-colorpalette-entry {
+	border: 5px solid black;
+	width: 70px;
+	height: 70px;
+}
