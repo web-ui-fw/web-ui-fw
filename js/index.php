@@ -1,8 +1,10 @@
 <?php
 $type = 'text/javascript';
 $files = array(
+	'../jq-color/jquery.color.js',
 	'behaviors/optionDemultiplexer.js',
-	'behaviors/setValue.js'
+	'behaviors/setValue.js',
+	'widgets/color/colorwidget.js'
 );
 
 function getGitHeadPath() {
