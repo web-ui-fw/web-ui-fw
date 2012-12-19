@@ -1,7 +1,8 @@
 <?php
 $type = 'text/javascript';
 $files = array(
-	'behaviors/optionDemultiplexer.js'
+	'behaviors/optionDemultiplexer.js',
+	'behaviors/setValue.js'
 );
 
 function getGitHeadPath() {
