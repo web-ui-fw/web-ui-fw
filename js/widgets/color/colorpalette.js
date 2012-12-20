@@ -46,14 +46,18 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 		$.extend( this, {
 			_ui: ui,
-			_colorEls: []
+			_clrEls: []
 		});
 
 		this.refresh();
 	},
 
+	widget: function() {
+		return this._ui.outer;
+	},
+
 	_setShowPreview: function( value ) {
-		this._ui.preview[ value ? "show" : "hide" ]();
+		this._ui.preview.outer[ value ? "show" : "hide" ]();
 	},
 
 	_setRows: function( value ) {
@@ -62,14 +66,76 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_setColor: function( value ) {
+		var clr, activeClr;
+
+		if ( value ) {
+			clr = $.Color( value );
+			activeClr = this._getElementColor( this._ui.table.find( ".ui-colorpalette-choice-active" ) );
+
+			if ( !activeClr || ( activeClr && !activeClr.is( clr ) ) ) {
+				if ( !this._findAndActivateColor( clr ) ) {
+					this._setOption( "colors", this._makePalette( clr ) );
+					this._findAndActivateColor( clr );
+				}
+			}
+		}
+	},
+
+	_findAndActivateColor: function( clr ) {
+		var idx, elClr, found = false;
+
+		// Look for the color in the existing entries
+		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
+			elClr = this._getElementColor( this._clrEls[ idx ] );
+			if ( elClr.is( clr ) ) {
+				// If found set it as active and show it in the preview
+				this._clrEls[ idx ].addClass( "ui-colorpalette-choice-active" );
+				this._setElementColor( this._ui.preview.inner, clr, "background-color" );
+				found = true;
+				break;
+			} else {
+				this._clrEls[ idx ].removeClass( "ui-colorpalette-choice-active" );
+			}
+		}
+
+		if ( found ) {
+			// If the color was found, make sure the remaining entries are not active
+			for ( idx++; idx < this._clrEls.length ; idx++ ) {
+				this._clrEls[ idx ].removeClass( "ui-colorpalette-choice-active" );
+			}
+		}
+	},
+
+	_makePalette: function( clr ) {
+		var idx, newHue, inc = 360 / this._clrEls.length,
+			hue = clr.hue(),
+			nIncs = hue / inc,
+			offset = nIncs - Math.floor( nIncs ),
+			ls = [];
+
+		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
+			newHue = offset + idx * inc;
+			if ( newHue > 359 ) {
+				newHue -= Math.floor( newHue / 360 ) * 360;
+			}
+			ls.push( clr.hue( newHue ).toHexString( false ) );
+		}
+
+		return ls.join( "," );
 	},
 
 	_setDisabled: function( value ) {
+		// TODO remove this when working with jQM where
+		// https://github.com/jquery/jquery-mobile/issues/5390 is fixed
+		this._ui.outer.toggleClass( "ui-disabled", value );
 	},
 
 	_setColors: function( value ) {
 		if ( value !== this.options.colors ) {
 			this._updateColors( value );
+			if ( this.options.color ) {
+				this._findAndActivateColor( $.Color( this.options.color ) );
+			}
 		}
 	},
 
@@ -78,12 +144,27 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 			nClrs = clrs.length,
 			idx;
 
-		for ( idx = 0 ; idx < this._colorEls.length ; idx++ ) {
+		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
 			if ( idx < nClrs ) {
-				this._setElementColor( this._colorEls[ idx ], clrs[ idx ], "background-color" );
+				this._setElementColor( this._clrEls[ idx ], clrs[ idx ], "background-color" );
 			} else {
-				this._setElementColor( this._colorEls[ idx ], null, "background-color" );
+				this._setElementColor( this._clrEls[ idx ], null, "background-color" );
 			}
+		}
+	},
+
+	_handleEntryVClick: function( e ) {
+		var el = $( e.target ),
+			clr = this._getElementColor( el ),
+			idx = 0;
+
+		if ( clr ) {
+			for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
+				this._clrEls[ idx ].removeClass( "ui-colorpalette-choice-active" );
+			}
+			el.addClass( "ui-colorpalette-choice-active" );
+			this._setElementColor( this._ui.preview.inner, clr, "background-color" );
+			this._setColor( clr.toHexString( false ) );
 		}
 	},
 
@@ -94,7 +175,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 			idx, row, el, inner;
 
 		this._ui.table.empty();
-		this._colorEls = [];
+		this._clrEls = [];
 
 		for ( idx = 0 ; idx < nClrs ; idx++ ) {
 			if ( idx % nCols === 0 ) {
@@ -104,10 +185,14 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 			el = this._ui.entry.outer.clone();
 			row.append( el );
 			inner = this._ui.entry.inner.clone().appendTo( el );
-			this._colorEls.push( inner );
+			this._on( inner, { vclick: "_handleEntryVClick" } );
+			this._clrEls.push( inner );
 		}
 
 		this._updateColors( o.colors );
+		if ( o.color ) {
+			this._findAndActivateColor( $.Color( o.color ) );
+		}
 	}
 });
 

@@ -15,7 +15,7 @@ $.mobile.behaviors.optionDemultiplexer = {
 			this[ setter ]( value );
 		}
 
-		this.super( key, value );
+		this._super( key, value );
 
 		if ( key !== "initSelector" ) {
 			this.element.attr( "data-" + ( $.mobile.ns || "" ) + ( key.replace( /([A-Z])/, "-$1" ).toLowerCase() ), value );

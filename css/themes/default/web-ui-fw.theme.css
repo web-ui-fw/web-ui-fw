@@ -39,6 +39,10 @@
 	border-radius: inherit;
 }
 
+.ui-colorpalette .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-choice-container .ui-colorpalette-choice.ui-colorpalette-choice-active {
+	border-color: #d9931a;
+}
+
 .ui-colorpalette-row {
 	padding-top: 10px;
 }

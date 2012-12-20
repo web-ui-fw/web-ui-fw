@@ -7,6 +7,8 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.core", "../../behaviors/setVa
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
+var dataKey = "_setElementColor_data";
+
 $.mobile.behaviors.colorWidget = $.extend( $.mobile.behaviors.setValue, {
 	options: {
 		color: null
@@ -17,30 +19,70 @@ $.mobile.behaviors.colorWidget = $.extend( $.mobile.behaviors.setValue, {
 		signal: "colorchanged"
 	},
 
+	// Look for all elements in this widget that have the "_setElementColor" data
+	// and assign a desaturated version of the color to the css property
+	// previously set via _setElementColor
+	_setDisabled: function( value ) {
+		var widget = this.widget();
+
+		widget.add( widget.find( "*" ) ).each( function() {
+			var $el = $( this ),
+				data = $el.jqmData( dataKey ),
+				clr;
+
+			if ( data ) {
+				clr = data.clr;
+				if ( value ) {
+					clr = clr.saturation( 0 );
+				}
+
+				$el.css( data.cssProp, clr.toRgbaString() );
+			}
+		});
+		this._super( value );
+	},
+
+	_getElementColor: function( el ) {
+		var data = el.jqmData( dataKey );
+
+		return ( data ? data.clr : undefined );
+	},
+
 	_setElementColor: function( el, clr, cssProp ) {
-		clr = $.Color( clr );
+		if ( clr ) {
+			clr = $.Color( clr );
 
-		el.jqmData( "_setElementColor", clr );
+			el.jqmData( dataKey, { clr: clr, cssProp: cssProp } );
 
-		if ( this.options.disabled ) {
-			clr = clr.saturation( 0 );
+			if ( this.options.disabled ) {
+				clr = clr.saturation( 0 );
+			}
+
+			el.css( cssProp, clr.toRgbaString() );
+		} else {
+			el.jqmData( dataKey, undefined );
+			el.css( cssProp, "" );
 		}
-
-		el.css( cssProp, clr.toRgbaString() );
 	},
 
 	_setColor: function( value ) {
-		var currentValue = ( null === this.options.color ? null : $.Color( this.options.color ) );
+		var curClr = null, newClr = null, diff;
 
-		value = ( null === value ? null : $.Color( value ) );
-
-		if ( this.options.color !== value ) {
-			this.options.color = value;
-			this._setValue( value );
-			return true;
+		if ( this.options.color ) {
+			curClr = $.Color( this.options.color );
 		}
 
-		return false;
+		if ( value ) {
+			newClr = $.Color( value );
+		}
+
+		if ( ( curClr === null && newClr !== null ) ||
+			( curClr !== null && newClr === null ) ||
+			( curClr !== null && newClr !== null && !curClr.is( newClr ) ) ) {
+			this.options.color = value;
+			this._setValue( value );
+		}
+		this._super( value );
 	}
 });
 
