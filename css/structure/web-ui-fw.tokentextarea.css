@@ -1,0 +1,91 @@
+.ui-tokentextarea {
+  display: table;
+  outline: none;
+}
+.ui-tokentextarea .ui-tokentextarea-label {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin-left: .3em;
+  margin-right: .3em;
+  padding: .6em 0em;
+}
+
+.ui-tokentextarea .ui-tokentextarea-label-theme-c {
+  color: #666666;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.ui-tokentextarea .ui-tokentextarea-input {
+  display: inline-block;
+  outline: none;
+  position: relative;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: .5em;
+  text-align: left;
+}
+
+.ui-tokentextarea .ui-tokentextarea-input-theme-c {
+  background-color : #F9F9F9;
+  color: #222222;
+  font-size: 1em;
+}
+
+.ui-tokentextarea div {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  margin-left: .3em;
+  margin-right: .3em;
+  margin-bottom: .3em;
+  margin-top: .3em;
+  padding: .2em .5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-tokentextarea div.ui-tokentextarea-item-theme-c {
+  font-size: 1em;
+  text-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.3);
+  -ms-border-radius: .2em;
+  -o-border-radius: .2em;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
+  -o-box-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.1em 0.1em rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.ui-tokentextarea div.ui-tokentextarea-block {
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding-left: .7em;
+}
+.ui-tokentextarea div.ui-tokentextarea-block-theme-c {
+  background-color: #5f8abd;
+}
+.ui-tokentextarea div.ui-tokentextarea-sblock {
+  padding-left: .7em;
+}
+.ui-tokentextarea div.ui-tokentextarea-sblock-theme-c {
+  background: #365984;
+}
+.ui-tokentextarea .ui-tokentextarea-desclabel {
+  display: inline-block;
+  outline: none;
+  position: relative;
+  border: 0;
+  text-align: left;
+}
+.ui-tokentextarea .ui-tokentextarea-desclabel-theme-c {
+  color: #666666;
+  font-size: 1em;
+}
