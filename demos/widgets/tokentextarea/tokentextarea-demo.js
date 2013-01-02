@@ -1,49 +1,49 @@
 ( function ( $, window ) {
 	$( document ).ready( function () {
-		$( document ).delegate("#MBTaddItemTest", "click", function () {
+		$( document ).delegate("#TTAaddItemTest", "click", function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", "additem" );
 		});
 
-		$( document ).delegate( "#MBTremoveItemTest", "click",function () {
+		$( document ).delegate( "#TTAremoveItemTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "remove", 0 );
 		});
 
-		$( document ).delegate( "#MBTinputTextTest", "click",function () {
+		$( document ).delegate( "#TTAinputTextTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "inputText", "Hello~~~" );
 		});
 
-		$( document ).delegate( "#MBTgetInputTextTest", "click",function () {
+		$( document ).delegate( "#TTAgetInputTextTest", "click",function () {
 			var input = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "inputText" );
 			window.alert( "input String : " + input );
 		});
 
-		$( document ).delegate("#MBTremoveAllItemTest", "click",function () {
+		$( document ).delegate("#TTAremoveAllItemTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "remove" );
 		});
 
-		$( document ).delegate("#MBTgetSelectedItemTest", "click",function () {
+		$( document ).delegate("#TTAgetSelectedItemTest", "click",function () {
 			var content = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "select" );
 			window.alert( "Select content : " + content );
 		});
 
-		$( document ).delegate( "#MBTselectItemTest", "click",function () {
+		$( document ).delegate( "#TTAselectItemTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "select", 0 );
 		});
 
-		$( document ).delegate( "#MBTlengthTest", "click",function () {
+		$( document ).delegate( "#TTAlengthTest", "click",function () {
 			var length = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "length" );
 			window.alert( "length : " + length );
 		});
 
-		$( document ).delegate( "#MBTfocusInTest", "click",function () {
+		$( document ).delegate( "#TTAfocusInTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "focusIn", 0 );
 		});
 
-		$( document ).delegate( "#MBTfocusOutTest", "click",function () {
+		$( document ).delegate( "#TTAfocusOutTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "focusOut", 0 );
 		});
 
-		$( document ).delegate( "#MBTdestroyTest", "click",function () {
+		$( document ).delegate( "#TTAdestroyTest", "click",function () {
 			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "destroy" );
 		});
 
