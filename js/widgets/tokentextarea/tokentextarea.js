@@ -252,7 +252,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jqu
 			var $view = this.element,
 				theme = this.options.theme,
 				lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
-			if ( !lockBlock ) {
+			if ( lockBlock ) {
 				lockBlock.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme )
 					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme );
 			}
