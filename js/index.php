@@ -5,7 +5,8 @@ $files = array(
 	'behaviors/optionDemultiplexer.js',
 	'behaviors/setValue.js',
 	'widgets/color/colorwidget.js',
-	'widgets/color/colorpalette.js'
+	'widgets/color/colorpalette.js',
+	'widgets/tokentextarea.js'
 );
 
 function getGitHeadPath() {

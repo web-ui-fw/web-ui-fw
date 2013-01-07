@@ -1,13 +1,10 @@
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Common functionality for widgets dealing with color
+//>>description: Text area containing tokens
 //>>label: tokentextarea
 //>>group: Widget
 
-
 define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jquery.mobile.buttonMarkup" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
-( function( $, undefined ) {
-
 
 ( function ( $, window, document, undefined ) {
 	$.widget( "mobile.tokentextarea", $.mobile.widget, {
