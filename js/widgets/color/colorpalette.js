@@ -10,7 +10,6 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "./colorwidget", "..
 $.widget( "mobile.colorpalette", $.mobile.widget, {
 	options: {
 		showPreview: false,
-		initSelector: ":jqmData(role='colorpalette')",
 		rows: 2,
 		colors: "#ff0000,#ff8000,#ffff00,#80ff00,#00ff00,#00ff80,#00ffff,#0080ff,#0000ff,#8000ff,#ff00ff,#ff0080",
 		initSelector: ":jqmData(role='colorpalette')"
@@ -140,13 +139,13 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_updateColors: function( clrs ) {
-		var clrs = clrs.split( "," ),
-			nClrs = clrs.length,
+		var clrsSplit = clrs.split( "," ),
+			nClrs = clrsSplit.length,
 			idx;
 
 		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
 			if ( idx < nClrs ) {
-				this._setElementColor( this._clrEls[ idx ], clrs[ idx ], "background-color" );
+				this._setElementColor( this._clrEls[ idx ], clrsSplit[ idx ], "background-color" );
 			} else {
 				this._setElementColor( this._clrEls[ idx ], null, "background-color" );
 			}

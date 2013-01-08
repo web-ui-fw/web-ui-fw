@@ -28,13 +28,14 @@ $.mobile.behaviors.setValue = {
 			// Special handling for checkboxes and radio buttons, where the presence
 			// of the "checked" attribute is really the value
 			if ( inputType === "checkbox" || inputType === "radio" ) {
-				if ( newValue )
+				if ( newValue ) {
 					this.element.attr( "checked", true );
-				else
+				} else {
 					this.element.removeAttr( "checked" );
+				}
 			}
 			else {
-				this.element.attr( "value", ( valueStrinIsSet ? valueString : newValue ) );
+				this.element.attr( "value", ( valueStringIsSet ? valueString : newValue ) );
 			}
 
 			this.element.trigger( "change" );

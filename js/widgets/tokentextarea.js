@@ -488,7 +488,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jqu
 			if ( arguments.length === 0 ) {
 				blocks.remove();
 				this._trigger( "clear" );
-			} else if ( typeof position == "number" ) {
+			} else if ( typeof position === "number" ) {
 				// remove selected button
 				index = ( ( position < blocks.length ) ? position : ( blocks.length - 1 ) );
 				$( blocks[index] ).remove();
