@@ -44,10 +44,21 @@ module.exports = function( grunt ) {
 		//      different globs
 		lint: {
 			files: [ 'js/**/*.js', 'js/*/*.js' ]
-		}
+		},
+
+		global: {}
 
 	});
 
 	// set the default task.
 	grunt.registerTask('default', 'lint');
+
+	// unit tests
+	grunt.loadNpmTasks( "grunt-junit" );
+
+	// load the project's default tasks
+	grunt.loadTasks( 'build/tasks');
+
+	// A convenient task alias.
+	grunt.registerTask('test', 'config:test:pages config:test junit');
 };
