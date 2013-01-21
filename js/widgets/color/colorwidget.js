@@ -15,7 +15,7 @@ $.mobile.behaviors.colorWidget = $.extend( $.mobile.behaviors.setValue, {
 	},
 
 	_value: {
-		attr: "data-" + ( $.mobile.ns || "" ) + "color",
+		option: "color",
 		signal: "colorchanged"
 	},
 
