@@ -3,7 +3,13 @@
 //>>label: colorpalette
 //>>group: Forms
 
-define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "./colorwidget", "../../behaviors/optionDemultiplexer" ], function( $ ) {
+define( [
+	"jquery",
+	"../../../jqm/js/jquery.mobile.widget",
+	"./colorwidget",
+	"../../behaviors/optionDemultiplexer",
+	"../../../jqm/js/widgets/forms/textinput"
+	], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
@@ -17,23 +23,25 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 	_create: function() {
 		var ui = {
-			preview: {
-				outer: $( "<div class='ui-colorpalette-preview-container ui-corner-all'></div>" ),
-				inner: $( "<div class='ui-colorpalette-preview'></div>" )
+				preview: {
+					outer: $( "<div class='ui-colorpalette-preview-container ui-corner-all'></div>" ),
+					inner: $( "<div class='ui-colorpalette-preview'></div>" )
+				},
+				table: $( "<div class='ui-colorpalette-table'></div>" ),
+				row: $( "<div class='ui-colorpalette-row'></div>" ),
+				entry: {
+					outer: $( "<div class='ui-colorpalette-choice-container ui-corner-all'></div>" ),
+					inner: $( "<div class='ui-colorpalette-choice'></div>" )
+				}
 			},
-			table: $( "<div class='ui-colorpalette-table'></div>" ),
-			row: $( "<div class='ui-colorpalette-row'></div>" ),
-			entry: {
-				outer: $( "<div class='ui-colorpalette-choice-container ui-corner-all'></div>" ),
-				inner: $( "<div class='ui-colorpalette-choice'></div>" )
-			}
-		};
+			clrs = this._getClrList( this.options.colors ), idx;
 
 		// Establish the outer element
 		if ( this.element.is( "input" ) ) {
 			ui.outer = $( "<div class='ui-colorpalette'></div>" )
 				.insertAfter( this.element )
 				.append( this.element );
+			this.element.css( { display: "none" } );
 		} else {
 			ui.outer = this.element.addClass( "ui-colorpalette" );
 		}
@@ -49,6 +57,19 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 		});
 
 		this.refresh();
+
+		if ( this.options.color ) {
+			// Initially, the color may not be present in the palette, so let's make a
+			// palette that's guaranteed to contain it
+			for ( idx = 0 ; idx < clrs.length ; idx++ ) {
+				if ( this.options.color === clrs[ idx ] ) {
+					break;
+				}
+			}
+			if ( idx === clrs.length ) {
+				this.option( "colors", this._makePalette( $.Color( this.options.color ) ) );
+			}
+		}
 	},
 
 	widget: function() {
@@ -106,18 +127,22 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_makePalette: function( clr ) {
-		var idx, newHue, inc = 360 / this._clrEls.length,
+		var hues = [],
+			nClrs = this._clrEls.length,
 			hue = clr.hue(),
-			nIncs = hue / inc,
-			offset = nIncs - Math.floor( nIncs ),
+			inc = 360 / nClrs,
+			idxMin = 0,
 			ls = [];
 
-		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
-			newHue = offset + idx * inc;
-			if ( newHue > 359 ) {
-				newHue -= Math.floor( newHue / 360 ) * 360;
+		for ( idx = 0 ; idx < nClrs ; idx++ ) {
+			hues.push( Math.round( hue + inc * idx ) % 360 );
+			if ( hues[ hues.length - 1 ] < hues[ idxMin ] ) {
+				idxMin = hues.length - 1;
 			}
-			ls.push( clr.hue( newHue ).toHexString( false ) );
+		}
+
+		for ( idx = 0 ; idx < nClrs ; idx++ ) {
+			ls.push( clr.hue( hues[ ( idxMin + idx ) % nClrs ] ).toHexString( false ) );
 		}
 
 		return ls.join( "," );
@@ -138,14 +163,19 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 		}
 	},
 
+	// Correct for the situation where splitting an empty string results in an
+	// array containing a single element: an empty string
+	_getClrList: function( clrs ) {
+		var clrAr = ( clrs || "" ).split( "," );
+		return clrAr.length > 0 ? ( clrAr[ 0 ] ? clrAr : [] ) : clrAr;
+	},
+
 	_updateColors: function( clrs ) {
-		var clrsSplit = clrs.split( "," ),
-			nClrs = clrsSplit.length,
-			idx;
+		var clrs = this._getClrList( clrs ), idx;
 
 		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
-			if ( idx < nClrs ) {
-				this._setElementColor( this._clrEls[ idx ], clrsSplit[ idx ], "background-color" );
+			if ( idx < clrs.length ) {
+				this._setElementColor( this._clrEls[ idx ], clrs[ idx ], "background-color" );
 			} else {
 				this._setElementColor( this._clrEls[ idx ], null, "background-color" );
 			}
@@ -169,14 +199,14 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 	refresh: function() {
 		var o = this.options,
-			nClrs = ( o.colors || "" ).split( "," ).length,
-			nCols = Math.floor( nClrs / o.rows ),
+			clrs = this._getClrList( o.colors ),
+			nCols = Math.floor( clrs.length / o.rows ),
 			idx, row, el, inner;
 
 		this._ui.table.empty();
 		this._clrEls = [];
 
-		for ( idx = 0 ; idx < nClrs ; idx++ ) {
+		for ( idx = 0 ; idx < clrs.length ; idx++ ) {
 			if ( idx % nCols === 0 ) {
 				row = this._ui.row.clone();
 				this._ui.table.append( row );
@@ -197,6 +227,14 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 $.widget( "mobile.colorpalette", $.mobile.colorpalette, $.mobile.behaviors.colorWidget );
 $.widget( "mobile.colorpalette", $.mobile.colorpalette, $.mobile.behaviors.optionDemultiplexer );
+
+// Grab enhance from textinput, and overwrite it with a version that
+// filters out colorpalettes
+// FIXME: Implement one of the solutions mentioned in #54 instead
+var origTextinputEnhance = $.mobile.textinput.prototype.enhance;
+$.mobile.textinput.prototype.enhance = function( targets, useKeepNative ) {
+	origTextinputEnhance.call( this, targets.not( $.mobile.colorpalette.prototype.options.initSelector ), useKeepNative );
+};
 
 $( document ).bind( "pagecreate create", function( e )  {
 	$.mobile.colorpalette.prototype.enhanceWithin( e.target, true );
