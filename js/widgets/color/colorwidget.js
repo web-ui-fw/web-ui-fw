@@ -9,7 +9,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.core", "../../behaviors/setVa
 
 var dataKey = "_setElementColor_data";
 
-$.mobile.behaviors.colorWidget = $.extend( $.mobile.behaviors.setValue, {
+$.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, {
 	options: {
 		color: null
 	},
