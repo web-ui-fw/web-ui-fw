@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Virtualgrid Demo - Web UI Framework Demos</title>
+		<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
+		<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
+		<link rel="stylesheet" href="../../../jqm/docs/demos/_assets/css/jqm-demos.css">
+
+		<script src="../../../jqm/js/jquery.js"></script>
+		<script src="../../../jqm/js/"></script>
+		<script src="../../../js/"></script>
+		<script src="../../_assets/js/"></script>
+		<!-- Demo.js -->
+		<script src="virtualgrid-db-demo.js"></script>
+		<link rel="stylesheet" href="namecard.css">
+	</head>
+
+	<body>
+		<div id="virtualgrid_grid_page" data-scroll="no" data-role="page" class="virtualgrid_grid_demo_page">
+			<div id="normal" data-role="header" data-position="fixed">
+				<h1>Virtual Grid</h1>
+				<a href="../../intro.html" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+			</div>
+			<div data-role="content" data-scroll="none">
+				<script id="tizen-demo-namecard" type="text/x-jquery-tmpl">
+					<div class="ui-demo-rotation-namecard">
+					<div class="ui-demo-namecard-pic">
+					<img class="ui-demo-namecard-pic-img" src="${TEAM_LOGO}"  />
+					</div>
+					<div class="ui-demo-namecard-contents">
+					<span class="name ui-li-text-main">${NAME}</span>
+					</div>
+					</div>
+				</script>
+				<div id="virtualgrid-demo" data-role="virtualgrid" data-rotation="true" data-template="tizen-demo-namecard"></div>
+			</div>
+			<div id="normal" data-role="footer" data-position="fixed">
+				<h1>Footer</h1>
+			</div>
+			<script>
+				$(".virtualgrid_grid_demo_page").one("pagecreate", function() {
+					$.getScript("virtualgrid-db-demo.js", function(data, textStatus, jqXHR) {
+						$(".virtualgrid_demo_page").die();
+
+						$(":jqmData(role='virtualgrid')").virtualgrid("create", {
+							itemData : function(idx) {
+								return JSON_DATA[idx];
+							},
+							numItemData : JSON_DATA.length,
+							cacheItemData : function(minIdx, maxIdx) {
+							}
+						});
+						$(".virtualgrid_grid_demo_page").unbind("pagecreate");
+					});
+				});
+			</script>
+		</div>
+	</body>
+</html>
