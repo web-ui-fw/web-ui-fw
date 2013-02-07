@@ -233,7 +233,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jqu
 				self._currentWidth -= self._calcBlockWidth( lockBlock );
 				lockBlock.remove();
 				self._modifyInputBoxWidth();
-				this._trigger( "remove" );
+				this._trigger( "removed" );
 			} else {
 				$view.find( "div:last" )
 					.removeClass( "ui-tokentextarea-block ui-ui-tokentextarea-block-theme-"+theme )
@@ -492,7 +492,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jqu
 				// remove selected button
 				index = ( ( position < blocks.length ) ? position : ( blocks.length - 1 ) );
 				$( blocks[index] ).remove();
-				this._trigger( "remove" );
+				this._trigger( "removed" );
 			}
 			self._modifyInputBoxWidth();
 		},
