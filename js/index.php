@@ -6,7 +6,8 @@ $files = array(
 	'behaviors/setValue.js',
 	'widgets/color/colorwidget.js',
 	'widgets/color/colorpalette.js',
-	'widgets/tokentextarea.js'
+	'widgets/tokentextarea.js',
+	'widgets/virtualgrid.js'
 );
 
 function getGitHeadPath() {
