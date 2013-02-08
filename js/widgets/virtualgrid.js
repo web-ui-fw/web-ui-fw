@@ -54,7 +54,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 		update : function () {
 			var state = this.state, duration, elapsed, dx, x;
 
-			if (state == tstates.done) {
+			if (state === tstates.done) {
 				return this.pos;
 			}
 			duration = this.duration;
@@ -71,7 +71,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 		},
 
 		done : function () {
-			return this.state == tstates.done;
+			return this.state === tstates.done;
 		},
 
 		getPosition : function () {
@@ -202,15 +202,15 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 		_loadData : function ( args ) {
 			var self = this;
 
-			if ( args.itemData && typeof args.itemData == 'function'  ) {
+			if ( args.itemData && typeof args.itemData === 'function'  ) {
 				self._itemData = args.itemData;
 			} else {
 				return false;
 			}
 			if ( args.numItemData ) {
-				if ( typeof args.numItemData == 'function' ) {
+				if ( typeof args.numItemData === 'function' ) {
 					self._numItemData = args.numItemData( );
-				} else if ( typeof args.numItemData == 'number' ) {
+				} else if ( typeof args.numItemData === 'number' ) {
 					self._numItemData = args.numItemData;
 				} else {
 					return false;
@@ -370,7 +370,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 				clipPosition = 0;
 
 			itemCount = self._calculateColumnCount();
-			if ( itemCount != self._itemCount ) {
+			if ( itemCount !== self._itemCount ) {
 				totalRowCnt = parseInt(self._numItemData / itemCount , 10 );
 				self._totalRowCnt = self._numItemData % itemCount === 0 ? totalRowCnt : totalRowCnt + 1;
 				prevcnt = self._itemCount;
@@ -857,7 +857,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 
 			$( window ).bind("resize", function ( e ) {
 				var viewSize = 0,
-					role = $(self.element).jqmData("role");
+					role = $(self.element).jqmData("role"),
 					$virtualgrid = $(".ui-virtualgrid-view");
 
 				if ( role === 'virtualgrid' ) {
@@ -961,7 +961,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 				clipSize = clipSize - ( header.outerHeight(true) || 0);
 				clipSize = clipSize - ( footer.outerHeight(true) || 0);
 			} else {
-				clipSize = view.height();
+				clipSize = $view.height();
 			}
 			return clipSize;
 		},
@@ -1166,7 +1166,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 				opts = self.options,
 				$columns = null,
 				$column = null,
-				$block = block.attr ? block : $( block );
+				$block = block.attr ? block : $( block ),
 				data = null,
 				htmlData = null,
 				myTemplate = null,
@@ -1228,43 +1228,6 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 			plainMsg = self._template.text();
 			for ( idx = 0 ; idx < self._properties.length ; idx++ ) {
 				plainMsg = self._strReplace( plainMsg, "${" + self._properties[idx] +"}" , data[ self._properties[ idx ] ] );
-			}
-			ret = $( plainMsg );
-			return ret;
-		},
-
-		_strReplace : function(plainMsg, stringToFind,stringToReplace){
-			var temp = plainMsg,
-				index = plainMsg.indexOf( stringToFind );
-			while (index != -1) {
-				temp = temp.replace( stringToFind, stringToReplace );
-				index = temp.indexOf( stringToFind );
-			}
-			return temp;
-		},
-
-		_getObjectNames : function ( obj ) {
-			var properties = [],
-				name = "";
-
-			for ( name in obj ) {
-				properties.push( name );
-			}
-			this._properties = properties;
-		},
-
-		_tmpl : function ( data ){
-			var self = this,
-				idx = 0,
-				plainMsg,
-				ret;
-			if ( !data ) {
-				return ;
-			}
-
-			plainMsg = self._template.text();
-			for ( idx = 0 ; idx < self._properties.length ; idx++ ) {
-				plainMsg = self._strReplace( plainMsg, "${" + self._properties[idx] +"}" , data[ self._properties[ idx ] ] );
 			} // repalce string.
 			ret = $( plainMsg ); // Make a DOM element.
 			return ret;
@@ -1273,7 +1236,7 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 		_strReplace : function(plainMsg, stringToFind,stringToReplace){
 			var temp = plainMsg,
 				index = plainMsg.indexOf( stringToFind );
-			while (index != -1) {
+			while (index !== -1) {
 				temp = temp.replace( stringToFind, stringToReplace );
 				index = temp.indexOf( stringToFind );
 			}
