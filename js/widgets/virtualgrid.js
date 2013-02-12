@@ -754,13 +754,17 @@ define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jq
 		},
 
 		_enableTracking: function () {
-			$(document).bind( this._dragMoveEvt, this._dragMoveCB );
-			$(document).bind( this._dragStopEvt, this._dragStopCB );
+			var self = this;
+			self._$view.bind( self._dragMoveEvt, self._dragMoveCB );
+			self._$view.bind( self._dragStopEvt, self._dragStopCB );
+			self._scrollView._enableTracking.apply( self );
 		},
 
 		_disableTracking: function () {
-			$(document).unbind( this._dragMoveEvt, this._dragMoveCB );
-			$(document).unbind( this._dragStopEvt, this._dragStopCB );
+			var self = this;
+			self._$view.unbind( self._dragMoveEvt, self._dragMoveCB );
+			self._$view.unbind( self._dragStopEvt, self._dragStopCB );
+			self._scrollView._disableTracking.apply( self );
 		},
 
 		_handleDragStart: function ( e, ex, ey ) {
