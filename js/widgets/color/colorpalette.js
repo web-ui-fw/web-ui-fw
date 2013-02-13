@@ -127,7 +127,8 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_makePalette: function( clr ) {
-		var hues = [],
+		var idx,
+			hues = [],
 			nClrs = this._clrEls.length,
 			hue = clr.hue(),
 			inc = 360 / nClrs,
@@ -171,8 +172,9 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_updateColors: function( clrs ) {
-		var clrs = this._getClrList( clrs ), idx;
+		var idx;
 
+		clrs = this._getClrList( clrs );
 		for ( idx = 0 ; idx < this._clrEls.length ; idx++ ) {
 			if ( idx < clrs.length ) {
 				this._setElementColor( this._clrEls[ idx ], clrs[ idx ], "background-color" );
