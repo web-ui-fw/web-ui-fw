@@ -67,7 +67,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 				}
 			}
 			if ( idx === clrs.length ) {
-				this.option( "colors", this._makePalette( $.Color( this.options.color ) ) );
+				this.option( "colors", this._makePalette( $.Color( this.options.color ), this._clrEls.length ) );
 			}
 		}
 	},
@@ -94,7 +94,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 			if ( !activeClr || ( activeClr && !activeClr.is( clr ) ) ) {
 				if ( !this._findAndActivateColor( clr ) ) {
-					this._setOption( "colors", this._makePalette( clr ) );
+					this._setOption( "colors", this._makePalette( clr, this._clrEls.length ) );
 					this._findAndActivateColor( clr );
 				}
 			}
@@ -126,10 +126,9 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 		}
 	},
 
-	_makePalette: function( clr ) {
+	_makePalette: function( clr, nClrs ) {
 		var idx,
 			hues = [],
-			nClrs = this._clrEls.length,
 			hue = clr.hue(),
 			inc = 360 / nClrs,
 			idxMin = 0,
