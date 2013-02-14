@@ -3,12 +3,10 @@
 }
 
 .ui-colorpalette .ui-colorpalette-preview-container {
-  display: table;
   margin: auto;
 }
 
 .ui-colorpalette .ui-colorpalette-preview-container .ui-colorpalette-preview {
-	display: table;
 	margin: auto;
 }
 
