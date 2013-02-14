@@ -127,7 +127,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 	},
 
 	_makePalette: function( clr, nClrs ) {
-		var idx,
+		var idx, hueIdx,
 			hues = [],
 			hue = clr.hue(),
 			inc = 360 / nClrs,
@@ -142,7 +142,15 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 		}
 
 		for ( idx = 0 ; idx < nClrs ; idx++ ) {
-			ls.push( clr.hue( hues[ ( idxMin + idx ) % nClrs ] ).toHexString( false ) );
+			hueIdx = ( idxMin + idx ) % nClrs;
+			// When the hueIdx is 0, we do not create a new colour, because setting
+			// the hue on clr may produce a different hex colour even if you set the
+			// hue to the value it already has - so, basically, for clr,
+			//
+			// clr.toHexString( false ) === clr.hue( clr.hue() ).toHexString( false )
+			//
+			// does not always hold. Thus, we append clr unmodified.
+			ls.push( ( 0 === hueIdx ? clr : clr.hue( hues[ hueIdx ] ) ).toHexString( false ) );
 		}
 
 		return ls.join( "," );
