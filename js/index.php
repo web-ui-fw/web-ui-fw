@@ -4,6 +4,7 @@ $files = array(
 	'../jq-color/jquery.color.js',
 	'behaviors/optionDemultiplexer.js',
 	'behaviors/setValue.js',
+	'widgets/color/desat.js',
 	'widgets/color/colorwidget.js',
 	'widgets/color/colorpalette.js',
 	'widgets/tokentextarea.js',
