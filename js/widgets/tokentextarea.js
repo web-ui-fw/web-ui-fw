@@ -3,7 +3,9 @@
 //>>label: tokentextarea
 //>>group: Widget
 
-define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../jqm/js/jquery.mobile.buttonMarkup" ], function( $ ) {
+define( [ "jquery",
+	"jqm/jquery.mobile.widget",
+	"jqm/jquery.mobile.buttonMarkup" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function ( $, window, document, undefined ) {

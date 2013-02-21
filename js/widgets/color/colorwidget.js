@@ -3,7 +3,10 @@
 //>>label: colorwidget
 //>>group: Forms
 
-define( [ "jquery", "../../../jqm/js/jquery.mobile.core", "../../behaviors/setValue", "../../../jq-color/jquery.color" ], function( $ ) {
+define( [ "jquery",
+	"jqm/jquery.mobile.core",
+	"../../behaviors/setValue",
+	"jq-color/jquery.color" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 

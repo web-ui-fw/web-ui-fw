@@ -5,10 +5,10 @@
 
 define( [
 	"jquery",
-	"../../../jqm/js/jquery.mobile.widget",
+	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",
-	"../../../jqm/js/widgets/forms/textinput"
+	"jqm/widgets/forms/textinput"
 	], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {

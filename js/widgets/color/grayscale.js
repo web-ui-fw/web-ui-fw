@@ -1,3 +1,13 @@
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+//>>description: Color palette
+//>>label: colorpalette
+//>>group: Forms
+
+define( [
+	"jquery",
+	"jq-color/jquery-color"
+	], function( $ ) {
+//>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 	$.Color.fn.grayscale = function() {
 		var hsl = [ this.hue(), this.saturation(), this.lightness() ],
@@ -31,3 +41,6 @@
 		return $.Color( { red: val, green: val, blue: val } );
 	};
 })( jQuery );
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+});
+//>>excludeEnd("jqmBuildExclude");

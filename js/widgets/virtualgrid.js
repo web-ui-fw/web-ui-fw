@@ -3,7 +3,10 @@
 //>>label: virtualgrid
 //>>group: Widget
 
-define( [ "jquery", "../../../jqm/js/jquery.mobile.widget", "../../../libs/js/jquery.easing.1.3", "../../../libs/js/jquery.mobile.scrollview.js" ], function( $ ) {
+define( [ "jquery",
+	"jqm/jquery.mobile.widget",
+	"../../../libs/js/jquery.easing.1.3",
+	"../../../libs/js/jquery.mobile.scrollview.js" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function ($, window, document, undefined) {
