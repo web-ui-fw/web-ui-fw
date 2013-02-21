@@ -33,7 +33,7 @@ $.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, {
 			if ( data ) {
 				clr = data.clr;
 				if ( value ) {
-					clr = clr.saturation( 0 );
+					clr = clr.grayscale();
 				}
 
 				$el.css( data.cssProp, clr.toRgbaString() );
