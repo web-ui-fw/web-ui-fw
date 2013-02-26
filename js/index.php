@@ -5,6 +5,7 @@ $files = array(
 	'behaviors/optionDemultiplexer.js',
 	'behaviors/setValue.js',
 	'behaviors/createOuter.js',
+	'web-ui-fw.reduceScope.js',
 	'widgets/color/grayscale.js',
 	'widgets/color/colorwidget.js',
 	'widgets/color/colorpalette.js',

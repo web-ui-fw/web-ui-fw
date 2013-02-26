@@ -1,3 +1,13 @@
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+//>>description: Establish outermost element for a widget
+//>>label: createOuter
+//>>group: Infrastructure
+
+define( [
+	"jquery",
+	"jqm/jquery.mobile.core"
+	], function( $ ) {
+//>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
 $.mobile.behaviors.createOuter = {
@@ -19,3 +29,7 @@ $.mobile.behaviors.createOuter = {
 };
 
 })( jQuery );
+
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+});
+//>>excludeEnd("jqmBuildExclude");

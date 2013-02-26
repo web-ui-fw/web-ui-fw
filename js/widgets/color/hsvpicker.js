@@ -207,6 +207,10 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 
 $.widget( "mobile.hsvpicker", $.mobile.hsvpicker, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
+// Add a filter to prevent the textinput widget from enhancing color inputs 
+// that our initSelector would match
+$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.hsvpicker.prototype.options.initSelector );
+
 $( document ).bind( "pagecreate create", function( e )  {
 	$.mobile.hsvpicker.prototype.enhanceWithin( e.target, true );
 });

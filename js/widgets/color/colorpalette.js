@@ -8,7 +8,8 @@ define( [
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",
-	"jqm/widgets/forms/textinput"
+	"jqm/widgets/forms/textinput",
+	"../../reduceScope"
 	], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
@@ -230,13 +231,9 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {},
 
 $.widget( "mobile.colorpalette", $.mobile.colorpalette, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
-// Grab enhance from textinput, and overwrite it with a version that
-// filters out colorpalettes
-// FIXME: Implement one of the solutions mentioned in #54 instead
-var origTextinputEnhance = $.mobile.textinput.prototype.enhance;
-$.mobile.textinput.prototype.enhance = function( targets, useKeepNative ) {
-	origTextinputEnhance.call( this, targets.not( $.mobile.colorpalette.prototype.options.initSelector ), useKeepNative );
-};
+// Add a filter to prevent the textinput widget from enhancing color inputs 
+// that our initSelector would match
+$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.colorpalette.prototype.options.initSelector );
 
 $( document ).bind( "pagecreate create", function( e )  {
 	$.mobile.colorpalette.prototype.enhanceWithin( e.target, true );
