@@ -17,9 +17,7 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-$.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {},
-	$.mobile.behaviors.createOuter,
-	$.mobile.behaviors.optionDemultiplexer, {
+$.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
 	options: {
 		showPreview: false,
 		rows: 2,
@@ -230,7 +228,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {},
 		}
 	}
 
-}));
+}, $.mobile.behaviors.createOuter, $.mobile.behaviors.optionDemultiplexer ) );
 
 $.widget( "mobile.colorpalette", $.mobile.colorpalette, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 

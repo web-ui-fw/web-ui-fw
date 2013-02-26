@@ -16,9 +16,7 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-$.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
-	$.mobile.behaviors.createOuter,
-	$.mobile.behaviors.optionDemultiplexer, {
+$.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 	options: {
 		initSelector: ":jqmData(role='hsvpicker')"
 	},
@@ -250,7 +248,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 			this._clr = value;
 		}
 	}
-}));
+}, $.mobile.behaviors.createOuter, $.mobile.behaviors.optionDemultiplexer ) );
 
 $.widget( "mobile.hsvpicker", $.mobile.hsvpicker, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
