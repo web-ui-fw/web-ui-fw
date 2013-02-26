@@ -4,29 +4,43 @@
 //>>group: Forms
 
 define( [ "jquery",
-	"jqm/jquery.mobile.core" ], function( $ ) {
+	"jqm/jquery.mobile.core",
+	"jqm/widgets/forms/reset" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-$.mobile.behaviors.setValue = {
+$.mobile.behaviors.setValue = $.extend( {
 	// The widget factory automagically merges data-<option> attributes with the
 	// widget instance's options, but it does not merge the input's value with the
 	// widget's corresponding option if this widget is based on an input
 	_create: function() {
-		var inputType;
 		if ( this._value !== undefined && this.element.is( "input" ) ) {
-			inputType = this.element.attr( "type" );
-
-			// Special handling for checkboxes and radio buttons, where the presence
-			// of the "checked" attribute is really the value
-			if ( inputType === "checkbox" || inputType === "radio" ) {
-				this.options[ this._value.option ] = this.element[ 0 ].hasAttribute( "checked" );
-			} else {
-				this.options[ this._value.option ] = this.element.attr( "value" );
-			}
+			this.options[ this._value.option ] = this._getInputValue();
+			this._handleFormReset();
 		}
 
 		this._super();
+	},
+
+	_getInputValue: function() {
+		var inputType, ret;
+
+		if ( this.element.is( "input" ) ) {
+			inputType = this.element.attr( "type" );
+			// Special handling for checkboxes and radio buttons, where the presence
+			// of the "checked" attribute is really the value
+			if ( inputType === "checkbox" || inputType === "radio" ) {
+				ret = this.element.prop( "checked" );
+			} else {
+				ret = this.element.val();
+			}
+		}
+
+		return ret;
+	},
+
+	_reset: function() {
+		this._setOption( this._value.option, this._getInputValue() );
 	},
 
 	_setValue: function( newValue ) {
@@ -49,20 +63,16 @@ $.mobile.behaviors.setValue = {
 			// Special handling for checkboxes and radio buttons, where the presence
 			// of the "checked" attribute is really the value
 			if ( inputType === "checkbox" || inputType === "radio" ) {
-				if ( newValue ) {
-					this.element.attr( "checked", true );
-				} else {
-					this.element.removeAttr( "checked" );
-				}
+				this.element.prop( "checked", !!newValue );
 			}
 			else {
-				this.element.attr( "value", ( valueStringIsSet ? valueString : newValue ) );
+				this.element.val( ( valueStringIsSet ? valueString : newValue ) );
 			}
 
 			this.element.trigger( "change" );
 		}
 	}
-};
+}, $.mobile.behaviors.formReset );
 
 })( jQuery );
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
