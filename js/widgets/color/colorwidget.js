@@ -6,7 +6,8 @@
 define( [ "jquery",
 	"jqm/jquery.mobile.core",
 	"../../behaviors/setValue",
-	"jq-color/jquery.color" ], function( $ ) {
+	"jq-color/jquery.color",
+	"./grayscale" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
@@ -53,12 +54,14 @@ $.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, {
 
 	_setElementColor: function( el, clr, cssProp ) {
 		if ( clr ) {
-			clr = $.Color( clr );
+			if ( $.type( clr ) === "string" ) {
+				clr = $.Color( clr );
+			}
 
 			el.jqmData( dataKey, { clr: clr, cssProp: cssProp } );
 
 			if ( this.options.disabled ) {
-				clr = clr.saturation( 0 );
+				clr = clr.grayscale();
 			}
 
 			el.css( cssProp, clr.toRgbaString() );
@@ -86,6 +89,21 @@ $.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, {
 			this._setValue( value );
 		}
 		this._super( value );
+	},
+
+	_huegradient: function( el ) {
+		var idx;
+		el.addClass( "ui-huegradient" );
+		if ( $.mobile.browser.oldIE ) {
+			el.addClass( "ie" );
+			for ( idx = 0 ; idx < 6 ; idx++ ) {
+				$( "<div></div>" )
+					.addClass( "ie-grad g" + idx )
+					.appendTo( el );
+			}
+		}
+
+		return el;
 	}
 });
 

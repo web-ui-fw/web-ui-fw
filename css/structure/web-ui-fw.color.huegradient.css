@@ -1,5 +1,4 @@
 .ui-huegradient {
-    background: none; /* Old browsers */
     background: -webkit-gradient(linear, left top, right top,
         color-stop(  0%          ,rgba(255,  0,  0,1)),
         color-stop( 16.666666667%,rgba(255,255,  0,1)),
@@ -55,7 +54,6 @@
 .ui-disabled.ui-huegradient,
 .ui-state-disabled .ui-huegradient,
 .ui-disabled .ui-huegradient {
-    background: none; /* Old browsers */
     background: -webkit-gradient(linear, left top, right top,
         color-stop(  0%          ,rgba( 54, 54, 54,1)),
         color-stop( 16.666666667%,rgba(237,237,237,1)),
@@ -106,10 +104,6 @@
         rgba( 54, 54, 54,1) 100%);
 }
 
-.ui-huegradient.ie {
-	position: relative;
-}
-
 .ui-huegradient.ie > .ie-grad {
 	position: absolute;
 	width: 16.666666667%;
@@ -157,29 +151,29 @@
 .ui-state-disabled.ui-huegradient.ie > .ie-grad.g1,
 .ui-state-disabled .ui-huegradient.ie > .ie-grad.g1 {
 	left: 16.666666667%;
-	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#ededed', endColorstr='#b6b6b6', GradientType = 1);
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#ececec', endColorstr='#b6b6b6', GradientType = 1);
 }
 
 .ui-state-disabled.ui-huegradient.ie > .ie-grad.g2,
 .ui-state-disabled .ui-huegradient.ie > .ie-grad.g2 {
 	left: 33.333333333%;
-	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#b6b6b6', endColorstr='#c9c9c9', GradientType = 1);
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#b7b7b7', endColorstr='#c9c9c9', GradientType = 1);
 }
 
 .ui-state-disabled.ui-huegradient.ie > .ie-grad.g3,
 .ui-state-disabled .ui-huegradient.ie > .ie-grad.g3 {
 	left: 50%;
-	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#c9c9c9', endColorstr='#121212', GradientType = 1);
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#c8c8c8', endColorstr='#121212', GradientType = 1);
 }
 
 .ui-state-disabled.ui-huegradient.ie > .ie-grad.g4,
 .ui-state-disabled .ui-huegradient.ie > .ie-grad.g4 {
 	left: 66.666666667%;
-	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#121212', endColorstr='#494949', GradientType = 1);
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#131313', endColorstr='#494949', GradientType = 1);
 }
 
 .ui-state-disabled.ui-huegradient.ie > .ie-grad.g5,
 .ui-state-disabled .ui-huegradient.ie > .ie-grad.g5 {
 	left: 83.333333333%;
-	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#494949', endColorstr='#363636', GradientType = 1);
+	filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#484848', endColorstr='#363636', GradientType = 1);
 }

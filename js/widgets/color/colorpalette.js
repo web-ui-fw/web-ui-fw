@@ -13,7 +13,9 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-$.widget( "mobile.colorpalette", $.mobile.widget, {
+$.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {},
+	$.mobile.behaviors.createOuter,
+	$.mobile.behaviors.optionDemultiplexer, {
 	options: {
 		showPreview: false,
 		rows: 2,
@@ -23,6 +25,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 
 	_create: function() {
 		var ui = {
+				outer: this._createOuter().addClass( "ui-colorpalette" ),
 				preview: {
 					outer: $( "<div class='ui-colorpalette-preview-container ui-corner-all'></div>" ),
 					inner: $( "<div class='ui-colorpalette-preview'></div>" )
@@ -35,16 +38,6 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 				}
 			},
 			clrs = this._getClrList( this.options.colors ), idx;
-
-		// Establish the outer element
-		if ( this.element.is( "input" ) ) {
-			ui.outer = $( "<div class='ui-colorpalette'></div>" )
-				.insertAfter( this.element )
-				.append( this.element );
-			this.element.css( { display: "none" } );
-		} else {
-			ui.outer = this.element.addClass( "ui-colorpalette" );
-		}
 
 		// Apply the proto
 		ui.outer.append( ui.preview.outer );
@@ -232,10 +225,10 @@ $.widget( "mobile.colorpalette", $.mobile.widget, {
 			this._findAndActivateColor( $.Color( o.color ) );
 		}
 	}
-});
 
-$.widget( "mobile.colorpalette", $.mobile.colorpalette, $.mobile.behaviors.colorWidget );
-$.widget( "mobile.colorpalette", $.mobile.colorpalette, $.mobile.behaviors.optionDemultiplexer );
+}));
+
+$.widget( "mobile.colorpalette", $.mobile.colorpalette, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
 // Grab enhance from textinput, and overwrite it with a version that
 // filters out colorpalettes

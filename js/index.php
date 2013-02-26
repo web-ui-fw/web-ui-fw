@@ -4,9 +4,11 @@ $files = array(
 	'../jq-color/jquery.color.js',
 	'behaviors/optionDemultiplexer.js',
 	'behaviors/setValue.js',
-	'widgets/color/desat.js',
+	'behaviors/createOuter.js',
+	'widgets/color/grayscale.js',
 	'widgets/color/colorwidget.js',
 	'widgets/color/colorpalette.js',
+	'widgets/color/hsvpicker.js',
 	'widgets/tokentextarea.js',
 	'widgets/virtualgrid.js'
 );

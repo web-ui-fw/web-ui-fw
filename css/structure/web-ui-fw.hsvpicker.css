@@ -1,0 +1,62 @@
+.ui-hsvpicker-mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: inherit;
+}
+
+.ui-hsvpicker .ui-btn-inner,
+.ui-hsvpicker .ui-btn-inner * {
+	opacity: 0;
+	filter: Alpha(Opacity=0);
+}
+
+.ui-hsvpicker-sat-gradient {
+    background: -webkit-gradient(linear, left top, right top,
+        color-stop(  0%,rgba(255,255,255,1)),
+        color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -moz-linear-gradient(left, 
+        rgba(255,255,255,1)   0%, 
+        rgba(255,255,255,0) 100%);
+    background: -webkit-linear-gradient(left,
+        rgba(255,255,255,1)   0%, 
+        rgba(255,255,255,0) 100%);
+    background: -o-linear-gradient(left,
+        rgba(255,255,255,1)   0%, 
+        rgba(255,255,255,0) 100%);
+    background: -ms-linear-gradient(left,
+        rgba(255,255,255,1)   0%, 
+        rgba(255,255,255,0) 100%);
+    background: linear-gradient(left,
+        rgba(255,255,255,1)   0%, 
+        rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#ffffff', endColorstr="#00ffffff", GradientType = 1);
+}
+
+.ui-hsvpicker-val-gradient {
+    background: -webkit-gradient(linear, left top, right top,
+        color-stop(  0%,rgba(0,0,0,1)),
+        color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+    background: -moz-linear-gradient(left, 
+        rgba(0,0,0,1)   0%, 
+        rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(left,
+        rgba(0,0,0,1)   0%, 
+        rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(left,
+        rgba(0,0,0,1)   0%, 
+        rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(left,
+        rgba(0,0,0,1)   0%, 
+        rgba(0,0,0,0) 100%);
+    background: linear-gradient(left,
+        rgba(0,0,0,1)   0%, 
+        rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient (startColorstr='#000000', endColorstr="#00000000", GradientType = 1);
+}
+
+.ui-hsvpicker .ui-slider-track {
+	margin-left: 0;
+}
