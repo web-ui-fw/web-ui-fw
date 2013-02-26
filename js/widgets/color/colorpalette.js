@@ -2,6 +2,8 @@
 //>>description: Color palette
 //>>label: colorpalette
 //>>group: Forms
+//>>css.theme: ../../../css/default/web-ui-fw.theme.css
+//>>css.structure: ../../../css/structure/web-ui-fw.colorpalette.css
 
 define( [
 	"jquery",
@@ -9,7 +11,8 @@ define( [
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",
 	"jqm/widgets/forms/textinput",
-	"../../reduceScope"
+	"../../behaviors/createOuter",
+	"../../web-ui-fw.reduceScope"
 	], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
