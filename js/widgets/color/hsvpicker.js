@@ -1,3 +1,19 @@
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+//>>description: Color palette
+//>>label: colorpalette
+//>>group: Forms
+//>>css.theme: ../../../css/themes/default/web-ui-fw.theme.css
+//>>css.structure: ../../../css/structure/web-ui-fw.color.huegradient.css,../../../css/structure/web-ui-fw.hsvpicker.css
+
+define( [
+	"jquery",
+	"jqm/jquery.mobile.widget",
+	"./colorwidget",
+	"jqm/widgets/forms/textinput",
+	"../../behaviors/createOuter",
+	"../../web-ui-fw.reduceScope"
+	], function( $ ) {
+//>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
 $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
@@ -216,3 +232,7 @@ $( document ).bind( "pagecreate create", function( e )  {
 });
 
 })( jQuery );
+
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+});
+//>>excludeEnd("jqmBuildExclude");
