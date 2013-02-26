@@ -92,6 +92,14 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 		return widget.slider;
 	},
 
+	_hsvFromSliders: function() {
+		return {
+			h: this._ui.chan.h.widget._value(),
+			s: this._ui.chan.s.widget._value() / 255.0,
+			v: this._ui.chan.v.widget._value() / 255.0
+		};
+	},
+
 	_handleSlideControlChange: function( e ) {
 		var hsv, clr;
 
@@ -99,11 +107,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 			return;
 		}
 
-		hsv = [
-			this._ui.chan.h.widget._value(),
-			this._ui.chan.s.widget._value() / 255.0,
-			this._ui.chan.v.widget._value() / 255.0
-		];
+		hsv = this._hsvFromSliders();
 		clr = this._hsvToClr( hsv ).toHexString( false );
 
 		this._clr = clr;
@@ -121,18 +125,18 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 	// Make the slider colours reflect a certain colour without setting the handle
 	// position (which might cause an event loop)
 	_styleSliders: function( chan, clr, hsv ) {
-		var hclr = this._hsvToClr( [ hsv[ 0 ], 1.0, 1.0 ] ),
-			vclr = this._hsvToClr( [ hsv[ 0 ], hsv[ 1 ], 1.0 ] );
+		var hclr = this._hsvToClr( { h: hsv.h, s: 1.0, v: 1.0 } ),
+			vclr = this._hsvToClr( { h: hsv.h, s: hsv.s, v: 1.0 } );
 
 		// hue
 		this._setElementColor( chan.h.widget.handle, clr, "background" );
-		chan.h.sat.css( "opacity", 1 - hsv[ 1 ] );
-		chan.h.val.css( "opacity", 1 - hsv[ 2 ] );
+		chan.h.sat.css( "opacity", 1 - hsv.s );
+		chan.h.val.css( "opacity", 1 - hsv.v );
 
 		// sat
 		this._setElementColor( chan.s.widget.handle, clr, "background" );
 		this._setElementColor( chan.s.widget.slider, hclr, "background" );
-		chan.s.val.css( "opacity", 1 - hsv[ 2 ] );
+		chan.s.val.css( "opacity", 1 - hsv.v );
 
 		// val
 		this._setElementColor( chan.v.widget.handle, clr, "background" );
@@ -177,41 +181,68 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {},
 			}
 		}
 
-		return [ h, s, v ];
+		return { h: h, s: s, v: v };
 	},
 
-	// Input: [ h, s, v ], where
+	// Input: { h, s, v }, where
 	// h is in [0, 360]
 	// s is in [0,   1]
 	// v is in [0,   1]
 	// Returns: jQuery Color object
 	_hsvToClr: function( hsv ) {
-		var max = hsv[2],
-			delta = hsv[1] * max,
+		var max = hsv.v,
+			delta = hsv.s * max,
 			min = max - delta,
 			sum = max + min,
-			half_sum = sum / 2,
-			s_divisor = ((half_sum < 0.5) ? sum : (2 - max - min));
+			halfSum = sum / 2,
+			sDivisor = ( ( halfSum < 0.5 ) ? sum : ( 2 - max - min ) );
 
 		return $.Color( {
-			hue: hsv[ 0 ],
-			saturation: ( ( 0 === s_divisor ) ? 0 : ( delta / s_divisor ) ),
-			lightness: half_sum
+			hue: hsv.h,
+			saturation: ( ( 0 === sDivisor ) ? 0 : ( delta / sDivisor ) ),
+			lightness: halfSum
 		});
 	},
 
 	_setColor: function( value ) {
-		var clr, hsv, chan;
+		var comboIdx, idxidx, clr, hsv, chan, oldHSV, combos, tmpHSV, cpidx, combo, sliderVals;
 
 		if ( value !== this._clr ) {
 			chan = this._ui.chan;
 			clr = $.Color( value );
 			hsv = this._clrToHSV ( clr );
+			oldHSV = this._hsvFromSliders();
+			// by default we set all three sliders ...
+			combo = [ "h", "s", "v" ];
+			// ... however, we try to minimize the changes we make to slider
+			// positions in order to achieve the desired colour. This minimizes the
+			// amount that synced sliders fidget when the transformation quality
+			// degrades, like, when the saturation and/or value approaches 0.
+			combos = [ [], [ "h" ], [ "s" ], [ "v" ], [ "h", "s" ], [ "h", "v" ], [ "s", "v" ] ];
 
+			// For each combination ...
+			for ( comboIdx in combos ) {
+				tmpHSV = { h: oldHSV.h, s: oldHSV.s, v: oldHSV.v };
+				// ... overwrite those parts of the existing hsv specified by the given
+				// combination
+				for ( idxidx = 0 ; idxidx < combos[ comboIdx ].length ; idxidx++ ) {
+					cpidx = combos[ comboIdx ][ idxidx ];
+					tmpHSV[ cpidx ] = hsv[ cpidx ];
+				}
+				// ... and check whether the result is the desired colour
+				if ( this._hsvToClr( tmpHSV ).toHexString( false ) === value ) {
+					combo = combos[ comboIdx ];
+					hsv = tmpHSV;
+					break;
+				}
+			}
+
+			// We set values on the sliders identified above
 			this._ignoreHandle = true;
-			chan.h.widget.refresh( Math.round( hsv[ 0 ] ) );
-			chan.s.widget.refresh( Math.round( hsv[ 1 ] * 255 ) );
-			chan.v.widget.refresh( Math.round( hsv[ 2 ] * 255 ) );
+			sliderVals = { h: hsv.h, s: hsv.s * 255, v: hsv.v * 255 };
+			for ( idxidx = 0 ; idxidx < combo.length ; idxidx++ ) {
+				chan[ combo[ idxidx ] ].widget.refresh( Math.round( sliderVals[ combo[ idxidx ] ] ) );
+			}
 			this._ignoreHandle = false;
 
 			this._styleSliders( chan, clr, hsv );
