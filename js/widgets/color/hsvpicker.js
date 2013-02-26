@@ -68,7 +68,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 		$.extend( this, {
 			_ui: ui,
 			_clr: null,
-			_ignoreHandle: false,
+			_ignoreHandle: false
 		});
 
 		this.refresh();
