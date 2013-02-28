@@ -40,6 +40,32 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		// JS config, mostly the requirejs configuration
+		js: {
+			require: {
+				baseUrl: 'js',
+				paths: {
+					"depend": "../jqm/js/depend",
+					"text": "../jqm/js/text",
+					"jqm": "../jqm/js",
+					"jq-color": "../jq-color"
+				},
+				name: process.env.START_FILE || 'web-ui-fw',
+				exclude: [
+					'jqm/jquery',
+					'depend',
+					'text',
+					'text!../version.txt'
+				],
+				out: "output" + '.js',
+				pragmasOnSave: { jqmBuildExclude: true },
+				//wrap: { startFile: 'build/wrap.start', endFile: 'build/wrap.end' },
+				findNestedDependencies: true,
+				skipModuleInsertion: true,
+				optimize: 'none'
+			}
+		},
+
 		// TODO add test files here once we can specify different configs for
 		//      different globs
 		lint: {
