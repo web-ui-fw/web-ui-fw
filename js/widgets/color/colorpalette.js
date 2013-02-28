@@ -10,7 +10,6 @@ define( [
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",
-	"jqm/widgets/forms/textinput",
 	"jqm/jquery.mobile.vmouse",
 	"../../behaviors/createOuter",
 	"../../web-ui-fw.reduceScope"

@@ -9,7 +9,6 @@ define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
-	"jqm/widgets/forms/textinput",
 	"../../behaviors/createOuter",
 	"../../web-ui-fw.reduceScope"
 	], function( $ ) {

@@ -25,24 +25,39 @@ var scopeReduction = {},
 
 			scope.orig.call( this, targets, useKeepNative );
 		}
+	},
+	overwriteEnhance = function( ns, widget ) {
+		function overwrite() {
+			if ( $[ ns ][ widget ] ) {
+				// Overwrite the enhance() function for this widget class with our scope-
+				// restricting version if it's not already overwritten
+				if ( $[ ns ][ widget ].prototype.enhance !== reduceScope ) {
+					scopeReduction[ ns ][ widget ].orig = $[ ns ][ widget ].prototype.enhance;
+					$[ ns ][ widget ].prototype.enhance = reduceScope;
+				}
+			}
+		}
+
+		if ( $[ ns ] ) {
+			overwrite();
+		} else {
+			( ( $.mobile && $.mobile.document ) || $( document ) ).one( "mobileinit", function() {
+				overwrite();
+			});
+		}
 	};
 
 $.mobile.reduceEnhancementScope = function( ns, widget, filter ) {
 	var nsList = scopeReduction[ ns ] || {},
 		scope = nsList[ widget ] || { ls: [] };
 
-	// Overwrite the enhance() function for this widget class with our scope-
-	// restricting version if it's not already overwritten
-	if ( $[ ns ][ widget ].prototype.enhance !== reduceScope ) {
-		scope.orig = $[ ns ][ widget ].prototype.enhance;
-		$[ ns ][ widget ].prototype.enhance = reduceScope;
-	}
+		// Add the scope restriction
+		scope.ls.push( filter );
+		nsList[ widget ] = scope;
+		scopeReduction[ ns ] = nsList;
 
-	// Add the scope restriction
-	scope.ls.push( filter );
-
-	nsList[ widget ] = scope;
-	scopeReduction[ ns ] = nsList;
+		// Overwrite the enhance function for the given widget class
+		overwriteEnhance( ns, widget );
 };
 
 })( jQuery );
