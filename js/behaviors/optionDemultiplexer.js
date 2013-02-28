@@ -3,7 +3,8 @@
 //>>label: optionDemultiplexer
 //>>group: Forms
 
-define( [ "jquery",
+define( [
+	"jqm/jquery",
 	"jqm/jquery.mobile.core" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {

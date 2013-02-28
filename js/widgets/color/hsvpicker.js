@@ -6,7 +6,7 @@
 //>>css.structure: ../../../css/structure/web-ui-fw.color.huegradient.css,../../../css/structure/web-ui-fw.hsvpicker.css
 
 define( [
-	"jquery",
+	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"jqm/widgets/forms/textinput",

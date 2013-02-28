@@ -3,7 +3,8 @@
 //>>label: setValue
 //>>group: Forms
 
-define( [ "jquery",
+define( [
+	"jqm/jquery",
 	"jqm/jquery.mobile.core",
 	"jqm/widgets/forms/reset" ], function( $ ) {
 //>>excludeEnd("jqmBuildExclude");

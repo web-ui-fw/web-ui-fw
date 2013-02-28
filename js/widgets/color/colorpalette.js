@@ -6,11 +6,12 @@
 //>>css.structure: ../../../css/structure/web-ui-fw.colorpalette.css
 
 define( [
-	"jquery",
+	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",
 	"jqm/widgets/forms/textinput",
+	"jqm/jquery.mobile.vmouse",
 	"../../behaviors/createOuter",
 	"../../web-ui-fw.reduceScope"
 	], function( $ ) {
