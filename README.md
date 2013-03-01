@@ -1,7 +1,7 @@
 # Web UI Framework
 
 ## Using the repository
-0: Clone the repository into a path accessible through a Web server
+0. Clone the repository into a path accessible through a Web server
 1. Install grunt via [node](http://nodejs.org/): As root: npm install -g grunt
 2. From the repository's root directory, run npm install
 
