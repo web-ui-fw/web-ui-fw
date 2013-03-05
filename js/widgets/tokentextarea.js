@@ -100,7 +100,6 @@ define( [
 				}
 				$( this ).removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
 					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
-				self._trigger( "select" );
 			});
 
 			inputbox.bind( "keyup", function ( event ) {
@@ -223,7 +222,6 @@ define( [
 
 			self._currentWidth += self._calcBlockWidth( textBlock );
 			self._modifyInputBoxWidth();
-			self._trigger( "add" );
 		},
 
 		_removeTextBlock : function () {
@@ -236,7 +234,6 @@ define( [
 				self._currentWidth -= self._calcBlockWidth( lockBlock );
 				lockBlock.remove();
 				self._modifyInputBoxWidth();
-				this._trigger( "removed" );
 			} else {
 				$view.find( "div:last" )
 					.removeClass( "ui-tokentextarea-block ui-ui-tokentextarea-block-theme-"+theme )
@@ -466,7 +463,6 @@ define( [
 			if ( blocks.length > index ) {
 				$( blocks[index] ).removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme )
 				.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme );
-				this._trigger( "select" );
 			}
 			return null;
 		},
@@ -490,12 +486,10 @@ define( [
 
 			if ( arguments.length === 0 ) {
 				blocks.remove();
-				this._trigger( "clear" );
 			} else if ( typeof position === "number" ) {
 				// remove selected button
 				index = ( ( position < blocks.length ) ? position : ( blocks.length - 1 ) );
 				$( blocks[index] ).remove();
-				this._trigger( "removed" );
 			}
 			self._modifyInputBoxWidth();
 		},
@@ -520,8 +514,6 @@ define( [
 			$view.find( "div" ).undelegate( "vclick" ).remove();
 			$view.find( "a" ).remove();
 			$view.find( ".ui-tokentextarea-input" ).unbind( "keyup" ).remove();
-
-			this._trigger( "destroy" );
 		}
 	});
 
