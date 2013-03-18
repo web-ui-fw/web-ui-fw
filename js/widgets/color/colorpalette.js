@@ -13,7 +13,7 @@ define( [
 	"jqm/jquery.mobile.vmouse",
 	"../../behaviors/createOuter",
 	"../../web-ui-fw.reduceScope"
-	], function( $ ) {
+	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 

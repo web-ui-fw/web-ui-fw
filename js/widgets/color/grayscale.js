@@ -6,7 +6,7 @@
 define( [
 	"jqm/jquery",
 	"depend!jq-color/jquery.color[jquery]"
-	], function( $ ) {
+	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 	$.Color.fn.grayscale = function() {

@@ -6,7 +6,7 @@
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.core",
-	"jqm/widgets/forms/reset" ], function( $ ) {
+	"jqm/widgets/forms/reset" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 

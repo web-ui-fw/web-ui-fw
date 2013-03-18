@@ -6,7 +6,7 @@
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.ns"
-	], function( $ ) {
+	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 

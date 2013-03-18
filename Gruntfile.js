@@ -3,6 +3,7 @@ module.exports = function( grunt ) {
 
 	// grunt plugins
 	grunt.loadNpmTasks( "grunt-contrib-requirejs" );
+	grunt.loadNpmTasks( "grunt-contrib-jshint" );
 
 	// load the project's default tasks
 	grunt.loadTasks( "build/tasks" );

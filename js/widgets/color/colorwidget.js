@@ -8,7 +8,7 @@ define( [
 	"jqm/jquery.mobile.core",
 	"../../behaviors/setValue",
 	"depend!jq-color/jquery.color[jquery]",
-	"./grayscale" ], function( $ ) {
+	"./grayscale" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 

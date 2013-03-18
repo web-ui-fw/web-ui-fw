@@ -6,7 +6,7 @@
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
-	"jqm/jquery.mobile.buttonMarkup" ], function( $ ) {
+	"jqm/jquery.mobile.buttonMarkup" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function ( $, window, document, undefined ) {

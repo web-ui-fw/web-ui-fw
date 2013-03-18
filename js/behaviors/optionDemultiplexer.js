@@ -5,7 +5,7 @@
 
 define( [
 	"jqm/jquery",
-	"jqm/jquery.mobile.core" ], function( $ ) {
+	"jqm/jquery.mobile.core" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
