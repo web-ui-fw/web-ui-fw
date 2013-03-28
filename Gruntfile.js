@@ -89,5 +89,6 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "config:dev", "js:release" ] );
+	grunt.registerTask( "default", [ "lint" ] );
 
 };
