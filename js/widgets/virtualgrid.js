@@ -6,8 +6,8 @@
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
-	"../../../libs/js/jquery.easing.1.3",
-	"../../../libs/js/jquery.mobile.scrollview.js" ], function( jQuery ) {
+	"../../libs/js/jquery.easing.1.3",
+	"../../libs/js/jquery.mobile.scrollview.js" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function ($, window, document, undefined) {
