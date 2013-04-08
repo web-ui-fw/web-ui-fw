@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../entries2html.xsl" ?>
+<entry name="tokentextarea" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="tokentextarea">
+	<title>Tokentextarea Widget</title>
+	<desc>Creates a tokentextarea</desc>
+	<longdesc>
+		<h3>Token Text Area</h3>
+		<p>Tokentextarea changes a text item to a button. It can be comprised of a number of button widgets. When a user types text and the text gets a specific event to change from a text to a button, the input text is changed to a Tokentextarea widget. A user can add the Tokentextarea widget to a contact list, email list, or another list. The typical use of this widget is composing a number of contacts or phone numbers in a specific area of the screen.</p>
+		
+<pre><code>	
+&lt;div data-role=&quot;tokentextarea&quot;&gt;
+	&lt;h1&gt;Token Text Area&lt;/h1&gt;
+&lt;/div&gt;
+</code></pre>
+		
+		<iframe src="/resources/tokentextarea/example1.html" style="width:100%;height:420px;border:0px"></iframe>
+  	</longdesc>
+
+	<added>1.4</added>
+	<options>
+		<option name="label" default="To : " example-value="false">
+			<desc>
+				<p>This option is to provide a label for a user-guide : <code>data-label="To : "</code>.</p>
+			</desc>
+			<type name="String" />
+		</option>
+		<option name="description" default="+ {0}" example-value="fade">
+			<desc>Manage the message format. The message is displayed when the widget status changes to 'focus out'. : <code>data-description="+ {0}"</code>.
+			</desc>
+			<type name="String" />
+		</option>
+		<option name="link" default="null" example-value="false">
+			<desc>Set the ID of the page to link, like the contact. : <code>data-link="pageId"</code>.
+			</desc>
+			<type name="String" />
+		</option>
+	</options>
+	<events>
+		<event name="create">	
+			<desc>Triggered when a tokentextarea is created
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+		<event name="select">	
+			<desc>Triggered when a button is selected
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+		<event name="add">	
+			<desc>Triggered when a button is inserted
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+		<event name="remove">	
+			<desc>Triggered when a button is removed
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+	</events>
+	<methods>
+		<method name="destroy">
+			<desc>destroy at tokentextarea (Remove all of the new DOM elements for the current widget that you created.)
+			</desc>
+		</method>
+		<method name="inputText" example-params="options">
+			<desc>If no argument exists, gets the string from the input box. If the argument exists, sets the string to the input box.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="text" default=''>
+						<desc>The text ........... </desc>
+						<type name="String"/>
+					</property>
+				</argument>
+		</method>
+		<method name="select">
+			<desc>If no argument exists, gets a string of the selected block. If any button isn't selected on a tokentextarea widget, this method returns "null" value. When a user call this method with an argument which is a number type, this method selects the button which is matched with the argument.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="index" default=''>
+						<desc>The index ........... </desc>
+						<type name="Integer"/>
+					</property>
+				</argument>
+		</method>
+		<method name="add">
+			<desc>If second argument does not exist, will insert to a new button at last position. Insert a new button at indexed position. The position is decided by the second argument. "index of position" means that the position of inserting a new button is decided by the second argument on "add" method. For example, if a user call the method like this "add("Tizen", 2)", new button labeled "Tizen" will be inserted on the third position.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="text" default=''>
+						<desc>The text ........... </desc>
+						<type name="String"/>
+					</property>
+					<property name="index" default=''>
+						<desc>The index ........... </desc>
+						<type name="Integer"/>
+					</property>
+				</argument>
+		</method>
+		<method name="remove">
+			<desc>If no argument exists, all buttons are removed. Remove a button at indexed position. The position is decided by the second argument. (index: index of button)
+			</desc>
+				<argument name="options" type="Object">
+					<property name="index" default=''>
+						<desc>The index ........... </desc>
+						<type name="Integer"/>
+					</property>
+				</argument>
+		</method>
+		<method name="length">
+			<desc>Gets the number of the buttons.
+			</desc>
+		</method>
+		<method name="focusIn">
+			<desc>Changes the focus status to 'focus in'. The status is able to manage a widget. 'Manage' means that user can add or remove a button.
+			</desc>
+		</method>
+		<method name="focusOut">
+			<desc>Changes the focus status to 'focus out'. The status is not able to manage a widget. All buttons that contained in the widget are removed and summarized message is displayed.
+			</desc>
+		</method>
+	</methods>
+	<example>
+		<desc>A basic example of a page with tokentextarea.</desc>
+		<html><![CDATA[<div data-role="header">
+		<h1>jQuery Mobile Example</h1>
+	</div>
+	<div data-role="content">
+		<div data-role="tokentextarea">
+		</div>
+	</div>]]></html>
+	</example>
+	<category slug="widgets-webuifw"/>
+</entry>

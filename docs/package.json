@@ -1,0 +1,40 @@
+{
+  "name": "api.jquerymobile.com",
+  "title": "jQuery Mobile Web-UI-FW API Docs (based on Grunt-0.4)",
+  "description": "API reference documentation for Widgets of Web-UI-FW.",
+  "version": "0.2.0",
+  "homepage": "",
+  "author": {
+    "name": "Web UI FW",
+    "url": "http://web-ui-fw.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/web-ui-fw/web-ui-fw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/web-ui-fw/web-ui-fw/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-check-modules": "0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-jquery-content": "0.9.0",
+    "grunt-wordpress": "1.0.7"
+  },
+  "keywords": [],
+  "optionalDependencies": {},
+  "engines": {
+    "node": ">= 0.8.0"
+  }
+}
