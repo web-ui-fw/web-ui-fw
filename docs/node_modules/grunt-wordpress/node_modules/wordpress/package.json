@@ -1,0 +1,29 @@
+{
+  "author": {
+    "name": "Scott González",
+    "email": "scott.gonzalez@gmail.com",
+    "url": "http://scottgonzalez.com"
+  },
+  "name": "wordpress",
+  "description": "A client for working with WordPress.",
+  "version": "0.1.3",
+  "homepage": "https://github.com/scottgonzalez/node-wordpress",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/scottgonzalez/node-wordpress.git"
+  },
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "xmlrpc": "1.0.1"
+  },
+  "main": "lib/wordpress.js",
+  "readme": "# node-wordpress\n\nA node.js JavaScript client for working with WordPress.\n\nRequires WordPress 3.4 or newer (uses the [WordPress XML-RPC API](http://codex.wordpress.org/XML-RPC_WordPress_API)).\n\n## License\n\nCopyright 2012 Scott González. Licensed under the MIT license.\n",
+  "readmeFilename": "readme.md",
+  "_id": "wordpress@0.1.3",
+  "_from": "wordpress@0.1.3"
+}
