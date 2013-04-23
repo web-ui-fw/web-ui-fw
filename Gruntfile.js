@@ -2,6 +2,8 @@ module.exports = function( grunt ) {
 	"use strict";
 
 	var _ = grunt.util._,
+		path = require( "path" ),
+		dist = "dist",
 		httpPort =  Math.floor( 9000 + Math.random()*1000 );
 
 	// grunt plugins
@@ -77,7 +79,7 @@ module.exports = function( grunt ) {
 						"json!package.json"
 					],
 
-					out: "web-ui-fw.js",
+					out: path.join( dist, "web-ui-fw.js" ),
 
 					pragmasOnSave: {
 						jqmBuildExclude: true
@@ -183,6 +185,6 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "test", [ "jshint", "js:release", "connect", "qunit:http" ] );
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "config:dev", "js:release" ] );
-	grunt.registerTask( "default", [ "lint" ] );
+	grunt.registerTask( "default", [ "lint", "js:release" ] );
 
 };
