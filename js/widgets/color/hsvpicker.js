@@ -97,7 +97,7 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 		};
 	},
 
-	_handleSlideControlChange: function( e ) {
+	_handleSlideControlChange: function(/* e */) {
 		var hsv, clr;
 
 		if ( this._ignoreHandle ) {
