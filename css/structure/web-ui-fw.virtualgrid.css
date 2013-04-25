@@ -1,0 +1,55 @@
+/*
+ * for virtualgrid
+ */
+.ui-virtualgrid {
+	position: absolute;
+	overflow: hidden;
+	opacity: 1;
+}
+
+.ui-virtualgrid-y {
+	top: 0.09rem;
+	right: 0.09rem;
+	bottom: 0.09rem;
+	width: 0.5rem;
+}
+.ui-virtualgrid-x {
+	right: 0.09rem;
+	bottom: 0.09rem;
+	left: 0.09rem;
+	height: 0.5rem;
+}
+.ui-virtualgrid-track {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+.ui-virtualgrid-thumb {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #c6c4be;
+}
+.ui-virtualgrid-y .ui-virtualgrid-thumb {
+	width: 0.22rem;
+	height: 100%;
+	-o-border-radius: 0.09rem;
+	-ms-border-radius: 0.09rem;
+	-moz-border-radius: 0.09rem;
+	-webkit-border-radius: 0.09rem;
+	border-radius: 0.09rem;
+	-o-box-shadow: 0.045rem 0.045rem 0.09rem #94928c;
+	-ms-box-shadow: 0.045rem 0.045rem 0.09rem #94928c;
+	-moz-box-shadow: 0.045rem 0.045rem 0.09rem #94928c;
+	-webkit-box-shadow: 0.045rem 0.045rem 0.09rem #94928c;
+	box-shadow: 0.045rem 0.045rem 0.09rem #94928c;
+}
+.ui-virtualgrid-x .ui-virtualgrid-thumb {
+	width: 100%;
+	height: 0.22rem;
+	-o-border-radius: 0.09rem;
+	-ms-border-radius: 0.09rem;
+	-moz-border-radius: 0.09rem;
+	-webkit-border-radius: 0.09rem;
+	border-radius: 0.09rem;
+}
