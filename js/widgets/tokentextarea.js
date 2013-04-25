@@ -9,7 +9,7 @@ define( [
 	"jqm/jquery.mobile.buttonMarkup" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
-( function ( $, window, document, undefined ) {
+( function( $, window, document, undefined ) {
 	$.widget( "mobile.tokentextarea", $.mobile.widget, {
 		_focusStatus : null,
 		_items : null,
@@ -27,7 +27,7 @@ define( [
 			description : "+ {0}"
 		},
 
-		_create : function () {
+		_create: function() {
 			var self = this,
 				$view = this.element,
 				role = $view.jqmData( "role" ),
@@ -65,7 +65,7 @@ define( [
 			self._focusStatus = "init";
 			// display widget
 			$view.show();
-			$view.attr( "tabindex", -1 ).focusin( function ( e ) {
+			$view.attr( "tabindex", -1 ).focusin( function(/* event */) {
 				self.focusIn();
 			});
 
@@ -77,7 +77,7 @@ define( [
 		},
 
 		// bind events
-		_bindEvents : function () {
+		_bindEvents: function() {
 			var self = this,
 				$view = self.element,
 				option = self.options,
@@ -87,7 +87,7 @@ define( [
 				isSeparator = false;
 
 			// delegate a event to HTMLDivElement(each block).
-			$view.delegate( "div", "vclick", function ( event ) {
+			$view.delegate( "div", "vclick", function(/* event */) {
 				if ( $( this ).hasClass( "ui-tokentextarea-sblock" ) ) {
 					// If block is selected, it will be removed.
 					self._removeTextBlock();
@@ -102,7 +102,7 @@ define( [
 					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 			});
 
-			inputbox.bind( "keyup", function ( event ) {
+			inputbox.bind( "keyup", function( event ) {
 				// 8  : backspace
 				// 13 : Enter
 				// 186 : semi-colon
@@ -136,7 +136,7 @@ define( [
 				return !isSeparator;
 			});
 
-			moreBlock.click( function () {
+			moreBlock.click( function() {
 				if ( $( moreBlock ).hasClass( "ui-tokentextarea-link-dim" ) ) {
 					return;
 				}
@@ -150,7 +150,7 @@ define( [
 				});
 			});
 
-			$( document ).bind( "pagechange.mbe", function ( event ) {
+			$( document ).bind( "pagechange.mbe", function(/* event */) {
 				if ( $view.innerWidth() === 0 ) {
 					return ;
 				}
@@ -167,13 +167,13 @@ define( [
 				self.refresh();
 			});
 
-			$view.bind( "click", function ( event ) {
+			$view.bind( "click", function(/* event */) {
 				if ( self._focusStatus === "focusOut" ) {
 					self.focusIn();
 				}
 			});
 
-			$( window ).bind( "resize", function () {
+			$( window ).bind( "resize", function() {
 				//$( ":jqmData(role='multibuttonentry')" ).multibuttonentry( "refresh" );
 				self.refresh();
 			});
@@ -182,7 +182,7 @@ define( [
 		// create a textbutton and append this button to parent layer.
 		// @param arg1 : string
 		// @param arg2 : index
-		_addTextBlock : function ( messages, blockIndex ) {
+		_addTextBlock: function( messages, blockIndex ) {
 			if ( arguments.length === 0 ) {
 				return;
 			}
@@ -204,11 +204,11 @@ define( [
 			}
 
 			// Create a new text HTMLDivElement.
-			textBlock = $( document.createElement( 'div' ) );
+			textBlock = $( document.createElement( "div" ) );
 
 			textBlock.text( content ).addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme + " ui-tokentextarea-item-theme-" + theme);
-			
-			textBlock.css( {'visibility': 'hidden'} );
+
+			textBlock.css( {"visibility": "hidden"} );
 
 			blocks = $view.find( "div" );
 			if ( index !== null && index <= blocks.length ) {
@@ -218,13 +218,13 @@ define( [
 			}
 
 			textBlock = self._ellipsisTextBlock( textBlock );
-			textBlock.css( {'visibility': 'visible'} );
+			textBlock.css( {"visibility": "visible"} );
 
 			self._currentWidth += self._calcBlockWidth( textBlock );
 			self._modifyInputBoxWidth();
 		},
 
-		_removeTextBlock : function () {
+		_removeTextBlock: function() {
 			var self = this,
 				$view = self.element,
 				theme = self.options.theme,
@@ -241,11 +241,11 @@ define( [
 			}
 		},
 
-		_calcBlockWidth : function ( block ) {
+		_calcBlockWidth: function( block ) {
 			return $( block ).outerWidth( true );
 		},
 
-		_unlockTextBlock : function () {
+		_unlockTextBlock: function() {
 			var $view = this.element,
 				theme = this.options.theme,
 				lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
@@ -256,7 +256,7 @@ define( [
 		},
 
 		// call when remove text block by backspace key.
-		_validateTargetBlock : function () {
+		_validateTargetBlock: function() {
 			var self = this,
 				$view = self.element,
 				theme = self.options.theme,
@@ -274,7 +274,7 @@ define( [
 			}
 		},
 
-		_ellipsisTextBlock : function ( textBlock ) {
+		_ellipsisTextBlock: function( textBlock ) {
 			var self = this,
 				$view = self.element,
 				maxWidth = $view.innerWidth() - ( self._labelWidth + self._anchorWidth ) * 2;
@@ -286,7 +286,7 @@ define( [
 			return textBlock;
 		},
 
-		_modifyInputBoxWidth : function () {
+		_modifyInputBoxWidth: function() {
 			var self = this,
 				$view = self.element,
 				margin = self._marginWidth,
@@ -328,7 +328,7 @@ define( [
 			$( inputBox ).width( inputBoxWidth - anchorWidth - inputBoxMargin );
 		},
 
-		_stringFormat : function ( expression ) {
+		_stringFormat: function( expression ) {
 			var pattern = null,
 				message = expression,
 				i = 0;
@@ -339,7 +339,7 @@ define( [
 			return message;
 		},
 
-		_resizeBlocks : function () {
+		_resizeBlocks: function() {
 			var self = this,
 				$view = self.element,
 				blocks = $view.find( "div" ),
@@ -357,7 +357,7 @@ define( [
 		//
 		// Focus In Event
 		//
-		focusIn : function () {
+		focusIn: function() {
 			if ( this._focusStatus === "focusIn" ) {
 				return;
 			}
@@ -380,7 +380,7 @@ define( [
 			$view.removeClass( "ui-tokentextarea-focusout" ).addClass( "ui-tokentextarea-focusin" );
 		},
 
-		focusOut : function () {
+		focusOut: function() {
 			if ( this._focusStatus === "focusOut" ) {
 				return;
 			}
@@ -417,7 +417,7 @@ define( [
 
 			if ( lastIndex !== blocks.length ) {
 				statement = self._stringFormat( self.options.description, blocks.length - lastIndex - 1 );
-				tempBlock = $( document.createElement( 'label' ) );
+				tempBlock = $( document.createElement( "label" ) );
 				tempBlock.text( statement );
 				tempBlock.addClass( "ui-tokentextarea-desclabel " +"ui-tokentextarea-desclabel-theme-"+ theme);
 				$( blocks[lastIndex] ).after( tempBlock );
@@ -428,7 +428,7 @@ define( [
 			$view.removeClass( "ui-tokentextarea-focusin" ).addClass( "ui-tokentextarea-focusout" );
 		},
 
-		inputText : function ( message ) {
+		inputText: function( message ) {
 			var $view = this.element;
 
 			if ( arguments.length === 0 ) {
@@ -438,7 +438,7 @@ define( [
 			return message;
 		},
 
-		select : function ( index ) {
+		select: function( index ) {
 			var $view = this.element,
 				theme = this.options.theme,
 				lockBlock = null,
@@ -467,7 +467,7 @@ define( [
 			return null;
 		},
 
-		add : function ( message, position ) {
+		add: function( message, position ) {
 			if ( this._focusStatus === "focusOut" ) {
 				return;
 			}
@@ -475,7 +475,7 @@ define( [
 			this._addTextBlock( message, position );
 		},
 
-		remove : function ( position ) {
+		remove: function( position ) {
 			var self = this,
 				$view = this.element,
 				blocks = $view.find( "div" ),
@@ -494,11 +494,11 @@ define( [
 			self._modifyInputBoxWidth();
 		},
 
-		length : function () {
+		length: function() {
 			return this.element.find( "div" ).length;
 		},
 
-		refresh : function () {
+		refresh: function() {
 			var self = this,
 				$view = this.element;
 
@@ -507,7 +507,7 @@ define( [
 			self._modifyInputBoxWidth();
 		},
 
-		destroy : function () {
+		destroy: function() {
 			var $view = this.element;
 
 			$view.find( "label" ).remove();
@@ -517,7 +517,7 @@ define( [
 		}
 	});
 
-	$( document ).bind( "pagecreate create", function ( e ) {
+	$( document ).bind( "pagecreate create", function( e ) {
 		$.mobile.tokentextarea.prototype.enhanceWithin( e.target );
 	});
 } ( jQuery, window, document ) );
