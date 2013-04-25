@@ -7,12 +7,11 @@
 		<title>Virtualgrid Demo - Web UI Framework Demos</title>
 		<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
 		<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
-		<link rel="stylesheet" href="../../../jqm/docs/_assets/css/jqm-demos.css">
-
+		
 		<script src="../../../jqm/js/jquery.js"></script>
-		<script src="../../../jqm/js/"></script>
-		<script src="../../../js/"></script>
-		<script src="../../_assets/js/"></script>
+		<script src="../../../dist/web-ui-fw.js"></script>
+		
+
 		<!-- Demo.js -->
 		<script src="virtualgrid-db-demo.js"></script>
 		<link rel="stylesheet" href="namecard.css">
@@ -43,8 +42,7 @@
 			<script>
 				$(".virtualgrid_grid_demo_page").one("pagecreate", function() {
 					$.getScript("virtualgrid-db-demo.js", function(data, textStatus, jqXHR) {
-						$(".virtualgrid_demo_page").die();
-
+						$(":jqmData(role='virtualgrid')").virtualgrid();
 						$(":jqmData(role='virtualgrid')").virtualgrid("create", {
 							itemData : function(idx) {
 								return JSON_DATA[idx];
