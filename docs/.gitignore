@@ -6,3 +6,4 @@ config.json
 *.patch
 .DS_Store
 .settings
+ZZ_*
