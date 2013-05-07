@@ -5,6 +5,8 @@ module.exports = function( grunt ) {
 	function handleGHHook( req, res ) {
 		var payload;
 
+		console.log( "handleGHHook: Entering" );
+
 		if ( req.method === "POST" &&
 			req.body.payload &&
 			req.headers[ "x-github-event" ] === "push" ) {
@@ -82,7 +84,7 @@ module.exports = function( grunt ) {
 				options: {
 					hostname: "*",
 					keepalive: true,
-					port: 8081,
+					port: 8082,
 					middleware: function( connect ) {
 						return [
 							connect.bodyParser(),
