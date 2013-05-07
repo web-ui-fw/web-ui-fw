@@ -5,7 +5,7 @@
 	<desc>Displays an array of colors based on a given color.</desc>
 	<longdesc>
 		<h3>Colorpalette</h3>
-		<p>The color palette widget displays a palette of colors given a single color. It constructs the palette by calculating dividing the hue spectrum evenly around the hue of the given color into as many parts as there are palette entries and constructing one color out of each of the calculated hue values, including the hue of the given color, while using the given color's saturation and lightness for the calculated colors.</p>
+		<p>XXX The color palette widget displays a palette of colors given a single color. It constructs the palette by calculating dividing the hue spectrum evenly around the hue of the given color into as many parts as there are palette entries and constructing one color out of each of the calculated hue values, including the hue of the given color, while using the given color's saturation and lightness for the calculated colors.</p>
 
 <pre><code>
 &lt;div data-role=&quot;colorpalette&quot;&gt;&lt;/div&gt;
