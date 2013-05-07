@@ -163,6 +163,8 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
 			if ( this.options.color ) {
 				this._findAndActivateColor( $.Color( this.options.color ) );
 			}
+			this.options.colors = value;
+			this.refresh();
 		}
 	},
 
@@ -204,7 +206,7 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
 	refresh: function() {
 		var o = this.options,
 			clrs = this._getClrList( o.colors ),
-			nCols = Math.floor( clrs.length / o.rows ),
+			nCols = Math.ceil( clrs.length / o.rows ),
 			idx, row, el, inner;
 
 		this._ui.table.empty();
