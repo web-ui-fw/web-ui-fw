@@ -6,13 +6,13 @@
 	<longdesc>
 		<h3>Token Text Area</h3>
 		<p>Tokentextarea changes a text item to a button. It can be comprised of a number of button widgets. When a user types text and the text gets a specific event to change from a text to a button, the input text is changed to a Tokentextarea widget. A user can add the Tokentextarea widget to a contact list, email list, or another list. The typical use of this widget is composing a number of contacts or phone numbers in a specific area of the screen.</p>
-		
-<pre><code>	
+
+<pre><code>
 &lt;div data-role=&quot;tokentextarea&quot;&gt;
 	&lt;h1&gt;Token Text Area&lt;/h1&gt;
 &lt;/div&gt;
 </code></pre>
-		
+
 		<iframe src="/resources/tokentextarea/example1.html" style="width:100%;height:420px;border:0px"></iframe>
   	</longdesc>
 
@@ -20,7 +20,7 @@
 	<options>
 		<option name="label" default="To : " example-value="false">
 			<desc>
-				<p>This option is to provide a label for a user-guide : <code>data-label="To : "</code>.</p>
+				<p>This option is to provide a label for a user-guide:<code>data-label="To : "</code>.</p>
 			</desc>
 			<type name="String" />
 		</option>
@@ -36,7 +36,7 @@
 		</option>
 	</options>
 	<events>
-		<event name="create">	
+		<event name="create">
 			<desc>Triggered when a tokentextarea is created
 			</desc>
 			<argument name="event" type="Event">
@@ -46,7 +46,7 @@
 				<desc></desc>
 			</argument>
 		</event>
-		<event name="select">	
+		<event name="select">
 			<desc>Triggered when a button is selected
 			</desc>
 			<argument name="event" type="Event">
@@ -56,7 +56,7 @@
 				<desc></desc>
 			</argument>
 		</event>
-		<event name="add">	
+		<event name="add">
 			<desc>Triggered when a button is inserted
 			</desc>
 			<argument name="event" type="Event">
@@ -66,7 +66,7 @@
 				<desc></desc>
 			</argument>
 		</event>
-		<event name="remove">	
+		<event name="remove">
 			<desc>Triggered when a button is removed
 			</desc>
 			<argument name="event" type="Event">
@@ -79,7 +79,7 @@
 	</events>
 	<methods>
 		<method name="destroy">
-			<desc>destroy at tokentextarea (Remove all of the new DOM elements for the current widget that you created.)
+			<desc>destroy a tokentextarea (Remove all of the new DOM elements for the current widget that you created.)
 			</desc>
 		</method>
 		<method name="inputText" example-params="options">
