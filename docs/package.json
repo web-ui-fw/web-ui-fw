@@ -25,6 +25,7 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-contrib-connect": "git://github.com/gruntjs/grunt-contrib-connect.git",
     "grunt-check-modules": "0.2.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "~0.3.0",
