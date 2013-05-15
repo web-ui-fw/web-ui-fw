@@ -92,6 +92,35 @@ module.exports = function( grunt ) {
 			}
 		},
 
+		cssbuild: {
+			options: {
+				//Allow CSS optimizations. Allowed values:
+				//- "standard": @import inlining, comment removal and line returns.
+				//Removing line returns may have problems in IE, depending on the type
+				//of CSS.
+				//- "standard.keepLines": like "standard" but keeps line returns.
+				//- "none": skip CSS optimizations.
+				//- "standard.keepComments": keeps the file comments, but removes line
+				//returns.  (r.js 1.0.8+)
+				//- "standard.keepComments.keepLines": keeps the file comments and line
+				//returns. (r.js 1.0.8+)
+				optimizeCss: "standard.keepComments.keepLines",
+
+				//If optimizeCss is in use, a list of of files to ignore for the @import
+				//inlining. The value of this option should be a string of comma separated
+				//CSS file names to ignore (like 'a.css,b.css'. The file names should match
+				//whatever strings are used in the @import calls.
+				cssImportIgnore: null
+			},
+			all: {
+				files: {
+					"dist/web-ui-fw.structure.css": "css/structure/web-ui-fw.structure.css",
+					"dist/web-ui-fw.theme.css": "css/themes/default/web-ui-fw.theme.css",
+					"dist/web-ui-fw.css": "css/themes/default/web-ui-fw.css"
+				}
+			}
+		},
+
 		connect: {
 			server: {
 				options: {
@@ -184,7 +213,8 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "lint", [ "jshint" ] );
 	grunt.registerTask( "test", [ "jshint", "js:release", "connect", "qunit:http" ] );
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
-	grunt.registerTask( "js", [ "config:dev", "js:release" ] );
+	grunt.registerTask( "js", [ "js:release" ] );
+	grunt.registerTask( "release", [ "js", "cssbuild" ] );
 	grunt.registerTask( "default", [ "lint", "js:release" ] );
 
 };
