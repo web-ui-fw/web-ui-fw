@@ -8,6 +8,7 @@
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
+	"jqm/widgets/forms/slider",
 	"./colorwidget",
 	"../../behaviors/createOuter",
 	"../../web-ui-fw.reduceScope"
