@@ -77,7 +77,7 @@ module.exports = function( grunt ) {
 						"jqm/jquery",
 						"depend",
 						"json!package.json"
-					],
+					].concat( ( grunt.option( "modules" ) ) ? [] : [ "jqm/jquery.mobile" ] ),
 
 					out: path.join( dist, "web-ui-fw.js" ),
 
