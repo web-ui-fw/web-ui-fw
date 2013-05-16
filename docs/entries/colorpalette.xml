@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../entries2html.xsl" ?>
-<entry name="colorpalette" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="colorpalette">
+<entry name="colorpalette" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="">
 	<title>Colorpalette Widget</title>
 	<desc>Displays an array of colors based on a given color.</desc>
 	<longdesc>
@@ -68,5 +68,5 @@
 		</div>
 	</div>]]></html>
 	</example>
-	<category slug="widgets-webuifw"/>
+	<category slug="widgets"/>
 </entry>
