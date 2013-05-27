@@ -23,7 +23,7 @@ $.mobile.behaviors.createOuter = {
 			ret = $( "<div></div>" )
 				.insertAfter( this.element )
 				.append( this.element );
-			this.element.css( { display: "none" } );
+			this.element.css( "display", "none" );
 		} else {
 			ret = this.element;
 		}
@@ -34,6 +34,7 @@ $.mobile.behaviors.createOuter = {
 	_destroyOuter: function() {
 		if ( this._isInput ) {
 			this.element.parent().after( this.element ).remove();
+			this.element.css( "display", undefined );
 		}
 	}
 };
