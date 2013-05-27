@@ -16,14 +16,15 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
+var mask = $( "<div></div>", { "class": "ui-hsvpicker-mask" } );
+
 $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 	options: {
 		initSelector: ":jqmData(role='hsvpicker')"
 	},
 
 	_create: function() {
-		var mask = $( "<div></div>", { "class": "ui-hsvpicker-mask" } ),
-			ui = {
+		var ui = {
 				outer: this._createOuter().addClass( "ui-hsvpicker" ),
 				chan: {
 					h: {
@@ -115,6 +116,18 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 
 	_setDisabled: $.noop,
 	refresh: $.noop,
+
+	_destroy: function() {
+		var idx, chans = [ "h", "s", "v" ];
+
+		this._ui.outer.removeClass( "ui-hsvpicker" );
+		this._destroyOuter();
+		if ( !this._isInput ) {
+			for ( idx in chans ) {
+				this._ui.chan[ chans[ idx ] ].slider.parent().remove();
+			}
+		}
+	},
 
 	widget: function() {
 		return this._ui.outer;
