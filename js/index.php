@@ -3,6 +3,7 @@ $type = 'text/javascript';
 $files = array(
 	'../jq-color/jquery.color.js',
 	'behaviors/optionDemultiplexer.js',
+	'behaviors/setDisabled.js',
 	'behaviors/setValue.js',
 	'behaviors/createOuter.js',
 	'web-ui-fw.reduceScope.js',

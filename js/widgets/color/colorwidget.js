@@ -7,6 +7,7 @@ define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.core",
 	"../../behaviors/setValue",
+	"../../behaviors/setDisabled",
 	"depend!jq-color/jquery.color[jquery]",
 	"./grayscale" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
@@ -14,7 +15,7 @@ define( [
 
 var dataKey = "_setElementColor_data";
 
-$.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, {
+$.mobile.behaviors.colorWidget = $.extend( {}, $.mobile.behaviors.setValue, $.mobile.behaviors.setDisabled, {
 	options: {
 		color: null
 	},

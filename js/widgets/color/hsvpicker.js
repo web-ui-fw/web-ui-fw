@@ -114,7 +114,12 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 		this._styleSliders( this._ui.chan, $.Color( clr ), hsv );
 	},
 
-	_setDisabled: $.noop,
+	_setDisabled: function( value ) {
+		// TODO remove this when working with jQM where
+		// https://github.com/jquery/jquery-mobile/issues/5390 is fixed
+		this._ui.outer.toggleClass( "ui-disabled", value );
+	},
+
 	refresh: $.noop,
 
 	_destroy: function() {
