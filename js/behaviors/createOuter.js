@@ -14,8 +14,12 @@ $.mobile.behaviors.createOuter = {
 	_createOuter: function() {
 		var ret;
 
+		$.extend( this, {
+			_isInput: this.element.is( "input" )
+		});
+
 		// Establish the outer element
-		if ( this.element.is( "input" ) ) {
+		if ( this._isInput ) {
 			ret = $( "<div></div>" )
 				.insertAfter( this.element )
 				.append( this.element );
@@ -25,6 +29,12 @@ $.mobile.behaviors.createOuter = {
 		}
 
 		return ret;
+	},
+
+	_destroyOuter: function() {
+		if ( this._isInput ) {
+			this.element.parent().after( this.element ).remove();
+		}
 	}
 };
 
