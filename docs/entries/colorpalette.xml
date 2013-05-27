@@ -17,7 +17,7 @@
 	<added>0.2.0</added>
 	<options>
 		<option name="color" default="null" example-value="#f7b29a">
-			<desc>The color that forms the basis for the palette. When you set the color, the <code>colors</code> is set to a palette containing the color and hue-related siblings.</desc>
+			<desc>The color that forms the basis for the palette. When you set the color, the <code>colors</code> option is set to a palette containing the color and hue-related siblings.</desc>
 			<type name="String" />
 		</option>
 		<option name="showPreview" default="false" example-value="true">
@@ -34,7 +34,7 @@
 		</option>
 	</options>
 	<events>
-		<event name="create">
+		<event name="colorpalettecreate">
 			<desc>Triggered when a colorpalette is created.</desc>
 			<argument name="event" type="Event">
 				<desc></desc>
@@ -52,14 +52,14 @@
 	</events>
 	<methods>
 		<method name="destroy">
-			<desc>Destroys a colorpalette. This causes the DOM elemenent on which it is based to be restored to the state in which it was before the widget was created.</desc>
+			<desc>Destroys a colorpalette. This causes the DOM elemenent on which it is based to be restored to the state in which it was before the widget was created. Any DOM elements created as part of the widget will be destroyed.</desc>
 		</method>
 		<method name="refresh">
 			<desc>Rebuilds the color palette.</desc>
 		</method>
 	</methods>
 	<example>
-		<desc>A basic example of a page with colorpalette.</desc>
+		<desc>A basic example of a page with a colorpalette.</desc>
 		<html><![CDATA[<div data-role="header">
 		<h1>jQuery Mobile Example</h1>
 	</div>
