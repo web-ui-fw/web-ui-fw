@@ -43,6 +43,10 @@
 	border-color: #d9931a;
 }
 
+.ui-colorpalette.ui-state-disabled .ui-colorpalette-table .ui-colorpalette-row .ui-colorpalette-choice-container .ui-colorpalette-choice.ui-colorpalette-choice-active {
+	border-color: #999999;
+}
+
 .ui-colorpalette-row {
 	padding-top: 10px;
 }
