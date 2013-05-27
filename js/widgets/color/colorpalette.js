@@ -203,6 +203,15 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
 		}
 	},
 
+	_destroy: function() {
+		this._ui.outer.removeClass( "ui-colorpalette" );
+		this._destroyOuter();
+		if ( !this._isInput ) {
+			this._ui.preview.outer.remove();
+			this._ui.table.remove();
+		}
+	},
+
 	refresh: function() {
 		var o = this.options,
 			clrs = this._getClrList( o.colors ),
