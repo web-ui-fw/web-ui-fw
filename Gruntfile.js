@@ -211,7 +211,7 @@ module.exports = function( grunt ) {
 	});
 
 	grunt.registerTask( "lint", [ "jshint" ] );
-	grunt.registerTask( "test", [ "jshint", "js:release", "connect", "qunit:http" ] );
+	grunt.registerTask( "test", [ "jshint", "js:release", "buildjqm", "connect", "qunit:http" ] );
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "js:release" ] );
 	grunt.registerTask( "release", [ "js", "cssbuild" ] );
