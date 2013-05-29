@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../entries2html.xsl" ?>
+<entry name="colorpalette" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="virtualgrid">
+	<title>Virtualgrid Widget</title>
+	<desc>A 2D array of items</desc>
+	<longdesc>
+		<h3>Virtualgrid</h3>
+		<p>Displays an array of items tiled horizontally and vertically. The user can pan the list horizontally or vertically.</p>
+  	</longdesc>
+
+	<added>0.2.0</added>
+	<options>
+		<option name="temlate" default="''">
+			<desc>The template.</desc>
+			<type name="String" />
+		</option>
+		<option name="direction" default="y" example-value="x">
+			<desc>The axis along which the panning will take place.</desc>
+			<type name="String" />
+		</option>
+		<option name="rotation" default="false" example-value="true">
+			<desc>If set to true, the items will be repeated when one end of the list is reached, as if they were placed on a cylinder.</desc>
+			<type name="Boolean" />
+		</option>
+	</options>
+	<events>
+		<event name="create">
+			<desc>Triggered when a virtualgrid widget is created.</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+	</events>
+	<methods>
+		<method name="refresh">
+			<desc>Rebuilds the virtual grid.</desc>
+		</method>
+		<method name="scrollTo">
+			<desc>Scroll to a certain set of coordinates.</desc>
+			<signature exampleParams="120,55">
+				<desc>Scrolls to the pair of coordinates specified by the parameters.</desc>
+				<argument name="x" type="Number">
+					<desc>The x-coordinate to which to scroll.</desc>
+				</argument>
+				<argument name="y" type="Number">
+					<desc>The y-coordinate to which to scroll.</desc>
+				</argument>
+			</signature>
+		</method>
+	</methods>
+	<example>
+		<desc>A basic example of a page with a virtualgrid</desc>
+		<html><![CDATA[<div data-role="header">
+		<h1>Web UI Framework Example</h1>
+	</div>
+	<div data-role="content">
+		<div data-role="virtualgrid"></div>
+	</div>]]></html>
+	</example>
+	<category slug="widgets"/>
+</entry>
