@@ -6,12 +6,6 @@
 	<longdesc>
 		<h3>Colorpalette</h3>
 		<p>The color palette widget displays a palette of colors given a single color. It constructs the palette by calculating dividing the hue spectrum evenly around the hue of the given color into as many parts as there are palette entries and constructing one color out of each of the calculated hue values, including the hue of the given color, while using the given color's saturation and lightness for the calculated colors.</p>
-
-<pre><code>
-&lt;div data-role=&quot;colorpalette&quot;&gt;&lt;/div&gt;
-</code></pre>
-
-		<iframe src="/resources/colorpalette/example1.html" style="width:100%;height:420px;border:0px"></iframe>
   	</longdesc>
 
 	<added>0.2.0</added>
@@ -61,11 +55,10 @@
 	<example>
 		<desc>A basic example of a page with a colorpalette.</desc>
 		<html><![CDATA[<div data-role="header">
-		<h1>jQuery Mobile Example</h1>
+		<h1>Web UI Framework Example</h1>
 	</div>
 	<div data-role="content">
-		<div data-role="colorpalette">
-		</div>
+		<div data-role="colorpalette"></div>
 	</div>]]></html>
 	</example>
 	<category slug="widgets"/>
