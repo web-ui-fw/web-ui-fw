@@ -35,7 +35,7 @@ $.mobile.behaviors.createOuter = {
 	_destroyOuter: function() {
 		if ( this._isInput ) {
 			this.element.parent().after( this.element ).remove();
-			this.element.css( "display", undefined );
+			this.element.removeClass( "ui-hidden-input" );
 		}
 	}
 };
