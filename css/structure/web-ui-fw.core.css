@@ -1,0 +1,4 @@
+.ui-hidden-input {
+	visibility: hidden;
+	position: absolute;
+}
