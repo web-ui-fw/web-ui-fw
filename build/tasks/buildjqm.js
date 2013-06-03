@@ -6,7 +6,7 @@ module.exports = function( grunt ) {
 
 		grunt.util.spawn( {
 			cmd: "/bin/sh",
-			args: [ "-c", "cd jqm; npm cache clean && npm install && grunt;" ],
+			args: [ "-c", "cd jqm; " + ( grunt.option( "nonet" ) ? "" : "npm cache clean && npm install && " ) + "grunt;" ],
 			opts: { stdio: "inherit" },
 		},
 		function( error, result, code ) {
