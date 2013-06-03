@@ -2,6 +2,7 @@
 //>>description: Establish outermost element for a widget
 //>>label: createOuter
 //>>group: Infrastructure
+//>>css.structure: ../../css/structure/web-ui-fw.core.css
 
 define( [
 	"jqm/jquery",
@@ -23,7 +24,7 @@ $.mobile.behaviors.createOuter = {
 			ret = $( "<div></div>" )
 				.insertAfter( this.element )
 				.append( this.element );
-			this.element.css( "display", "none" );
+			this.element.addClass( "ui-hidden-input" );
 		} else {
 			ret = this.element;
 		}
