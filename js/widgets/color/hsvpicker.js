@@ -120,7 +120,13 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 		this._ui.outer.toggleClass( "ui-disabled", value );
 	},
 
-	refresh: $.noop,
+	refresh: function() {
+		var inputValue = this._getInputValue();
+
+		if ( inputValue !== undefined ) {
+			this._setColor( inputValue );
+		}
+	},
 
 	_destroy: function() {
 		var idx, chans = [ "h", "s", "v" ];
@@ -226,13 +232,13 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 		if ( value !== this._clr ) {
 			chan = this._ui.chan;
 			clr = $.Color( value );
-			hsv = this._clrToHSV ( clr );
+			hsv = this._clrToHSV( clr );
 			oldHSV = this._hsvFromSliders();
 			// by default we set all three sliders ...
 			combo = [ "h", "s", "v" ];
 			// ... however, we try to minimize the changes we make to slider
 			// positions in order to achieve the desired colour. This minimizes the
-			// amount that synced sliders fidget when the transformation quality
+			// amount that synced widgets fidget when the transformation quality
 			// degrades, like, when the saturation and/or value approaches 0.
 			combos = [ [], [ "h" ], [ "s" ], [ "v" ], [ "h", "s" ], [ "h", "v" ], [ "s", "v" ] ];
 
