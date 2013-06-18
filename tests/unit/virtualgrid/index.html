@@ -42,8 +42,6 @@
 				var replaceHelper = function ( elem, data ) {
 					var root = elem && elem.get ? elem[ 0 ] : elem,
 						targetElem;
-					targetElem = root.getElementsByTagName( "img" )[ 0 ];
-					targetElem.setAttribute("src", data.TEAM_LOGO );
 					targetElem = root.getElementsByTagName( "span" )[ 0 ];
 					targetElem.innerText = data.NAME;
 					return ;
