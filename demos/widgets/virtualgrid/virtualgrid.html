@@ -12,7 +12,6 @@
 		<script src="../../../jqm/js/"></script>
 		<script src="../../../dist/web-ui-fw.js"></script>
 		
-
 		<!-- Demo.js -->
 		<script src="virtualgrid-db-demo.js"></script>
 		<link rel="stylesheet" href="namecard.css">
@@ -35,27 +34,23 @@
 					</div>
 					</div>
 				</script>
-				<div id="virtualgrid-demo" data-role="virtualgrid" data-rotation="true" data-template="tizen-demo-namecard"></div>
+				<script>
+					var replaceHelper = function ( elem, data ) {
+						var root = elem && elem.get ? elem[ 0 ] : elem,
+							targetElem;
+						targetElem = root.getElementsByTagName( "img" )[ 0 ];
+						targetElem.setAttribute("src", data.TEAM_LOGO );
+						targetElem = root.getElementsByTagName( "span" )[ 0 ];
+						targetElem.innerText = data.NAME;
+						return ;
+					};
+				</script>
+				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="./virtualgrid-db-demo.json" data-data-type="json" data-replace-helper ="replaceHelper">
+				</div>
 			</div>
 			<div id="normal" data-role="footer" data-position="fixed">
 				<h1>Footer</h1>
 			</div>
-			<script>
-				$(".virtualgrid_grid_demo_page").one("pagecreate", function() {
-					$.getScript("virtualgrid-db-demo.js", function(data, textStatus, jqXHR) {
-						$(":jqmData(role='virtualgrid')").virtualgrid();
-						$(":jqmData(role='virtualgrid')").virtualgrid("create", {
-							itemData : function(idx) {
-								return JSON_DATA[idx];
-							},
-							numItemData : JSON_DATA.length,
-							cacheItemData : function(minIdx, maxIdx) {
-							}
-						});
-						$(".virtualgrid_grid_demo_page").unbind("pagecreate");
-					});
-				});
-			</script>
 		</div>
 	</body>
 </html>
