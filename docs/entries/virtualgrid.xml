@@ -15,12 +15,20 @@
 			<type name="String" />
 		</option>
 		<option name="direction" default="y" example-value="x">
-			<desc>The axis along which the panning will take place.</desc>
+			<desc>The axis along which the panning will take place. (note) Virtualgrid does not support both directions.</desc>
 			<type name="String" />
 		</option>
-		<option name="rotation" default="false" example-value="true">
-			<desc>If set to true, the items will be repeated when one end of the list is reached, as if they were placed on a cylinder.</desc>
-			<type name="Boolean" />
+		<option name="repository" default="null" example-value="../data.json">
+			<desc></desc>
+			<type name="String" />
+		</option>
+		<option name="dataType" default="json" example-value="json">
+			<desc>This attribute indicates the type of the referenced data. It supports 'xml' or 'json'.</desc>
+			<type name="String" />
+		</option>
+		<option name="replaceHelper" default="null" example-value="replaceHelper">
+			<desc>If user want to process more efficiently what replacing DOM, User should define a function and set a function name to this attribute.</desc>
+			<type name="String" />
 		</option>
 	</options>
 	<events>
@@ -40,7 +48,7 @@
 		</method>
 		<method name="scrollTo">
 			<desc>Scroll to a certain set of coordinates.</desc>
-			<signature exampleParams="120,55">
+			<signature exampleParams="120,0">
 				<desc>Scrolls to the pair of coordinates specified by the parameters.</desc>
 				<argument name="x" type="Number">
 					<desc>The x-coordinate to which to scroll.</desc>
