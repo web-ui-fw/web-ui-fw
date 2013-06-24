@@ -16,170 +16,38 @@
 		<!-- Demo.js -->
 		<script src="tokentextarea-demo.js"></script>
 	</head>
-
 	<body>
-		<div id="tokentextarea" data-role="page" data-scroll="none" >
-			<div data-role="header" data-position="fixed" data-theme="f">
-				<h1>TokenTextArea Entry</h1>
-				<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
+		<div data-role="page" id="tokentextarea" data-dom-cache="true">
+			<div data-role="header" data-position="fixed">
+				<h1>TOKEN TEXT AREA</h1>
 			</div>
-			<div data-role="content" data-scroll="none">
-				<div data-role="tokentextarea" data-link="#addressbook"></div>
+			<div data-role="content">
+				<div data-role="tokentextarea" data-link="addressbook.html"></div>
 				<br>
-				<ul id="tta-cmdlist" data-role="listview" data-scroll="none">
-					<li>
-						<a id='TTAaddItemTest'>Append Item</a>
-					</li>
-					<li>
-						<a id='TTAremoveItemTest'>Remove first Item</a>
-					</li>
-					<li>
-						<a id='TTAinputTextTest'>Input 'Hello'</a>
-					</li>
-					<li>
-						<a id='TTAgetInputTextTest'>Get input text</a>
-					</li>
-					<li>
-						<a id='TTAselectItemTest'>Select 1</a>
-					</li>
-					<li>
-						<a id='TTAgetSelectedItemTest'>Selected item</a>
-					</li>
-					<li>
-						<a id='TTAlengthTest'>Length</a>
-					</li>
-					<li>
-						<a id='TTAfocusOutTest'>Grouping On</a>
-					</li>
-					<li>
-						<a id='TTAfocusInTest'>Grouping Off</a>
-					</li>
-					<li>
-						<a id='TTAremoveAllItemTest'>Remove All Item</a>
-					</li>
+				<ul data-role="listview">
+					<li><a id='TTAaddItemTest'>Append Item</a></li>
+					<li><a id='TTAremoveItemTest'>Remove first Item</a></li>
+					<li><a id='TTAinputTextTest'>Input 'Hello'</a></li>
+					<li><a id='TTAgetInputTextTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Get input text</a></li>
+					<li><a id='TTAselectItemTest'>Select 1</a></li>
+					<li><a id='TTAgetSelectedItemTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Selected item</a></li>
+					<li><a id='TTAlengthTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Length</a></li>
+					<li><a id='TTAfocusOutTest'>Grouping On</a></li>
+					<li><a id='TTAfocusInTest'>Grouping Off</a></li>
+					<li><a id='TTAremoveAllItemTest'>Remove All Item</a></li>
 				</ul>
+
+				<div id="tta_popup" data-role="popup" class="tta-popup">
+					<div class="ui-popup-text">
+					</div>
+					<div class="ui-popup-button-bg">
+						<a data-role="button" data-rel="back" data-inline="true">OK</a>
+					</div>
+				</div>
 			</div>
 			<div data-role="footer" data-position="fixed">
 				<h1>Footer</h1>
 			</div>
-		</div>
-		<div data-role="page" id="addressbook" data-add-back-btn="none">
-			<div data-role="header"  data-position="fixed">
-				<h1>Address Book</h1>
-				<a href="#tokentextarea" data-icon="back" data-iconpos="notext" data-direction="reverse">Home</a>
-			</div>
-			<div data-role="content" id="contentList">
-				<ul data-role="listview">
-					<li data-role="list-divider">
-						A
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Adam Kinkaid</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Alex Wickerham</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Avery Johnson</a>
-					</li>
-					<li data-role="list-divider">
-						B
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Bob Cabot</a>
-					</li>
-					<li data-role="list-divider">
-						C
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Caleb Booth</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Christopher Adams</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Culver James</a>
-					</li>
-					<li data-role="list-divider">
-						D
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">David Walsh</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Drake Alfred</a>
-					</li>
-					<li data-role="list-divider">
-						E
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Elizabeth Bacon</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Emery Parker</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Enid Voldon</a>
-					</li>
-					<li data-role="list-divider">
-						F
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Francis Wall</a>
-					</li>
-					<li data-role="list-divider">
-						G
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Graham Smith</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Greta Peete</a>
-					</li>
-					<li data-role="list-divider">
-						H
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Harvey Walls</a>
-					</li>
-					<li data-role="list-divider">
-						M
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Mike Farnsworth</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Murray Vanderbuilt</a>
-					</li>
-					<li data-role="list-divider">
-						N
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Nathan Williams</a>
-					</li>
-					<li data-role="list-divider">
-						P
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Paul Baker</a>
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Pete Mason</a>
-					</li>
-					<li data-role="list-divider">
-						R
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Rod Tarker</a>
-					</li>
-					<li data-role="list-divider">
-						S
-					</li>
-					<li>
-						<a class="name-resource" href="#tokentextarea">Sawyer Wakefield</a>
-					</li>
-				</ul>
-			</div><!--/content -->
 		</div>
 	</body>
 </html>

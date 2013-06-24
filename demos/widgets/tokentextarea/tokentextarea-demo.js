@@ -1,56 +1,76 @@
-( function ( $, window ) {
-	$( document ).ready( function () {
-		$( document ).delegate("#TTAaddItemTest", "click", function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", "additem" );
+( function( $, window ) {
+	$.mobile.document.one( "pagecreate", "#tokentextarea", function() {
+		var $tta = $( ":jqmData(role='tokentextarea')" ),
+			$popup = $( ".tta-popup .ui-popup-text" );
+
+		$( "#TTAaddItemTest" ).on( "click", function() {
+			$tta.tokentextarea( "add", "additem" );
 		});
 
-		$( document ).delegate( "#TTAremoveItemTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "remove", 0 );
+		$( "#TTAremoveItemTest" ).on( "click", function() {
+			$tta.tokentextarea( "remove", 0 );
 		});
 
-		$( document ).delegate( "#TTAinputTextTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "inputText", "Hello~~~" );
+		$( "#TTAinputTextTest" ).on( "click", function() {
+			$tta.tokentextarea( "inputText", "Hello~~~" );
 		});
 
-		$( document ).delegate( "#TTAgetInputTextTest", "click",function () {
-			var input = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "inputText" );
-			window.alert( "input String : " + input );
+		$( "#TTAgetInputTextTest" ).on( "click", function() {
+			var input = $tta.tokentextarea( "inputText" );
+			$popup.text( "Input string : " + input );
 		});
 
-		$( document ).delegate("#TTAremoveAllItemTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "remove" );
+		$( "#TTAremoveAllItemTest" ).on( "click", function() {
+			$tta.tokentextarea( "remove" );
 		});
 
-		$( document ).delegate("#TTAgetSelectedItemTest", "click",function () {
-			var content = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "select" );
-			window.alert( "Select content : " + content );
+		$( "#TTAgetSelectedItemTest" ).on( "click", function() {
+			var content = $tta.tokentextarea( "select" );
+			$popup.text( "Select content : " + content );
 		});
 
-		$( document ).delegate( "#TTAselectItemTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "select", 0 );
+		$( "#TTAselectItemTest" ).on( "click", function() {
+			$tta.tokentextarea( "select", 0 );
 		});
 
-		$( document ).delegate( "#TTAlengthTest", "click",function () {
-			var length = $( ":jqmData(role='tokentextarea')" ).tokentextarea( "length" );
-			window.alert( "length : " + length );
+		$( "#TTAlengthTest" ).on( "click", function() {
+			var length = $tta.tokentextarea( "length" );
+			$popup.text( "Length : " + length );
 		});
 
-		$( document ).delegate( "#TTAfocusInTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "focusIn", 0 );
+		$( "#TTAfocusInTest" ).on( "click", function() {
+			$tta.tokentextarea( "focusIn", 0 );
 		});
 
-		$( document ).delegate( "#TTAfocusOutTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "focusOut", 0 );
+		$( "#TTAfocusOutTest" ).on( "click", function() {
+			$tta.tokentextarea( "focusOut", 0 );
 		});
 
-		$( document ).delegate( "#TTAdestroyTest", "click",function () {
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "destroy" );
+		$( "#TTAdestroyTest" ).on( "click", function() {
+			$tta.tokentextarea( "destroy" );
+		});
+	});
+
+	$.mobile.document.one( "pagecreate", "#addressbook", function() {
+		var self = this,
+			$address = $( "#addressbook" );
+
+		self.itemSelected = false;
+
+		$address.on( "mousedown", function() {
+			self.itemSelected = false;
 		});
 
-		$( document ).delegate(  ".name-resource", "click",function () {
-			var arg = $( this ).text();
-			$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", arg );
+		$address.on( "mouseup", function() {
+			self.itemSelected = true;
 		});
 
+		$( "#contentList a" ).on( "click", function() {
+			if ( self.itemSelected ) {
+				var arg = $( this ).text();
+				$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", arg );
+				history.back();
+			}
+		});
 	});
 } ( jQuery, window ) );
