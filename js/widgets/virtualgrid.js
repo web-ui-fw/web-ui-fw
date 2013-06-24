@@ -355,6 +355,16 @@ $.extend(MomentumTracker.prototype, {
 			this._timerID = setTimeout( tfunc, this._timerInterval );
 		},
 
+		getScrollPos: function () {
+			var ret = {
+				x = 0,
+				y = 0,
+			};
+			ret.x = this._$view[ 0 ].scrollLeft;
+			ret.y = this._$view[ 0 ].scrollTop;
+			return ret;
+		},
+
 		_resize : function () {
 			var self = this,
 				width = 0,
