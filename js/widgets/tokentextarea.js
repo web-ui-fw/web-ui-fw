@@ -1,7 +1,7 @@
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Text area containing tokens
-//>>label: tokentextarea
-//>>group: Widget
+//>>description: Make words to selectable tokens
+//>>label: Token text area
+//>>group: Widgets
 
 define( [
 	"jqm/jquery",
@@ -16,11 +16,14 @@ define( [
 		_viewWidth : 0,
 		_reservedWidth : 0,
 		_currentWidth : 0,
+		_fontSize : 0,
 		_anchorWidth : 0,
 		_labelWidth : 0,
 		_marginWidth : 0,
+		_$labeltag: null,
+		_$inputbox: null,
+		_$moreBlock: null,
 		options : {
-			initSelector: ":jqmData(role='tokentextarea')",
 			label : "To : ",
 			link : null,
 			theme : null,
@@ -30,50 +33,65 @@ define( [
 		_create: function() {
 			var self = this,
 				$view = this.element,
-				role = $view.jqmData( "role" ),
+				role = $view.jqmData( "role" ), //TODO: performance improvement for jqmData after jQM-1.4.
 				option = this.options,
 				className = "ui-tokentextarea-link",
-				inputbox = document.createElement( "input" ),
 				labeltag = document.createElement( "label" ),
-				moreBlock = document.createElement( "a" );
+				inputbox = document.createElement( "input" ),
+				$moreBlock = $( document.createElement( "a" ) );
 
 			if ( !option.theme ) {
-				option.theme = $.mobile.getInheritedTheme( this.element, "a" );
+				option.theme = $.mobile.getInheritedTheme( $view, "a" );
 			}
 
 			$view.hide().empty().addClass( "ui-" + role );
 
 			// create a label tag.
-			$( labeltag ).text( option.label ).addClass( "ui-tokentextarea-label " + " ui-tokentextarea-label-theme-" + option.theme );
+			labeltag.innerText = option.label;
+			labeltag.className = "ui-tokentextarea-label " + " ui-tokentextarea-label-theme-" + option.theme;
+			//labeltag.tabIndex = 0;
 			$view.append( labeltag );
 
 			// create a input tag
-			$( inputbox ).text( option.label ).addClass( "ui-tokentextarea-input" + " ui-tokentextarea-input-theme-" + option.theme );
+			inputbox.className = "ui-tokentextarea-input ui-tokentextarea-input-visible" + " ui-tokentextarea-input-theme-" + option.theme;
 			$view.append( inputbox );
 
 			// create a anchor tag.
-			if ( option.listId === null || $.trim( option.listId ).length < 1 || $( option.listId ).length === 0 ) {
+			if ( option.link === null || $.trim( option.link ).length < 1 || $( option.link ).length === 0 ) {
 				className += "-dim";
 			}
-			$( moreBlock ).addClass( " ui-tokentextarea-link-base " + className ).attr( "href", $.trim( option.link ) ).buttonMarkup({icon:"plus", inline:true, iconpos:"notext" });
+			$moreBlock.attr( "data-role", "button" )
+				.buttonMarkup( {
+					icon: "plus",
+					iconpos:"notext",
+					inline: true
+				})
+				.attr( { "href" : $.trim( option.link ) } )
+				.addClass( "ui-tokentextarea-link-base " + className )
+				.find( "span.ui-btn-text" )
+				.text( "Add recipient" );
 
 			// append default htmlelements to main widget.
-			$view.append( moreBlock );
+			$view.append( $moreBlock[0] );
+
+			// assign global variables for performance improvement instead of using objects in below codes.
+			self._$labeltag = $( labeltag );
+			self._$inputbox = $( inputbox );
+			self._$moreBlock = $moreBlock;
 
 			// bind a event
 			this._bindEvents();
 			self._focusStatus = "init";
 			// display widget
 			$view.show();
-			$view.attr( "tabindex", -1 ).focusin( function(/* event */) {
-				self.focusIn();
-			});
 
 			// assign global variables
 			self._viewWidth = $view.innerWidth();
-			self._reservedWidth += self._calcBlockWidth( moreBlock );
+			self._reservedWidth += self._calcBlockWidth( $moreBlock[0] );
 			self._reservedWidth += self._calcBlockWidth( labeltag );
+			self._fontSize = parseInt( $moreBlock.css( "font-size" ), 10 );
 			self._currentWidth = self._reservedWidth;
+			self._modifyInputBoxWidth();
 		},
 
 		// bind events
@@ -81,43 +99,44 @@ define( [
 			var self = this,
 				$view = self.element,
 				option = self.options,
-				theme = option.theme,
-				inputbox = $view.find( ".ui-tokentextarea-input" ),
-				moreBlock = $view.find( ".ui-tokentextarea-link-base" ),
-				isSeparator = false;
+				$inputbox = self._$inputbox,
+				$moreBlock = self._$moreBlock;
 
 			// delegate a event to HTMLDivElement(each block).
-			$view.delegate( "div", "vclick", function(/* event */) {
-				if ( $( this ).hasClass( "ui-tokentextarea-sblock" ) ) {
+			$view.delegate( "div", "click", function( event ) {
+				var $this = $( this ),
+					$lockBlock;
+
+				if ( $this.hasClass( "ui-tokentextarea-sblock" ) ) {
 					// If block is selected, it will be removed.
 					self._removeTextBlock();
 				}
 
-				var lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
-				if ( typeof lockBlock !== "undefined" ) {
-					lockBlock.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
-					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
+				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
+				if ( typeof $lockBlock !== "undefined" ) {
+					$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
 				}
-				$( this ).removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
-					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
+
+				$this.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				$view.trigger( "select" );
 			});
 
-			inputbox.bind( "keyup", function( event ) {
+			$inputbox.bind( "keyup", function( event ) {
 				// 8  : backspace
 				// 13 : Enter
 				// 186 : semi-colon
 				// 188 : comma
 				var keyValue = event.keyCode,
-					keyCode = jQuery.mobile.keyCode,
-					valueString = $( inputbox ).val(),
+					valueString = $inputbox.val(),
 					valueStrings = [],
-					index;
+					index,
+					isSeparator = false;
 
-				if ( keyValue === keyCode.BACKSPACE ) {
+				if ( keyValue === 8 ) {
 					if ( valueString.length === 0 ) {
 						self._validateTargetBlock();
 					}
-				} else if ( keyValue === keyCode.ENTER || keyValue === 186 || keyValue === keyCode.COMMA ) {
+				} else if ( keyValue === 13 || keyValue === 186 || keyValue === 188 ) {
 					if ( valueString.length !== 0 ) {
 						// split content by separators(',', ';')
 						valueStrings = valueString.split ( /[,;]/ );
@@ -127,7 +146,7 @@ define( [
 							}
 						}
 					}
-					inputbox.val( "" );
+					$inputbox.val( "" );
 					isSeparator = true;
 				} else {
 					self._unlockTextBlock();
@@ -136,46 +155,32 @@ define( [
 				return !isSeparator;
 			});
 
-			moreBlock.click( function() {
-				if ( $( moreBlock ).hasClass( "ui-tokentextarea-link-dim" ) ) {
+			$moreBlock.click( function() {
+				if ( $moreBlock.hasClass( "ui-tokentextarea-link-dim" ) ) {
 					return;
 				}
 
-				$( inputbox ).hide();
+				$inputbox.removeClass( "ui-tokentextarea-input-visible" ).addClass( "ui-tokentextarea-input-invisible" );
 
-				$.mobile.changePage( option.listId, {
+				$.mobile.changePage( option.link, {
 					transition: "slide",
 					reverse: false,
 					changeHash: false
 				});
 			});
 
-			$( document ).bind( "pagechange.mbe", function(/* event */) {
+			$.mobile.document.bind( "pagechange.tta", function( event ) {
 				if ( $view.innerWidth() === 0 ) {
-					return ;
+					return;
 				}
-				var inputBox = $view.find( ".ui-tokentextarea-input" );
-				if ( self._labelWidth === 0 ) {
-					self._labelWidth = $view.find( ".ui-tokentextarea-label" ).outerWidth( true );
-					self._anchorWidth = $view.find( ".ui-tokentextarea-link-base" ).outerWidth( true );
-					self._marginWidth = parseInt( ( $( inputBox ).css( "margin-left" ) ), 10 );
-					self._marginWidth += parseInt( ( $( inputBox ).css( "margin-right" ) ), 10 );
-					self._viewWidth = $view.innerWidth();
-				}
-				self._modifyInputBoxWidth();
-				$( inputbox ).show();
 				self.refresh();
+				$inputbox.removeClass( "ui-tokentextarea-input-invisible" ).addClass( "ui-tokentextarea-input-visible" );
 			});
 
-			$view.bind( "click", function(/* event */) {
+			$view.bind( "click", function( event ) {
 				if ( self._focusStatus === "focusOut" ) {
 					self.focusIn();
 				}
-			});
-
-			$( window ).bind( "resize", function() {
-				//$( ":jqmData(role='multibuttonentry')" ).multibuttonentry( "refresh" );
-				self.refresh();
 			});
 		},
 
@@ -188,56 +193,72 @@ define( [
 			}
 
 			if ( !messages ) {
-				return ;
+				return;
 			}
 
 			var self = this,
-				theme = self.options.theme,
 				$view = self.element,
-				content = messages,
 				index = blockIndex,
-				blocks = null,
-				textBlock = null;
+				textBlock = null,
+				$blocks = null;
 
 			if ( self._viewWidth === 0 ) {
 				self._viewWidth = $view.innerWidth();
 			}
 
 			// Create a new text HTMLDivElement.
-			textBlock = $( document.createElement( "div" ) );
+			textBlock = document.createElement( "div" );
+			textBlock.innerText = messages;
+			textBlock.className = "ui-tokentextarea-block";
+			textBlock.style.visibility = "hidden";
 
-			textBlock.text( content ).addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme + " ui-tokentextarea-item-theme-" + theme);
-
-			textBlock.css( {"visibility": "hidden"} );
-
-			blocks = $view.find( "div" );
-			if ( index !== null && index <= blocks.length ) {
-				$( blocks[index] ).before( textBlock );
+			$blocks = $view.find( "div" );
+			if ( index !== null && index <= $blocks.length ) {
+				$( $blocks[index] ).before( textBlock );
 			} else {
-				$view.find( ".ui-tokentextarea-input" ).before( textBlock );
+				self._$inputbox.before( textBlock );
 			}
 
 			textBlock = self._ellipsisTextBlock( textBlock );
-			textBlock.css( {"visibility": "visible"} );
+			textBlock.style.visibility = "visible";
 
-			self._currentWidth += self._calcBlockWidth( textBlock );
 			self._modifyInputBoxWidth();
+
+			textBlock.style.display = "none";
+
+			$( textBlock ).fadeIn( "fast", function() {
+				self._currentWidth += self._calcBlockWidth( textBlock );
+				$view.trigger( "add" );
+			});
 		},
 
 		_removeTextBlock: function() {
 			var self = this,
-				$view = self.element,
-				theme = self.options.theme,
-				lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
+				$view = this.element,
+				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" ),
+				_temp = null,
+				_dummy = function() {};
 
-			if ( lockBlock !== null && lockBlock.length > 0 ) {
-				self._currentWidth -= self._calcBlockWidth( lockBlock );
-				lockBlock.remove();
-				self._modifyInputBoxWidth();
+			if ( $lockBlock !== null && $lockBlock.length > 0 ) {
+				self._currentWidth -= self._calcBlockWidth( $lockBlock );
+
+				$lockBlock.fadeOut( "fast", function() {
+					$lockBlock.remove();
+					self._modifyInputBoxWidth();
+				});
+
+				this._eventRemoveCall = true;
+				if ( $view[0].remove ) {
+					_temp = $view[0].remove;
+					$view[0].remove = _dummy;
+				}
+				$view.triggerHandler( "remove" );
+				if ( _temp) {
+					$view[0].remove = _temp;
+				}
+				this._eventRemoveCall = false;
 			} else {
-				$view.find( "div:last" )
-					.removeClass( "ui-tokentextarea-block ui-ui-tokentextarea-block-theme-"+theme )
-					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme );
+				$view.find( "div:last" ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
 			}
 		},
 
@@ -247,11 +268,9 @@ define( [
 
 		_unlockTextBlock: function() {
 			var $view = this.element,
-				theme = this.options.theme,
-				lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
-			if ( lockBlock ) {
-				lockBlock.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme )
-					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme );
+				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
+			if ( $lockBlock ) {
+				$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
 			}
 		},
 
@@ -259,25 +278,22 @@ define( [
 		_validateTargetBlock: function() {
 			var self = this,
 				$view = self.element,
-				theme = self.options.theme,
-				lastBlock = $view.find( "div:last" ),
-				tmpBlock = null;
+				$lastBlock = $view.find( "div:last" ),
+				$tmpBlock = null;
 
-			if ( lastBlock.hasClass( "ui-tokentextarea-sblock" ) ) {
+			if ( $lastBlock.hasClass( "ui-tokentextarea-sblock" ) ) {
 				self._removeTextBlock();
 			} else {
-				tmpBlock = $view.find( "div.ui-tokentextarea-sblock" );
-				tmpBlock.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme )
-					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme );
-				lastBlock.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme )
-					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme );
+				$tmpBlock = $view.find( "div.ui-tokentextarea-sblock" );
+				$tmpBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
+				$lastBlock.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
 			}
 		},
 
 		_ellipsisTextBlock: function( textBlock ) {
 			var self = this,
 				$view = self.element,
-				maxWidth = $view.innerWidth() - ( self._labelWidth + self._anchorWidth ) * 2;
+				maxWidth = self._viewWidth / 2;
 
 			if ( self._calcBlockWidth( textBlock ) > maxWidth ) {
 				$( textBlock ).width( maxWidth - self._marginWidth );
@@ -289,22 +305,35 @@ define( [
 		_modifyInputBoxWidth: function() {
 			var self = this,
 				$view = self.element,
-				margin = self._marginWidth,
-				labelWidth = self._labelWidth,
-				anchorWidth = self._anchorWidth,
-				inputBoxWidth = self._viewWidth - labelWidth,
-				blocks = $view.find( "div" ),
+				margin = 0,
+				labelWidth = 0,
+				anchorWidth = 0,
+				inputBoxWidth = 0,
+				$blocks = $view.find( "div" ),
 				blockWidth = 0,
 				index = 0,
 				inputBoxMargin = 10,
-				inputBox = $view.find( ".ui-tokentextarea-input" );
+				$inputBox = self._$inputbox;
 
 			if ( $view.width() === 0 ) {
 				return;
 			}
 
-			for ( index = 0; index < blocks.length; index += 1 ) {
-				blockWidth = self._calcBlockWidth( blocks[index] );
+			if ( self._labelWidth === 0 ) {
+				self._labelWidth = self._$labeltag.outerWidth( true );
+				self._anchorWidth = self._$moreBlock.outerWidth( true );
+				self._marginWidth = parseInt( ( $inputBox.css( "margin-left" ) ), 10 );
+				self._marginWidth += parseInt( ( $inputBox.css( "margin-right" ) ), 10 );
+				self._viewWidth = $view.innerWidth();
+			}
+
+			margin = self._marginWidth;
+			labelWidth = self._labelWidth;
+			anchorWidth = self._anchorWidth;
+			inputBoxWidth = self._viewWidth - labelWidth;
+
+			for ( index = 0; index < $blocks.length; index += 1 ) {
+				blockWidth = self._calcBlockWidth( $blocks[index] );
 
 				if ( blockWidth >= inputBoxWidth + anchorWidth ) {
 					if ( blockWidth >= inputBoxWidth ) {
@@ -313,7 +342,7 @@ define( [
 						inputBoxWidth = self._viewWidth;
 					}
 				} else {
-					if ( blockWidth >= inputBoxWidth ) {
+					if ( blockWidth > inputBoxWidth ) {
 						inputBoxWidth = self._viewWidth - blockWidth;
 					} else {
 						inputBoxWidth -= blockWidth;
@@ -325,7 +354,7 @@ define( [
 			if ( inputBoxWidth < anchorWidth * 2 ) {
 				inputBoxWidth = self._viewWidth - margin;
 			}
-			$( inputBox ).width( inputBoxWidth - anchorWidth - inputBoxMargin );
+			$inputBox.width( inputBoxWidth - anchorWidth - inputBoxMargin );
 		},
 
 		_stringFormat: function( expression ) {
@@ -342,17 +371,17 @@ define( [
 		_resizeBlocks: function() {
 			var self = this,
 				$view = self.element,
-				blocks = $view.find( "div" ),
+				$blocks = $view.find( "div" ),
 				index = 0;
 
-			for ( index = 0 ; index < blocks.length ; index += 1 ) {
-				$( blocks[index] ).css( "width", "auto" );
-				blocks[index] = self._ellipsisTextBlock( blocks[index] );
+			for ( index = 0 ; index < $blocks.length ; index += 1 ) {
+				$( $blocks[index] ).css( "width", "auto" );
+				$blocks[index] = self._ellipsisTextBlock( $blocks[index] );
 			}
 		},
 
-		//---------------------------------------------------- //
-		//					Public Method   //
+		//----------------------------------------------------//
+		// Public Method                                      //
 		//----------------------------------------------------//
 		//
 		// Focus In Event
@@ -362,22 +391,19 @@ define( [
 				return;
 			}
 
-			var $view = this.element,
-				theme = this.options.theme;
+			var $view = this.element;
 
-			$view.find( "label" ).show();
 			$view.find( ".ui-tokentextarea-desclabel" ).remove();
-			$view.find( "div.ui-tokentextarea-sblock" )
-				.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme )
-				.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme );
+			$view.find( "div.ui-tokentextarea-sblock" ).removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
 			$view.find( "div" ).show();
-			$view.find( ".ui-tokentextarea-input" ).show();
+			this._$inputbox.removeClass( "ui-tokentextarea-input-invisible" ).addClass( "ui-tokentextarea-input-visible" );
 			$view.find( "a" ).show();
 
 			// change focus state.
 			this._modifyInputBoxWidth();
 			this._focusStatus = "focusIn";
 			$view.removeClass( "ui-tokentextarea-focusout" ).addClass( "ui-tokentextarea-focusin" );
+			this._$inputbox.focus();
 		},
 
 		focusOut: function() {
@@ -386,41 +412,48 @@ define( [
 			}
 
 			var self = this,
-				theme = self.options.theme,
 				$view = self.element,
 				tempBlock = null,
+				stateBlock = null,
+				numBlock = null,
 				statement = "",
 				index = 0,
 				lastIndex = 10,
-				label = $view.find( "label" ),
+				label = self._$labeltag,
 				more = $view.find( "span" ),
-				blocks = $view.find( "div" ),
+				$blocks = $view.find( "div" ),
 				currentWidth = $view.outerWidth( true ) - more.outerWidth( true ) - label.outerWidth( true ),
 				blockWidth = 0;
 
-			$view.find( ".ui-tokentextarea-input" ).hide();
+			self._$inputbox.removeClass( "ui-tokentextarea-input-visible" ).addClass( "ui-tokentextarea-input-invisible" );
+			$blocks.hide();
 			$view.find( "a" ).hide();
-			blocks.hide();
 
 			currentWidth = currentWidth - self._reservedWidth;
 
-			for ( index = 0; index < blocks.length; index++ ) {
-				blockWidth = $( blocks[index] ).outerWidth( true );
+			for ( index = 0; index < $blocks.length; index++ ) {
+				blockWidth = $( $blocks[index] ).outerWidth( true );
 				if ( currentWidth - blockWidth <= 0 ) {
 					lastIndex = index - 1;
 					break;
 				}
 
-				$( blocks[index] ).show();
+				$( $blocks[index] ).show();
 				currentWidth -= blockWidth;
 			}
 
-			if ( lastIndex !== blocks.length ) {
-				statement = self._stringFormat( self.options.description, blocks.length - lastIndex - 1 );
-				tempBlock = $( document.createElement( "label" ) );
-				tempBlock.text( statement );
-				tempBlock.addClass( "ui-tokentextarea-desclabel " +"ui-tokentextarea-desclabel-theme-"+ theme);
-				$( blocks[lastIndex] ).after( tempBlock );
+			if ( lastIndex !== $blocks.length ) {
+				statement = self._stringFormat( self.options.description, $blocks.length - lastIndex - 1 );
+				tempBlock = document.createElement( 'span' );
+				tempBlock.className = "ui-tokentextarea-desclabel";
+				stateBlock = document.createElement( 'span' );
+				stateBlock.innerText = statement;
+				numBlock = document.createElement( 'span' );
+				numBlock.innerText = $blocks.length - lastIndex - 1;
+				numBlock.style.visibility = "hidden";
+				tempBlock.appendChild( stateBlock );
+				tempBlock.appendChild( numBlock );
+				$( $blocks[lastIndex] ).after( tempBlock );
 			}
 
 			// update focus state
@@ -429,20 +462,17 @@ define( [
 		},
 
 		inputText: function( message ) {
-			var $view = this.element;
-
 			if ( arguments.length === 0 ) {
-				return $view.find( ".ui-tokentextarea-input" ).val();
+				return this._$inputbox.val();
 			}
-			$view.find( ".ui-tokentextarea-input" ).val( message );
+			this._$inputbox.val( message );
 			return message;
 		},
 
 		select: function( index ) {
 			var $view = this.element,
-				theme = this.options.theme,
-				lockBlock = null,
-				blocks = null;
+				$lockBlock = null,
+				$blocks = null;
 
 			if ( this._focusStatus === "focusOut" ) {
 				return;
@@ -450,19 +480,19 @@ define( [
 
 			if ( arguments.length === 0 ) {
 				// return a selected block.
-				lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
-				if ( lockBlock ) {
-					return lockBlock.text();
+				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
+				if ( $lockBlock ) {
+					return $lockBlock.text();
 				}
 				return null;
 			}
 			// 1. unlock all blocks.
 			this._unlockTextBlock();
 			// 2. select pointed block.
-			blocks = $view.find( "div" );
-			if ( blocks.length > index ) {
-				$( blocks[index] ).removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-"+theme )
-				.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-"+theme );
+			$blocks = $view.find( "div" );
+			if ( $blocks.length > index ) {
+				$( $blocks[index] ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				$view.trigger( "select" );
 			}
 			return null;
 		},
@@ -478,20 +508,41 @@ define( [
 		remove: function( position ) {
 			var self = this,
 				$view = this.element,
-				blocks = $view.find( "div" ),
-				index = 0;
+				$blocks = $view.find( "div" ),
+				index = 0,
+				_temp = null,
+				_dummy = function() {};
+
 			if ( this._focusStatus === "focusOut" ) {
 				return;
 			}
 
 			if ( arguments.length === 0 ) {
-				blocks.remove();
-			} else if ( typeof position === "number" ) {
+				$blocks.fadeOut( "fast", function() {
+					$blocks.remove();
+					self._modifyInputBoxWidth();
+					self._trigger( "clear" );
+				});
+			} else if ( !isNaN( position ) ) {
 				// remove selected button
-				index = ( ( position < blocks.length ) ? position : ( blocks.length - 1 ) );
-				$( blocks[index] ).remove();
+				index = ( ( position < $blocks.length ) ? position : ( $blocks.length - 1 ) );
+
+				$( $blocks[index] ).fadeOut( "fast", function() {
+					$( $blocks[index] ).remove();
+					self._modifyInputBoxWidth();
+				});
+
+				this._eventRemoveCall = true;
+				if ( $view[0].remove ) {
+					_temp = $view[0].remove;
+					$view[0].remove = _dummy;
+				}
+				$view.triggerHandler( "remove" );
+				if ( _temp) {
+					$view[0].remove = _temp;
+				}
+				this._eventRemoveCall = false;
 			}
-			self._modifyInputBoxWidth();
 		},
 
 		length: function() {
@@ -500,29 +551,53 @@ define( [
 
 		refresh: function() {
 			var self = this,
-				$view = this.element;
+				viewWidth = this.element.innerWidth();
 
-			self._viewWidth = $view.innerWidth();
+			if ( viewWidth && self._viewWidth !== viewWidth ) {
+				self._viewWidth = viewWidth;
+			}
 			self._resizeBlocks();
 			self._modifyInputBoxWidth();
 		},
 
 		destroy: function() {
-			var $view = this.element;
+			var $view = this.element,
+				_temp = null,
+				_dummy = function() {};
 
-			$view.find( "label" ).remove();
-			$view.find( "div" ).undelegate( "vclick" ).remove();
+			if ( this._eventRemoveCall ) {
+				return;
+			}
+
+			this._$labeltag.remove();
+			$view.find( "div" ).undelegate( "click" ).remove();
 			$view.find( "a" ).remove();
-			$view.find( ".ui-tokentextarea-input" ).unbind( "keyup" ).remove();
+			this._$inputbox.unbind( "keyup" ).remove();
+
+			this._eventRemoveCall = true;
+			if ( $view[0].remove ) {
+				_temp = $view[0].remove;
+				$view[0].remove = _dummy;
+			}
+			$view.remove();
+			if ( _temp) {
+				$view[0].remove = _temp;
+			}
+			this._eventRemoveCall = false;
+
+			this._trigger( "destroy" );
 		}
 	});
 
-	$( document ).bind( "pagecreate create", function( e ) {
-		$.mobile.tokentextarea.prototype.enhanceWithin( e.target );
+	$.mobile.document.bind( "pagecreate create", function() {
+		$( ":jqmData(role='tokentextarea')" ).tokentextarea();
+	});
+
+	$.mobile.window.bind( "resize", function() {
+		$( ":jqmData(role='tokentextarea')" ).tokentextarea( "refresh" );
 	});
 } ( jQuery, window, document ) );
 
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-});
+} );
 //>>excludeEnd("jqmBuildExclude");
-
