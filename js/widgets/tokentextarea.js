@@ -33,7 +33,7 @@ define( [
 		_create: function() {
 			var self = this,
 				$view = this.element,
-				role = $view.jqmData( "role" ), //TODO: performance improvement for jqmData after jQM-1.4.
+				role = $view.jqmData( "role" ),//TODO: performance improvement for jqmData after jQM-1.4.
 				option = this.options,
 				className = "ui-tokentextarea-link",
 				labeltag = document.createElement( "label" ),
@@ -108,7 +108,7 @@ define( [
 					$lockBlock;
 
 				if ( $this.hasClass( "ui-tokentextarea-sblock" ) ) {
-					// If block is selected, it will be removed.
+					// if block is selected, it will be removed.
 					self._removeTextBlock();
 				}
 
@@ -206,7 +206,7 @@ define( [
 				self._viewWidth = $view.innerWidth();
 			}
 
-			// Create a new text HTMLDivElement.
+			// create a new text HTMLDivElement.
 			textBlock = document.createElement( "div" );
 			textBlock.innerText = messages;
 			textBlock.className = "ui-tokentextarea-block";
@@ -228,7 +228,6 @@ define( [
 
 			$( textBlock ).fadeIn( "fast", function() {
 				self._currentWidth += self._calcBlockWidth( textBlock );
-				$view.trigger( "add" );
 			});
 		},
 
@@ -246,17 +245,6 @@ define( [
 					$lockBlock.remove();
 					self._modifyInputBoxWidth();
 				});
-
-				this._eventRemoveCall = true;
-				if ( $view[0].remove ) {
-					_temp = $view[0].remove;
-					$view[0].remove = _dummy;
-				}
-				$view.triggerHandler( "remove" );
-				if ( _temp) {
-					$view[0].remove = _temp;
-				}
-				this._eventRemoveCall = false;
 			} else {
 				$view.find( "div:last" ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
 			}
@@ -383,9 +371,6 @@ define( [
 		//----------------------------------------------------//
 		// Public Method                                      //
 		//----------------------------------------------------//
-		//
-		// Focus In Event
-		//
 		focusIn: function() {
 			if ( this._focusStatus === "focusIn" ) {
 				return;
@@ -531,17 +516,6 @@ define( [
 					$( $blocks[index] ).remove();
 					self._modifyInputBoxWidth();
 				});
-
-				this._eventRemoveCall = true;
-				if ( $view[0].remove ) {
-					_temp = $view[0].remove;
-					$view[0].remove = _dummy;
-				}
-				$view.triggerHandler( "remove" );
-				if ( _temp) {
-					$view[0].remove = _temp;
-				}
-				this._eventRemoveCall = false;
 			}
 		},
 
