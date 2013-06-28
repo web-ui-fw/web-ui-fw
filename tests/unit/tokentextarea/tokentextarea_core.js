@@ -39,14 +39,14 @@
 		asyncTest ( "asyncTest", function () {
 			$tokentextarea.tokentextarea( "remove", 0 );
 			setTimeout( function () {
-				deepEqual( $tokentextarea.tokentextarea( "length" ) , items.length - 1, "Remove a item." );
-				$tokentextarea.tokentextarea( "The widget has removed one item." );
+				deepEqual( $tokentextarea.tokentextarea( "length" ) , items.length - 1, "The widget has removed one item." );
+				$tokentextarea.tokentextarea( "remove" );
+			}, 500);
 
-			}, 400);
 			setTimeout( function () {
 				deepEqual( $tokentextarea.tokentextarea( "length" ), 0, "The widget has removed all items.");
 				start();
-			}, 1000);
+			}, 1100);
 		});
 
 
