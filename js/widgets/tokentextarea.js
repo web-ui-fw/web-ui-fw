@@ -2,13 +2,13 @@
 //>>description: Make words to selectable tokens
 //>>label: Token text area
 //>>group: Widgets
-
+/*
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"jqm/jquery.mobile.buttonMarkup" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
-
+*/
 ( function( $, window, document, undefined ) {
 	$.widget( "mobile.tokentextarea", $.mobile.widget, {
 		_focusStatus : null,
@@ -48,12 +48,18 @@ define( [
 
 			// create a label tag.
 			labeltag.innerText = option.label;
+			/* WORK::Reduced string concatenation.
 			labeltag.className = "ui-tokentextarea-label " + " ui-tokentextarea-label-theme-" + option.theme;
+			*/
+			labeltag.className = "ui-tokentextarea-label ui-tokentextarea-label-theme-" + option.theme;
 			//labeltag.tabIndex = 0;
 			$view.append( labeltag );
 
 			// create a input tag
+			/* WORK::Reduced string concatenation.
 			inputbox.className = "ui-tokentextarea-input ui-tokentextarea-input-visible" + " ui-tokentextarea-input-theme-" + option.theme;
+			*/
+			inputbox.className = "ui-tokentextarea-input ui-tokentextarea-input-visible ui-tokentextarea-input-theme-" + option.theme;
 			$view.append( inputbox );
 
 			// create a anchor tag.
@@ -98,7 +104,10 @@ define( [
 		_bindEvents: function() {
 			var self = this,
 				$view = self.element,
+				/* WORK::The value used only once doesn’t variable declaration and uses the value directly.
 				option = self.options,
+				*/
+				theme = self.options.theme,
 				$inputbox = self._$inputbox,
 				$moreBlock = self._$moreBlock;
 
@@ -114,10 +123,20 @@ define( [
 
 				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
 				if ( typeof $lockBlock !== "undefined" ) {
+					/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 					$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
+					*/
+					$lockBlock
+						.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
+						.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
 				}
 
+
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 				$this.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				*/
+				$this.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
+					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 				$view.trigger( "select" );
 			});
 
@@ -162,7 +181,7 @@ define( [
 
 				$inputbox.removeClass( "ui-tokentextarea-input-visible" ).addClass( "ui-tokentextarea-input-invisible" );
 
-				$.mobile.changePage( option.link, {
+				$.mobile.changePage( self.options.link, {
 					transition: "slide",
 					reverse: false,
 					changeHash: false
@@ -209,7 +228,10 @@ define( [
 			// create a new text HTMLDivElement.
 			textBlock = document.createElement( "div" );
 			textBlock.innerText = messages;
+			/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 			textBlock.className = "ui-tokentextarea-block";
+			*/
+			textBlock.className = "ui-tokentextarea-block ui-tokentextarea-block-theme-" + self.options.theme;
 			textBlock.style.visibility = "hidden";
 
 			$blocks = $view.find( "div" );
@@ -233,6 +255,7 @@ define( [
 
 		_removeTextBlock: function() {
 			var self = this,
+				theme = self.options.theme,
 				$view = this.element,
 				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" ),
 				_temp = null,
@@ -246,7 +269,12 @@ define( [
 					self._modifyInputBoxWidth();
 				});
 			} else {
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 				$view.find( "div:last" ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				*/
+				$view.find( "div:last" )
+					.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
+					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 			}
 		},
 
@@ -255,16 +283,24 @@ define( [
 		},
 
 		_unlockTextBlock: function() {
-			var $view = this.element,
+			var theme = this.options.theme,
+				$view = this.element,
 				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
+
 			if ( $lockBlock ) {
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 				$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
+				*/
+				$lockBlock
+					.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
+					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
 			}
 		},
 
 		// call when remove text block by backspace key.
 		_validateTargetBlock: function() {
 			var self = this,
+				theme = self.options.theme,
 				$view = self.element,
 				$lastBlock = $view.find( "div:last" ),
 				$tmpBlock = null;
@@ -273,8 +309,16 @@ define( [
 				self._removeTextBlock();
 			} else {
 				$tmpBlock = $view.find( "div.ui-tokentextarea-sblock" );
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 				$tmpBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
 				$lastBlock.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				*/
+				$tmpBlock
+					.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
+					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
+				$lastBlock
+					.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
+					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 			}
 		},
 
@@ -376,10 +420,16 @@ define( [
 				return;
 			}
 
-			var $view = this.element;
+			var theme = this.options.theme,
+				$view = this.element;
 
 			$view.find( ".ui-tokentextarea-desclabel" ).remove();
+			/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 			$view.find( "div.ui-tokentextarea-sblock" ).removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
+			*/
+			$view.find( "div.ui-tokentextarea-sblock" )
+				.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
+				.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
 			$view.find( "div" ).show();
 			this._$inputbox.removeClass( "ui-tokentextarea-input-invisible" ).addClass( "ui-tokentextarea-input-visible" );
 			$view.find( "a" ).show();
@@ -430,7 +480,10 @@ define( [
 			if ( lastIndex !== $blocks.length ) {
 				statement = self._stringFormat( self.options.description, $blocks.length - lastIndex - 1 );
 				tempBlock = document.createElement( 'span' );
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-desclabel to use as theme.
 				tempBlock.className = "ui-tokentextarea-desclabel";
+				*/
+				tempBlock.className = "ui-tokentextarea-desclabel ui-tokentextarea-desclabel-theme-" + self.options.theme;
 				stateBlock = document.createElement( 'span' );
 				stateBlock.innerText = statement;
 				numBlock = document.createElement( 'span' );
@@ -455,7 +508,8 @@ define( [
 		},
 
 		select: function( index ) {
-			var $view = this.element,
+			var theme = this.options.theme,
+				$view = this.element,
 				$lockBlock = null,
 				$blocks = null;
 
@@ -476,7 +530,12 @@ define( [
 			// 2. select pointed block.
 			$blocks = $view.find( "div" );
 			if ( $blocks.length > index ) {
+				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
 				$( $blocks[index] ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
+				*/
+				$( $blocks[index] )
+					.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
+					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 				$view.trigger( "select" );
 			}
 			return null;
@@ -571,7 +630,8 @@ define( [
 		$( ":jqmData(role='tokentextarea')" ).tokentextarea( "refresh" );
 	});
 } ( jQuery, window, document ) );
-
+/*
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 } );
 //>>excludeEnd("jqmBuildExclude");
+*/

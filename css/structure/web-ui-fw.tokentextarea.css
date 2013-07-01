@@ -59,25 +59,31 @@
   white-space: nowrap;
 }
 div.ui-tokentextarea-block {
-  background-color: #769dcc;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#769dcc), to(#7394bd));
   background-size: contain;
   background-repeat: no-repeat;
   padding-left: .7em;
 }
+div.ui-tokentextarea-block-theme-c {
+  background-color: #769dcc;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#769dcc), to(#7394bd));
+}
 div.ui-tokentextarea-sblock {
-  background-color: #4093f7;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#4093f7), to(#4b8ede));
   background-size: contain;
   background-repeat: no-repeat;
   padding-left: .7em;
+}
+div.ui-tokentextarea-sblock-theme-c {
+  background-color: #4093f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4093f7), to(#4b8ede));
 }
 .ui-tokentextarea .ui-tokentextarea-desclabel {
   display: inline-block;
   outline: none;
   border: 0;
-  color: #666666;
   text-align: left;
+}
+.ui-tokentextarea .ui-tokentextarea-desclabel-theme-c {
+  color: #666666;
   font-size: 1em;
 }
 .ui-tokentextarea-link-base {
