@@ -2,16 +2,21 @@ module.exports = function( grunt ) {
 	"use strict";
 
 	var _ = grunt.util._,
+		webUiFwVersion = "0.2.0",
+		jQueryVersion = "1.9.1",
+		jQueryMobileVersion = "1.3.1",
 		path = require( "path" ),
 		dist = "dist",
-		httpPort =  Math.floor( 9000 + Math.random()*1000 );
+		httpPort =  Math.floor( 9000 + Math.random() * 1000 );
 
 	// grunt plugins
+	grunt.loadNpmTasks( "grunt-contrib-concat" );
 	grunt.loadNpmTasks( "grunt-contrib-connect" );
 	grunt.loadNpmTasks( "grunt-contrib-requirejs" );
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
 	grunt.loadNpmTasks( "grunt-contrib-qunit" );
 	grunt.loadNpmTasks( "grunt-qunit-junit" );
+	grunt.loadNpmTasks( "grunt-contrib-copy" );
 
 	// load the project's default tasks
 	grunt.loadTasks( "build/tasks" );
@@ -43,6 +48,40 @@ module.exports = function( grunt ) {
 				files: {
 					src: [ "Gruntfile.js" ]
 				}
+			}
+		},
+
+		concat: {
+			demos: {
+				src: [ "demos/_assets/js/*.js" ],
+				dest: path.join( dist, "demos/_assets/js/index.js" )
+			}
+		},
+
+		copy: {
+			demos: {
+				options: {
+					processContent: function( content, srcPath ) {
+						if ( grunt.file.isMatch( "**/*.html", srcPath ) ) {
+							content = content
+								.replace( /(..\/)*jqm\/js\/jquery\.js/g, "http://code.jquery.com/jquery-" + jQueryVersion + ".min.js" )
+								.replace( /((..\/)*_assets\/js\/)/g, "$1index.js" )
+								.replace( /(..\/)*jqm\/js\//g, "http://code.jquery.com/mobile/" + jQueryMobileVersion + "/jquery.mobile-" + jQueryMobileVersion + ".min.js" )
+								.replace( /(..\/)*js\/"/g, 'http://web-ui-fw.github.com/jqm/' + webUiFwVersion + '/web-ui-fw.js"' )
+								.replace( /(..\/)*jqm\/css\/themes\/default\/jquery\.mobile\.css/g, "http://code.jquery.com/mobile/" + jQueryMobileVersion + "/jquery.mobile-" + jQueryMobileVersion + ".min.css" )
+								.replace( /(..\/)*css\/themes\/default\/web-ui-fw\.css/g, "http://web-ui-fw.github.com/jqm/" + webUiFwVersion + "/web-ui-fw.css" )
+								.replace( /(..\/)*jqm\/demos\/_assets\/css\/jqm-demos\.css/g, "http://view.jquerymobile.com/" + jQueryMobileVersion + "/demos/_assets/css/jqm-demos.css" );
+						}
+						return content;
+					}
+				},
+				files: [
+					{
+						expand: true,
+						src: [ "demos/**" ],
+						dest: dist
+					}
+				]
 			}
 		},
 
@@ -214,7 +253,8 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "test", [ "jshint", "js:release", "buildjqm", "connect", "qunit:http" ] );
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "js:release" ] );
-	grunt.registerTask( "release", [ "js", "cssbuild" ] );
+	grunt.registerTask( "demos", [ "copy:demos", "concat:demos" ] );
+	grunt.registerTask( "release", [ "js", "cssbuild", "demos" ] );
 	grunt.registerTask( "default", [ "lint", "js:release" ] );
 
 };
