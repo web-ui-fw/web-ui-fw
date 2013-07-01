@@ -2,13 +2,13 @@
 //>>description: Make words to selectable tokens
 //>>label: Token text area
 //>>group: Widgets
-/*
+
 define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"jqm/jquery.mobile.buttonMarkup" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
-*/
+
 ( function( $, window, document, undefined ) {
 	$.widget( "mobile.tokentextarea", $.mobile.widget, {
 		_focusStatus : null,
@@ -630,8 +630,7 @@ define( [
 		$( ":jqmData(role='tokentextarea')" ).tokentextarea( "refresh" );
 	});
 } ( jQuery, window, document ) );
-/*
+
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 } );
 //>>excludeEnd("jqmBuildExclude");
-*/
