@@ -9,7 +9,8 @@
     etc.
 3. Deploy the docs:
 
-    ```$ cd docs
+    ```
+$ cd docs
 $ grunt wordpress-deploy
 $ wget --mirror -p http://local.api.jquerymobile.com/
 $ cd local.api.jquerymobile.com/
@@ -54,5 +55,3 @@ $ cd ..
 $ mv local.api.jquerymobile.com/ ../dist/api-docs
 $ cd ..
 ```
-
-
