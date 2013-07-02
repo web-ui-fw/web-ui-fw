@@ -2,12 +2,14 @@
 
 1. npm install
 2. grunt test
-3. Build web-ui-fw.
+3. Build web-ui-fw with ```grunt release```.
 4. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
 
 
     ```
 $ cd docs
+$ npm install
+$ # Set up config.json with the credentials for uploading to http://local.api.jquerymobile.com/
 $ grunt wordpress-deploy
 $ wget --mirror -p http://local.api.jquerymobile.com/
 $ cd local.api.jquerymobile.com/
