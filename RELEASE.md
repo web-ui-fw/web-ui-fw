@@ -1,8 +1,9 @@
 # Release process for \<version\>
 
-0. grunt test
-1. Build web-ui-fw.
-2. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
+1. npm install
+2. grunt test
+3. Build web-ui-fw.
+4. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
 
 
     ```
@@ -51,7 +52,7 @@ $ cd ..
 $ mv local.api.jquerymobile.com/ ../dist/api-docs
 $ cd ..
 ```
-3. ```cp -a dist``` as ```<version>``` to the repository from which ```http://web-ui-fw.github.com/jqm/<version>``` will be produced.
+5. ```cp -a dist``` as ```<version>``` to the repository from which ```http://web-ui-fw.github.com/jqm/<version>``` will be produced.
 
     For example:
     ```
@@ -69,4 +70,4 @@ http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.js
 http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.css
 etc.
 ```
-4. git tag <version> and push.
+6. git tag <version> and push.
