@@ -58,3 +58,4 @@ http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.js
 http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.css
 etc.
 ```
+4. git tag <version> and push.
