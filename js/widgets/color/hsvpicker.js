@@ -11,6 +11,7 @@ define( [
 	"jqm/widgets/forms/slider",
 	"./colorwidget",
 	"../../behaviors/createOuter",
+	"../../behaviors/optionDemultiplexer",
 	"../../web-ui-fw.reduceScope"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
