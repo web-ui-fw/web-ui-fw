@@ -2,12 +2,7 @@
 
 0. grunt test
 1. Build web-ui-fw.
-2. cp -a dist/* to the repository representing http://web-ui-fw.github.com/jqm/&lt;version&gt;. This should result in the following directory structure:
-
-    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.js
-    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.css
-    etc.
-3. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
+2. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
 
 
     ```
@@ -56,3 +51,8 @@ $ cd ..
 $ mv local.api.jquerymobile.com/ ../dist/api-docs
 $ cd ..
 ```
+3. cp -a dist/* to the repository representing http://web-ui-fw.github.com/jqm/&lt;version&gt;. This should result in the following directory structure:
+
+    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.js
+    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.css
+    etc.
