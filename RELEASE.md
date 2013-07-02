@@ -51,8 +51,10 @@ $ cd ..
 $ mv local.api.jquerymobile.com/ ../dist/api-docs
 $ cd ..
 ```
-3. cp -a dist/* to the repository representing http://web-ui-fw.github.com/jqm/&lt;version&gt;. This should result in the following directory structure:
+3. cp -a dist/* to the repository representing ```http://web-ui-fw.github.com/jqm/<version>```. This should result in the following directory structure:
 
-    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.js
-    http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.css
-    etc.
+    ```
+http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.js
+http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.css
+etc.
+```
