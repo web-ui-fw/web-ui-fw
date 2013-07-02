@@ -7,7 +7,8 @@
     http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.js
     http://web-ui-fw.github.com/jqm/&lt;version&gt;/web-ui-fw.css
     etc.
-3. Deploy the docs:
+3. Deploy the API docs as shown below. This assumes you have already set up LAMP with wordpress to host local.api.jquerymobile.com and that the docs will overwrite that site.
+
 
     ```
 $ cd docs
