@@ -51,7 +51,18 @@ $ cd ..
 $ mv local.api.jquerymobile.com/ ../dist/api-docs
 $ cd ..
 ```
-3. cp -a dist/* to the repository representing ```http://web-ui-fw.github.com/jqm/<version>```. This should result in the following directory structure:
+3. ```cp -a dist``` as ```<version>``` to the repository from which ```http://web-ui-fw.github.com/jqm/<version>``` will be produced.
+
+    For example:
+    ```
+$ cp -a dist ../web-ui-fw.github.com/jqm/0.2.0
+$ cd ../web-ui-fw.github.com
+$ git add jqm/0.2.0
+$ git commit -a -m 'Web UI Framework version 0.2.0.'
+$ git push origin master
+```
+
+    This should result in the following directory structure:
 
     ```
 http://web-ui-fw.github.com/jqm/<version>/web-ui-fw.js
