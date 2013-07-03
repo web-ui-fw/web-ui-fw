@@ -48,17 +48,10 @@ define( [
 
 			// create a label tag.
 			labeltag.innerText = option.label;
-			/* WORK::Reduced string concatenation.
-			labeltag.className = "ui-tokentextarea-label " + " ui-tokentextarea-label-theme-" + option.theme;
-			*/
 			labeltag.className = "ui-tokentextarea-label ui-tokentextarea-label-theme-" + option.theme;
-			//labeltag.tabIndex = 0;
 			$view.append( labeltag );
 
 			// create a input tag
-			/* WORK::Reduced string concatenation.
-			inputbox.className = "ui-tokentextarea-input ui-tokentextarea-input-visible" + " ui-tokentextarea-input-theme-" + option.theme;
-			*/
 			inputbox.className = "ui-tokentextarea-input ui-tokentextarea-input-visible ui-tokentextarea-input-theme-" + option.theme;
 			$view.append( inputbox );
 
@@ -104,9 +97,6 @@ define( [
 		_bindEvents: function() {
 			var self = this,
 				$view = self.element,
-				/* WORK::The value used only once doesn’t variable declaration and uses the value directly.
-				option = self.options,
-				*/
 				theme = self.options.theme,
 				$inputbox = self._$inputbox,
 				$moreBlock = self._$moreBlock;
@@ -123,18 +113,11 @@ define( [
 
 				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
 				if ( typeof $lockBlock !== "undefined" ) {
-					/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-					$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
-					*/
 					$lockBlock
 						.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
 						.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
 				}
 
-
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-				$this.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
-				*/
 				$this.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
 					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
 				$view.trigger( "select" );
@@ -228,9 +211,6 @@ define( [
 			// create a new text HTMLDivElement.
 			textBlock = document.createElement( "div" );
 			textBlock.innerText = messages;
-			/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-			textBlock.className = "ui-tokentextarea-block";
-			*/
 			textBlock.className = "ui-tokentextarea-block ui-tokentextarea-block-theme-" + self.options.theme;
 			textBlock.style.visibility = "hidden";
 
@@ -269,9 +249,6 @@ define( [
 					self._modifyInputBoxWidth();
 				});
 			} else {
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-				$view.find( "div:last" ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
-				*/
 				$view.find( "div:last" )
 					.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
 					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
@@ -288,9 +265,6 @@ define( [
 				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
 
 			if ( $lockBlock ) {
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-				$lockBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
-				*/
 				$lockBlock
 					.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
 					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
@@ -309,10 +283,6 @@ define( [
 				self._removeTextBlock();
 			} else {
 				$tmpBlock = $view.find( "div.ui-tokentextarea-sblock" );
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-				$tmpBlock.removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
-				$lastBlock.removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
-				*/
 				$tmpBlock
 					.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
 					.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
@@ -424,9 +394,6 @@ define( [
 				$view = this.element;
 
 			$view.find( ".ui-tokentextarea-desclabel" ).remove();
-			/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-			$view.find( "div.ui-tokentextarea-sblock" ).removeClass( "ui-tokentextarea-sblock" ).addClass( "ui-tokentextarea-block" );
-			*/
 			$view.find( "div.ui-tokentextarea-sblock" )
 				.removeClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme )
 				.addClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme );
@@ -480,9 +447,6 @@ define( [
 			if ( lastIndex !== $blocks.length ) {
 				statement = self._stringFormat( self.options.description, $blocks.length - lastIndex - 1 );
 				tempBlock = document.createElement( 'span' );
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-desclabel to use as theme.
-				tempBlock.className = "ui-tokentextarea-desclabel";
-				*/
 				tempBlock.className = "ui-tokentextarea-desclabel ui-tokentextarea-desclabel-theme-" + self.options.theme;
 				stateBlock = document.createElement( 'span' );
 				stateBlock.innerText = statement;
@@ -530,9 +494,6 @@ define( [
 			// 2. select pointed block.
 			$blocks = $view.find( "div" );
 			if ( $blocks.length > index ) {
-				/* WORK::Modified due to seperating some CSS from ui-tokentextarea-sblock or from ui-tokentextarea-block to use as theme.
-				$( $blocks[index] ).removeClass( "ui-tokentextarea-block" ).addClass( "ui-tokentextarea-sblock" );
-				*/
 				$( $blocks[index] )
 					.removeClass( "ui-tokentextarea-block ui-tokentextarea-block-theme-" + theme )
 					.addClass( "ui-tokentextarea-sblock ui-tokentextarea-sblock-theme-" + theme );
