@@ -289,7 +289,7 @@ $.extend(MomentumTracker.prototype, {
 			// make view layer
 			self._$clip = $( self.element ).addClass( "ui-scrollview-clip" ).addClass( "ui-virtualgrid-view" );
 			self._$clip.css( "overflow", "hidden" );
-			self._$view = $( document.createElement( "div" ) ).addClass( "ui-virtualgrid-overthrow" );
+			self._$view = $( document.createElement( "div" ) ).addClass( "ui-virtualgrid-scroll-container" );
 			self._$view[ 0 ].style.overflow = "auto";
 			if ( self._direction ) {
 				self._$view[ 0 ].style[ "overflow-y" ] = "hidden";
