@@ -63,7 +63,7 @@
 		<desc>A basic example of a page with a virtualgrid</desc>
 		<html><![CDATA[
 			<div data-role="header">
-				<link rel="stylesheet" href="../../resources/virtualgrid/namecard.css">
+				<link rel="stylesheet" href="http://web-ui-fw.github.com/jqm/0.2.0/demos/widgets/virtualgrid/namecard.css">
 				<h1>Web UI Framework Example</h1>
 			</div>
 			<div data-role="content" > 
@@ -88,7 +88,7 @@
 						return ;
 					};
 				</script>
-				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="../../resources/virtualgrid/virtualgrid-db-demo-mini.json" data-data-type="json" data-replace-helper ="replaceHelper">
+				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="http://web-ui-fw.github.io/jqm/0.2.0/demos/widgets/virtualgrid/virtualgrid-db-demo.json" data-data-type="json" data-replace-helper ="replaceHelper">
 				</div><!-- /virtualgrid-->
 			</div>
 	]]></html>
