@@ -213,8 +213,12 @@ $.extend(MomentumTracker.prototype, {
 					self._loadedData = true;
 					self.element.trigger("virtualgrid.firstdraw");
 				},
-				errorCB = function ( data ) {
+				errorCB = function ( data ) {					
 					$.mobile.loading("hide");
+					// show error message
+					$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme,"Can not load data : "+ data.statusText, true );
+					// hide after delay
+					setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
 				};
 
 			if ( _repository === null ) {
@@ -248,7 +252,7 @@ $.extend(MomentumTracker.prototype, {
 				dataType: _dataType,
 				timeout : 2000,
 				cache: true,
-				async: false,
+				async: true,
 				success: successCB,
 				error: errorCB
 			} );
