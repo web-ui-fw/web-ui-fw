@@ -213,19 +213,18 @@ $.extend(MomentumTracker.prototype, {
 					self._loadedData = true;
 					self.element.trigger("virtualgrid.firstdraw");
 				},
-				errorCB = function ( data ) {					
+				errorCB = function ( data ) {
 					$.mobile.loading("hide");
+					self.element.unbind( "virtualgrid.firstdraw" );
 					// show error message
-					$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme,"Can not load data : "+ data.statusText, true );
-					// hide after delay
-					setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
+					self._showErrorMessage( "Can not load the data : \n" + data.statusText + "\n(" +  _repository + ")" );
 				};
 
 			if ( _repository === null ) {
-				return ;
-			}
-
-			if (  !( _dataType === "json" ||  _dataType === 'xml')  ){
+				$( document ).one( "pageshow" , function ( event ) {
+					self._showErrorMessage( "Please enter the path of data to the attribute of 'data-repository'. " );
+					return false;
+				});
 				return ;
 			}
 
@@ -238,6 +237,7 @@ $.extend(MomentumTracker.prototype, {
 					self.element.unbind("virtualgrid.firstdraw");
 					self.refresh();
 				}
+				return false;
 			});
 
 			self._$document = $( document );
@@ -1215,6 +1215,13 @@ $.extend(MomentumTracker.prototype, {
 			} else { // IE
 				document.selection.empty();
 			}
+		},
+
+		_showErrorMessage: function ( message ) {
+			// show error message
+			$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, message, true );
+			// hide after delay
+			setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
 		}
 	} );
 
