@@ -7,7 +7,7 @@
 			$view, toXPos = 0, toYPos = 220;
 
 		deepEqual( $virtualgrid.length  , 1, "Virtualgrid is created." );
-		$view = $virtualgrid.find( ".ui-virtualgrid-overthrow" ) [ 0 ];
+		$view = $virtualgrid.find( ".ui-virtualgrid-scroll-container" ) [ 0 ];
 		$virtualgrid.virtualgrid( "scrollTo", toXPos, toYPos );
 
 		asyncTest ( "asynchronous test :  scroll move test.", function (){
