@@ -88,7 +88,7 @@
 						return ;
 					};
 				</script>
-				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="http://web-ui-fw.github.io/jqm/0.2.0/demos/widgets/virtualgrid/virtualgrid-db-demo.json" data-data-type="json" data-replace-helper ="replaceHelper">
+				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="http://www.allsteady.p.ht/resources/json/getJson.php" data-data-type="json" data-replace-helper ="replaceHelper">
 				</div><!-- /virtualgrid-->
 			</div>
 	]]></html>
