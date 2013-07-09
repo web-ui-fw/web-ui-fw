@@ -37,7 +37,6 @@
 }
 .ui-tokentextarea div {
   display: inline-block;
-  text-align: center;
   cursor: pointer;
   margin: .3em;
   padding: .2em .5em;
@@ -61,7 +60,6 @@
 div.ui-tokentextarea-block {
   background-size: contain;
   background-repeat: no-repeat;
-  padding-left: .7em;
 }
 div.ui-tokentextarea-block-theme-c {
   background-color: #769dcc;
@@ -70,7 +68,6 @@ div.ui-tokentextarea-block-theme-c {
 div.ui-tokentextarea-sblock {
   background-size: contain;
   background-repeat: no-repeat;
-  padding-left: .7em;
 }
 div.ui-tokentextarea-sblock-theme-c {
   background-color: #4093f7;
