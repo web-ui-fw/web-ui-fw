@@ -1,59 +1,137 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Tokentextarea Demo - Web UI Framework Demos</title>
-		<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
-		<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
-		<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css">
+	<title>Tokentextarea Demo - Web UI Framework Demos</title>
+	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
+	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
+	<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css">
 
-		<script src="../../../jqm/js/jquery.js"></script>
-		<script src="../../../jqm/js/"></script>
-		<script src="../../../js/"></script>
-		<script src="../../_assets/js/"></script>
-	</head>
-	<body>
-		<div data-role="page" id="tokentextarea" data-dom-cache="true">
-			<div data-role="header" data-position="fixed">
-				<h1>TOKEN TEXT AREA</h1>
-			</div>
-			<div data-role="content">
-				<div data-role="tokentextarea" data-link="addressbook.html"></div>
-				<br>
-				<ul data-role="listview">
-					<li><a id='TTAaddItemTest'>Append Item</a></li>
-					<li><a id='TTAremoveItemTest'>Remove first Item</a></li>
-					<li><a id='TTAinputTextTest'>Input 'Hello'</a></li>
-					<li><a id='TTAgetInputTextTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Get input text</a></li>
-					<li><a id='TTAselectItemTest'>Select 1</a></li>
-					<li><a id='TTAgetSelectedItemTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Selected item</a></li>
-					<li><a id='TTAlengthTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Length</a></li>
-					<li><a id='TTAfocusOutTest'>Grouping On</a></li>
-					<li><a id='TTAfocusInTest'>Grouping Off</a></li>
-					<li><a id='TTAremoveAllItemTest'>Remove All Item</a></li>
-				</ul>
+	<script src="../../../jqm/js/jquery.js"></script>
+	<script src="../../../jqm/js/"></script>
+	<script src="../../../js/"></script>
+	<script src="../../_assets/js/"></script>
+	<script>
+		$.mobile.document.one( "pagecreate", "#tokentextarea", function() {
+			var $tta = $( ":jqmData(role='tokentextarea')" ),
+				$popup = $( ".tta-popup .ui-popup-text" );
 
-				<div id="tta_popup" data-role="popup" class="tta-popup ui-corner-all" style="width:300px">
-					<div data-role="header" data-theme="a" class="ui-corner-top">
-						<h1>Message</h1>
-					</div>
-					<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-						<p class="ui-popup-text "> message</p>
-						<center>
-							<div class="ui-popup-button-bg">
-								<a data-role="button" data-rel="back" data-inline="true" data-theme="c">OK</a>
-							</div>
-						</center>
+			$( "#TTAaddItemTest" ).on( "click", function() {
+				$tta.tokentextarea( "add", "additem" );
+			});
+
+			$( "#TTAremoveItemTest" ).on( "click", function() {
+				$tta.tokentextarea( "remove", 0 );
+			});
+
+			$( "#TTAinputTextTest" ).on( "click", function() {
+				$tta.tokentextarea( "inputText", "Hello~~~" );
+			});
+
+			$( "#TTAgetInputTextTest" ).on( "click", function() {
+				var input = $tta.tokentextarea( "inputText" );
+				$popup.text( "Input string : " + input );
+			});
+
+			$( "#TTAremoveAllItemTest" ).on( "click", function() {
+				$tta.tokentextarea( "remove" );
+			});
+
+			$( "#TTAgetSelectedItemTest" ).on( "click", function() {
+				var content = $tta.tokentextarea( "select" );
+				$popup.text( "Select content : " + content );
+			});
+
+			$( "#TTAselectItemTest" ).on( "click", function() {
+				$tta.tokentextarea( "select", 0 );
+			});
+
+			$( "#TTAlengthTest" ).on( "click", function() {
+				var length = $tta.tokentextarea( "length" );
+				$popup.text( "Length : " + length );
+			});
+
+			$( "#TTAfocusInTest" ).on( "click", function() {
+				$tta.tokentextarea( "focusIn", 0 );
+			});
+
+			$( "#TTAfocusOutTest" ).on( "click", function() {
+				$tta.tokentextarea( "focusOut", 0 );
+			});
+
+			$( "#TTAdestroyTest" ).on( "click", function() {
+				$tta.tokentextarea( "destroy" );
+			});
+		});
+
+		$.mobile.document.one( "pagecreate", "#addressbook", function() {
+			var self = this,
+				$address = $( "#addressbook" );
+
+			self.itemSelected = false;
+
+			$address.on( "mousedown", function() {
+				self.itemSelected = false;
+			});
+
+			$address.on( "mouseup", function() {
+				self.itemSelected = true;
+			});
+
+			$( "#contentList a" ).on( "click", function() {
+				if ( self.itemSelected ) {
+					var arg = $( this ).text();
+					$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", arg );
+					history.back();
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div data-role="page" id="tokentextarea" data-dom-cache="true">
+		<div data-role="header" data-position="fixed" data-theme="f">
+			<h1>Tokentextarea Demo - Web UI Framework Demos</h1>
+			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
+		</div> <!--/header -->
+		<div data-role="content">
+			<div class="content-primary">
+
+				<h3>Tokentextarea</h3>
+				<div data-demo-html="true" data-demo-js="true">
+					<div data-role="tokentextarea" data-link="addressbook.html"></div>
+
+					<ul data-role="listview" data-inset="true">
+						<li><a id='TTAaddItemTest'>Append Item</a></li>
+						<li><a id='TTAremoveItemTest'>Remove first Item</a></li>
+						<li><a id='TTAinputTextTest'>Input 'Hello'</a></li>
+						<li><a id='TTAgetInputTextTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Get input text</a></li>
+						<li><a id='TTAselectItemTest'>Select 1</a></li>
+						<li><a id='TTAgetSelectedItemTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Selected item</a></li>
+						<li><a id='TTAlengthTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Length</a></li>
+						<li><a id='TTAfocusOutTest'>Grouping On</a></li>
+						<li><a id='TTAfocusInTest'>Grouping Off</a></li>
+						<li><a id='TTAremoveAllItemTest'>Remove All Item</a></li>
+					</ul>
+
+					<div id="tta_popup" data-role="popup" class="tta-popup ui-corner-all" style="width:300px">
+						<div data-role="header" data-theme="a" class="ui-corner-top">
+							<h1>Message</h1>
+						</div>
+						<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+							<p class="ui-popup-text "> message</p>
+							<center>
+								<div class="ui-popup-button-bg">
+									<a data-role="button" data-rel="back" data-inline="true" data-theme="c">OK</a>
+								</div>
+							</center>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div data-role="footer" data-position="fixed">
-				<h1>Footer</h1>
-			</div>
-			<!-- Demo.js -->
-			<script src="tokentextarea-demo.js"></script>
-		</div>
-	</body>
+		</div> <!--/content -->
+	</div>
+</body>
 </html>
