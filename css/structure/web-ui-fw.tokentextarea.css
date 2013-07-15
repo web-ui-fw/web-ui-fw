@@ -60,6 +60,7 @@
 div.ui-tokentextarea-block {
   background-size: contain;
   background-repeat: no-repeat;
+  vertical-align: middle;
 }
 div.ui-tokentextarea-block-theme-c {
   background-color: #769dcc;
@@ -68,6 +69,7 @@ div.ui-tokentextarea-block-theme-c {
 div.ui-tokentextarea-sblock {
   background-size: contain;
   background-repeat: no-repeat;
+  vertical-align: middle;
 }
 div.ui-tokentextarea-sblock-theme-c {
   background-color: #4093f7;
