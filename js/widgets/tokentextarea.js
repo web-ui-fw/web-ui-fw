@@ -47,7 +47,7 @@ define( [
 			$view.hide().empty().addClass( "ui-" + role );
 
 			// create a label tag.
-			labeltag.innerText = option.label;
+			labeltag.innerHTML = option.label;
 			labeltag.className = "ui-tokentextarea-label ui-tokentextarea-label-theme-" + option.theme;
 			$view.append( labeltag );
 
@@ -210,7 +210,7 @@ define( [
 
 			// create a new text HTMLDivElement.
 			textBlock = document.createElement( "div" );
-			textBlock.innerText = messages;
+			textBlock.innerHTML = messages;
 			textBlock.className = "ui-tokentextarea-block ui-tokentextarea-block-theme-" + self.options.theme;
 			textBlock.style.visibility = "hidden";
 
@@ -449,9 +449,9 @@ define( [
 				tempBlock = document.createElement( 'span' );
 				tempBlock.className = "ui-tokentextarea-desclabel ui-tokentextarea-desclabel-theme-" + self.options.theme;
 				stateBlock = document.createElement( 'span' );
-				stateBlock.innerText = statement;
+				stateBlock.innerHTML = statement;
 				numBlock = document.createElement( 'span' );
-				numBlock.innerText = $blocks.length - lastIndex - 1;
+				numBlock.innerHTML = $blocks.length - lastIndex - 1;
 				numBlock.style.visibility = "hidden";
 				tempBlock.appendChild( stateBlock );
 				tempBlock.appendChild( numBlock );
