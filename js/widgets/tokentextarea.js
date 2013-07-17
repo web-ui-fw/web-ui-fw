@@ -455,7 +455,7 @@ define( [
 				numBlock.style.visibility = "hidden";
 				tempBlock.appendChild( stateBlock );
 				tempBlock.appendChild( numBlock );
-				$( $blocks[lastIndex] ).after( tempBlock );
+				$( $blocks[index] ).after( tempBlock );
 			}
 
 			// update focus state
