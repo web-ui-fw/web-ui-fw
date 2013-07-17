@@ -9,6 +9,7 @@
   margin-right: .3em;
   padding: .6em 0em;
   text-align: center;
+  vertical-align: middle;/* WORK::Add */
 }
 .ui-tokentextarea-label-theme-c {
   color: #666666;
@@ -80,6 +81,7 @@ div.ui-tokentextarea-sblock-theme-c {
   outline: none;
   border: 0;
   text-align: left;
+  vertical-align: middle;/* WORK::Add */
 }
 .ui-tokentextarea .ui-tokentextarea-desclabel-theme-c {
   color: #666666;
