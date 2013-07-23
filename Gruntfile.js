@@ -124,6 +124,13 @@ module.exports = function( grunt ) {
 						jqmBuildExclude: true
 					},
 
+					//File paths are relative to the build file, or if running a commmand
+					//line build, the current directory.
+					wrap: grunt.option( "wrap" ) ? {
+						startFile: "build/wrap.start",
+						endFile: "build/wrap.end"
+					} : undefined,
+
 					onBuildWrite: function( moduleName, path, contents ) {
 						return contents.replace( /__version__/g, grunt.config.process( "\"<%= version %>\"" ) );
 					}
