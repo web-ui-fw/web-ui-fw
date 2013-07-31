@@ -6,6 +6,9 @@
 	<longdesc>
 		<h3>Virtualgrid</h3>
 		<p>Displays an array of items tiled horizontally and vertically. The user can pan the list horizontally or vertically.</p>
+		<p>Note</p>
+		<p>You want to use a data on different domain server, you need to check whether to support CORS(Cross Origin Resources Sharing) in the server. </p>
+		<p>If the server does not support CORS, virtualgrid would not work properly.</p>
   	</longdesc>
 
 	<added>0.2.0</added>
