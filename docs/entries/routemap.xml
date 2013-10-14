@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../entries2html.xsl" ?>
+<entry name="routemap" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="routemap">
+	<title>Routemap Widget</title>
+	<desc>Creates a routemap</desc>
+	<longdesc>
+		<h3>Route Map</h3>
+		<p>Routemap is a jquery mobile plugin to render a route data.</p>
+		<p>Routemap supports JSON format for DB. So, user can set DB by setting a file path or a variable on the widget.And it drawing the line between two stations automatically to use DB. You can change each style for stations, routes, and labels to modify DB.</p>
+		<p>Routemap can indecated the shortest route between two stations that user selected. And it supports a multi-language, also.</p>
+
+<pre><code>
+&lt;div data-role=&quot;routemap&quot; data-db=&quot;data.json&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+
+	</longdesc>
+
+	<added>0.3.0</added>
+	<options>
+		<option name="db" default="null" example-value="false">
+			<desc>
+				<p>The URL of a JSON file or a javascript variable to load.</p>
+			</desc>
+			<type name="String" />
+		</option>
+		<option name="language" default="null" example-value="false">
+			<desc>
+				<p>Determine the current languauge. The valuse must be the abbreviation of language names(ex: English > en )</p>
+			</desc>
+			<type name="String" />
+		</option>
+	</options>
+	<events>
+		<event name="create">
+			<desc>Triggered when a routemap is created
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="ui" type="Object">
+				<desc></desc>
+			</argument>
+		</event>
+	</events>
+	<methods>
+		<method name="getCodeByName" example-params="options">
+			<desc>Gets an array of station code associated with the specified station name.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="name" default=''>
+						<desc>The name of staion</desc>
+						<type name="Object"/>
+					</property>
+				</argument>
+		</method>
+		<method name="getNameByCode" example-params="options">
+			<desc>Gets a station name with associated the specified station code.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="code" default=''>
+						<desc>The code of staion</desc>
+						<type name="String"/>
+					</property>
+				</argument>
+		</method>
+		<method name="shortestPath" example-params="options">
+			<desc>Returns the array of staion code about the shortest path from source to destination.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="source" default=''>
+						<desc>The staion code of source</desc>
+						<type name="String"/>
+					</property>
+					<property name="destination" default=''>
+						<desc>The staion code of destination</desc>
+						<type name="String"/>
+					</property>
+					<property name="isMinimumTransper" default='false'>
+						<desc>When set to true, the widget will find shortest path with "minimum transpers" mode.<br />Default mode is "shortest route" mode.</desc>
+						<type name="Boolean"/>
+					</property>
+				</argument>
+		</method>
+		<method name="highlight" example-params="options">
+			<desc>Add a highlighting style to stations.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="stations" default=''>
+						<desc>The array of staion code</desc>
+						<type name="Array"/>
+					</property>
+				</argument>
+		</method>
+		<method name="dishighlight" example-params="options">
+			<desc>Remove a highlighting style from stations.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="stations" default=''>
+						<desc>The array of staion code</desc>
+						<type name="Array"/>
+					</property>
+				</argument>
+		</method>
+		<method name="refresh" example-params="options">
+			<desc>Redraw the widget, after having made some external modifications.
+			</desc>
+				<argument name="options" type="Object">
+					<property name="redraw" default='false'>
+						<desc>When set to true, the widget will redraw everything by a route data.<br />Only re-layout the widget if set to false.</desc>
+						<type name="Boolean"/>
+					</property>
+				</argument>
+		</method>
+	</methods>
+	<example>
+		<desc>A basic example of a page with routemap.</desc>
+		<html><![CDATA[<div data-role="header">
+		<h1>Web UI Framework Example</h1>
+	</div>
+	<div data-role="content">
+		<div data-role="routemap">
+		</div>
+	</div>]]></html>
+	</example>
+	<category slug="widgets"/>
+</entry>
