@@ -10,54 +10,16 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-var scopeReduction = {},
-	reduceScope = function( targets, useKeepNative ) {
-		var idx,
-			ns = this.namespace,
-			name = this.widgetName,
-			nsList = scopeReduction[ ns ],
-			scope = nsList ? nsList[ name ] : undefined;
-
-		if ( scope ) {
-			for ( idx = 0 ; targets.length > 0 && idx < scope.ls.length ; idx++ ) {
-				targets = targets.not( scope.ls[ idx ] );
-			}
-
-			scope.orig.call( this, targets, useKeepNative );
-		}
-	},
-	overwriteEnhance = function( ns, widget ) {
-		function overwrite() {
-			if ( $[ ns ][ widget ] ) {
-				// Overwrite the enhance() function for this widget class with our scope-
-				// restricting version if it's not already overwritten
-				if ( $[ ns ][ widget ].prototype.enhance !== reduceScope ) {
-					scopeReduction[ ns ][ widget ].orig = $[ ns ][ widget ].prototype.enhance;
-					$[ ns ][ widget ].prototype.enhance = reduceScope;
-				}
-			}
-		}
-
-		if ( $[ ns ] ) {
-			overwrite();
-		} else {
-			( ( $.mobile && $.mobile.document ) || $( document ) ).one( "mobileinit", function() {
-				overwrite();
-			});
-		}
-	};
-
+// Wrap the initSelector for a widget in a :not(:not()) and intersect with
+// :not(filter). Assign the resulting selector to the widget's initSelector.
 $.mobile.reduceEnhancementScope = function( ns, widget, filter ) {
-	var nsList = scopeReduction[ ns ] || {},
-		scope = nsList[ widget ] || { ls: [] };
+	var initSelector;
 
-		// Add the scope restriction
-		scope.ls.push( filter );
-		nsList[ widget ] = scope;
-		scopeReduction[ ns ] = nsList;
+	widget = $[ ns ][ widget ];
+	initSelector = widget.initSelector;
+	initSelector = initSelector ? ":not(:not(" + initSelector + "))" : "";
 
-		// Overwrite the enhance function for the given widget class
-		overwriteEnhance( ns, widget );
+	widget.initSelector = initSelector + ":not(" + filter + ")";
 };
 
 })( jQuery );

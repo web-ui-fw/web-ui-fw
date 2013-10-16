@@ -19,10 +19,7 @@ define( [
 
 var mask = $( "<div></div>", { "class": "ui-hsvpicker-mask" } );
 
-$.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
-	options: {
-		initSelector: ":jqmData(role='hsvpicker')"
-	},
+$.widget( "mobile.hsvpicker", $.extend( {
 
 	_create: function() {
 		var ui = {
@@ -277,13 +274,9 @@ $.widget( "mobile.hsvpicker", $.mobile.widget, $.extend( {
 
 $.widget( "mobile.hsvpicker", $.mobile.hsvpicker, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
-// Add a filter to prevent the textinput widget from enhancing color inputs 
+// Add a filter to prevent the textinput widget from enhancing color inputs
 // that our initSelector would match
-$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.hsvpicker.prototype.options.initSelector );
-
-$( document ).bind( "pagecreate create", function( e )  {
-	$.mobile.hsvpicker.prototype.enhanceWithin( e.target, true );
-});
+$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.hsvpicker.initSelector );
 
 })( jQuery );
 

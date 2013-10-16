@@ -125,7 +125,7 @@ $.extend(MomentumTracker.prototype, {
 });
 
 
-	jQuery.widget ( "mobile.virtualgrid", jQuery.mobile.widget, {
+	jQuery.widget ( "mobile.virtualgrid", {
 		// view
 		_$view : null,
 		_$clip : null,
@@ -221,7 +221,7 @@ $.extend(MomentumTracker.prototype, {
 				};
 
 			if ( _repository === null ) {
-				$( document ).one( "pageshow" , function ( event ) {
+				$( document ).one( "pageshow" , function ( /* event */ ) {
 					self._showErrorMessage( "Please enter the path of data to the attribute of 'data-repository'. " );
 					return false;
 				});
@@ -232,7 +232,7 @@ $.extend(MomentumTracker.prototype, {
 			if (  _replaceHelper && $.isFunction( _replaceHelper) ) {
 				self._replaceHelper = _replaceHelper;
 			}
-			self.element.bind( "virtualgrid.firstdraw", function ( event ) {
+			self.element.bind( "virtualgrid.firstdraw", function ( /* event */ ) {
 				if ( self._isPageShow && self._loadedData ) {
 					self.element.unbind("virtualgrid.firstdraw");
 					self.refresh();
@@ -1122,12 +1122,9 @@ $.extend(MomentumTracker.prototype, {
 		},
 
 		_increaseRow : function ( num ) {
-			var self = this,
-				$row = null,
-				$children = null,
+			var $row = null,
 				idx = 0,
-				itemSize =  this._direction ? this._$templateItemSize. width :  this._$templateItemSize. height,
-				childCount = 0;
+				itemSize =  this._direction ? this._$templateItemSize. width :  this._$templateItemSize. height;
 
 
 			for ( ; idx < num ; idx++ ) {
@@ -1145,10 +1142,6 @@ $.extend(MomentumTracker.prototype, {
 
 		_decreaseRow : function ( num ) {
 			var self = this,
-				attrName = this._direction ? "left" : "top",
-				$tailRow = null,
-				$headRow = null,
-				position,
 				idx = 0;
 
 			for ( ; idx < num ; idx++ ) {
@@ -1223,10 +1216,6 @@ $.extend(MomentumTracker.prototype, {
 			// hide after delay
 			setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
 		}
-	} );
-
-	$( document ).bind( "pagecreate create", function ( e ) {
-		$.mobile.virtualgrid.prototype.enhanceWithin( e.target );
 	} );
 
 } (jQuery, window, document) );

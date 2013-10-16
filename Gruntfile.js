@@ -44,10 +44,10 @@ module.exports = function( grunt ) {
 			grunt: {
 				options: {
 					jshintrc: ".jshintrc"
-				},
+				}/*,
 				files: {
 					src: [ "Gruntfile.js" ]
-				}
+				}*/
 			}
 		},
 

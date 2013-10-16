@@ -17,12 +17,11 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
 
-$.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
+$.widget( "mobile.colorpalette", $.extend( {
 	options: {
 		showPreview: false,
 		rows: 2,
-		colors: "#ff0000,#ff8000,#ffff00,#80ff00,#00ff00,#00ff80,#00ffff,#0080ff,#0000ff,#8000ff,#ff00ff,#ff0080",
-		initSelector: ":jqmData(role='colorpalette')"
+		colors: "#ff0000,#ff8000,#ffff00,#80ff00,#00ff00,#00ff80,#00ffff,#0080ff,#0000ff,#8000ff,#ff00ff,#ff0080"
 	},
 
 	_create: function() {
@@ -243,13 +242,9 @@ $.widget( "mobile.colorpalette", $.mobile.widget, $.extend( {
 
 $.widget( "mobile.colorpalette", $.mobile.colorpalette, $.extend( {}, $.mobile.behaviors.colorWidget ) );
 
-// Add a filter to prevent the textinput widget from enhancing color inputs 
+// Add a filter to prevent the textinput widget from enhancing color inputs
 // that our initSelector would match
-$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.colorpalette.prototype.options.initSelector );
-
-$( document ).bind( "pagecreate create", function( e )  {
-	$.mobile.colorpalette.prototype.enhanceWithin( e.target, true );
-});
+$.mobile.reduceEnhancementScope( "mobile", "textinput", $.mobile.colorpalette.initSelector );
 
 })( jQuery );
 

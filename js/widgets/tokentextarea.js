@@ -10,7 +10,7 @@ define( [
 //>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
-	$.widget( "mobile.tokentextarea", $.mobile.widget, {
+	$.widget( "mobile.tokentextarea", {
 		_focusStatus : null,
 		_items : null,
 		_viewWidth : 0,
@@ -102,7 +102,7 @@ define( [
 				$moreBlock = self._$moreBlock;
 
 			// delegate a event to HTMLDivElement(each block).
-			$view.delegate( "div", "click", function( event ) {
+			$view.delegate( "div", "click", function( /* event */ ) {
 				var $this = $( this ),
 					$lockBlock;
 
@@ -171,7 +171,7 @@ define( [
 				});
 			});
 
-			$.mobile.document.bind( "pagechange.tta", function( event ) {
+			$.mobile.document.bind( "pagechange.tta", function( /* event */ ) {
 				if ( $view.innerWidth() === 0 ) {
 					return;
 				}
@@ -179,7 +179,7 @@ define( [
 				$inputbox.removeClass( "ui-tokentextarea-input-invisible" ).addClass( "ui-tokentextarea-input-visible" );
 			});
 
-			$view.bind( "click", function( event ) {
+			$view.bind( "click", function( /* event */ ) {
 				if ( self._focusStatus === "focusOut" ) {
 					self.focusIn();
 				}
@@ -237,9 +237,7 @@ define( [
 			var self = this,
 				theme = self.options.theme,
 				$view = this.element,
-				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" ),
-				_temp = null,
-				_dummy = function() {};
+				$lockBlock = $view.find( "div.ui-tokentextarea-sblock" );
 
 			if ( $lockBlock !== null && $lockBlock.length > 0 ) {
 				self._currentWidth -= self._calcBlockWidth( $lockBlock );
@@ -294,7 +292,6 @@ define( [
 
 		_ellipsisTextBlock: function( textBlock ) {
 			var self = this,
-				$view = self.element,
 				maxWidth = self._viewWidth / 2;
 
 			if ( self._calcBlockWidth( textBlock ) > maxWidth ) {
@@ -446,11 +443,11 @@ define( [
 
 			if ( lastIndex !== $blocks.length ) {
 				statement = self._stringFormat( self.options.description, $blocks.length - lastIndex - 1 );
-				tempBlock = document.createElement( 'span' );
+				tempBlock = document.createElement( "span" );
 				tempBlock.className = "ui-tokentextarea-desclabel ui-tokentextarea-desclabel-theme-" + self.options.theme;
-				stateBlock = document.createElement( 'span' );
+				stateBlock = document.createElement( "span" );
 				stateBlock.innerHTML = statement;
-				numBlock = document.createElement( 'span' );
+				numBlock = document.createElement( "span" );
 				numBlock.innerHTML = $blocks.length - lastIndex - 1;
 				numBlock.style.visibility = "hidden";
 				tempBlock.appendChild( stateBlock );
@@ -514,9 +511,7 @@ define( [
 			var self = this,
 				$view = this.element,
 				$blocks = $view.find( "div" ),
-				index = 0,
-				_temp = null,
-				_dummy = function() {};
+				index = 0;
 
 			if ( this._focusStatus === "focusOut" ) {
 				return;
@@ -581,10 +576,6 @@ define( [
 
 			this._trigger( "destroy" );
 		}
-	});
-
-	$.mobile.document.bind( "pagecreate create", function() {
-		$( ":jqmData(role='tokentextarea')" ).tokentextarea();
 	});
 
 	$.mobile.window.bind( "resize", function() {
