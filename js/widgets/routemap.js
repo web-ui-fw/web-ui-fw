@@ -1,11 +1,39 @@
-/*!
- * jQuery mobile routemap plugin v0.1.0 - Copyright (c) 2013 Wonseop Kim
- * Released under MIT license
- */
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+//>>description: Render a route data.
+//>>label: Route map
+//>>group: Widgets
+
+define( [
+	"jqm/jquery",
+	"jqm/jquery.mobile.widget" ], function( jQuery ) {
+//>>excludeEnd("jqmBuildExclude");
 
 ( function ( $, window ) {
 	var document = window.document,
-		svgNameSpace = 'http://www.w3.org/2000/svg';
+		svgNameSpace = 'http://www.w3.org/2000/svg',
+		// Default style for SVG elements.
+		DEFAULT_STYLE = {
+			font: {
+				fontSize: "12px"
+			},
+			exchangeRadius: 6,
+			exchangeStyle: {
+				fill: "white",
+				stroke: "gray",
+				strokeWidth: 2
+			},
+			stationRadius: 4,
+			stationStyle: {
+				fill: "white",
+				stroke: "black",
+				strokeWidth: 1
+			},
+			lineStyle: {
+				fill: "none",
+				stroke: "black",
+				strokeWidth: 3
+			}
+		};
 
 	$.widget( "mobile.routemap", $.mobile.widget, {
 		options: {
@@ -116,11 +144,11 @@
 				station,
 				duplicatedStation,
 				stationStyle,
-				stationRadius = data.stationRadius,
-				stationFont = data.stationFont,
-				exchangeStyle = data.exchangeStyle,
-				exchangeRadius = data.exchangeRadius,
-				exchangeFont = data.exchangeFont,
+				stationRadius = data.stationRadius || DEFAULT_STYLE.stationRadius,
+				stationFont = $.extend( {}, DEFAULT_STYLE.font, data.stationFont ),
+				exchangeStyle = $.extend( {}, DEFAULT_STYLE.exchangeStyle, data.exchangeStyle ),
+				exchangeRadius = data.exchangeRadius || DEFAULT_STYLE.exchangeRadius,
+				exchangeFont = $.extend( {}, DEFAULT_STYLE.font, data.exchangeFont ),
 				lineStyle,
 				coord,
 				minX = 9999,
@@ -146,8 +174,8 @@
 
 			for ( i = 0; i < lines.length; i += 1 ) {
 				branches = lines[i].stations;
-				stationStyle = lines[i].style.station;
-				lineStyle = lines[i].style.line;
+				stationStyle = $.extend( {}, DEFAULT_STYLE.stationStyle, lines[i].style.station );
+				lineStyle = $.extend( {}, DEFAULT_STYLE.lineStyle, lines[i].style.line );
 				for ( j = 0; j < branches.length; j += 1 ) {
 					branch = branches[j];
 					linePath = "";
@@ -271,7 +299,7 @@
 
 				// draw station
 				this._node( null, "circle", {
-					class: "station-" + station.label.text,
+					"class": "station-" + station.label.text,
 					cx: position[0],
 					cy: position[1],
 					r: stationRadius
@@ -569,3 +597,7 @@
 	} );
 
 } ( jQuery, this ) );
+
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
+} );
+//>>excludeEnd("jqmBuildExclude");

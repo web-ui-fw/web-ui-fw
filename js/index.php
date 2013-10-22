@@ -12,7 +12,8 @@ $files = array(
 	'widgets/color/colorpalette.js',
 	'widgets/color/hsvpicker.js',
 	'widgets/tokentextarea.js',
-	'widgets/virtualgrid.js'
+	'widgets/virtualgrid.js',
+	'widgets/routemap.js'
 );
 
 function getGitHeadPath() {

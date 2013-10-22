@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../entries2html.xsl" ?>
 <entry name="routemap" namespace="fn" type="widget" widgetnamespace="mobile" event-prefix="routemap">
 	<title>Routemap Widget</title>
-	<desc>Creates a routemap</desc>
+	<desc>Creates a routemap widget.</desc>
 	<longdesc>
 		<h3>Route Map</h3>
 		<p>Routemap is a jquery mobile plugin to render a route data.</p>
@@ -18,17 +18,23 @@
 
 	<added>0.3.0</added>
 	<options>
-		<option name="db" default="null" example-value="false">
+		<option name="db" default="null" example-value="&quot;data.json&quot;">
 			<desc>
 				<p>The URL of a JSON file or a javascript variable to load.</p>
 			</desc>
 			<type name="String" />
 		</option>
-		<option name="language" default="null" example-value="false">
+		<option name="language" default="null" example-value="&quot;en&quot;">
 			<desc>
 				<p>Determine the current languauge. The valuse must be the abbreviation of language names(ex: English > en )</p>
 			</desc>
 			<type name="String" />
+		</option>
+		<option name="unit" default="1" example-value='10'>
+			<desc>
+				<p>The length unit of the route map. If the value is 10 and a station coordinate is (1, 2) then the station will be displayed at (10, 20).</p>
+			</desc>
+			<type name="Integer" />
 		</option>
 	</options>
 	<events>
@@ -44,72 +50,59 @@
 		</event>
 	</events>
 	<methods>
-		<method name="getCodeByName" example-params="options">
+		<method name="getCodeByName">
 			<desc>Gets an array of station code associated with the specified station name.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="name" default=''>
-						<desc>The name of staion</desc>
-						<type name="Object"/>
-					</property>
+				<argument name="name" type="String">
+					<desc>The name of staion</desc>
 				</argument>
 		</method>
-		<method name="getNameByCode" example-params="options">
+		<method name="getNameByCode">
 			<desc>Gets a station name with associated the specified station code.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="code" default=''>
-						<desc>The code of staion</desc>
-						<type name="String"/>
-					</property>
+				<argument name="code" type="String">
+					<desc>The code of staion</desc>
 				</argument>
 		</method>
-		<method name="shortestPath" example-params="options">
-			<desc>Returns the array of staion code about the shortest path from source to destination.
+		<method name="shortestRoute">
+			<desc>Returns the array of station codes which is the shortest route from source to destination.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="source" default=''>
-						<desc>The staion code of source</desc>
-						<type name="String"/>
-					</property>
-					<property name="destination" default=''>
-						<desc>The staion code of destination</desc>
-						<type name="String"/>
-					</property>
-					<property name="isMinimumTransper" default='false'>
-						<desc>When set to true, the widget will find shortest path with "minimum transpers" mode.<br />Default mode is "shortest route" mode.</desc>
-						<type name="Boolean"/>
-					</property>
+				<argument name="source" type="String">
+					<desc>The staion code of source</desc>
+				</argument>
+				<argument name="destination" type="String">
+					<desc>The staion code of destination</desc>
 				</argument>
 		</method>
-		<method name="highlight" example-params="options">
-			<desc>Add a highlighting style to stations.
+		<method name="minimumTransfers">
+			<desc>Returns the array of station codes which is the route having minimum transfers from source to destination.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="stations" default=''>
-						<desc>The array of staion code</desc>
-						<type name="Array"/>
-					</property>
+				<argument name="source" type="String">
+					<desc>The staion code of source</desc>
+				</argument>
+				<argument name="destination" type="String">
+					<desc>The staion code of destination</desc>
 				</argument>
 		</method>
-		<method name="dishighlight" example-params="options">
-			<desc>Remove a highlighting style from stations.
+		<method name="highlight">
+			<desc>Adds a highlighting style to stations.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="stations" default=''>
-						<desc>The array of staion code</desc>
-						<type name="Array"/>
-					</property>
+				<argument name="stations" type="Array">
+					<desc>The array of staion code</desc>
+				</argument>
+		</method>
+		<method name="dishighlight">
+			<desc>Removes a highlighting style from stations.
+			</desc>
+				<argument name="stations" type="Array">
+					<desc>The array of staion code</desc>
 				</argument>
 		</method>
 		<method name="refresh" example-params="options">
-			<desc>Redraw the widget, after having made some external modifications.
+			<desc>Resizes&amp;redraws the widget, after having made some external modifications.
 			</desc>
-				<argument name="options" type="Object">
-					<property name="redraw" default='false'>
-						<desc>When set to true, the widget will redraw everything by a route data.<br />Only re-layout the widget if set to false.</desc>
-						<type name="Boolean"/>
-					</property>
+				<argument name="redraw" default='false' type="Boolean">
+					<desc>When set to true, the widget will redraw everything by a route data.<br />Only re-layout the widget if set to false.</desc>
 				</argument>
 		</method>
 	</methods>
@@ -119,8 +112,45 @@
 		<h1>Web UI Framework Example</h1>
 	</div>
 	<div data-role="content">
-		<div data-role="routemap">
-		</div>
+		<script>
+			var DB_DATA = {
+				"name": "Example Route Map",
+				"exchangeStyle": {
+					"fill": "white",
+					"stroke": "gray"
+				},
+				"lines": [{
+					"name": "Line 1",
+					"style": {
+						"line" : { "stroke": "rgb(85, 85, 85)" },
+						"station": { "stroke": "rgb(85, 85, 85)" }
+					},
+					"stations": [
+						[
+							{ "code": "1", "coordinates": [ 1, 2 ], "label": { "text": "station1", "position": "ne", "angle": 45 } },
+							{ "code": "2", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
+							{ "code": "3", "coordinates": [ 3, 2 ], "label": { "text": "station3", "position": "ne", "angle": 45 } }
+						]
+					]
+				}, {
+					"name": "Line 2",
+					"style": {
+						"line" : { "stroke": "rgb(95, 178, 33)" },
+						"station": { "stroke": "rgb(95, 178, 33)" }
+					},
+					"stations": [
+						[
+							{ "code": "4", "coordinates": [ 2, 1 ], "label": { "text": "station4", "position": "ne", "angle": 45 } },
+							{ "code": "5", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
+							{ "code": "6", "coordinates": [ 2, 3 ], "label": { "text": "station5", "position": "ne", "angle": 45 } },
+							{ "code": "7", "coordinates": [ 3, 3 ], "label": { "text": "station6", "position": "ne", "angle": 45 } },
+							{ "code": "8", "coordinates": [ 3, 4 ], "label": { "text": "station7", "position": "ne", "angle": 45 } }
+						]
+					]
+				}]
+			};
+		</script>
+		<div data-role="routemap" data-db="DB_DATA" data-unit="50"></div>
 	</div>]]></html>
 	</example>
 	<category slug="widgets"/>
