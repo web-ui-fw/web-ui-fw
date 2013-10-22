@@ -1,0 +1,36 @@
+{
+	"name": "Example Route Map",
+	"exchangeStyle": {
+		"fill": "white",
+		"stroke": "gray"
+	},
+	"lines": [{
+		"name": "Line 1",
+		"style": {
+			"line" : { "stroke": "rgb(85, 85, 85)" },
+			"station": { "stroke": "rgb(85, 85, 85)" }
+		},
+		"stations": [
+			[
+				{ "code": "1", "coordinates": [ 1, 2 ], "label": { "text": "station1", "position": "ne", "angle": 45 } },
+				{ "code": "2", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
+				{ "code": "3", "coordinates": [ 3, 2 ], "label": { "text": "station3", "position": "ne", "angle": 45 } }
+			]
+		]
+	}, {
+		"name": "Line 2",
+		"style": {
+			"line" : { "stroke": "rgb(95, 178, 33)" },
+			"station": { "stroke": "rgb(95, 178, 33)" }
+		},
+		"stations": [
+			[
+				{ "code": "4", "coordinates": [ 2, 1 ], "label": { "text": "station4", "position": "ne", "angle": 45 } },
+				{ "code": "5", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
+				{ "code": "6", "coordinates": [ 2, 3 ], "label": { "text": "station5", "position": "ne", "angle": 45 } },
+				{ "code": "7", "coordinates": [ 3, 3 ], "label": { "text": "station6", "position": "ne", "angle": 45 } },
+				{ "code": "8", "coordinates": [ 3, 4 ], "label": { "text": "station7", "position": "ne", "angle": 45 } }
+			]
+		]
+	}]
+}
