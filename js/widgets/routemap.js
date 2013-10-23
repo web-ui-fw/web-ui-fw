@@ -10,7 +10,7 @@ define( [
 
 ( function ( $, window ) {
 	var document = window.document,
-		svgNameSpace = 'http://www.w3.org/2000/svg',
+		svgNameSpace = "http://www.w3.org/2000/svg",
 		// Default style for SVG elements.
 		DEFAULT_STYLE = {
 			font: {
@@ -90,7 +90,7 @@ define( [
 					$.ajax( {
 						async: false,
 						global: false,
-						dataType: 'JSON',
+						dataType: "JSON",
 						url : option.db
 					} ).done( function ( result ) {
 						data = result;
@@ -119,7 +119,7 @@ define( [
 				$.ajax( {
 					async: false,
 					global: false,
-					dataType: 'JSON',
+					dataType: "JSON",
 					url : data
 				} ).done( function ( result ) {
 					self._languageData = result;
@@ -361,8 +361,8 @@ define( [
 
 			for ( key in attributes ) {
 				value = attributes[key];
-				if ( value && ( typeof value !== 'string' || value !== '' ) ) {
-					node.setAttribute( key.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase(), value);
+				if ( value && ( typeof value !== "string" || value !== "" ) ) {
+					node.setAttribute( key.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase(), value);
 				}
 			}
 
@@ -374,7 +374,7 @@ define( [
 			var node = this._node( parent, "text", settings, style ),
 				texts, i;
 
-			if ( typeof value !== 'string' ) {
+			if ( typeof value !== "string" ) {
 				value = "";
 			}
 
@@ -389,23 +389,23 @@ define( [
 		},
 
 		_addClassSVG: function ( element, className ) {
-			var classAttr = element.attr('class');
+			var classAttr = element.attr( "class" );
 
 			if ( classAttr.indexOf( className ) !== -1 ) {
 				return;
 			}
 
-			classAttr = classAttr + ( classAttr.length === 0 ? '' : ' ' ) + className;
-			element.attr( 'class', classAttr );
+			classAttr = classAttr + ( classAttr.length === 0 ? "" : " " ) + className;
+			element.attr( "class", classAttr );
 		},
 
 		_removeClassSVG: function ( elements, className ) {
 			$.each( elements, function () {
 				var element = $( this ),
-					classAttr = element.attr('class');
+					classAttr = element.attr( "class" );
 
-				classAttr = classAttr.replace( new RegExp( '\\s?' + className ), '' );
-				element.attr( 'class', classAttr );
+				classAttr = classAttr.replace( new RegExp( "\\s?" + className ), "" );
+				element.attr( "class", classAttr );
 			} );
 		},
 
@@ -483,7 +483,7 @@ define( [
 			}
 
 			if ( destination !== undefined && costs[destination] === undefined ) {
-				msg = ['Could not find a path from ', source, ' to ', destination, '.'].join( '' );
+				msg = ["Could not find a path from ", source, " to ", destination, "."].join( "" );
 				throw new Error( msg );
 			}
 
@@ -585,12 +585,7 @@ define( [
 		}
 	} );
 
-	//auto self-init widgets
-	$( document ).on( "pagecreate create", function ( e ) {
-		$.mobile.routemap.prototype.enhanceWithin( e.target );
-	} );
-
-	$( window ).on( "pagechange", function () {
+	$.mobile.window.on( "pagechange", function () {
 		$( ".ui-page-active .ui-routemap" ).routemap( "refresh", true );
 	} ).on( "resize", function () {
 		$( ".ui-page-active .ui-routemap" ).routemap( "refresh" );
