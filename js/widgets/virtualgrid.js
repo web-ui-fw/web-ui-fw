@@ -7,7 +7,7 @@ define( [
 	"jqm/jquery",
 	"jqm/jquery.mobile.widget",
 	"jqm/widgets/page",
-	"jqm/widgets/page.sections"
+	"jqm/widgets/toolbar"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
@@ -1212,9 +1212,9 @@ $.extend(MomentumTracker.prototype, {
 
 		_showErrorMessage: function ( message ) {
 			// show error message
-			$.mobile.showPageLoadingMsg( $.mobile.pageLoadErrorMessageTheme, message, true );
+			$.mobile.loading( "show", $.mobile.pageLoadErrorMessageTheme, message, true );
 			// hide after delay
-			setTimeout( $.mobile.hidePageLoadingMsg, 3000 );
+			setTimeout( function() { $.mobile.loading( "hide" ); }, 3000 );
 		}
 	} );
 
