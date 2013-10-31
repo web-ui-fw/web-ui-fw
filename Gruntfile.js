@@ -90,7 +90,8 @@ module.exports = function( grunt ) {
 				options: {
 					baseUrl: "js",
 					paths: {
-						"depend": "../jqm/external/requirejs/plugins/depend",
+						"jquery.ui.widget": "../jqm/js/jquery.ui.widget",
+						"jquery.hashchange": "../jqm/js/jquery.hashchange",
 						"text": "../jqm/external/requirejs/plugins/text",
 						"json": "../jqm/external/requirejs/plugins/json",
 						"jqm": "../jqm/js",
@@ -99,6 +100,7 @@ module.exports = function( grunt ) {
 					//Finds require() dependencies inside a require() or define call.
 					findNestedDependencies: true,
 					optimize: "none",
+					mainConfigFile: "jqm/js/requirejs.config.js",
 
 					//If skipModuleInsertion is false, then files that do not use define()
 					//to define modules will get a define() placeholder inserted for them.
@@ -114,7 +116,6 @@ module.exports = function( grunt ) {
 					exclude: [
 						"jquery",
 						"jqm/jquery",
-						"depend",
 						"json!package.json"
 					].concat( ( grunt.option( "modules" ) ) ? [] : [ "jqm/jquery.mobile" ] ),
 
