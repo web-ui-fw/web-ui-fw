@@ -5,7 +5,7 @@
 
 define( [
 	"jqm/jquery",
-	"depend!jq-color/jquery.color[jquery]"
+	"jq-color/jquery.color"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 ( function( $, undefined ) {
