@@ -234,7 +234,7 @@ define( [
 							if ( xPosPrev === xPos || yPosPrev === yPos ) {
 								linePath += "L" + xPos + "," + yPos;
 							} else {
-								// Catmull-Rom to Cubic Bezier conversion matrix 
+								// Catmull-Rom to Cubic Bezier conversion matrix
 								//    0       1       0       0
 								//  -1/6      1      1/6      0
 								//    0      1/6      1     -1/6
