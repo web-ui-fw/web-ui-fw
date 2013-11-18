@@ -1,0 +1,29 @@
+.ui-routemap .ui-line.ui-highlight {
+	-webkit-animation: uiline 0.8s infinite;
+	animation: uiline 0.8s infinite;
+}
+.ui-routemap .ui-highlight .ui-shape {
+	-webkit-animation: uistation 0.8s infinite;
+	animation: uistation 0.8s infinite;
+}
+.ui-routemap .ui-highlight .ui-label {
+	font-size: 1rem;
+}
+
+@-webkit-keyframes uistation {
+	0% { stroke-width: 1px; }
+	100% { stroke-width: 5px; }
+}
+@keyframes uistation {
+	0% { stroke-width: 1px; }
+	100% { stroke-width: 5px; }
+}
+
+@-webkit-keyframes uiline {
+	0% { stroke-width: 2px; stroke-opacity: 1.0; }
+	100% { stroke-width: 4px; stroke-opacity: 0.8; }
+}
+@keyframes uiline {
+	0% { stroke-width: 2px; stroke-opacity: 1.0; }
+	100% { stroke-width: 4px; stroke-opacity: 0.8; }
+}

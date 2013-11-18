@@ -49,7 +49,7 @@ define( [
 		_lines: [],
 		_stations: [],
 		_stationsMap: [],
-		_stationList: {},
+		_nameList: {},
 		_graph: {},
 
 		_create: function () {
@@ -142,7 +142,7 @@ define( [
 				branches,
 				branch,
 				station,
-				duplicatedStation,
+				exchange,
 				stationStyle,
 				stationRadius = data.stationRadius || DEFAULT_STYLE.stationRadius,
 				stationFont = $.extend( {}, DEFAULT_STYLE.font, data.stationFont ),
@@ -176,6 +176,8 @@ define( [
 				branches = lines[i].branches;
 				stationStyle = $.extend( {}, DEFAULT_STYLE.stationStyle, lines[i].style.station );
 				lineStyle = $.extend( {}, DEFAULT_STYLE.lineStyle, lines[i].style.line );
+				this._nameList[ lines[i].id ] = lines[i].name;
+
 				for ( j = 0; j < branches.length; j += 1 ) {
 					branch = branches[j];
 					linePath = "";
@@ -207,23 +209,25 @@ define( [
 							this._stationsMap[coord[0]] = [];
 						}
 
-						this._stationList[ station.id ] = station.label;
+						this._nameList[ station.id ] = station.label;
 
 						if ( !this._stationsMap[coord[0]][coord[1]] ) {
 							station.style = stationStyle;
 							station.radius = stationRadius;
 							station.font = stationFont;
+							station.transfer = [];
 							this._stationsMap[coord[0]][coord[1]] = station;
 							this._stations.push( station );
-						} else if ( !this._stationsMap[coord[0]][coord[1]].exchange ) {
-							duplicatedStation = this._stationsMap[coord[0]][coord[1]];
-							duplicatedStation.style = exchangeStyle;
-							duplicatedStation.radius = exchangeRadius;
-							duplicatedStation.font = exchangeFont;
-							duplicatedStation.exchange = true;
-
-							graph[station.id][duplicatedStation.id] = "TRANSPER";
-							graph[duplicatedStation.id][station.id] = "TRANSPER";
+						} else {
+							exchange = this._stationsMap[coord[0]][coord[1]];
+							if ( !exchange.transfer.length ) {
+								exchange.style = exchangeStyle;
+								exchange.radius = exchangeRadius;
+								exchange.font = exchangeFont;
+							}
+							exchange.transfer.push( station.id );
+							graph[station.id][exchange.id] = "TRANSPER";
+							graph[exchange.id][station.id] = "TRANSPER";
 						}
 
 						// lines
@@ -281,14 +285,16 @@ define( [
 				stationRadius,
 				stations = this._stations,
 				station,
+				stationGroup,
 				label,
 				coordinates,
 				position,
 				labelPosition = [0, 0],
 				labelAngle = 0,
-				group,
+				textGroup,
 				stationName,
-				text;
+				text,
+				classes;
 
 			for ( i = 0; i < stations.length; i += 1 ) {
 				station = stations[i];
@@ -297,15 +303,24 @@ define( [
 				position = [unit * coordinates[0], unit * coordinates[1] ];
 				stationRadius = station.radius;
 
+				classes = "ui-station ui-id-" + station.id;
+				if ( station.transfer.length ) {
+					classes += " ui-id-" + station.transfer.join( " ui-id-" );
+				}
+
+				stationGroup = this._node( null, "g", {
+					"class": classes
+				} );
+
 				// draw station
-				this._node( null, "circle", {
-					"class": "ui-station ui-id-" + station.id,
+				this._node( stationGroup, "circle", {
+					"class": "ui-shape",
 					cx: position[0],
 					cy: position[1],
 					r: stationRadius
 				}, station.style );
 
-				group = this._node( null, "g" );
+				textGroup = this._node( stationGroup, "g" );
 
 				labelAngle = ( station.labelAngle ) ? -parseInt( station.labelAngle, 10 ) : 0;
 
@@ -314,7 +329,7 @@ define( [
 					( this._languageData[label] || label ) :
 						label;
 
-				text = this._text( group, stationName || "?", {},
+				text = this._text( textGroup, stationName || "?", { "class": "ui-label" },
 					{ transform: "rotate(" + labelAngle + ")", fontSize: station.font.fontSize || "9" }
 				);
 
@@ -345,7 +360,7 @@ define( [
 					break;
 				}
 
-				group.setAttribute( "transform", "translate(" + labelPosition[0] + "," + labelPosition[1] + ")" );
+				textGroup.setAttribute( "transform", "translate(" + labelPosition[0] + "," + labelPosition[1] + ")" );
 			}
 		},
 
@@ -381,8 +396,10 @@ define( [
 			texts = value.split( "\n" );
 
 			for ( i = 0; i < texts.length; i += 1 ) {
-				this._node( node, "tspan", { x: "0",  y: ( settings.fontSize * i ) }, {} )
-					.appendChild( node.ownerDocument.createTextNode( texts[i] ) );
+				this._node( node, "tspan", {
+					x: "0",
+					y: ( settings.fontSize * i )
+				}, {} ).appendChild( node.ownerDocument.createTextNode( texts[i] ) );
 			}
 
 			return node;
@@ -501,10 +518,10 @@ define( [
 		// Public
 
 		getIdsByName: function ( name ) {
-			var stationList = this._stationList, key, ret = [];
+			var nameList = this._nameList, key, ret = [];
 
-			for ( key in stationList ) {
-				if( stationList[key] === name ) {
+			for ( key in nameList ) {
+				if( nameList[key] === name ) {
 					ret.push( key );
 				}
 			}
@@ -512,7 +529,7 @@ define( [
 		},
 
 		getNameById: function ( id ) {
-			return this._stationList[id];
+			return this._nameList[id];
 		},
 
 		shortestRoute: function ( source, destination ) {
@@ -523,48 +540,37 @@ define( [
 			return this._calculateShortestPath( this._graph, source, destination, true );
 		},
 
-		highlight: function ( path ) {
-			var i, j, stations, stationList;
+		highlight: function ( target ) {
+			var i, view, targetLength;
 
-			if ( !this._svg || !path ) {
+			if ( !this._svg || !target ) {
 				return;
 			}
 
-			stations = this._stations;
-			stationList = this._stationList;
+			view = this.element;
+			targetLength = target.length;
 
-			for ( i = 0; i < path.length; i++ ) {
-				for ( j = 0; j < stations.length; j += 1 ) {
-					if ( stations[j].label === stationList[path[i]] ) {
-						this._addClassSVG( $( ".ui-id-" + stations[j].id ), "ui-highlight" );
-						break;
-					}
-				}
+			for ( i = 0; i < targetLength; i++ ) {
+				this._addClassSVG( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
 			}
 		},
 
-		dishighlight: function ( path ) {
-			var i, j,
-				svgDoc = this._svg,
-				stations = this._stations,
-				stationList = this._stationList;
+		dishighlight: function ( target ) {
+			var i, view, targetLength;
 
-			if ( !svgDoc ) {
+			if ( !this._svg ) {
 				return;
 			}
 
-			if ( !path ) {
-				this._removeClassSVG( $( "circle" ), "ui-highlight" );
+			view = this.element;
+			if ( !target ) {
+				this._removeClassSVG( view.find( ".ui-station, .ui-line" ), "ui-highlight" );
 				return;
 			}
 
-			for ( i = 0; i < path.length; i++ ) {
-				for ( j = 0; j < stations.length; j += 1 ) {
-					if ( stations[j].label === stationList[path[i]] ) {
-						this._removeClassSVG( $( ".ui-id-" + stations[j].id ), "ui-highlight" );
-						break;
-					}
-				}
+			targetLength = target.length;
+			for ( i = 0; i < targetLength; i++ ) {
+				this._removeClassSVG( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
 			}
 		},
 
