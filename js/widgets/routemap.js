@@ -33,7 +33,8 @@ define( [
 				stroke: "black",
 				strokeWidth: 3
 			}
-		};
+		},
+		regId = new RegExp( "\\bui-id-([\\w-]+)\\b" );
 
 	$.widget( "mobile.routemap", $.mobile.widget, {
 		options: {
@@ -55,9 +56,7 @@ define( [
 		_create: function () {
 			var self = this,
 				view = self.element,
-				svgContainer = $( "<div>" ).appendTo( view );
-
-			svgContainer.addClass( "ui-routemap-container" );
+				svgContainer = $( "<div class='ui-routemap-container'>" ).appendTo( view );
 
 			self._svg = $( document.createElementNS( svgNameSpace, "svg" ) )
 				.attr( {
@@ -76,6 +75,20 @@ define( [
 			if ( document.readyState === "complete" ) {
 				self.refresh( true );
 			}
+
+			svgContainer.on( "vclick", function ( event ) {
+				var target = $( event.target ),
+					targetId,
+					classList = target[0].classList;
+
+				if ( classList.contains( "ui-shape" ) || classList.contains( "ui-label" ) ) {
+					targetId = regId.exec( target.parent().attr( "class" ) );
+				} else if ( classList.contains( "ui-line" ) ) {
+					targetId = regId.exec( target.attr( "class" ) );
+				}
+
+				target.trigger( "select", targetId ? targetId[1] : undefined );
+			} );
 		},
 
 		_setOption: function ( key, value ) {
