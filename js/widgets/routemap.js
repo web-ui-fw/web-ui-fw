@@ -291,6 +291,31 @@ define( [
 			}
 		},
 
+		_drawLegend: function () {
+			var i, lines = this._lines,
+				length = lines.length,
+				lineId,
+				group = this._node( null, "g", { "class": "ui-legend"} );
+
+			for ( i = 0; i < length; i += 1 ) {
+				if ( lineId !== lines[i].id ) {
+					lineId = lines[i].id;
+					this._node( group, "line", {
+						"class": "ui-line ui-id-" + lineId,
+						x1: 0,
+						y1: 10 + (i * 15),
+						x2: 20,
+						y2: 10 + (i * 15)
+					}, lines[i].style );
+
+					this._node( group, "text", {
+						x : 25,
+						y : 13 + (i * 15)
+					}, { fontSize: DEFAULT_STYLE.font.fontSize || "0.75rem"} ).appendChild( group.ownerDocument.createTextNode( lineId ) );
+				}
+			}
+		},
+
 		_drawElements: function () {
 			var i,
 				options = this.options,
@@ -452,8 +477,8 @@ define( [
 				costE,
 				costUTotal,
 				costV,
-				first_visit,
 				msg,
+				destCost,
 				nodes = [];
 
 			function PriorityQueue() {
@@ -503,8 +528,7 @@ define( [
 					costUTotal = costU + costE;
 
 					costV = costs[v];
-					first_visit = ( costs[v] === undefined );
-					if ( first_visit || costV > costUTotal ) {
+					if ( costV === undefined  || costV > costUTotal ) {
 						costs[v] = costUTotal;
 						open.push( v, costUTotal );
 						predecessors[v] = u;
@@ -517,6 +541,8 @@ define( [
 				throw new Error( msg );
 			}
 
+			destCost = costs[destination];
+
 			while ( destination ) {
 				nodes.push( destination );
 				destination = predecessors[destination];
@@ -524,7 +550,7 @@ define( [
 
 			nodes.reverse();
 
-			return nodes;
+			return { path: nodes, cost: destCost };
 		},
 
 		// -------------------------------------------------
@@ -546,11 +572,27 @@ define( [
 		},
 
 		shortestRoute: function ( source, destination ) {
-			return this._calculateShortestPath( this._graph, source, destination );
+			return this._calculateShortestPath( this._graph, source, destination ).path;
 		},
 
 		minimumTransfers: function ( source, destination ) {
-			return this._calculateShortestPath( this._graph, source, destination, true );
+			var i = 0, j = 0, route,
+				result = { cost: 9999 },
+				sources = this.getIdsByName( this.getNameById( source ) ),
+				destinations = this.getIdsByName( this.getNameById( destination ) ),
+				sourcesLength = sources.length,
+				destinationsLength = destinations.length;
+
+			for ( i = 0; i < sourcesLength; i++ ) {
+				for ( j = 0; j < destinationsLength; j++ ) {
+					route = this._calculateShortestPath( this._graph, sources[i], destinations[j], true );
+					if ( result.cost > route.cost ) {
+						result = route;
+					}
+				}
+			}
+
+			return result.path;
 		},
 
 		highlight: function ( target ) {
@@ -601,6 +643,7 @@ define( [
 				this._clear();
 				this._drawLines();
 				this._drawElements();
+				this._drawLegend();
 			}
 		}
 	} );
