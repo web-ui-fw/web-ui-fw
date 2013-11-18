@@ -500,14 +500,15 @@ define( [
 		// -------------------------------------------------
 		// Public
 
-		getIdByName: function ( name ) {
-			var stationList = this._stationList, key;
+		getIdsByName: function ( name ) {
+			var stationList = this._stationList, key, ret = [];
 
 			for ( key in stationList ) {
 				if( stationList[key] === name ) {
-					return key;
+					ret.push( key );
 				}
 			}
+			return ret;
 		},
 
 		getNameById: function ( id ) {
