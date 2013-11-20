@@ -11,28 +11,10 @@ define( [
 ( function ( $, window ) {
 	var document = window.document,
 		svgNameSpace = "http://www.w3.org/2000/svg",
-		// Default style for SVG elements.
-		DEFAULT_STYLE = {
-			font: {
-				fontSize: "12px"
-			},
+		// Default values for SVG elements.
+		DEFAULT = {
 			exchangeRadius: 6,
-			exchangeStyle: {
-				fill: "white",
-				stroke: "gray",
-				strokeWidth: 2
-			},
-			stationRadius: 4,
-			stationStyle: {
-				fill: "white",
-				stroke: "black",
-				strokeWidth: 1
-			},
-			lineStyle: {
-				fill: "none",
-				stroke: "black",
-				strokeWidth: 3
-			}
+			stationRadius: 4
 		},
 		regId = new RegExp( "\\bui-id-([\\w-]+)\\b" );
 
@@ -157,11 +139,9 @@ define( [
 				station,
 				exchange,
 				stationStyle,
-				stationRadius = data.stationRadius || DEFAULT_STYLE.stationRadius,
-				stationFont = $.extend( {}, DEFAULT_STYLE.font, data.stationFont ),
-				exchangeStyle = $.extend( {}, DEFAULT_STYLE.exchangeStyle, data.exchangeStyle ),
-				exchangeRadius = data.exchangeRadius || DEFAULT_STYLE.exchangeRadius,
-				exchangeFont = $.extend( {}, DEFAULT_STYLE.font, data.exchangeFont ),
+				stationRadius = data.stationRadius || DEFAULT.stationRadius,
+				exchangeStyle = data.exchangeStyle || {},
+				exchangeRadius = data.exchangeRadius || DEFAULT.exchangeRadius,
 				lineStyle,
 				coord,
 				minX = 9999,
@@ -187,8 +167,8 @@ define( [
 
 			for ( i = 0; i < lines.length; i += 1 ) {
 				branches = lines[i].branches;
-				stationStyle = $.extend( {}, DEFAULT_STYLE.stationStyle, lines[i].style.station );
-				lineStyle = $.extend( {}, DEFAULT_STYLE.lineStyle, lines[i].style.line );
+				stationStyle = lines[i].style.station || {};
+				lineStyle = lines[i].style.line || {};
 				this._nameList[ lines[i].id ] = lines[i].name;
 
 				for ( j = 0; j < branches.length; j += 1 ) {
@@ -227,7 +207,6 @@ define( [
 						if ( !this._stationsMap[coord[0]][coord[1]] ) {
 							station.style = stationStyle;
 							station.radius = stationRadius;
-							station.font = stationFont;
 							station.transfer = [];
 							this._stationsMap[coord[0]][coord[1]] = station;
 							this._stations.push( station );
@@ -236,7 +215,6 @@ define( [
 							if ( !exchange.transfer.length ) {
 								exchange.style = exchangeStyle;
 								exchange.radius = exchangeRadius;
-								exchange.font = exchangeFont;
 							}
 							exchange.transfer.push( station.id );
 							graph[station.id][exchange.id] = "TRANSPER";
@@ -311,7 +289,7 @@ define( [
 					this._node( group, "text", {
 						x : 25,
 						y : 13 + (i * 15)
-					}, { fontSize: DEFAULT_STYLE.font.fontSize || "0.75rem"} ).appendChild( group.ownerDocument.createTextNode( lineId ) );
+					} ).appendChild( group.ownerDocument.createTextNode( lineId ) );
 				}
 			}
 		},
@@ -343,7 +321,7 @@ define( [
 
 				classes = "ui-station ui-id-" + station.id;
 				if ( station.transfer.length ) {
-					classes += " ui-id-" + station.transfer.join( " ui-id-" );
+					classes += " ui-exchange ui-id-" + station.transfer.join( " ui-id-" );
 				}
 
 				stationGroup = this._node( null, "g", {
@@ -367,9 +345,10 @@ define( [
 					( this._languageData[label] || label ) :
 						label;
 
-				text = this._text( textGroup, stationName || "?", { "class": "ui-label" },
-					{ transform: "rotate(" + labelAngle + ")", fontSize: station.font.fontSize || "9" }
-				);
+				text = this._text( textGroup, stationName || "?", {
+					"class": "ui-label",
+					transform: "rotate(" + labelAngle + ")"
+				} );
 
 				switch ( station.labelPosition || "s" ) {
 				case "w" :
@@ -406,17 +385,27 @@ define( [
 		// SVG
 
 		_node: function ( parent, name, settings, style ) {
-			var node, key, value,
-				attributes = $.extend( settings, style || {} );
+			var node, key, value, string = "";
 
 			parent = parent || this._svg;
 			node = parent.ownerDocument.createElementNS( svgNameSpace, name );
+			settings = settings || {};
 
-			for ( key in attributes ) {
-				value = attributes[key];
+			for ( key in settings ) {
+				value = settings[key];
 				if ( value && ( typeof value !== "string" || value !== "" ) ) {
 					node.setAttribute( key.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase(), value);
 				}
+			}
+
+			if ( style ) {
+				for ( key in style ) {
+					value = style[key];
+					if ( value && ( typeof value !== "string" || value !== "" ) ) {
+						string += key.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase() + ":" + value + ";";
+					}
+				}
+				node.setAttribute( "style", string );
 			}
 
 			parent.appendChild( node );
@@ -436,8 +425,8 @@ define( [
 			for ( i = 0; i < texts.length; i += 1 ) {
 				this._node( node, "tspan", {
 					x: "0",
-					y: ( settings.fontSize * i )
-				}, {} ).appendChild( node.ownerDocument.createTextNode( texts[i] ) );
+					y: ( i + "rem" )
+				} ).appendChild( node.ownerDocument.createTextNode( texts[i] ) );
 			}
 
 			return node;

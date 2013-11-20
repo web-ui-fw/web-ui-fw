@@ -9,18 +9,18 @@
 		"name": "Line 1",
 		"style": {
 			"line" : { "stroke": "blue" },
-			"station": { "stroke": "rgb(85, 85, 85)" }
+			"station": { "stroke": "blue" }
 		},
 		"branches": [
 			[
-				{ "id": "1", "coordinates": [ 1, 2 ], "label": "station1", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "2", "coordinates": [ 2, 2 ], "label": "station2(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "3", "coordinates": [ 3, 2 ], "label": "station3", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "4", "coordinates": [ 4, 2 ], "label": "station4(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "5", "coordinates": [ 5, 3 ], "label": "station5(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "6", "coordinates": [ 6, 3 ], "label": "station6", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "7", "coordinates": [ 7, 3 ], "label": "station7(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "8", "coordinates": [ 8, 4 ], "label": "station8(ex)", "labelPosition": "ne", "labelAngle": 45 }
+				{ "id": "1", "coordinates": [ 1, 2 ], "label": "1", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "2", "coordinates": [ 2, 2 ], "label": "2(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "3", "coordinates": [ 3, 2 ], "label": "3", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "4", "coordinates": [ 4, 2 ], "label": "4(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "5", "coordinates": [ 5, 3 ], "label": "5(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "6", "coordinates": [ 6, 3 ], "label": "6", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "7", "coordinates": [ 7, 3 ], "label": "7(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "8", "coordinates": [ 8, 4 ], "label": "8(ex)", "labelPosition": "ne", "labelAngle": 45 }
 			]
 		]
 	}, {
@@ -28,19 +28,19 @@
 		"name": "Line 2",
 		"style": {
 			"line" : { "stroke": "red" },
-			"station": { "stroke": "rgb(85, 85, 85)" }
+			"station": { "stroke": "red" }
 		},
 		"branches": [
 			[
-				{ "id": "21", "coordinates": [ 2, 1 ], "label": "station21", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "22", "coordinates": [ 2, 2 ], "label": "station2(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "23", "coordinates": [ 2, 3 ], "label": "station23", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "24", "coordinates": [ 2, 4 ], "label": "station24(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "25", "coordinates": [ 3, 6 ], "label": "station25", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "26", "coordinates": [ 5, 6 ], "label": "station26", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "27", "coordinates": [ 7, 5 ], "label": "station27", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "28", "coordinates": [ 7, 3 ], "label": "station7(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "29", "coordinates": [ 6, 1 ], "label": "station29", "labelPosition": "ne", "labelAngle": 45 }
+				{ "id": "21", "coordinates": [ 2, 1 ], "label": "21", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "22", "coordinates": [ 2, 2 ], "label": "2(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "23", "coordinates": [ 2, 3 ], "label": "23", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "24", "coordinates": [ 2, 4 ], "label": "24(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "25", "coordinates": [ 3, 6 ], "label": "25" },
+				{ "id": "26", "coordinates": [ 5, 6 ], "label": "26" },
+				{ "id": "27", "coordinates": [ 7, 5 ], "label": "27", "labelPosition": "e" },
+				{ "id": "28", "coordinates": [ 7, 3 ], "label": "7(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "29", "coordinates": [ 6, 1 ], "label": "29", "labelPosition": "ne", "labelAngle": 45 }
 			]
 		]
 	}, {
@@ -48,16 +48,16 @@
 		"name": "Line 3",
 		"style": {
 			"line" : { "stroke": "green" },
-			"station": { "stroke": "rgb(85, 85, 85)" }
+			"station": { "stroke": "green" }
 		},
 		"branches": [
 			[
-				{ "id": "31", "coordinates": [ 3, 1 ], "label": "station31", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "32", "coordinates": [ 4, 2 ], "label": "station4(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "33", "coordinates": [ 3, 4 ], "label": "station33(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "34", "coordinates": [ 5, 5 ], "label": "station34", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "35", "coordinates": [ 8, 4 ], "label": "station8(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "36", "coordinates": [ 9, 4 ], "label": "station36", "labelPosition": "ne", "labelAngle": 45 }
+				{ "id": "31", "coordinates": [ 3, 1 ], "label": "31", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "32", "coordinates": [ 4, 2 ], "label": "4(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "33", "coordinates": [ 3, 4 ], "label": "33(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "34", "coordinates": [ 5, 5 ], "label": "34", "labelPosition": "n" },
+				{ "id": "35", "coordinates": [ 8, 4 ], "label": "8(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "36", "coordinates": [ 9, 4 ], "label": "36", "labelPosition": "e" }
 			]
 		]
 	}, {
@@ -65,21 +65,21 @@
 		"name": "Line 4",
 		"style": {
 			"line" : { "stroke": "orange" },
-			"station": { "stroke": "rgb(85, 85, 85)" }
+			"station": { "stroke": "orange" }
 		},
 		"branches": [
 			[
-				{ "id": "41", "coordinates": [ 1, 4 ], "label": "station41", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "42", "coordinates": [ 2, 4 ], "label": "station24(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "43", "coordinates": [ 3, 4 ], "label": "station33(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "44", "coordinates": [ 5, 4 ], "label": "station44(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "45", "coordinates": [ 6, 4 ], "label": "station45", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "46", "coordinates": [ 7, 3 ], "label": "station7(ex)", "labelPosition": "ne", "labelAngle": 45 }
+				{ "id": "41", "coordinates": [ 1, 4 ], "label": "41", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "42", "coordinates": [ 2, 4 ], "label": "24(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "43", "coordinates": [ 3, 4 ], "label": "33(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "44", "coordinates": [ 5, 4 ], "label": "44(ex)" },
+				{ "id": "45", "coordinates": [ 6, 4 ], "label": "45" },
+				{ "id": "46", "coordinates": [ 7, 3 ], "label": "7(ex)", "labelPosition": "ne", "labelAngle": 45 }
 			],
 			[
-				{ "id": "47", "coordinates": [ 5, 4 ], "label": "station44(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "48", "coordinates": [ 5, 3 ], "label": "station5(ex)", "labelPosition": "ne", "labelAngle": 45 },
-				{ "id": "49", "coordinates": [ 5, 1 ], "label": "station47", "labelPosition": "ne", "labelAngle": 45 }
+				{ "id": "47", "coordinates": [ 5, 4 ], "label": "44(ex)" },
+				{ "id": "48", "coordinates": [ 5, 3 ], "label": "5(ex)", "labelPosition": "ne", "labelAngle": 45 },
+				{ "id": "49", "coordinates": [ 5, 1 ], "label": "47", "labelPosition": "ne", "labelAngle": 45 }
 			]
 		]
 	}]
