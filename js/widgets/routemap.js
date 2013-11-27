@@ -11,12 +11,8 @@ define( [
 ( function ( $, window ) {
 	var document = window.document,
 		svgNameSpace = "http://www.w3.org/2000/svg",
-		// Default values for SVG elements.
-		DEFAULT = {
-			exchangeRadius: 6,
-			stationRadius: 4
-		},
-		regId = new RegExp( "\\bui-id-([\\w-]+)\\b" );
+		regId = /\bui-id-([\w\-]+)\b/,
+		regAttr = /([a-z])([A-Z])/g;
 
 	$.widget( "mobile.routemap", $.mobile.widget, {
 		options: {
@@ -38,15 +34,17 @@ define( [
 		_create: function () {
 			var self = this,
 				view = self.element,
-				svgContainer = $( "<div class='ui-routemap-container'>" ).appendTo( view );
+				routemapContainer = $( "<div class='ui-routemap-container'>" )
+					.append( "<div class='ui-station-container'></div>" )
+					.appendTo( view );
 
 			self._svg = $( document.createElementNS( svgNameSpace, "svg" ) )
 				.attr( {
 					"version": "1.1",
 					"width": "100%",
 					"height": "100%",
-					"class": "ui-routemap-svg"
-				} ).appendTo( svgContainer )[0];
+					"class": "ui-line-container"
+				} ).appendTo( routemapContainer )[0];
 
 			view.addClass( "ui-routemap" );
 
@@ -58,18 +56,21 @@ define( [
 				self.refresh( true );
 			}
 
-			svgContainer.on( "vclick", function ( event ) {
+			routemapContainer.on( "vclick", function ( event ) {
 				var target = $( event.target ),
-					targetId,
-					classList = target[0].classList;
+					targetId;
 
-				if ( classList.contains( "ui-shape" ) || classList.contains( "ui-label" ) ) {
+				if ( target[0].namespaceURI.indexOf("svg") > -1 ){
+					if ( self._hasClass( target, "ui-line" ) ) {
+						targetId = regId.exec( target.attr( "class" ) );
+					}
+				} else if ( target.hasClass( "ui-shape" ) || target.hasClass( "ui-label" ) ) {
 					targetId = regId.exec( target.parent().attr( "class" ) );
-				} else if ( classList.contains( "ui-line" ) ) {
-					targetId = regId.exec( target.attr( "class" ) );
 				}
 
 				target.trigger( "select", targetId ? targetId[1] : undefined );
+
+				event.stopPropagation();
 			} );
 		},
 
@@ -105,12 +106,14 @@ define( [
 				}
 
 				data = option.db;
+
 				if ( !data || !data.match(/\.(json)$/i) ) {
 					return;
 				}
 
 				data = data.substring( data.lastIndexOf("\\") + 1, data.lastIndexOf(".") ) +
 						"." + value + "." + data.substring( data.lastIndexOf(".") + 1, data.length );
+
 				$.ajax( {
 					async: false,
 					global: false,
@@ -119,6 +122,7 @@ define( [
 				} ).done( function ( result ) {
 					self._languageData = result;
 				} );
+
 				break;
 			}
 		},
@@ -127,6 +131,8 @@ define( [
 			while ( this._svg.firstChild ) {
 				this._svg.removeChild( this._svg.firstChild );
 			}
+
+			$( ".ui-station-container" ).empty();
 		},
 
 		_processData: function ( data ) {
@@ -139,9 +145,7 @@ define( [
 				station,
 				exchange,
 				stationStyle,
-				stationRadius = data.stationRadius || DEFAULT.stationRadius,
 				exchangeStyle = data.exchangeStyle || {},
-				exchangeRadius = data.exchangeRadius || DEFAULT.exchangeRadius,
 				lineStyle,
 				coord,
 				minX = 9999,
@@ -156,13 +160,14 @@ define( [
 				shorthand,
 				controlPoint = [],
 				graph= {},
-				svgContainer = this.element.find( ".ui-routemap-container" ),
-				marginTop = parseInt( svgContainer.css( "marginTop" ), 10 ) || 0,
-				marginBottom = parseInt( svgContainer.css( "marginBottom" ), 10 ) || 0,
-				marginLeft = parseInt( svgContainer.css( "marginLeft" ), 10 ) || 0,
-				marginRight = parseInt( svgContainer.css( "marginRight" ), 10 ) || 0,
+				routemapContainer = this.element.find( ".ui-routemap-container" ),
+				marginTop = parseInt( routemapContainer.css( "marginTop" ), 10 ) || 0,
+				marginBottom = parseInt( routemapContainer.css( "marginBottom" ), 10 ) || 0,
+				marginLeft = parseInt( routemapContainer.css( "marginLeft" ), 10 ) || 0,
+				marginRight = parseInt( routemapContainer.css( "marginRight" ), 10 ) || 0,
+
 				convertCoord = function ( pos ) {
-					return ( unit * pos );
+					return unit * pos;
 				};
 
 			for ( i = 0; i < lines.length; i += 1 ) {
@@ -206,7 +211,6 @@ define( [
 
 						if ( !this._stationsMap[coord[0]][coord[1]] ) {
 							station.style = stationStyle;
-							station.radius = stationRadius;
 							station.transfer = [];
 							this._stationsMap[coord[0]][coord[1]] = station;
 							this._stations.push( station );
@@ -214,7 +218,6 @@ define( [
 							exchange = this._stationsMap[coord[0]][coord[1]];
 							if ( !exchange.transfer.length ) {
 								exchange.style = exchangeStyle;
-								exchange.radius = exchangeRadius;
 							}
 							exchange.transfer.push( station.id );
 							graph[station.id][exchange.id] = "TRANSPER";
@@ -253,8 +256,8 @@ define( [
 			this._drawingRange = [ minX, minY, maxX, maxY ];
 			this._graph = graph;
 
-			svgContainer.width( ( maxX + minX ) * unit + marginLeft + marginRight )
-				.height( ( maxY + minY ) * unit + marginTop + marginBottom );
+			routemapContainer.width( convertCoord( maxX ) + marginLeft + marginRight )
+				.height( convertCoord( maxY ) + marginTop + marginBottom );
 		},
 
 		_drawLines: function () {
@@ -272,24 +275,28 @@ define( [
 		_drawLegend: function () {
 			var i, lines = this._lines,
 				length = lines.length,
-				lineId,
+				namelist = this._nameList,
+				lineId = "",
+				y_weight,
+				labelHeight = this.element.find( ".ui-label" ).outerHeight( true ),
 				group = this._node( null, "g", { "class": "ui-legend"} );
 
-			for ( i = 0; i < length; i += 1 ) {
+			for ( i = 0; i < length; i +=1 ) {
 				if ( lineId !== lines[i].id ) {
 					lineId = lines[i].id;
+					y_weight = $(".ui-routemap text").length * labelHeight;
 					this._node( group, "line", {
 						"class": "ui-line ui-id-" + lineId,
 						x1: 0,
-						y1: 10 + (i * 15),
+						y1: 20 + y_weight,
 						x2: 20,
-						y2: 10 + (i * 15)
+						y2: 20 + y_weight
 					}, lines[i].style );
 
 					this._node( group, "text", {
-						x : 25,
-						y : 13 + (i * 15)
-					} ).appendChild( group.ownerDocument.createTextNode( lineId ) );
+						x : 23,
+						y : 23 + y_weight
+					} ).appendChild( group.ownerDocument.createTextNode( namelist[ lineId ] ) );
 				}
 			}
 		},
@@ -301,83 +308,88 @@ define( [
 				stationRadius,
 				stations = this._stations,
 				station,
-				stationGroup,
 				label,
 				coordinates,
 				position,
 				labelPosition = [0, 0],
 				labelAngle = 0,
-				textGroup,
 				stationName,
-				text,
-				classes;
+				classes,
+				top, left, key,
+				$station,
+				$stationCircle,
+				$textSpan,
+				textSpanWidth,
+				textSpanHeight,
+				$stationContainer = this.element.find( ".ui-station-container" );
 
 			for ( i = 0; i < stations.length; i += 1 ) {
 				station = stations[i];
 				label = station.label;
 				coordinates = station.coordinates;
 				position = [unit * coordinates[0], unit * coordinates[1] ];
-				stationRadius = station.radius;
-
 				classes = "ui-station ui-id-" + station.id;
+
 				if ( station.transfer.length ) {
-					classes += " ui-exchange ui-id-" + station.transfer.join( " ui-id-" );
+					classes += " ui-id-" + station.transfer.join( " ui-id-" ) + " ui-exchange";
 				}
 
-				stationGroup = this._node( null, "g", {
-					"class": classes
+				$station = $( "<div class='" + classes + "'></div>" ).appendTo( $stationContainer );
+				$stationCircle = $( "<div class='ui-shape'></div>" ).appendTo( $station );
+
+				if ( station.style ) {
+					for ( key in station.style ) {
+						$stationCircle.css( key, station.style[key] );
+					}
+				}
+
+				stationRadius = $stationCircle.outerWidth() / 2;
+				top = position[1];
+				left = position[0];
+				$stationCircle.css( {
+					"top" : top - stationRadius,
+					"left" : left - stationRadius
 				} );
 
-				// draw station
-				this._node( stationGroup, "circle", {
-					"class": "ui-shape",
-					cx: position[0],
-					cy: position[1],
-					r: stationRadius
-				}, station.style );
-
-				textGroup = this._node( stationGroup, "g" );
-
-				labelAngle = ( station.labelAngle ) ? -parseInt( station.labelAngle, 10 ) : 0;
-
-				// draw station name
-				stationName = this._languageData ?
-					( this._languageData[label] || label ) :
-						label;
-
-				text = this._text( textGroup, stationName || "?", {
-					"class": "ui-label",
-					transform: "rotate(" + labelAngle + ")"
-				} );
+				labelAngle = station.labelAngle ? -parseInt( station.labelAngle, 10 ) : 0;
+				stationName = this._languageData ? ( this._languageData[label] || label ) : label;
+				$textSpan = $( "<span class='ui-label'>"+ stationName +"</span>" ).appendTo( $station );
+				textSpanWidth = $textSpan.outerWidth( true );
+				textSpanHeight = $textSpan.outerHeight( true );
+				top -= textSpanHeight / 2;
 
 				switch ( station.labelPosition || "s" ) {
 				case "w" :
-					labelPosition = [ position[0] - stationRadius * 3 / 2 - text.getBBox().width, position[1] + stationRadius / 2 ];
-					break;
-				case "e" :
-					labelPosition = [ position[0] + stationRadius * 3 / 2, position[1] + stationRadius / 2 ];
-					break;
-				case "s" :
-					labelPosition = [ position[0] - text.getBBox().width / 2, position[1] + stationRadius + text.getBBox().height ];
-					break;
-				case "n" :
-					labelPosition = [ position[0] - text.getBBox().width / 2, position[1] - stationRadius - text.getBBox().height / 3 ];
+					labelPosition = [ left - stationRadius * 3 / 2 - textSpanWidth, top ];
 					break;
 				case "nw" :
-					labelPosition = [ position[0] - stationRadius * 3 / 2 - text.getBBox().width, position[1] - stationRadius / 2 - text.getBBox().height / 3  ];
-					break;
-				case "ne" :
-					labelPosition = [ position[0] + stationRadius * 3 / 2, position[1] - stationRadius / 2 - text.getBBox().height / 3 ];
+					labelPosition = [ left - stationRadius * 3 / 2 - textSpanWidth, top - textSpanHeight / 2 ];
 					break;
 				case "sw" :
-					labelPosition = [ position[0] - stationRadius * 3 / 2 - text.getBBox().width, position[1] + stationRadius + text.getBBox().height / 2  ];
+					labelPosition = [ left - stationRadius * 3 / 2 - textSpanWidth, top + textSpanHeight / 2 ];
+					break;
+				case "e" :
+					labelPosition = [ left + stationRadius * 3 / 2, top ];
+					break;
+				case "ne" :
+					labelPosition = [ left + stationRadius * 3 / 2, top - textSpanHeight / 2 ];
 					break;
 				case "se" :
-					labelPosition = [ position[0] + stationRadius * 3 / 2, position[1] + stationRadius + text.getBBox().height / 2 ];
+					labelPosition = [ left + stationRadius * 3 / 2, top + textSpanHeight / 2 ];
+					break;
+				case "s" :
+					labelPosition = [ left - textSpanWidth / 2, top + textSpanHeight ];
+					break;
+				case "n" :
+					labelPosition = [ left - textSpanWidth / 2, top - textSpanHeight ];
 					break;
 				}
 
-				textGroup.setAttribute( "transform", "translate(" + labelPosition[0] + "," + labelPosition[1] + ")" );
+				$textSpan.css( {
+					"top" : labelPosition[1],
+					"left" : labelPosition[0],
+					"transform" : "rotate( " + labelAngle + "deg )"
+				} );
 			}
 		},
 
@@ -394,7 +406,7 @@ define( [
 			for ( key in settings ) {
 				value = settings[key];
 				if ( value && ( typeof value !== "string" || value !== "" ) ) {
-					node.setAttribute( key.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase(), value);
+					node.setAttribute( key.replace( regAttr, "$1-$2" ).toLowerCase(), value);
 				}
 			}
 
@@ -402,7 +414,7 @@ define( [
 				for ( key in style ) {
 					value = style[key];
 					if ( value && ( typeof value !== "string" || value !== "" ) ) {
-						string += key.replace( /([a-z])([A-Z])/g, "$1-$2" ).toLowerCase() + ":" + value + ";";
+						string += key.replace( regAttr, "$1-$2" ).toLowerCase() + ":" + value + ";";
 					}
 				}
 				node.setAttribute( "style", string );
@@ -412,44 +424,37 @@ define( [
 			return node;
 		},
 
-		_text:  function ( parent, value, settings, style ) {
-			var node = this._node( parent, "text", settings, style ),
-				texts, i;
-
-			if ( typeof value !== "string" ) {
-				value = "";
-			}
-
-			texts = value.split( "\n" );
-
-			for ( i = 0; i < texts.length; i += 1 ) {
-				this._node( node, "tspan", {
-					x: "0",
-					y: ( i + "rem" )
-				} ).appendChild( node.ownerDocument.createTextNode( texts[i] ) );
-			}
-
-			return node;
+		_hasClass: function ( elements, className ) {
+			return new RegExp( "\\b" + className + "\\b" ).test( elements.attr( "class" ) );
 		},
 
-		_addClassSVG: function ( element, className ) {
-			var classAttr = element.attr( "class" );
-
-			if ( classAttr.indexOf( className ) !== -1 ) {
-				return;
-			}
-
-			classAttr = classAttr + ( classAttr.length === 0 ? "" : " " ) + className;
-			element.attr( "class", classAttr );
-		},
-
-		_removeClassSVG: function ( elements, className ) {
+		_addClass: function ( elements, className ) {
+			var element, classAttr;
 			$.each( elements, function () {
-				var element = $( this ),
-					classAttr = element.attr( "class" );
+				element = $( this );
+				if ( element[0].namespaceURI.indexOf( "svg" ) === -1 ) {
+					element.addClass( className );
+					return true;
+				}
+				classAttr = element.attr( "class" );
+				if ( classAttr.indexOf( className ) !== -1 ) {
+					return true;
+				}
+				element.attr( "class", classAttr + " " + className );
+			} );
+		},
 
-				classAttr = classAttr.replace( new RegExp( "\\s?" + className ), "" );
-				element.attr( "class", classAttr );
+		_removeClass: function ( elements, className ) {
+			var element, classAttr;
+
+			$.each( elements, function () {
+				element = $( this );
+				if ( element[0].namespaceURI.indexOf( "svg" ) === -1 ) {
+					element.removeClass( className );
+					return true;
+				}
+				classAttr = element.attr( "class" );
+				element.attr( "class", classAttr.replace( new RegExp( "\\s?" + className ), "" ) );
 			} );
 		},
 
@@ -595,7 +600,7 @@ define( [
 			targetLength = target.length;
 
 			for ( i = 0; i < targetLength; i++ ) {
-				this._addClassSVG( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
+				this._addClass( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
 			}
 		},
 
@@ -608,24 +613,22 @@ define( [
 
 			view = this.element;
 			if ( !target ) {
-				this._removeClassSVG( view.find( ".ui-station, .ui-line" ), "ui-highlight" );
+				this._removeClass( view.find( ".ui-station, .ui-line" ), "ui-highlight" );
 				return;
 			}
 
 			targetLength = target.length;
 			for ( i = 0; i < targetLength; i++ ) {
-				this._removeClassSVG( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
+				this._removeClass( view.find( ".ui-id-" + target[i] ), "ui-highlight" );
 			}
 		},
 
 		refresh: function ( redraw ) {
-			var view, svgContainer;
+			var view = this.element,
+				routemapContainer = view.find( "ui-routemap-container" );
 
-			view = this.element;
-			svgContainer = view.find( "ui-routemap-container" );
-
-			if ( svgContainer.width() !== view.width() ) {
-				svgContainer.width( view.width() );
+			if ( routemapContainer.width() !== view.width() ) {
+				routemapContainer.width( view.width() );
 			}
 
 			if ( redraw ) {

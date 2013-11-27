@@ -1,50 +1,65 @@
-.ui-routemap {
-	font-size: 0.77rem;
+.ui-routemap .ui-routemap-container {
+	margin: 1rem;
 }
 
-.ui-routemap .ui-line {
+.ui-routemap .ui-line-container .ui-line {
 	fill: none;
-	stroke: black;
 	stroke-width: 3px;
 }
 
-.ui-routemap .ui-station .ui-shape {
-	fill: white;
-	stroke: black;
-	stroke-width: 1px;
+.ui-routemap .ui-station-container {
+	position: absolute;
 }
 
-.ui-routemap .ui-exchange .ui-shape {
-	stroke: gray;
-	stroke-width: 2px;
+.ui-routemap .ui-station-container .ui-station {
+	display: block;
 }
 
-.ui-routemap .ui-line.ui-highlight {
-	-webkit-animation: uiline 0.8s infinite;
-	animation: uiline 0.8s infinite;
+.ui-routemap .ui-station-container .ui-station .ui-label {
+	text-align: center;
+	white-space: nowrap;
+	position: absolute;
+	transform-origin: 0% 50%;
+	-moz-transform-origin:0% 50%;
+	-webkit-transform-origin: 0% 50%;
 }
-.ui-routemap .ui-highlight .ui-shape {
-	-webkit-animation: uistation 0.8s infinite;
-	animation: uistation 0.8s infinite;
+
+.ui-routemap .ui-station-container .ui-station .ui-shape {
+	position: absolute;
+	background-color: white;
+	border-color: black;
+	border: 0.15rem solid;
+	width: 0.375rem;
+	height: 0.375rem;
+	border-radius: 50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
 }
-.ui-routemap .ui-highlight .ui-label {
-	font-size: 1rem;
+.ui-routemap .ui-station-container .ui-exchange .ui-shape{
+	width: 0.5rem;
+	height: 0.5rem;
+}
+
+.ui-routemap .ui-legend {
+	font-size: 0.7rem;
+}
+
+.ui-routemap .ui-line-container .ui-highlight {
+	stroke-width: 5px;
+}
+.ui-routemap .ui-station-container .ui-highlight .ui-shape {
+	-webkit-animation: uistation 0.6s infinite;
+	animation: uistation 0.6s infinite;
+}
+.ui-routemap .ui-station-container .ui-highlight .ui-label {
+	font-weight: bold;
 }
 
 @-webkit-keyframes uistation {
-	0% { stroke-width: 1px; }
-	100% { stroke-width: 5px; }
+	0% { box-shadow: 0px 0px 1px 1px rgb(128,128,128); }
+	100% { box-shadow: 0px 0px 2px 3px rgba(128,128,128,0.7); }
 }
 @keyframes uistation {
-	0% { stroke-width: 1px; }
-	100% { stroke-width: 5px; }
-}
-
-@-webkit-keyframes uiline {
-	0% { stroke-width: 2px; stroke-opacity: 1.0; }
-	100% { stroke-width: 4px; stroke-opacity: 0.8; }
-}
-@keyframes uiline {
-	0% { stroke-width: 2px; stroke-opacity: 1.0; }
-	100% { stroke-width: 4px; stroke-opacity: 0.8; }
+	0% { box-shadow: 0px 0px 1px 1px rgb(128,128,128); }
+	100% { box-shadow: 0px 0px 2px 3px rgba(128,128,128,0.7); }
 }
