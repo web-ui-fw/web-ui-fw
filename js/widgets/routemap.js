@@ -516,7 +516,7 @@ define( [
 					costE = adjacentNodes[v];
 
 					if ( costE === "TRANSPER" ) {
-						costE = isMinimumTransfersMode ? 999 : 5;
+						costE = isMinimumTransfersMode ? 999 : 3;
 					}
 
 					costUTotal = costU + costE;
@@ -547,6 +547,26 @@ define( [
 			return { path: nodes, cost: destCost };
 		},
 
+		_findBestRoute: function ( source, destination, isMinimumTransfersMode ) {
+			var i = 0, j = 0, route,
+				result = { cost: 9999 },
+				sources = this.getIdsByName( this.getNameById( source ) ),
+				destinations = this.getIdsByName( this.getNameById( destination ) ),
+				sourcesLength = sources.length,
+				destinationsLength = destinations.length;
+
+			for ( i = 0; i < sourcesLength; i++ ) {
+				for ( j = 0; j < destinationsLength; j++ ) {
+					route = this._calculateShortestPath( this._graph, sources[i], destinations[j], isMinimumTransfersMode );
+					if ( result.cost > route.cost ) {
+						result = route;
+					}
+				}
+			}
+
+			return result.path;
+		},
+
 		// -------------------------------------------------
 		// Public
 
@@ -566,27 +586,11 @@ define( [
 		},
 
 		shortestRoute: function ( source, destination ) {
-			return this._calculateShortestPath( this._graph, source, destination ).path;
+			return this._findBestRoute( source, destination );
 		},
 
 		minimumTransfers: function ( source, destination ) {
-			var i = 0, j = 0, route,
-				result = { cost: 9999 },
-				sources = this.getIdsByName( this.getNameById( source ) ),
-				destinations = this.getIdsByName( this.getNameById( destination ) ),
-				sourcesLength = sources.length,
-				destinationsLength = destinations.length;
-
-			for ( i = 0; i < sourcesLength; i++ ) {
-				for ( j = 0; j < destinationsLength; j++ ) {
-					route = this._calculateShortestPath( this._graph, sources[i], destinations[j], true );
-					if ( result.cost > route.cost ) {
-						result = route;
-					}
-				}
-			}
-
-			return result.path;
+			return this._findBestRoute( source, destination, true );
 		},
 
 		highlight: function ( target ) {
