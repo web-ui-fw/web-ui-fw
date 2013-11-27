@@ -1,15 +1,14 @@
 {
 	"name": "Example Route Map",
 	"exchangeStyle": {
-		"fill": "white",
-		"stroke": "gray"
+		"borderColor": "gray"
 	},
 	"lines": [{
 		"id": "line1",
 		"name": "Line 1",
 		"style": {
 			"line" : { "stroke": "blue" },
-			"station": { "stroke": "blue" }
+			"station": { "borderColor": "blue" }
 		},
 		"branches": [
 			[
@@ -28,7 +27,7 @@
 		"name": "Line 2",
 		"style": {
 			"line" : { "stroke": "red" },
-			"station": { "stroke": "red" }
+			"station": { "borderColor": "red" }
 		},
 		"branches": [
 			[
@@ -48,7 +47,7 @@
 		"name": "Line 3",
 		"style": {
 			"line" : { "stroke": "green" },
-			"station": { "stroke": "green" }
+			"station": { "borderColor": "green" }
 		},
 		"branches": [
 			[
@@ -65,7 +64,7 @@
 		"name": "Line 4",
 		"style": {
 			"line" : { "stroke": "orange" },
-			"station": { "stroke": "orange" }
+			"station": { "borderColor": "orange" }
 		},
 		"branches": [
 			[

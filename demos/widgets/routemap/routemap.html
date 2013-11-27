@@ -28,13 +28,13 @@
 						data-unit="60">
 					</div>
 					<ul data-role="listview" data-inset="true">
-						<li><a id='shortestWay'>shortestWay : station21 > station7</a></li>
-						<li><a id='minimumTransfers'>minimumTransfers : station21 > station7</a></li>
+						<li><a id='shortestWay'>shortestWay : 21 > 7</a></li>
+						<li><a id='minimumTransfers'>minimumTransfers : 21 > 7</a></li>
 						<li><a id='clearWay'>Clear</a></li>
 						<li><a id='getNameById' href='#routePopup' data-rel='popup' data-position-to='window'>getNameById : "5"</a></li>
-						<li><a id='getIdsByName' href='#routePopup' data-rel='popup' data-position-to='window'>getIdsByName : "station5(ex)"</a></li>
-						<li><a id='highlight'>highlight : station3 > station45 </a></li>
-						<li><a id='dishighlight'>dishighlight : station3 > station45 </a></li>
+						<li><a id='getIdsByName' href='#routePopup' data-rel='popup' data-position-to='window'>getIdsByName : "5(ex)"</a></li>
+						<li><a id='highlight'>highlight : 3 > 45 </a></li>
+						<li><a id='dishighlight'>dishighlight : 3 > 45 </a></li>
 					</ul>
 					<div id="routePopup" data-role="popup" style="width:300px">
 						<div data-role="header">
@@ -56,8 +56,8 @@
 	<script>
 		$( document ).on( "routemapcreate", function ( e ) {
 			var widget = $( "#routemapTest" ),
-				startId = widget.routemap( "getIdsByName", "station21" )[0],
-				endId = widget.routemap( "getIdsByName", "station7(ex)" )[0],
+				startId = widget.routemap( "getIdsByName", "21" )[0],
+				endId = widget.routemap( "getIdsByName", "7(ex)" )[0],
 				$popup = $( "#routePopup .ui-popup-text"),
 				path;
 
@@ -84,7 +84,7 @@
 			});
 
 			$( "#getIdsByName" ).on( "vclick", function () {
-				$popup.text( ( widget.routemap( "getIdsByName", "station5(ex)" ) ) );
+				$popup.text( ( widget.routemap( "getIdsByName", "5(ex)" ) ) );
 			});
 
 			$( "#getNameById" ).on( "vclick", function () {
