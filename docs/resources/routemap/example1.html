@@ -23,40 +23,62 @@
 </head>
 
 <div data-role="page" style="max-height:90px; min-height:90px;">
-	<div data-role="content" > 
+	<div data-role="header">
+		<h1>Web UI Framework Example</h1>
+	</div>
+	<div data-role="content">
 		<script>
 			var DB_DATA = {
 				"name": "Example Route Map",
+
 				"exchangeStyle": {
-					"fill": "white",
-					"stroke": "gray"
+					"backgroundColor": "white",
+					"borderColor": "gray",
+					"width" : 12,
+					"height" : 12
 				},
+
 				"lines": [{
+					"id": "line1",
 					"name": "Line 1",
 					"style": {
-						"line" : { "stroke": "rgb(85, 85, 85)" },
-						"station": { "stroke": "rgb(85, 85, 85)" }
+						"line" : { "stroke": "blue" },
+						"station": {
+							"borderColor": "blue",
+							"width" : 8,
+							"height" : 8
+						}
 					},
-					"stations": [
+					"branches": [
 						[
-							{ "code": "1", "coordinates": [ 1, 2 ], "label": { "text": "station1", "position": "ne", "angle": 45 } },
-							{ "code": "2", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
-							{ "code": "3", "coordinates": [ 3, 2 ], "label": { "text": "station3", "position": "ne", "angle": 45 } }
+							{ "id": "11", "coordinates": [ 2, 1 ], "label": "ST1", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "12", "coordinates": [ 2, 2 ], "label": "ST2", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "13", "coordinates": [ 2, 3 ], "label": "ST3", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "14", "coordinates": [ 3, 5 ], "label": "ST4", "labelPosition": "e", "labelAngle": 0 }
+						], [
+							{ "id": "15", "coordinates": [ 2, 3 ], "label": "ST3", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "16", "coordinates": [ 1, 4 ], "label": "ST6", "labelPosition": "e", "labelAngle": 0 }
 						]
 					]
 				}, {
+					"id": "line2",
 					"name": "Line 2",
 					"style": {
-						"line" : { "stroke": "rgb(95, 178, 33)" },
-						"station": { "stroke": "rgb(95, 178, 33)" }
+						"line" : { "stroke": "red" },
+						"station": {
+							"borderColor": "red",
+							"width" : 8,
+							"height" : 8
+						}
 					},
-					"stations": [
+					"branches": [
 						[
-							{ "code": "4", "coordinates": [ 2, 1 ], "label": { "text": "station4", "position": "ne", "angle": 45 } },
-							{ "code": "5", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
-							{ "code": "6", "coordinates": [ 2, 3 ], "label": { "text": "station5", "position": "ne", "angle": 45 } },
-							{ "code": "7", "coordinates": [ 3, 3 ], "label": { "text": "station6", "position": "ne", "angle": 45 } },
-							{ "code": "8", "coordinates": [ 3, 4 ], "label": { "text": "station7", "position": "ne", "angle": 45 } }
+							{ "id": "21", "coordinates": [ 1, 2 ], "label": "ST7", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "22", "coordinates": [ 2, 2 ], "label": "ST2", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "23", "coordinates": [ 3, 2 ], "label": "ST9", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "24", "coordinates": [ 3, 3 ], "label": "ST10", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "25", "coordinates": [ 3, 4 ], "label": "ST11", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "26", "coordinates": [ 3, 5 ], "label": "ST4", "labelPosition": "ne", "labelAngle": 45 }
 						]
 					]
 				}]

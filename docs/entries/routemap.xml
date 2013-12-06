@@ -6,14 +6,15 @@
 	<longdesc>
 		<h3>Route Map</h3>
 		<p>Routemap is a jquery mobile plugin to render a route data.</p>
-		<p>Routemap supports JSON format for DB. So, user can set DB by setting a file path or a variable on the widget.And it drawing the line between two stations automatically to use DB. You can change each style for stations, routes, and labels to modify DB.</p>
-		<p>Routemap can indecated the shortest route between two stations that user selected. And it supports a multi-language, also.</p>
+		<p>Routemap draws the lines between above two stations automatically, and it indicates a shortest or minimum transfer route between two stations that a user selected</p>
+		<p>Routemap supports JSON for DB ( routemap data ), so it's possible to set DB by setting a file path or a variable on widget, and it allows us to modify each style of stations, routes, and labels easily</p>
+		<p>And also, it supports a multi-language.</p>
 
 <pre><code>
 &lt;div data-role=&quot;routemap&quot; data-db=&quot;data.json&quot;&gt;
 &lt;/div&gt;
 </code></pre>
-
+		<p>To create a routemap, create a container and add the data-role="routemap" attribute. Using data-db attribute allows you to set a DB for the lines, stations, label and each style.</p>
 	</longdesc>
 
 	<added>0.3.0</added>
@@ -26,13 +27,14 @@
 		</option>
 		<option name="language" default="null" example-value="&quot;en&quot;">
 			<desc>
-				<p>Determine the current languauge. The valuse must be the abbreviation of language names(ex: English > en )</p>
+				<p>Determine the current languauge. The values must be the abbreviation of language names(ex: English > en )</p>
 			</desc>
 			<type name="String" />
 		</option>
 		<option name="unit" default="1" example-value='10'>
 			<desc>
-				<p>The length unit of the route map. If the value is 10 and a station coordinate is (1, 2) then the station will be displayed at (10, 20).</p>
+				<p>The length unit of the route map. If the value is 10 and a station coordinate is (1, 2) 
+					then the station will be displayed at (10, 20).</p>
 			</desc>
 			<type name="Integer" />
 		</option>
@@ -48,61 +50,72 @@
 				<desc></desc>
 			</argument>
 		</event>
+		<event name="select">
+			<desc>Triggered when station or line are selected
+			</desc>
+			<argument name="event" type="Event">
+				<desc></desc>
+			</argument>
+			<argument name="id" type="String">
+				<desc>selected station or line id </desc>
+			</argument>
+		</event>
 	</events>
 	<methods>
-		<method name="getCodeByName">
-			<desc>Gets an array of station code associated with the specified station name.
+		<method name="getIdsByName">
+			<desc>Gets an array of station/line ids associated with the specified station name or line name.
 			</desc>
 				<argument name="name" type="String">
-					<desc>The name of staion</desc>
+					<desc>The name of station or line.</desc>
 				</argument>
 		</method>
-		<method name="getNameByCode">
-			<desc>Gets a station name with associated the specified station code.
+		<method name="getNameById">
+			<desc>Gets a string of station or line name with associated the specified station or line id.
 			</desc>
-				<argument name="code" type="String">
-					<desc>The code of staion</desc>
+				<argument name="id" type="String">
+					<desc>The id of station or line</desc>
 				</argument>
 		</method>
 		<method name="shortestRoute">
-			<desc>Returns the array of station codes which is the shortest route from source to destination.
+			<desc>Returns an array of station id which is the shortest route from source to destination.
 			</desc>
 				<argument name="source" type="String">
-					<desc>The staion code of source</desc>
+					<desc>a station id of source</desc>
 				</argument>
 				<argument name="destination" type="String">
-					<desc>The staion code of destination</desc>
+					<desc>a station id of destination</desc>
 				</argument>
 		</method>
 		<method name="minimumTransfers">
-			<desc>Returns the array of station codes which is the route having minimum transfers from source to destination.
+			<desc>Returns an array of station ids which is the route having minimum transfers from source to destination.
 			</desc>
 				<argument name="source" type="String">
-					<desc>The staion code of source</desc>
+					<desc>The staion id of source</desc>
 				</argument>
 				<argument name="destination" type="String">
-					<desc>The staion code of destination</desc>
+					<desc>The staion id of destination</desc>
 				</argument>
 		</method>
 		<method name="highlight">
-			<desc>Adds a highlighting style to stations.
+			<desc>Add highlight styles to station or line.
 			</desc>
 				<argument name="stations" type="Array">
-					<desc>The array of staion code</desc>
+					<desc>The array of staion id</desc>
 				</argument>
 		</method>
 		<method name="dishighlight">
 			<desc>Removes a highlighting style from stations.
 			</desc>
 				<argument name="stations" type="Array">
-					<desc>The array of staion code</desc>
+					<desc>The array of staion id</desc>
 				</argument>
+			<p>if there are no arguments, all of highlighting style will be removed</p>
 		</method>
 		<method name="refresh" example-params="options">
 			<desc>Resizes&amp;redraws the widget, after having made some external modifications.
 			</desc>
 				<argument name="redraw" default='false' type="Boolean">
-					<desc>When set to true, the widget will redraw everything by a route data.<br />Only re-layout the widget if set to false.</desc>
+					<desc>When set to true, the widget will redraw all of elements by a route data.<br />Only re-layout the widget if set to false.</desc>
 				</argument>
 		</method>
 	</methods>
@@ -115,36 +128,55 @@
 		<script>
 			var DB_DATA = {
 				"name": "Example Route Map",
+
 				"exchangeStyle": {
-					"fill": "white",
-					"stroke": "gray"
+					"backgroundColor": "white",
+					"borderColor": "gray",
+					"width" : 12,
+					"height" : 12
 				},
+
 				"lines": [{
+					"id": "line1",
 					"name": "Line 1",
 					"style": {
-						"line" : { "stroke": "rgb(85, 85, 85)" },
-						"station": { "stroke": "rgb(85, 85, 85)" }
+						"line" : { "stroke": "blue" },
+						"station": {
+							"borderColor": "blue",
+							"width" : 8,
+							"height" : 8
+						}
 					},
-					"stations": [
+					"branches": [
 						[
-							{ "code": "1", "coordinates": [ 1, 2 ], "label": { "text": "station1", "position": "ne", "angle": 45 } },
-							{ "code": "2", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
-							{ "code": "3", "coordinates": [ 3, 2 ], "label": { "text": "station3", "position": "ne", "angle": 45 } }
+							{ "id": "11", "coordinates": [ 2, 1 ], "label": "ST1", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "12", "coordinates": [ 2, 2 ], "label": "ST2", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "13", "coordinates": [ 2, 3 ], "label": "ST3", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "14", "coordinates": [ 3, 5 ], "label": "ST4", "labelPosition": "e", "labelAngle": 0 }
+						], [
+							{ "id": "15", "coordinates": [ 2, 3 ], "label": "ST3", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "16", "coordinates": [ 1, 4 ], "label": "ST6", "labelPosition": "e", "labelAngle": 0 }
 						]
 					]
 				}, {
+					"id": "line2",
 					"name": "Line 2",
 					"style": {
-						"line" : { "stroke": "rgb(95, 178, 33)" },
-						"station": { "stroke": "rgb(95, 178, 33)" }
+						"line" : { "stroke": "red" },
+						"station": {
+							"borderColor": "red",
+							"width" : 8,
+							"height" : 8
+						}
 					},
-					"stations": [
+					"branches": [
 						[
-							{ "code": "4", "coordinates": [ 2, 1 ], "label": { "text": "station4", "position": "ne", "angle": 45 } },
-							{ "code": "5", "coordinates": [ 2, 2 ], "label": { "text": "station2(ex)", "position": "ne", "angle": 45 } },
-							{ "code": "6", "coordinates": [ 2, 3 ], "label": { "text": "station5", "position": "ne", "angle": 45 } },
-							{ "code": "7", "coordinates": [ 3, 3 ], "label": { "text": "station6", "position": "ne", "angle": 45 } },
-							{ "code": "8", "coordinates": [ 3, 4 ], "label": { "text": "station7", "position": "ne", "angle": 45 } }
+							{ "id": "21", "coordinates": [ 1, 2 ], "label": "ST7", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "22", "coordinates": [ 2, 2 ], "label": "ST2", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "23", "coordinates": [ 3, 2 ], "label": "ST9", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "24", "coordinates": [ 3, 3 ], "label": "ST10", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "25", "coordinates": [ 3, 4 ], "label": "ST11", "labelPosition": "ne", "labelAngle": 45 },
+							{ "id": "26", "coordinates": [ 3, 5 ], "label": "ST4", "labelPosition": "ne", "labelAngle": 45 }
 						]
 					]
 				}]
