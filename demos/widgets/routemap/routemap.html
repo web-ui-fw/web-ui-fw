@@ -4,57 +4,18 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Routemap Demo - Web UI Framework Demos</title>
+
 	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
 	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
 	<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css">
+
 	<script src="../../../jqm/js/jquery.js"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
 	<script src="../../_assets/js/"></script>
-</head>
-<body>
-	<div data-role="page" id="routemap" data-dom-cache="true">
-		<div data-role="header" data-position="fixed">
-			<h1>Routemap Demo - Web UI Framework Demos</h1>
-			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
-		</div> <!--/header -->
-		<div data-role="content">
-			<div class="content-primary">
-				<h3>Routemap</h3>
-				<div data-demo-html="true" data-demo-js="true">
-					<div id="routemapTest"
-						data-role="routemap"
-						data-db="routemap_data.json"
-						data-unit="60">
-					</div>
-					<ul data-role="listview" data-inset="true">
-						<li><a id='shortestWay'>shortestWay : 21 > 7</a></li>
-						<li><a id='minimumTransfers'>minimumTransfers : 21 > 7</a></li>
-						<li><a id='clearWay'>Clear</a></li>
-						<li><a id='getNameById' href='#routePopup' data-rel='popup' data-position-to='window'>getNameById : "5"</a></li>
-						<li><a id='getIdsByName' href='#routePopup' data-rel='popup' data-position-to='window'>getIdsByName : "5(ex)"</a></li>
-						<li><a id='highlight'>highlight : 3 > 45 </a></li>
-						<li><a id='dishighlight'>dishighlight : 3 > 45 </a></li>
-					</ul>
-					<div id="routePopup" data-role="popup" style="width:300px">
-						<div data-role="header">
-							<h1>Result</h1>
-						</div>
-						<div data-role="content">
-							<p class="ui-popup-text">message</p>
-							<center>
-								<div>
-									<a data-role="button" data-rel="back" data-inline="true">OK</a>
-								</div>
-							</center>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> <!--/content -->
-	</div>
+
 	<script>
-		$( document ).on( "routemapcreate", function ( e ) {
+		$.mobile.document.one( "routemapcreate", "#routemapTest", function ( e ) {
 			var widget = $( "#routemapTest" ),
 				startId = widget.routemap( "getIdsByName", "21" )[0],
 				endId = widget.routemap( "getIdsByName", "7(ex)" )[0],
@@ -100,5 +61,47 @@
 			});
 		});
 	</script>
+</head>
+<body>
+	<div data-role="page" id="routemap" data-dom-cache="true">
+		<div data-role="header" data-position="fixed">
+			<h1>Routemap Demo - Web UI Framework Demos</h1>
+			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
+		</div> <!--/header -->
+		<div data-role="content">
+			<div class="content-primary">
+				<h3>Routemap</h3>
+				<div data-demo-html="true" data-demo-js="true">
+					<div id="routemapTest"
+						data-role="routemap"
+						data-db="routemap_data.json"
+						data-unit="60">
+					</div>
+					<ul data-role="listview" data-inset="true">
+						<li><a id='shortestWay'>shortestWay : 21 > 7</a></li>
+						<li><a id='minimumTransfers'>minimumTransfers : 21 > 7</a></li>
+						<li><a id='clearWay'>Clear</a></li>
+						<li><a id='getNameById' href='#routePopup' data-rel='popup' data-position-to='window'>getNameById : "5"</a></li>
+						<li><a id='getIdsByName' href='#routePopup' data-rel='popup' data-position-to='window'>getIdsByName : "5(ex)"</a></li>
+						<li><a id='highlight'>highlight : 3 > 45 </a></li>
+						<li><a id='dishighlight'>dishighlight : 3 > 45 </a></li>
+					</ul>
+					<div id="routePopup" data-role="popup" style="width:300px">
+						<div data-role="header">
+							<h1>Result</h1>
+						</div>
+						<div data-role="content">
+							<p class="ui-popup-text">message</p>
+							<center>
+								<div>
+									<a data-role="button" data-rel="back" data-inline="true">OK</a>
+								</div>
+							</center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> <!--/content -->
+	</div>
 </body>
 </html>
