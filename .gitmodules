@@ -1,6 +1,0 @@
-[submodule "jqm"]
-	path = jqm
-	url = https://github.com/jquery/jquery-mobile.git
-[submodule "jq-color"]
-	path = jq-color
-	url = https://github.com/jquery/jquery-color.git
