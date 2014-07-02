@@ -4,7 +4,7 @@
 //>>group: Forms
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.core",
 	"jqm/widgets/forms/reset" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");

@@ -4,7 +4,7 @@
 //>>group: Widget
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.widget",
 	"jqm/widgets/page",
 	"jqm/widgets/toolbar"

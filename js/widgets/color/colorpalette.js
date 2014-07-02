@@ -6,7 +6,7 @@
 //>>css.structure: ../../../css/structure/web-ui-fw.colorpalette.css
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.widget",
 	"./colorwidget",
 	"../../behaviors/optionDemultiplexer",

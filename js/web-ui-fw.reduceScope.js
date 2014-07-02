@@ -4,7 +4,7 @@
 //>>group: Infrastructure
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.ns"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");

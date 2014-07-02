@@ -4,7 +4,7 @@
 //>>group: Widgets
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.widget" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 

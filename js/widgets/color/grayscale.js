@@ -4,7 +4,7 @@
 //>>group: Forms
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jq-color/jquery.color"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");

@@ -5,7 +5,7 @@
 //>>css.structure: ../../css/structure/web-ui-fw.core.css
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.core"
 	], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");

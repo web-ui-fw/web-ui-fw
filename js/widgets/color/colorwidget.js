@@ -4,7 +4,7 @@
 //>>group: Forms
 
 define( [
-	"jqm/jquery",
+	"jquery",
 	"jqm/jquery.mobile.core",
 	"../../behaviors/setValue",
 	"../../behaviors/setDisabled",
