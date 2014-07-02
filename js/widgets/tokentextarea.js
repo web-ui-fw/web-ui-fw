@@ -5,8 +5,7 @@
 
 define( [
 	"jquery",
-	"jqm/jquery.mobile.widget",
-	"jqm/jquery.mobile.buttonMarkup" ], function( jQuery ) {
+	"jqm/jquery.mobile.widget" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
@@ -31,14 +30,14 @@ define( [
 		},
 
 		_create: function() {
-			var self = this,
+			var $moreBlock,
+				self = this,
 				$view = this.element,
 				role = $view.jqmData( "role" ),//TODO: performance improvement for jqmData after jQM-1.4.
 				option = this.options,
 				className = "ui-tokentextarea-link",
 				labeltag = document.createElement( "label" ),
-				inputbox = document.createElement( "input" ),
-				$moreBlock = $( document.createElement( "a" ) );
+				inputbox = document.createElement( "input" );
 
 			if ( !option.theme ) {
 				option.theme = $.mobile.getInheritedTheme( $view, "a" );
@@ -59,19 +58,13 @@ define( [
 			if ( option.link === null || $.trim( option.link ).length < 1 || $( option.link ).length === 0 ) {
 				className += "-dim";
 			}
-			$moreBlock.attr( "data-role", "button" )
-				.buttonMarkup( {
-					icon: "plus",
-					iconpos:"notext",
-					inline: true
-				})
-				.attr( { "href" : $.trim( option.link ) } )
-				.addClass( "ui-tokentextarea-link-base " + className )
-				.find( "span.ui-btn-text" )
-				.text( "Add recipient" );
 
 			// append default htmlelements to main widget.
-			$view.append( $moreBlock[0] );
+			$moreBlock = $( "<a " +
+				"href='" + $.trim( option.link ) + "' " +
+				"class='ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-notext ui-tokentextarea-link-base " + className + "'" +
+				">Add recipient</a>" )
+				.appendTo( $view );
 
 			// assign global variables for performance improvement instead of using objects in below codes.
 			self._$labeltag = $( labeltag );
