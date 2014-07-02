@@ -5,14 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<title>Tokentextarea Demo - Web UI Framework Demos</title>
-	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
-	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
-	<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css">
 
-	<script src="../../../jqm/js/jquery.js"></script>
+	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
+	<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css" />
+	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
+
+	<script src="../../../jqm/external/jquery/jquery.js"></script>
+	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
-	<script src="../../_assets/js/"></script>
 	<script>
 		$.mobile.document.one( "pagecreate", "#tokentextarea", function() {
 			var $tta = $( ":jqmData(role='tokentextarea')" ),
@@ -96,7 +97,7 @@
 			<h1>Tokentextarea Demo - Web UI Framework Demos</h1>
 			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
 		</div> <!--/header -->
-		<div data-role="content">
+		<div class="ui-content" role="main">
 			<div class="content-primary">
 
 				<h3>Tokentextarea</h3>

@@ -1,114 +1,115 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Virtualgrid Demo - Web UI Framework Demos</title>
-		<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
-		<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
-		<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css">
+	<title>Virtualgrid Demo - Web UI Framework Demos</title>
 
-		<script src="../../../jqm/js/jquery.js"></script>
-		<script src="../../../jqm/js/"></script>
-		<script src="../../../js/"></script>
-		<script src="../../_assets/js/"></script>
-		<!-- Demo.js -->
-		<style>
-			.ui-demo-rotation-namecard {
-				display:inline-block;
-				width : 70px;
-				height : 99px;
-				margin-right: 5px;
-				margin-left: 5px;
-				margin-bottom: 8px;
-			}
+	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css" />
+	<link rel="stylesheet" href="../../../jqm/demos/_assets/css/jqm-demos.css" />
+	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
 
-			.ui-demo-namecard-pic {
-				float : left;
-				padding-top : 3px;
-				padding-left : 3px;
-				padding-bottom: 0rem;
-			}
+	<script src="../../../jqm/external/jquery/jquery.js"></script>
+	<script src="../../_assets/js/"></script>
+	<script src="../../../jqm/js/"></script>
+	<script src="../../../js/"></script>
+	<!-- Demo.js -->
+	<style>
+		.ui-demo-rotation-namecard {
+			display:inline-block;
+			width : 70px;
+			height : 99px;
+			margin-right: 5px;
+			margin-left: 5px;
+			margin-bottom: 8px;
+		}
 
-			.ui-demo-namecard-pic-img {
-				height : 69px;
-				width : 69px;
-			}
+		.ui-demo-namecard-pic {
+			float : left;
+			padding-top : 3px;
+			padding-left : 3px;
+			padding-bottom: 0rem;
+		}
 
-			.ui-demo-namecard-contents {
-				float : left;
-				height : 16px;
-				margin: 0rem;
-			}
+		.ui-demo-namecard-pic-img {
+			height : 69px;
+			width : 69px;
+		}
 
-			.ui-demo-namecard-contents span {
-				font-style : italic;
-				color : #666;
-				border-bottom : 1px dashed;
-				margin-top: 0rem;
-			}
+		.ui-demo-namecard-contents {
+			float : left;
+			height : 16px;
+			margin: 0rem;
+		}
 
-			.ui-demo-namecard-contents span.name {
-				color : gray;
-				font : normal 0.6rem Georgia, serif !important;
-				width: 64px;
-				display: inline-block;
-				white-space : nowrap;
-				overflow : hidden !important;
-				text-overflow : ellipsis !important;
-				-o-text-overflow:ellipsis;
-				resize:horizontal;
-			}
-		</style>
-	</head>
+		.ui-demo-namecard-contents span {
+			font-style : italic;
+			color : #666;
+			border-bottom : 1px dashed;
+			margin-top: 0rem;
+		}
 
-	<body>
-		<div data-role="page"   id="demo-intro">
-			<div id="normal" data-role="header" data-position="fixed">
-				<h1>Virtual Grid</h1>
-				<a href="../../index.html" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
-			</div>
-			<div data-role="content">
-				<h3>Virtualgrid</h3>
-				<p>Displays an array of items tiled horizontally and vertically. The user can pan the list horizontally or vertically.</p>
-				<a href="#demo-page" class="jqm-button" data-ajax="false" data-role="button" data-inline="true" data-mini="true" data-icon="arrow-r" data-iconpos="right">Open demo</a>
+		.ui-demo-namecard-contents span.name {
+			color : gray;
+			font : normal 0.6rem Georgia, serif !important;
+			width: 64px;
+			display: inline-block;
+			white-space : nowrap;
+			overflow : hidden !important;
+			text-overflow : ellipsis !important;
+			-o-text-overflow:ellipsis;
+			resize:horizontal;
+		}
+	</style>
+</head>
 
-				<div data-demo-html="#demo-page" data-demo-css="true"></div><!--/demo-html -->
-			</div>
+<body>
+	<div data-role="page" id="demo-intro">
+		<div id="normal" data-role="header" data-position="fixed">
+			<h1>Virtual Grid</h1>
+			<a href="../../index.html" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
 		</div>
+		<div class="ui-content" role="main">
+			<h3>Virtualgrid</h3>
+			<p>Displays an array of items tiled horizontally and vertically. The user can pan the list horizontally or vertically.</p>
+			<a href="#demo-page" class="jqm-button" data-ajax="false" data-role="button" data-inline="true" data-mini="true" data-icon="arrow-r" data-iconpos="right">Open demo</a>
 
-		<div id="demo-page" data-scroll="no" data-role="page" class="virtualgrid_grid_demo_page" >
-			<div id="normal" data-role="header" data-position="fixed">
-				<h1>Virtual Grid</h1>
-				<a href="#demo-intro" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
-			</div>
-			<div data-role="content" data-scroll="none" >
-				<script id="tizen-demo-namecard" type="text/x-jquery-tmpl">
-					<div class="ui-demo-rotation-namecard">
-						<div class="ui-demo-namecard-pic">
-							<img class="ui-demo-namecard-pic-img" src="${TEAM_LOGO}"  />
-						</div>
-						<div class="ui-demo-namecard-contents">
-							<span class="name ui-li-text-main">${NAME}</span>
-						</div>
+			<div data-demo-html="#demo-page" data-demo-css="true"></div><!--/demo-html -->
+		</div>
+	</div>
+
+	<div id="demo-page" data-scroll="no" data-role="page" class="virtualgrid_grid_demo_page" >
+		<div id="normal" data-role="header" data-position="fixed">
+			<h1>Virtual Grid</h1>
+			<a href="#demo-intro" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
+		</div>
+		<div class="ui-content" role="main" data-scroll="none" >
+			<script id="tizen-demo-namecard" type="text/x-jquery-tmpl">
+				<div class="ui-demo-rotation-namecard">
+					<div class="ui-demo-namecard-pic">
+						<img class="ui-demo-namecard-pic-img" src="${TEAM_LOGO}"  />
 					</div>
-				</script>
-				<script>
-					var replaceHelper = function ( elem, data ) {
-						var root = elem && elem.get ? elem[ 0 ] : elem,
-							targetElem;
-						targetElem = root.getElementsByTagName( "img" )[ 0 ];
-						targetElem.setAttribute("src", data.TEAM_LOGO );
-						targetElem = root.getElementsByTagName( "span" )[ 0 ];
-						targetElem.innerText = data.NAME;
-						return ;
-					};
-				</script>
-				<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="./virtualgrid-db-demo.json" data-data-type="json" data-replace-helper ="replaceHelper">
+					<div class="ui-demo-namecard-contents">
+						<span class="name ui-li-text-main">${NAME}</span>
+					</div>
 				</div>
+			</script>
+			<script>
+				var replaceHelper = function ( elem, data ) {
+					var root = elem && elem.get ? elem[ 0 ] : elem,
+						targetElem;
+					targetElem = root.getElementsByTagName( "img" )[ 0 ];
+					targetElem.setAttribute("src", data.TEAM_LOGO );
+					targetElem = root.getElementsByTagName( "span" )[ 0 ];
+					targetElem.innerText = data.NAME;
+					return ;
+				};
+			</script>
+			<div id="virtualgrid-demo" data-role="virtualgrid"  data-template="tizen-demo-namecard" data-repository="./virtualgrid-db-demo.json" data-data-type="json" data-replace-helper ="replaceHelper">
 			</div>
-			
 		</div>
-	</body>
+
+	</div>
+</body>
 </html>
