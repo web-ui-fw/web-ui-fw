@@ -175,7 +175,20 @@ module.exports = function( grunt ) {
 
 		qunit: {
 			options: {
-				timeout: 30000
+				timeout: 30000,
+				"--web-security": "no",
+				coverage: {
+					baseUrl: ".",
+					src: [
+						"js/**/*.js",
+						"!js/jquery.tag.inserter.js",
+						"!js/requirejs.config.js"
+					],
+					instrumentedFiles: "temp/",
+					htmlReport: "_tests/reports/coverage",
+					lcovReport: "_tests/reports/lcov",
+					linesThresholdPct: 0
+				}
 			},
 
 			files: {},
