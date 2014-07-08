@@ -1,0 +1,15 @@
+.ui-tokentextarea2 input {
+	display: inline-block;
+}
+
+.ui-tokentextarea2 > a.ui-btn:first-child {
+	margin-left: 0.625em;
+}
+
+.ui-tokentextarea2 > a.ui-btn {
+	padding-top: 0.35em;
+	padding-bottom: 0.35em;
+	margin-top: 0;
+	margin-bottom: 0;
+	height: 100%;
+}
