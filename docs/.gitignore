@@ -1,9 +1,0 @@
-dist
-config.json
-.project
-*~
-*.diff
-*.patch
-.DS_Store
-.settings
-ZZ_*

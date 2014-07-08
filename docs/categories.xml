@@ -1,7 +1,0 @@
-<categories>
-	<category name="Uncategorized" slug="uncategorized"/>
-	<category name="Widgets" slug="widgets">
-		<desc><![CDATA[
-			<p>Web UI Framework widgets</p>]]></desc>
-	</category>
-</categories>
