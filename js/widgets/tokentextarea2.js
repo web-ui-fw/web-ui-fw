@@ -19,14 +19,19 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_create: function() {
 		this._superApply( arguments );
 		this._on({
-			"keyup": "_handleKeyUp",
-			"paste": "_handlePaste"
+			"keyup": "_processInput",
+			"paste": "_handlePaste",
+			"change": "_processInput",
+			"vclick a[href='#']": "_handleBlockClick"
 		});
+
+		this._on( this.window, { "throttledresize": "_adjustWidth" } );
 	},
 
 	_enhance: function() {
 		this._superApply( arguments );
 		this.widget().addClass( "ui-tokentextarea2" );
+		this._processInput( null, false );
 	},
 
 	_tokenizeInput: function( value ) {
@@ -48,12 +53,23 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_handlePaste: function() {
-		setTimeout( $.proxy( this, "_handleKeyUp" ), 0 );
+		this._delay( "_handleKeyUp" );
 	},
 
-	_handleKeyUp: function( event ) {
+	_handleBlockClick: function( event ) {
+		var block = $( event.target );
+
+		if ( this._trigger( "select", { block: block } ) ) {
+			if ( block.hasClass( "ui-btn-active" ) ) {
+				block.remove();
+			} else {
+				block.addClass( "ui-btn-active" );
+			}
+		}
+	},
+
+	_processInput: function( event, adjustWidth ) {
 		var index, tokens, tokensLength, keepLast,
-			adjustWidth = false,
 			value = this.element.val();
 		// 186 : semi-colon
 
@@ -67,24 +83,34 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				keepLast = !value.match( terminatorRegex );
 
 				for ( index = 0 ; index < tokensLength - ( keepLast ? 1 : 0 ); index++ ) {
-					this._block( tokens[ index ] )
-						.jqmData( "value", tokens[ index ] )
-						.insertBefore( this.element );
+					this.add( tokens[ index ] );
 				}
 
 				this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
 
-				this._adjustWidth();
+				adjustWidth = ( arguments.length < 2 ) ? true : adjustWidth;
 		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE && value === "" ) {
 			if ( this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() ) ) {
-				this._adjustWidth();
+				adjustWidth = ( arguments.length < 2 ) ? true : adjustWidth;
 			}
+		}
+
+		if ( adjustWidth ) {
+			this._adjustWidth();
 		}
 	},
 
 	_removeBlock: function( block ) {
-		block.remove();
-		return true;
+		var returnValue = false;
+
+		if ( block.hasClass( "ui-btn-active" ) ) {
+			block.remove();
+			returnValue = true;
+		} else {
+			block.addClass( "ui-btn-active" );
+		}
+
+		return returnValue;
 	},
 
 	_adjustWidth: function() {
@@ -110,20 +136,71 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			( this.element.outerWidth() - this.element.width() ) );
 	},
 
+	_textFromButtons: function( buttons ) {
+		var text = "";
+
+		buttons.each( function() {
+			text += $( this ).jqmData( "value" ) + ";";
+		});
+
+		return text;
+	},
+
 	inputText: function( newText ) {
 		var text = "",
 			buttons = this.element.prevAll( "a.ui-btn" );
 
 		if ( arguments.length === 0 ) {
-			buttons.reverse().each( function() {
-				text += $( this ).jqmData( "value" ) + ";";
-			});
-
-			return text + input.val();
+			return this._textFromButtons( $( buttons.get().reverse() ) ) + input.val();
 		} else {
 			buttons.remove();
 			this.element.val( newText );
-			this._handleKeyUp();
+			this._processInput();
+		}
+	},
+
+	add: function( value, index ) {
+		var buttons,
+			destination = this.element;
+
+		if ( arguments.length > 1 ) {
+			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+			if ( index >= 0 && index < buttons.length ) {
+				destination = $( buttons[ index ] )
+			}
+		}
+
+		this._block( value )
+			.jqmData( "value", value )
+			.insertBefore( destination );
+	},
+
+	length: function() {
+		return this.element.prevAll( "a.ui-btn" ).length;
+	},
+
+	remove: function( position ) {
+		var buttons = this.element.prevAll( "a.ui-btn" );
+
+		if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
+			buttons = $( buttons.get().reverse()[ position ] );
+		}
+
+		buttons.remove();
+	},
+
+	select: function( index ) {
+		var buttons;
+
+		if ( arguments.length === 0 ) {
+			return this._textFromButtons(
+				$( this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() ) );
+		} else {
+			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+
+			if ( index >= 0 && index < buttons.length ) {
+				$( buttons[ index ] ).addClass( "ui-btn-active" );
+			}
 		}
 	}
 });
