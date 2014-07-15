@@ -8,7 +8,11 @@
 	display: inline-block;
 }
 
-.ui-tokentextarea2.initial input,
+.ui-tokentextarea2.initial input {
+	position: absolute;
+	opacity: 0;
+}
+
 .ui-tokentextarea2 .input-shadow {
 	visibility: hidden;
 	position: absolute;
