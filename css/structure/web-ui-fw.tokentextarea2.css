@@ -1,15 +1,22 @@
+.ui-tokentextarea2 {
+	padding-left: 0.625em;
+	cursor: text;
+}
+
 .ui-tokentextarea2 input {
+	padding-left: 0;
 	display: inline-block;
 }
 
-.ui-tokentextarea2 > a.ui-btn:first-child {
-	margin-left: 0.625em;
+.ui-tokentextarea2.initial input,
+.ui-tokentextarea2 .input-shadow {
+	visibility: hidden;
+	position: absolute;
 }
 
 .ui-tokentextarea2 > a.ui-btn {
 	padding-top: 0.35em;
 	padding-bottom: 0.35em;
-	margin-top: 0;
-	margin-bottom: 0;
-	height: 100%;
+	margin-top: 0.4em;
+	margin-bottom: 0.4em;
 }
