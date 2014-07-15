@@ -24,12 +24,11 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			"paste": "_handlePaste",
 			"change": "_processInput",
 			"vclick a[href='#']": "_handleBlockClick",
-			"focusin": "_handleInitialFocusIn"
 		});
 
 		this._on( this.window, { "throttledresize": "_adjustWidth" } );
 
-		this._on( this.widget(), { "vmousedown": "_handleInitialFocusIn" } );
+		this._on( this.widget(), { "focusin": "_handleFocusIn" });
 	},
 
 	_enhance: function() {
@@ -57,12 +56,9 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			text + "</a>" );
 	},
 
-	_handleInitialFocusIn: function() {
-		if ( this.widget().hasClass( "initial" ) ) {
-			this.widget().removeClass( "initial" );
-			this._adjustWidth();
-			this._delay( function() { this.element.focus() } );
-		}
+	_handleFocusIn: function() {
+		this._adjustWidth();
+		this.widget().removeClass( "initial" );
 	},
 
 	_handlePaste: function() {
