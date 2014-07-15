@@ -34,7 +34,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 	_enhance: function() {
 		this._superApply( arguments );
-		this.widget().addClass( "ui-tokentextarea2 initial" );
+		this.widget().addClass( "ui-tokentextarea2" + ( this.element.val() ? " initial" : "" ) );
 		this._processInput( null, false );
 		this._inputShadow = $( "<span class='input-shadow'></span>" ).appendTo( this.widget() );
 	},
