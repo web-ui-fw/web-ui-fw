@@ -38,6 +38,20 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		this._inputShadow = $( "<span class='input-shadow'></span>" ).appendTo( this.widget() );
 	},
 
+	_setOptions: function( options ) {
+		var blocks;
+
+		if ( options.disabled !== undefined ) {
+			blocks = this.element.prevAll( "a.ui-btn" );
+			if ( options.disabled ) {
+				blocks.attr( "tabindex", -1 );
+			} else {
+				blocks.removeAttr( "tabindex" );
+			}
+		}
+		return this._superApply( arguments );
+	},
+
 	_tokenizeInput: function( value ) {
 		var tokens = [];
 
@@ -52,7 +66,9 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_block: function( text ) {
-		return $( "<a href='#' class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'>" +
+		return $( "<a href='#' " +
+			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
+			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'>" +
 			text + "</a>" );
 	},
 
