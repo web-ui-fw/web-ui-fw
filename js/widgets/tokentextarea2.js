@@ -107,6 +107,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE && value === "" ) {
 			this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
+		} else {
+			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
 
 		if ( adjustWidth ) {
