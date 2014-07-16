@@ -46,7 +46,6 @@
 				// input test widget with initial value
 				inputTestSet.infratestwidget();
 				deepEqual( inputTestSet.infratestwidget( "option", "testValue" ), "testValue", "Initial value for widget inputTest is 'testValue'" );
-				debugger;
 				inputTestSet.infratestwidget( "option", "testValue", testText );
 			},
 
@@ -56,7 +55,6 @@
 			},
 
 			function( result ) {
-				debugger;
 				deepEqual( result.testvaluechanged.timedOut, false, "Widget did emit signal 'testvaluechanged'" );
 				deepEqual( result.change.timedOut, false, "Widget did emit signal 'change'" );
 				deepEqual( inputTestSet.text(), testText, "The widget correctly reflects the option value" );
