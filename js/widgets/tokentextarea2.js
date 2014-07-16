@@ -112,7 +112,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_handlePaste: function() {
-		this._delay( "_handleKeyUp" );
+		this._delay( "_processInput" );
 	},
 
 	_handleBlockClick: function( event ) {
@@ -242,7 +242,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			if ( arguments.length > 1 ) {
 				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
 				if ( index >= 0 && index < buttons.length ) {
-					destination = $( buttons[ index ] )
+					destination = $( buttons[ index ] );
 				}
 			}
 
