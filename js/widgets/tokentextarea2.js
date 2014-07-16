@@ -18,35 +18,52 @@ var regexString = " *[;,] *",
 
 $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_create: function() {
+		var outer;
+
 		this._superApply( arguments );
-		this._on({
-			"keyup": "_processInput",
-			"paste": "_handlePaste",
-			"change": "_processInput",
-			"vclick a[href='#']": "_handleBlockClick",
-		});
+		if ( this.inputNeedsWrap ) {
+			outer = this.widget();
+			if ( this.options.enhanced ) {
+				this._inputShadow = outer.children( ".ui-tokentextarea2-input-shadow" );
+			}
 
-		this._on( this.window, { "throttledresize": "_adjustWidth" } );
-
-		this._on( this.widget(), { "focusin": "_handleFocusIn" });
+			this._on({
+				"keyup": "_processInput",
+				"paste": "_handlePaste",
+				"change": "_processInput",
+				"vclick a[href='#']": "_handleBlockClick",
+				"focusin": "_handleInputFocusIn"
+			});
+			this._on( this.window, { "throttledresize": "_adjustWidth" } );
+			this._on( outer, { "vmousedown": "_handleWidgetVMouseDown" } );
+		}
 	},
 
 	_enhance: function() {
+		var outer;
+
 		this._superApply( arguments );
-		this.widget().addClass( "ui-tokentextarea2" + ( this.element.val() ? " initial" : "" ) );
-		this._processInput( null, false );
-		this._inputShadow = $( "<span class='input-shadow'></span>" ).appendTo( this.widget() );
+
+		if ( this.inputNeedsWrap ) {
+			outer = this.widget().addClass( "ui-tokentextarea2" +
+				( this.element.val() ? " initial" : "" ) );
+			this._processInput( null, false );
+			this._inputShadow = $( "<span class='ui-tokentextarea2-input-shadow'></span>" )
+				.appendTo( outer );
+		}
 	},
 
 	_setOptions: function( options ) {
 		var blocks;
 
-		if ( options.disabled !== undefined ) {
-			blocks = this.element.prevAll( "a.ui-btn" );
-			if ( options.disabled ) {
-				blocks.attr( "tabindex", -1 );
-			} else {
-				blocks.removeAttr( "tabindex" );
+		if ( this.inputNeedsWrap ) {
+			if ( options.disabled !== undefined ) {
+				blocks = this.element.prevAll( "a.ui-btn" );
+				if ( options.disabled ) {
+					blocks.attr( "tabindex", -1 );
+				} else {
+					blocks.removeAttr( "tabindex" );
+				}
 			}
 		}
 		return this._superApply( arguments );
@@ -72,9 +89,23 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			text + "</a>" );
 	},
 
-	_handleFocusIn: function() {
-		this._adjustWidth();
-		this.widget().removeClass( "initial" );
+	_handleWidgetVMouseDown: function( event ) {
+		if ( event.target === this.widget()[ 0 ] ) {
+			if ( this.element.is( ":focus" ) ) {
+				event.preventDefault();
+			} else {
+				this._delay( function() { this.element.focus(); } );
+			}
+		}
+	},
+
+	_handleInputFocusIn: function() {
+		var outer = this.widget();
+
+		if ( outer.hasClass( "initial" ) ) {
+			this._adjustWidth();
+			outer.removeClass( "initial" );
+		}
 	},
 
 	_handlePaste: function() {
@@ -117,8 +148,11 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 				this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
 
-		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE && value === "" ) {
-			this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
+		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE &&
+			value === "" &&
+			this._inputShadow.text() === "" ) {
+
+				this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
 		} else {
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
@@ -181,61 +215,87 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	inputText: function( newText ) {
-		var text = "",
+		var buttons;
+
+		if ( this.inputNeedsWrap ) {
 			buttons = this.element.prevAll( "a.ui-btn" );
 
-		if ( arguments.length === 0 ) {
-			return this._textFromButtons( $( buttons.get().reverse() ) ) + input.val();
-		} else {
-			buttons.remove();
-			this.element.val( newText );
-			this._processInput();
+			if ( arguments.length === 0 ) {
+				return this._textFromButtons( $( buttons.get().reverse() ) ) + this.element.val();
+			} else {
+				buttons.remove();
+				this.element.val( newText );
+				this._processInput();
+			}
 		}
 	},
 
 	add: function( value, index ) {
-		var buttons,
+		var buttons, destination;
+
+		if ( this.inputNeedsWrap ) {
 			destination = this.element;
 
-		if ( arguments.length > 1 ) {
-			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
-			if ( index >= 0 && index < buttons.length ) {
-				destination = $( buttons[ index ] )
+			if ( arguments.length > 1 ) {
+				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+				if ( index >= 0 && index < buttons.length ) {
+					destination = $( buttons[ index ] )
+				}
 			}
-		}
 
-		this._block( value )
-			.jqmData( "value", value )
-			.insertBefore( destination );
+			this._block( value )
+				.jqmData( "value", value )
+				.insertBefore( destination );
+		}
 	},
 
 	length: function() {
-		return this.element.prevAll( "a.ui-btn" ).length;
+		return ( this.inputNeedsWrap ? this.element.prevAll( "a.ui-btn" ).length : 0 );
 	},
 
 	remove: function( position ) {
-		var buttons = this.element.prevAll( "a.ui-btn" );
+		var buttons;
 
-		if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
-			buttons = $( buttons.get().reverse()[ position ] );
+		if ( this.inputNeedsWrap ) {
+			buttons = this.element.prevAll( "a.ui-btn" );
+
+			if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
+				buttons = $( buttons.get().reverse()[ position ] );
+			}
+
+			buttons.remove();
 		}
-
-		buttons.remove();
 	},
 
 	select: function( index ) {
 		var buttons;
 
-		if ( arguments.length === 0 ) {
-			return this._textFromButtons(
-				$( this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() ) );
-		} else {
-			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+		if ( this.inputNeedsWrap ) {
+			if ( arguments.length === 0 ) {
+				return this._textFromButtons(
+					$( this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() ) );
+			} else {
+				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
 
-			if ( index >= 0 && index < buttons.length ) {
-				$( buttons[ index ] ).addClass( "ui-btn-active" );
+				if ( index >= 0 && index < buttons.length ) {
+					$( buttons[ index ] ).addClass( "ui-btn-active" );
+				}
 			}
 		}
+	},
+
+	refresh: function() {
+		this._processInput();
+		this._handleInputFocusIn();
+	},
+
+	_destroy: function() {
+		if ( this.inputNeedsWrap && !this.options.enhanced ) {
+			this.element.val( this.inputText() );
+			this.element.prevAll( "a.ui-btn" ).remove();
+			this._inputShadow.remove();
+		}
+		return this._superApply( arguments );
 	}
 });
 

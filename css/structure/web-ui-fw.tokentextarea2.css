@@ -13,7 +13,7 @@
 	opacity: 0;
 }
 
-.ui-tokentextarea2 .input-shadow {
+.ui-tokentextarea2 .ui-tokentextarea2-input-shadow {
 	visibility: hidden;
 	position: absolute;
 }
