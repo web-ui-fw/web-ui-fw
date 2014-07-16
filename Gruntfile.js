@@ -205,7 +205,7 @@ module.exports = function( grunt ) {
 						// Find the test files
 						var suites = _.without( ( grunt.option( "suites" ) || "" ).split( "," ), "" ),
 							patterns, paths,
-							prefixes = ["tests/unit/"],
+							prefixes = [ "tests/unit/", "tests/integration/" ],
 							versionedPaths = [],
 							jQueries = _.without( ( grunt.option( "jqueries" ) || process.env.JQUERIES || "" ).split( "," ), "" );
 
