@@ -7,8 +7,9 @@
 define([
 	"jquery",
 	"jqm/widgets/forms/textinput",
-	"jqm/vmouse",
+	"jqm/jquery.mobile.vmouse",
 	"../web-ui-fw.reduceScope" ], function( jQuery ) {
+//>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
 
@@ -17,6 +18,8 @@ var regexString = " *[;,] *",
 	terminatorRegex = new RegExp( regexString + "$" );
 
 $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
+	initSelector: "[data-" + $.mobile.ns + "role='tokentextarea2']",
+
 	_create: function() {
 		var outer;
 
@@ -300,8 +303,11 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 });
 
 // Textinputs that have data-role="tokentextarea" are no longer to be enhanced as textinput
-$.mobile.reduceEnhancementScope( "mobile", "textinput", "[data-role='tokentextarea2']" );
+$.mobile.reduceEnhancementScope( "mobile", "textinput",
+	"[data-" + $.mobile.ns + "role='tokentextarea2']" );
 
 })( jQuery, window, document );
 
+//>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
 });
+//>>excludeEnd("jqmBuildExclude");

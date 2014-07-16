@@ -9,6 +9,7 @@ define([
 	"widgets/color/colorwidget",
 	"widgets/virtualgrid",
 	"widgets/tokentextarea",
+	"widgets/tokentextarea2",
 	"widgets/routemap",
 	"behaviors/setValue",
 	"behaviors/optionDemultiplexer",
