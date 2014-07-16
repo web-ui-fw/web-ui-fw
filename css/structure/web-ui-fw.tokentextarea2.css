@@ -1,5 +1,6 @@
 .ui-tokentextarea2 {
 	padding-left: 0.625em;
+	padding-right: 0.625em;
 	cursor: text;
 }
 
@@ -15,6 +16,7 @@
 
 .ui-tokentextarea2 .ui-tokentextarea2-input-shadow {
 	visibility: hidden;
+	white-space: pre;
 	position: absolute;
 }
 
@@ -23,4 +25,8 @@
 	padding-bottom: 0.35em;
 	margin-top: 0.35em;
 	margin-bottom: 0.35em;
+	max-width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
