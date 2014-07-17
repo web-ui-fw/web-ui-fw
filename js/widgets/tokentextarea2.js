@@ -35,7 +35,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"paste": "_handlePaste",
 				"change": "_processInput",
 				"vclick a[href='#']": "_handleBlockClick",
-				"focusin": "_handleInputFocusIn"
+				"focusin": "_adjustWidth"
 			});
 			this._on( this.window, { "throttledresize": "_adjustWidth" } );
 			this._on( outer, { "vmousedown": "_handleWidgetVMouseDown" } );
@@ -77,7 +77,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		var tokens = [];
 
 		$.each( value.split( tokenizeRegex ), function( index, token ) {
-			token = $.trim( token );
 			if ( token !== "" ) {
 				tokens.push( token );
 			}
@@ -103,15 +102,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 	},
 
-	_handleInputFocusIn: function() {
-		var outer = this.widget();
-
-		if ( outer.hasClass( "initial" ) ) {
-			this._adjustWidth();
-			outer.removeClass( "initial" );
-		}
-	},
-
 	_handlePaste: function() {
 		this._delay( "_processInput" );
 	},
@@ -125,6 +115,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			} else {
 				block.addClass( "ui-btn-active" );
 			}
+			this._adjustWidth();
 		}
 	},
 
@@ -147,15 +138,13 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				keepLast = !value.match( terminatorRegex );
 
 				for ( index = 0 ; index < tokensLength - ( keepLast ? 1 : 0 ); index++ ) {
-					this.add( tokens[ index ] );
+					this._add( $.trim( tokens[ index ] ) );
 				}
 
 				this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
 
 		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE &&
-			value === "" &&
-			this._inputShadow.text() === "" ) {
-
+			value === this._inputShadow.text() ) {
 				this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
 		} else {
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
@@ -182,8 +171,10 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_adjustWidth: function() {
 		var top,
 			width = 0,
-			containerWidth = this.widget().width(),
-			blocks = this.element.prevAll( "a.ui-btn" );
+			input = this.element,
+			outer = this.widget(),
+			containerWidth = outer.width(),
+			blocks = input.prevAll( "a.ui-btn" );
 
 			$.each( blocks, function() {
 				var block = $( this ),
@@ -198,14 +189,24 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				width += block.outerWidth( true );
 			});
 
-		this._inputShadow.text( this.element.val() );
+		this._inputShadow.text( input.val() );
 
-		width = containerWidth - width - ( this.element.outerWidth() - this.element.width() );
+		// Reusing the variable "width" here. Whereas before it was referring to the combined width
+		// of the blocks, it is now reassigned to refer to the width we desire for the input. If
+		// the input width is insufficient to properly display its text or there are no blocks,
+		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
+		// and thus be alone on a line.
+		if ( 0 === width ) {
+			width = "";
+		} else {
+			width = containerWidth - width - ( input.outerWidth() - input.width() );
+			if ( width < this._inputShadow.width() ) {
+				width = "";
+			}
+		}
 
-		// If the input width is insufficient to properly display its text, unset the width. This
-		// will cause the input to have width 100% (set earlier in the CSS) and thus wrap to the
-		// next line.
-		this.element.width( ( width < this._inputShadow.width() ) ? "" : width );
+		input.width( width );
+		outer.removeClass( "initial" );
 	},
 
 	_textFromButtons: function( buttons ) {
@@ -234,22 +235,26 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 	},
 
-	add: function( value, index ) {
-		var buttons, destination;
-
-		if ( this.inputNeedsWrap ) {
+	_add: function( value, index ) {
+		var buttons,
 			destination = this.element;
 
-			if ( arguments.length > 1 ) {
-				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
-				if ( index >= 0 && index < buttons.length ) {
-					destination = $( buttons[ index ] );
-				}
+		if ( arguments.length > 1 ) {
+			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+			if ( index >= 0 && index < buttons.length ) {
+				destination = $( buttons[ index ] );
 			}
+		}
 
-			this._block( value )
-				.jqmData( "value", value )
-				.insertBefore( destination );
+		this._block( value )
+			.jqmData( "value", value )
+			.insertBefore( destination );
+	},
+
+	add: function( value, index ) {
+		if ( this.inputNeedsWrap ) {
+			this._add( value, index );
+			this._adjustWidth();
 		}
 	},
 
@@ -290,7 +295,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 	refresh: function() {
 		this._processInput();
-		this._handleInputFocusIn();
+		this._adjustWidth();
 	},
 
 	_destroy: function() {
