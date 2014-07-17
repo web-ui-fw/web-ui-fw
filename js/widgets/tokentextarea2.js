@@ -107,16 +107,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_handleBlockClick: function( event ) {
-		var block = $( event.target );
-
-		if ( this._trigger( "select", { block: block } ) ) {
-			if ( block.hasClass( "ui-btn-active" ) ) {
-				block.remove();
-			} else {
-				block.addClass( "ui-btn-active" );
-			}
-			this._adjustWidth();
-		}
+		this._removeBlock( $( event.target ) );
+		this._adjustWidth();
 	},
 
 	_processInput: function( event, adjustWidth ) {
@@ -157,16 +149,11 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_removeBlock: function( block ) {
-		var returnValue = false;
-
 		if ( block.hasClass( "ui-btn-active" ) ) {
 			block.remove();
-			returnValue = true;
-		} else {
+		} else if ( this._trigger( "select", { value: block.jqmData( "value" ) } ) ) {
 			block.addClass( "ui-btn-active" );
 		}
-
-		return returnValue;
 	},
 
 	_adjustWidth: function() {
