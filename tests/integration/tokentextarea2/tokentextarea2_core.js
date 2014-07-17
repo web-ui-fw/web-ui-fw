@@ -1,3 +1,7 @@
+/* Things to test:
+ * - inputText() removes all tokens, sets value to its argument, and re-tokenizes
+ * - inputText() removes class "initial"
+ */
 test( "class 'initial' correctly applied during enhancement", function() {
 	deepEqual( $( "#enhance-test" ).parent().hasClass( "initial" ), false,
 		"When there's no initial value, there's no initial class on the wrapper" );
