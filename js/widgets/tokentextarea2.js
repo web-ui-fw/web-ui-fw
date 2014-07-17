@@ -128,25 +128,26 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			adjustWidth = true;
 		}
 
-		if ( !event ||
-			event.keyCode === $.ui.keyCode.ENTER ||
-			event.keyCode === $.ui.keyCode.COMMA ||
-			event.keyCode === 186 ) {
-
-				tokens = this._tokenizeInput( value );
-				tokensLength = tokens.length;
-				keepLast = !value.match( terminatorRegex );
-
-				for ( index = 0 ; index < tokensLength - ( keepLast ? 1 : 0 ); index++ ) {
-					this._add( $.trim( tokens[ index ] ) );
-				}
-
-				this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
-
-		} else if ( event.keyCode === $.ui.keyCode.BACKSPACE &&
+		if ( event && event.keyCode === $.ui.keyCode.BACKSPACE &&
 			value === this._inputShadow.text() ) {
 				this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
 		} else {
+			if ( !event ||
+				event.keyCode === $.ui.keyCode.ENTER ||
+				event.keyCode === $.ui.keyCode.COMMA ||
+				event.keyCode === 186 ) {
+
+					tokens = this._tokenizeInput( value );
+					tokensLength = tokens.length;
+					keepLast = !value.match( terminatorRegex );
+
+					for ( index = 0 ; index < tokensLength - ( keepLast ? 1 : 0 ); index++ ) {
+						this._add( $.trim( tokens[ index ] ) );
+					}
+
+					this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
+
+			}
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
 
