@@ -24,10 +24,12 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		var outer;
 
 		this._superApply( arguments );
+
 		if ( this.inputNeedsWrap ) {
 			outer = this.widget();
 			if ( this.options.enhanced ) {
 				this._inputShadow = outer.children( ".ui-tokentextarea2-input-shadow" );
+				this._processInput( null, false );
 			}
 
 			this._on({
@@ -35,9 +37,10 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"paste": "_handlePaste",
 				"change": "_processInput",
 				"vclick a[href='#']": "_handleBlockClick",
-				"focusin": "_adjustWidth"
+				"focusin": "_handleFocusInOut",
+				"focusout": "_handleFocusInOut",
 			});
-			this._on( this.window, { "throttledresize": "_adjustWidth" } );
+			this._on( this.window, { "resize": "_adjustWidth" } );
 			this._on( outer, { "vmousedown": "_handleWidgetVMouseDown" } );
 		}
 	},
@@ -46,14 +49,14 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		var outer;
 
 		this._superApply( arguments );
-
 		if ( this.inputNeedsWrap ) {
+			outer = this.widget();
+			this._inputShadow = $( "<span class='ui-tokentextarea2-input-shadow'></span>" )
+				.appendTo( outer );
 			this._processInput( null, false );
 			outer = this.widget().addClass( "ui-tokentextarea2" +
 				( ( this.element.prevAll( "a.ui-btn" ).length > 0 ) ?
 					" initial" : "" ) );
-			this._inputShadow = $( "<span class='ui-tokentextarea2-input-shadow'></span>" )
-				.appendTo( outer );
 		}
 	},
 
@@ -71,6 +74,16 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 		return this._superApply( arguments );
+	},
+
+	_handleFocusInOut: function( event ) {
+		var isFocusIn = ( event.type === "focusin" );
+
+		if ( isFocusIn ) {
+			this._adjustWidth();
+		}
+
+		this.widget().toggleClass( "initial", !isFocusIn && this._inputIsStretched );
 	},
 
 	_tokenizeInput: function( value ) {
@@ -108,13 +121,12 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 	_handleBlockClick: function( event ) {
 		this._removeBlock( $( event.target ) );
-		this._adjustWidth();
 	},
 
 	_processInput: function( event, adjustWidth ) {
-		var index, tokens, tokensLength, keepLast,
+		var index, tokens, tokensLength, tokensToAdd,
 			value = this.element.val();
-		// 186 : semi-colon
+		// 59, 186 : semicolon, colon
 
 		if ( arguments.length < 2 ) {
 			adjustWidth = true;
@@ -127,44 +139,50 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			if ( !event ||
 				event.keyCode === $.ui.keyCode.ENTER ||
 				event.keyCode === $.ui.keyCode.COMMA ||
-				event.keyCode === 186 ) {
+				event.keyCode === 186 || event.keyCode === 59 ) {
 
 					tokens = this._tokenizeInput( value );
 					tokensLength = tokens.length;
-					keepLast = !value.match( terminatorRegex );
+					value = ( !value.match( terminatorRegex ) ? tokens[ tokensLength - 1 ] : "" );
+					tokensToAdd = tokensLength - ( value ? 1 : 0 );
 
-					for ( index = 0 ; index < tokensLength - ( keepLast ? 1 : 0 ); index++ ) {
-						this._add( $.trim( tokens[ index ] ) );
+					if ( tokensToAdd > 0 ) {
+						this.widget().addClass( "initial" );
+						for ( index = 0 ; index < tokensToAdd; index++ ) {
+							this._add( $.trim( tokens[ index ] ) );
+						}
 					}
 
-					this.element.val( keepLast ? tokens[ tokensLength - 1 ] : "" );
-
+					this.element.val( value );
 			}
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
 
+		this._inputShadow.text( this.element.val() );
 		if ( adjustWidth ) {
 			this._adjustWidth();
+			this.widget().removeClass( "initial" );
 		}
 	},
 
 	_removeBlock: function( block ) {
 		if ( block.hasClass( "ui-btn-active" ) ) {
 			block.remove();
+			this._adjustWidth();
 		} else if ( this._trigger( "select", { value: block.jqmData( "value" ) } ) ) {
 			block.addClass( "ui-btn-active" );
 		}
 	},
 
 	_adjustWidth: function() {
-		var top,
+		var top, padding, minWidth,
 			width = 0,
-			input = this.element,
-			outer = this.widget(),
-			containerWidth = outer.width(),
-			blocks = input.prevAll( "a.ui-btn" );
+			input = this.element;
 
-			$.each( blocks, function() {
+		buttons = input.prevAll( "a.ui-btn" );
+
+		if ( buttons.length > 0 ) {
+			buttons.each( function() {
 				var block = $( this ),
 					blockTop = block.offset().top;
 
@@ -177,24 +195,17 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				width += block.outerWidth( true );
 			});
 
-		this._inputShadow.text( input.val() );
+			padding = ( input.outerWidth() - input.width() );
 
-		// Reusing the variable "width" here. Whereas before it was referring to the combined width
-		// of the blocks, it is now reassigned to refer to the width we desire for the input. If
-		// the input width is insufficient to properly display its text or there are no blocks,
-		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
-		// and thus be alone on a line.
-		if ( 0 === width ) {
-			width = "";
-		} else {
-			width = containerWidth - width - ( input.outerWidth() - input.width() );
-			if ( width < this._inputShadow.width() ) {
-				width = "";
+			width = Math.max( 0, this.widget().width() - width - padding );
+
+			if ( width < this._inputShadow.width() + padding ) {
+				width = 0;
 			}
 		}
 
-		input.width( width );
-		outer.removeClass( "initial" );
+		input.width( width || "" );
+		this._inputIsStretched = !!width;
 	},
 
 	_textFromButtons: function( buttons ) {
@@ -251,16 +262,20 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	remove: function( position ) {
-		var buttons;
+		var buttons, toRemove;
 
 		if ( this.inputNeedsWrap ) {
-			buttons = this.element.prevAll( "a.ui-btn" );
+			buttons = toRemove = this.element.prevAll( "a.ui-btn" );
 
 			if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
-				buttons = $( buttons.get().reverse()[ position ] );
+				toRemove = $( buttons.get().reverse()[ position ] );
 			}
 
-			buttons.remove();
+			toRemove.remove();
+			if ( buttons.not( toRemove ).length === 0 ) {
+				this._adjustWidth();
+				this.widget().removeClass( "initial" );
+			}
 		}
 	},
 
@@ -282,8 +297,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	refresh: function() {
-		this._processInput();
-		this._adjustWidth();
+		this.remove();
+		this._processInput( null, this.element.is( ":focus" ) );
 	},
 
 	_destroy: function() {

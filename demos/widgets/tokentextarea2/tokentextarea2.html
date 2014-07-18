@@ -14,19 +14,6 @@
 	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
-	<script id="leftover-demo-js">
-$( document ).on( "pagecontainershow", function( event, data ) {
-	if ( data.toPage.attr( "id" ) === "tokentextarea2" ) {
-
-		// When a tokentextarea2 has an initial value that includes both tokens and leftover
-		// characters which cannot be turned into a token, you must call refresh() once the page
-		// is visible so that the tokentextarea2 widget's input, which is initially hidden, can be
-		// properly resized and shown. There is no event the widget can handle that tells it that
-		// it has become visible, so you must tell it by calling refresh().
-		$( "#leftover-demo" ).tokentextarea2( "refresh" );
-	}
-});
-	</script>
 </head>
 <body>
 	<div data-role="page" id="tokentextarea2">
@@ -35,6 +22,7 @@ $( document ).on( "pagecontainershow", function( event, data ) {
 			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
 		</div> <!--/header -->
 		<div class="ui-content" role="main">
+
 			<h2>Basic tokentextarea2</h2>
 			<div data-demo-html="true">
 				<input data-role="tokentextarea2">
@@ -51,15 +39,14 @@ $( document ).on( "pagecontainershow", function( event, data ) {
 			</div>
 
 			<h2>tokentextarea2 with initial input resulting in a token and leftover input</h2>
-			<div data-demo-html="true" data-demo-js="#leftover-demo-js">
+			<div data-demo-html="true">
 				<input id="leftover-demo" data-role="tokentextarea2" value="abc@def.com; ghi">
 			</div>
 
 			<h2>Enhanced</h2>
 			<div data-demo-html="true">
 				<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea2 initial">
-					<a href="#" class="ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline" data-value="your.name@your.domain.com">your.name@your.domain.com</a>
-					<input data-role="tokentextarea2" data-enhanced="true">
+					<input data-role="tokentextarea2" data-enhanced="true" value="your.name@your.domain.com;">
 					<span class="ui-tokentextarea2-input-shadow"></span>
 				</div>
 			</div>
