@@ -44,7 +44,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"change": "_processInput",
 				"vclick a[href='#']": "_handleBlockClick",
 				"focusin": "_handleFocusInOut",
-				"focusout": "_handleFocusInOut",
+				"focusout": "_handleFocusInOut"
 			});
 			this._on( this.window, { "resize": "_adjustWidth" } );
 			this._on( outer, { "vmousedown": "_handleWidgetVMouseDown" } );
@@ -181,11 +181,10 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_adjustWidth: function() {
-		var top, padding, minWidth,
+		var top, padding,
 			width = 0,
-			input = this.element;
-
-		buttons = input.prevAll( "a.ui-btn" );
+			input = this.element,
+			buttons = input.prevAll( "a.ui-btn" );
 
 		if ( buttons.length > 0 ) {
 			buttons.each( function() {
@@ -203,13 +202,18 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 			padding = ( input.outerWidth() - input.width() );
 
+			// Reusing the variable "width" here. Whereas before it was referring to the combined
+			// width of the blocks, it is now reassigned to refer to the width we desire for the
+			// input.
 			width = Math.max( 0, this.widget().width() - width - padding );
-
 			if ( width < this._inputShadow.width() + padding ) {
 				width = 0;
 			}
 		}
 
+		// If the input width is insufficient to properly display its text or there are no blocks,
+		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
+		// and thus be alone on a line.
 		input.width( width || "" );
 		this._inputIsStretched = !!width;
 	},
