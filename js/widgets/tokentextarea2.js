@@ -4,6 +4,12 @@
 //>>group: Widgets
 //>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.css
 
+//
+// The problem with pre-rendered blocks:
+// - http://jsbin.com/rowajepa/1/ (core only)
+// - http://jsbin.com/rasoliva/1/ (core + jQM)
+//
+
 define([
 	"jquery",
 	"jqm/widgets/forms/textinput",
@@ -101,8 +107,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_block: function( text ) {
 		return $( "<a href='#' " +
 			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
-			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'>" +
-			text + "</a>" );
+			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
+				.text( text );
 	},
 
 	_handleWidgetVMouseDown: function( event ) {
