@@ -43,8 +43,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"paste": "_handlePaste",
 				"change": "_processInput",
 				"vclick a[href='#']": "_handleBlockClick",
-				"focusin": "_handleFocusInOut",
-				"focusout": "_handleFocusInOut"
+				"focusin": "_adjustWidth"
 			});
 			this._on( this.window, { "resize": "_adjustWidth" } );
 			this._on( outer, { "vmousedown": "_handleWidgetVMouseDown" } );
@@ -80,16 +79,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 		return this._superApply( arguments );
-	},
-
-	_handleFocusInOut: function( event ) {
-		var isFocusIn = ( event.type === "focusin" );
-
-		if ( isFocusIn ) {
-			this._adjustWidth();
-		}
-
-		this.widget().toggleClass( "initial", !isFocusIn && this._inputIsStretched );
 	},
 
 	_tokenizeInput: function( value ) {
@@ -166,7 +155,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 					tokensLength = tokens.tokens.length;
 
 					if ( tokensLength > 0 ) {
-						this.widget().addClass( "initial" );
 						if ( tokensLength === 1 ) {
 							fragment = this._block( tokens.tokens[ 0 ] );
 						} else {
@@ -176,7 +164,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 									this._block( tokens.tokens[ index ] )[ 0 ] );
 							}
 						}
-						this.element.before( fragment );
+						this._add( fragment );
 					}
 
 					this.element.val( tokens.leftover );
@@ -187,13 +175,13 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		this._inputShadow.text( this.element.val() );
 		if ( adjustWidth ) {
 			this._adjustWidth();
-			this.widget().removeClass( "initial" );
 		}
 	},
 
 	_removeBlock: function( block ) {
 		if ( block.hasClass( "ui-btn-active" ) ) {
 			block.remove();
+			this.widget().toggleClass( "initial", this.element.prevAll( "a.ui-btn" ).length > 0 );
 			this._adjustWidth();
 		} else if ( this._trigger( "select", { value: block.jqmData( "value" ) } ) ) {
 			block.addClass( "ui-btn-active" );
@@ -235,7 +223,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
 		// and thus be alone on a line.
 		input.width( width || "" );
-		this._inputIsStretched = !!width;
+		this.widget().toggleClass( "initial", !!width && ( buttons.length > 0 ) );
 	},
 
 	_textFromButtons: function( buttons ) {
@@ -275,9 +263,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 
-		this._block( value )
-			.jqmData( "value", value )
-			.insertBefore( destination );
+		destination.before( ( typeof value === "string" ? this._block( value ) : value ) );
 	},
 
 	add: function( value, index ) {
