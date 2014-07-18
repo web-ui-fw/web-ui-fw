@@ -262,6 +262,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 
+		this.widget().addClass( "initial" );
 		destination.before( ( typeof value === "string" ? this._block( value ) : value ) );
 	},
 
