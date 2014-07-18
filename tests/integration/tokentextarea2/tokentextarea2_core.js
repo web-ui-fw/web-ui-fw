@@ -158,12 +158,6 @@ test( "Clicking on token works", function() {
 
 	input.prev().click();
 
-	deepEqual( input.parent().hasClass( "initial" ), false,
-		"class 'initial' is removed when clicking on token" );
-
-	deepEqual( input.offset().top, top,
-		"input top hasn't change because of removal of 'initial' from wrapper" );
-
 	deepEqual( input.prev().hasClass( "ui-btn-active" ), true,
 		"clicking on token causes class 'ui-btn-active' to be added" );
 
