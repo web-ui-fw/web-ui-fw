@@ -93,7 +93,9 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_tokenizeInput: function( value ) {
-		var tokens = [];
+		var index,
+			tokens = [],
+			leftover = "";
 
 		$.each( value.split( tokenizeRegex ), function( index, token ) {
 			if ( token !== "" ) {
@@ -101,14 +103,27 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		});
 
-		return tokens;
+		if ( !value.match( terminatorRegex ) ) {
+			leftover = tokens[ tokens.length - 1 ];
+			tokens = tokens.slice( 0, tokens.length - 1 );
+		}
+
+		for ( index in tokens ) {
+			tokens[ index ] = $.trim( tokens[ index ] );
+		}
+
+		return {
+			tokens: tokens,
+			leftover: leftover
+		};
 	},
 
 	_block: function( text ) {
 		return $( "<a href='#' " +
 			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
 			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
-				.text( text );
+				.text( text )
+				.jqmData( "value", text );
 	},
 
 	_handleWidgetVMouseDown: function( event ) {
@@ -130,7 +145,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_processInput: function( event, adjustWidth ) {
-		var index, tokens, tokensLength, tokensToAdd,
+		var index, tokens, fragment, tokensLength,
 			value = this.element.val();
 		// 59, 186 : semicolon, colon
 
@@ -148,18 +163,23 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				event.keyCode === 186 || event.keyCode === 59 ) {
 
 					tokens = this._tokenizeInput( value );
-					tokensLength = tokens.length;
-					value = ( !value.match( terminatorRegex ) ? tokens[ tokensLength - 1 ] : "" );
-					tokensToAdd = tokensLength - ( value ? 1 : 0 );
+					tokensLength = tokens.tokens.length;
 
-					if ( tokensToAdd > 0 ) {
+					if ( tokensLength > 0 ) {
 						this.widget().addClass( "initial" );
-						for ( index = 0 ; index < tokensToAdd; index++ ) {
-							this._add( $.trim( tokens[ index ] ) );
+						if ( tokensLength === 1 ) {
+							fragment = this._block( tokens.tokens[ 0 ] );
+						} else {
+							fragment = this.document[ 0 ].createDocumentFragment();
+							for ( index = 0 ; index < tokensLength; index++ ) {
+								fragment.appendChild(
+									this._block( tokens.tokens[ index ] )[ 0 ] );
+							}
 						}
+						this.element.before( fragment );
 					}
 
-					this.element.val( value );
+					this.element.val( tokens.leftover );
 			}
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
