@@ -13,6 +13,7 @@
 define([
 	"jquery",
 	"jqm/widgets/forms/textinput",
+	"jqm/widgets/forms/reset",
 	"jqm/jquery.mobile.vmouse",
 	"../web-ui-fw.reduceScope" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
@@ -27,7 +28,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	initSelector: "[data-" + $.mobile.ns + "role='tokentextarea2']",
 
 	_create: function() {
-		var outer;
+		var outer, formId;
 
 		this._superApply( arguments );
 
@@ -36,6 +37,13 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			if ( this.options.enhanced ) {
 				this._inputShadow = outer.children( ".ui-tokentextarea2-input-shadow" );
 			}
+
+			// Handle form reset
+			formId = this.element.attr( "form" );
+			this._on( ( formId ? this.document[ 0 ].getElementById( formId ) :
+				this.element.closest( "form" ) ), {
+					"reset": function() { this._delay( "refresh" ); }
+			});
 
 			this._on({
 				"keyup": "_processInput",
