@@ -56,29 +56,6 @@ test( "backspace works correctly", function() {
 		"Backspacing on empty input with previous token selected removes selected token" );
 });
 
-asyncTest( "focusing on input removes class 'initial'", function() {
-	expect( 2 );
-
-	var input = $( "#focus-test-initial" );
-
-	$.testHelper.detailedEventCascade([
-		function() {
-			deepEqual( input.parent().hasClass( "initial" ), true,
-				"Class 'initial' present at first" );
-
-			input.focus();
-		},
-		{
-			focusin: { src: input, event: "focusin.focusTest1" }
-		},
-		function() {
-			deepEqual( input.parent().hasClass( "initial" ), false,
-				"Class 'initial' absent after focusing input" );
-			start();
-		}
-	]);
-});
-
 asyncTest( "mousing down on wrapper focuses input", function() {
 	expect( 1 );
 
