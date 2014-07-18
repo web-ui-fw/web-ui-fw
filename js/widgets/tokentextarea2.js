@@ -35,7 +35,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			outer = this.widget();
 			if ( this.options.enhanced ) {
 				this._inputShadow = outer.children( ".ui-tokentextarea2-input-shadow" );
-				this._processInput( null, false );
 			}
 
 			this._on({
