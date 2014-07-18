@@ -180,7 +180,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_removeBlock: function( block ) {
 		if ( block.hasClass( "ui-btn-active" ) ) {
 			block.remove();
-			this.widget().toggleClass( "initial", this.element.prevAll( "a.ui-btn" ).length > 0 );
+			this.widget().toggleClass( "stretched-input",
+				this.element.prevAll( "a.ui-btn" ).length > 0 );
 			this._adjustWidth();
 		} else if ( this._trigger( "select", { value: block.jqmData( "value" ) } ) ) {
 			block.addClass( "ui-btn-active" );
@@ -222,7 +223,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
 		// and thus be alone on a line.
 		input.width( width || "" );
-		this.widget().toggleClass( "initial", !!width && ( buttons.length > 0 ) );
+		this.widget().toggleClass( "stretched-input", !!width && ( buttons.length > 0 ) );
 	},
 
 	_textFromButtons: function( buttons ) {
@@ -262,7 +263,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 
-		this.widget().addClass( "initial" );
+		this.widget().addClass( "stretched-input" );
 		destination.before( ( typeof value === "string" ? this._block( value ) : value ) );
 	},
 
@@ -290,7 +291,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			toRemove.remove();
 			if ( buttons.not( toRemove ).length === 0 ) {
 				this._adjustWidth();
-				this.widget().removeClass( "initial" );
+				this.widget().removeClass( "stretched-input" );
 			}
 		}
 	},
