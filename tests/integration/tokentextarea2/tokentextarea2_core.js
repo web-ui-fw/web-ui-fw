@@ -1,7 +1,3 @@
-/* Things to test:
- * - inputText() removes all tokens, sets value to its argument, and re-tokenizes
- * - inputText() removes class "initial"
- */
 test( "class 'initial' correctly applied during enhancement", function() {
 	deepEqual( $( "#enhance-test" ).parent().hasClass( "initial" ), false,
 		"When there's no initial value, there's no initial class on the wrapper" );
@@ -164,6 +160,21 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "inputText" ), "abc@def.com;ghi@jkl.com;mno@pqr.com;stu ",
 		"inputText() returns the correct value" );
 
+	input.tokentextarea2( "inputText", "foo@example.com; bar@example.org; baz@example.edu; xyz " );
+
+	deepEqual( input.prev().prev().prev().text(), "foo@example.com",
+		"inputText(): First added button text is correct" );
+
+	deepEqual( input.prev().prev().text(), "bar@example.org",
+		"inputText(): Second added button text is correct" );
+
+	deepEqual( input.prev().text(), "baz@example.edu",
+		"inputText(): Third added button text is correct" );
+
+	deepEqual( input.prevAll().length, 3, "inputText(): There are three buttons" );
+
+	deepEqual( input.val(), "xyz ", "inputText(): Input has correct value after setting text" );
+
 	deepEqual( input.tokentextarea2( "length" ), 3, "length() returns the correct value" );
 
 	input.tokentextarea2( "remove", 1 );
@@ -171,18 +182,18 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "length" ), 2,
 		"remove(): length() returns the correct value after one removal" );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "abc@def.com;mno@pqr.com;stu ",
+	deepEqual( input.tokentextarea2( "inputText" ), "foo@example.com;baz@example.edu;xyz ",
 		"remove(): inputText() returns the correct value after one removal" );
 
-	deepEqual( input.prev().prev().text(), "abc@def.com",
+	deepEqual( input.prev().prev().text(), "foo@example.com",
 		"remove(): First button is correct" );
 
-	deepEqual( input.prev().text(), "mno@pqr.com",
+	deepEqual( input.prev().text(), "baz@example.edu",
 		"remove(): Second button is correct" );
 
 	input.tokentextarea2( "remove" );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "stu ",
+	deepEqual( input.tokentextarea2( "inputText" ), "xyz ",
 		"remove(): inputText() returns the correct value after removal of all tokens" );
 
 	deepEqual( input.parent().children( "a.ui-btn" ).length, 0,
