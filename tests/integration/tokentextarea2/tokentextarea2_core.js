@@ -1,12 +1,13 @@
-test( "class 'initial' correctly applied during enhancement", function() {
-	deepEqual( $( "#enhance-test" ).parent().hasClass( "initial" ), false,
-		"When there's no initial value, there's no initial class on the wrapper" );
-	deepEqual( $( "#enhance-test-initial-value-no-tokens" ).parent().hasClass( "initial" ), false,
-		"When there's no initial value, there's no initial class on the wrapper" );
-	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "initial" ), true,
-		"When the input has an initial value, the wrapper initially has class 'initial'" );
-	deepEqual( $( "#enhance-test-initial-value-tokens" ).parent().hasClass( "initial" ), true,
-		"When the input has an initial value, the wrapper initially has class 'initial'" );
+test( "class 'stretched-input' correctly applied during enhancement", function() {
+	deepEqual( $( "#enhance-test" ).parent().hasClass( "stretched-input" ), false,
+		"When there's no initial value, there's no class 'stretched-input' on the wrapper" );
+	deepEqual(
+		$( "#enhance-test-initial-value-no-tokens" ).parent().hasClass( "stretched-input" ), false,
+		"When there's no initial value, there's no class 'stretched-input' on the wrapper" );
+	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
+		"When the input has an initial value, the wrapper initially has class 'stretched-input'" );
+	deepEqual( $( "#enhance-test-initial-value-tokens" ).parent().hasClass( "stretched-input" ),
+		true, "When the input has an initial value, the wrapper initially has class 'initial'" );
 });
 
 test( "token generation", function() {
@@ -81,6 +82,8 @@ asyncTest( "input wraps to next line to accommodate typed text", function() {
 		currentLeft = initialLeft,
 		resolve = function( success ) {
 			ok( success, "input has wrapped when typed text no longer fits" );
+			deepEqual( input.parent().hasClass( "stretched-input" ), false,
+				"wrapper no longer has class stretched-input" );
 			clearInterval( intervalId );
 			start();
 		},
