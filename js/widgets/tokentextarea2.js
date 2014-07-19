@@ -1,14 +1,8 @@
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Make words into selectable tokens
+//>>description: Make words into selectable buttons
 //>>label: Token text area
 //>>group: Widgets
 //>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.css
-
-//
-// The problem with pre-rendered blocks:
-// - http://jsbin.com/rowajepa/1/ (core only)
-// - http://jsbin.com/rasoliva/1/ (core + jQM)
-//
 
 define([
 	"jquery",
@@ -49,7 +43,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"keyup": "_processInput",
 				"paste": "_handlePaste",
 				"change": "_processInput",
-				"vclick a[href='#']": "_handleBlockClick",
+				"vclick a[href='#']": "_handleButtonClick",
 				"focusin": "_adjustWidth"
 			});
 			this._on( this.window, { "resize": "_adjustWidth" } );
@@ -73,15 +67,15 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_setOptions: function( options ) {
-		var blocks;
+		var buttons;
 
 		if ( this.inputNeedsWrap ) {
 			if ( options.disabled !== undefined ) {
-				blocks = this.element.prevAll( "a.ui-btn" );
+				buttons = this.element.prevAll( "a.ui-btn" );
 				if ( options.disabled ) {
-					blocks.attr( "tabindex", -1 );
+					buttons.attr( "tabindex", -1 );
 				} else {
-					blocks.removeAttr( "tabindex" );
+					buttons.removeAttr( "tabindex" );
 				}
 			}
 		}
@@ -114,7 +108,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		};
 	},
 
-	_block: function( text ) {
+	_button: function( text ) {
 		return $( "<a href='#' " +
 			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
 			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
@@ -136,8 +130,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		this._delay( "_processInput" );
 	},
 
-	_handleBlockClick: function( event ) {
-		this._removeBlock( $( event.target ) );
+	_handleButtonClick: function( event ) {
+		this._removeButton( $( event.target ) );
 	},
 
 	_processInput: function( event, adjustWidth ) {
@@ -151,7 +145,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		if ( event && event.keyCode === $.ui.keyCode.BACKSPACE &&
 			value === this._inputShadow.text() ) {
-				this._removeBlock( this.element.prevAll( "a.ui-btn" ).first() );
+				this._removeButton( this.element.prevAll( "a.ui-btn" ).first() );
 		} else {
 			if ( !event ||
 				event.keyCode === $.ui.keyCode.ENTER ||
@@ -163,12 +157,12 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 					if ( tokensLength > 0 ) {
 						if ( tokensLength === 1 ) {
-							fragment = this._block( tokens.tokens[ 0 ] );
+							fragment = this._button( tokens.tokens[ 0 ] );
 						} else {
 							fragment = this.document[ 0 ].createDocumentFragment();
 							for ( index = 0 ; index < tokensLength; index++ ) {
 								fragment.appendChild(
-									this._block( tokens.tokens[ index ] )[ 0 ] );
+									this._button( tokens.tokens[ index ] )[ 0 ] );
 							}
 						}
 						this._add( fragment );
@@ -185,14 +179,14 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 	},
 
-	_removeBlock: function( block ) {
-		if ( block.hasClass( "ui-btn-active" ) ) {
-			block.remove();
+	_removeButton: function( button ) {
+		if ( button.hasClass( "ui-btn-active" ) ) {
+			button.remove();
 			this.widget().toggleClass( "stretched-input",
 				this.element.prevAll( "a.ui-btn" ).length > 0 );
 			this._adjustWidth();
-		} else if ( this._trigger( "select", { value: block.jqmData( "value" ) } ) ) {
-			block.addClass( "ui-btn-active" );
+		} else if ( this._trigger( "select", { value: button.jqmData( "value" ) } ) ) {
+			button.addClass( "ui-btn-active" );
 		}
 	},
 
@@ -204,22 +198,22 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		if ( buttons.length > 0 ) {
 			buttons.each( function() {
-				var block = $( this ),
-					blockTop = block.offset().top;
+				var button = $( this ),
+					buttonTop = button.offset().top;
 
 				if ( top === undefined ) {
-					top = blockTop;
-				} else if ( top !== blockTop ) {
+					top = buttonTop;
+				} else if ( top !== buttonTop ) {
 					return false;
 				}
 
-				width += block.outerWidth( true );
+				width += button.outerWidth( true );
 			});
 
 			padding = ( input.outerWidth() - input.width() );
 
 			// Reusing the variable "width" here. Whereas before it was referring to the combined
-			// width of the blocks, it is now reassigned to refer to the width we desire for the
+			// width of the buttons, it is now reassigned to refer to the width we desire for the
 			// input.
 			width = Math.max( 0, this.widget().width() - width - padding );
 			if ( width < this._inputShadow.width() + padding ) {
@@ -227,7 +221,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 		}
 
-		// If the input width is insufficient to properly display its text or there are no blocks,
+		// If the input width is insufficient to properly display its text or there are no buttons,
 		// unset the width. This will cause the input to have width 100% (set earlier in the CSS)
 		// and thus be alone on a line.
 		input.width( width || "" );
@@ -272,7 +266,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 
 		this.widget().addClass( "stretched-input" );
-		destination.before( ( typeof value === "string" ? this._block( value ) : value ) );
+		destination.before( ( typeof value === "string" ? this._button( value ) : value ) );
 	},
 
 	add: function( value, index ) {
@@ -336,7 +330,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	}
 });
 
-// Textinputs that have data-role="tokentextarea" are no longer to be enhanced as textinput
+// Textinputs that have data-role="tokentextarea2" are no longer to be enhanced as textinput
 $.mobile.reduceEnhancementScope( "mobile", "textinput",
 	"[data-" + $.mobile.ns + "role='tokentextarea2']" );
 
