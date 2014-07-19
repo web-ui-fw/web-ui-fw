@@ -231,7 +231,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_textFromButtons: function( buttons ) {
 		var text = "";
 
-		buttons.each( function() {
+		$.each( buttons, function() {
 			text += $( this ).jqmData( "value" ) + ";";
 		});
 
@@ -239,17 +239,17 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	inputText: function( newText ) {
-		var buttons;
+		var input;
 
 		if ( this.inputNeedsWrap ) {
-			buttons = this.element.prevAll( "a.ui-btn" );
+			input = this.element;
 
 			if ( arguments.length === 0 ) {
-				return this._textFromButtons( $( buttons.get().reverse() ) ) + this.element.val();
+				return this._textFromButtons( input.prevAll( "a.ui-btn" ).get().reverse() ) +
+					input.val();
 			} else {
-				buttons.remove();
-				this.element.val( newText );
-				this._processInput();
+				input.val( newText );
+				this.refresh();
 			}
 		}
 	},
@@ -304,7 +304,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		if ( this.inputNeedsWrap ) {
 			if ( arguments.length === 0 ) {
 				return this._textFromButtons(
-					$( this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() ) );
+					this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() );
 			} else {
 				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
 
