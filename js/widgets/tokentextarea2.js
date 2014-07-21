@@ -186,8 +186,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_removeButtonGracefully: function( button ) {
 		if ( button.hasClass( "ui-btn-active" ) ) {
 			this._removeButtons( button );
-			this.widget().toggleClass( "stretched-input",
-				this.element.prevAll( "a.ui-btn" ).length > 0 );
 			this._adjustWidth();
 		} else if ( this._trigger( "select", { value: button.jqmData( "value" ) } ) ) {
 			button.addClass( "ui-btn-active" );
@@ -295,10 +293,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			}
 
 			this._removeButtons( toRemove );
-			if ( buttons.not( toRemove ).length === 0 ) {
-				this._adjustWidth();
-				this.widget().removeClass( "stretched-input" );
-			}
+			this._adjustWidth();
 		}
 	},
 
