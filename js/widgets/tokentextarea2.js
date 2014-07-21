@@ -62,9 +62,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			this._inputShadow = $( "<span class='ui-tokentextarea2-input-shadow'></span>" )
 				.appendTo( outer );
 			this._processInput();
-			outer = this.widget().addClass( "ui-tokentextarea2" +
-				( ( this.element.prevAll( "a.ui-btn" ).length > 0 ) ?
-					" stretched-input" : "" ) );
+			outer.addClass( "ui-tokentextarea2" +
+				( ( this.element.prevAll( "a.ui-btn" ).length > 0 ) ? " stretched-input" : "" ) );
 		}
 	},
 
@@ -133,9 +132,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_handleButtonClick: function( event ) {
-		if ( !this._removeButtonGracefully( $( event.target ) ) ) {
-			this._adjustWidth();
-		}
+		this._removeButtonGracefully( $( event.target ) );
+		this._adjustWidth();
 	},
 
 	_processInput: function( event ) {
@@ -165,37 +163,28 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 									this._button( tokens.tokens[ index ] )[ 0 ] );
 							}
 						}
+						this._add( fragment );
 					}
 
 					this.element.val( tokens.leftover );
 			}
+			this._inputShadow.text( this.element.val() );
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
 		}
 
-		this._inputShadow.text( this.element.val() );
-		if ( fragment ) {
-			this.add( fragment );
-		} else {
-			this._adjustWidth();
-		}
+		this._adjustWidth();
 	},
 
 	_removeButtons: function( buttons ) {
 		buttons.remove();
-		this._adjustWidth();
 	},
 
 	_removeButtonGracefully: function( button ) {
-		var returnValue = false;
-
 		if ( button.hasClass( "ui-btn-active" ) ) {
 			this._removeButtons( button );
-			returnValue = true;
 		} else if ( this._trigger( "select", { value: button.jqmData( "value" ) } ) ) {
 			button.addClass( "ui-btn-active" );
 		}
-
-		return returnValue;
 	},
 
 	_adjustWidth: function() {
@@ -268,21 +257,24 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 	},
 
-	add: function( value, index ) {
-		var buttons, destination;
-
-		if ( this.inputNeedsWrap ) {
+	_add: function( value, index ) {
+		var buttons,
 			destination = this.element;
 
-			if ( arguments.length > 1 ) {
-				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
-				if ( index >= 0 && index < buttons.length ) {
-					destination = $( buttons[ index ] );
-				}
+		if ( arguments.length > 1 ) {
+			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+			if ( index >= 0 && index < buttons.length ) {
+				destination = $( buttons[ index ] );
 			}
+		}
 
-			destination.before( ( typeof value === "string" ? this._button( value ) : value ) );
+		destination.before( ( typeof value === "string" ? this._button( value ) : value ) );
+	},
+
+	add: function( value, index ) {
+		if ( this.inputNeedsWrap ) {
 			this._adjustWidth();
+			this._add( value, index );
 		}
 	},
 
@@ -291,16 +283,17 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	remove: function( position ) {
-		var buttons, toRemove;
+		var buttons;
 
 		if ( this.inputNeedsWrap ) {
-			buttons = toRemove = this.element.prevAll( "a.ui-btn" );
+			buttons = this.element.prevAll( "a.ui-btn" );
 
 			if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
-				toRemove = $( buttons.get().reverse()[ position ] );
+				buttons = $( buttons.get().reverse()[ position ] );
 			}
 
-			this._removeButtons( toRemove );
+			this._removeButtons( buttons );
+			this._adjustWidth();
 		}
 	},
 
