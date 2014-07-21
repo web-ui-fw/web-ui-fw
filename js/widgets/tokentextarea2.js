@@ -163,10 +163,9 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 									this._button( tokens.tokens[ index ] )[ 0 ] );
 							}
 						}
+						this.element.val( tokens.leftover );
 						this._add( fragment );
 					}
-
-					this.element.val( tokens.leftover );
 			}
 			this._inputShadow.text( this.element.val() );
 			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );

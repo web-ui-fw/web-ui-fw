@@ -13,6 +13,7 @@ $files = array(
 	'widgets/color/hsvpicker.js',
 	'widgets/tokentextarea.js',
 	'widgets/tokentextarea2.js',
+	'widgets/tokentextarea2.sync.js',
 	'widgets/virtualgrid.js',
 	'widgets/routemap.js'
 );

@@ -10,6 +10,7 @@ define([
 	"widgets/virtualgrid",
 	"widgets/tokentextarea",
 	"widgets/tokentextarea2",
+	"widgets/tokentextarea2.sync",
 	"widgets/routemap",
 	"behaviors/setValue",
 	"behaviors/optionDemultiplexer",

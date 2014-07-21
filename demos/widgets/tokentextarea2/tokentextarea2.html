@@ -14,10 +14,29 @@
 	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
+	<style id="sync-input-style">
+/* Hide actual text input if we're not grade C, but leave it submittable via visibility: hidden */
+.hidden-if-enhanced-but-submit-works {
+	visibility: hidden;
+	position: absolute;
+}
+
+/* Hide tokentextarea2 if we're grade C */
+.hidden-if-not-enhanced {
+	display: none;
+}
+
+/* If we're not grade C then the tokentextarea2 will be placed inside a .ui-input-text wrapper
+ * by the enhancement code, and so this will override the previous rule, making the tokentextarea2
+ * visible */
+.ui-input-text .hidden-if-not-enhanced {
+	display: inline-block;
+}
+	</style>
 </head>
 <body>
 	<div data-role="page" id="tokentextarea2">
-		<div data-role="header" data-position="fixed">
+		<div data-role="header">
 			<h1>Tokentextarea2 Demo - Web UI Framework Demos</h1>
 			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
 		</div> <!--/header -->
@@ -28,22 +47,30 @@
 				<input data-role="tokentextarea2">
 			</div>
 
-			<h2>tokentextarea2 with initial input</h2>
+			<h2>Initial input</h2>
 			<div data-demo-html="true">
 				<input data-role="tokentextarea2" value="abc">
 			</div>
 
-			<h2>tokentextarea2 with initial input resulting in a token</h2>
+			<h2>Initial input resulting in a token</h2>
 			<div data-demo-html="true">
 				<input data-role="tokentextarea2" value="your.name@your.domain.com;">
 			</div>
 
-			<h2>tokentextarea2 with initial input resulting in a token and leftover input</h2>
+			<h2>Initial input resulting in a token and leftover input</h2>
 			<div data-demo-html="true">
 				<input id="leftover-demo" data-role="tokentextarea2" value="abc@def.com; ghi">
 			</div>
 
-			<h2>Enhanced</h2>
+			<h2>Synchronized to another input</h2>
+			<div data-demo-html="true" data-demo-css="#sync-input-style">
+				<form>
+					<input name="to-addresses" id="to-addresses" data-wrapper-class="hidden-if-enhanced-but-submit-works" value="abc@def.com;">
+					<input data-role="tokentextarea2" data-master="#to-addresses" class="hidden-if-not-enhanced">
+				</form>
+			</div>
+
+			<h2>Pre-rendered</h2>
 			<div data-demo-html="true">
 				<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea2 stretched-input">
 					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline" data-value="your.name@your.domain.com">your.name@your.domain.com</a>
