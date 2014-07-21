@@ -131,7 +131,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	_handleButtonClick: function( event ) {
-		this._removeButton( $( event.target ) );
+		this._removeButtonGracefully( $( event.target ) );
 	},
 
 	_processInput: function( event, adjustWidth ) {
@@ -145,7 +145,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		if ( event && event.keyCode === $.ui.keyCode.BACKSPACE &&
 			value === this._inputShadow.text() ) {
-				this._removeButton( this.element.prevAll( "a.ui-btn" ).first() );
+				this._removeButtonGracefully( this.element.prevAll( "a.ui-btn" ).first() );
 		} else {
 			if ( !event ||
 				event.keyCode === $.ui.keyCode.ENTER ||
@@ -179,9 +179,13 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		}
 	},
 
-	_removeButton: function( button ) {
+	_removeButtons: function( buttons ) {
+		buttons.remove();
+	},
+
+	_removeButtonGracefully: function( button ) {
 		if ( button.hasClass( "ui-btn-active" ) ) {
-			button.remove();
+			this._removeButtons( button );
 			this.widget().toggleClass( "stretched-input",
 				this.element.prevAll( "a.ui-btn" ).length > 0 );
 			this._adjustWidth();
@@ -290,7 +294,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				toRemove = $( buttons.get().reverse()[ position ] );
 			}
 
-			toRemove.remove();
+			this._removeButtons( toRemove );
 			if ( buttons.not( toRemove ).length === 0 ) {
 				this._adjustWidth();
 				this.widget().removeClass( "stretched-input" );
