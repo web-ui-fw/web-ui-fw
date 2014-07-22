@@ -59,6 +59,26 @@
 					<span class="ui-tokentextarea2-input-shadow"></span>
 				</div>
 			</div>
+
+			<h2>Pre-rendered, with label, synchronized, with initial leftover input</h2>
+			<div data-demo-html="true">
+				<form>
+					<div class="ui-field-contain">
+						<label for="recipients">Recipients:</label>
+						<!-- ui-noop causes the ui-field-contain rule floating the element after the label to apply to our div -->
+						<div id="recipients" class="ui-noop">
+							<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea2-master">
+								<input name="recipients" id="recipients-master" data-enhanced="true" data-wrapper-class="ui-tokentextarea2-master" value="abc@def.com; an.unfinished.email.address@gmail">
+							</div>
+							<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea2 stretched-input">
+								<a href="#" class="ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline" data-value="abc@def.com">abc@def.com</a>
+								<input data-role="tokentextarea2" data-enhanced="true" data-master="#recipients-master" class="ui-tokentextarea2-slave" value="daniel@g">
+								<span class="ui-tokentextarea2-input-shadow">daniel@g</span>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div> <!--/content -->
 	</div>
 </body>
