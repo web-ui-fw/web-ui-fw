@@ -14,25 +14,6 @@
 	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
-	<style id="sync-input-style">
-/* Hide actual text input if we're not grade C, but leave it submittable via visibility: hidden */
-.hidden-if-enhanced-but-submit-works {
-	visibility: hidden;
-	position: absolute;
-}
-
-/* Hide tokentextarea2 if we're grade C */
-.hidden-if-not-enhanced {
-	display: none;
-}
-
-/* If we're not grade C then the tokentextarea2 will be placed inside a .ui-input-text wrapper
- * by the enhancement code, and so this will override the previous rule, making the tokentextarea2
- * visible */
-.ui-input-text .hidden-if-not-enhanced {
-	display: inline-block;
-}
-	</style>
 </head>
 <body>
 	<div data-role="page" id="tokentextarea2">
@@ -62,11 +43,11 @@
 				<input id="leftover-demo" data-role="tokentextarea2" value="abc@def.com; ghi">
 			</div>
 
-			<h2>Synchronized to another input</h2>
-			<div data-demo-html="true" data-demo-css="#sync-input-style">
+			<h2>Synchronized to another input (ensures progressive enhancement)</h2>
+			<div data-demo-html="true">
 				<form>
-					<input name="to-addresses" id="to-addresses" data-wrapper-class="hidden-if-enhanced-but-submit-works" value="abc@def.com;">
-					<input data-role="tokentextarea2" data-master="#to-addresses" class="hidden-if-not-enhanced">
+					<input name="to-addresses" id="to-addresses" data-wrapper-class="ui-tokentextarea2-master" value="abc@def.com;">
+					<input data-role="tokentextarea2" data-master="#to-addresses" class="ui-tokentextarea2-slave">
 				</form>
 			</div>
 

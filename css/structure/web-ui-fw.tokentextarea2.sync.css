@@ -1,0 +1,26 @@
+/**
+ * Convenience class to add to master 'data-wrapper-class' attribute. This causes the master to be
+ * hidden when it is enhanced. It is hidden in such a way that its value is still submitted with
+ * the rest of the form data.
+ **/
+.ui-tokentextarea2-master {
+	visibility: hidden;
+	position: absolute;
+}
+
+/**
+ * Convenience class to add to slave 'class' attribute. This causes the slave to be hidden entirely
+ * unless the widget is enhanced. When the widget is enhanced, the next rule overrides this rule,
+ * and the input becomes visible.
+ **/
+.ui-tokentextarea2-slave {
+	display: none;
+}
+
+/**
+ * This rule ensures that the slave input is visible when it is enhanced into a textinput widget
+ * of which tokentextarea2 is a subclass.
+ **/
+.ui-input-text .ui-tokentextarea2-slave {
+	display: inline-block;
+}

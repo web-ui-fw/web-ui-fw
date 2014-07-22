@@ -2,6 +2,7 @@
 //>>description: Sync tokentextarea2 text with another input
 //>>label: Token text area sync
 //>>group: Widgets
+//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.sync.css
 
 define([
 	"jquery",
