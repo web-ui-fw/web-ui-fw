@@ -272,8 +272,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 	add: function( value, index ) {
 		if ( this.inputNeedsWrap ) {
-			this._adjustWidth();
 			this._add( value, index );
+			this._adjustWidth();
 		}
 	},
 
