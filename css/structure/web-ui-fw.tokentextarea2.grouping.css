@@ -1,0 +1,34 @@
+/* The summary span mimics the input in terms of padding and line height and is normally hidden */
+.ui-tokentextarea2-summary {
+	pointer-events: none;
+	display: none;
+	position: absolute;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+	line-height: 1.4em;
+}
+
+/* When in grouped mode, turn off styling */
+.ui-tokentextarea2.ui-tokentextarea2-grouped {
+	border-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	background-color: inherit;
+}
+
+/* When in grouped mode, display the summary */
+.ui-tokentextarea2.ui-tokentextarea2-grouped > .ui-tokentextarea2-summary {
+	display: block;
+}
+
+/* When in grouped mode, hide the buttons */
+.ui-tokentextarea2.ui-tokentextarea2-grouped > a.ui-btn {
+	display: none;
+}
+
+/* When in grouped mode, hide the input, but leave it focusable */
+.ui-tokentextarea2.ui-tokentextarea2-grouped > input {
+	opacity: 0;
+}
+
