@@ -43,7 +43,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				"keyup": "_processInput",
 				"paste": "_handlePaste",
 				"change": "_processInput",
-				"vclick a[href='#']": "_handleButtonClick"
+				"vclick a.ui-tokentextarea2-button": "_handleButtonClick"
 			});
 			this._on( this.window, { "resize": "_adjustWidth" } );
 			this._on( outer, {
@@ -112,7 +112,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_button: function( text ) {
 		return $( "<a href='#' " +
 			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
-			"class='ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
+			"class='ui-tokentextarea2-button ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
 				.text( text )
 				.jqmData( "value", text );
 	},
