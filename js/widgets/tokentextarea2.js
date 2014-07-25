@@ -63,7 +63,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 				.appendTo( outer );
 			this._processInput();
 			outer.addClass( "ui-tokentextarea2" +
-				( ( this.element.prevAll( "a.ui-btn" ).length > 0 ) ? " stretched-input" : "" ) );
+				( ( this.element.prevAll( "a.ui-tokentextarea2-button" ).length > 0 ) ?
+					" stretched-input" : "" ) );
 		}
 	},
 
@@ -72,7 +73,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		if ( this.inputNeedsWrap ) {
 			if ( options.disabled !== undefined ) {
-				buttons = this.element.prevAll( "a.ui-btn" );
+				buttons = this.element.prevAll( "a.ui-tokentextarea2-button" );
 				if ( options.disabled ) {
 					buttons.attr( "tabindex", -1 );
 				} else {
@@ -143,7 +144,9 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 		if ( event && event.keyCode === $.ui.keyCode.BACKSPACE &&
 			value === this._inputShadow.text() ) {
-				this._removeButtonGracefully( this.element.prevAll( "a.ui-btn" ).first() );
+				this._removeButtonGracefully( this.element
+					.prevAll( "a.ui-tokentextarea2-button" )
+					.first() );
 		} else {
 			if ( !event ||
 				event.keyCode === $.ui.keyCode.ENTER ||
@@ -168,7 +171,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 					}
 			}
 			this._inputShadow.text( this.element.val() );
-			this.element.prevAll( "a.ui-btn.ui-btn-active" ).removeClass( "ui-btn-active" );
+			this.element.prevAll( "a.ui-tokentextarea2-button.ui-btn-active" )
+				.removeClass( "ui-btn-active" );
 		}
 
 		this._adjustWidth();
@@ -194,7 +198,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		// If the container reports a width of 0, then we assume we're hidden and so we do nothing.
 		if ( containerWidth > 0 ) {
 			input = this.element;
-			buttons = input.prevAll( "a.ui-btn" );
+			buttons = input.prevAll( "a.ui-tokentextarea2-button" );
 			width = 0;
 			if ( buttons.length > 0 ) {
 				buttons.each( function() {
@@ -247,7 +251,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			input = this.element;
 
 			if ( arguments.length === 0 ) {
-				return this._textFromButtons( input.prevAll( "a.ui-btn" ).get().reverse() ) +
+				return this._textFromButtons(
+					input.prevAll( "a.ui-tokentextarea2-button" ).get().reverse() ) +
 					input.val();
 			} else {
 				input.val( newText );
@@ -261,7 +266,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 			destination = this.element;
 
 		if ( arguments.length > 1 ) {
-			buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+			buttons = this.element.prevAll( "a.ui-tokentextarea2-button" ).get().reverse();
 			if ( index >= 0 && index < buttons.length ) {
 				destination = $( buttons[ index ] );
 			}
@@ -278,14 +283,15 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	},
 
 	length: function() {
-		return ( this.inputNeedsWrap ? this.element.prevAll( "a.ui-btn" ).length : 0 );
+		return ( this.inputNeedsWrap ?
+			this.element.prevAll( "a.ui-tokentextarea2-button" ).length : 0 );
 	},
 
 	remove: function( position ) {
 		var buttons;
 
 		if ( this.inputNeedsWrap ) {
-			buttons = this.element.prevAll( "a.ui-btn" );
+			buttons = this.element.prevAll( "a.ui-tokentextarea2-button" );
 
 			if ( arguments.length > 0 && position >= 0 && position < buttons.length ) {
 				buttons = $( buttons.get().reverse()[ position ] );
@@ -302,9 +308,10 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 		if ( this.inputNeedsWrap ) {
 			if ( arguments.length === 0 ) {
 				return this._textFromButtons(
-					this.element.prevAll( "a.ui-btn.ui-btn-active" ).get().reverse() );
+					this.element.prevAll( "a.ui-tokentextarea2-button.ui-btn-active" )
+						.get().reverse() );
 			} else {
-				buttons = this.element.prevAll( "a.ui-btn" ).get().reverse();
+				buttons = this.element.prevAll( "a.ui-tokentextarea2-button" ).get().reverse();
 
 				if ( index >= 0 && index < buttons.length ) {
 					$( buttons[ index ] ).addClass( "ui-btn-active" );
@@ -321,7 +328,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_destroy: function() {
 		if ( this.inputNeedsWrap && !this.options.enhanced ) {
 			this.element.val( this.inputText() );
-			this.element.prevAll( "a.ui-btn" ).remove();
+			this.element.prevAll( "a.ui-tokentextarea2-button" ).remove();
 			this._inputShadow.remove();
 		}
 		return this._superApply( arguments );
