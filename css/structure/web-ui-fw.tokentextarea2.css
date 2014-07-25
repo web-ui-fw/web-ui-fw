@@ -1,6 +1,7 @@
 .ui-tokentextarea2 {
 	padding-left: 0.625em;
 	cursor: text;
+	min-height: 2.2em;
 }
 
 .ui-tokentextarea2 input {
@@ -18,12 +19,13 @@
 	position: absolute;
 }
 
-.ui-tokentextarea2 > a.ui-btn {
-	padding-top: 0.35em;
-	padding-bottom: 0.35em;
-	margin-top: 0.35em;
-	margin-bottom: 0.35em;
+.ui-tokentextarea2 > a.ui-btn.ui-tokentextarea2-button {
+	height: 1.6em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	padding: 0.1em 0.5em 0.1em 0.5em;
 	max-width: 100%;
+	font-weight: normal;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;

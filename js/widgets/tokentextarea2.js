@@ -113,7 +113,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_button: function( text ) {
 		return $( "<a href='#' " +
 			( this.element.prop( "disabled" ) ? "tabindex='-1' " : "" ) +
-			"class='ui-tokentextarea2-button ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline'></a>" )
+			"class='ui-tokentextarea2-button ui-btn ui-corner-all ui-shadow ui-btn-inline'></a>" )
 				.text( text )
 				.jqmData( "value", text );
 	},
