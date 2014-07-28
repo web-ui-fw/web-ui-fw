@@ -50,8 +50,8 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 			if ( options.link !== undefined ) {
 				this._setLink( options.link );
 			}
-			return this._superApply( arguments );
 		}
+		return this._superApply( arguments );
 	}
 
 });
