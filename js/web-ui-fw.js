@@ -12,6 +12,7 @@ define([
 	"widgets/tokentextarea2",
 	"widgets/tokentextarea2.sync",
 	"widgets/tokentextarea2.grouping",
+	"widgets/tokentextarea2.link",
 	"widgets/routemap",
 	"behaviors/setValue",
 	"behaviors/optionDemultiplexer",

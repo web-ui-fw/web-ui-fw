@@ -19,6 +19,28 @@ $( document ).on( "vclick", "#call-focus-out", function() {
 	$( "#grouping-demo" ).tokentextarea2( "focusOut" );
 });
 	</script>
+	<style id="link-option-style">
+.address-book-popup {
+	overflow-y: auto;
+	min-width: 25em;
+}
+	</style>
+	<script id="link-option-script">
+$( document )
+	.on( "popupbeforeposition", "#link-option-popup", function( event, options ) {
+
+		// We limit the height of the popup to the height of the window minus a clearance
+		$( event.target ).css( "height", $( window ).height() - 60 );
+	})
+	.on( "vclick", "#link-option-popup li a", function( event ) {
+
+		// When the user choses an item from the list, add the text of the item as a button and
+		// close the popup
+		$( "#link-option" ).tokentextarea2( "add", $( event.target ).text() );
+		$( "#link-option-popup" ).popup( "close" );
+		event.preventDefault();
+	});
+	</script>
 </head>
 <body>
 	<div data-role="page" id="tokentextarea2">
@@ -66,6 +88,51 @@ $( document ).on( "vclick", "#call-focus-out", function() {
 				<p>Click on the summary to show the input and the buttons. Click "Group" to show the summary.</p>
 				<input id="grouping-demo" data-role="tokentextarea2" value="michael@example.com;">
 				<a href="#" id="call-focus-out" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Group</a>
+
+			<h2>Link option</h2>
+			<div data-demo-html="true" data-demo-js="#link-option-script" data-demo-css="#link-option-style">
+				<input id="link-option" data-role="tokentextarea2" data-link="#link-option-button">
+				<a href="#link-option-popup" data-rel="popup" id="link-option-button" class="ui-btn ui-btn-inline ui-corner-all ui-shadow ui-icon-grid ui-btn-icon-notext">Address book</a>
+				<div id="link-option-popup" data-role="popup" data-position-to="window" class="address-book-popup">
+					<ul data-role="listview" data-inset="false">
+						<li data-role="list-divider">A</li>
+						<li><a>Adam Kinkaid</a></li>
+						<li><a>Alex Wickerham</a></li>
+						<li><a>Avery Johnson</a></li>
+						<li data-role="list-divider">B</li>
+						<li><a>Bob Cabot</a></li>
+						<li data-role="list-divider">C</li>
+						<li><a>Caleb Booth</a></li>
+						<li><a>Christopher Adams</a></li>
+						<li><a>Culver James</a></li>
+						<li data-role="list-divider">D</li>
+						<li><a>David Walsh</a></li>
+						<li><a>Drake Alfred</a></li>
+						<li data-role="list-divider">E</li>
+						<li><a>Elizabeth Bacon</a></li>
+						<li><a>Emery Parker</a></li>
+						<li><a>Enid Voldon</a></li>
+						<li data-role="list-divider">F</li>
+						<li><a>Francis Wall</a></li>
+						<li data-role="list-divider">G</li>
+						<li><a>Graham Smith</a></li>
+						<li><a>Greta Peete</a></li>
+						<li data-role="list-divider">H</li>
+						<li><a>Harvey Walls</a></li>
+						<li data-role="list-divider">M</li>
+						<li><a>Mike Farnsworth</a></li>
+						<li><a>Murray Vanderbuilt</a></li>
+						<li data-role="list-divider">N</li>
+						<li><a>Nathan Williams</a></li>
+						<li data-role="list-divider">P</li>
+						<li><a>Paul Baker</a></li>
+						<li><a>Pete Mason</a></li>
+						<li data-role="list-divider">R</li>
+						<li><a>Rod Tarker</a></li>
+						<li data-role="list-divider">S</li>
+						<li><a>Sawyer Wakefield</a></li>
+					</ul>
+				</div>
 			</div>
 
 			<h2>Pre-rendered</h2>

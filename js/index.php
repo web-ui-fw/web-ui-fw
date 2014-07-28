@@ -15,6 +15,7 @@ $files = array(
 	'widgets/tokentextarea2.js',
 	'widgets/tokentextarea2.sync.js',
 	'widgets/tokentextarea2.grouping.js',
+	'widgets/tokentextarea2.link.js',
 	'widgets/virtualgrid.js',
 	'widgets/routemap.js'
 );
