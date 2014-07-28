@@ -19,19 +19,23 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 	_create: function() {
 		this._superApply( arguments );
 
-		if ( this.inputNeedsWrap && this.options.enhanced ) {
-			this._summary = this.widget().children( ".ui-tokentextarea2-summary" );
-		}
+		if ( this.inputNeedsWrap ) {
+			if ( this.options.enhanced ) {
+				this._summary = this.widget().children( ".ui-tokentextarea2-summary" );
+			}
 
-		this._on( this.widget(), {
-			"focusin": "_handleFocusIn"
-		});
+			this._on( this.widget(), {
+				"focusin": "_handleFocusIn"
+			});
+		}
 	},
 
 	_enhance: function() {
 		this._superApply( arguments );
-		this._summary = $( "<span class='ui-tokentextarea2-summary'></span>" )
-			.prependTo( this.widget() );
+		if ( this.inputNeedsWrap ) {
+			this._summary = $( "<span class='ui-tokentextarea2-summary'></span>" )
+				.prependTo( this.widget() );
+		}
 	},
 
 	_handleFocusIn: function() {
@@ -39,20 +43,26 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 	},
 
 	focusIn: function() {
-		this.widget().removeClass( "ui-tokentextarea2-grouped" );
-		this._adjustWidth();
+		if ( this.inputNeedsWrap ) {
+			this.widget().removeClass( "ui-tokentextarea2-grouped" );
+			this._adjustWidth();
+		}
 	},
 
 	focusOut: function() {
-		var numberOfButtons = this.element.prevAll( "a.ui-tokentextarea2-button" ).length;
+		var numberOfButtons;
 
-		this._summary
-			.text( numberOfButtons > 0 ?
-				this.options.description.replace( /\{0\}/, numberOfButtons ) :
-				"" );
-		this.widget()
-			.addClass( "ui-tokentextarea2-grouped" )
-			.removeClass( "stretched-input" );
+		if ( this.inputNeedsWrap ) {
+			numberOfButtons = this.element.prevAll( "a.ui-tokentextarea2-button" ).length;
+
+			this._summary
+				.text( numberOfButtons > 0 ?
+					this.options.description.replace( /\{0\}/, numberOfButtons ) :
+					"" );
+			this.widget()
+				.addClass( "ui-tokentextarea2-grouped" )
+				.removeClass( "stretched-input" );
+		}
 	}
 });
 
