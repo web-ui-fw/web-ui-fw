@@ -1,3 +1,5 @@
+define([ "jquery", "behaviors/optionDemultiplexer", "behaviors/setValue" ], function() {
+
 ( function( $, undefined ) {
 	$.widget( "mobile.infratestwidget", $.mobile.widget, {
 
@@ -21,3 +23,5 @@
 	$.widget( "mobile.infratestwidget", $.mobile.infratestwidget, $.mobile.behaviors.setValue );
 
 })( jQuery );
+
+});
