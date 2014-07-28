@@ -16,10 +16,11 @@ $.mobile.reduceEnhancementScope = function( ns, widget, filter ) {
 	var initSelector;
 
 	widget = $[ ns ][ widget ];
-	initSelector = widget.initSelector;
-	initSelector = initSelector ? ":not(:not(" + initSelector + "))" : "";
-
-	widget.initSelector = initSelector + ":not(" + filter + ")";
+	if ( !!widget ) {
+		initSelector = widget.initSelector;
+		initSelector = initSelector ? ":not(:not(" + initSelector + "))" : "";
+		widget.initSelector = initSelector + ":not(" + filter + ")";
+	}
 };
 
 })( jQuery );
