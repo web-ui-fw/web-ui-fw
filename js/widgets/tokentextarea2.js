@@ -19,7 +19,7 @@ var regexString = " *[;,] *",
 	terminatorRegex = new RegExp( regexString + "$" );
 
 $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
-	initSelector: "[data-" + $.mobile.ns + "role='tokentextarea2']",
+	initSelector: ":jqmData(role='tokentextarea2')",
 
 	_create: function() {
 		var outer, formId;
