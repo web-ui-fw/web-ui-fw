@@ -63,6 +63,14 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 				.addClass( "ui-tokentextarea2-grouped" )
 				.removeClass( "stretched-input" );
 		}
+	},
+
+	_destroy: function() {
+		if ( this.inputNeedsWrap && !this.options.enhanced ) {
+			this._summary.remove();
+			this.widget().removeClass( "ui-tokentextarea2-grouped" );
+		}
+		return this._superApply( arguments );
 	}
 });
 
