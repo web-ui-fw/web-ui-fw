@@ -5,6 +5,7 @@
 
 define( [
 	"jquery",
+	"jqm/jquery.mobile.helpers",
 	"jqm/jquery.mobile.widget" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
