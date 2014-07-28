@@ -262,7 +262,7 @@ module.exports = function( grunt ) {
 	grunt.loadTasks( "build/tasks" );
 
 	grunt.registerTask( "lint", [ "jshint" ] );
-	grunt.registerTask( "test", [ "jshint", "js:release", "buildjqm", "connect", "qunit:http" ] );
+	grunt.registerTask( "test", [ "jshint", "connect", "qunit:http" ] );
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "js:release" ] );
 	grunt.registerTask( "demos", [ "copy:demos", "concat:demos" ] );
