@@ -52,8 +52,14 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 			}
 		}
 		return this._superApply( arguments );
-	}
+	},
 
+	_destroy: function() {
+		if ( this.inputNeedsWrap && !this.options.enhanced ) {
+			this._setLink( null );
+		}
+		return this._superApply( arguments );
+	}
 });
 
 })( jQuery, window, document );
