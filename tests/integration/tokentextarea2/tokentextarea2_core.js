@@ -3,11 +3,13 @@ test( "class 'stretched-input' correctly applied during enhancement", function()
 		"When there's no initial value, there's no class 'stretched-input' on the wrapper" );
 	deepEqual(
 		$( "#enhance-test-initial-value-no-tokens" ).parent().hasClass( "stretched-input" ), false,
-		"When there's no initial value, there's no class 'stretched-input' on the wrapper" );
+		"When there are no initial buttons but only a leftover, there's no class " +
+			"'stretched-input' on the wrapper" );
 	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
-		"When the input has an initial value, the wrapper initially has class 'stretched-input'" );
+		"When the input has initial buttons, the wrapper initially has class 'stretched-input'" );
 	deepEqual( $( "#enhance-test-initial-value-tokens" ).parent().hasClass( "stretched-input" ),
-		true, "When the input has an initial value, the wrapper initially has class 'initial'" );
+		true, "When the input has initial buttons and a leftover, the wrapper initially has " +
+			"class 'stretched-input'" );
 });
 
 test( "token generation", function() {
