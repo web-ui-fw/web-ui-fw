@@ -147,15 +147,23 @@ test( "Public API works", function() {
 
 	input.val( "abc@def.com; ghi@jkl.com, mno@pqr.com; stu " ).tokentextarea2( "refresh" );
 
-	deepEqual( input.prevAll().length, 3, "refresh(): Two buttons were added" );
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
+		"refresh(): Two buttons were added" );
 
-	deepEqual( input.prev().prev().prev().text(), "abc@def.com",
+	deepEqual( input
+		.prev( ".ui-tokentextarea2-button" )
+			.prev( ".ui-tokentextarea2-button" )
+				.prev( ".ui-tokentextarea2-button" )
+					.text(), "abc@def.com",
 		"refresh(): First added button text is correct" );
 
-	deepEqual( input.prev().prev().text(), "ghi@jkl.com",
+	deepEqual( input
+		.prev( ".ui-tokentextarea2-button" )
+			.prev( ".ui-tokentextarea2-button" )
+				.text(), "ghi@jkl.com",
 		"refresh(): Second added button text is correct" );
 
-	deepEqual( input.prev().text(), "mno@pqr.com",
+	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "mno@pqr.com",
 		"refresh(): Third added button text is correct" );
 
 	deepEqual( input.val(), "stu ", "refresh(): Leftover text is correct" );
@@ -165,16 +173,24 @@ test( "Public API works", function() {
 
 	input.tokentextarea2( "inputText", "foo@example.com; bar@example.org; baz@example.edu; xyz " );
 
-	deepEqual( input.prev().prev().prev().text(), "foo@example.com",
+	deepEqual( input
+		.prev( ".ui-tokentextarea2-button" )
+			.prev( ".ui-tokentextarea2-button" )
+				.prev( ".ui-tokentextarea2-button" )
+					.text(), "foo@example.com",
 		"inputText(): First added button text is correct" );
 
-	deepEqual( input.prev().prev().text(), "bar@example.org",
+	deepEqual( input
+		.prev( ".ui-tokentextarea2-button" )
+			.prev( ".ui-tokentextarea2-button" )
+				.text(), "bar@example.org",
 		"inputText(): Second added button text is correct" );
 
-	deepEqual( input.prev().text(), "baz@example.edu",
+	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "baz@example.edu",
 		"inputText(): Third added button text is correct" );
 
-	deepEqual( input.prevAll().length, 3, "inputText(): There are three buttons" );
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
+		"inputText(): There are three buttons" );
 
 	deepEqual( input.val(), "xyz ", "inputText(): Input has correct value after setting text" );
 
@@ -188,10 +204,13 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "inputText" ), "foo@example.com;baz@example.edu;xyz ",
 		"remove(): inputText() returns the correct value after one removal" );
 
-	deepEqual( input.prev().prev().text(), "foo@example.com",
+	deepEqual( input
+		.prev( ".ui-tokentextarea2-button" )
+			.prev( ".ui-tokentextarea2-button" )
+				.text(), "foo@example.com",
 		"remove(): First button is correct" );
 
-	deepEqual( input.prev().text(), "baz@example.edu",
+	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "baz@example.edu",
 		"remove(): Second button is correct" );
 
 	input.tokentextarea2( "remove" );
@@ -199,7 +218,7 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "inputText" ), "xyz ",
 		"remove(): inputText() returns the correct value after removal of all tokens" );
 
-	deepEqual( input.parent().children( "a.ui-btn" ).length, 0,
+	deepEqual( input.parent().children( ".ui-tokentextarea2-button" ).length, 0,
 		"remove(): No tokens present after calling remove() with no arguments" );
 
 	input
@@ -210,7 +229,7 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "inputText" ), "abc@def.com;vwx@yz.com;mno@pqr.com;stu ",
 		"add(): inputText() returns the correct value after one addition" );
 
-	deepEqual( input.prevAll( "a.ui-btn" ).length, 3,
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
 		"add(): There are three buttons after one addition" );
 
 	deepEqual( input.tokentextarea2( "select" ), "",
@@ -218,7 +237,8 @@ test( "Public API works", function() {
 
 	input.tokentextarea2( "select", 0 );
 
-	deepEqual( input.prevAll( "a.ui-btn" ).last().hasClass( "ui-btn-active" ), true,
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).last().hasClass( "ui-btn-active" ),
+		true,
 		"select(): Selecting the first element causes class 'ui-btn-active' to be added to it" );
 
 	deepEqual( input.tokentextarea2( "select" ), "abc@def.com;",
@@ -226,10 +246,12 @@ test( "Public API works", function() {
 
 	input.tokentextarea2( "select", 2 );
 
-	deepEqual( input.prevAll( "a.ui-btn" ).last().hasClass( "ui-btn-active" ), true,
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).last().hasClass( "ui-btn-active" ),
+		true,
 		"select(): Selecting the last element causes the first element to remain selected" );
 
-	deepEqual( input.prevAll( "a.ui-btn" ).first().hasClass( "ui-btn-active" ), true,
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).first().hasClass( "ui-btn-active" ),
+		true,
 		"select(): Selecting the last element causes class 'ui-btn-active' to be added to it" );
 
 	deepEqual( input.tokentextarea2( "select" ), "abc@def.com;mno@pqr.com;",
@@ -239,7 +261,7 @@ test( "Public API works", function() {
 		.val( input.val() + " " )
 		.trigger( "keyup" );
 
-	deepEqual( input.prevAll( "a.ui-btn.ui-btn-active" ).length, 0,
+	deepEqual( input.prevAll( ".ui-tokentextarea2-button.ui-btn-active" ).length, 0,
 		"Typing a space causes all selected items to be deselected" );
 
 	deepEqual( input.tokentextarea2( "select" ), "",
