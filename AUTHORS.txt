@@ -1,0 +1,13 @@
+Kangsik Kim <allsteady@gmail.com>
+Elliot Smith <elliot.smith@intel.com>
+Gabriel Schulhof <gabriel.schulhof@intel.com>
+Hyunsook Park <hspark.dasom@gmail.com>
+iwege <cyberiwege@gmail.com>
+jinhyuk.jun <jinhyuk.jun@samsung.com>
+Kalyan Kondapally <kalyan.kondapally@intel.com>
+Max Waterman <max.waterman@intel.com>
+Ming Jin <ming79.jin@samsung.com>
+Rijubrata Bhaumik <rijubrata.bhaumik@intel.com>
+Salvatore Iovene <salvatore.iovene@intel.com>
+Wonseop Kim <wonseop.kim@samsung.com>
+Youmin Ha <youmin.ha@samsung.com>
