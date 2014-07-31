@@ -130,9 +130,18 @@ function loadAuthors() {
 
 $( document )
 	.on( "pagecontainerchange", function( event, ui ) {
-		if ( ui.toPage.attr( "id" ) === "authors" &&
-			$( "#authors-list" ).children().length === 0 ) {
+		if ( ui.toPage.attr( "id" ) === "authors" ) {
+			if ( $( "#authors-list" ).children().length === 0 ) {
 				loadAuthors();
+			} else {
+				$( "#authors-list" ).children().each( function() {
+					var child = $( this );
+
+					if ( !child.hasClass( "transformed" ) ) {
+						transformChild( child.addClass( "transformed" ) );
+					}
+				});
+			}
 		}
 	})
 	.on( "vclick", "#authors-list li", function() {
