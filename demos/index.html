@@ -50,6 +50,7 @@ var showTimeout = 0;
 
 window.transformChild = function( child, angle ) {
 	var transform, translate,
+		container = $( "#authors .ui-content" ),
 		boundingBox = {},
 		theWindow = $( window ),
 		offset = child.offset(),
@@ -66,10 +67,13 @@ window.transformChild = function( child, angle ) {
 	boundingBox.top = offset.top + ( height - boundingBox.height ) / 2;
 
 	translate = {
-		minX: -boundingBox.left,
-		maxX: theWindow.width() - boundingBox.left - boundingBox.width,
-		minY: theWindow.scrollTop() - boundingBox.top + $( "#header" ).outerHeight(),
-		maxY: theWindow.scrollTop() + theWindow.height() - boundingBox.top - boundingBox.height
+		minX: -boundingBox.left + parseFloat( container.css( "padding-left" ) ),
+		maxX: theWindow.width() - boundingBox.left - boundingBox.width -
+			parseFloat( container.css( "padding-right" ) ),
+		minY: theWindow.scrollTop() - boundingBox.top + $( "#header" ).outerHeight() +
+			parseFloat( container.css( "padding-top" ) ),
+		maxY: theWindow.scrollTop() + theWindow.height() - boundingBox.top - boundingBox.height -
+			parseFloat( container.css( "padding-bottom" ) )
 	};
 
 	transform = "translate(" +
