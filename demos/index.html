@@ -14,13 +14,155 @@
 	<script src="_assets/js/"></script>
 	<script src="../jqm/js/"></script>
 	<script src="../js/"></script>
+
+	<style>
+#authors-list {
+	display: inline-block;
+}
+#authors-list li {
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	-ms-transition: 1s;
+	-o-transition: 1s;
+	transition: 1s;
+}
+
+#authors-list li {
+	z-index: 1;
+}
+
+#authors-list li.transformed {
+	z-index: initial;
+	border-width: 1px;
+}
+
+#authors-list.transformed {
+	box-shadow: none;
+}
+
+#authors .ui-content {
+	overflow: visible;
+}
+	</style>
+	<script>
+( function( $, undefined ) {
+var showTimeout = 0;
+
+window.transformChild = function( child, angle ) {
+	var transform, translate,
+		boundingBox = {},
+		theWindow = $( window ),
+		offset = child.offset(),
+		width = child.outerWidth(),
+		height = child.outerHeight(),
+		angle = ( arguments.length > 1 ? angle :
+			Math.round( Math.random() * 360 ) ) * Math.PI / 180;
+
+	boundingBox.width = Math.abs( width * Math.cos( angle ) ) +
+		Math.abs( height * Math.sin( angle ) );
+	boundingBox.height = Math.abs( width * Math.sin( angle ) ) +
+		Math.abs( height * Math.cos( angle ) );
+	boundingBox.left = offset.left + ( width - boundingBox.width ) / 2;
+	boundingBox.top = offset.top + ( height - boundingBox.height ) / 2;
+
+	translate = {
+		minX: -boundingBox.left,
+		maxX: theWindow.width() - boundingBox.left - boundingBox.width,
+		minY: theWindow.scrollTop() - boundingBox.top + $( "#header" ).outerHeight(),
+		maxY: theWindow.scrollTop() + theWindow.height() - boundingBox.top - boundingBox.height
+	};
+
+	transform = "translate(" +
+		( Math.random() * ( translate.maxX - translate.minX ) + translate.minX ) + "px," +
+		( Math.random() * ( translate.maxY - translate.minY ) + translate.minY ) + "px)" +
+		" rotate(" + angle + "rad)";
+
+	child
+		.addClass( "transformed" )
+		.css({
+			"-webkit-transform": transform,
+			"-moz-transform": transform,
+			"-ms-transform": transform,
+			"-o-transform": transform,
+			"transform": transform
+		});
+}
+
+function displayAuthors( data ) {
+	var authorsList = $( "#authors-list" );
+
+	$.each( data.split( "\n" ), function( index, value ) {
+		if ( value ) {
+			authorsList.append( $( "<li>" ).text( value ) );
+		}
+	});
+
+	authorsList
+		.listview( "refresh" )
+		.addClass( "transformed" )
+		.children()
+			.each( function() {
+				transformChild( $( this ) );
+			});
+}
+
+function loadAuthors() {
+	showTimeout = setTimeout( function() {
+		$.mobile.loading( "show" );
+		showTimeout = 0;
+	}, 100 );
+	$.ajax( "../AUTHORS.txt", {
+		success: function( data ) {
+			displayAuthors( data );
+		},
+		complete: function() {
+			if ( showTimeout ) {
+				clearTimeout( showTimeout );
+			} else {
+				$.mobile.loading( "hide" );
+			}
+		},
+		fail: function() {
+			alert( "FAIL" );
+		}
+	});
+}
+
+$( document )
+	.on( "pagecontainerchange", function( event, ui ) {
+		if ( ui.toPage.attr( "id" ) === "authors" &&
+			$( "#authors-list" ).children().length === 0 ) {
+				loadAuthors();
+		}
+	})
+	.on( "vclick", "#authors-list li", function() {
+		var child = $( this ),
+			transform = child.css( "transform" );
+
+		transform = ( "none" === transform ) ? "" : transform;
+
+		if ( transform ) {
+			child.removeClass( "transformed" ).css({
+				"-webkit-transform": "",
+				"-moz-transform": "",
+				"-ms-transform": "",
+				"-o-transform": "",
+				"transform": ""
+			});
+		} else {
+			transformChild( child.addClass( "transformed" ) );
+		}
+	});
+})( jQuery );
+	</script>
 </head>
 
 <body>
 	<div data-role="page" class="jqm-demos-home">
 
-		<div class="jqm-header" data-role="header">
+		<div class="jqm-header" data-role="header" data-position="fixed">
 			<h2>Demos - Web UI Framework</h2>
+			<a href="#authors" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline ui-btn-right ui-icon-star ui-btn-icon-left">Authors</a>
 		</div><!-- /jqm-header -->
 
 		<div class="ui-content" role="main">
@@ -44,5 +186,14 @@
 		</div><!-- /content -->
 
 	</div><!-- /page -->
+
+	<div data-role="page" id="authors">
+		<div data-role="header" id="header" data-position="fixed" data-add-back-btn="true">
+			<h2>Web UI Framework was brought to you by ...</h2>
+		</div>
+		<div class="ui-content">
+			<ul id="authors-list" data-role="listview" data-inset="true"></ul>
+		</div>
+	</div>
 </body>
 </html>
