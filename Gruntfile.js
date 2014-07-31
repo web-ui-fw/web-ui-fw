@@ -46,6 +46,12 @@ module.exports = function( grunt ) {
 		},
 
 		copy: {
+			authors: {
+				files: [{
+					src: [ "AUTHORS.txt" ],
+					dest: path.join( dist, "AUTHORS.txt" )
+				}]
+			},
 			demos: {
 				options: {
 					processContent: function( content, srcPath ) {
@@ -266,7 +272,7 @@ module.exports = function( grunt ) {
 	grunt.registerTask( "js:release",  [ "requirejs"/*, "concat:js", "uglify", "copy:sourcemap"*/ ] );
 	grunt.registerTask( "js", [ "js:release" ] );
 	grunt.registerTask( "demos", [ "copy:demos", "concat:demos" ] );
-	grunt.registerTask( "release", [ "js", "cssbuild", "demos" ] );
+	grunt.registerTask( "release", [ "js", "cssbuild", "demos", "copy:authors" ] );
 	grunt.registerTask( "default", [ "lint", "js:release" ] );
 
 };
