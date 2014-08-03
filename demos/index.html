@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="../jqm/css/themes/default/jquery.mobile.css" />
 	<link rel="stylesheet" href="../jqm/demos/_assets/css/jqm-demos.css" />
 	<link rel="stylesheet" href="../css/themes/default/web-ui-fw.css" />
+	<link rel="stylesheet" href="_assets/css/collapsible-list-items.css" />
 
 	<script src="../jqm/external/jquery/jquery.js"></script>
 	<script src="_assets/js/"></script>
@@ -175,26 +176,35 @@ $( document )
 
 		<div class="jqm-header" data-role="header" data-position="fixed">
 			<h2>Demos - Web UI Framework</h2>
-			<a href="#authors" class="ui-btn ui-corner-all ui-mini ui-shadow ui-btn-inline ui-btn-right ui-icon-star ui-btn-icon-left">Authors</a>
 		</div><!-- /jqm-header -->
 
 		<div class="ui-content" role="main">
+			<strong>Web UI Framework is a set of additional widgets for jQuery Mobile. It started its life as part of the Tizen SDK. The project aims to achieve tight integration with jQuery Mobile, currently supporting jQuery Mobile 1.4.3.</strong>
 
-			<div class="content-primary">
-
-				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider">Color widgets</li>
-					<li><a href="widgets/color/colorpalette.html">Color palette</a></li>
-					<li><a href="widgets/color/hsvpicker.html">Hue/Saturation/Value Picker</a></li>
-					<li data-role="list-divider">Text input widgets</li>
-					<li><a data-ajax="false" href="widgets/tokentextarea/tokentextarea.html">Tokentextarea</a></li>
-					<li data-role="list-divider">Virtualgrid widgets</li>
-					<li><a data-ajax="false" href="widgets/virtualgrid/virtualgrid.html">Virtualgrid</a></li>
-					<li data-role="list-divider">Routemap widgets</li>
-					<li><a data-ajax="false" href="widgets/routemap/routemap.html">Routemap</a></li>
-				</ul>
-
-			</div><!--/content-primary -->
+					<ul data-role="listview" data-inset="true" id="project-links-list" class="ui-listview-outer">
+						<li data-role="list-divider">Project links</li>
+						<li><a href="http://web-ui-fw.github.io/jqm/latest/api-docs/" data-ajax="false">API Documentation</a></li>
+						<li><a href="https://github.com/web-ui-fw/web-ui-fw/" data-ajax="false">Repository Home Page</a></li>
+						<li><a href="https://github.com/web-ui-fw/web-ui-fw/issues/" data-ajax="false">Bug Tracker</a></li>
+						<li><a href="#authors">Contributors</a></li>
+						<li data-role="list-divider">Older versions</li>
+						<li><a href="http://web-ui-fw.github.io/jqm/0.2.0/demos/" data-ajax="false">Version 0.2.0</a></li>
+						<li><a href="http://web-ui-fw.github.io/" data-ajax="false">Original Version</a></li>
+						<li data-role="collapsible" data-collapsed="false" data-expanded-icon="false" data-collapsed-icon="false" data-shadow="false" data-corners="false">
+							<h2>Demos</h2>
+							<ul data-role="listview" data-inset="true" id="demo-list" data-shadow="false" data-corners="false">
+								<li data-role="list-divider">Color widgets</li>
+								<li><a href="widgets/color/colorpalette.html">Color palette</a></li>
+								<li><a href="widgets/color/hsvpicker.html">Hue/Saturation/Value Picker</a></li>
+								<li data-role="list-divider">Text input widgets</li>
+								<li><a data-ajax="false" href="widgets/tokentextarea/tokentextarea.html">Tokentextarea</a></li>
+								<li data-role="list-divider">Virtualgrid widgets</li>
+								<li><a data-ajax="false" href="widgets/virtualgrid/virtualgrid.html">Virtualgrid</a></li>
+								<li data-role="list-divider">Routemap widgets</li>
+								<li><a data-ajax="false" href="widgets/routemap/routemap.html">Routemap</a></li>
+							</ul>
+						</li>
+					</ul>
 
 		</div><!-- /content -->
 
