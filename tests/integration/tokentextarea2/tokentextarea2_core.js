@@ -269,3 +269,88 @@ test( "Public API works", function() {
 	deepEqual( input.tokentextarea2( "select" ), "",
 		"select(): After items become deselected, select() returns an empty string" );
 });
+
+test( "Disabling widget", function() {
+	var input = $( "#set-options-test" );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+		if ( $( element ).attr( "tabindex" ) === "-1" ) {
+			return true;
+		}
+	}), false, "Initially no button has tabindex -1" );
+
+	input.tokentextarea2( "option", "disabled", true );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+		if ( $( element ).attr( "tabindex" ) !== "-1" ) {
+			return true;
+		}
+	}), false, "After disabling, all buttons have tabindex -1" );
+
+	input.tokentextarea2( "option", "disabled", false );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+		if ( $( element ).attr( "tabindex" ) === "-1" ) {
+			return true;
+		}
+	}), false, "After re-enabling, no buttons have tabindex -1" );
+});
+
+module( "Pre-rendered" );
+
+test( "Input shadow found", function() {
+	var input = $( "#pre-rendered-test" );
+
+	input.val( "k" ).trigger( "keyup" );
+
+	deepEqual( input.siblings( ".ui-tokentextarea2-input-shadow" ).text(), "k",
+		"text is transferred to input shadow" );
+});
+
+asyncTest( "Form reset works", function() {
+	expect( 16 );
+
+	var form = $( "#reset-test-form" ),
+		inputInside = $( "#reset-test-input" ),
+		inputOutside = $( "#reset-test-input-outside" ),
+		checkPreResetAssertions = function( input ) {
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+				"Initially two buttons are present" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+				"abc@def.com", "Initially the first button has the correct value" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+				"ghi@jkl.com", "Initially the second button has the correct value" );
+
+			input.val( "mno@pqr.com;" ).trigger( "change" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 3,
+				"A newly added button increases length of buttons by one" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+				"mno@pqr.com", "A newly added button becomes the first to precede the input" );
+		},
+		checkPostResetAssertions = function( input ) {
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+				"Initially two buttons are present" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+				"abc@def.com", "Initially the first button has the correct value" );
+
+			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+				"ghi@jkl.com", "Initially the second button has the correct value" );
+		};
+
+	checkPreResetAssertions( inputInside );
+	checkPreResetAssertions( inputOutside );
+
+	form.trigger( "reset" );
+
+	setTimeout( function() {
+		checkPostResetAssertions( inputInside );
+		checkPostResetAssertions( inputOutside );
+
+		start();
+	}, 500 );
+});
