@@ -7,6 +7,19 @@ test( "class 'stretched-input' correctly applied during enhancement", function()
 			"'stretched-input' on the wrapper" );
 	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
 		"When the input has initial buttons, the wrapper initially has class 'stretched-input'" );
+	deepEqual( $( "#enhance-test-initial-tokens" )
+		.prevAll( ".ui-tokentextarea2-button" ).length,
+		1, "When the input has initial buttons, they precede the input" );
+	deepEqual( $( "#enhance-test-initial-tokens" )
+		.prevAll( ".ui-tokentextarea2-button" )
+			.attr( "tabindex" ),
+		undefined, "When the enabled input has initial buttons, their tabindex is unset" );
+	deepEqual( $( "#enhance-test-initial-tokens-disabled" )
+		.prevAll( ".ui-tokentextarea2-button" )
+			.attr( "tabindex" ),
+		"-1", "When the disabled input has initial buttons, their tabindex is set to '-1'" );
+	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
+		"When the input has initial buttons, the wrapper initially has class 'stretched-input'" );
 	deepEqual( $( "#enhance-test-initial-value-tokens" ).parent().hasClass( "stretched-input" ),
 		true, "When the input has initial buttons and a leftover, the wrapper initially has " +
 			"class 'stretched-input'" );
