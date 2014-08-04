@@ -149,6 +149,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 					.first() );
 		} else {
 			if ( !event ||
+				event.type === "change" ||
 				event.keyCode === $.ui.keyCode.ENTER ||
 				event.keyCode === $.ui.keyCode.COMMA ||
 				event.keyCode === 186 || event.keyCode === 59 ) {
