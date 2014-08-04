@@ -367,3 +367,36 @@ asyncTest( "Form reset works", function() {
 		start();
 	}, 500 );
 });
+
+asyncTest( "Paste works", function() {
+	expect( 7 );
+
+	var input = $( "#paste-test" );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+		"Initially two buttons are present" );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+		"abc@def.com", "Initially the first button has the correct value" );
+
+	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		"ghi@jkl.com", "Initially the second button has the correct value" );
+
+	input.val( "mno@pqr.com;" ).trigger( "paste" );
+
+	setTimeout( function() {
+		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 3,
+			"After pasting three buttons are present" );
+
+		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+			"mno@pqr.com", "After pasting the button nearest the input has the correct value" );
+
+		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).eq( 1 ).jqmData( "value" ),
+			"ghi@jkl.com", "After pasting the middle button has the correct value" );
+
+		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+			"abc@def.com", "After pasting the first button has the correct value" );
+
+		start();
+	}, 500 );
+});
