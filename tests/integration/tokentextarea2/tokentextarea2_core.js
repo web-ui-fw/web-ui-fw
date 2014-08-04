@@ -236,6 +236,8 @@ test( "Public API works", function() {
 	deepEqual( input.parent().children( ".ui-tokentextarea2-button" ).length, 0,
 		"remove(): No tokens present after calling remove() with no arguments" );
 
+	deepEqual( input.tokentextarea2( "length" ), 0, "remove(): length() reports correctly" );
+
 	input
 		.val( "abc@def.com;mno@pqr.com;stu " )
 		.tokentextarea2( "refresh" )
