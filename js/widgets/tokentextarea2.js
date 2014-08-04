@@ -327,7 +327,15 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 
 	_destroy: function() {
 		if ( this.inputNeedsWrap && !this.options.enhanced ) {
-			this.element.val( this.inputText() );
+			this.element
+				.val( this.inputText() )
+				.css( "width", "" );
+
+			// Remove after testHelper's domEqual is fixed
+			if ( !this.element.attr( "style" ) ) {
+				this.element.removeAttr( "style" );
+			}
+
 			this.element.prevAll( "a.ui-tokentextarea2-button" ).remove();
 			this._inputShadow.remove();
 		}
