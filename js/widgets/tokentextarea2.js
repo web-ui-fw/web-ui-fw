@@ -186,7 +186,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.textinput, {
 	_removeButtonGracefully: function( button ) {
 		if ( button.hasClass( "ui-btn-active" ) ) {
 			this._remove( button );
-		} else if ( this._trigger( "select", { value: button.jqmData( "value" ) } ) ) {
+		} else if ( this._trigger( "select", null, { value: button.jqmData( "value" ) } ) ) {
 			button.addClass( "ui-btn-active" );
 		}
 	},
