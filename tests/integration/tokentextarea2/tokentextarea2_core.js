@@ -144,7 +144,8 @@ asyncTest( "input wraps to next line to accommodate typed text", function() {
 });
 
 test( "Clicking on token works", function() {
-	var input = $( "#click-twice-to-remove-token" ),
+	var selectTriggered = false,
+		input = $( "#click-twice-to-remove-token" ),
 		top = input.offset().top;
 
 	input.prev().click();
@@ -154,7 +155,25 @@ test( "Clicking on token works", function() {
 
 	input.prev().click();
 
-	deepEqual( input.prev( "a.ui-btn" ).length, 0, "clicking on token again removes it" );
+	deepEqual( input.prev( "a.ui-tokentextarea2-button" ).length, 0,
+		"clicking on token again removes it" );
+
+	input.tokentextarea2( "add", "dennis@example.com" );
+
+	input.one( "tokentextarea2select", function( event, data ) {
+		selectTriggered = true;
+		deepEqual( !!data, true, "Data is passed to the 'select' event" );
+		deepEqual( data.value, "dennis@example.com",
+			"The selected button's value is passed as the key named 'value' of the data object" );
+		event.preventDefault();
+	});
+
+	input.prev().click();
+
+	deepEqual( selectTriggered, true, "'select' event was triggered by click on button" );
+
+	deepEqual( input.prev().hasClass( "ui-btn-active" ), false,
+		"preventing default from the 'select' event causes the button to not be selected" );
 });
 
 test( "Public API works", function() {
