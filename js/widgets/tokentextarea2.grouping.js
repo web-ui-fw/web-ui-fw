@@ -80,6 +80,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 			this.widget()
 				.addClass( "ui-tokentextarea2-grouped" )
 				.removeClass( "stretched-input" );
+			this.element.blur();
 		}
 	},
 
