@@ -25,7 +25,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 			}
 
 			this._on( this.widget(), {
-				"focusin": "_handleFocusIn"
+				"focusin": "focusIn"
 			});
 		}
 	},
@@ -37,10 +37,6 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 				.prependTo( this.widget() );
 			this._updateText();
 		}
-	},
-
-	_handleFocusIn: function() {
-		this.focusIn();
 	},
 
 	_updateText: function() {
