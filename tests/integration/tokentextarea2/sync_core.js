@@ -24,3 +24,63 @@ test( "The value of the master is reflected in the slave upon triggering 'change
 	deepEqual( $( "#sync-test-slave" ).tokentextarea2( "inputText" ), "abc",
 		"Widget inputText() is correct" );
 });
+
+test( "Setting a master at runtime", function() {
+	var slave = $( "#sync-test-slave-no-master" ),
+		master = $( "#sync-test-new-master" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 0,
+		"Initially slave has no buttons" );
+
+	slave.tokentextarea2( "option", "master", master );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+		"After setting a new master, there are two buttons" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		"ghi@jkl.com", "After setting a new master, button nearest input has the right value" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+		"abc@def.com", "After setting a new master, first button has the right value" );
+
+	slave.tokentextarea2( "option", "master", null );
+
+	master.val( "mno@pqr.com;" ).trigger( "change" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+		"After unsetting the new master, there are still two buttons" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		"ghi@jkl.com",
+		"After unsetting the new master, button nearest input still has the right value" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+		"abc@def.com", "After unsetting the new master, first button still has the right value" );
+
+	slave.tokentextarea2( "remove" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 0,
+		"After removing all the buttons the slave has no buttons" );
+
+	slave.tokentextarea2( "option", "master", master );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 1,
+		"After reassigning the same master, the slave has one button" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		"mno@pqr.com",
+		"After reassigning the new master, button nearest input again has the right value" );
+
+	slave.tokentextarea2( "option", "master", "#sync-test-other-master" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+		"After assigning a different master, the slave has two buttons" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		"vincent@example.com",
+		"After assigning a different master, button nearest input again has the right value" );
+
+	deepEqual( slave.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+		"doreen@example.com",
+		"After assigning a different master, first button again has the right value" );
+});
