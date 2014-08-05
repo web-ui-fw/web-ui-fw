@@ -14,6 +14,11 @@
 	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
+	<script id="grouping-demo-js">
+$( document ).on( "vclick", "#call-focus-out", function() {
+	$( "#grouping-demo" ).tokentextarea2( "focusOut" );
+});
+	</script>
 </head>
 <body>
 	<div data-role="page" id="tokentextarea2">
@@ -54,6 +59,13 @@
 					<input name="to-addresses" id="to-addresses" data-wrapper-class="ui-tokentextarea2-master" value="abc@def.com;">
 					<input data-role="tokentextarea2" data-master="#to-addresses" class="ui-tokentextarea2-slave">
 				</form>
+			</div>
+
+			<h2>Grouping when not focused</h2>
+			<div data-demo-html="true" data-demo-js="#grouping-demo-js">
+				<p>Click on the summary to show the input and the buttons. Click "Group" to show the summary.</p>
+				<input id="grouping-demo" data-role="tokentextarea2" value="michael@example.com;">
+				<a href="#" id="call-focus-out" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Group</a>
 			</div>
 
 			<h2>Pre-rendered</h2>
