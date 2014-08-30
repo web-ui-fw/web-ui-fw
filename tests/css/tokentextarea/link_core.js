@@ -10,7 +10,7 @@ test( "Link aligns with the bottom of the wrapper", function() {
 
 	while( true ) {
 		input.val( "abc@def.com;" ).trigger( "change" );
-		currentTop = input.prevAll( "a.ui-tokentextarea2-button" ).first().offset().top;
+		currentTop = input.prevAll( "a.ui-tokentextarea-button" ).first().offset().top;
 		if ( prevTop === undefined ) {
 			prevTop = currentTop;
 		} else if ( currentTop !== prevTop ) {

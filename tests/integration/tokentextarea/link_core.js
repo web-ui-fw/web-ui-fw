@@ -1,8 +1,8 @@
 test( "Widget is correctly instantiated", function() {
 	var input = $( "#enhance-test" );
 
-	deepEqual( input.parent().hasClass( "ui-tokentextarea2" ), true,
-		"input parent has class ui-tokentextarea2" );
+	deepEqual( input.parent().hasClass( "ui-tokentextarea" ), true,
+		"input parent has class ui-tokentextarea" );
 	deepEqual( input.siblings( "#enhance-test-link" ).length, 1,
 		"link is sibling of input" );
 	deepEqual( input.parent().hasClass( "ui-input-has-clear" ), true,
@@ -17,7 +17,7 @@ test( "Setting link at runtime works", function() {
 	deepEqual( input.parent().hasClass( "ui-input-has-clear" ), false,
 		"input parent does not initially have class ui-input-has-clear" );
 
-	input.tokentextarea2( "option", "link", "#runtime-link-1" );
+	input.tokentextarea( "option", "link", "#runtime-link-1" );
 
 	deepEqual( input.siblings( "#runtime-link-1" ).length, 1,
 		"runtime-link-1 has become a sibling of the input" );
@@ -26,7 +26,7 @@ test( "Setting link at runtime works", function() {
 	deepEqual( input.parent().hasClass( "ui-input-has-clear" ), true,
 		"Input parent has class ui-input-hashc-clear" );
 
-	input.tokentextarea2( "option", "link", "#runtime-link-2" );
+	input.tokentextarea( "option", "link", "#runtime-link-2" );
 
 	deepEqual( input.siblings( "#runtime-link-1" ).length, 0,
 		"runtime-link-1 is no longer a sibling of the input" );
@@ -37,7 +37,7 @@ test( "Setting link at runtime works", function() {
 	deepEqual( input.parent().hasClass( "ui-input-has-clear" ), true,
 		"Input parent still has class ui-input-hashc-clear" );
 
-	input.tokentextarea2( "option", "link", null );
+	input.tokentextarea( "option", "link", null );
 
 	deepEqual( input.siblings( "#runtime-link-1,#runtime-link-2" ).length, 0,
 		"Neither runtime-link-1 nor runtime-link-2 is any longer a sibling of the input" );

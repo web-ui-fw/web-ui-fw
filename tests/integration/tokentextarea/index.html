@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tokentextarea - Unit Tests - Web UI Framework</title>
+
+	<script src="../../../external/requirejs/require.js"></script>
+	<script src="../../../jqm/js/requirejs.config.js"></script>
+	<script src="../../../js/requirejs.config.js"></script>
+	<script src="../../../jqm/js/jquery.tag.inserter.js"></script>
+	<script src="../../../jqm/tests/jquery.setNameSpace.js"></script>
+	<script src="../../../jqm/tests/jquery.testHelper.js"></script>
+
+	<link rel="stylesheet" href="../../../jqm/css/themes/default/jquery.mobile.css"/>
+	<link rel="stylesheet" href="../../../css/themes/default/web-ui-fw.css" />
+	<link rel="stylesheet" href="../../../external/qunit/qunit.css"/>
+	<link rel="stylesheet" href="../../../jqm/tests/jqm-tests.css"/>
+	<script src="../../../external/qunit/qunit.js"></script>
+
+	<script>
+		$.testHelper.asyncLoad([
+			[ "jqm/widgets/page" ],
+			[ "widgets/tokentextarea" ],
+			[ "jqm/jquery.mobile.init" ],
+			[ "tokentextarea_core.js" ]
+		]);
+	</script>
+
+	<script src="../../../jqm/tests/swarminject.js"></script>
+</head>
+<body>
+	<div id="qunit"></div>
+	<div data-nstest-role="page">
+		<div class="ui-content">
+			<input id="enhance-test" data-nstest-role="tokentextarea">
+			<input id="enhance-test-initial-value-no-tokens" data-nstest-role="tokentextarea" value="abc@def">
+			<input id="enhance-test-initial-tokens" data-nstest-role="tokentextarea" value="abc@def.com;">
+			<input id="enhance-test-initial-tokens-disabled" data-nstest-role="tokentextarea" value="abc@def.com;" disabled>
+			<input id="enhance-test-initial-value-tokens" data-nstest-role="tokentextarea" value="abc@def.com; ghi">
+			<input id="token-generation" data-nstest-role="tokentextarea">
+			<input id="backspace" data-nstest-role="tokentextarea" value="abc@def.com; gh">
+			<input id="set-options-test" data-nstest-role="tokentextarea" value="abc@def.com; ghi@jkl.com;mno">
+			<input id="focus-test-vmousedown" data-nstest-role="tokentextarea">
+			<div style="width: 500px;">
+				<input id="wrap-test" data-nstest-role="tokentextarea">
+			</div>
+			<div style="width: 500px;">
+				<input id="click-twice-to-remove-token" data-nstest-role="tokentextarea" value="abc@def.com;">
+			</div>
+			<input id="refresh-test" data-nstest-role="tokentextarea">
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea stretched-input">
+				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-tokentextarea-button ui-btn-inline" data-nstest-value="your.name@your.domain.com">your.name@your.domain.com</a>
+				<input id="pre-rendered-test" data-nstest-role="tokentextarea" data-nstest-enhanced="true">
+				<span class="ui-tokentextarea-input-shadow"></span>
+			</div>
+			<form id="reset-test-form">
+				<input id="reset-test-input" data-nstest-role="tokentextarea" value="abc@def.com; ghi@jkl.com; ">
+			</form>
+			<input id="reset-test-input-outside" form="reset-test-form" data-nstest-role="tokentextarea" value="abc@def.com; ghi@jkl.com; ">
+			<input id="paste-test" data-nstest-role="tokentextarea" value="abc@def.com; ghi@jkl.com;mno">
+		</div>
+	</div>
+</body>
+</html>

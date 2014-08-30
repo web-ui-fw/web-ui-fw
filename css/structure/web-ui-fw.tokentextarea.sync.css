@@ -3,7 +3,7 @@
  * hidden when it is enhanced. It is hidden in such a way that its value is still submitted with
  * the rest of the form data.
  **/
-.ui-tokentextarea2-master {
+.ui-tokentextarea-master {
 	visibility: hidden;
 	position: absolute;
 }
@@ -13,14 +13,14 @@
  * unless the widget is enhanced. When the widget is enhanced, the next rule overrides this rule,
  * and the input becomes visible.
  **/
-.ui-tokentextarea2-slave {
+.ui-tokentextarea-slave {
 	display: none;
 }
 
 /**
  * This rule ensures that the slave input is visible when it is enhanced into a textinput widget
- * of which tokentextarea2 is a subclass.
+ * of which tokentextarea is a subclass.
  **/
-.ui-input-text .ui-tokentextarea2-slave {
+.ui-input-text .ui-tokentextarea-slave {
 	display: inline-block;
 }

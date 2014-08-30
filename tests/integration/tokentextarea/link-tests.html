@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Tokentextarea2 - Unit Tests - Web UI Framework</title>
+	<title>Tokentextarea - Unit Tests - Web UI Framework</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
 	<script src="../../../jqm/js/requirejs.config.js"></script>
@@ -21,9 +21,9 @@
 	<script>
 		$.testHelper.asyncLoad([
 			[ "jqm/widgets/page" ],
-			[ "widgets/tokentextarea2" ],
+			[ "widgets/tokentextarea.link" ],
 			[ "jqm/jquery.mobile.init" ],
-			[ "tokentextarea2_core.js" ]
+			[ "link_core.js" ]
 		]);
 	</script>
 
@@ -33,9 +33,12 @@
 	<div id="qunit"></div>
 	<div data-nstest-role="page">
 		<div class="ui-content">
-			<div style="width: 500px;">
-				<input id="test-ellipsize" data-nstest-role="tokentextarea2" value="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;">
-			</div>
+			<input id="enhance-test" data-nstest-role="tokentextarea" data-nstest-link="#enhance-test-link">
+			<a href="#" id="enhance-test-link">Enhance test link</a>
+
+			<input id="set-link-at-runtime" data-nstest-role="tokentextarea">
+			<a href="#" id="runtime-link-1">Link 1</a>
+			<a href="#" id="runtime-link-2">Link 2</a>
 		</div>
 	</div>
 </body>

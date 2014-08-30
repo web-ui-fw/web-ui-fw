@@ -1,5 +1,5 @@
 /* The summary span mimics the input in terms of padding and line height and is normally hidden */
-.ui-tokentextarea2-summary {
+.ui-tokentextarea-summary {
 	pointer-events: none;
 	display: none;
 	position: absolute;
@@ -9,7 +9,7 @@
 }
 
 /* When in grouped mode, turn off styling */
-.ui-tokentextarea2.ui-tokentextarea2-grouped {
+.ui-tokentextarea.ui-tokentextarea-grouped {
 	border-color: transparent;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -20,17 +20,17 @@
 }
 
 /* When in grouped mode, display the summary */
-.ui-tokentextarea2.ui-tokentextarea2-grouped > .ui-tokentextarea2-summary {
+.ui-tokentextarea.ui-tokentextarea-grouped > .ui-tokentextarea-summary {
 	display: block;
 }
 
 /* When in grouped mode, hide the buttons */
-.ui-tokentextarea2.ui-tokentextarea2-grouped > a.ui-btn {
+.ui-tokentextarea.ui-tokentextarea-grouped > a.ui-btn {
 	display: none;
 }
 
 /* When in grouped mode, hide the input, but leave it focusable */
-.ui-tokentextarea2.ui-tokentextarea2-grouped > input {
+.ui-tokentextarea.ui-tokentextarea-grouped > input {
 	opacity: 0;
 }
 

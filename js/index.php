@@ -12,10 +12,9 @@ $files = array(
 	'widgets/color/colorpalette.js',
 	'widgets/color/hsvpicker.js',
 	'widgets/tokentextarea.js',
-	'widgets/tokentextarea2.js',
-	'widgets/tokentextarea2.sync.js',
-	'widgets/tokentextarea2.grouping.js',
-	'widgets/tokentextarea2.link.js',
+	'widgets/tokentextarea.sync.js',
+	'widgets/tokentextarea.grouping.js',
+	'widgets/tokentextarea.link.js',
 	'widgets/virtualgrid.js',
 	'widgets/routemap.js'
 );

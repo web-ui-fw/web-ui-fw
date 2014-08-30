@@ -14,123 +14,156 @@
 	<script src="../../_assets/js/"></script>
 	<script src="../../../jqm/js/"></script>
 	<script src="../../../js/"></script>
-	<script>
-		$.mobile.document.one( "pagecreate", "#tokentextarea", function() {
-			var $tta = $( ":jqmData(role='tokentextarea')" ),
-				$popup = $( ".tta-popup .ui-popup-text" );
+	<script id="grouping-demo-js">
+$( document ).on( "vclick", "#call-focus-out", function() {
+	$( "#grouping-demo" ).tokentextarea( "focusOut" );
+});
+	</script>
+	<style id="link-option-style">
+.address-book-popup {
+	overflow-y: auto;
+	min-width: 25em;
+}
+	</style>
+	<script id="link-option-script">
+$( document )
+	.on( "popupbeforeposition", "#link-option-popup", function( event, options ) {
 
-			$( "#TTAaddItemTest" ).on( "click", function() {
-				$tta.tokentextarea( "add", "additem" );
-			});
+		// We limit the height of the popup to the height of the window minus a clearance
+		$( event.target ).css( "height", $( window ).height() - 60 );
+	})
+	.on( "vclick", "#link-option-popup li a", function( event ) {
 
-			$( "#TTAremoveItemTest" ).on( "click", function() {
-				$tta.tokentextarea( "remove", 0 );
-			});
-
-			$( "#TTAinputTextTest" ).on( "click", function() {
-				$tta.tokentextarea( "inputText", "Hello~~~" );
-			});
-
-			$( "#TTAgetInputTextTest" ).on( "click", function() {
-				var input = $tta.tokentextarea( "inputText" );
-				$popup.text( "Input string : " + input );
-			});
-
-			$( "#TTAremoveAllItemTest" ).on( "click", function() {
-				$tta.tokentextarea( "remove" );
-			});
-
-			$( "#TTAgetSelectedItemTest" ).on( "click", function() {
-				var content = $tta.tokentextarea( "select" );
-				$popup.text( "Select content : " + content );
-			});
-
-			$( "#TTAselectItemTest" ).on( "click", function() {
-				$tta.tokentextarea( "select", 0 );
-			});
-
-			$( "#TTAlengthTest" ).on( "click", function() {
-				var length = $tta.tokentextarea( "length" );
-				$popup.text( "Length : " + length );
-			});
-
-			$( "#TTAfocusInTest" ).on( "click", function() {
-				$tta.tokentextarea( "focusIn", 0 );
-			});
-
-			$( "#TTAfocusOutTest" ).on( "click", function() {
-				$tta.tokentextarea( "focusOut", 0 );
-			});
-
-			$( "#TTAdestroyTest" ).on( "click", function() {
-				$tta.tokentextarea( "destroy" );
-			});
-		});
-
-		$.mobile.document.one( "pagecreate", "#addressbook", function() {
-			var self = this,
-				$address = $( "#addressbook" );
-
-			self.itemSelected = false;
-
-			$address.on( "mousedown", function() {
-				self.itemSelected = false;
-			});
-
-			$address.on( "mouseup", function() {
-				self.itemSelected = true;
-			});
-
-			$( "#contentList a" ).on( "click", function() {
-				if ( self.itemSelected ) {
-					var arg = $( this ).text();
-					$( ":jqmData(role='tokentextarea')" ).tokentextarea( "add", arg );
-					history.back();
-				}
-			});
-		});
+		// When the user choses an item from the list, add the text of the item as a button and
+		// close the popup
+		$( "#link-option" ).tokentextarea( "add", $( event.target ).text() );
+		$( "#link-option-popup" ).popup( "close" );
+		event.preventDefault();
+	});
 	</script>
 </head>
 <body>
-	<div data-role="page" id="tokentextarea" data-dom-cache="true">
-		<div data-role="header" data-position="fixed">
-			<h1>Tokentextarea Demo - Web UI Framework Demos</h1>
+	<div data-role="page" id="tokentextarea">
+		<div data-role="header">
+			<h1>tokentextarea Demo - Web UI Framework Demos</h1>
 			<a href="../../" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
 		</div> <!--/header -->
 		<div class="ui-content" role="main">
-			<div class="content-primary">
 
-				<h3>Tokentextarea</h3>
-				<div data-demo-html="true" data-demo-js="true">
-					<div data-role="tokentextarea" data-link="addressbook.html"></div>
+			<h2>Basic tokentextarea</h2>
+			<div data-demo-html="true">
+				<input data-role="tokentextarea">
+			</div>
 
-					<ul data-role="listview" data-inset="true">
-						<li><a id='TTAaddItemTest'>Append Item</a></li>
-						<li><a id='TTAremoveItemTest'>Remove first Item</a></li>
-						<li><a id='TTAinputTextTest'>Input 'Hello'</a></li>
-						<li><a id='TTAgetInputTextTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Get input text</a></li>
-						<li><a id='TTAselectItemTest'>Select 1</a></li>
-						<li><a id='TTAgetSelectedItemTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Selected item</a></li>
-						<li><a id='TTAlengthTest' href='#tta_popup' data-rel='popup' data-position-to='window'>Length</a></li>
-						<li><a id='TTAfocusOutTest'>Grouping On</a></li>
-						<li><a id='TTAfocusInTest'>Grouping Off</a></li>
-						<li><a id='TTAremoveAllItemTest'>Remove All Item</a></li>
+			<h2>Initial input</h2>
+			<div data-demo-html="true">
+				<input data-role="tokentextarea" value="abc">
+			</div>
+
+			<h2>Initial input resulting in a token</h2>
+			<div data-demo-html="true">
+				<input data-role="tokentextarea" value="your.name@your.domain.com;">
+			</div>
+
+			<h2>Explicitly themed</h2>
+			<div data-demo-html="true">
+				<input data-role="tokentextarea" value="your.name@your.domain.com;" data-theme="b">
+			</div>
+
+			<h2>Initial input resulting in a token and leftover input</h2>
+			<div data-demo-html="true">
+				<input id="leftover-demo" data-role="tokentextarea" value="abc@def.com; ghi">
+			</div>
+
+			<h2>Synchronized to another input (ensures progressive enhancement)</h2>
+			<div data-demo-html="true">
+				<form>
+					<input name="to-addresses" id="to-addresses" data-wrapper-class="ui-tokentextarea-master" value="abc@def.com;">
+					<input data-role="tokentextarea" data-master="#to-addresses" class="ui-tokentextarea-slave">
+				</form>
+			</div>
+
+			<h2>Grouping when not focused</h2>
+			<div data-demo-html="true" data-demo-js="#grouping-demo-js">
+				<p>Click on the summary to show the input and the buttons. Click "Group" to show the summary.</p>
+				<input id="grouping-demo" data-role="tokentextarea" value="michael@example.com;">
+				<a href="#" id="call-focus-out" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Group</a>
+
+			<h2>Link option</h2>
+			<div data-demo-html="true" data-demo-js="#link-option-script" data-demo-css="#link-option-style">
+				<input id="link-option" data-role="tokentextarea" data-link="#link-option-button">
+				<a href="#link-option-popup" data-rel="popup" id="link-option-button" class="ui-btn ui-btn-inline ui-corner-all ui-icon-grid ui-btn-icon-notext">Address book</a>
+				<div id="link-option-popup" data-role="popup" data-position-to="window" class="address-book-popup">
+					<ul data-role="listview" data-inset="false">
+						<li data-role="list-divider">A</li>
+						<li><a>Adam Kinkaid</a></li>
+						<li><a>Alex Wickerham</a></li>
+						<li><a>Avery Johnson</a></li>
+						<li data-role="list-divider">B</li>
+						<li><a>Bob Cabot</a></li>
+						<li data-role="list-divider">C</li>
+						<li><a>Caleb Booth</a></li>
+						<li><a>Christopher Adams</a></li>
+						<li><a>Culver James</a></li>
+						<li data-role="list-divider">D</li>
+						<li><a>David Walsh</a></li>
+						<li><a>Drake Alfred</a></li>
+						<li data-role="list-divider">E</li>
+						<li><a>Elizabeth Bacon</a></li>
+						<li><a>Emery Parker</a></li>
+						<li><a>Enid Voldon</a></li>
+						<li data-role="list-divider">F</li>
+						<li><a>Francis Wall</a></li>
+						<li data-role="list-divider">G</li>
+						<li><a>Graham Smith</a></li>
+						<li><a>Greta Peete</a></li>
+						<li data-role="list-divider">H</li>
+						<li><a>Harvey Walls</a></li>
+						<li data-role="list-divider">M</li>
+						<li><a>Mike Farnsworth</a></li>
+						<li><a>Murray Vanderbuilt</a></li>
+						<li data-role="list-divider">N</li>
+						<li><a>Nathan Williams</a></li>
+						<li data-role="list-divider">P</li>
+						<li><a>Paul Baker</a></li>
+						<li><a>Pete Mason</a></li>
+						<li data-role="list-divider">R</li>
+						<li><a>Rod Tarker</a></li>
+						<li data-role="list-divider">S</li>
+						<li><a>Sawyer Wakefield</a></li>
 					</ul>
+				</div>
+			</div>
 
-					<div id="tta_popup" data-role="popup" class="tta-popup ui-corner-all" style="width:300px">
-						<div data-role="header" data-theme="a" class="ui-corner-top">
-							<h1>Message</h1>
-						</div>
-						<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-							<p class="ui-popup-text "> message</p>
-							<center>
-								<div class="ui-popup-button-bg">
-									<a data-role="button" data-rel="back" data-inline="true" data-theme="c">OK</a>
-								</div>
-							</center>
+			<h2>Pre-rendered</h2>
+			<div data-demo-html="true">
+				<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea stretched-input">
+					<span class="ui-tokentextarea-summary">+ 1</span>
+					<a href="#" class="ui-btn ui-corner-all ui-shadow ui-tokentextarea-button ui-btn-inline" data-value="your.name@your.domain.com">your.name@your.domain.com</a>
+					<input data-role="tokentextarea" data-enhanced="true">
+					<span class="ui-tokentextarea-input-shadow"></span>
+				</div>
+			</div>
+
+			<h2>Pre-rendered, with label, synchronized, with initial leftover input</h2>
+			<div data-demo-html="true">
+				<form>
+					<div class="ui-field-contain">
+						<label for="recipients">Recipients:</label>
+						<!-- ui-noop causes the ui-field-contain rule floating the element after the label to apply to our div -->
+						<div id="recipients" class="ui-noop">
+							<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea-master">
+								<input name="recipients" id="recipients-master" data-enhanced="true" data-wrapper-class="ui-tokentextarea-master" value="abc@def.com; an.unfinished.email.address@gmail">
+							</div>
+							<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea stretched-input">
+								<span class="ui-tokentextarea-summary">+ 1</span>
+								<a href="#" class="ui-tokentextarea-button ui-btn ui-corner-all ui-shadow ui-btn-inline" data-value="abc@def.com">abc@def.com</a>
+								<input data-role="tokentextarea" data-enhanced="true" data-master="#recipients-master" class="ui-tokentextarea-slave" value="daniel@g">
+								<span class="ui-tokentextarea-input-shadow">daniel@g</span>
+							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div> <!--/content -->
 	</div>

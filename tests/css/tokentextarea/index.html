@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Tokentextarea2 - Unit Tests - Web UI Framework</title>
+	<title>Tokentextarea - Unit Tests - Web UI Framework</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
 	<script src="../../../jqm/js/requirejs.config.js"></script>
@@ -21,9 +21,9 @@
 	<script>
 		$.testHelper.asyncLoad([
 			[ "jqm/widgets/page" ],
-			[ "widgets/tokentextarea2.sync" ],
+			[ "widgets/tokentextarea" ],
 			[ "jqm/jquery.mobile.init" ],
-			[ "sync_core.js" ]
+			[ "tokentextarea_core.js" ]
 		]);
 	</script>
 
@@ -33,11 +33,9 @@
 	<div id="qunit"></div>
 	<div data-nstest-role="page">
 		<div class="ui-content">
-			<input id="sync-test-master" value="abc@def.com; ghi ">
-			<input id="sync-test-slave" data-nstest-role="tokentextarea2" data-nstest-master="#sync-test-master">
-			<input id="sync-test-slave-no-master" data-nstest-role="tokentextarea2">
-			<input id="sync-test-new-master" value="abc@def.com; ghi@jkl.com;">
-			<input id="sync-test-other-master" value="doreen@example.com;vincent@example.com;">
+			<div style="width: 500px;">
+				<input id="test-ellipsize" data-nstest-role="tokentextarea" value="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;">
+			</div>
 		</div>
 	</div>
 </body>

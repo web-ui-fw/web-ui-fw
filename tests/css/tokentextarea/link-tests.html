@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Tokentextarea2 - Unit Tests - Web UI Framework</title>
+	<title>Tokentextarea - Unit Tests - Web UI Framework</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
 	<script src="../../../jqm/js/requirejs.config.js"></script>
@@ -21,9 +21,9 @@
 	<script>
 		$.testHelper.asyncLoad([
 			[ "jqm/widgets/page" ],
-			[ "widgets/tokentextarea2.grouping" ],
+			[ "widgets/tokentextarea.link" ],
 			[ "jqm/jquery.mobile.init" ],
-			[ "grouping_core.js" ]
+			[ "link_core.js" ]
 		]);
 	</script>
 
@@ -33,15 +33,9 @@
 	<div id="qunit"></div>
 	<div data-nstest-role="page">
 		<div class="ui-content">
-			<input data-nstest-role="tokentextarea2" id="enhance-test">
-			<input data-nstest-role="tokentextarea2" id="initial-buttons-test" value="abc@def.com; ghi">
-			<input data-nstest-role="tokentextarea2" id="update-summary-while-hidden">
-			<input data-nstest-role="tokentextarea2" id="focus-out-test" value="abc@def.com; ghi">
-			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset ui-tokentextarea2 stretched-input">
-				<span class="ui-tokentextarea2-summary">+ 1</span>
-				<a href="#" class="ui-btn ui-corner-all ui-shadow ui-tokentextarea2-button ui-btn-inline" data-nstest-value="your.name@your.domain.com">your.name@your.domain.com</a>
-				<input id="pre-rendered-test" data-nstest-role="tokentextarea2" data-nstest-enhanced="true">
-				<span class="ui-tokentextarea2-input-shadow"></span>
+			<div style="width: 500px;">
+				<input id="test-link-placement" data-nstest-role="tokentextarea" data-nstest-link="#link-placement-test-link">
+				<a href="#" id="link-placement-test-link" class="ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-inline">Link</a>
 			</div>
 		</div>
 	</div>

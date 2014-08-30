@@ -1,17 +1,17 @@
 //>>excludeStart("jqmBuildExclude", pragmas.jqmBuildExclude);
-//>>description: Sync tokentextarea2 text with another input
+//>>description: Sync tokentextarea text with another input
 //>>label: Token text area sync
 //>>group: Widgets
-//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.sync.css
+//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea.sync.css
 
 define([
 	"jquery",
-	"./tokentextarea2" ], function( jQuery ) {
+	"./tokentextarea" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
 
-$.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
+$.widget( "mobile.tokentextarea", $.mobile.tokentextarea, {
 	options: {
 		master: null
 	},

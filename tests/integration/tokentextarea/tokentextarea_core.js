@@ -8,14 +8,14 @@ test( "class 'stretched-input' correctly applied during enhancement", function()
 	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
 		"When the input has initial buttons, the wrapper initially has class 'stretched-input'" );
 	deepEqual( $( "#enhance-test-initial-tokens" )
-		.prevAll( ".ui-tokentextarea2-button" ).length,
+		.prevAll( ".ui-tokentextarea-button" ).length,
 		1, "When the input has initial buttons, they precede the input" );
 	deepEqual( $( "#enhance-test-initial-tokens" )
-		.prevAll( ".ui-tokentextarea2-button" )
+		.prevAll( ".ui-tokentextarea-button" )
 			.attr( "tabindex" ),
 		undefined, "When the enabled input has initial buttons, their tabindex is unset" );
 	deepEqual( $( "#enhance-test-initial-tokens-disabled" )
-		.prevAll( ".ui-tokentextarea2-button" )
+		.prevAll( ".ui-tokentextarea-button" )
 			.attr( "tabindex" ),
 		"-1", "When the disabled input has initial buttons, their tabindex is set to '-1'" );
 	deepEqual( $( "#enhance-test-initial-tokens" ).parent().hasClass( "stretched-input" ), true,
@@ -121,7 +121,7 @@ asyncTest( "input wraps to next line to accommodate typed text", function() {
 
 	// Fill the first row with tokens to establish the last position of the input before it wraps
 	while ( true ) {
-		input.tokentextarea2( "add", "abc@def.com" );
+		input.tokentextarea( "add", "abc@def.com" );
 		previousLeft = currentLeft;
 		currentLeft = input.offset().left;
 		if ( currentLeft < previousLeft ) {
@@ -132,7 +132,7 @@ asyncTest( "input wraps to next line to accommodate typed text", function() {
 
 	// Go back to a state where adding another block would cause a wrap
 	while ( true ) {
-		input.tokentextarea2( "add", "abc@def.com" );
+		input.tokentextarea( "add", "abc@def.com" );
 		currentLeft = input.offset().left;
 		if ( currentLeft === maxLeft ) {
 			break;
@@ -155,12 +155,12 @@ test( "Clicking on token works", function() {
 
 	input.prev().click();
 
-	deepEqual( input.prev( "a.ui-tokentextarea2-button" ).length, 0,
+	deepEqual( input.prev( "a.ui-tokentextarea-button" ).length, 0,
 		"clicking on token again removes it" );
 
-	input.tokentextarea2( "add", "dennis@example.com" );
+	input.tokentextarea( "add", "dennis@example.com" );
 
-	input.one( "tokentextarea2select", function( event, data ) {
+	input.one( "tokentextareaselect", function( event, data ) {
 		selectTriggered = true;
 		deepEqual( !!data, true, "Data is passed to the 'select' event" );
 		deepEqual( data.value, "dennis@example.com",
@@ -179,151 +179,151 @@ test( "Clicking on token works", function() {
 test( "Public API works", function() {
 	var input = $( "#refresh-test" );
 
-	input.val( "abc@def.com; ghi@jkl.com, mno@pqr.com; stu " ).tokentextarea2( "refresh" );
+	input.val( "abc@def.com; ghi@jkl.com, mno@pqr.com; stu " ).tokentextarea( "refresh" );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).length, 3,
 		"refresh(): Two buttons were added" );
 
 	deepEqual( input
-		.prev( ".ui-tokentextarea2-button" )
-			.prev( ".ui-tokentextarea2-button" )
-				.prev( ".ui-tokentextarea2-button" )
+		.prev( ".ui-tokentextarea-button" )
+			.prev( ".ui-tokentextarea-button" )
+				.prev( ".ui-tokentextarea-button" )
 					.text(), "abc@def.com",
 		"refresh(): First added button text is correct" );
 
 	deepEqual( input
-		.prev( ".ui-tokentextarea2-button" )
-			.prev( ".ui-tokentextarea2-button" )
+		.prev( ".ui-tokentextarea-button" )
+			.prev( ".ui-tokentextarea-button" )
 				.text(), "ghi@jkl.com",
 		"refresh(): Second added button text is correct" );
 
-	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "mno@pqr.com",
+	deepEqual( input.prev( ".ui-tokentextarea-button" ).text(), "mno@pqr.com",
 		"refresh(): Third added button text is correct" );
 
 	deepEqual( input.val(), "stu ", "refresh(): Leftover text is correct" );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "abc@def.com;ghi@jkl.com;mno@pqr.com;stu ",
+	deepEqual( input.tokentextarea( "inputText" ), "abc@def.com;ghi@jkl.com;mno@pqr.com;stu ",
 		"inputText() returns the correct value" );
 
-	input.tokentextarea2( "inputText", "foo@example.com; bar@example.org; baz@example.edu; xyz " );
+	input.tokentextarea( "inputText", "foo@example.com; bar@example.org; baz@example.edu; xyz " );
 
 	deepEqual( input
-		.prev( ".ui-tokentextarea2-button" )
-			.prev( ".ui-tokentextarea2-button" )
-				.prev( ".ui-tokentextarea2-button" )
+		.prev( ".ui-tokentextarea-button" )
+			.prev( ".ui-tokentextarea-button" )
+				.prev( ".ui-tokentextarea-button" )
 					.text(), "foo@example.com",
 		"inputText(): First added button text is correct" );
 
 	deepEqual( input
-		.prev( ".ui-tokentextarea2-button" )
-			.prev( ".ui-tokentextarea2-button" )
+		.prev( ".ui-tokentextarea-button" )
+			.prev( ".ui-tokentextarea-button" )
 				.text(), "bar@example.org",
 		"inputText(): Second added button text is correct" );
 
-	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "baz@example.edu",
+	deepEqual( input.prev( ".ui-tokentextarea-button" ).text(), "baz@example.edu",
 		"inputText(): Third added button text is correct" );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).length, 3,
 		"inputText(): There are three buttons" );
 
 	deepEqual( input.val(), "xyz ", "inputText(): Input has correct value after setting text" );
 
-	deepEqual( input.tokentextarea2( "length" ), 3, "length() returns the correct value" );
+	deepEqual( input.tokentextarea( "length" ), 3, "length() returns the correct value" );
 
-	input.tokentextarea2( "remove", 1 );
+	input.tokentextarea( "remove", 1 );
 
-	deepEqual( input.tokentextarea2( "length" ), 2,
+	deepEqual( input.tokentextarea( "length" ), 2,
 		"remove(): length() returns the correct value after one removal" );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "foo@example.com;baz@example.edu;xyz ",
+	deepEqual( input.tokentextarea( "inputText" ), "foo@example.com;baz@example.edu;xyz ",
 		"remove(): inputText() returns the correct value after one removal" );
 
 	deepEqual( input
-		.prev( ".ui-tokentextarea2-button" )
-			.prev( ".ui-tokentextarea2-button" )
+		.prev( ".ui-tokentextarea-button" )
+			.prev( ".ui-tokentextarea-button" )
 				.text(), "foo@example.com",
 		"remove(): First button is correct" );
 
-	deepEqual( input.prev( ".ui-tokentextarea2-button" ).text(), "baz@example.edu",
+	deepEqual( input.prev( ".ui-tokentextarea-button" ).text(), "baz@example.edu",
 		"remove(): Second button is correct" );
 
-	input.tokentextarea2( "remove" );
+	input.tokentextarea( "remove" );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "xyz ",
+	deepEqual( input.tokentextarea( "inputText" ), "xyz ",
 		"remove(): inputText() returns the correct value after removal of all tokens" );
 
-	deepEqual( input.parent().children( ".ui-tokentextarea2-button" ).length, 0,
+	deepEqual( input.parent().children( ".ui-tokentextarea-button" ).length, 0,
 		"remove(): No tokens present after calling remove() with no arguments" );
 
-	deepEqual( input.tokentextarea2( "length" ), 0, "remove(): length() reports correctly" );
+	deepEqual( input.tokentextarea( "length" ), 0, "remove(): length() reports correctly" );
 
 	input
 		.val( "abc@def.com;mno@pqr.com;stu " )
-		.tokentextarea2( "refresh" )
-		.tokentextarea2( "add", "vwx@yz.com", 1 );
+		.tokentextarea( "refresh" )
+		.tokentextarea( "add", "vwx@yz.com", 1 );
 
-	deepEqual( input.tokentextarea2( "inputText" ), "abc@def.com;vwx@yz.com;mno@pqr.com;stu ",
+	deepEqual( input.tokentextarea( "inputText" ), "abc@def.com;vwx@yz.com;mno@pqr.com;stu ",
 		"add(): inputText() returns the correct value after one addition" );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).length, 3,
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).length, 3,
 		"add(): There are three buttons after one addition" );
 
-	deepEqual( input.tokentextarea2( "select" ), "",
+	deepEqual( input.tokentextarea( "select" ), "",
 		"select(): Empty string is returned when no tokens are selected" );
 
-	input.tokentextarea2( "select", 0 );
+	input.tokentextarea( "select", 0 );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).last().hasClass( "ui-btn-active" ),
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).last().hasClass( "ui-btn-active" ),
 		true,
 		"select(): Selecting the first element causes class 'ui-btn-active' to be added to it" );
 
-	deepEqual( input.tokentextarea2( "select" ), "abc@def.com;",
+	deepEqual( input.tokentextarea( "select" ), "abc@def.com;",
 		"select(): Correct text is returned after selecting one element" );
 
-	input.tokentextarea2( "select", 2 );
+	input.tokentextarea( "select", 2 );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).last().hasClass( "ui-btn-active" ),
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).last().hasClass( "ui-btn-active" ),
 		true,
 		"select(): Selecting the last element causes the first element to remain selected" );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button" ).first().hasClass( "ui-btn-active" ),
+	deepEqual( input.prevAll( ".ui-tokentextarea-button" ).first().hasClass( "ui-btn-active" ),
 		true,
 		"select(): Selecting the last element causes class 'ui-btn-active' to be added to it" );
 
-	deepEqual( input.tokentextarea2( "select" ), "abc@def.com;mno@pqr.com;",
+	deepEqual( input.tokentextarea( "select" ), "abc@def.com;mno@pqr.com;",
 		"select(): Correct text is returned after selecting two elements" );
 
 	input
 		.val( input.val() + " " )
 		.trigger( "keyup" );
 
-	deepEqual( input.prevAll( ".ui-tokentextarea2-button.ui-btn-active" ).length, 0,
+	deepEqual( input.prevAll( ".ui-tokentextarea-button.ui-btn-active" ).length, 0,
 		"Typing a space causes all selected items to be deselected" );
 
-	deepEqual( input.tokentextarea2( "select" ), "",
+	deepEqual( input.tokentextarea( "select" ), "",
 		"select(): After items become deselected, select() returns an empty string" );
 });
 
 test( "Disabling widget", function() {
 	var input = $( "#set-options-test" );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).is( function( index, element ) {
 		if ( $( element ).attr( "tabindex" ) === "-1" ) {
 			return true;
 		}
 	}), false, "Initially no button has tabindex -1" );
 
-	input.tokentextarea2( "option", "disabled", true );
+	input.tokentextarea( "option", "disabled", true );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).is( function( index, element ) {
 		if ( $( element ).attr( "tabindex" ) !== "-1" ) {
 			return true;
 		}
 	}), false, "After disabling, all buttons have tabindex -1" );
 
-	input.tokentextarea2( "option", "disabled", false );
+	input.tokentextarea( "option", "disabled", false );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).is( function( index, element ) {
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).is( function( index, element ) {
 		if ( $( element ).attr( "tabindex" ) === "-1" ) {
 			return true;
 		}
@@ -337,7 +337,7 @@ test( "Input shadow found", function() {
 
 	input.val( "k" ).trigger( "keyup" );
 
-	deepEqual( input.siblings( ".ui-tokentextarea2-input-shadow" ).text(), "k",
+	deepEqual( input.siblings( ".ui-tokentextarea-input-shadow" ).text(), "k",
 		"text is transferred to input shadow" );
 });
 
@@ -348,31 +348,31 @@ asyncTest( "Form reset works", function() {
 		inputInside = $( "#reset-test-input" ),
 		inputOutside = $( "#reset-test-input-outside" ),
 		checkPreResetAssertions = function( input ) {
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).length, 2,
 				"Initially two buttons are present" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).last().jqmData( "value" ),
 				"abc@def.com", "Initially the first button has the correct value" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).first().jqmData( "value" ),
 				"ghi@jkl.com", "Initially the second button has the correct value" );
 
 			input.val( "mno@pqr.com;" ).trigger( "change" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 3,
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).length, 3,
 				"A newly added button increases length of buttons by one" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).first().jqmData( "value" ),
 				"mno@pqr.com", "A newly added button becomes the first to precede the input" );
 		},
 		checkPostResetAssertions = function( input ) {
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).length, 2,
 				"Initially two buttons are present" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).last().jqmData( "value" ),
 				"abc@def.com", "Initially the first button has the correct value" );
 
-			deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+			deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).first().jqmData( "value" ),
 				"ghi@jkl.com", "Initially the second button has the correct value" );
 		};
 
@@ -394,28 +394,28 @@ asyncTest( "Paste works", function() {
 
 	var input = $( "#paste-test" );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 2,
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).length, 2,
 		"Initially two buttons are present" );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).last().jqmData( "value" ),
 		"abc@def.com", "Initially the first button has the correct value" );
 
-	deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+	deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).first().jqmData( "value" ),
 		"ghi@jkl.com", "Initially the second button has the correct value" );
 
 	input.val( "mno@pqr.com;" ).trigger( "paste" );
 
 	setTimeout( function() {
-		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).length, 3,
+		deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).length, 3,
 			"After pasting three buttons are present" );
 
-		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).first().jqmData( "value" ),
+		deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).first().jqmData( "value" ),
 			"mno@pqr.com", "After pasting the button nearest the input has the correct value" );
 
-		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).eq( 1 ).jqmData( "value" ),
+		deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).eq( 1 ).jqmData( "value" ),
 			"ghi@jkl.com", "After pasting the middle button has the correct value" );
 
-		deepEqual( input.prevAll( "a.ui-tokentextarea2-button" ).last().jqmData( "value" ),
+		deepEqual( input.prevAll( "a.ui-tokentextarea-button" ).last().jqmData( "value" ),
 			"abc@def.com", "After pasting the first button has the correct value" );
 
 		start();

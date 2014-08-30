@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Tokentextarea2 - Unit Tests - Web UI Framework</title>
+	<title>Tokentextarea - Unit Tests - Web UI Framework</title>
 
 	<script src="../../../external/requirejs/require.js"></script>
 	<script src="../../../jqm/js/requirejs.config.js"></script>
@@ -20,10 +20,8 @@
 
 	<script>
 		$.testHelper.asyncLoad([
-			[ "jqm/widgets/page" ],
-			[ "widgets/tokentextarea2.link" ],
-			[ "jqm/jquery.mobile.init" ],
-			[ "link_core.js" ]
+			[ "widgets/tokentextarea" ],
+			[ "base_destroy_core.js" ]
 		]);
 	</script>
 
@@ -32,11 +30,8 @@
 <body>
 	<div id="qunit"></div>
 	<div data-nstest-role="page">
-		<div class="ui-content">
-			<div style="width: 500px;">
-				<input id="test-link-placement" data-nstest-role="tokentextarea2" data-nstest-link="#link-placement-test-link">
-				<a href="#" id="link-placement-test-link" class="ui-btn ui-corner-all ui-icon-grid ui-btn-icon-notext ui-btn-inline">Link</a>
-			</div>
+		<div id="destroy-test-container">
+			<input id="destroy-test" value="a;">
 		</div>
 	</div>
 </body>

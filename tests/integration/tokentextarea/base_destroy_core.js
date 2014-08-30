@@ -3,14 +3,14 @@ asyncTest( "Destroying widget works", function() {
 		input = $( "#destroy-test" ),
 		initial = container.clone();
 
-	input.tokentextarea2();
+	input.tokentextarea();
 
 	$.testHelper.sequence([
 		function() {
 			input.focus();
 		},
 		function() {
-			input.tokentextarea2( "destroy" );
+			input.tokentextarea( "destroy" );
 			deepEqual( $.testHelper.domEqual( container, initial ), true,
 				"DOM after creation/destruction is identical to initial DOM" );
 			start();

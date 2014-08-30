@@ -2,16 +2,16 @@
 //>>description: Token text area item grouping
 //>>label: Token text area
 //>>group: Widgets
-//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.grouping.css
+//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea.grouping.css
 
 define([
 	"jquery",
-	"./tokentextarea2" ], function( jQuery ) {
+	"./tokentextarea" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
 
-$.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
+$.widget( "mobile.tokentextarea", $.mobile.tokentextarea, {
 	options: {
 		description: "+ {0}"
 	},
@@ -21,7 +21,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 
 		if ( this.inputNeedsWrap ) {
 			if ( this.options.enhanced ) {
-				this._summary = this.widget().children( ".ui-tokentextarea2-summary" );
+				this._summary = this.widget().children( ".ui-tokentextarea-summary" );
 			}
 
 			this._on( this.widget(), {
@@ -33,14 +33,14 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 	_enhance: function() {
 		this._superApply( arguments );
 		if ( this.inputNeedsWrap ) {
-			this._summary = $( "<span class='ui-tokentextarea2-summary'></span>" )
+			this._summary = $( "<span class='ui-tokentextarea-summary'></span>" )
 				.prependTo( this.widget() );
 			this._updateText();
 		}
 	},
 
 	_updateText: function() {
-		var numberOfButtons = this.element.prevAll( "a.ui-tokentextarea2-button" ).length;
+		var numberOfButtons = this.element.prevAll( "a.ui-tokentextarea-button" ).length;
 
 		if ( this._summary ) {
 			this._summary
@@ -65,7 +65,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 
 	focusIn: function() {
 		if ( this.inputNeedsWrap ) {
-			this.widget().removeClass( "ui-tokentextarea2-grouped" );
+			this.widget().removeClass( "ui-tokentextarea-grouped" );
 			this._adjustWidth();
 		}
 	},
@@ -74,7 +74,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 		if ( this.inputNeedsWrap ) {
 			this._updateText();
 			this.widget()
-				.addClass( "ui-tokentextarea2-grouped" )
+				.addClass( "ui-tokentextarea-grouped" )
 				.removeClass( "stretched-input" );
 			this.element.blur();
 		}
@@ -83,7 +83,7 @@ $.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
 	_destroy: function() {
 		if ( this.inputNeedsWrap && !this.options.enhanced ) {
 			this._summary.remove();
-			this.widget().removeClass( "ui-tokentextarea2-grouped" );
+			this.widget().removeClass( "ui-tokentextarea-grouped" );
 		}
 		return this._superApply( arguments );
 	}

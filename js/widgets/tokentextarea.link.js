@@ -2,16 +2,16 @@
 //>>description: Token text area item grouping
 //>>label: Token text area
 //>>group: Widgets
-//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea2.link.css
+//>>css.structure: ../../css/structure/web-ui-fw.tokentextarea.link.css
 
 define([
 	"jquery",
-	"./tokentextarea2" ], function( jQuery ) {
+	"./tokentextarea" ], function( jQuery ) {
 //>>excludeEnd("jqmBuildExclude");
 
 ( function( $, window, document, undefined ) {
 
-$.widget( "mobile.tokentextarea2", $.mobile.tokentextarea2, {
+$.widget( "mobile.tokentextarea", $.mobile.tokentextarea, {
 	options: {
 		link: null
 	},
