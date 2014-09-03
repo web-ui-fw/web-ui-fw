@@ -1,7 +1,7 @@
 # Release process for \<version\>
 
 0. npm install
-0 grunt test
+0. grunt test
 0. Build web-ui-fw with ```grunt release```.
 0. Build web-ui-fw API docs and copy the mirror to dist/api-docs.
 0. ```cp -a dist/ <web-ui-fw.github.com repo path>/jqm/<version>```
