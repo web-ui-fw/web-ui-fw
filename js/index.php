@@ -2,6 +2,7 @@
 $type = 'text/javascript';
 $files = array(
 	'../jq-color/jquery.color.js',
+	'eachIdle.js',
 	'behaviors/optionDemultiplexer.js',
 	'behaviors/setDisabled.js',
 	'behaviors/setValue.js',

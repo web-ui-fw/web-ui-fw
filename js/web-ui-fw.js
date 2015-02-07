@@ -3,6 +3,7 @@
 
 define([
 	"require",
+	"eachIdle",
 	"widgets/color/grayscale",
 	"widgets/color/hsvpicker",
 	"widgets/color/colorpalette",
