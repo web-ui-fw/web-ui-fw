@@ -16,9 +16,11 @@ module.exports = function( grunt ) {
 
 		jshint: {
 			js: {
-				options: {
-					jshintrc: "js/.jshintrc"
-				},
+
+				// TODO: Revert to
+				// options: { jshintrc: "js/.jshintrc" }
+				// once jQM has "jquery": true in its .jshintrc
+				options: _.extend( grunt.file.readJSON( "js/.jshintrc" ), { "jquery": true } ),
 				files: {
 					src: [
 						"js/**/*.js",
