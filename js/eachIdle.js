@@ -139,11 +139,17 @@ $.eachIdle.iterate = function() {
 	// We yield if we have work left, but if the callback told us to stop, we no longer
 	// set up a timeout that will allow us to complete the remainder of the work later.
 	// We asynchronously resolve the deferred instead to indicate that our job is done.
-	if ( this.i < this.length && value !== false ) {
-		setTimeout( $.proxy( $.eachIdle.iterate, this ), delay === undefined ? 0 : delay );
-	} else {
-		setTimeout( $.proxy( this.deferred, "resolve" ), 0 );
-	}
+	setTimeout(
+		( this.i < this.length && value !== false ) ?
+
+			// Yield now and resume iterations later.
+			$.proxy( $.eachIdle.iterate, this ) :
+
+			// We're done. Resolve the deferred.
+			$.proxy( this.deferred, "resolve" ),
+
+		// delay will be undefined if we're done.
+		( delay === undefined ? 0 : delay ) );
 };
 
 // Provided for convenience. This allows the callback to legibly indicate that it wishes to yield
