@@ -111,6 +111,7 @@ $.eachIdle.iterate = function() {
 		startTime = ( this.timeout > 0 ? $.now() : 0 ),
 		currentIterations = 0;
 
+	// We loop while we still have data or until we determine that we must delay further iteration
 	for( ; this.i < this.length && delay === undefined ; this.i++ ) {
 
 		// Set up the arguments and the context for the callback
@@ -148,8 +149,8 @@ $.eachIdle.iterate = function() {
 							// performed too many of them
 							( ++currentIterations ) >= this.iterations ) ) ? 0 :
 
-					// If none of these conditions are met, we continue iterating in this busy loop
-					undefined ) ) );
+						// We continue the busy loop if none of these conditions are met
+						undefined ) ) );
 	}
 
 	// We yield if we have work left, but if the callback told us to stop, we no longer
