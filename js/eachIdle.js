@@ -107,33 +107,49 @@ $.eachIdle = function( obj, callback, args, timeout, iterations ) {
 // timeout: The maximum amount of time for which we should busy-loop
 // iterations: The maximum number of iterations in any busy-loop
 $.eachIdle.iterate = function() {
-	var value, index, context, currentTime, delay,
+	var value, index, context, delay,
 		startTime = ( this.timeout > 0 ? $.now() : 0 ),
 		currentIterations = 0;
 
-	for( ; this.i < this.length ; this.i++ ) {
+	for( ; this.i < this.length && delay === undefined ; this.i++ ) {
+
+		// Set up the arguments and the context for the callback
 		index = this.keys ? this.keys[ this.i ] : this.i;
 		context = this.obj[ index ];
 
+		// Perform the iteration
 		if ( this.args ) {
 			value = this.callback.apply( context, this.args );
 		} else {
 			value = this.callback.call( context, index, context );
 		}
 
-		if ( $.isNumeric( value ) ) {
-			delay = value;
-		}
+		// Determine whether we should yield.
+		delay =
 
-		currentTime = ( this.timeout > 0 ? $.now() : 1 );
-		currentIterations++;
+			// We yield if the callback indicates by a numeric return value that we should delay
+			// further iteration by a specified amount of milliseconds
+			( $.isNumeric( value ) ? value :
 
-		if ( delay !== undefined || value === false ||
-				( this.timeout !== undefined && ( currentTime - startTime >= this.timeout ) ) ||
-				( this.iterations !== undefined && currentIterations >= this.iterations ) ) {
-			this.i++;
-			break;
-		}
+				// We also yield if the callback indicates that it wishes to stop iterating
+				( false === value ? 0 :
+
+				// Finally, we yield if any of the conditions in our options (timeout/iterations)
+				// are satisfied
+				( ( ( this.timeout !== undefined &&
+
+						// If we're measuring time, yield if we've been iterating for too long. We
+						// artificially create a difference of 1 ms if the timeout is <= 0, to make
+						// sure that we yield after each iteration.
+						( ( ( this.timeout > 0 ? $.now() : 1 ) ) - startTime >= this.timeout ) ) ||
+					( this.iterations !== undefined &&
+
+							// If we're measuring the number of iterations, yield if we've
+							// performed too many of them
+							( ++currentIterations ) >= this.iterations ) ) ? 0 :
+
+					// If none of these conditions are met, we continue iterating in this busy loop
+					undefined ) ) );
 	}
 
 	// We yield if we have work left, but if the callback told us to stop, we no longer
@@ -148,12 +164,13 @@ $.eachIdle.iterate = function() {
 			// We're done. Resolve the deferred.
 			$.proxy( this.deferred, "resolve" ),
 
-		// delay will be undefined if we're done.
+		// delay will be undefined if we get to the end of the data.
 		( delay === undefined ? 0 : delay ) );
 };
 
 // Provided for convenience. This allows the callback to legibly indicate that it wishes to yield
 // by returning the value defined below.
+$.eachIdle.YIELD = 0;
 
 $.fn.eachIdle = function( callback, args, timeout, iterations ) {
 	return $.eachIdle( this, callback, args, timeout, iterations );
