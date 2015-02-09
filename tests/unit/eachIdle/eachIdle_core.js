@@ -93,8 +93,8 @@ function defineTest( options ) {
 						}
 					}() ) : options.callback ) ]
 
-					// If we have extra arguments, we have to insert undefined for the @args argument of
-					// eachIdle()
+					// If we have extra arguments, we have to insert undefined for the @args
+					// argument of eachIdle()
 					.concat( options.argsToEachIdle );
 
 			$.eachIdle.apply( undefined, eachIdleArgs ).done( function() {
